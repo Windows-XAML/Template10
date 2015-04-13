@@ -1,0 +1,101 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <SolidColorBrush x:Key="NavButtonPressedBackgroundBrush" Color="White" Opacity="0.3" />
+    <SolidColorBrush x:Key="NavButtonCheckedBackgroundBrush" Color="White" Opacity="0.2" />
+    <SolidColorBrush x:Key="NavButtonHoverBackgroundBrush" Color="White" Opacity="0.1" />
+
+    <Style x:Key="NavButtonStyle" TargetType="RadioButton">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Padding" Value="1,4,0,0" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RadioButton">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="PointerOver">
+                                    <VisualState.Setters>
+                                        <Setter Target="OverlayBackground.Fill" Value="{StaticResource NavButtonHoverBackgroundBrush}" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <VisualState.Setters>
+                                        <Setter Target="OverlayBackground.Fill" Value="{StaticResource NavButtonPressedBackgroundBrush}" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <VisualState.Setters>
+                                        <Setter Target="JerryNixon.Foreground" Value="{ThemeResource RadioButtonContentDisabledForegroundThemeBrush}" />
+                                        <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource RadioButtonContentDisabledForegroundThemeBrush}" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="CheckStates">
+                                <VisualState x:Name="Checked">
+                                    <VisualState.Setters>
+                                        <Setter Target="OverlayBackground.Fill" Value="{StaticResource NavButtonCheckedBackgroundBrush}" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Unchecked" />
+                                <VisualState x:Name="Indeterminate" />
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="FocusStates">
+                                <VisualState x:Name="Focused">
+                                    <VisualState.Setters>
+                                        <Setter Target="FocusVisualWhite.Opacity" Value="1" />
+                                        <Setter Target="FocusVisualBlack.Opacity" Value="1" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Unfocused" />
+                                <VisualState x:Name="PointerFocused" />
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="48" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="48" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="20" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.Resources>
+                                <Style TargetType="Rectangle" x:Name="FocusVisual">
+                                    <Setter Property="Opacity" Value="0" />
+                                    <Setter Property="StrokeDashArray" Value="1,1" />
+                                    <Setter Property="StrokeEndLineCap" Value="Square" />
+                                </Style>
+                                <Style TargetType="TextBlock" x:Name="GlyphText">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                    <Setter Property="FontFamily" Value="Segoe MDL2 Assets" />
+                                    <Setter Property="FontSize" Value="16" />
+                                </Style>
+                            </Grid.Resources>
+                            <Rectangle x:Name="OverlayBackground" Grid.ColumnSpan="4" Visibility="Collapsed" Fill="{StaticResource NavButtonPressedBackgroundBrush}"/>
+                            <Rectangle x:Name="FocusVisualWhite" Stroke="{ThemeResource FocusVisualWhiteStrokeThemeBrush}" StrokeDashOffset="1.5" Style="{StaticResource FocusVisual}" />
+                            <Rectangle x:Name="FocusVisualBlack" Stroke="{ThemeResource FocusVisualBlackStrokeThemeBrush}" StrokeDashOffset="0.5" Style="{StaticResource FocusVisual}" />
+                            <TextBlock x:Name="JerryNixon" Text="{TemplateBinding Tag}" Style="{StaticResource GlyphText}" />
+                            <ContentPresenter x:Name="ContentPresenter"
+                        			Grid.Column="1"
+                        			Margin="{TemplateBinding Padding}"
+                        			HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        			VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                        			AutomationProperties.AccessibilityView="Raw"
+                        			Content="{TemplateBinding Content}"
+                        			ContentTemplate="{TemplateBinding ContentTemplate}"
+                        			ContentTransitions="{TemplateBinding ContentTransitions}" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

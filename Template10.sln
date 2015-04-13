@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{DE54
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10", "Template10\Template10.csproj", "{278AEE33-62D0-4B73-8319-F7F5E5711874}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DisplaySizeTrigger", "DisplaySizeTrigger", "{8E20E13E-9632-416F-ACBE-4BFF13C7EEE2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,5 +57,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{278AEE33-62D0-4B73-8319-F7F5E5711874} = {BD58DA49-B8F8-48A3-81CD-64C0D3B8F0E2}
+		{8E20E13E-9632-416F-ACBE-4BFF13C7EEE2} = {DE54733C-C92B-4177-9EB0-A4A2AFB99F42}
 	EndGlobalSection
 EndGlobal

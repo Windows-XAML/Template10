@@ -1,5 +1,9 @@
-<Application x:Class="Template10.App" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:Template10">
+<common:BootStrapper x:Class="Template10.App" xmlns:common="using:Template10.Common" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:Template10" RequestedTheme="Dark">
   <Application.Resources>
-    <vm:ViewModelLocator x:Key="Locator" xmlns:vm="using:Template10.ViewModel" />
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Styles/ColorTemplates.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
   </Application.Resources>
-</Application>
+</common:BootStrapper>

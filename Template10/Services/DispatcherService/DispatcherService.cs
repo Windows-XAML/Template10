@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Windows.UI.Core;
 
-namespace Windows10.Services.DispatcherService
+namespace Template10.Services.DispatcherService
 {
     public class DispatcherService 
     {

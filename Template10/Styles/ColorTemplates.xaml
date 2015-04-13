@@ -1,0 +1,75 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:Template10.Models"
+    mc:Ignorable="d">
+    
+    <DataTemplate x:Key="HubBigColorTemplate">
+        <Grid Height="400" Width="400" Background="{Binding Brush}">
+            <StackPanel VerticalAlignment="Bottom">
+                <StackPanel.Background>
+                    <SolidColorBrush Color="Black" Opacity=".5" />
+                </StackPanel.Background>
+                <TextBlock Style="{StaticResource TitleTextBlockStyle}" 
+                           Margin="5" MaxLines="2" TextTrimming="CharacterEllipsis"
+                           Foreground="White" Text="{Binding Name}" />
+            </StackPanel>
+        </Grid>
+    </DataTemplate>
+    
+    <DataTemplate x:Key="HubSmallColorTemplate">
+        <Grid Height="100" Width="200" Background="{Binding Brush}">
+            <StackPanel VerticalAlignment="Bottom">
+                <StackPanel.Background>
+                    <SolidColorBrush Color="Black" Opacity=".5" />
+                </StackPanel.Background>
+                <TextBlock Style="{StaticResource TitleTextBlockStyle}" 
+                           Margin="5" MaxLines="1" TextTrimming="CharacterEllipsis"
+                           Foreground="White" Text="{Binding Name}" />
+            </StackPanel>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate x:Key="DetailColorTemplate">
+        <Grid Height="450" Width="600">
+            <Rectangle Fill="{Binding Variant1}" Height="75" Width="75">
+                <Rectangle.RenderTransform>
+                    <TranslateTransform X="135" Y="-10" />
+                </Rectangle.RenderTransform>
+            </Rectangle>
+            <Rectangle Fill="{Binding Variant1}" Height="35" Width="35" Opacity=".5">
+                <Rectangle.RenderTransform>
+                    <TranslateTransform X="-120" Y="25" />
+                </Rectangle.RenderTransform>
+            </Rectangle>
+            <Rectangle Fill="{Binding Variant2}" Height="50" Width="50" Opacity=".5">
+                <Rectangle.RenderTransform>
+                    <TranslateTransform X="125" Y="55" />
+                </Rectangle.RenderTransform>
+            </Rectangle>
+            <Rectangle Fill="{Binding Variant3}" Height="50" Width="50">
+                <Rectangle.RenderTransform>
+                    <TranslateTransform X="-125" Y="-20" />
+                </Rectangle.RenderTransform>
+            </Rectangle>
+            <Rectangle Fill="{Binding Variant3}" Height="30" Width="30" Opacity=".5">
+                <Rectangle.RenderTransform>
+                    <TranslateTransform X="40" Y="-115" />
+                </Rectangle.RenderTransform>
+            </Rectangle>
+            <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Rectangle Fill="{Binding ColorInfo.Brush}" Height="200" Width="200" />
+                <Grid VerticalAlignment="Bottom">
+                    <Grid.Background>
+                        <SolidColorBrush Color="Black" Opacity=".5" />
+                    </Grid.Background>
+                    <TextBlock Text="{Binding ColorInfo.Color}" 
+    					Foreground="White" Margin="5"
+    					Style="{StaticResource TitleTextBlockStyle}" />
+                </Grid>
+            </Grid>
+        </Grid>
+    </DataTemplate>
+
+</ResourceDictionary>
