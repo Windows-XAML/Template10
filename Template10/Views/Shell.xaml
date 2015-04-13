@@ -1,0 +1,37 @@
+﻿<Page
+    x:Class="Template10.Views.Shell"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Template10.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/SplitViewStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <SplitView Background="Black" OpenPaneLength="240" x:Name="ShellSplitView"
+               CompactPaneLength="48" DisplayMode="CompactOverlay"
+               IsPaneOpen="False" PaneBackground="DimGray">
+        <SplitView.Pane>
+            <StackPanel x:Name="RadioButtonContainer">
+                
+                <RadioButton Tag="" Checked="BackRadioButton_Checked" Style="{StaticResource NavButtonStyle}" Background="SteelBlue" />
+                
+                <RadioButton Tag="" Checked="HamburgerRadioButton_Checked" Style="{StaticResource NavButtonStyle}" />
+                
+                <RadioButton Tag="" Command="{Binding NavCommand}" CommandParameter="MainPage" Content="Home" GroupName="Nav" Style="{StaticResource NavButtonStyle}" />
+                <RadioButton Tag="" Command="{Binding NavCommand}" CommandParameter="DetailPage" Content="Details" GroupName="Nav" Style="{StaticResource NavButtonStyle}" />
+                <RadioButton Tag="" Command="{Binding NavCommand}" CommandParameter="PrivacyPage" Content="Privacy" GroupName="Nav" Style="{StaticResource NavButtonStyle}" />
+                <RadioButton Tag="" Command="{Binding NavCommand}" CommandParameter="AboutPage" Content="About" GroupName="Nav" Style="{StaticResource NavButtonStyle}" />
+                
+            </StackPanel>
+        </SplitView.Pane>
+    </SplitView>
+
+</Page>

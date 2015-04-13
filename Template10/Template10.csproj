@@ -142,6 +142,8 @@
     <Compile Include="Services\LocationService\LocationService.cs" />
     <Compile Include="Services\MapService\MapHelper.cs" />
     <Compile Include="Services\MapService\MapService.cs" />
+    <Compile Include="Services\MarketplaceService\MarketplaceHelper.cs" />
+    <Compile Include="Services\MarketplaceService\MarketplaceService.cs" />
     <Compile Include="Services\NavigationService\NavigationEventArgs.cs" />
     <Compile Include="Services\NavigationService\NavigationFacade.cs" />
     <Compile Include="Services\NavigationService\NavigationService.cs" />
@@ -166,15 +168,24 @@
     <Compile Include="Triggers\ControlSizeTrigger.cs" />
     <Compile Include="Triggers\DeviceFamilyTrigger.cs" />
     <Compile Include="Triggers\InputTypeTrigger.cs" />
-    <Compile Include="Triggers\NetworkConnectionStateTrigger.cs" />
+    <Compile Include="Triggers\NetworkAvailableStateTrigger.cs" />
     <Compile Include="Triggers\OrientationTrigger.cs" />
     <Compile Include="ViewModels\DetailPageViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
+    <Compile Include="Views\AboutPage.xaml.cs">
+      <DependentUpon>AboutPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DetailPage.xaml.cs">
       <DependentUpon>DetailPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PrivacyPage.xaml.cs">
+      <DependentUpon>PrivacyPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shell.xaml.cs">
+      <DependentUpon>Shell.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -183,6 +194,7 @@
     </AppxManifest>
     <None Include="ApplicationInsights.config" />
     <None Include="packages.config" />
+    <PRIResource Include="Strings\en-US\Resources.resw" />
     <None Include="Template10_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -210,11 +222,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\AboutPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\DetailPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\PrivacyPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Shell.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -262,7 +286,6 @@
     <Folder Include="Controls\" />
     <Folder Include="Design\" />
     <Folder Include="Messages\" />
-    <Folder Include="Strings\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

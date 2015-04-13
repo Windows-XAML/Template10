@@ -46,7 +46,7 @@ namespace Template10.Services.NavigationService
                     if (method != null)
                     {
                         // TODO: get existing state
-                        method.Invoke(dataContext, new object[] { suspending });
+                        method.Invoke(dataContext, new object[] { null, suspending });
                     }
                 }
             }

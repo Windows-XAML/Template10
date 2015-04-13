@@ -34,7 +34,6 @@ namespace Template10.Common
 
         public Frame RootFrame { get; set; }
         public Services.NavigationService.NavigationService NavigationService { get; private set; }
-        public Services.DispatcherService.DispatcherService DispatcherService { get; private set; }
         protected Func<SplashScreen, Page> SplashFactory { get; set; }
 
         #endregion
@@ -71,7 +70,6 @@ namespace Template10.Common
             this.RootFrame = this.RootFrame ?? new Frame();
             this.RootFrame.Language = Windows.Globalization.ApplicationLanguages.Languages[0];
             this.NavigationService = new Services.NavigationService.NavigationService(this.RootFrame);
-            this.DispatcherService = new Services.DispatcherService.DispatcherService(Window.Current.Dispatcher);
 
             // the user may override to set custom content
             await OnInitializeAsync();

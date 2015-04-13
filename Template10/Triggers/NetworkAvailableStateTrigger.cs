@@ -8,9 +8,9 @@ using Windows.UI.Xaml;
 
 namespace Template10.Triggers
 {
-	public class NetworkConnStateTrigger : StateTriggerBase
+	public class NetworkAvailableStateTrigger : StateTriggerBase
     {
-        public NetworkConnStateTrigger()
+        public NetworkAvailableStateTrigger()
         {
             NetworkInformation.NetworkStatusChanged += NetworkInformation_NetworkStatusChanged;
             UpdateState();
@@ -40,12 +40,12 @@ namespace Template10.Triggers
         }
 
         public static readonly DependencyProperty ConnectionStateProperty =
-            DependencyProperty.Register("ConnectionState", typeof(ConnectionState), typeof(NetworkConnStateTrigger),
+            DependencyProperty.Register("ConnectionState", typeof(ConnectionState), typeof(NetworkAvailableStateTrigger),
             new PropertyMetadata(ConnectionState.Connected, OnConnectionStatePropertyChanged));
 
         private static void OnConnectionStatePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var obj = (NetworkConnStateTrigger)d;
+            var obj = (NetworkAvailableStateTrigger)d;
             obj.UpdateState();
         }
     }
