@@ -18,7 +18,7 @@ using Microsoft.ApplicationInsights;
 
 // The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=402347&clcid=0x409
 
-namespace Blank
+namespace Template10
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.

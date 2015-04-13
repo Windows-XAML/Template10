@@ -166,6 +166,7 @@
     <Compile Include="Triggers\ControlSizeTrigger.cs" />
     <Compile Include="Triggers\DeviceFamilyTrigger.cs" />
     <Compile Include="Triggers\InputTypeTrigger.cs" />
+    <Compile Include="Triggers\NetworkConnectionStateTrigger.cs" />
     <Compile Include="Triggers\OrientationTrigger.cs" />
     <Compile Include="ViewModels\DetailPageViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
@@ -180,7 +181,6 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="app.config" />
     <None Include="ApplicationInsights.config" />
     <None Include="packages.config" />
     <None Include="Template10_TemporaryKey.pfx" />

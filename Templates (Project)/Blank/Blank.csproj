@@ -7,8 +7,8 @@
     <ProjectGuid>{E481767A-6A1F-43F9-BD06-7F86D3D215D9}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Blank</RootNamespace>
-    <AssemblyName>Blank</AssemblyName>
+    <RootNamespace>Template10</RootNamespace>
+    <AssemblyName>Template10</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10030.0</TargetPlatformVersion>
