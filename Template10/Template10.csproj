@@ -167,8 +167,8 @@
     <Compile Include="Triggers\DeviceFamilyTrigger.cs" />
     <Compile Include="Triggers\InputTypeTrigger.cs" />
     <Compile Include="Triggers\OrientationTrigger.cs" />
-    <Compile Include="ViewModel\DetailPageViewModel.cs" />
-    <Compile Include="ViewModel\MainPageViewModel.cs" />
+    <Compile Include="ViewModels\DetailPageViewModel.cs" />
+    <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="Views\DetailPage.xaml.cs">
       <DependentUpon>DetailPage.xaml</DependentUpon>
     </Compile>
@@ -263,7 +263,6 @@
     <Folder Include="Design\" />
     <Folder Include="Messages\" />
     <Folder Include="Strings\" />
-    <Folder Include="ViewModels\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
