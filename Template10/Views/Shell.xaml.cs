@@ -15,10 +15,10 @@ namespace Template10.Views
         {
             this.InitializeComponent();
             this.ShellSplitView.Content = frame;
-            frame.Navigated += (s, e) =>
+            var update = new Action(() =>
             {
                 // update radiobuttons after frame navigates
-                var type = e.SourcePageType;
+                var type = frame.CurrentSourcePageType;
                 foreach (var radioButton in AllRadioButtons(this))
                 {
                     var target = radioButton.CommandParameter as NavType;
@@ -28,7 +28,9 @@ namespace Template10.Views
                 }
                 this.ShellSplitView.IsPaneOpen = false;
                 this.BackCommand.RaiseCanExecuteChanged();
-            };
+            });
+            frame.Navigated += (s, e) => update();
+            this.Loaded += (s, e) => update();
             this.DataContext = this;
         }
 
@@ -60,15 +62,15 @@ namespace Template10.Views
         private void ExecuteNav(NavType navType)
         {
             var type = navType.Type;
+            var nav = (App.Current as App).NavigationService;
 
             // when we nav home, clear history
-            var nav = (App.Current as App).NavigationService;
             if (type.Equals(typeof(Views.MainPage)))
                 nav.ClearHistory();
 
             // navigate only to new pages
             if (nav.CurrentPageType != null && nav.CurrentPageType != type)
-                nav.Navigate(type);
+                nav.Navigate(type, navType.Parameter);
         }
 
         // utility
@@ -96,5 +98,9 @@ namespace Template10.Views
         }
     }
 
-    public class NavType { public Type Type { get; set; } }
+    public class NavType
+    {
+        public Type Type { get; set; }
+        public string Parameter { get; set; }
+    }
 }
