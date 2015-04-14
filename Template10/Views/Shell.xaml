@@ -3,24 +3,45 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Template10.Views"
+    xmlns:views="using:Template10.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-
     <Page.Resources>
+
         <ResourceDictionary>
+
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Styles/SplitViewStyles.xaml" />
+                <ResourceDictionary Source="ms-appx:///Styles/SplitViewStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="SplitView">
+                <Setter Property="IsPaneOpen" Value="False" />
+                <Setter Property="OpenPaneLength" Value="240" />
+                <Setter Property="CompactPaneLength" Value="48" />
+                <Setter Property="PaneBackground" Value="DimGray" />
+                <Setter Property="DisplayMode" Value="CompactOverlay" />
+            </Style>
+
+            <Style TargetType="TextBlock">
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="FontFamily" Value="Segoe MDL2 Assets" />
+                <Setter Property="FontSize" Value="16" />
+            </Style>
+
+            <Style TargetType="RadioButton" BasedOn="{StaticResource SplitViewRadioButtonStyle}" />
+            
+            <x:Double x:Key="LargeNavFontSize">24</x:Double>
+
         </ResourceDictionary>
+
     </Page.Resources>
 
     <Grid>
 
-        <SplitView Background="Black" OpenPaneLength="240" x:Name="ShellSplitView"
-               CompactPaneLength="48" DisplayMode="CompactOverlay" 
-               IsPaneOpen="False" PaneBackground="DimGray">
+        <SplitView x:Name="ShellSplitView" PaneBackground="SteelBlue">
             <SplitView.Pane>
                 <Grid>
 
@@ -31,19 +52,69 @@
                     </Grid.RowDefinitions>
 
                     <StackPanel Grid.Row="0">
-                        <RadioButton Tag="" Checked="BackRadioButton_Checked" Style="{StaticResource SplitViewButtonStyle}" Background="{StaticResource SystemControlBackgroundAccentBrush}" />
-                        <RadioButton Tag="" Checked="HamburgerRadioButton_Checked" Style="{StaticResource SplitViewButtonStyle}" />
+
+                        <!-- back -->
+                        <RadioButton Checked="DontCheck" Command="{Binding BackCommand}"  Background="{StaticResource SystemControlBackgroundAccentBrush}">
+                            <RadioButton.Tag>
+                                <TextBlock Text="" FontSize="{StaticResource LargeNavFontSize}" />
+                            </RadioButton.Tag>
+                        </RadioButton>
+
+                        <!-- hamburger -->
+                        <RadioButton Checked="DontCheck" Command="{Binding MenuCommand}">
+                            <RadioButton.Tag>
+                                <TextBlock Text="" FontSize="{StaticResource LargeNavFontSize}" />
+                            </RadioButton.Tag>
+                        </RadioButton>
+
                     </StackPanel>
 
                     <StackPanel x:Name="RadioButtonContainer" Grid.Row="1">
-                        <RadioButton Tag="" Command="{Binding NavCommand}" CommandParameter="MainPage" Content="Home" GroupName="Nav" Style="{StaticResource SplitViewButtonStyle}" />
-                        <RadioButton Tag="" Command="{Binding NavCommand}" CommandParameter="DetailPage" Content="Details" GroupName="Nav" Style="{StaticResource SplitViewButtonStyle}" />
-                        <RadioButton Tag="" Command="{Binding NavCommand}" CommandParameter="PrivacyPage" Content="Privacy" GroupName="Nav" Style="{StaticResource SplitViewButtonStyle}" />
-                        <RadioButton Tag="" Command="{Binding NavCommand}" CommandParameter="AboutPage" Content="About" GroupName="Nav" Style="{StaticResource SplitViewButtonStyle}" />
+
+                        <!-- home -->
+                        <RadioButton Command="{Binding NavCommand}" Content="Home" GroupName="Nav">
+                            <RadioButton.CommandParameter>
+                                <views:NavType Type="views:MainPage" />
+                            </RadioButton.CommandParameter>
+                            <RadioButton.Tag>
+                                <TextBlock Text="" />
+                            </RadioButton.Tag>
+                        </RadioButton>
+
+                        <!-- privacy -->
+                        <RadioButton Command="{Binding NavCommand}" Content="Privacy" GroupName="Nav">
+                            <RadioButton.CommandParameter>
+                                <views:NavType Type="views:PrivacyPage" />
+                            </RadioButton.CommandParameter>
+                            <RadioButton.Tag>
+                                <TextBlock Text="" />
+                            </RadioButton.Tag>
+                        </RadioButton>
+
+                        <!-- about -->
+                        <RadioButton Command="{Binding NavCommand}" Content="About" GroupName="Nav">
+                            <RadioButton.CommandParameter>
+                                <views:NavType Type="views:AboutPage" />
+                            </RadioButton.CommandParameter>
+                            <RadioButton.Tag>
+                                <TextBlock Text="" />
+                            </RadioButton.Tag>
+                        </RadioButton>
+
                     </StackPanel>
 
                     <StackPanel Grid.Row="2">
-                        <RadioButton Tag="" Checked="HamburgerRadioButton_Checked" Style="{StaticResource SplitViewButtonStyle}" />
+
+                        <!-- settings -->
+                        <RadioButton Command="{Binding NavCommand}" Content="Settings" GroupName="Nav">
+                            <RadioButton.CommandParameter>
+                                <views:NavType Type="views:SettingsPage" />
+                            </RadioButton.CommandParameter>
+                            <RadioButton.Tag>
+                                <TextBlock Text="" FontSize="{StaticResource LargeNavFontSize}" />
+                            </RadioButton.Tag>
+                        </RadioButton>
+                        
                     </StackPanel>
 
                 </Grid>

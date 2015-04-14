@@ -96,7 +96,7 @@ namespace Template10.Services.NavigationService
 
         public void RestoreSavedNavigation() { /* TODO */ }
 
-        public void GoBack() { _frame.GoBack(); }
+        public void GoBack() { if (_frame.CanGoBack) _frame.GoBack(); }
 
         public bool CanGoBack { get { return _frame.CanGoBack; } }
 

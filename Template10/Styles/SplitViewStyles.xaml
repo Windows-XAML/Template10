@@ -6,7 +6,7 @@
     <SolidColorBrush x:Key="NavButtonCheckedBackgroundBrush" Color="White" Opacity="0.2" />
     <SolidColorBrush x:Key="NavButtonHoverBackgroundBrush" Color="White" Opacity="0.1" />
 
-    <Style x:Key="SplitViewButtonStyle" TargetType="RadioButton">
+    <Style TargetType="RadioButton" x:Key="SplitViewRadioButtonStyle">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Padding" Value="1,4,0,0" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
@@ -80,33 +80,38 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Grid>
+
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="48" />
                             </Grid.RowDefinitions>
+
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="48" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="20" />
                             </Grid.ColumnDefinitions>
+
                             <Grid.Resources>
                                 <Style TargetType="Rectangle" x:Name="FocusVisual">
                                     <Setter Property="Opacity" Value="0" />
                                     <Setter Property="StrokeDashArray" Value="1,1" />
                                     <Setter Property="StrokeEndLineCap" Value="Square" />
                                 </Style>
-                                <Style TargetType="TextBlock" x:Name="GlyphText">
-                                    <Setter Property="HorizontalAlignment" Value="Center" />
-                                    <Setter Property="VerticalAlignment" Value="Center" />
-                                    <Setter Property="FontFamily" Value="Segoe MDL2 Assets" />
-                                    <Setter Property="FontSize" Value="16" />
-                                </Style>
                             </Grid.Resources>
+
+                            <!-- background -->
                             <Rectangle x:Name="PressedBackground" Grid.ColumnSpan="4" Visibility="Collapsed" Fill="{StaticResource NavButtonPressedBackgroundBrush}"/>
                             <Rectangle x:Name="CheckedBackground" Grid.ColumnSpan="4" Visibility="Collapsed" Fill="{StaticResource NavButtonCheckedBackgroundBrush}"/>
                             <Rectangle x:Name="HoverBackground" Grid.ColumnSpan="4" Visibility="Collapsed" Fill="{StaticResource NavButtonHoverBackgroundBrush}"/>
+
+                            <!-- focus -->
                             <Rectangle x:Name="FocusVisualWhite" Stroke="{ThemeResource FocusVisualWhiteStrokeThemeBrush}" StrokeDashOffset="1.5" Style="{StaticResource FocusVisual}" />
                             <Rectangle x:Name="FocusVisualBlack" Stroke="{ThemeResource FocusVisualBlackStrokeThemeBrush}" StrokeDashOffset="0.5" Style="{StaticResource FocusVisual}" />
-                            <FontIcon x:Name="NixonGlyph" FontSize="16" FontFamily="Segoe MDL2 Assets" Glyph="{TemplateBinding Tag}" />
+
+                            <!-- glyph -->
+                            <ContentPresenter x:Name="NixonGlyph" Content="{TemplateBinding Tag}" />
+
+                            <!-- text -->
                             <ContentPresenter x:Name="ContentPresenter"
                         			Grid.Column="1"
                         			Margin="{TemplateBinding Padding}"

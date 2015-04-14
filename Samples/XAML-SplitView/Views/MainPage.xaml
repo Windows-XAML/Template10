@@ -21,6 +21,7 @@
 
         <Grid Grid.Row="1" Margin="0,80,0,0">
             <!-- content -->
+            <Button VerticalAlignment="Center" HorizontalAlignment="Center" Click="GotoAbout">About</Button>
         </Grid>
 
     </Grid>
