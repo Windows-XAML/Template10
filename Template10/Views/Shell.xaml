@@ -6,7 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    
+
+
     <Page.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -15,23 +16,39 @@
         </ResourceDictionary>
     </Page.Resources>
 
-    <SplitView Background="Black" OpenPaneLength="240" x:Name="ShellSplitView"
-               CompactPaneLength="48" DisplayMode="CompactOverlay"
+    <Grid>
+
+        <SplitView Background="Black" OpenPaneLength="240" x:Name="ShellSplitView"
+               CompactPaneLength="48" DisplayMode="CompactOverlay" 
                IsPaneOpen="False" PaneBackground="DimGray">
-        <SplitView.Pane>
-            <StackPanel x:Name="RadioButtonContainer">
-                
-                <RadioButton Tag="" Checked="BackRadioButton_Checked" Style="{StaticResource NavButtonStyle}" Background="SteelBlue" />
-                
-                <RadioButton Tag="" Checked="HamburgerRadioButton_Checked" Style="{StaticResource NavButtonStyle}" />
-                
-                <RadioButton Tag="" Command="{Binding NavCommand}" CommandParameter="MainPage" Content="Home" GroupName="Nav" Style="{StaticResource NavButtonStyle}" />
-                <RadioButton Tag="" Command="{Binding NavCommand}" CommandParameter="DetailPage" Content="Details" GroupName="Nav" Style="{StaticResource NavButtonStyle}" />
-                <RadioButton Tag="" Command="{Binding NavCommand}" CommandParameter="PrivacyPage" Content="Privacy" GroupName="Nav" Style="{StaticResource NavButtonStyle}" />
-                <RadioButton Tag="" Command="{Binding NavCommand}" CommandParameter="AboutPage" Content="About" GroupName="Nav" Style="{StaticResource NavButtonStyle}" />
-                
-            </StackPanel>
-        </SplitView.Pane>
-    </SplitView>
+            <SplitView.Pane>
+                <Grid>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0">
+                        <RadioButton Tag="" Checked="BackRadioButton_Checked" Style="{StaticResource SplitViewButtonStyle}" Background="{StaticResource SystemControlBackgroundAccentBrush}" />
+                        <RadioButton Tag="" Checked="HamburgerRadioButton_Checked" Style="{StaticResource SplitViewButtonStyle}" />
+                    </StackPanel>
+
+                    <StackPanel x:Name="RadioButtonContainer" Grid.Row="1">
+                        <RadioButton Tag="" Command="{Binding NavCommand}" CommandParameter="MainPage" Content="Home" GroupName="Nav" Style="{StaticResource SplitViewButtonStyle}" />
+                        <RadioButton Tag="" Command="{Binding NavCommand}" CommandParameter="DetailPage" Content="Details" GroupName="Nav" Style="{StaticResource SplitViewButtonStyle}" />
+                        <RadioButton Tag="" Command="{Binding NavCommand}" CommandParameter="PrivacyPage" Content="Privacy" GroupName="Nav" Style="{StaticResource SplitViewButtonStyle}" />
+                        <RadioButton Tag="" Command="{Binding NavCommand}" CommandParameter="AboutPage" Content="About" GroupName="Nav" Style="{StaticResource SplitViewButtonStyle}" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="2">
+                        <RadioButton Tag="" Checked="HamburgerRadioButton_Checked" Style="{StaticResource SplitViewButtonStyle}" />
+                    </StackPanel>
+
+                </Grid>
+            </SplitView.Pane>
+        </SplitView>
+    </Grid>
 
 </Page>

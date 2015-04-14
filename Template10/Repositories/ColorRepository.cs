@@ -14,6 +14,7 @@ namespace Template10.Repositories
     {
         public async Task<IEnumerable<Models.ColorInfo>> GetColorsAsync()
         {
+            await Task.Delay(0);
             var colors = typeof(Colors)
                 .GetRuntimeProperties()
                 .Select(x => new Models.ColorInfo

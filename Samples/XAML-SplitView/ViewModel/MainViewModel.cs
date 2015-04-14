@@ -1,6 +1,6 @@
 using GalaSoft.MvvmLight;
 
-namespace XAML_SplitView.ViewModel
+namespace Template10.ViewModel
 {
     /// <summary>
     /// This class contains properties that the main View can data bind to.

@@ -6,7 +6,7 @@
     <SolidColorBrush x:Key="NavButtonCheckedBackgroundBrush" Color="White" Opacity="0.2" />
     <SolidColorBrush x:Key="NavButtonHoverBackgroundBrush" Color="White" Opacity="0.1" />
 
-    <Style x:Key="NavButtonStyle" TargetType="RadioButton">
+    <Style x:Key="SplitViewButtonStyle" TargetType="RadioButton">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Padding" Value="1,4,0,0" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
@@ -21,37 +21,59 @@
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal" />
                                 <VisualState x:Name="PointerOver">
-                                    <VisualState.Setters>
-                                        <Setter Target="OverlayBackground.Fill" Value="{StaticResource NavButtonHoverBackgroundBrush}" />
-                                    </VisualState.Setters>
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="HoverBackground">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Visible</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
-                                    <VisualState.Setters>
-                                        <Setter Target="OverlayBackground.Fill" Value="{StaticResource NavButtonPressedBackgroundBrush}" />
-                                    </VisualState.Setters>
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="PressedBackground">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Visible</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
-                                    <VisualState.Setters>
-                                        <Setter Target="JerryNixon.Foreground" Value="{ThemeResource RadioButtonContentDisabledForegroundThemeBrush}" />
-                                        <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource RadioButtonContentDisabledForegroundThemeBrush}" />
-                                    </VisualState.Setters>
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NixonGlyph" Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource RadioButtonContentDisabledForegroundThemeBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource RadioButtonContentDisabledForegroundThemeBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="CheckStates">
                                 <VisualState x:Name="Checked">
-                                    <VisualState.Setters>
-                                        <Setter Target="OverlayBackground.Fill" Value="{StaticResource NavButtonCheckedBackgroundBrush}" />
-                                    </VisualState.Setters>
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="CheckedBackground">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <Visibility>Visible</Visibility>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Unchecked" />
                                 <VisualState x:Name="Indeterminate" />
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="FocusStates">
                                 <VisualState x:Name="Focused">
-                                    <VisualState.Setters>
-                                        <Setter Target="FocusVisualWhite.Opacity" Value="1" />
-                                        <Setter Target="FocusVisualBlack.Opacity" Value="1" />
-                                    </VisualState.Setters>
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0" Storyboard.TargetName="FocusVisualWhite" Storyboard.TargetProperty="Opacity" To="1" />
+                                        <DoubleAnimation Duration="0" Storyboard.TargetName="FocusVisualBlack" Storyboard.TargetProperty="Opacity" To="1" />
+                                    </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Unfocused" />
                                 <VisualState x:Name="PointerFocused" />
@@ -79,10 +101,12 @@
                                     <Setter Property="FontSize" Value="16" />
                                 </Style>
                             </Grid.Resources>
-                            <Rectangle x:Name="OverlayBackground" Grid.ColumnSpan="4" Visibility="Collapsed" Fill="{StaticResource NavButtonPressedBackgroundBrush}"/>
+                            <Rectangle x:Name="PressedBackground" Grid.ColumnSpan="4" Visibility="Collapsed" Fill="{StaticResource NavButtonPressedBackgroundBrush}"/>
+                            <Rectangle x:Name="CheckedBackground" Grid.ColumnSpan="4" Visibility="Collapsed" Fill="{StaticResource NavButtonCheckedBackgroundBrush}"/>
+                            <Rectangle x:Name="HoverBackground" Grid.ColumnSpan="4" Visibility="Collapsed" Fill="{StaticResource NavButtonHoverBackgroundBrush}"/>
                             <Rectangle x:Name="FocusVisualWhite" Stroke="{ThemeResource FocusVisualWhiteStrokeThemeBrush}" StrokeDashOffset="1.5" Style="{StaticResource FocusVisual}" />
                             <Rectangle x:Name="FocusVisualBlack" Stroke="{ThemeResource FocusVisualBlackStrokeThemeBrush}" StrokeDashOffset="0.5" Style="{StaticResource FocusVisual}" />
-                            <TextBlock x:Name="JerryNixon" Text="{TemplateBinding Tag}" Style="{StaticResource GlyphText}" />
+                            <FontIcon x:Name="NixonGlyph" FontSize="16" FontFamily="Segoe MDL2 Assets" Glyph="{TemplateBinding Tag}" />
                             <ContentPresenter x:Name="ContentPresenter"
                         			Grid.Column="1"
                         			Margin="{TemplateBinding Padding}"

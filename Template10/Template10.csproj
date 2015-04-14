@@ -115,7 +115,6 @@
     <Compile Include="Common\BootStrapper.cs" />
     <Compile Include="Converters\DateTimeFormatConverter.cs" />
     <Compile Include="Models\ColorInfo.cs" />
-    <Compile Include="Mvvm\BindableBase.cs" />
     <Compile Include="Mvvm\Command.cs" />
     <Compile Include="Mvvm\Container\Lifetimes.cs" />
     <Compile Include="Mvvm\Container\Container.cs" />

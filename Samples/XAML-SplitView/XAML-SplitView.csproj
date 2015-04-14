@@ -7,8 +7,8 @@
     <ProjectGuid>{8FA9E207-C5C1-4A14-B45F-2A724A32A45D}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>XAML_SplitView</RootNamespace>
-    <AssemblyName>XAML-SplitView</AssemblyName>
+    <RootNamespace>Template10</RootNamespace>
+    <AssemblyName>Template10</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10030.0</TargetPlatformVersion>
@@ -130,6 +130,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SplitViewButton.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
