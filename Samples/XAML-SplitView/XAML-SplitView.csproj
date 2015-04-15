@@ -109,30 +109,15 @@
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\..\Template10\Common\BootStrapper.cs">
-      <Link>Common\BootStrapper.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Template10\Mvvm\Command.cs">
-      <Link>Mvvm\Command.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Template10\Services\NavigationService\NavigationEventArgs.cs">
-      <Link>Services\NavigationService\NavigationEventArgs.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Template10\Services\NavigationService\NavigationFacade.cs">
-      <Link>Services\NavigationService\NavigationFacade.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Template10\Services\NavigationService\NavigationService.cs">
-      <Link>Services\NavigationService\NavigationService.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Template10\Views\Shell.xaml.cs">
-      <Link>Views\Shell.xaml.cs</Link>
-    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\BootStrapper.cs" />
+    <Compile Include="Mvvm\Command.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="Services\NavigationService\NavigationEventArgs.cs" />
+    <Compile Include="Services\NavigationService\NavigationFacade.cs" />
+    <Compile Include="Services\NavigationService\NavigationService.cs" />
     <Compile Include="Views\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
@@ -144,6 +129,9 @@
     </Compile>
     <Compile Include="Views\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shell.xaml.cs">
+      <DependentUpon>Shell.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -193,21 +181,15 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Page Include="..\..\Template10\Styles\SplitViewStyles.xaml">
-      <Link>Styles\SplitViewStyles.xaml</Link>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="..\..\Template10\Views\Shell.xaml">
-      <Link>Views\Shell.xaml</Link>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Properties\DesignTimeResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <ContainsDesignTimeResources>true</ContainsDesignTimeResources>
+    </Page>
+    <Page Include="Styles\SplitViewStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\AboutPage.xaml">
       <SubType>Designer</SubType>
@@ -224,6 +206,10 @@
     <Page Include="Views\SettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Shell.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

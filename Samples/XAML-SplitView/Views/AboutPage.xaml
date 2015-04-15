@@ -1,0 +1,32 @@
+﻿<Page
+    x:Class="Template10.Views.AboutPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Template10.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Hub Header="About" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <HubSection Width="550" ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <DataTemplate>
+                <TextBlock TextWrapping="WrapWholeWords" FontSize="16">
+                    <Run>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vestibulum lectus arcu, vitae tristique nulla suscipit sit amet. Suspendisse eu sem eros. Nulla ullamcorper dui volutpat nisi interdum, quis pellentesque nibh vestibulum. Aenean eu erat venenatis, dapibus velit maximus, tristique lorem. Integer mauris metus, tempor quis ullamcorper lacinia, eleifend ut mi. Etiam venenatis, magna ut hendrerit ultricies, nisi dui porttitor tellus, pellentesque pulvinar felis dolor consectetur ante. Nullam elementum dictum rhoncus. Maecenas quis leo at nunc aliquam feugiat nec at lectus. Aenean in augue eu orci suscipit porta. Fusce egestas, justo in placerat molestie, sem ligula pellentesque nisi, ut interdum ex mauris ac nunc. Sed neque felis, rutrum eget venenatis et, porta quis urna. In sollicitudin viverra dictum.</Run>
+                    <LineBreak />
+                    <LineBreak />
+                    <Run>Nulla vitae mollis orci, eget facilisis velit. Donec congue neque et libero ullamcorper dapibus. Maecenas consequat ultricies enim ac posuere. Sed faucibus libero ac lobortis dapibus. Fusce massa lorem, tempor a arcu vel, posuere venenatis felis. Nulla id mattis nisl. Donec commodo, elit at bibendum ultrices, mi mi hendrerit dui, nec facilisis velit enim sit amet lorem. Nunc vitae nisi eu ante efficitur porta. Donec tempor mi non lacus rhoncus, quis rhoncus sapien hendrerit. Pellentesque eros felis, suscipit pellentesque venenatis vel, faucibus vel diam. Aliquam et enim lobortis, porta risus in, tincidunt mi. Sed id erat blandit, feugiat leo sit amet, interdum ipsum. Morbi consectetur eget tortor cursus aliquet. Donec augue nisl, ornare eget tincidunt vel, consectetur eget neque.</Run>
+                    <LineBreak />
+                    <LineBreak />
+                    <Run>Ut lobortis consequat nisi, sollicitudin rhoncus ante scelerisque ac. In condimentum tortor sed nunc convallis, id ornare est bibendum. Curabitur id libero lorem. Nunc non aliquam ipsum, eu semper tortor. Pellentesque sagittis ante a turpis mollis, quis accumsan odio aliquet. Donec condimentum diam sapien, ut malesuada libero facilisis sit amet. Nullam felis dui, hendrerit ac odio nec, pulvinar molestie sem. Integer eget consectetur justo. Proin eu pellentesque dolor. Duis lacinia velit consectetur lectus pharetra porta. Fusce cursus dui ut porttitor rhoncus. </Run>
+                    <LineBreak />
+                    <LineBreak />
+                    <Run>Sed nec varius elit. Ut ut lectus nec sapien pellentesque interdum. Pellentesque cursus magna in eros tristique, in viverra dolor fermentum. Mauris volutpat urna nec nibh sollicitudin, non pellentesque est rhoncus. Pellentesque elementum, purus feugiat mollis finibus, tortor orci sagittis dui, a pulvinar eros lectus quis ipsum. Fusce rhoncus molestie diam, sit amet luctus lacus tincidunt eu. Cras eros elit, bibendum nec nisi et, egestas pharetra mauris. Nam consequat, dui vitae ultrices pulvinar, est enim tristique ipsum, maximus iaculis odio ligula vel purus. Maecenas quis congue lectus. Sed consectetur dignissim ipsum non gravida. Ut ut tristique sapien. Fusce at vehicula mauris. Fusce blandit, libero et maximus congue, nisl dolor ultrices lectus, sed semper turpis massa id augue. </Run>
+                    <LineBreak />
+                    <LineBreak />
+                    <Run>Suspendisse fermentum magna est, sit amet euismod ex gravida at. Praesent imperdiet laoreet massa, quis fermentum sem venenatis eget. Nullam ac justo id ex accumsan volutpat ut eu sem. Mauris mattis libero vitae magna tristique consectetur. Pellentesque consequat est ac erat facilisis fermentum. Aenean magna nisi, dapibus eu scelerisque vitae, commodo et metus. Fusce nisl nibh, pharetra a facilisis imperdiet, commodo eget sem. Morbi iaculis lacus a enim ullamcorper, ut condimentum justo ultricies. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Fusce lobortis sodales augue, a ullamcorper eros. Quisque dapibus elit quis erat eleifend, et hendrerit justo eleifend. Mauris dapibus, quam a ornare facilisis, felis tellus ultrices nunc, ut venenatis est risus a nisi. Donec sed vestibulum velit, id viverra erat. Praesent dolor metus, lobortis et velit eu, sagittis tempor ex. Nullam tempus mattis lacus ut sollicitudin. Pellentesque sapien augue, ultrices feugiat erat vel, fermentum vulputate purus.</Run>
+                </TextBlock>
+            </DataTemplate>
+        </HubSection>
+    </Hub>
+
+</Page>
