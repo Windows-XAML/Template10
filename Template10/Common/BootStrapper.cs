@@ -60,11 +60,11 @@ namespace Template10.Common
 
         private async void InternalLaunchAsync(ILaunchActivatedEventArgs e)
         {
+            UIElement splashScreen = default(UIElement);
             if (this.SplashFactory != null)
             {
-                Window.Current.Content = this.SplashFactory(e.SplashScreen);
-                Window.Current.Activate();
-                Window.Current.Content = null;
+                splashScreen = this.SplashFactory(e.SplashScreen);
+                Window.Current.Content = splashScreen;
             }
 
             this.RootFrame = this.RootFrame ?? new Frame();
@@ -74,19 +74,24 @@ namespace Template10.Common
             // the user may override to set custom content
             await OnInitializeAsync();
 
-            // if the user didn't set custom content, use frame
-            if (Window.Current.Content == null)
-            { Window.Current.Content = this.RootFrame; }
-
             if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
             {
                 try { /* TODO: restore state */ }
-                catch { /* TODO: handle fail */ }
+                finally { await this.OnLaunchedAsync(e); }
             }
             else
             {
-                // this is to handle any other type of launch
                 await this.OnLaunchedAsync(e);
+            }
+
+            // if the user didn't already set custom content use rootframe
+            if (Window.Current.Content == splashScreen)
+            {
+                Window.Current.Content = this.RootFrame;
+            }
+            if (Window.Current.Content == null)
+            {
+                Window.Current.Content = this.RootFrame;
             }
             Window.Current.Activate();
         }
