@@ -10,9 +10,9 @@ namespace Template10.ViewModels
 {
     class MainPageViewModel : Mvvm.ViewModelBase
     {
-        ColorRepository _colorRepository = new Repositories.ColorRepository();
-        FavoritesRepository _favoritesRepository = new Repositories.FavoritesRepository();
-        NavigationService _navigationService = (App.Current as App).NavigationService;
+        ColorRepository _colorRepository;
+        FavoritesRepository _favoritesRepository;
+        NavigationService _navigationService;
 
         public MainPageViewModel()
         {
@@ -20,11 +20,31 @@ namespace Template10.ViewModels
             {
                 LoadDesigntimeData();
             }
+            else
+            {
+                _colorRepository = new Repositories.ColorRepository();
+                _favoritesRepository = new Repositories.FavoritesRepository();
+                _navigationService = (App.Current as App).NavigationService;
+            }
         }
 
         private void LoadDesigntimeData()
         {
-            // TODO
+            var color = new Models.ColorInfo()
+            {
+                Name = "Sample",
+                Color = Windows.UI.Colors.Green,
+            };
+            for (int i = 0; i < 10; i++)
+            {
+                foreach (var item in new[] { this.Favorites, this.Yellows, this.Reds, this.Greens, this.Blues })
+                    item.Add(color);
+            }
+            foreach (var item in new[] { this.Yellows, this.Reds, this.Greens, this.Blues })
+            {
+                item.First().ColSpan = 3;
+                item.First().RowSpan = 2;
+            }
         }
 
         public override void OnNavigatedTo(string parameter, NavigationMode mode, Dictionary<string, object> state)
@@ -40,13 +60,38 @@ namespace Template10.ViewModels
         }
 
         public ObservableCollection<Models.ColorInfo> Favorites { get; } = new ObservableCollection<Models.ColorInfo>();
+
         public ObservableCollection<Models.ColorInfo> Yellows { get; } = new ObservableCollection<Models.ColorInfo>();
+
         public ObservableCollection<Models.ColorInfo> Reds { get; } = new ObservableCollection<Models.ColorInfo>();
+
         public ObservableCollection<Models.ColorInfo> Greens { get; } = new ObservableCollection<Models.ColorInfo>();
+
         public ObservableCollection<Models.ColorInfo> Blues { get; } = new ObservableCollection<Models.ColorInfo>();
 
         private Models.ColorInfo _selected;
-        public Models.ColorInfo Selected { get { return _selected; } set { Set(ref _selected, value); } }
+        public Models.ColorInfo Selected
+        {
+            get { return _selected; }
+            set
+            {
+                Set(ref _selected, value);
+                if (value != null)
+                    this.SelectedFavorite = null;
+            }
+        }
+
+        private Models.ColorInfo _selectedFavorite;
+        public Models.ColorInfo SelectedFavorite
+        {
+            get { return _selectedFavorite; }
+            set
+            {
+                Set(ref _selectedFavorite, value);
+                if (value != null)
+                    this.Selected = null;
+            }
+        }
 
         private bool _busy;
         public bool Busy { get { return _busy; } set { Set(ref _busy, value); } }
@@ -58,9 +103,19 @@ namespace Template10.ViewModels
             {
                 return _openCommand ?? (_openCommand = new Mvvm.Command(() =>
                 {
-                    _navigationService.Navigate(typeof(Views.DetailPage), Selected.Name);
+                    if (this.Selected != null)
+                        _navigationService.Navigate(typeof(Views.DetailPage), Selected.Name);
+                    if (this.SelectedFavorite != null)
+                        _navigationService.Navigate(typeof(Views.DetailPage), SelectedFavorite.Name);
                 },
-                () => { return this.Selected != null; }));
+                () =>
+                {
+                    if (this.Selected != null)
+                        return true;
+                    else if (this.SelectedFavorite != null)
+                        return true;
+                    return false;
+                }));
             }
         }
 
@@ -72,10 +127,16 @@ namespace Template10.ViewModels
                 return _favoriteCommand ?? (_favoriteCommand = new Mvvm.Command(async () =>
                 {
                     await _favoritesRepository.Add(this.Selected);
-                    if (!this.Favorites.Any(x => x.Color.ToString().Equals(this.Selected.Color.ToString())))
-                        this.Favorites.Add(this.Selected);
+                    if (!this.Favorites.Any(x => x.ToString().Equals(this.Selected.ToString())))
+                        this.Favorites.Add(this.Selected.Clone());
                 },
-                () => { return this.Selected != null; }));
+                () =>
+                {
+                    if (this.Selected == null)
+                        return false;
+                    else
+                        return !this.Favorites.Any(x => x.ToString().Equals(this.Selected.ToString()));
+                }));
             }
         }
 
@@ -86,11 +147,10 @@ namespace Template10.ViewModels
             {
                 return _unFavoriteCommand ?? (_unFavoriteCommand = new Mvvm.Command(async () =>
                 {
-                    await _favoritesRepository.Remove(this.Selected);
-                    if (this.Favorites.Any(x => x.Color.ToString().Equals(this.Selected.Color.ToString())))
-                        this.Favorites.Remove(this.Selected);
+                    await _favoritesRepository.Remove(this.SelectedFavorite);
+                    this.Favorites.Remove(this.SelectedFavorite);
                 },
-                () => { return this.Selected != null; }));
+                () => { return this.SelectedFavorite != null; }));
             }
         }
 
@@ -131,7 +191,7 @@ namespace Template10.ViewModels
 
                         var favorites = await _favoritesRepository.GetColorsAsync();
                         foreach (var color in favorites)
-                            this.Favorites.Add(color);
+                            this.Favorites.Add(color.Clone());
                     }
                     finally { this.Busy = false; }
                 },

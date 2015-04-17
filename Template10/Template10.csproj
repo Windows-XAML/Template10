@@ -114,6 +114,7 @@
     </Compile>
     <Compile Include="Common\BootStrapper.cs" />
     <Compile Include="Controls\MyGridView.cs" />
+    <Compile Include="Converters\CollapsedWhenZero.cs" />
     <Compile Include="Converters\DateTimeFormatConverter.cs" />
     <Compile Include="Models\ColorInfo.cs" />
     <Compile Include="Mvvm\Command.cs" />

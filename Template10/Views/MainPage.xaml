@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:Template10.ViewModels"
     xmlns:controls="using:Template10.Controls"
+    xmlns:converters="using:Template10.Converters"
     mc:Ignorable="d" RequestedTheme="Dark">
 
     <Page.DataContext>
@@ -15,20 +16,23 @@
 
     <Page.BottomAppBar>
         <CommandBar>
-            <AppBarButton Label="Refresh" Icon="Refresh" Command="{Binding RefreshCommand}" />
-            <AppBarSeparator />
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Label="Refresh" Icon="Refresh" Command="{Binding RefreshCommand}" />
+            </CommandBar.SecondaryCommands>
             <AppBarButton Label="Favorite" Icon="Favorite" Command="{Binding FavoriteCommand}" />
             <AppBarButton Label="Favorite" Icon="UnFavorite" Command="{Binding UnFavoriteCommand}" />
             <AppBarSeparator />
             <AppBarButton Label="Open" Icon="OpenFile" Command="{Binding OpenCommand}" />
         </CommandBar>
     </Page.BottomAppBar>
-    
+
     <Page.Resources>
+        <converters:CollapsedWhenZero x:Name="CollapsedWhenZero" />
         <Style TargetType="controls:MyGridView">
             <Setter Property="ItemWidth" Value="175" />
             <Setter Property="ItemHeight" Value="175" />
             <Setter Property="SelectionMode" Value="Single" />
+            <Setter Property="IsItemClickEnabled" Value="False" />
             <Setter Property="ItemTemplate">
                 <Setter.Value>
                     <DataTemplate>
@@ -54,10 +58,10 @@
 
     <Hub Header="Colors" Background="DimGray" Orientation="Vertical">
 
-        <HubSection Header="Favorites">
+        <HubSection Header="Favorites" Visibility="{Binding Favorites.Count, Converter={StaticResource CollapsedWhenZero}}">
             <DataTemplate>
                 <controls:MyGridView ItemsSource="{Binding Favorites}" 
-                          SelectedItem="{Binding Selected, Mode=TwoWay}" />
+                          SelectedItem="{Binding SelectedFavorite, Mode=TwoWay}" />
             </DataTemplate>
         </HubSection>
 
