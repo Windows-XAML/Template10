@@ -113,6 +113,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\BootStrapper.cs" />
+    <Compile Include="Controls\MyGridView.cs" />
     <Compile Include="Converters\DateTimeFormatConverter.cs" />
     <Compile Include="Models\ColorInfo.cs" />
     <Compile Include="Mvvm\Command.cs" />
@@ -125,6 +126,7 @@
     <Compile Include="Mvvm\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ColorRepository.cs" />
+    <Compile Include="Repositories\FavoritesRepository.cs" />
     <Compile Include="Services\BlobService\BlobHelper.cs" />
     <Compile Include="Services\BlobService\BlobService.cs" />
     <Compile Include="Services\ColorService\ColorHelper.cs" />
@@ -261,7 +263,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Behaviors\" />
-    <Folder Include="Controls\" />
     <Folder Include="Design\" />
     <Folder Include="Messages\" />
   </ItemGroup>

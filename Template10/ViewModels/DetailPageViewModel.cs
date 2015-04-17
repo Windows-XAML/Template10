@@ -19,11 +19,6 @@ namespace Template10.ViewModels
                 LoadDesignData();
         }
 
-        public override void OnNavigatedTo(string parameter, NavigationMode mode, Dictionary<string, object> state)
-        {
-            LoadRuntimeData(parameter);
-        }
-
         private void LoadDesignData()
         {
             this.ColorInfo = new Models.ColorInfo
@@ -31,6 +26,11 @@ namespace Template10.ViewModels
                 Name = "Orange",
                 Color = Colors.Orange,
             };
+        }
+
+        public override void OnNavigatedTo(string parameter, NavigationMode mode, Dictionary<string, object> state)
+        {
+            LoadRuntimeData(parameter);
         }
 
         private async void LoadRuntimeData(string parameter)

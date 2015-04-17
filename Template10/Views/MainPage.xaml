@@ -6,24 +6,88 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:Template10.ViewModels"
+    xmlns:controls="using:Template10.Controls"
     mc:Ignorable="d" RequestedTheme="Dark">
 
     <Page.DataContext>
         <vm:MainPageViewModel />
     </Page.DataContext>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton Label="Refresh" Icon="Refresh" Command="{Binding RefreshCommand}" />
+            <AppBarSeparator />
+            <AppBarButton Label="Favorite" Icon="Favorite" Command="{Binding FavoriteCommand}" />
+            <AppBarButton Label="Favorite" Icon="UnFavorite" Command="{Binding UnFavoriteCommand}" />
+            <AppBarSeparator />
+            <AppBarButton Label="Open" Icon="OpenFile" Command="{Binding OpenCommand}" />
+        </CommandBar>
+    </Page.BottomAppBar>
+    
+    <Page.Resources>
+        <Style TargetType="controls:MyGridView">
+            <Setter Property="ItemWidth" Value="175" />
+            <Setter Property="ItemHeight" Value="175" />
+            <Setter Property="SelectionMode" Value="Single" />
+            <Setter Property="ItemTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <Grid Background="{Binding Brush}">
+                            <StackPanel Margin="20,10" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <Ellipse Height="40" Width="40" Fill="{Binding Brush}" Stroke="White" StrokeThickness="5" Margin="0,0,5,10" />
+                                    <Ellipse Height="40" Width="40" Fill="{Binding Brush}" Stroke="Black" StrokeThickness="5" Margin="0,5,0,10" />
+                                </StackPanel>
+                                <Grid>
+                                    <TextBlock Text="{Binding Name}" FontFamily="Segoe UI Light" 
+                                        TextWrapping="Wrap" TextAlignment="Center" MaxLines="1"
+                                        Foreground="{Binding ContrastForegroundBrush}" Margin="5"
+                                        FontSize="15" HorizontalAlignment="Stretch" />
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
 
-        <GridView ItemTemplate="{StaticResource HubSmallColorTemplate}"
-                  ItemsSource="{Binding Colors}"
-                  SelectedItem="{Binding Selected, Mode=TwoWay}"
-                  CanDragItems="True" CanReorderItems="True" CanDrag="True"
-                  Margin="0,100,0,0" Padding="20,0,0,0" />
+    <Hub Header="Colors" Background="DimGray" Orientation="Vertical">
 
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="12,12,0,0">
-            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE76E;" FontSize="40" VerticalAlignment="Center" />
-            <TextBlock Style="{StaticResource HeaderTextBlockStyle}" Text="Hello Template 10" Margin="20,0" />
-        </StackPanel>
+        <HubSection Header="Favorites">
+            <DataTemplate>
+                <controls:MyGridView ItemsSource="{Binding Favorites}" 
+                          SelectedItem="{Binding Selected, Mode=TwoWay}" />
+            </DataTemplate>
+        </HubSection>
 
-    </Grid>
+        <HubSection Header="Yellows">
+            <DataTemplate>
+                <controls:MyGridView ItemsSource="{Binding Yellows}" 
+                          SelectedItem="{Binding Selected, Mode=TwoWay}" />
+            </DataTemplate>
+        </HubSection>
+
+        <HubSection Header="Greens">
+            <DataTemplate>
+                <controls:MyGridView ItemsSource="{Binding Greens}" 
+                          SelectedItem="{Binding Selected, Mode=TwoWay}" />
+            </DataTemplate>
+        </HubSection>
+
+        <HubSection Header="Blues">
+            <DataTemplate>
+                <controls:MyGridView ItemsSource="{Binding Blues}" 
+                          SelectedItem="{Binding Selected, Mode=TwoWay}" />
+            </DataTemplate>
+        </HubSection>
+
+        <HubSection Header="Reds">
+            <DataTemplate>
+                <controls:MyGridView ItemsSource="{Binding Reds}" 
+                          SelectedItem="{Binding Selected, Mode=TwoWay}" />
+            </DataTemplate>
+        </HubSection>
+
+    </Hub>
 </Page>
