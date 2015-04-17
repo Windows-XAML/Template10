@@ -15,6 +15,14 @@ namespace Template10.Common
     // - NavigationService is an automatic property of this class
     public abstract class BootStrapper : Application
     {
+        /// <summary>
+        /// Event to allow views and viewmodels to intercept the Hardware/Shell Back request and 
+        /// implement their own logic, such as closing a dialog. In your event handler, set the
+        /// Handled property of the BackRequestedEventArgs to true if you do not want a Page
+        /// Back navigation to occur.
+        /// </summary>
+        public event EventHandler<Windows.UI.Core.BackRequestedEventArgs> BackRequested;
+
         public BootStrapper()
         {
             this.Resuming += (s, e) =>
@@ -94,6 +102,34 @@ namespace Template10.Common
                 Window.Current.Content = this.RootFrame;
             }
             Window.Current.Activate();
+
+            // Hook up the default Back handler
+            Windows.UI.Core.SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
+        }
+
+        /// <summary>
+        /// Default Hardware/Shell Back handler overrides standard Back behavior that navigates to previous app
+        /// in the app stack to instead cause a backward page navigation.
+        /// Views or Viewodels can override this behavior by handling the BackRequested event and setting the
+        /// Handled property of the BackRequestedEventArgs to true.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnBackRequested(object sender, Windows.UI.Core.BackRequestedEventArgs e)
+        {
+            if (BackRequested != null)
+            {
+                BackRequested(this, e);
+            }
+
+            if (!e.Handled)
+            {
+                if (this.RootFrame.CanGoBack)
+                {
+                    RootFrame.GoBack();
+                    e.Handled = true;
+                }
+            }
         }
 
         #region overrides
