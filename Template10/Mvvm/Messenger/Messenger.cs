@@ -7,19 +7,19 @@ namespace Template10.Mvvm.Messenger
     // use messenger to communicate between viewmodels
     public class Messenger : GalaSoft.MvvmLight.Messaging.Messenger
     {
-        public void Subscribe<T>(object recipient, Action<T> action)where T : IMessage
+        public void Subscribe<Message>(object recipient, Action<Message> action)
         {
-            base.Register<T>(recipient, action);
+            base.Register<Message>(recipient, action);
         }
 
-        public void Unsubscribe<T>(object recipient)where T : IMessage
+        public void Unsubscribe<Message>(object recipient)
         {
-            base.Unregister<T>(recipient);
+            base.Unregister<Message>(recipient);
         }
 
-        public void Publish<T>(T message)where T : IMessage
+        public void Publish<Message>(Message message)
         {
-            base.Send<T>(message);
+            base.Send<Message>(message);
         }
     }
 }

@@ -109,22 +109,14 @@
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\..\Template10\Common\BootStrapper.cs">
-      <Link>Common\BootStrapper.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Template10\Services\NavigationService\NavigationEventArgs.cs">
-      <Link>Services\NavigationService\NavigationEventArgs.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Template10\Services\NavigationService\NavigationFacade.cs">
-      <Link>Services\NavigationService\NavigationFacade.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Template10\Services\NavigationService\NavigationService.cs">
-      <Link>Services\NavigationService\NavigationService.cs</Link>
-    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\BootStrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\NavigationService\NavigationEventArgs.cs" />
+    <Compile Include="Services\NavigationService\NavigationFacade.cs" />
+    <Compile Include="Services\NavigationService\NavigationService.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

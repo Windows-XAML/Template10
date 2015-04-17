@@ -118,11 +118,8 @@
     <Compile Include="Converters\DateTimeFormatConverter.cs" />
     <Compile Include="Models\ColorInfo.cs" />
     <Compile Include="Mvvm\Command.cs" />
-    <Compile Include="Mvvm\Container\Lifetimes.cs" />
-    <Compile Include="Mvvm\Container\Container.cs" />
-    <Compile Include="Mvvm\Container\IContainer.cs" />
-    <Compile Include="Mvvm\Messenger\IMessage.cs" />
-    <Compile Include="Mvvm\Messenger\Message.cs" />
+    <Compile Include="Mvvm\IoC\Container.cs" />
+    <Compile Include="Mvvm\IoC\IContainer.cs" />
     <Compile Include="Mvvm\Messenger\Messenger.cs" />
     <Compile Include="Mvvm\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -173,6 +170,7 @@
     <Compile Include="Triggers\NetworkAvailableStateTrigger.cs" />
     <Compile Include="Triggers\OrientationTrigger.cs" />
     <Compile Include="ViewModels\DetailPageViewModel.cs" />
+    <Compile Include="ViewModels\Locator.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="Views\DetailPage.xaml.cs">
       <DependentUpon>DetailPage.xaml</DependentUpon>
