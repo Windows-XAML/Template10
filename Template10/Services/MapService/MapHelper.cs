@@ -71,9 +71,9 @@ namespace Template10.Services.MapService
         /// <param name="user"></param>
         /// <param name="size"></param>
         /// <returns></returns>
-        public Uri GetMapUrl(IEnumerable<StaticMapPushpin> items, StaticMapPushpin user, StaticMapPushpin center, Nullable<Size> size, int? zoom = null, StaticMapImagerySets imagery = StaticMapImagerySets.Road)
+        public Uri GetMapUrl(IEnumerable<StaticMapPushpin> items, StaticMapPushpin user, StaticMapPushpin center, Size size, int? zoom = null, StaticMapImagerySets imagery = StaticMapImagerySets.Road)
         {
-            if (size == null)
+            if (size == default(Size))
                 throw new ArgumentNullException("size");
 
             var _Builder = new StringBuilder();
@@ -84,8 +84,11 @@ namespace Template10.Services.MapService
             var _Size = string.Format("&mapSize={0},{1}", size.Width, size.Height);
             _Builder.Append(_Size);
 
-            var _Zoom = string.Format("&zoomLevel={0}", zoom);
-            _Builder.Append(_Zoom);
+            if (zoom != null)
+            {
+                var _Zoom = string.Format("&zoomLevel={0}", zoom);
+                _Builder.Append(_Zoom);
+            }
 
             // optional is okay
             if (center != null)
@@ -167,34 +170,34 @@ namespace Template10.Services.MapService
         // helper method
         private static async Task<RootObject> CallService(Uri uri)
         {
-            string _JsonString = string.Empty;
+            string jsonString = string.Empty;
             try
             {
                 // fetch from rest service
-                var _HttpClient = new System.Net.Http.HttpClient();
-                var _HttpResponse = await _HttpClient.GetAsync(uri.ToString());
-                _JsonString = await _HttpResponse.Content.ReadAsStringAsync();
+                var httpClient = new System.Net.Http.HttpClient();
+                var httpResponse = await httpClient.GetAsync(uri.ToString());
+                jsonString = await httpResponse.Content.ReadAsStringAsync();
 
                 // check for error
-                if (!_JsonString.Contains("\"statusCode\":200"))
-                    throw new InvalidStatusCodeException { JSON = _JsonString };
-                if (_JsonString.Contains("InvalidCredentials")
-                    || _JsonString.Contains("CredentialsExpired")
-                    || _JsonString.Contains("NotAuthorized")
-                    || _JsonString.Contains("NoCredentials"))
-                    throw new InvalidCredentialsException { JSON = _JsonString };
+                if (!jsonString.Contains("\"statusCode\":200"))
+                    throw new InvalidStatusCodeException { JSON = jsonString };
+                if (jsonString.Contains("InvalidCredentials")
+                    || jsonString.Contains("CredentialsExpired")
+                    || jsonString.Contains("NotAuthorized")
+                    || jsonString.Contains("NoCredentials"))
+                    throw new InvalidCredentialsException { JSON = jsonString };
 
                 // deserialize json to objects
-                var _JsonBytes = Encoding.Unicode.GetBytes(_JsonString);
-                using (MemoryStream _MemoryStream = new MemoryStream(_JsonBytes))
+                var jsonBytes = Encoding.Unicode.GetBytes(jsonString);
+                using (MemoryStream _MemoryStream = new MemoryStream(jsonBytes))
                 {
-                    var _JsonSerializer = new DataContractJsonSerializer(typeof(RootObject));
-                    var _Result = (RootObject)_JsonSerializer.ReadObject(_MemoryStream);
-                    return _Result;
+                    var jsonSerializer = new DataContractJsonSerializer(typeof(RootObject));
+                    var result = (RootObject)jsonSerializer.ReadObject(_MemoryStream);
+                    return result;
                 }
             }
             catch (InvalidSomethingException) { throw; }
-            catch (Exception e) { throw new InvalidSomethingException(e) { JSON = _JsonString }; }
+            catch (Exception e) { throw new InvalidSomethingException(e) { JSON = jsonString }; }
         }
 
         public class InvalidSomethingException : Exception
