@@ -71,7 +71,7 @@ namespace Template10.Services.MapService
         /// <param name="user"></param>
         /// <param name="size"></param>
         /// <returns></returns>
-        public Uri GetMapUrl(IEnumerable<StaticMapPushpin> items, StaticMapPushpin user, StaticMapPushpin center, Size size, int? zoom = null, StaticMapImagerySets imagery = StaticMapImagerySets.Road)
+        public Uri GetMapUrl(IEnumerable<StaticMapPushpin> items, StaticMapPushpin user, StaticMapPushpin center, Nullable<Size> size, int? zoom = null, StaticMapImagerySets imagery = StaticMapImagerySets.Road)
         {
             if (size == null)
                 throw new ArgumentNullException("size");
