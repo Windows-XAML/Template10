@@ -6,13 +6,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:Template10.ViewModels"
+    xmlns:models="using:Template10.Models"
     xmlns:Converters="using:Template10.Converters"
     mc:Ignorable="d">
 
     <Page.DataContext>
         <vm:MainPageViewModel />
     </Page.DataContext>
-    
+
     <Page.Resources>
         <Converters:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter" />
         <Converters:StateToStringConverter x:Name="StateToStringConverter" />
@@ -21,17 +22,14 @@
     <Grid Background="Black">
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="80" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="12,12,0,0">
-            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE76E;" FontSize="40" VerticalAlignment="Center" Margin="0,0,20,0" />
-            <TextBlock FontSize="42" FontWeight="Light" Text="Hello Template 10 - TODO" />
-        </StackPanel>
+        <TextBlock Grid.Row="1" Margin="12,12,0,0" FontSize="42" FontWeight="Light" Text="Contoso Tada" />
 
-        <CommandBar Grid.Row="1">
+        <CommandBar Grid.Row="0">
             <AppBarButton Label="New" Icon="Add" Command="{Binding AddCommand}" />
             <AppBarButton Label="Remove" Icon="Remove" Command="{Binding RemoveCommand}" />
         </CommandBar>
@@ -41,29 +39,60 @@
             Grid.Row="1" HorizontalAlignment="Left" Margin="12,0" IsActive="True" />
 
         <Grid Grid.Row="2">
-            
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            
-            <ListView Grid.Row="0" Grid.Column="0" ItemsSource="{Binding Todos}" 
+
+            <Pivot Grid.Row="0" Grid.Column="0" Margin="0,12,12,0">
+                <PivotItem Header="All Tasks">
+
+                    <ListView Grid.Row="0" Grid.Column="0" ItemsSource="{Binding Todos}" 
                       SelectedItem="{Binding SelectedTodo, Mode=TwoWay}"
                       HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Margin="0,10">
-                            <TextBlock FontSize="26" Text="{Binding Title}" MaxLines="1" />
-                            <TextBlock FontSize="16" Text="{Binding State}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            
-            <Grid Grid.Row="0" Grid.Column="1" DataContext="{Binding SelectedTodo}">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Grid.ColumnSpan="2" FontSize="26" Text="{Binding Title}" MaxLines="1" />
+                                    <TextBlock Grid.Row="1" Grid.Column="0" FontSize="16" Text="{Binding DueDate}" />
+                                    <TextBlock Grid.Row="1" Grid.Column="1" FontSize="16" Text="{Binding State}" HorizontalAlignment="Right" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                </PivotItem>
+                <PivotItem Header="Not Started">
+
+                </PivotItem>
+                <PivotItem Header="In Process">
+
+                </PivotItem>
+                <PivotItem Header="Complete">
+
+                </PivotItem>
+            </Pivot>
+
+            <Grid Grid.Row="0" Grid.Column="1" DataContext="{Binding SelectedTodo}" Margin="12,24,24,0">
                 <StackPanel Margin="4,0">
-                    <TextBox Header="Title" Text="{Binding Title, Mode=TwoWay}" />
-                    <ListBox SelectedValue="{Binding State, Mode=TwoWay}" xmlns:models="using:Template10.Models">
+                    <TextBlock Text="Task Details" Margin="0,0,0,12" />
+                    <TextBox Header="Title" Text="{Binding Title, Mode=TwoWay}" Margin="0,0,0,12" />
+                    <DatePicker Header="Due Date" Date="{Binding DueDate, Mode=TwoWay}" Margin="0,0,0,12" />
+                    <ListBox SelectedItem="{Binding State, Mode=TwoWay}" Margin="0,0,0,12">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Converter={StaticResource StateToStringConverter}}" />
@@ -75,7 +104,7 @@
                     </ListBox>
                 </StackPanel>
             </Grid>
-            
+
         </Grid>
 
     </Grid>

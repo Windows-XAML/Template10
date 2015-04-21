@@ -1,4 +1,5 @@
-﻿using Template10.Models;
+﻿using System;
+using Template10.Models;
 
 namespace Template10.ViewModels
 {
@@ -15,6 +16,12 @@ namespace Template10.ViewModels
         {
             get { return Todo.Title; }
             set { Todo.Title = value; base.RaisePropertyChanged(); }
+        }
+
+        public DateTime DueDate
+        {
+            get { return Todo.DueDate; }
+            set { Todo.DueDate = value; base.RaisePropertyChanged(); }
         }
 
         public Models.States State

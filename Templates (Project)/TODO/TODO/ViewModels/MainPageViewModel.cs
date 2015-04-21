@@ -49,18 +49,23 @@ namespace Template10.ViewModels
         private bool CanExecuteAddCommand() { return true; }
         private async void ExecuteAddCommand()
         {
-            var todo = _todoRepository.Factory(title: "New Task");
-            this.Todos.Add(new ViewModels.TodoItemViewModel(todo));
+            var todo = new ViewModels.TodoItemViewModel(_todoRepository.Factory(title: "New Task"));
+            var index = this.Todos.IndexOf(this.SelectedTodo);
+            this.Todos.Insert((index > -1) ? index : 0, todo);
+            this.SelectedTodo = todo;
             await Save();
         }
 
-        Command<ViewModels.TodoItemViewModel> _RemoveCommand;
-        public Command<ViewModels.TodoItemViewModel> RemoveCommand { get { return _RemoveCommand ?? (_RemoveCommand = new Command<ViewModels.TodoItemViewModel>(ExecuteRemoveCommand, CanExecuteRemoveCommand)); } }
-        private bool CanExecuteRemoveCommand(ViewModels.TodoItemViewModel todo) { return todo != null; }
-        private async void ExecuteRemoveCommand(ViewModels.TodoItemViewModel todo)
+        Command _RemoveCommand;
+        public Command RemoveCommand { get { return _RemoveCommand ?? (_RemoveCommand = new Command(ExecuteRemoveCommand, CanExecuteRemoveCommand)); } }
+        private bool CanExecuteRemoveCommand() { return this.SelectedTodo != null; }
+        private async void ExecuteRemoveCommand()
         {
-            this.Todos.Remove(todo);
-            await Save();
+            var index = this.Todos.IndexOf(this.SelectedTodo);
+            this.Todos.Remove(this.SelectedTodo);
+            try { this.SelectedTodo = this.Todos[index]; }
+            catch { this.SelectedTodo = null; }
+            finally { await Save(); }
         }
 
         async Task Load()
