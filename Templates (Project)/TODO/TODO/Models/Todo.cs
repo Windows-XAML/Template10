@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Template10.Models
 {
-    public class Todo : IKeyedModel
+    public class Todo 
     {
         public string Key { get; set; } = Guid.NewGuid().ToString();
         public string Title { get; set; }
