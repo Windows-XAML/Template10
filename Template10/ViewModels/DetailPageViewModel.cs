@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Windows.UI;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Media;
+using System.Collections.ObjectModel;
 
 namespace Template10.ViewModels
 {
@@ -47,14 +48,22 @@ namespace Template10.ViewModels
             {
                 Set(ref _colorInfo, value);
                 if (value != null)
-                {
-                    var triad = this.ColorInfo.Color.GetTriads().ToArray();
-                    this.Variant1 = new SolidColorBrush(triad[0]);
-                    this.Variant2 = new SolidColorBrush(triad[1]);
-                    this.Variant3 = new SolidColorBrush(triad[2]);
-                }
+                    Setup();
             }
         }
+
+        void Setup()
+        {
+            var triad = this.ColorInfo.Color.GetTriads().ToArray();
+            this.Variant1 = new SolidColorBrush(triad[0]);
+            this.Variant2 = new SolidColorBrush(triad[1]);
+            this.Variant3 = new SolidColorBrush(triad[2]);
+        }
+
+        public ObservableCollection<SolidColorBrush> Shades { get; } = new ObservableCollection<SolidColorBrush>();
+        public ObservableCollection<SolidColorBrush> Triads { get; } = new ObservableCollection<SolidColorBrush>();
+        public ObservableCollection<SolidColorBrush> Tetradicts { get; } = new ObservableCollection<SolidColorBrush>();
+        public ObservableCollection<SolidColorBrush> Chromatics { get; } = new ObservableCollection<SolidColorBrush>();
 
         private SolidColorBrush _variant1;
         public SolidColorBrush Variant1 { get { return _variant1; } set { Set(ref _variant1, value); } }
