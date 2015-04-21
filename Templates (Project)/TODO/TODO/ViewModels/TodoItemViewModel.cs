@@ -4,12 +4,12 @@ namespace Template10.ViewModels
 {
     public class TodoItemViewModel : Mvvm.ViewModelBase
     {
-        public TodoItemViewModel(Models.Todo todo)
+        public TodoItemViewModel(Models.TodoItem todo)
         {
             this.Todo = todo;
         }
 
-        public Models.Todo Todo { get; private set; }
+        public Models.TodoItem Todo { get; private set; }
 
         public string Title
         {

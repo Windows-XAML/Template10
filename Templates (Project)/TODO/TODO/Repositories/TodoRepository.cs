@@ -17,26 +17,26 @@ namespace Template10.Repositories
             _fileService = new Services.FileService.FileService();
         }
 
-        List<Models.Todo> _cache;
-        public async Task<List<Models.Todo>> GetAsync()
+        List<Models.TodoItem> _cache;
+        public async Task<List<Models.TodoItem>> GetAsync()
         {
-            return _cache ?? (_cache = await _fileService.ReadAsync<Models.Todo>(CACHEKEY) ?? new List<Todo>());
+            return _cache ?? (_cache = await _fileService.ReadAsync<Models.TodoItem>(CACHEKEY) ?? new List<TodoItem>());
         }
 
-        public async Task<Models.Todo> GetAsync(string key)
+        public async Task<Models.TodoItem> GetAsync(string key)
         {
             return (await this.GetAsync()).FirstOrDefault(x => x.Key.Equals(key));
         }
 
-        public async Task SaveAsync(List<Models.Todo> items)
+        public async Task SaveAsync(List<Models.TodoItem> items)
         {
             if (items != null)
-                await _fileService.WriteAsync<Models.Todo>(CACHEKEY, items);
+                await _fileService.WriteAsync<Models.TodoItem>(CACHEKEY, items);
         }
 
-        public Models.Todo Factory(string key = null, States? state = null, string title = null)
+        public Models.TodoItem Factory(string key = null, States? state = null, string title = null)
         {
-            return new Models.Todo
+            return new Models.TodoItem
             {
                 Key = key ?? Guid.NewGuid().ToString(),
                 State = state ?? States.NotStarted,
@@ -44,7 +44,7 @@ namespace Template10.Repositories
             };
         }
 
-        public IEnumerable<Models.Todo> Sample(int count = 5)
+        public IEnumerable<Models.TodoItem> Sample(int count = 5)
         {
             var random = new Random((int)DateTime.Now.Ticks);
             Func<States> state = () =>
@@ -58,7 +58,7 @@ namespace Template10.Repositories
             };
             foreach (var item in Enumerable.Range(1, count))
             {
-                yield return new Models.Todo
+                yield return new Models.TodoItem
                 {
                     Key = Guid.Empty.ToString(),
                     Title = Guid.NewGuid().ToString(),

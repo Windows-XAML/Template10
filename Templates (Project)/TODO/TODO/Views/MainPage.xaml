@@ -36,22 +36,20 @@
             <AppBarButton Label="Remove" Icon="Remove" Command="{Binding RemoveCommand}" />
         </CommandBar>
 
+        <!-- visible when busy -->
         <ProgressRing Visibility="{Binding Busy, Converter={StaticResource BooleanToVisibilityConverter}}"
             Grid.Row="1" HorizontalAlignment="Left" Margin="12,0" IsActive="True" />
 
         <Grid Grid.Row="2">
+            
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
+            
             <ListView Grid.Row="0" Grid.Column="0" ItemsSource="{Binding Todos}" 
                       SelectedItem="{Binding SelectedTodo, Mode=TwoWay}"
                       HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                    </Style>
-                </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Margin="0,10">
@@ -61,6 +59,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            
             <Grid Grid.Row="0" Grid.Column="1" DataContext="{Binding SelectedTodo}">
                 <StackPanel Margin="4,0">
                     <TextBox Header="Title" Text="{Binding Title, Mode=TwoWay}" />
@@ -76,6 +75,7 @@
                     </ListBox>
                 </StackPanel>
             </Grid>
+            
         </Grid>
 
     </Grid>

@@ -116,7 +116,7 @@
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\StateToStringConverter.cs" />
     <Compile Include="Models\States.cs" />
-    <Compile Include="Models\Todo.cs" />
+    <Compile Include="Models\TodoItem.cs" />
     <Compile Include="Mvvm\Command.cs" />
     <Compile Include="Mvvm\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
