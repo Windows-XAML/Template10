@@ -69,24 +69,34 @@ namespace Template10.Services.MapService
         /// <see cref="http://msdn.microsoft.com/en-us/library/ff701724.aspx">Documentation</see>
         /// <param name="items"></param>
         /// <param name="user"></param>
-        /// <param name="size"></param>
+        /// <param name="size">
+        /// Optional. The width and height in pixels of the static map output. The width must be 
+        /// between 80 and 900 pixels and the height must be between 80 and 834 pixels. The default 
+        /// map size for static maps is 350 pixels by 350 pixels.
+        /// </param>
+        /// <param name="zoom">
+        /// Optional. The level of zoom to display. An integer between 0 and 21.
+        /// </param>
         /// <returns></returns>
-        public Uri GetMapUrl(IEnumerable<StaticMapPushpin> items, StaticMapPushpin user, StaticMapPushpin center, Size size, int? zoom = null, StaticMapImagerySets imagery = StaticMapImagerySets.Road)
+        public Uri GetMapUrl(IEnumerable<StaticMapPushpin> items, StaticMapPushpin user, StaticMapPushpin center, Size? size = null, int? zoom = null, StaticMapImagerySets imagery = StaticMapImagerySets.Road)
         {
-            if (size == default(Size))
-                throw new ArgumentNullException("size");
-
             var _Builder = new StringBuilder();
 
             var _Url = string.Format("http://dev.virtualearth.net/REST/v1/Imagery/Map/{0}?key={1}", imagery, _bingMapsKey);
             _Builder.Append(_Url);
 
-            var _Size = string.Format("&mapSize={0},{1}", size.Width, size.Height);
-            _Builder.Append(_Size);
-
-            if (zoom != null)
+            // According to the Documentation link above, size is optional
+            if (size.HasValue)
             {
-                var _Zoom = string.Format("&zoomLevel={0}", zoom);
+                Size sz = size.Value;
+                var _Size = string.Format("&mapSize={0},{1}", sz.Width, sz.Height);
+                _Builder.Append(_Size);
+            }
+
+            // According to the Documentation link above, zoom is optional
+            if (zoom.HasValue)
+            {
+                var _Zoom = string.Format("&zoomLevel={0}", zoom.Value);
                 _Builder.Append(_Zoom);
             }
 
