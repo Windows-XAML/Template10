@@ -6,11 +6,17 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:Template10.ViewModels"
+    xmlns:Converters="using:Template10.Converters"
     mc:Ignorable="d">
 
     <Page.DataContext>
         <vm:MainPageViewModel />
     </Page.DataContext>
+    
+    <Page.Resources>
+        <Converters:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter" />
+        <Converters:StateToStringConverter x:Name="StateToStringConverter" />
+    </Page.Resources>
 
     <Grid Background="Black">
 
@@ -29,6 +35,9 @@
             <AppBarButton Label="New" Icon="Add" Command="{Binding AddCommand}" />
             <AppBarButton Label="Remove" Icon="Remove" Command="{Binding RemoveCommand}" />
         </CommandBar>
+
+        <ProgressRing Visibility="{Binding Busy, Converter={StaticResource BooleanToVisibilityConverter}}"
+            Grid.Row="1" HorizontalAlignment="Left" Margin="12,0" IsActive="True" />
 
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
@@ -56,6 +65,11 @@
                 <StackPanel Margin="4,0">
                     <TextBox Header="Title" Text="{Binding Title, Mode=TwoWay}" />
                     <ListBox SelectedValue="{Binding State, Mode=TwoWay}" xmlns:models="using:Template10.Models">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={StaticResource StateToStringConverter}}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
                         <models:States>NotStarted</models:States>
                         <models:States>InProcess</models:States>
                         <models:States>Done</models:States>

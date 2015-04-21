@@ -114,6 +114,7 @@
     </Compile>
     <Compile Include="Common\BootStrapper.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\StateToStringConverter.cs" />
     <Compile Include="Models\States.cs" />
     <Compile Include="Models\Todo.cs" />
     <Compile Include="Mvvm\Command.cs" />
