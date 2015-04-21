@@ -1,0 +1,82 @@
+﻿<Page
+    x:Class="Template10.Views.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Template10.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Template10.ViewModels"
+    xmlns:Converters="using:Template10.Converters"
+    mc:Ignorable="d">
+
+    <Page.DataContext>
+        <vm:MainPageViewModel />
+    </Page.DataContext>
+    
+    <Page.Resources>
+        <Converters:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter" />
+        <Converters:StateToStringConverter x:Name="StateToStringConverter" />
+    </Page.Resources>
+
+    <Grid Background="Black">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="12,12,0,0">
+            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE76E;" FontSize="40" VerticalAlignment="Center" Margin="0,0,20,0" />
+            <TextBlock FontSize="42" FontWeight="Light" Text="Hello Template 10 - TODO" />
+        </StackPanel>
+
+        <CommandBar Grid.Row="1">
+            <AppBarButton Label="New" Icon="Add" Command="{Binding AddCommand}" />
+            <AppBarButton Label="Remove" Icon="Remove" Command="{Binding RemoveCommand}" />
+        </CommandBar>
+
+        <!-- visible when busy -->
+        <ProgressRing Visibility="{Binding Busy, Converter={StaticResource BooleanToVisibilityConverter}}"
+            Grid.Row="1" HorizontalAlignment="Left" Margin="12,0" IsActive="True" />
+
+        <Grid Grid.Row="2">
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            
+            <ListView Grid.Row="0" Grid.Column="0" ItemsSource="{Binding Todos}" 
+                      SelectedItem="{Binding SelectedTodo, Mode=TwoWay}"
+                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="0,10">
+                            <TextBlock FontSize="26" Text="{Binding Title}" MaxLines="1" />
+                            <TextBlock FontSize="16" Text="{Binding State}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            
+            <Grid Grid.Row="0" Grid.Column="1" DataContext="{Binding SelectedTodo}">
+                <StackPanel Margin="4,0">
+                    <TextBox Header="Title" Text="{Binding Title, Mode=TwoWay}" />
+                    <ListBox SelectedValue="{Binding State, Mode=TwoWay}" xmlns:models="using:Template10.Models">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={StaticResource StateToStringConverter}}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <models:States>NotStarted</models:States>
+                        <models:States>InProcess</models:States>
+                        <models:States>Done</models:States>
+                    </ListBox>
+                </StackPanel>
+            </Grid>
+            
+        </Grid>
+
+    </Grid>
+</Page>
