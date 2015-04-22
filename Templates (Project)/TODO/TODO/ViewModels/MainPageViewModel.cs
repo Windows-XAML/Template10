@@ -96,5 +96,9 @@ namespace Template10.ViewModels
             }
             finally { Busy = false; }
         }
+
+        void Organize()
+        {
+        }
     }
 }

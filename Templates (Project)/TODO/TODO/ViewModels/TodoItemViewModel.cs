@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Template10.Models;
 
 namespace Template10.ViewModels
@@ -27,7 +29,12 @@ namespace Template10.ViewModels
         public Models.States State
         {
             get { return Todo.State; }
-            set { Todo.State = value; base.RaisePropertyChanged(); }
+            set { Todo.State = value; /*base.RaisePropertyChanged();*/ }
+        }
+
+        public IEnumerable<Models.States> StateValues
+        {
+            get { return Enum.GetValues(typeof(Models.States)).Cast<Models.States>(); }
         }
     }
 }

@@ -27,7 +27,7 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="1" Margin="12,12,0,0" FontSize="42" FontWeight="Light" Text="Contoso Tada" />
+        <TextBlock Grid.Row="1" Margin="12,12,0,0" FontSize="42" FontWeight="Light" Text="Contoso Todo" />
 
         <CommandBar Grid.Row="0">
             <AppBarButton Label="New" Icon="Add" Command="{Binding AddCommand}" />
@@ -69,7 +69,7 @@
                                     </Grid.RowDefinitions>
                                     <TextBlock Grid.Row="0" Grid.ColumnSpan="2" FontSize="26" Text="{Binding Title}" MaxLines="1" />
                                     <TextBlock Grid.Row="1" Grid.Column="0" FontSize="16" Text="{Binding DueDate}" />
-                                    <TextBlock Grid.Row="1" Grid.Column="1" FontSize="16" Text="{Binding State}" HorizontalAlignment="Right" />
+                                    <TextBlock Grid.Row="1" Grid.Column="1" FontSize="16" Text="{Binding State, Converter={StaticResource StateToStringConverter}}" HorizontalAlignment="Right" />
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
@@ -92,15 +92,12 @@
                     <TextBlock Text="Task Details" Margin="0,0,0,12" />
                     <TextBox Header="Title" Text="{Binding Title, Mode=TwoWay}" Margin="0,0,0,12" />
                     <DatePicker Header="Due Date" Date="{Binding DueDate, Mode=TwoWay}" Margin="0,0,0,12" />
-                    <ListBox SelectedItem="{Binding State, Mode=TwoWay}" Margin="0,0,0,12">
+                    <ListBox ItemsSource="{Binding StateValues}" SelectedItem="{Binding State, Mode=TwoWay}" Margin="0,0,0,12">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Converter={StaticResource StateToStringConverter}}" />
+                                <TextBlock Text="{Binding Converter={StaticResource StateToStringConverter}, Mode=OneTime}" />
                             </DataTemplate>
                         </ListBox.ItemTemplate>
-                        <models:States>NotStarted</models:States>
-                        <models:States>InProcess</models:States>
-                        <models:States>Done</models:States>
                     </ListBox>
                 </StackPanel>
             </Grid>
