@@ -117,6 +117,7 @@
     <Compile Include="Converters\CollapsedWhenZero.cs" />
     <Compile Include="Converters\DateTimeFormatConverter.cs" />
     <Compile Include="Models\ColorInfo.cs" />
+    <Compile Include="Mvvm\BindableBase.cs" />
     <Compile Include="Mvvm\Command.cs" />
     <Compile Include="Mvvm\IoC\Container.cs" />
     <Compile Include="Mvvm\IoC\IContainer.cs" />
@@ -143,6 +144,7 @@
     <Compile Include="Services\MapService\MapService.cs" />
     <Compile Include="Services\MarketplaceService\MarketplaceHelper.cs" />
     <Compile Include="Services\MarketplaceService\MarketplaceService.cs" />
+    <Compile Include="Services\NavigationService\INavigatable.cs" />
     <Compile Include="Services\NavigationService\NavigationEventArgs.cs" />
     <Compile Include="Services\NavigationService\NavigationFacade.cs" />
     <Compile Include="Services\NavigationService\NavigationService.cs" />

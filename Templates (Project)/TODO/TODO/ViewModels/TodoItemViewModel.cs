@@ -12,19 +12,8 @@ namespace Template10.ViewModels
             this.TodoItem = todo;
         }
 
-        public Models.TodoItem TodoItem { get; private set; }
-
-        public string Title
-        {
-            get { return TodoItem.Title; }
-            set { TodoItem.Title = value; base.RaisePropertyChanged(); }
-        }
-
-        public DateTime DueDate
-        {
-            get { return TodoItem.DueDate; }
-            set { TodoItem.DueDate = value; base.RaisePropertyChanged(); }
-        }
+        private Models.TodoItem _todoItem;
+        public Models.TodoItem TodoItem { get { return _todoItem; } set { base.Set(ref _todoItem, value); } }
 
         public Models.States State
         {
@@ -39,9 +28,10 @@ namespace Template10.ViewModels
             }
         }
 
+        private static IEnumerable<Models.States> stateOptions;
         public IEnumerable<Models.States> StateOptions
         {
-            get { return Enum.GetValues(typeof(Models.States)).Cast<Models.States>(); }
+            get { return stateOptions ?? (stateOptions = Enum.GetValues(typeof(Models.States)).Cast<Models.States>()); }
         }
     }
 }

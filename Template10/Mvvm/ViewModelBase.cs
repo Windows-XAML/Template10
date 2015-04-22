@@ -4,15 +4,10 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Mvvm
 {
-    // viewmodelbase enables To/From, called by NavigationService
-    public abstract class ViewModelBase : GalaSoft.MvvmLight.ViewModelBase
+    public abstract class ViewModelBase : BindableBase, Services.NavigationService.INavigatable
     {
-        public virtual void OnNavigatedTo(string parameter, NavigationMode mode, Dictionary<string, object> state)
-        {
-        }
+        public virtual void OnNavigatedTo(string parameter, NavigationMode mode, Dictionary<string, object> state) { /* nothing by default */ }
 
-        public virtual void OnNavigatedFrom(Dictionary<string, object> state, bool suspending)
-        {
-        }
+        public virtual void OnNavigatedFrom(Dictionary<string, object> state, bool suspending) { /* nothing by default */ }
     }
 }

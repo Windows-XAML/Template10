@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Services.NavigationService
@@ -14,12 +8,9 @@ namespace Template10.Services.NavigationService
     public class NavigationService
     {
         private readonly NavigationFacade _frame;
-        private const string OnNavigatedFrom = "OnNavigatedFrom";
-        private const string OnNavigatedTo = "OnNavigatedTo";
         private const string EmptyNavigation = "1,0";
 
         string LastNavigationParameter { get; set; /* TODO: persist */ }
-
         string LastNavigationType { get; set; /* TODO: persist */ }
 
         public NavigationService(Frame frame)
@@ -34,20 +25,10 @@ namespace Template10.Services.NavigationService
             var page = _frame.Content as FrameworkElement;
             if (page != null)
             {
-                var dataContext = page.DataContext;
+                var dataContext = page.DataContext as INavigatable;
                 if (dataContext != null)
                 {
-                    // navigationService will not depend on Mvvm namespace
-                    var method = dataContext.GetType()
-                        .GetRuntimeMethod(OnNavigatedFrom, new[] {
-                            typeof(Dictionary<string, object>),
-                            typeof(Boolean)
-                        });
-                    if (method != null)
-                    {
-                        // TODO: get existing state
-                        method.Invoke(dataContext, new object[] { null, suspending });
-                    }
+                    dataContext.OnNavigatedFrom(null, suspending);
                 }
             }
         }
@@ -65,21 +46,10 @@ namespace Template10.Services.NavigationService
             var page = _frame.Content as FrameworkElement;
             if (page != null)
             {
-                var dataContext = page.DataContext;
+                var dataContext = page.DataContext as INavigatable;
                 if (dataContext != null)
                 {
-                    // navigationService will not depend on Mvvm namespace
-                    var method = dataContext.GetType()
-                        .GetRuntimeMethod(OnNavigatedTo, new[] {
-                            typeof(string),
-                            typeof(NavigationMode),
-                            typeof(Dictionary<string, object>)
-                        });
-                    if (method != null)
-                    {
-                        // TODO: get existing state
-                        method.Invoke(dataContext, new object[] { parameter, mode, null });
-                    }
+                    dataContext.OnNavigatedTo(parameter, mode, null);
                 }
             }
         }
@@ -112,21 +82,10 @@ namespace Template10.Services.NavigationService
         {
             if (flyout == null)
                 throw new ArgumentNullException(nameof(flyout));
-            var dataContext = flyout.DataContext;
+            var dataContext = flyout.DataContext as INavigatable;
             if (dataContext != null)
             {
-                // navigationService will not depend on Mvvm namespace
-                var method = dataContext.GetType()
-                    .GetRuntimeMethod(OnNavigatedTo, new[] {
-                        typeof(string),
-                        typeof(NavigationMode),
-                        typeof(Dictionary<string, object>)
-                    });
-                if (method != null)
-                {
-                    // TODO: get existing state
-                    method.Invoke(dataContext, new object[] { parameter, NavigationMode.New, null });
-                }
+                dataContext.OnNavigatedTo(parameter, NavigationMode.New, null);
             }
             flyout.Show();
         }
