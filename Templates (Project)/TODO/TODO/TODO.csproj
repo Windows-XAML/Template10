@@ -113,7 +113,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\BootStrapper.cs" />
-    <Compile Include="Models\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\ValueWhenConverter.cs" />
     <Compile Include="Converters\DateTimeFormatConverter.cs" />
     <Compile Include="Converters\StateToStringConverter.cs" />
     <Compile Include="Models\States.cs" />
@@ -121,7 +121,7 @@
     <Compile Include="Mvvm\Command.cs" />
     <Compile Include="Mvvm\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\TodoRepository.cs" />
+    <Compile Include="Repositories\TodoItemRepository.cs" />
     <Compile Include="Services\FileService\FileHelper.cs" />
     <Compile Include="Services\FileService\FileService.cs" />
     <Compile Include="Services\NavigationService\NavigationEventArgs.cs" />

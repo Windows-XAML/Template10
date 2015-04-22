@@ -6,12 +6,12 @@ using Template10.Models;
 
 namespace Template10.Repositories
 {
-    public class TodoRepository
+    public class TodoItemRepository
     {
         readonly string CACHEKEY;
         Services.FileService.FileService _fileService;
 
-        public TodoRepository()
+        public TodoItemRepository()
         {
             CACHEKEY = string.Format("CACHE {0}", this.GetType());
             _fileService = new Services.FileService.FileService();
@@ -63,6 +63,7 @@ namespace Template10.Repositories
                     Key = Guid.Empty.ToString(),
                     Title = Guid.NewGuid().ToString(),
                     State = state.Invoke(),
+                    DueDate = DateTime.Now.AddHours(random.Next(1, 200)),
                 };
             }
         }

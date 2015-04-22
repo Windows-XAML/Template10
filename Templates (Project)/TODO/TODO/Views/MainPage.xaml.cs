@@ -8,5 +8,10 @@ namespace Template10.Views
         {
             this.InitializeComponent();
         }
+
+        private void Popup_Holding(object sender, Windows.UI.Xaml.Input.HoldingRoutedEventArgs e)
+        {
+
+        }
     }
 }

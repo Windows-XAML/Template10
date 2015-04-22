@@ -7,102 +7,92 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:Template10.ViewModels"
     xmlns:models="using:Template10.Models"
-    xmlns:Converters="using:Template10.Converters"
+    x:Name="ThisPage"
     mc:Ignorable="d">
 
     <Page.DataContext>
         <vm:MainPageViewModel />
     </Page.DataContext>
 
-    <Page.Resources>
-        <Converters:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter" />
-        <Converters:StateToStringConverter x:Name="StateToStringConverter" />
-    </Page.Resources>
-
-    <Grid Background="Black">
-
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="400" />
+            <ColumnDefinition Width="400" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="1" Margin="12,12,0,0" FontSize="42" FontWeight="Light" Text="Contoso Todo" />
+        <!-- page title -->
+        <TextBlock Grid.Column="1" Grid.ColumnSpan="2" Margin="12,12,0,0" FontSize="42" FontWeight="Light" Text="Contoso Todo" />
 
-        <CommandBar Grid.Row="0">
-            <AppBarButton Label="New" Icon="Add" Command="{Binding AddCommand}" />
-            <AppBarButton Label="Remove" Icon="Remove" Command="{Binding RemoveCommand}" />
-        </CommandBar>
+        <!-- filter buttons -->
+        <Grid Grid.Column="1" Grid.Row="1" Margin="12,12,12,0">
+            <ListView SelectedItem="{Binding SelectedTodoItem, Mode=TwoWay}"
+                  Style="{StaticResource TodoListViewStyle}" ItemsSource="{Binding TodoItems}">
+                <ListView.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <HyperlinkButton Content="Filter by:" Margin="0,0,12,0" IsEnabled="False" />
+                        <HyperlinkButton Content="Not Started" Margin="0,0,12,0" Command="{Binding FilterCommand}" CommandParameter="NotStarted" />
+                        <HyperlinkButton Content="In Progress" Margin="0,0,12,0" Command="{Binding FilterCommand}" CommandParameter="InProcess" />
+                        <HyperlinkButton Content="Completed" Margin="0,0,12,0" Command="{Binding FilterCommand}" CommandParameter="Done" />
+                    </StackPanel>
+                </ListView.Header>
+            </ListView>
+            <!-- when empty -->
+            <TextBlock Text="No items" Margin="12,36,0,0" Visibility="{Binding TodoItems.Count, Converter={StaticResource VisibleWhenZeroConverter}}" />
+        </Grid>
 
-        <!-- visible when busy -->
-        <ProgressRing Visibility="{Binding Busy, Converter={StaticResource BooleanToVisibilityConverter}}"
-            Grid.Row="1" HorizontalAlignment="Left" Margin="12,0" IsActive="True" />
+        <!-- right content area -->
+        <Grid Grid.Column="2" Grid.Row="1" Margin="12,24,24,0" VerticalAlignment="Top">
+            <Grid.Background>
+                <SolidColorBrush Color="White" Opacity=".1" />
+            </Grid.Background>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
 
-        <Grid Grid.Row="2">
+            <!-- top menu -->
+            <CommandBar Grid.Row="0">
+                <AppBarButton Label="New" Icon="Add" Command="{Binding AddCommand}" />
+                <AppBarButton Label="Remove" Icon="Remove" Command="{Binding RemoveCommand}" />
+            </CommandBar>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
+            <!-- header -->
+            <TextBlock Grid.Row="0" Text="Task Details" Margin="12,0,0,0" VerticalAlignment="Center" />
 
-            <Pivot Grid.Row="0" Grid.Column="0" Margin="0,12,12,0">
-                <PivotItem Header="All Tasks">
-
-                    <ListView Grid.Row="0" Grid.Column="0" ItemsSource="{Binding Todos}" 
-                      SelectedItem="{Binding SelectedTodo, Mode=TwoWay}"
-                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="ListViewItem">
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                            </Style>
-                        </ListView.ItemContainerStyle>
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Margin="0,10">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition />
-                                        <ColumnDefinition />
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0" Grid.ColumnSpan="2" FontSize="26" Text="{Binding Title}" MaxLines="1" />
-                                    <TextBlock Grid.Row="1" Grid.Column="0" FontSize="16" Text="{Binding DueDate}" />
-                                    <TextBlock Grid.Row="1" Grid.Column="1" FontSize="16" Text="{Binding State, Converter={StaticResource StateToStringConverter}}" HorizontalAlignment="Right" />
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-
-                </PivotItem>
-                <PivotItem Header="Not Started">
-
-                </PivotItem>
-                <PivotItem Header="In Process">
-
-                </PivotItem>
-                <PivotItem Header="Complete">
-
-                </PivotItem>
-            </Pivot>
-
-            <Grid Grid.Row="0" Grid.Column="1" DataContext="{Binding SelectedTodo}" Margin="12,24,24,0">
-                <StackPanel Margin="4,0">
-                    <TextBlock Text="Task Details" Margin="0,0,0,12" />
-                    <TextBox Header="Title" Text="{Binding Title, Mode=TwoWay}" Margin="0,0,0,12" />
-                    <DatePicker Header="Due Date" Date="{Binding DueDate, Mode=TwoWay}" Margin="0,0,0,12" />
-                    <ListBox ItemsSource="{Binding StateValues}" SelectedItem="{Binding State, Mode=TwoWay}" Margin="0,0,0,12">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Converter={StaticResource StateToStringConverter}, Mode=OneTime}" />
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                </StackPanel>
-            </Grid>
+            <!-- fields -->
+            <StackPanel Grid.Row="1" Margin="12" DataContext="{Binding SelectedTodoItem}">
+                <TextBox Header="Title" Margin="0,0,0,12" Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <DatePicker Header="Due Date" Margin="0,0,0,12" Date="{Binding DueDate, Mode=TwoWay}" />
+                <ComboBox Header="Current State" Margin="0,0,0,12"
+                              ItemsSource="{Binding StateOptions, Mode=OneTime}" 
+                              SelectedItem="{Binding State, Mode=TwoWay}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource StateToStringConverter}, Mode=OneTime}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
 
         </Grid>
+
+        <!-- busy indicator -->
+        <Popup IsOpen="{Binding Busy}" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2"
+               VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,200,0,0">
+            <Grid Background="White">
+                <StackPanel Orientation="Horizontal" Margin="100">
+                    <ProgressRing VerticalAlignment="Center" IsActive="True" />
+                    <TextBlock Foreground="DimGray" Text="Loading" 
+                               FontSize="22" FontWeight="Light" Margin="12,0,0,0" />
+                </StackPanel>
+            </Grid>
+        </Popup>
 
     </Grid>
 </Page>

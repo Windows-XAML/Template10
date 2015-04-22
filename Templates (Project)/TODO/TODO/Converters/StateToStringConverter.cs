@@ -19,7 +19,7 @@ namespace Template10.Converters
                 case Models.States.InProcess:
                     return "In Process";
                 default:
-                    return "Done";
+                    return "Completed";
             }
         }
 
