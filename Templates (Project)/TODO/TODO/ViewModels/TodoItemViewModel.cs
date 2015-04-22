@@ -38,10 +38,5 @@ namespace Template10.ViewModels
                 }
             }
         }
-
-        public IEnumerable<Models.States> StateOptions
-        {
-            get { return Enum.GetValues(typeof(Models.States)).Cast<Models.States>(); }
-        }
     }
 }

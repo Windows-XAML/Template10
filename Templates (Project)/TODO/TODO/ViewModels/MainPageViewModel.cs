@@ -45,6 +45,19 @@ namespace Template10.ViewModels
         IEnumerable<ViewModels.TodoItemViewModel> _cache;
         public ObservableCollection<ViewModels.TodoItemViewModel> TodoItems { get; } = new ObservableCollection<ViewModels.TodoItemViewModel>();
 
+        private IEnumerable<Models.States> stateOptions;
+        public IEnumerable<Models.States> StateOptions
+        {
+            get
+            {
+                if (stateOptions == null)
+                {
+                    stateOptions = Enum.GetValues(typeof(Models.States)).Cast<Models.States>();
+                }
+                return stateOptions;
+            }
+        }
+
         ViewModels.TodoItemViewModel _selectedTodoItem = default(ViewModels.TodoItemViewModel);
         public ViewModels.TodoItemViewModel SelectedTodoItem { get { return _selectedTodoItem; } set { Set(ref _selectedTodoItem, value); } }
 
