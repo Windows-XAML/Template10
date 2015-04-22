@@ -27,11 +27,14 @@ namespace Template10.ViewModels
                 }
             }
         }
+<<<<<<< HEAD
 
         private static IEnumerable<Models.States> stateOptions;
         public IEnumerable<Models.States> StateOptions
         {
             get { return stateOptions ?? (stateOptions = Enum.GetValues(typeof(Models.States)).Cast<Models.States>()); }
         }
+=======
+>>>>>>> origin/master
     }
 }
