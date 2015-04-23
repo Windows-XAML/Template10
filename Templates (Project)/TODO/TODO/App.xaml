@@ -9,18 +9,30 @@
         <c:DateTimeFormatConverter x:Name="DateTimeFormatConverter" />
         <c:StateToStringConverter x:Name="StateToStringConverter" />
 
-<c:ValueWhenConverter x:Name="VisibleWhenZeroConverter">
-    <c:ValueWhenConverter.When>
-        <x:Int32>0</x:Int32>
-    </c:ValueWhenConverter.When>
-    <c:ValueWhenConverter.Value>
-        <Visibility>Visible</Visibility>
-    </c:ValueWhenConverter.Value>
-    <c:ValueWhenConverter.Otherwise>
-        <Visibility>Collapsed</Visibility>
-    </c:ValueWhenConverter.Otherwise>
-</c:ValueWhenConverter>
+        <c:ValueWhenConverter x:Name="VisibleWhenZeroConverter">
+            <c:ValueWhenConverter.When>
+                <x:Int32>0</x:Int32>
+            </c:ValueWhenConverter.When>
+            <c:ValueWhenConverter.Value>
+                <Visibility>Visible</Visibility>
+            </c:ValueWhenConverter.Value>
+            <c:ValueWhenConverter.Otherwise>
+                <Visibility>Collapsed</Visibility>
+            </c:ValueWhenConverter.Otherwise>
+        </c:ValueWhenConverter>
+
+        <c:ValueWhenConverter x:Name="VisibleWhenTrueConverter">
+            <c:ValueWhenConverter.When>
+                <x:Boolean>true</x:Boolean>
+            </c:ValueWhenConverter.When>
+            <c:ValueWhenConverter.Value>
+                <Visibility>Visible</Visibility>
+            </c:ValueWhenConverter.Value>
+            <c:ValueWhenConverter.Otherwise>
+                <Visibility>Collapsed</Visibility>
+            </c:ValueWhenConverter.Otherwise>
+        </c:ValueWhenConverter>
 
     </common:BootStrapper.Resources>
-    
+
 </common:BootStrapper>

@@ -27,7 +27,6 @@
     </Page.BottomAppBar>
 
     <Page.Resources>
-        <converters:CollapsedWhenZero x:Name="CollapsedWhenZero" />
         <Style TargetType="controls:MyGridView">
             <Setter Property="ItemWidth" Value="175" />
             <Setter Property="ItemHeight" Value="175" />

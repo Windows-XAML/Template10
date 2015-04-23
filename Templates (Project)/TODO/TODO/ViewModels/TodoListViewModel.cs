@@ -25,7 +25,10 @@ namespace Template10.ViewModels
         public ObservableCollection<ViewModels.TodoItemViewModel> Items { get { return _Items; } private set { Set(ref _Items, value); } }
 
         private ViewModels.TodoItemViewModel _SelectedItem = default(ViewModels.TodoItemViewModel);
-        public ViewModels.TodoItemViewModel SelectedItem { get { return _SelectedItem; } set { Set(ref _SelectedItem, value); } }
+        public ViewModels.TodoItemViewModel SelectedItem { get { return _SelectedItem; } set { Set(ref _SelectedItem, value); SelectedItemIsSelected = (value != null); } }
+
+        private bool _SelectedItemIsSelected = default(bool);
+        public bool SelectedItemIsSelected { get { return _SelectedItemIsSelected; } set { Set(ref _SelectedItemIsSelected, value); } }
 
         Mvvm.Command _AddCommand = default(Mvvm.Command);
         public Mvvm.Command AddCommand { get { return _AddCommand ?? (_AddCommand = new Mvvm.Command(ExecuteAddCommand, CanExecuteAddCommand)); } }

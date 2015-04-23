@@ -56,7 +56,10 @@ namespace Template10.ViewModels
         public IEnumerable<Models.States> StateOptions { get { return _stateOptions; } }
 
         private ViewModels.TodoListViewModel _SelectedTodoList = default(ViewModels.TodoListViewModel);
-        public ViewModels.TodoListViewModel SelectedTodoList { get { return _SelectedTodoList; } set { Set(ref _SelectedTodoList, value); } }
+        public ViewModels.TodoListViewModel SelectedTodoList { get { return _SelectedTodoList; } set { Set(ref _SelectedTodoList, value); SelectedTodoListIsSelected = (value != null); } }
+
+        private bool _SelectedTodoListIsSelected = default(bool);
+        public bool SelectedTodoListIsSelected { get { return _SelectedTodoListIsSelected; } private set { Set(ref _SelectedTodoListIsSelected, value); } }
 
         #endregion
 
@@ -102,7 +105,7 @@ namespace Template10.ViewModels
             {
                 Busy = true;
                 await Task.Delay(2000);
-                var data = _todoListRepository.Sample(20).Select(x => new ViewModels.TodoListViewModel(x));
+                var data = _todoListRepository.Sample(3).Select(x => new ViewModels.TodoListViewModel(x));
                 this.TodoLists.Clear();
                 foreach (var item in data.OrderBy(x => x.TodoList.Title))
                 {

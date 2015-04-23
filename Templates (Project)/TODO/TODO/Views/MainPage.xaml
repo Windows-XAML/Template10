@@ -60,7 +60,7 @@
         </Grid>
 
         <!-- list / items -->
-        <Grid Grid.Row="1" Grid.Column="1" Margin="12,0">
+        <Grid Grid.Row="1" Grid.Column="1" Margin="12,0" Visibility="{Binding SelectedTodoListIsSelected, Converter={StaticResource VisibleWhenTrueConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -115,7 +115,7 @@
         </Grid>
 
         <!-- item -->
-        <Grid Grid.Row="1" Grid.Column="2" VerticalAlignment="Top" Margin="12,0">
+        <Grid Grid.Row="1" Grid.Column="2" VerticalAlignment="Top" Margin="12,0"  Visibility="{Binding SelectedTodoList.SelectedItemIsSelected, Converter={StaticResource VisibleWhenTrueConverter}, FallbackValue=Collapsed}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition />
@@ -150,7 +150,7 @@
         </Grid>
 
         <!-- busy indicator -->
-        <Popup IsOpen="{Binding Busy}" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2"
+        <Popup IsOpen="{Binding Busy}" Grid.ColumnSpan="10" Grid.RowSpan="10"
                VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,200,0,0">
             <Grid Background="White">
                 <StackPanel Orientation="Horizontal" Margin="100">
