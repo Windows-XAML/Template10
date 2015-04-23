@@ -10,161 +10,126 @@ namespace Template10.ViewModels
 {
     public class MainPageViewModel : Mvvm.ViewModelBase
     {
-        Repositories.TodoItemRepository _todoItemRepository;
+        Repositories.TodoListRepository _todoListRepository;
 
         public MainPageViewModel()
         {
-            _todoItemRepository = new Repositories.TodoItemRepository();
+            _todoListRepository = new Repositories.TodoListRepository();
 
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
             {
                 // designtime sample data
-                this.TodoItems = new ObservableCollection<ViewModels.TodoItemViewModel>(_todoItemRepository.Sample().Select(x => new ViewModels.TodoItemViewModel(x)));
-                this.SelectedTodoItem = this.TodoItems.First();
+                var data = _todoListRepository.Sample().Select(x => new ViewModels.TodoListViewModel(x));
+                this.TodoLists = new ObservableCollection<ViewModels.TodoListViewModel>(data);
+                this.SelectedTodoList = this.TodoLists.First();
             }
             else
             {
                 // update commands
                 this.PropertyChanged += (s, e) =>
                 {
-                    this.AddCommand.RaiseCanExecuteChanged();
-                    this.RemoveCommand.RaiseCanExecuteChanged();
-                    this.FilterCommand.RaiseCanExecuteChanged();
+                    this.AddListCommand.RaiseCanExecuteChanged();
+                    this.RemoveListCommand.RaiseCanExecuteChanged();
                 };
             }
         }
 
-        public override async void OnNavigatedTo(string parameter, NavigationMode mode, Dictionary<string, object> state)
+        public override void OnNavigatedTo(string parameter, NavigationMode mode, Dictionary<string, object> state)
         {
-            // initial data load
-            await Load();
+            LoadCommand.Execute(null);
+        }
+
+        public override void OnNavigatedFrom(Dictionary<string, object> state, bool suspending)
+        {
+            SaveCommand.Execute(null);
         }
 
         #region Properties
 
-        IEnumerable<ViewModels.TodoItemViewModel> _cache;
-        public ObservableCollection<ViewModels.TodoItemViewModel> TodoItems { get; } = new ObservableCollection<ViewModels.TodoItemViewModel>();
-
-        private IEnumerable<Models.States> stateOptions;
-        public IEnumerable<Models.States> StateOptions
-        {
-            get
-            {
-                if (stateOptions == null)
-                {
-                    stateOptions = Enum.GetValues(typeof(Models.States)).Cast<Models.States>();
-                }
-                return stateOptions;
-            }
-        }
-
-        ViewModels.TodoItemViewModel _selectedTodoItem = default(ViewModels.TodoItemViewModel);
-        public ViewModels.TodoItemViewModel SelectedTodoItem { get { return _selectedTodoItem; } set { Set(ref _selectedTodoItem, value); } }
-
         bool _busy = false;
         public bool Busy { get { return _busy; } set { Set(ref _busy, value); } }
 
-        #endregion  
+        private ObservableCollection<ViewModels.TodoListViewModel> _TodoLists = new ObservableCollection<TodoListViewModel>();
+        public ObservableCollection<ViewModels.TodoListViewModel> TodoLists { get { return _TodoLists; } private set { Set(ref _TodoLists, value); } }
 
-        #region Commands
+        private static IEnumerable<Models.States> _stateOptions = Enum.GetValues(typeof(Models.States)).Cast<Models.States>();
+        public IEnumerable<Models.States> StateOptions { get { return _stateOptions; } }
 
-        Command _AddCommand;
-        public Command AddCommand { get { return _AddCommand ?? (_AddCommand = new Command(ExecuteAddCommand, CanExecuteAddCommand)); } }
-        private bool CanExecuteAddCommand() { return !Busy; }
-        private async void ExecuteAddCommand()
-        {
-            try
-            {
-                var index = this.TodoItems.IndexOf(this.SelectedTodoItem);
-                var todo = new ViewModels.TodoItemViewModel(_todoItemRepository.Factory(title: "New Task"));
-                this.TodoItems.Insert((index > -1) ? index : 0, todo);
-                this.SelectedTodoItem = todo;
-                Populate();
-            }
-            catch { this.SelectedTodoItem = null; }
-            finally { await Save(); }
-        }
-
-        Command _RemoveCommand;
-        public Command RemoveCommand { get { return _RemoveCommand ?? (_RemoveCommand = new Command(ExecuteRemoveCommand, CanExecuteRemoveCommand)); } }
-        private bool CanExecuteRemoveCommand() { return this.SelectedTodoItem != null && !Busy; }
-        private async void ExecuteRemoveCommand()
-        {
-            try
-            {
-                var index = this.TodoItems.IndexOf(this.SelectedTodoItem);
-                this.TodoItems.Remove(this.SelectedTodoItem);
-                this.SelectedTodoItem = this.TodoItems[index];
-                Populate();
-            }
-            catch { this.SelectedTodoItem = null; }
-            finally { await Save(); }
-        }
-
-        Models.States _CurrentFilter = Models.States.Done;
-        Command<string> _FilterCommand;
-        public Command<string> FilterCommand { get { return _FilterCommand ?? (_FilterCommand = new Command<string>(ExecuteFilterCommand, CanExecuteFilterCommand)); } }
-        private bool CanExecuteFilterCommand(string filter)
-        {
-            if (Busy)
-                return false;
-            Models.States state;
-            Enum.TryParse<Models.States>(filter, out state);
-            return !state.Equals(_CurrentFilter);
-        }
-        private void ExecuteFilterCommand(string filter)
-        {
-            IEnumerable<ViewModels.TodoItemViewModel> list;
-            if (Enum.TryParse<Models.States>(filter, out _CurrentFilter))
-                list = _cache.Where(x => x.State.Equals(_CurrentFilter));
-            else
-                list = _cache.ToArray();
-            Populate(list);
-            this.RaisePropertyChanged(string.Empty);
-        }
+        private ViewModels.TodoListViewModel _SelectedTodoList = default(ViewModels.TodoListViewModel);
+        public ViewModels.TodoListViewModel SelectedTodoList { get { return _SelectedTodoList; } set { Set(ref _SelectedTodoList, value); } }
 
         #endregion
 
-        async Task Load()
+        #region Commands
+
+        Mvvm.Command _AddListCommand = default(Mvvm.Command);
+        public Mvvm.Command AddListCommand { get { return _AddListCommand ?? (_AddListCommand = new Mvvm.Command(ExecuteAddListCommand, CanExecuteAddListCommand)); } }
+        private bool CanExecuteAddListCommand() { return !Busy; }
+        private void ExecuteAddListCommand()
         {
-            if (!Busy)
+            try
             {
-                try
-                {
-                    Busy = true;
-                    await Task.Delay(2000);
-                    _cache = _todoItemRepository.Sample(20).Select(x => new ViewModels.TodoItemViewModel(x));
-                    // _cache = ((await _todoItemRepository.GetAsync()).Select(x => new ViewModels.TodoItemViewModel(x)));
-                    FilterCommand.Execute(Models.States.NotStarted.ToString());
-                }
-                finally { Busy = false; }
+                var index = this.TodoLists.IndexOf(this.SelectedTodoList);
+                var item = new ViewModels.TodoListViewModel(_todoListRepository.Factory(title: "New List"));
+                this.TodoLists.Insert((index > -1) ? index : 0, item);
+                this.SelectedTodoList = item;
+                SaveCommand.Execute(null);
             }
+            catch { this.SelectedTodoList = null; }
         }
 
-        async Task Save()
+        Mvvm.Command _RemoveListCommand = default(Mvvm.Command);
+        public Mvvm.Command RemoveListCommand { get { return _RemoveListCommand ?? (_RemoveListCommand = new Mvvm.Command(ExecuteRemoveListCommand, CanExecuteRemoveListCommand)); } }
+        private bool CanExecuteRemoveListCommand() { return !Busy && this.SelectedTodoList != null; }
+        private void ExecuteRemoveListCommand()
         {
-            while (Busy)
-                await Task.Delay(100);
+            try
+            {
+                var index = this.TodoLists.IndexOf(this.SelectedTodoList);
+                this.TodoLists.Remove(this.SelectedTodoList);
+                this.SelectedTodoList = this.TodoLists[index];
+                SaveCommand.Execute(null);
+            }
+            catch { this.SelectedTodoList = null; }
+        }
+
+        Mvvm.Command _LoadCommand = default(Mvvm.Command);
+        public Mvvm.Command LoadCommand { get { return _LoadCommand ?? (_LoadCommand = new Mvvm.Command(ExecuteLoadCommand, CanExecuteLoadCommand)); } }
+        private bool CanExecuteLoadCommand() { return !Busy; }
+        private async void ExecuteLoadCommand()
+        {
             try
             {
                 Busy = true;
                 await Task.Delay(2000);
-                await _todoItemRepository.SaveAsync(this.TodoItems.Select(x => x.TodoItem).ToList());
+                var data = _todoListRepository.Sample(20).Select(x => new ViewModels.TodoListViewModel(x));
+                this.TodoLists.Clear();
+                foreach (var item in data.OrderBy(x => x.TodoList.Title))
+                {
+                    this.TodoLists.Add(item);
+                }
             }
             finally { Busy = false; }
         }
 
-        void Populate(IEnumerable<ViewModels.TodoItemViewModel> items = null)
+        Mvvm.Command _SaveCommand = default(Mvvm.Command);
+        public Mvvm.Command SaveCommand { get { return _SaveCommand ?? (_SaveCommand = new Mvvm.Command(ExecuteSaveCommand, CanExecuteSaveCommand)); } }
+        private bool CanExecuteSaveCommand() { return true; }
+        private async void ExecuteSaveCommand()
         {
-            items = items ?? this.TodoItems.ToArray();
-
-            this.TodoItems.Clear();
-            foreach (var item in items
-                .OrderBy(x => x.State)
-                .ThenByDescending(x => x.DueDate))
-                this.TodoItems.Add(item);
-
-            this.SelectedTodoItem = this.SelectedTodoItem ?? items.FirstOrDefault();
+            while (Busy)
+            {
+                await Task.Delay(100);
+            }
+            try
+            {
+                Busy = true;
+                await Task.Delay(2000);
+                await _todoListRepository.SaveAsync(this.TodoLists.Select(x => x.TodoList).ToList());
+            }
+            finally { Busy = false; }
         }
+
+        #endregion  
     }
 }

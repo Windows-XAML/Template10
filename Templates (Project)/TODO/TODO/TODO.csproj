@@ -133,6 +133,7 @@
     <Compile Include="Services\NavigationService\NavigationService.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\TodoItemViewModel.cs" />
+    <Compile Include="ViewModels\TodoListViewModel.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -146,6 +147,8 @@
     <None Include="TODO_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Converters\Converters.readme.htm" />
+    <Content Include="Models\Models.readme.htm" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\Logo.scale-100.png" />
     <Content Include="Assets\SmallLogo.scale-100.png" />

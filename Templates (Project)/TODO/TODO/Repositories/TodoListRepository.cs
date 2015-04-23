@@ -61,8 +61,8 @@ namespace Template10.Repositories
             {
                 yield return Factory
                     (
-                        Guid.Empty.ToString(),
                         Guid.NewGuid().ToString(),
+                        "List-" + Guid.NewGuid().ToString(),
                         _todoItemRepository.Sample(random.Next(5, 10))
                     );
             }

@@ -45,9 +45,9 @@ namespace Template10.Repositories
             {
                 yield return Factory
                     (
-                        Guid.Empty.ToString(),
-                        state.Invoke(),
                         Guid.NewGuid().ToString(),
+                        state.Invoke(),
+                        "Task-" + Guid.NewGuid().ToString(),
                         DateTime.Now.AddHours(random.Next(1, 200))
                     );
             }

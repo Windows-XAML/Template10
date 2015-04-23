@@ -7,20 +7,7 @@
     <common:BootStrapper.Resources>
 
         <c:DateTimeFormatConverter x:Name="DateTimeFormatConverter" />
-
         <c:StateToStringConverter x:Name="StateToStringConverter" />
-
-        <c:ValueWhenConverter x:Name="VisibleWhenTrueConverter">
-            <c:ValueWhenConverter.When>
-                <x:Boolean>true</x:Boolean>
-            </c:ValueWhenConverter.When>
-            <c:ValueWhenConverter.Value>
-                <Visibility>Visible</Visibility>
-            </c:ValueWhenConverter.Value>
-            <c:ValueWhenConverter.Otherwise>
-                <Visibility>Collapsed</Visibility>
-            </c:ValueWhenConverter.Otherwise>
-        </c:ValueWhenConverter>
 
         <c:ValueWhenConverter x:Name="VisibleWhenZeroConverter">
             <c:ValueWhenConverter.When>
@@ -33,42 +20,6 @@
                 <Visibility>Collapsed</Visibility>
             </c:ValueWhenConverter.Otherwise>
         </c:ValueWhenConverter>
-
-        <Style TargetType="ListView" x:Name="TodoListViewStyle">
-            <Setter Property="ItemContainerTransitions">
-                <Setter.Value>
-                    <TransitionCollection>
-                        <EntranceThemeTransition IsStaggeringEnabled="True" />
-                    </TransitionCollection>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="ItemContainerStyle">
-                <Setter.Value>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                    </Style>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="ItemTemplate">
-                <Setter.Value>
-                    <DataTemplate>
-                        <Grid Margin="0,10">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding Title}" MaxLines="1" />
-                            <TextBlock Grid.Row="1" Grid.Column="0" Opacity=".6" Text="{Binding DueDate, Converter={StaticResource DateTimeFormatConverter}, ConverterParameter='MMMM dd @ h:mm tt'}" />
-                            <TextBlock Grid.Row="1" Grid.Column="1" Opacity=".6" Text="{Binding State, Converter={StaticResource StateToStringConverter}}" HorizontalAlignment="Right" />
-                        </Grid>
-                    </DataTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
 
     </common:BootStrapper.Resources>
     

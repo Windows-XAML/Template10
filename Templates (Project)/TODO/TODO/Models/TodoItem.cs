@@ -4,9 +4,16 @@ namespace Template10.Models
 {
     public class TodoItem : Mvvm.BindableBase
     {
-        public string Key { get; set; } = Guid.NewGuid().ToString();
-        public string Title { get; set; }
-        public DateTime DueDate { get; set; } = DateTime.Now;
-        public States State { get; set; } = States.NotStarted;
+        private string _Key = default(string);
+        public string Key { get { return _Key; } set { Set(ref _Key, value); } }
+
+        private string _Title = default(string);
+        public string Title { get { return _Title; } set { Set(ref _Title, value); } }
+
+        private DateTime _DueDate = default(DateTime);
+        public DateTime DueDate { get { return _DueDate; } set { Set(ref _DueDate, value); } }
+
+        private States _State = default(States);
+        public States State { get { return _State; } set { Set(ref _State, value); } }
     }
 }

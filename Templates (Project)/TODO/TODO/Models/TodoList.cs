@@ -6,12 +6,13 @@ namespace Template10.Models
 {
     public class TodoList : Mvvm.BindableBase
     {
-        public string Key { get; set; } = Guid.NewGuid().ToString();
+        private string _Key = Guid.NewGuid().ToString();
+        public string Key { get { return _Key; } set { Set(ref _Key, value); } }
 
         private string _title;
         public string Title { get { return _title; } set { Set(ref _title, value); } }
 
-        private ObservableCollection<Models.TodoItem> _items = new ObservableCollection<TodoItem>();
-        public ObservableCollection<Models.TodoItem> Items { get { return _items; } set { Set(ref _items, value); } }
+        private ObservableCollection<Models.TodoItem> _Items = default(ObservableCollection<Models.TodoItem>);
+        public ObservableCollection<Models.TodoItem> Items { get { return _Items; } set { Set(ref _Items, value); } }
     }
 }

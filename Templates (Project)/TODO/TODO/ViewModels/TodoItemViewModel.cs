@@ -12,29 +12,7 @@ namespace Template10.ViewModels
             this.TodoItem = todo;
         }
 
-        private Models.TodoItem _todoItem;
-        public Models.TodoItem TodoItem { get { return _todoItem; } set { base.Set(ref _todoItem, value); } }
-
-        public Models.States State
-        {
-            get { return TodoItem.State; }
-            set
-            {
-                if (TodoItem.State != value)
-                {
-                    TodoItem.State = value;
-                    base.RaisePropertyChanged();
-                }
-            }
-        }
-<<<<<<< HEAD
-
-        private static IEnumerable<Models.States> stateOptions;
-        public IEnumerable<Models.States> StateOptions
-        {
-            get { return stateOptions ?? (stateOptions = Enum.GetValues(typeof(Models.States)).Cast<Models.States>()); }
-        }
-=======
->>>>>>> origin/master
+        private Models.TodoItem _TodoItem = default(Models.TodoItem);
+        public Models.TodoItem TodoItem { get { return _TodoItem; } set { Set(ref _TodoItem, value); } }
     }
 }
