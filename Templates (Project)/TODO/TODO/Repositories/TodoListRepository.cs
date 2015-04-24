@@ -63,7 +63,7 @@ namespace Template10.Repositories
                     (
                         Guid.NewGuid().ToString(),
                         "List-" + Guid.NewGuid().ToString(),
-                        _todoItemRepository.Sample(random.Next(5, 10))
+                        _todoItemRepository.Sample(random.Next(5, 30))
                     );
             }
         }

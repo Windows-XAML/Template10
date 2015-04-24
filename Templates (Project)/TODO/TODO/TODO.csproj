@@ -115,8 +115,6 @@
     <Compile Include="Common\BootStrapper.cs" />
     <Compile Include="Converters\ValueWhenConverter.cs" />
     <Compile Include="Converters\DateTimeFormatConverter.cs" />
-    <Compile Include="Converters\StateToStringConverter.cs" />
-    <Compile Include="Models\States.cs" />
     <Compile Include="Models\TodoItem.cs" />
     <Compile Include="Models\TodoList.cs" />
     <Compile Include="Mvvm\BindableBase.cs" />

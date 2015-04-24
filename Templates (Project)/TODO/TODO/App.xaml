@@ -2,12 +2,11 @@
                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
                      xmlns:c="using:Template10.Converters"
-                     xmlns:local="using:Template10" RequestedTheme="Dark">
+                     xmlns:local="using:Template10" RequestedTheme="Light">
 
     <common:BootStrapper.Resources>
 
         <c:DateTimeFormatConverter x:Name="DateTimeFormatConverter" />
-        <c:StateToStringConverter x:Name="StateToStringConverter" />
 
         <c:ValueWhenConverter x:Name="VisibleWhenZeroConverter">
             <c:ValueWhenConverter.When>

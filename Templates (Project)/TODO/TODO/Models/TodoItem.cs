@@ -13,7 +13,7 @@ namespace Template10.Models
         private DateTime _DueDate = default(DateTime);
         public DateTime DueDate { get { return _DueDate; } set { Set(ref _DueDate, value); } }
 
-        private States _State = default(States);
-        public States State { get { return _State; } set { Set(ref _State, value); } }
+        private bool _IsComplete = default(bool);
+        public bool IsComplete { get { return _IsComplete; } set { Set(ref _IsComplete, value); } }
     }
 }
