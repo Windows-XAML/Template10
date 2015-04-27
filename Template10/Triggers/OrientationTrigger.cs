@@ -45,7 +45,7 @@ namespace Template10.Triggers
         //Logic to evaluate and apply trigger value
         private void UpdateTrigger()
         {
-            SetTriggerValue(_currentOrientation == _orientation);
+            SetActive(_currentOrientation == _orientation);
         }
     }
 

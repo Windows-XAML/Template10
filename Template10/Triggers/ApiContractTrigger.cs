@@ -22,6 +22,7 @@ namespace Template10.Triggers
             get
             {
                 return _backButton;
+
             }
             set
             {
@@ -41,7 +42,7 @@ namespace Template10.Triggers
         //Evaluate and update trigger
         private void UpdateTrigger()
         {
-            SetTriggerValue(_currentBackButton == _backButton);
+            SetActive(_currentBackButton == _backButton);
         }
     }
 }

@@ -64,21 +64,21 @@ namespace Template10.Triggers
                 //if both minHeight and minWidth are set, then both conditions must be satisfied
                 if (_minHeight > 0 && _minWidth > 0)
                 {
-                    SetTriggerValue((_currentHeight >= _minHeight) && (_currentWidth >= _minWidth));
+                    SetActive((_currentHeight >= _minHeight) && (_currentWidth >= _minWidth));
                 }
                 //if only one of them is set, then only that condition needs to be satisfied
                 else if (_minHeight > 0)
                 {
-                    SetTriggerValue(_currentHeight >= _minHeight);
+                    SetActive(_currentHeight >= _minHeight);
                 }
                 else
                 {
-                    SetTriggerValue(_currentWidth >= _minWidth);
+                    SetActive(_currentWidth >= _minWidth);
                 }
             }
             else
             {
-                SetTriggerValue(false);
+                SetActive(false);
             }
         }
     }

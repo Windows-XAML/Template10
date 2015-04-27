@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:Template10.ViewModels"
     xmlns:models="using:Template10.Models"
-    x:Name="ThisPage"
+    x:Name="ThisPage" 
     mc:Ignorable="d">
 
     <Page.DataContext>
@@ -51,7 +51,8 @@
                                     <Rectangle Grid.Row="1" Fill="Black" Opacity=".1" />
                                     <TextBlock RequestedTheme="Light" Margin="24,12" FontSize="34" FontWeight="Light" Grid.Row="1" Text="{Binding TodoList.Title}" />
                                     <ScrollViewer Grid.Row="2" VerticalAlignment="Stretch">
-                                        <ListView Padding="0,0,0,12" Margin="0" Grid.Row="2" 
+                                        <ListView Padding="0,0,0,12" Margin="0" Grid.Row="2"
+                                                  IsItemClickEnabled="True" ItemClick="TodoItem_ItemClicked"
                                                   ItemsSource="{Binding Items}" VerticalAlignment="Top" 
                                                   SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
                                                   CanDrag="True" CanDragItems="True" CanReorderItems="True">
@@ -98,9 +99,18 @@
             </HubSection>
         </Hub>
 
+        <ContentDialog x:Name="TodoEditorDialog" Title="Edit Task" PrimaryButtonText="Close" d:IsHidden="True">
+            <ContentDialog.Content>
+                <StackPanel>
+                    <TextBox Header="Item Title" Width="320" Text="{Binding TodoItem.Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <DatePicker Header="Due Date" Width="320" Date="{Binding TodoItem.DueDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <CheckBox Content="Is Complete" Width="320" IsChecked="{Binding TodoItem.IsComplete, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+            </ContentDialog.Content>
+        </ContentDialog>
+        
         <!-- busy indicator -->
-        <Popup IsOpen="{Binding Busy}" Grid.ColumnSpan="10" Grid.RowSpan="10"
-               VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,200,0,0">
+        <Popup IsOpen="{Binding Busy}" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Grid Background="White">
                 <StackPanel Orientation="Horizontal" Margin="100">
                     <ProgressRing VerticalAlignment="Center" IsActive="True" />

@@ -47,7 +47,7 @@ namespace Template10.Triggers
         //Logic to evaluate and apply trigger value
         public void UpdateTrigger()
         {
-            SetTriggerValue(_triggerPointerType == _lastPointerType);
+            SetActive(_triggerPointerType == _lastPointerType);
         }
     }
 }

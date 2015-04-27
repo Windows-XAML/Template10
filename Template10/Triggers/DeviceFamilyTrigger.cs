@@ -24,9 +24,9 @@ namespace Template10.Triggers
                 _deviceFamily = value;
                 var qualifiers = Windows.ApplicationModel.Resources.Core.ResourceContext.GetForCurrentView().QualifierValues;
                 if (qualifiers.ContainsKey("DeviceFamily"))
-                    SetTriggerValue(qualifiers["DeviceFamily"] == _deviceFamily);
+                    SetActive(qualifiers["DeviceFamily"] == _deviceFamily);
                 else
-                    SetTriggerValue(false);
+                    SetActive(false);
             }
         }
     }

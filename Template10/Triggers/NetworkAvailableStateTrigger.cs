@@ -28,7 +28,7 @@ namespace Template10.Triggers
             // TODO: complete check
             if (profile != null)
                 isConnected = profile.GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess;
-            SetTriggerValue(
+            SetActive(
                  isConnected && ConnectionState == ConnectionState.Connected ||
                 !isConnected && ConnectionState == ConnectionState.Disconnected);
         }
