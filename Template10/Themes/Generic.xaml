@@ -3,16 +3,47 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Template10.Controls" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d">
 
-    <Style TargetType="controls:AutoBackButton">
+    <Style TargetType="controls:AutoNavButton">
         <Setter Property="Visibility" Value="Collapsed" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="controls:AutoBackButton">
+                <ControlTemplate TargetType="controls:AutoNavButton">
                     <Grid
 						Background="{TemplateBinding Background}"
 						Height="48" Width="48">
-                        <Button x:Name="BackButton" Background="Transparent" BorderBrush="Transparent">
-                            <SymbolIcon Symbol="Back" RequestedTheme="{TemplateBinding RequestedTheme}" />
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="EnabledGroup">
+                                <VisualState x:Name="Disabled">
+                                    <VisualState.Setters>
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Enabled">
+                                    <VisualState.Setters>
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="ModeGroup">
+                                <VisualState x:Name="Back">
+                                    <VisualState.Setters>
+                                        <Setter Target="SymbolHolder.Symbol" Value="Back" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Forward">
+                                    <VisualState.Setters>
+                                        <Setter Target="SymbolHolder.Symbol" Value="Forward" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Home">
+                                    <VisualState.Setters>
+                                        <Setter Target="SymbolHolder.Symbol" Value="Home" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Button x:Name="NavButton" Background="Transparent" BorderBrush="Transparent">
+                            <SymbolIcon x:Name="SymbolHolder" Symbol="Back" RequestedTheme="{TemplateBinding RequestedTheme}" />
                         </Button>
                     </Grid>
                 </ControlTemplate>
