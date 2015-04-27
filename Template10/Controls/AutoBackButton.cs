@@ -67,7 +67,7 @@ namespace Template10.Controls
             return Window.Current.Content as Frame;
         }
 
-        private void TryGoBack()
+        private bool TryGoBack()
         {
             // Get the frame
             var frame = FindFrame();
@@ -76,6 +76,11 @@ namespace Template10.Controls
             if ((frame != null) && (frame.CanGoBack))
             {
                 frame.GoBack();
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
         #endregion // Internal Methods
@@ -109,11 +114,8 @@ namespace Template10.Controls
             // Only process if not already handled
             if (!e.Handled)
             {
-                // We'll handle it
-                e.Handled = true;
-
-                // Go back (assuming we have a frame)
-                TryGoBack();
+                // We'll try to handle it, assuming we have a frame and can go back
+                e.Handled = TryGoBack();
             }
         }
 
