@@ -113,7 +113,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\BootStrapper.cs" />
-    <Compile Include="Controls\AutoBackButton.cs" />
+    <Compile Include="Controls\AutoNavButton.cs" />
     <Compile Include="Controls\MyGridView.cs" />
     <Compile Include="Converters\DateTimeFormatConverter.cs" />
     <Compile Include="Converters\ValueWhenConverter.cs" />
