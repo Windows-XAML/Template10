@@ -1,0 +1,22 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Template10.Controls" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d">
+
+    <Style TargetType="controls:AutoBackButton">
+        <Setter Property="Visibility" Value="Collapsed" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:AutoBackButton">
+                    <Grid
+						Background="{TemplateBinding Background}"
+						Height="48" Width="48">
+                        <Button x:Name="BackButton" Background="Transparent" BorderBrush="Transparent">
+                            <SymbolIcon Symbol="Back" RequestedTheme="{TemplateBinding RequestedTheme}" />
+                        </Button>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
