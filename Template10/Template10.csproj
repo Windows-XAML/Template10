@@ -113,9 +113,11 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\BootStrapper.cs" />
+    <Compile Include="Controls\AutoBackButton.cs" />
     <Compile Include="Controls\MyGridView.cs" />
     <Compile Include="Converters\DateTimeFormatConverter.cs" />
     <Compile Include="Converters\ValueWhenConverter.cs" />
+    <Compile Include="Extensions\WeakEvent.cs" />
     <Compile Include="Models\ColorInfo.cs" />
     <Compile Include="Mvvm\BindableBase.cs" />
     <Compile Include="Mvvm\Command.cs" />
@@ -165,7 +167,7 @@
     <Compile Include="Services\WebApiService\WebApiService.cs" />
     <Compile Include="Services\WindowService\WindowHelper.cs" />
     <Compile Include="Services\WindowService\WindowService.cs" />
-    <Compile Include="Triggers\ApiContractTrigger.cs" />
+    <Compile Include="Triggers\ApiInformationTrigger.cs" />
     <Compile Include="Triggers\ControlSizeTrigger.cs" />
     <Compile Include="Triggers\DeviceFamilyTrigger.cs" />
     <Compile Include="Triggers\InputTypeTrigger.cs" />
@@ -215,6 +217,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\DetailPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -254,9 +260,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Behaviors\" />
     <Folder Include="Design\" />
     <Folder Include="Messages\" />
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="Windows Mobile, Version=10.0.0.1">
+      <Name>Windows Mobile Extension SDK</Name>
+    </SDKReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
