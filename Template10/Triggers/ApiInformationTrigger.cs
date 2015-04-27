@@ -70,17 +70,17 @@ namespace Template10.Triggers
             // We don't want to trigger if no APIs were specified at all
             if (!anySpecified)
             {
-                SetTriggerValue(false);
+                SetActive(false);
             }
             // Are all required?
             else if (requireAll)
             {
-                SetTriggerValue(allMet);
+                SetActive(allMet);
             }
             // Only one is required
             else
             {
-                SetTriggerValue(anyMet);
+                SetActive(anyMet);
             }
         }
         #endregion // Internal Methods

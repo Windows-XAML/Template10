@@ -9,6 +9,13 @@
     xmlns:models="using:Template10.Models"
     x:Name="ThisPage" 
     mc:Ignorable="d">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///Styles/StarRadioButtonStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
 
     <Page.DataContext>
         <vm:MainPageViewModel />
@@ -17,6 +24,7 @@
     <Grid>
 
         <Hub>
+            
             <Hub.Header>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Contoso" />
@@ -26,6 +34,7 @@
                     </Grid>
                 </StackPanel>
             </Hub.Header>
+            
             <HubSection VerticalContentAlignment="Stretch" x:Name="MainHubSection">
                 <DataTemplate>
                     <ItemsControl ItemsSource="{Binding TodoLists}">
@@ -72,7 +81,10 @@
                                                 </Style>
                                             </ListView.ItemContainerStyle>
                                             <ListView.Header>
-                                                <TextBox PlaceholderText="Add a new task" Margin="24,0,24,12" />
+                                                
+                                                <!-- create new item -->
+                                                <TextBox KeyDown="TextBox_KeyDown" PlaceholderText="Add a new task" Margin="24,0,24,12" />
+                                                
                                             </ListView.Header>
                                             <ListView.ItemTemplate>
                                                 <DataTemplate>
@@ -82,10 +94,16 @@
                                                             <ColumnDefinition Width="*" />
                                                             <ColumnDefinition Width="48" />
                                                         </Grid.ColumnDefinitions>
+                                                        
+                                                        <!-- item checked -->
                                                         <CheckBox IsChecked="{Binding TodoItem.IsComplete, Mode=TwoWay}" Grid.Column="0" VerticalAlignment="Center" Height="32" Width="32" />
+                                                        <!-- item title -->
                                                         <TextBlock Grid.Column="1" VerticalAlignment="Center" Foreground="Black" Text="{Binding TodoItem.Title}" FontWeight="Normal" LineHeight="20" />
+                                                        <!-- item strikethrough -->
                                                         <Line Visibility="{Binding TodoItem.IsComplete, Converter={StaticResource VisibleWhenTrueConverter}}" Grid.Column="1" Stretch="Fill" Stroke="Black" StrokeThickness="1" X1="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,0,24,0" />
-                                                        <CheckBox Grid.Column="2" VerticalAlignment="Center" Height="32" Width="32" />
+                                                        <!-- item star -->
+                                                        <CheckBox Grid.Column="2" VerticalAlignment="Center" Height="32" Width="32" Style="{StaticResource StarCheckBoxStyle}" />
+                                                        
                                                     </Grid>
                                                 </DataTemplate>
                                             </ListView.ItemTemplate>
@@ -99,7 +117,8 @@
             </HubSection>
         </Hub>
 
-        <ContentDialog x:Name="TodoEditorDialog" Title="Edit Task" PrimaryButtonText="Close" d:IsHidden="True">
+        <!-- task editor -->
+        <ContentDialog x:Name="TodoEditorDialog" SecondaryButtonText="Close" d:IsHidden="True">
             <ContentDialog.Content>
                 <StackPanel>
                     <TextBox Header="Item Title" Width="320" Text="{Binding TodoItem.Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -108,13 +127,16 @@
                 </StackPanel>
             </ContentDialog.Content>
         </ContentDialog>
-        
+
         <!-- busy indicator -->
         <Popup IsOpen="{Binding Busy}" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Grid Background="White">
-                <StackPanel Orientation="Horizontal" Margin="100">
-                    <ProgressRing VerticalAlignment="Center" IsActive="True" />
-                    <TextBlock Foreground="DimGray" Text="Loading" FontSize="22" FontWeight="Light" Margin="12,0,0,0" />
+            <Grid Background="{ThemeResource ContentDialogBorderThemeBrush}" Height="100" Width="200">
+                <Grid.RenderTransform>
+                    <TranslateTransform X="-100" Y="-50" />
+                </Grid.RenderTransform>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <ProgressRing VerticalAlignment="Center" IsActive="True" Foreground="{ThemeResource ContentDialogDimmingThemeBrush}" />
+                    <TextBlock Foreground="{ThemeResource ContentDialogDimmingThemeBrush}" Text="Loading" FontSize="22" FontWeight="Light" Margin="12,0,0,0" />
                 </StackPanel>
             </Grid>
         </Popup>

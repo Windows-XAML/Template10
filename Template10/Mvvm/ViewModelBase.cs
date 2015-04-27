@@ -9,5 +9,7 @@ namespace Template10.Mvvm
         public virtual void OnNavigatedTo(string parameter, NavigationMode mode, Dictionary<string, object> state) { /* nothing by default */ }
 
         public virtual void OnNavigatedFrom(Dictionary<string, object> state, bool suspending) { /* nothing by default */ }
+
+        public virtual void OnNavigatingFrom(NavigatingCancelEventArgs args) { /* nothing by default */ }
     }
 }

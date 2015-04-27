@@ -82,12 +82,12 @@ namespace Template10.ViewModels
         Mvvm.Command _LoadCommand = default(Mvvm.Command);
         public Mvvm.Command LoadCommand { get { return _LoadCommand ?? (_LoadCommand = new Mvvm.Command(ExecuteLoadCommand, CanExecuteLoadCommand)); } }
         private bool CanExecuteLoadCommand() { return !Busy; }
-        private void ExecuteLoadCommand()
+        private async void ExecuteLoadCommand()
         {
             try
             {
                 Busy = true;
-                //await Task.Delay(2000);
+                await Task.Delay(2000);
                 var data = _todoListRepository.Sample(10).Select(x => new ViewModels.TodoListViewModel(x));
                 this.TodoLists.Clear();
                 foreach (var item in data.OrderBy(x => x.TodoList.Title))
@@ -110,7 +110,7 @@ namespace Template10.ViewModels
             try
             {
                 Busy = true;
-                //await Task.Delay(2000);
+                await Task.Delay(2000);
                 await _todoListRepository.SaveAsync(this.TodoLists.Select(x => x.TodoList).ToList());
             }
             finally { Busy = false; }

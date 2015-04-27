@@ -30,15 +30,15 @@ namespace Template10.ViewModels
         private bool _SelectedItemIsSelected = default(bool);
         public bool SelectedItemIsSelected { get { return _SelectedItemIsSelected; } set { Set(ref _SelectedItemIsSelected, value); } }
 
-        Mvvm.Command _AddCommand = default(Mvvm.Command);
-        public Mvvm.Command AddCommand { get { return _AddCommand ?? (_AddCommand = new Mvvm.Command(ExecuteAddCommand, CanExecuteAddCommand)); } }
-        private bool CanExecuteAddCommand() { return true; }
-        private void ExecuteAddCommand()
+        Mvvm.Command<string> _AddCommand = default(Mvvm.Command<string>);
+        public Mvvm.Command<string> AddCommand { get { return _AddCommand ?? (_AddCommand = new Mvvm.Command<string>(ExecuteAddCommand, CanExecuteAddCommand)); } }
+        private bool CanExecuteAddCommand(string title) { return true; }
+        private void ExecuteAddCommand(string title)
         {
             try
             {
                 var index = this.Items.IndexOf(this.SelectedItem);
-                var item = new ViewModels.TodoItemViewModel(_todoItemRepository.Factory(title: "New Task"));
+                var item = new ViewModels.TodoItemViewModel(_todoItemRepository.Factory(title: title));
                 this.TodoList.Items.Insert((index > -1) ? index : 0, item.TodoItem);
                 this.Items.Insert((index > -1) ? index : 0, item);
                 this.SelectedItem = item;

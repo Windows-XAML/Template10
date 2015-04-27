@@ -45,7 +45,7 @@ namespace Template10.Triggers
             {
                 currentOrientation = ApplicationViewOrientation.Portrait;
             }
-            SetTriggerValue(currentOrientation == orientation);
+            SetActive(currentOrientation == orientation);
         }
         #endregion // Internal Methods
 
