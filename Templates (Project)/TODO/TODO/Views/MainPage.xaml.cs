@@ -1,4 +1,6 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using Windows.ApplicationModel.Core;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace Template10.Views
 {
@@ -8,16 +10,11 @@ namespace Template10.Views
         {
             this.InitializeComponent();
             this.ViewModel = this.DataContext as ViewModels.MainPageViewModel;
-            Loaded += (s, e) => Windows.UI.Xaml.Window.Current.SizeChanged += Current_SizeChanged;
-            Unloaded += (s, e)=> Windows.UI.Xaml.Window.Current.SizeChanged -= Current_SizeChanged; 
+            CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar= true;
+            Window.Current.SetTitleBar(AppTitle);
         }
 
         ViewModels.MainPageViewModel ViewModel { get; set; }
-
-        private void Current_SizeChanged(object sender, Windows.UI.Core.WindowSizeChangedEventArgs e)
-        {
-            throw new System.NotImplementedException();
-        }
 
         private async void TodoItem_ItemClicked(object sender, ItemClickEventArgs e)
         {

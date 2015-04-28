@@ -24,17 +24,17 @@
     <Grid>
 
         <Hub>
-            
+
             <Hub.Header>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Contoso" />
+                    <TextBlock Text="Contoso" x:Name="AppTitle" />
                     <Grid>
                         <Ellipse Stroke="Black" StrokeThickness="1" Margin="9" VerticalAlignment="Top" Height="32" Width="32" />
                         <AppBarButton Icon="Add" Command="{Binding AddListCommand}" Foreground="Black" />
                     </Grid>
                 </StackPanel>
             </Hub.Header>
-            
+
             <HubSection VerticalContentAlignment="Stretch" x:Name="MainHubSection">
                 <DataTemplate>
                     <ItemsControl ItemsSource="{Binding TodoLists}">
@@ -81,10 +81,10 @@
                                                 </Style>
                                             </ListView.ItemContainerStyle>
                                             <ListView.Header>
-                                                
+
                                                 <!-- create new item -->
                                                 <TextBox KeyDown="TextBox_KeyDown" PlaceholderText="Add a new task" Margin="24,0,24,12" />
-                                                
+
                                             </ListView.Header>
                                             <ListView.ItemTemplate>
                                                 <DataTemplate>
@@ -94,7 +94,7 @@
                                                             <ColumnDefinition Width="*" />
                                                             <ColumnDefinition Width="48" />
                                                         </Grid.ColumnDefinitions>
-                                                        
+
                                                         <!-- item checked -->
                                                         <CheckBox IsChecked="{Binding TodoItem.IsComplete, Mode=TwoWay}" Grid.Column="0" VerticalAlignment="Center" Height="32" Width="32" />
                                                         <!-- item title -->
@@ -102,8 +102,8 @@
                                                         <!-- item strikethrough -->
                                                         <Line Visibility="{Binding TodoItem.IsComplete, Converter={StaticResource VisibleWhenTrueConverter}}" Grid.Column="1" Stretch="Fill" Stroke="Black" StrokeThickness="1" X1="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,0,24,0" />
                                                         <!-- item star -->
-                                                        <CheckBox Grid.Column="2" VerticalAlignment="Center" Height="32" Width="32" Style="{StaticResource StarCheckBoxStyle}" />
-                                                        
+                                                        <CheckBox IsChecked="{Binding TodoItem.IsFavorite, Mode=TwoWay}" Grid.Column="2" VerticalAlignment="Center" Height="32" Width="32" Style="{StaticResource StarCheckBoxStyle}" />
+
                                                     </Grid>
                                                 </DataTemplate>
                                             </ListView.ItemTemplate>
@@ -118,12 +118,30 @@
         </Hub>
 
         <!-- task editor -->
-        <ContentDialog x:Name="TodoEditorDialog" SecondaryButtonText="Close" d:IsHidden="True">
+        <ContentDialog x:Name="TodoEditorDialog" Title=" " SecondaryButtonText="Close" d:IsHidden="True">
             <ContentDialog.Content>
-                <StackPanel>
-                    <TextBox Header="Item Title" Width="320" Text="{Binding TodoItem.Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    <DatePicker Header="Due Date" Width="320" Date="{Binding TodoItem.DueDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    <CheckBox Content="Is Complete" Width="320" IsChecked="{Binding TodoItem.IsComplete, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <StackPanel Margin="12,0,0,0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="48" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" VerticalAlignment="Top">
+                            <!-- item checked -->
+                            <CheckBox IsChecked="{Binding TodoItem.IsComplete, Mode=TwoWay}" Height="32" Width="32" />
+                            <!-- item star -->
+                            <CheckBox IsChecked="{Binding TodoItem.IsFavorite, Mode=TwoWay}" Height="32" Width="32" Style="{StaticResource StarCheckBoxStyle}" />
+                        </StackPanel>
+
+                        <!-- item details -->
+                        <StackPanel Grid.Column="1" MaxWidth="300">
+                            <TextBox Width="300" Text="{Binding TodoItem.Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox Width="300" Height="96" Margin="0,12,0,0" Header="Details" Text="{Binding TodoItem.Details, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <DatePicker Width="300" Margin="0,12,0,0" Header="Due Date" Date="{Binding TodoItem.DueDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+
+                    </Grid>
                 </StackPanel>
             </ContentDialog.Content>
         </ContentDialog>

@@ -15,5 +15,11 @@ namespace Template10.Models
 
         private bool _IsComplete = default(bool);
         public bool IsComplete { get { return _IsComplete; } set { Set(ref _IsComplete, value); } }
+
+        private string _Details = default(string);
+        public string Details { get { return _Details; } set { Set(ref _Details, value); } }
+
+        private bool _IsFavorite = default(bool);
+        public bool IsFavorite { get { return _IsFavorite; } set { Set(ref _IsFavorite, value); } }
     }
 }
