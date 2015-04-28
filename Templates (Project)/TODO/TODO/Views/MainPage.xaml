@@ -51,10 +51,15 @@
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="*" />
                                     </Grid.RowDefinitions>
-                                    <CommandBar RequestedTheme="Dark" Grid.Row="0" VerticalAlignment="Bottom" ClosedDisplayMode="Minimal">
+                                    <CommandBar Grid.Row="0" VerticalAlignment="Bottom" ClosedDisplayMode="Minimal" Background="DimGray">
                                         <CommandBar.SecondaryCommands>
-                                            <AppBarButton Label="Delete list" Command="{Binding DataContext.RemoveListCommand, ElementName=MainHubSection}" CommandParameter="{Binding}" />
-                                            <AppBarButton Label="Delete selected task" Command="{Binding RemoveCommand}" />
+                                            <AppBarButton Label="Delete list">
+                                                <AppBarButton.Flyout>
+                                                    <Flyout Placement="Bottom">
+                                                        <Button Content="Are you sure?" Command="{Binding DataContext.RemoveListCommand, ElementName=MainHubSection}" CommandParameter="{Binding}" />
+                                                    </Flyout>
+                                                </AppBarButton.Flyout>
+                                            </AppBarButton>
                                         </CommandBar.SecondaryCommands>
                                     </CommandBar>
                                     <Rectangle Grid.Row="1" Fill="Black" Opacity=".1" />
@@ -118,7 +123,8 @@
         </Hub>
 
         <!-- task editor -->
-        <ContentDialog x:Name="TodoEditorDialog" Title=" " SecondaryButtonText="Close" d:IsHidden="True">
+        <ContentDialog x:Name="TodoEditorDialog" Title=" " PrimaryButtonText="Close" d:IsHidden="True"
+                       SecondaryButtonText="Delete" SecondaryButtonCommand="{Binding RemoveCommand}">
             <ContentDialog.Content>
                 <StackPanel Margin="12,0,0,0">
                     <Grid>
