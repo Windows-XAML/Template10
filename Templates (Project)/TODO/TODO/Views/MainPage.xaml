@@ -63,7 +63,10 @@
                                         </CommandBar.SecondaryCommands>
                                     </CommandBar>
                                     <Rectangle Grid.Row="1" Fill="Black" Opacity=".1" />
-                                    <TextBlock RequestedTheme="Light" Margin="24,12" FontSize="34" FontWeight="Light" Grid.Row="1" Text="{Binding TodoList.Title}" />
+                                    
+                                    <!-- list title -->
+                                    <TextBlock Tapped="List_Tapped" RequestedTheme="Light" Margin="24,12" FontSize="34" FontWeight="Light" Grid.Row="1" Text="{Binding TodoList.Title}" />
+                                    
                                     <ScrollViewer Grid.Row="2" VerticalAlignment="Stretch">
                                         <ListView Padding="0,0,0,12" Margin="0" Grid.Row="2"
                                                   IsItemClickEnabled="True" ItemClick="TodoItem_ItemClicked"
@@ -121,6 +124,19 @@
                 </DataTemplate>
             </HubSection>
         </Hub>
+
+        <!-- list editor -->
+        <ContentDialog x:Name="ListEditorDialog" Title=" " PrimaryButtonText="Close" d:IsHidden="True"
+                       SecondaryButtonText="Delete">
+            <ContentDialog.Content>
+                <StackPanel Margin="12,0,0,0" MaxWidth="300">
+
+                    <!-- item details -->
+                    <TextBox Width="300" Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                </StackPanel>
+            </ContentDialog.Content>
+        </ContentDialog>
 
         <!-- task editor -->
         <ContentDialog x:Name="TodoEditorDialog" Title=" " PrimaryButtonText="Close" d:IsHidden="True"
