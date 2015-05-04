@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 
-namespace Template10
+namespace Blank1
 {
     sealed partial class App : Common.BootStrapper
     {

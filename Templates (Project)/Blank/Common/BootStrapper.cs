@@ -6,7 +6,7 @@ using Windows.ApplicationModel;
 using Windows.UI.Xaml.Controls;
 using Windows.ApplicationModel.Activation;
 
-namespace Template10.Common
+namespace Blank1.Common
 {
     // BootStrapper is a drop-in replacement of Application
     // - OnInitializeAsync is the first in the pipeline, if launching

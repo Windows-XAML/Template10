@@ -3,7 +3,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace Template10.Services.NavigationService
+namespace Blank1.Services.NavigationService
 {
     public class NavigationService
     {
