@@ -1,0 +1,109 @@
+﻿<Application xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <!-- Insert the Application.Resource element if it's missing -->
+  <Application.Resources xdt:Transform="InsertIfMissing" />
+
+  <!-- insert two dummy objects so that selection for ResourceDictionary always succeeds -->
+  <Application.Resources xdt:Transform="Insert" x:Key="TempResources1">
+    <ResourceDictionary>
+    </ResourceDictionary>
+  </Application.Resources>
+
+  <Application.Resources xdt:Transform="Insert" x:Key="TempResources2">
+  </Application.Resources>
+
+  <!-- We now have 3 Application.Resources elements: the "final" one that may or may not have a ResourceDictionary, and 2 "temp" ones, one 
+       that has a ResourceDictionary, one that does not -->
+
+  <!-- Deal with the ResourceDictionary case -->
+  <Application.Resources xdt:Locator="Condition(count(*[local-name() = 'ResourceDictionary' and namespace-uri() = 'http://schemas.microsoft.com/winfx/2006/xaml/presentation'])!=0)">
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries xdt:Transform="InsertIfMissing">
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
+  
+  <Application.Resources xdt:Locator="Condition(count(*[local-name() = 'ResourceDictionary' and namespace-uri() = 'http://schemas.microsoft.com/winfx/2006/xaml/presentation'])!=0)">
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary xdt:Transform="Insert" AiTemp="Marker">
+        </ResourceDictionary>
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
+
+  <Application.Resources xdt:Locator="Condition(count(*[local-name() = 'ResourceDictionary' and namespace-uri() = 'http://schemas.microsoft.com/winfx/2006/xaml/presentation'])!=0)">
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary xdt:Transform="RemoveAll" xdt:Locator="Condition(TelemetryClient/@x:Key='ApplicationInsightsBootstrapper')">
+          <ai:TelemetryClient xdt:Locator="Match(x:Key)" x:Key="ApplicationInsightsBootstrapper" xmlns:ai="using:Microsoft.ApplicationInsights" />
+        </ResourceDictionary>
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
+  
+  <Application.Resources xdt:Locator="Condition(count(*[local-name() = 'ResourceDictionary' and namespace-uri() = 'http://schemas.microsoft.com/winfx/2006/xaml/presentation'])!=0)">
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary xdt:Locator="XPath(//*[local-name() = 'ResourceDictionary' and namespace-uri() = 'http://schemas.microsoft.com/winfx/2006/xaml/presentation' and @AiTemp = 'Marker'])">
+          <ai:Temp xdt:Transform="InsertIfMissing" xmlns:ai="http://schemas.microsoft.com/ApplicationInsights/2013/Settings" />
+        </ResourceDictionary>
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
+
+  <Application.Resources xdt:Locator="Condition(count(*[local-name() = 'ResourceDictionary' and namespace-uri() = 'http://schemas.microsoft.com/winfx/2006/xaml/presentation'])!=0)">
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary xdt:Transform="RemoveAttributes(AiTemp)" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
+
+  <Application.Resources xdt:Locator="Condition(count(*[local-name() = 'ResourceDictionary' and namespace-uri() = 'http://schemas.microsoft.com/winfx/2006/xaml/presentation'])!=0)">
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary>
+          <ai:TelemetryClient xdt:Transform="InsertBefore(//*[local-name() = 'Temp' and namespace-uri() = 'http://schemas.microsoft.com/ApplicationInsights/2013/Settings']/../*[1])" x:Key="ApplicationInsightsBootstrapper" xmlns:ai="using:Microsoft.ApplicationInsights" />
+        </ResourceDictionary>
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
+  
+  <Application.Resources xdt:Locator="Condition(count(*[local-name() = 'ResourceDictionary' and namespace-uri() = 'http://schemas.microsoft.com/winfx/2006/xaml/presentation'])!=0)">
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary>
+          <ai:Temp xdt:Transform="Remove" xmlns:ai="http://schemas.microsoft.com/ApplicationInsights/2013/Settings" />
+        </ResourceDictionary>
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
+
+  <!-- Deal with the non-ResourceDictionary case -->
+  <Application.Resources xdt:Locator="Condition(count(*[local-name() = 'ResourceDictionary' and namespace-uri() = 'http://schemas.microsoft.com/winfx/2006/xaml/presentation']) = 0])">
+    <ai:TelemetryClient xdt:Transform="Remove" xdt:Locator="Match(x:Key)" x:Key="ApplicationInsightsBootstrapper" xmlns:ai="using:Microsoft.ApplicationInsights" />
+  </Application.Resources>
+
+  <Application.Resources xdt:Locator="Condition(count(*[local-name() = 'ResourceDictionary' and namespace-uri() = 'http://schemas.microsoft.com/winfx/2006/xaml/presentation']) = 0])">
+    <ai:Temp xdt:Transform="InsertIfMissing" xmlns:ai="http://schemas.microsoft.com/ApplicationInsights/2013/Settings" />
+  </Application.Resources>
+
+  <Application.Resources xdt:Locator="Condition(count(*[local-name() = 'ResourceDictionary' and namespace-uri() = 'http://schemas.microsoft.com/winfx/2006/xaml/presentation']) = 0])">
+    <ai:TelemetryClient xdt:Transform="InsertBefore(//*[local-name() = 'Temp' and namespace-uri() = 'http://schemas.microsoft.com/ApplicationInsights/2013/Settings']/../*[1])" x:Key="ApplicationInsightsBootstrapper" xmlns:ai="using:Microsoft.ApplicationInsights" />
+  </Application.Resources>
+
+  <Application.Resources xdt:Locator="Condition(count(*[local-name() = 'ResourceDictionary' and namespace-uri() = 'http://schemas.microsoft.com/winfx/2006/xaml/presentation']) = 0])">
+    <ai:Temp xdt:Transform="Remove" xmlns:ai="http://schemas.microsoft.com/ApplicationInsights/2013/Settings" />
+  </Application.Resources>
+
+  <!-- Delete temp Application.Resources elements -->
+  <Application.Resources xdt:Transform="Remove" x:Key="TempResources1" xdt:Locator="Match(x:Key)">
+  </Application.Resources>
+
+  <Application.Resources xdt:Transform="Remove" x:Key="TempResources2" xdt:Locator="Match(x:Key)">
+  </Application.Resources>
+
+</Application>

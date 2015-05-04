@@ -1,0 +1,57 @@
+﻿<Application xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <!-- insert two dummy objects so that selection for ResourceDictionary always succeeds -->
+  <Application.Resources xdt:Transform="Insert" x:Key="TempResources1">
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary>
+          <ai:Temp xmlns:ai="http://schemas.microsoft.com/ApplicationInsights/2013/Settings" />
+        </ResourceDictionary>
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
+
+  <Application.Resources xdt:Transform="Insert" x:Key="TempResources2">
+    <ai:Temp xmlns:ai="http://schemas.microsoft.com/ApplicationInsights/2013/Settings" />
+  </Application.Resources>
+
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary>
+          <ai:TelemetryClient xdt:Transform="RemoveAll" xdt:Locator="Match(x:Key)" x:Key="ApplicationInsightsBootstrapper" xmlns:ai="using:Microsoft.ApplicationInsights" />
+        </ResourceDictionary>
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
+
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary xdt:Transform="RemoveAll" xdt:Locator="Condition(count(*) = 0 and (@Source = '' or boolean(@Source) = false))" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
+
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries xdt:Transform="Remove" xdt:Locator="Condition(count(*)=0)" />
+    </ResourceDictionary>
+  </Application.Resources>
+
+  <Application.Resources>
+    <ai:TelemetryClient xdt:Transform="RemoveAll" xdt:Locator="Match(x:Key)" x:Key="ApplicationInsightsBootstrapper" xmlns:ai="using:Microsoft.ApplicationInsights" />
+  </Application.Resources>
+
+  <Application.Resources xdt:Transform="Remove" xdt:Locator="Condition(count(*)=0)" />
+
+  <!-- Delete temp Application.Resources elements -->
+  <Application.Resources xdt:Transform="Remove" x:Key="TempResources1" xdt:Locator="Match(x:Key)">
+  </Application.Resources>
+
+  <Application.Resources xdt:Transform="Remove" x:Key="TempResources2" xdt:Locator="Match(x:Key)">
+  </Application.Resources>
+
+</Application>

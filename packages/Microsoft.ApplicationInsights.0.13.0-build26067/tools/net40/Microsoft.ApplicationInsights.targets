@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <!-- Used by the project to display user-friendly errors when the targets file is missing  -->
+    <ApplicationInsightsImported>true</ApplicationInsightsImported>
+  </PropertyGroup>
+  
+  <!--
+    Create Application Insights references for C++ projects, which NuGet does not support automatically.
+    We don't want to do this for other project types because references added through MSBuild files are not picked up by IntelliSense until the project is reloaded.
+  -->
+  <ItemGroup Condition="'$(ProjectExt)' == '.vcxproj'">
+    <Reference Include="Microsoft.ApplicationInsights">
+      <HintPath>$(MSBuildThisFileDirectory)..\..\lib\portable-win81+wpa81\Microsoft.ApplicationInsights.winmd</HintPath>
+      <IsWinMDFile>true</IsWinMDFile>
+    </Reference>
+  </ItemGroup>
+  
+  <Target Name="CreateApplicationInsightsConfigItemsForIncrementalBuild">
+    <ItemGroup>
+      <OriginalApplicationInsightsConfig Include="@(None);@(Content)" Condition="'%(FileName)%(Extension)' == 'ApplicationInsights.config'" />
+      <_IntermediateApplicationInsightsConfig Include="@(OriginalApplicationInsightsConfig->'$(IntermediateOutputPath)%(FileName)%(Extension)')" />
+      <IntermediateApplicationInsightsConfig Include="@(_IntermediateApplicationInsightsConfig->'%(FullPath)')" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="PrepareIntermediateApplicationInsightsConfig"
+          DependsOnTargets="CreateApplicationInsightsConfigItemsForIncrementalBuild"
+          Inputs="@(OriginalApplicationInsightsConfig)"
+          Outputs="@(IntermediateApplicationInsightsConfig)">
+    
+    <!-- Copy original ApplicaitonInsights.config to the intermediate directory -->
+    <Copy SourceFiles="@(OriginalApplicationInsightsConfig)" DestinationFiles="@(IntermediateApplicationInsightsConfig)" />
+
+    <!-- Register intermediate config file for removal by the Clean target -->
+    <ItemGroup>
+      <FileWrites Include="@(IntermediateApplicationInsightsConfig)" />
+    </ItemGroup>
+
+    <!-- Enable DeveloperMode when building in Visual Studio in Debug configuration -->
+    <EnableDeveloperMode ConfigurationFile="@(IntermediateApplicationInsightsConfig)"
+                         Condition="'$(BuildingInsideVisualStudio)' == 'true' and '$(Configuration)' == 'Debug'" />
+  </Target>
+
+  <Target Name="CopyApplicationInsightsConfigToOutputDirectory" 
+          BeforeTargets="GetCopyToOutputDirectoryItems" 
+          DependsOnTargets="PrepareIntermediateApplicationInsightsConfig">
+    <ItemGroup>
+      <!-- Remove the existing ContentWithTargetPath item of the original ApplicationInsights.config to prevent collision with the intermediate one we need to copy to output directory -->
+      <ContentWithTargetPath Remove="@(OriginalApplicationInsightsConfig)" />
+
+      <!-- Create a ContentWithTargetPath item to make sure the intermediate ApplicationInsights.config gets copied to the output directory by Microsoft.Common.CurrentVersion.targets -->
+      <ContentWithTargetPath Include="@(IntermediateApplicationInsightsConfig)">
+        <TargetPath>%(FileName)%(Extension)</TargetPath>
+        <!-- Always overwrite output copy with intermediate to guarantee that switching configurations updates output copy correctly -->
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </ContentWithTargetPath>
+    </ItemGroup>
+  </Target>
+
+  <Target Name="PackageApplicationInsightsConfig" 
+          BeforeTargets="ContentFilesProjectOutputGroup" 
+          DependsOnTargets="PrepareIntermediateApplicationInsightsConfig">
+    <!-- Create a ContentFilesProjectOutputGroupOutput item to make sure intermediate ApplicationInsights.config gets included in the AppX package by Microsoft.AppXPackage.targets -->
+    <ItemGroup>
+      <ContentFilesProjectOutputGroupOutput Include="@(IntermediateApplicationInsightsConfig)">
+        <TargetPath>%(FileName)%(Extension)</TargetPath>
+      </ContentFilesProjectOutputGroupOutput>
+    </ItemGroup>
+  </Target>
+
+  <UsingTask TaskName="EnableDeveloperMode" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v12.0.dll">
+    <ParameterGroup>
+      <ConfigurationFile ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Reference Include="System.Xml" />
+      <Reference Include="System.Xml.Linq" />
+      <Using Namespace="System" />
+      <Using Namespace="System.Xml.Linq" />
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+            XNamespace xmlns = "http://schemas.microsoft.com/ApplicationInsights/2013/Settings";
+            XDocument document = XDocument.Load(this.ConfigurationFile);
+
+            XName elementName = xmlns + "TelemetryChannel";
+            XElement telemetryChannel = document.Root.Element(elementName);
+            if (telemetryChannel == null)
+            {
+                telemetryChannel = new XElement(elementName);
+                document.Root.Add(telemetryChannel);
+            }
+
+            elementName = xmlns + "DeveloperMode";
+            XElement developerMode = telemetryChannel.Element(elementName);
+            if (developerMode == null)
+            {
+                developerMode = new XElement(elementName);
+                telemetryChannel.Add(developerMode);
+                developerMode.Value = "true";
+                document.Save(this.ConfigurationFile);
+            }
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+</Project>

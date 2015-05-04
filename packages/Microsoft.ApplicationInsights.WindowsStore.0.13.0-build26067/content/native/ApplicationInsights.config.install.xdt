@@ -1,0 +1,17 @@
+<ApplicationInsights schemaVersion="2014-05-30" xdt:Transform="SetAttributes" xmlns="http://schemas.microsoft.com/ApplicationInsights/2013/Settings" xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+      
+  <ContextInitializers xdt:Transform="InsertIfMissing">
+    <Add xdt:Transform="InsertIfMissing" xdt:Locator="Match(Type)" Type="Microsoft.ApplicationInsights.Extensibility.ComponentContextInitializer, Microsoft.ApplicationInsights" />
+    <Add xdt:Transform="InsertIfMissing" xdt:Locator="Match(Type)" Type="Microsoft.ApplicationInsights.Extensibility.DeviceContextInitializer, Microsoft.ApplicationInsights" />
+  </ContextInitializers>
+      
+  <TelemetryInitializers xdt:Transform="InsertIfMissing">
+    <Add xdt:Transform="InsertIfMissing" xdt:Locator="Match(Type)" Type="Microsoft.ApplicationInsights.Extensibility.StoreAppSessionInitializer, Microsoft.ApplicationInsights" />
+    <Add xdt:Transform="InsertIfMissing" xdt:Locator="Match(Type)" Type="Microsoft.ApplicationInsights.Extensibility.StoreAppUserInitializer, Microsoft.ApplicationInsights" />
+  </TelemetryInitializers>
+
+  <TelemetryModules xdt:Transform="InsertIfMissing">
+    <Add xdt:Transform="InsertIfMissing" xdt:Locator="Match(Type)" Type="Microsoft.ApplicationInsights.Extensibility.Windows.PageViewTelemetryModule, Microsoft.ApplicationInsights.Extensibility.Windows" />
+  </TelemetryModules>
+
+</ApplicationInsights>

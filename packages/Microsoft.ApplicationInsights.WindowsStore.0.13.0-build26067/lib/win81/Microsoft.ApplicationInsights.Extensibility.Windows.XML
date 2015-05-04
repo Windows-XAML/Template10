@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+    <assembly>
+        <name>Microsoft.ApplicationInsights.Extensibility.Windows</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.Windows.PageViewTelemetryModule">
+            <summary>
+            A module that deals in PageView events and will create PageViewTelemetry objects when triggered.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Windows.PageViewTelemetryModule.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.Extensibility.Windows.PageViewTelemetryModule" /> class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Windows.PageViewTelemetryModule.Initialize(Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration)">
+            <summary>
+            Initialize method is called after all configuration properties have been loaded from the configuration.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Windows.PageViewTelemetryModule.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.Windows.UnhandledExceptionTelemetryModule">
+            <summary>
+            A module that deals in Exception events and will create ExceptionTelemetry objects when triggered.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Windows.UnhandledExceptionTelemetryModule.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.Extensibility.Windows.UnhandledExceptionTelemetryModule" /> class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Windows.UnhandledExceptionTelemetryModule.Dispose">
+            <summary>
+            Unsubscribes from the <see cref="E:Windows.UI.Xaml.Application.UnhandledException" /> event.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Windows.UnhandledExceptionTelemetryModule.Initialize(Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration)">
+            <summary>
+            Subscribes to unhandled event notifications.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.Windows.UnhandledExceptionTransmitter">
+            <summary>
+            A transmitter that will immediately send whatever telemetry we want to transmit immediately.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Windows.UnhandledExceptionTransmitter.EnqueueAsync(Microsoft.ApplicationInsights.Channel.Transmission)">
+            <summary>
+            Transmits the <paramref name="transmission" />.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Windows.UnhandledExceptionTransmitter.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+    </members>
+</doc>

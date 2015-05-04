@@ -1,0 +1,5 @@
+<ApplicationInsights schemaVersion="2014-05-30" xdt:Transform="SetAttributes" xmlns="http://schemas.microsoft.com/ApplicationInsights/2013/Settings" xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+  <TelemetryModules xdt:Transform="InsertIfMissing">
+    <Add xdt:Transform="InsertIfMissing" xdt:Locator="Match(Type)" Type="Microsoft.ApplicationInsights.Extensibility.Implementation.Tracing.DiagnosticsTelemetryModule, Microsoft.ApplicationInsights" />
+  </TelemetryModules>
+</ApplicationInsights>
