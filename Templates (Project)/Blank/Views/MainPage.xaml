@@ -1,25 +1,33 @@
 ﻿<Page
-    x:Class="Blank1.Views.MainPage"
+    x:Class="Template10.Views.MainPage"
+    xmlns:local="using:Template10.Views"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Blank1.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Template10.ViewModels"
     mc:Ignorable="d">
+    
+    <Page.DataContext>
+        <vm:MainPageViewModel />
+    </Page.DataContext>
 
-    <Hub Header="Hello Template 10" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Hub Header="{Binding Value}" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-        <HubSection>
+        <HubSection Header="{x:Bind ViewModel.Value}">
             <DataTemplate>
                 <Grid>
-                    <!-- content -->
                     <StackPanel>
-                        <HyperlinkButton Click="LaunchUri">https://github.com/Windows-XAML/Blank1</HyperlinkButton>
+
+                        <!-- content -->
+                        <HyperlinkButton 
+                            Content="View source on github"
+                            NavigateUri="https://github.com/Windows-XAML" />
+
                     </StackPanel>
                 </Grid>
             </DataTemplate>
         </HubSection>
 
     </Hub>
-    
 </Page>

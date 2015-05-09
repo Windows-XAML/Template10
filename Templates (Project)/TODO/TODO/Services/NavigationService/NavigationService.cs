@@ -1,4 +1,5 @@
 ﻿using System;
+using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -20,6 +21,15 @@ namespace Template10.Services.NavigationService
             _frame.Navigated += (s, e) => NavigateTo(e.NavigationMode, e.Parameter);
         }
 
+        public IPropertySet State(Type type)
+        {
+            var key = string.Format("{0}", type);
+            var data = Windows.Storage.ApplicationData.Current;
+            var page = data.LocalSettings.CreateContainer("PageState", Windows.Storage.ApplicationDataCreateDisposition.Always);
+            var container = page.CreateContainer(key, Windows.Storage.ApplicationDataCreateDisposition.Always);
+            return container.Values;
+        }
+
         void NavigateFrom(bool suspending)
         {
             var page = _frame.Content as FrameworkElement;
@@ -28,7 +38,7 @@ namespace Template10.Services.NavigationService
                 var dataContext = page.DataContext as INavigatable;
                 if (dataContext != null)
                 {
-                    dataContext.OnNavigatedFrom(null, suspending);
+                    dataContext.OnNavigatedFrom(State(this.CurrentPageType), suspending);
                 }
             }
         }
@@ -49,7 +59,7 @@ namespace Template10.Services.NavigationService
                 var dataContext = page.DataContext as INavigatable;
                 if (dataContext != null)
                 {
-                    dataContext.OnNavigatedTo(parameter, mode, null);
+                    dataContext.OnNavigatedTo(parameter, mode, State(page.GetType()));
                 }
             }
         }

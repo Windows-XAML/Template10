@@ -1,20 +1,16 @@
-﻿using System;
-using Windows.System;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+﻿using Windows.UI.Xaml.Controls;
 
-namespace Blank1.Views
+namespace Template10.Views
 {
     public sealed partial class MainPage : Page
     {
         public MainPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
+            this.DataContextChanged += (s, e) => ViewModel = DataContext as ViewModels.MainPageViewModel;
         }
 
-        private async void LaunchUri(object sender, RoutedEventArgs e)
-        {
-            await Launcher.LaunchUriAsync(new Uri((sender as HyperlinkButton).Content.ToString()));
-        }
+        // strongly-typed view models enable x:bind
+        public ViewModels.MainPageViewModel ViewModel { get; set; }
     }
 }
