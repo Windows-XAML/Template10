@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Template10.Mvvm;
 using Template10.Services.NavigationService;
+using Windows.ApplicationModel.Store;
 using Windows.UI.Xaml.Navigation;
 
 namespace Template10.ViewModels
@@ -121,6 +122,6 @@ namespace Template10.ViewModels
             finally { Busy = false; }
         }
 
-        #endregion  
+        #endregion
     }
 }

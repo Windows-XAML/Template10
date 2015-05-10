@@ -10,17 +10,21 @@
     x:Name="ThisPage" 
     mc:Ignorable="d">
 
+    <!--#region Resources -->
+
     <Page.Resources>
         <ResourceDictionary>
-            <DataTemplate x:Key="TodoListTemplate">
-                <Grid Width="456" VerticalAlignment="Top" Margin="0,0,12,12" MaxHeight="{Binding Path=ActualHeight, FallbackValue=500, ElementName=HorizontalItems}">
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\Styles\StarRadioButtonStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
 
-                    <Grid.Resources>
-                        <SolidColorBrush x:Key="PrimaryBrush" Color="SteelBlue" />
-                        <ElementTheme x:Key="PrimaryTheme">Dark</ElementTheme>
-                        <SolidColorBrush x:Key="SecondaryBrush" Color="Gainsboro" />
-                        <ElementTheme x:Key="SecondaryTheme">Dark</ElementTheme>
-                    </Grid.Resources>
+            <SolidColorBrush x:Key="PrimaryBrush" Color="SteelBlue" />
+            <ElementTheme x:Key="PrimaryTheme">Dark</ElementTheme>
+            <SolidColorBrush x:Key="SecondaryBrush" Color="Gainsboro" />
+            <ElementTheme x:Key="SecondaryTheme">Dark</ElementTheme>
+            
+            <DataTemplate x:Key="TodoListTemplate">
+                <Grid Width="456" VerticalAlignment="Stretch" Margin="0,0,12,12">
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -87,17 +91,20 @@
                     </ListView>
                 </Grid>
             </DataTemplate>
+
         </ResourceDictionary>
     </Page.Resources>
+
+    <!--#endregion-->
 
     <Page.DataContext>
         <vm:MainPageViewModel />
     </Page.DataContext>
 
     <Grid>
-        
+
         <!--#region Visual States -->
-        
+
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
                 <VisualStateGroup.Transitions>
@@ -151,7 +158,7 @@
         </VisualStateManager.VisualStateGroups>
 
         <!--#endregion-->
-        
+
         <Grid>
 
             <Grid.RowDefinitions>
@@ -164,16 +171,6 @@
                 <!-- bottom app bar -->
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-
-            <!-- advert -->
-            <Rectangle Height="400" Width="150" Fill="Red" Margin="12" 
-                       VerticalAlignment="Top"
-                       Grid.Column="1" Grid.Row="2" />
 
             <!-- page title -->
             <Rectangle Grid.Row="0" x:Name="AppTitle" />
@@ -196,23 +193,25 @@
             </CommandBar>
 
             <!-- horizontal view -->
-            <ScrollViewer Grid.Row="2" x:Name="HorizontalView"
-                          HorizontalScrollBarVisibility="Auto" HorizontalScrollMode="Auto"
-                          VerticalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled">
-                <ItemsControl ItemsSource="{Binding TodoLists}" x:Name="HorizontalItems"
-                              ItemTemplate="{StaticResource TodoListTemplate}"
-                              Margin="12,12,0,0">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal" />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                </ItemsControl>
-            </ScrollViewer>
+            <Hub Grid.Row="2" x:Name="HorizontalView">
+                <HubSection VerticalContentAlignment="Stretch">
+                    <DataTemplate>
+                        <ItemsControl ItemsSource="{Binding TodoLists}"
+                              ItemTemplate="{StaticResource TodoListTemplate}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </DataTemplate>
+                </HubSection>
+            </Hub>
 
             <!-- vertical view -->
             <Pivot Grid.Row="2" x:Name="VerticalView"
                    ItemsSource="{Binding TodoLists}"
+                   VerticalContentAlignment="Stretch"
                    SelectedItem="{Binding SelectedTodoList, Mode=TwoWay}"
                    ItemTemplate="{StaticResource TodoListTemplate}">
                 <Pivot.HeaderTemplate>
