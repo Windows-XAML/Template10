@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using Windows.Networking.Connectivity;
 using Windows.UI.Xaml;
 
-namespace Template10.Triggers
+namespace Blank1.Triggers
 {
-	public class NetworkAvailableStateTrigger : StateTriggerBase
+    public class NetworkAvailableStateTrigger : StateTriggerBase
     {
         public NetworkAvailableStateTrigger()
         {
+            NetworkInformation.NetworkStatusChanged -= NetworkInformation_NetworkStatusChanged;
             NetworkInformation.NetworkStatusChanged += NetworkInformation_NetworkStatusChanged;
             UpdateState();
         }
@@ -25,35 +26,30 @@ namespace Template10.Triggers
         {
             bool isConnected = false;
             var profile = NetworkInformation.GetInternetConnectionProfile();
-            // TODO: complete check
             if (profile != null)
                 isConnected = profile.GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess;
             SetActive(
-                 isConnected && ConnectionState == ConnectionState.Connected ||
-                !isConnected && ConnectionState == ConnectionState.Disconnected);
+                 isConnected && ConnectionState.Equals(ConnectionStates.Connected) ||
+                !isConnected && ConnectionState.Equals(ConnectionStates.Disconnected));
         }
 
-        public ConnectionState ConnectionState
+        private ConnectionStates _connectionState;
+        public ConnectionStates ConnectionState
         {
-            get { return (ConnectionState)GetValue(ConnectionStateProperty); }
-            set { SetValue(ConnectionStateProperty, value); }
+            get { return _connectionState; }
+            set
+            {
+                if (_connectionState == value)
+                    return;
+                _connectionState = value;
+                UpdateState();
+            }
         }
 
-        public static readonly DependencyProperty ConnectionStateProperty =
-            DependencyProperty.Register("ConnectionState", typeof(ConnectionState), typeof(NetworkAvailableStateTrigger),
-            new PropertyMetadata(ConnectionState.Connected, OnConnectionStatePropertyChanged));
-
-        private static void OnConnectionStatePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        public enum ConnectionStates
         {
-            var obj = (NetworkAvailableStateTrigger)d;
-            obj.UpdateState();
+            Connected,
+            Disconnected,
         }
     }
-
-    public enum ConnectionState
-    {
-        Connected,
-        Disconnected,
-    }
-
 }

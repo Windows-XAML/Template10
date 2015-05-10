@@ -7,27 +7,21 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:Template10.ViewModels"
     mc:Ignorable="d">
-    
+
     <Page.DataContext>
         <vm:MainPageViewModel />
     </Page.DataContext>
 
-    <Hub Header="{Binding Value}" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-        <HubSection Header="{x:Bind ViewModel.Value}">
-            <DataTemplate>
-                <Grid>
-                    <StackPanel>
+        <!-- content -->
+        <StackPanel Margin="12" HorizontalAlignment="Left">
 
-                        <!-- content -->
-                        <HyperlinkButton 
-                            Content="View source on github"
-                            NavigateUri="https://github.com/Windows-XAML" />
+            <TextBlock Text="Welcome" Style="{StaticResource HeaderTextBlockStyle}" />
+            <TextBox Width="200" Margin="0,4" Header="Classic binding" Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBox Width="200" Margin="0,4" Header="Compiled binding" Text="{x:Bind ViewModel.Value, Mode=TwoWay}" />
 
-                    </StackPanel>
-                </Grid>
-            </DataTemplate>
-        </HubSection>
+        </StackPanel>
 
-    </Hub>
+    </Grid>
 </Page>

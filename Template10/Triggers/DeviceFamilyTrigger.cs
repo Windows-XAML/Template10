@@ -1,32 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Windows.ApplicationModel.Resources.Core;
 using Windows.UI.Xaml;
 
-namespace Template10.Triggers
+namespace Blank1.Triggers
 {
     public class DeviceFamilyTrigger : StateTriggerBase
     {
-        //private variables
-        private string _deviceFamily;
-        //Public property
-
         public string DeviceFamily
         {
-            get
-            {
-                return _deviceFamily;
-            }
+            get { return string.Empty; }
             set
             {
-                _deviceFamily = value;
-                var qualifiers = Windows.ApplicationModel.Resources.Core.ResourceContext.GetForCurrentView().QualifierValues;
-                if (qualifiers.ContainsKey("DeviceFamily"))
-                    SetActive(qualifiers["DeviceFamily"] == _deviceFamily);
-                else
-                    SetActive(false);
+                var family = ResourceContext.GetForCurrentView().QualifierValues["DeviceFamily"];
+                SetActive(family.Equals(value));
             }
         }
     }

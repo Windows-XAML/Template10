@@ -3,51 +3,38 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Template10.Mvvm;
 using Windows.Devices.Input;
+using Windows.Foundation;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
 
-namespace Template10.Triggers
+namespace Blank1.Triggers
 {
     public class InputTypeTrigger : StateTriggerBase
     {
-        //private variables
-        private FrameworkElement _targetElement;
-        private PointerDeviceType _lastPointerType, _triggerPointerType;
-        //public properties to set from XAML
-        public FrameworkElement TargetElement
-        {
-            get
-            {
-                return _targetElement;
-            }
-            set
-            {
-                _targetElement = value;
-                _targetElement.AddHandler(FrameworkElement.PointerPressedEvent, new PointerEventHandler(_targetElement_PointerPressed), true);
-            }
-        }
+        private PointerDeviceType _triggerPointerType;
         public PointerDeviceType PointerType
         {
-            get
-            {
-                return _triggerPointerType;
-            }
+            get { return _triggerPointerType; }
             set
             {
                 _triggerPointerType = value;
+                WeakEvent.Subscribe<TypedEventHandler<CoreWindow, PointerEventArgs>>
+                    (Window.Current.CoreWindow, nameof(Window.Current.CoreWindow.PointerPressed), CoreWindow_PointerPressed);
+                UpdateTrigger(default(PointerDeviceType));
             }
         }
-        //Handle event to get current values
-        private void _targetElement_PointerPressed(object sender, PointerRoutedEventArgs e)
+
+        private void CoreWindow_PointerPressed(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.PointerEventArgs args)
         {
-            _lastPointerType = e.Pointer.PointerDeviceType;
-            UpdateTrigger();
+            UpdateTrigger(args.CurrentPoint.PointerDevice.PointerDeviceType);
         }
-        //Logic to evaluate and apply trigger value
-        public void UpdateTrigger()
+
+        public void UpdateTrigger(PointerDeviceType type)
         {
-            SetActive(_triggerPointerType == _lastPointerType);
+            SetActive(_triggerPointerType.Equals(type));
         }
     }
 }

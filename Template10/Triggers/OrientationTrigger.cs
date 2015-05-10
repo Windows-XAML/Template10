@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Template10.Mvvm;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 
-namespace Template10.Triggers
+namespace Blank1.Triggers
 {
     /// <summary>
     /// A trigger that changes state based on the orientation of the current window.
