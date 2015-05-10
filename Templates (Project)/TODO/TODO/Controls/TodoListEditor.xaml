@@ -5,11 +5,17 @@
     xmlns:local="using:Template10.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
+    mc:Ignorable="d" Title=" "
     d:DesignHeight="300"
     d:DesignWidth="400">
-    
-    <Grid>
 
-    </Grid>
+    <ContentDialog.Content>
+        <StackPanel Margin="12,0,0,0" MaxWidth="300">
+
+            <!-- item details -->
+            <TextBox Width="300" Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+        </StackPanel>
+    </ContentDialog.Content>
+    
 </ContentDialog>

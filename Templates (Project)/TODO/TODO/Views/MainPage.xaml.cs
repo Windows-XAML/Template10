@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -22,24 +23,38 @@ namespace Template10.Views
 
         private async void TodoItem_ItemClicked(object sender, ItemClickEventArgs e)
         {
-            this.TodoEditorDialog.DataContext = e.ClickedItem;
-            await this.TodoEditorDialog.ShowAsync();
+            var list = this.ViewModel.TodoLists.First(x => x.Items.Contains(e.ClickedItem));
+            var editor = new Controls.TodoItemEditor
+            {
+                PrimaryButtonText = "Close",
+                SecondaryButtonText = "Delete",
+                DataContext = e.ClickedItem,
+                SecondaryButtonCommand = list.RemoveCommand,
+                SecondaryButtonCommandParameter = e.ClickedItem,
+            };
+            await editor.ShowAsync();
         }
 
         private async void List_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
             var textBlock = sender as TextBlock;
             var data = textBlock.DataContext as ViewModels.TodoListViewModel;
-            this.ListEditorDialog.DataContext = data.TodoList;
-            this.ListEditorDialog.SecondaryButtonCommand = this.ViewModel.RemoveListCommand;
-            this.ListEditorDialog.SecondaryButtonCommandParameter = data;
-            await this.ListEditorDialog.ShowAsync();
+
+            var editor = new Controls.TodoListEditor
+            {
+                PrimaryButtonText = "Close",
+                SecondaryButtonText = "Delete",
+                DataContext = data,
+                SecondaryButtonCommand = this.ViewModel.RemoveListCommand,
+                SecondaryButtonCommandParameter = data,
+            };
+            await editor.ShowAsync();
         }
 
         private void TextBox_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
         {
             var textBox = sender as TextBox;
-            if (e.Key == Windows.System.VirtualKey.Enter 
+            if (e.Key == Windows.System.VirtualKey.Enter
                 && !string.IsNullOrEmpty(textBox.Text)
                 && textBox.Text.Length > 3)
             {
