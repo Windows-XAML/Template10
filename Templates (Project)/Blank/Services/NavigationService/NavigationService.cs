@@ -10,7 +10,7 @@ namespace Template10.Services.NavigationService
 {
     public class NavigationService
     {
-        private readonly NavigationFacade _frame;
+        private readonly FrameFacade _frame;
         private const string EmptyNavigation = "1,0";
 
         string LastNavigationParameter { get; set; }
@@ -18,7 +18,7 @@ namespace Template10.Services.NavigationService
 
         public NavigationService(Frame frame)
         {
-            _frame = new NavigationFacade(frame);
+            _frame = new FrameFacade(frame);
             _frame.Navigating += async (s, e) =>
             {
                 if (e.Suspending)

@@ -8,9 +8,9 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Services.NavigationService
 {
-    public class NavigationFacade
+    public class FrameFacade
     {
-        public NavigationFacade(Frame frame)
+        public FrameFacade(Frame frame)
         {
             _frame = frame;
             _navigatedEventHandlers = new List<EventHandler<NavigatedEventArgs>>();

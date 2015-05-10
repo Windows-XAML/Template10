@@ -94,6 +94,12 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\BootStrapper.cs" />
+    <Compile Include="Controls\TodoItemEditor.xaml.cs">
+      <DependentUpon>TodoItemEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TodoListEditor.xaml.cs">
+      <DependentUpon>TodoListEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\ValueWhenConverter.cs" />
     <Compile Include="Converters\DateTimeFormatConverter.cs" />
     <Compile Include="Models\TodoItem.cs" />
@@ -106,9 +112,13 @@
     <Compile Include="Repositories\TodoItemRepository.cs" />
     <Compile Include="Services\FileService\FileHelper.cs" />
     <Compile Include="Services\FileService\FileService.cs" />
+    <Compile Include="Services\KeyboardService\KeyboardEventArgs.cs" />
+    <Compile Include="Services\KeyboardService\KeyboardHelper.cs" />
+    <Compile Include="Services\KeyboardService\KeyboardService.cs" />
     <Compile Include="Services\NavigationService\INavigatable.cs" />
-    <Compile Include="Services\NavigationService\NavigationEventArgs.cs" />
-    <Compile Include="Services\NavigationService\NavigationFacade.cs" />
+    <Compile Include="Services\NavigationService\NavigatedEventArgs.cs" />
+    <Compile Include="Services\NavigationService\NavigatingEventArgs.cs" />
+    <Compile Include="Services\NavigationService\FrameFacade.cs" />
     <Compile Include="Services\NavigationService\NavigationService.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\TodoItemViewModel.cs" />
@@ -139,6 +149,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Controls\TodoItemEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\TodoListEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\Custom.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
     <Page Include="Styles\StarRadioButtonStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

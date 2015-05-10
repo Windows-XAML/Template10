@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Mvvm
@@ -7,9 +7,7 @@ namespace Template10.Mvvm
     public abstract class ViewModelBase : BindableBase, Services.NavigationService.INavigatable
     {
         public virtual void OnNavigatedTo(string parameter, NavigationMode mode, IDictionary<string, object> state) { /* nothing by default */ }
-
-        public virtual void OnNavigatedFrom(IDictionary<string, object> state, bool suspending) { /* nothing by default */ }
-
-        public void OnNavigatingFrom(NavigatingCancelEventArgs args) { /* nothing by default */ }
+        public virtual Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending) { return Task.FromResult<object>(null); }
+        public virtual void OnNavigatingFrom(Services.NavigationService.NavigatingEventArgs args) { /* nothing by default */ }
     }
 }

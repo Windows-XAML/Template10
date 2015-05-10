@@ -9,11 +9,87 @@
     xmlns:models="using:Template10.Models"
     x:Name="ThisPage" 
     mc:Ignorable="d">
+
     <Page.Resources>
         <ResourceDictionary>
+
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ms-appx:///Styles/StarRadioButtonStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate x:Key="TodoListTemplate">
+                <Grid Width="456" VerticalAlignment="Top" Margin="0,0,12,12" MaxHeight="{Binding Path=ActualHeight, FallbackValue=500, ElementName=HorizontalItems}">
+
+                    <Grid.Resources>
+                        <SolidColorBrush x:Key="PrimaryBrush" Color="SteelBlue" />
+                        <ElementTheme x:Key="PrimaryTheme">Dark</ElementTheme>
+                        <SolidColorBrush x:Key="SecondaryBrush" Color="Gainsboro" />
+                        <ElementTheme x:Key="SecondaryTheme">Dark</ElementTheme>
+                    </Grid.Resources>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <!-- header color -->
+                    <Rectangle Grid.Row="0" Fill="{StaticResource PrimaryBrush}" />
+
+                    <!-- list title -->
+                    <TextBlock Tapped="List_Tapped" 
+                               RequestedTheme="Dark"
+        				       Margin="24,12" FontSize="34" FontWeight="Light" 
+        				       Grid.Row="0" Text="{Binding TodoList.Title}" />
+
+                    <ListView Padding="0,0,0,12" Margin="0,0,0,12" Grid.Row="1"
+                            Background="{StaticResource SecondaryBrush}" RequestedTheme="Light"
+                            IsItemClickEnabled="True" ItemClick="TodoItem_ItemClicked"
+        					ItemsSource="{Binding Items}" VerticalAlignment="Top" 
+        					SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+
+                        <ListView.ItemContainerTransitions>
+                            <TransitionCollection>
+                                <AddDeleteThemeTransition />
+                            </TransitionCollection>
+                        </ListView.ItemContainerTransitions>
+
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Padding" Value="24,0,0,0" />
+                                <Setter Property="Margin" Value="0,0,0,0" />
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+
+                        <!-- create new item -->
+                        <ListView.Header>
+                            <TextBox KeyDown="TextBox_KeyDown" PlaceholderText="Add a new task" Margin="24,12,24,12" />
+                        </ListView.Header>
+
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Height="48">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="48" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="48" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- item checked -->
+                                    <CheckBox IsChecked="{Binding TodoItem.IsComplete, Mode=TwoWay}" Grid.Column="0" VerticalAlignment="Center" Height="32" Width="32" />
+                                    <!-- item title -->
+                                    <TextBlock Grid.Column="1" VerticalAlignment="Center" Text="{Binding TodoItem.Title}" FontWeight="Normal" LineHeight="20" />
+                                    <!-- item strikethrough -->
+                                    <Line Visibility="{Binding TodoItem.IsComplete, Converter={StaticResource VisibleWhenTrueConverter}}" Grid.Column="1" Stretch="Fill" Stroke="Black" StrokeThickness="1" X1="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,0,24,0" />
+                                    <!-- item star -->
+                                    <CheckBox IsChecked="{Binding TodoItem.IsFavorite, Mode=TwoWay}" Grid.Column="2" VerticalAlignment="Center" Height="32" Width="32" Style="{StaticResource StarCheckBoxStyle}" />
+
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </DataTemplate>
         </ResourceDictionary>
     </Page.Resources>
 
@@ -22,125 +98,122 @@
     </Page.DataContext>
 
     <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <VisualStateGroup.Transitions>
+                    <VisualTransition GeneratedDuration="0:0:0.3"/>
+                </VisualStateGroup.Transitions>
+                <VisualState x:Name="VisualStateNarrow">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Grid.Row)" Storyboard.TargetName="commandBar">
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <x:Int32>3</x:Int32>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                        <DoubleAnimation Duration="0" To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="HorizontalView" d:IsOptimized="True"/>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.IsHitTestVisible)" Storyboard.TargetName="HorizontalView">
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <x:Boolean>False</x:Boolean>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="VisualStateWide">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600" />
+                    </VisualState.StateTriggers>
+                    <Storyboard>
+                        <DoubleAnimation Duration="0" To="0" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="VerticalView" d:IsOptimized="True"/>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.IsHitTestVisible)" Storyboard.TargetName="VerticalView">
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <x:Boolean>False</x:Boolean>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
 
-        <Hub>
+        <Grid>
 
-            <Hub.Header>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Contoso" x:Name="AppTitle" />
-                    <Grid>
-                        <Ellipse Stroke="Black" StrokeThickness="1" Margin="9" VerticalAlignment="Top" Height="32" Width="32" />
-                        <AppBarButton Icon="Add" Command="{Binding AddListCommand}" Foreground="Black" />
-                    </Grid>
-                </StackPanel>
-            </Hub.Header>
+            <Grid.RowDefinitions>
+                <!-- title bar -->
+                <RowDefinition Height="32" />
+                <!-- top app bar-->
+                <RowDefinition Height="Auto" />
+                <!-- page content -->
+                <RowDefinition />
+                <!-- bottom app bar -->
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
 
-            <HubSection VerticalContentAlignment="Stretch" x:Name="MainHubSection">
-                <DataTemplate>
-                    <ItemsControl ItemsSource="{Binding TodoLists}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Horizontal" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Width="456" Margin="0,0,12,12">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="*" />
-                                    </Grid.RowDefinitions>
-                                    <CommandBar Grid.Row="0" VerticalAlignment="Bottom" ClosedDisplayMode="Minimal" Background="DimGray">
-                                        <CommandBar.SecondaryCommands>
-                                            <AppBarButton Label="Delete list">
-                                                <AppBarButton.Flyout>
-                                                    <Flyout Placement="Bottom">
-                                                        <Button Content="Are you sure?" Command="{Binding DataContext.RemoveListCommand, ElementName=MainHubSection}" CommandParameter="{Binding}" />
-                                                    </Flyout>
-                                                </AppBarButton.Flyout>
-                                            </AppBarButton>
-                                        </CommandBar.SecondaryCommands>
-                                    </CommandBar>
-                                    <Rectangle Grid.Row="1" Fill="Black" Opacity=".1" />
-                                    
-                                    <!-- list title -->
-                                    <TextBlock Tapped="List_Tapped" RequestedTheme="Light" Margin="24,12" FontSize="34" FontWeight="Light" Grid.Row="1" Text="{Binding TodoList.Title}" />
-                                    
-                                    <ScrollViewer Grid.Row="2" VerticalAlignment="Stretch">
-                                        <ListView Padding="0,0,0,12" Margin="0" Grid.Row="2"
-                                                  IsItemClickEnabled="True" ItemClick="TodoItem_ItemClicked"
-                                                  ItemsSource="{Binding Items}" VerticalAlignment="Top" 
-                                                  SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
-                                                  CanDrag="True" CanDragItems="True" CanReorderItems="True">
-                                            <ListView.Background>
-                                                <SolidColorBrush Color="Black" Opacity=".1" />
-                                            </ListView.Background>
-                                            <ListView.ItemContainerTransitions>
-                                                <TransitionCollection>
-                                                    <AddDeleteThemeTransition />
-                                                </TransitionCollection>
-                                            </ListView.ItemContainerTransitions>
-                                            <ListView.ItemContainerStyle>
-                                                <Style TargetType="ListViewItem">
-                                                    <Setter Property="Padding" Value="24,0,0,0" />
-                                                    <Setter Property="Margin" Value="0,0,0,0" />
-                                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                                </Style>
-                                            </ListView.ItemContainerStyle>
-                                            <ListView.Header>
+            <!-- page title -->
+            <Rectangle Grid.Row="0" Fill="SteelBlue" x:Name="AppTitle" />
+            <TextBlock Grid.Row="0" Foreground="White" Text="CONTOSO STACKS" FontSize="15" Margin="12,0" VerticalAlignment="Center" />
 
-                                                <!-- create new item -->
-                                                <TextBox KeyDown="TextBox_KeyDown" PlaceholderText="Add a new task" Margin="24,0,24,12" />
+            <!-- top/bottom app bar -->
+            <CommandBar x:Name="commandBar" Grid.Row="1" Background="SteelBlue" RequestedTheme="Dark">
+                <AppBarButton Icon="Add" Label="New List" Command="{Binding AddListCommand}" />
+            </CommandBar>
 
-                                            </ListView.Header>
-                                            <ListView.ItemTemplate>
-                                                <DataTemplate>
-                                                    <Grid Height="48">
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="48" />
-                                                            <ColumnDefinition Width="*" />
-                                                            <ColumnDefinition Width="48" />
-                                                        </Grid.ColumnDefinitions>
+            <!-- horizontal view -->
+            <ScrollViewer Grid.Row="2" x:Name="HorizontalView"
+                          HorizontalScrollBarVisibility="Auto" HorizontalScrollMode="Auto"
+                          VerticalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled">
+                <ItemsControl ItemsSource="{Binding TodoLists}" x:Name="HorizontalItems"
+                              ItemTemplate="{StaticResource TodoListTemplate}"
+                              Margin="12,12,0,0">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </ScrollViewer>
 
-                                                        <!-- item checked -->
-                                                        <CheckBox IsChecked="{Binding TodoItem.IsComplete, Mode=TwoWay}" Grid.Column="0" VerticalAlignment="Center" Height="32" Width="32" />
-                                                        <!-- item title -->
-                                                        <TextBlock Grid.Column="1" VerticalAlignment="Center" Foreground="Black" Text="{Binding TodoItem.Title}" FontWeight="Normal" LineHeight="20" />
-                                                        <!-- item strikethrough -->
-                                                        <Line Visibility="{Binding TodoItem.IsComplete, Converter={StaticResource VisibleWhenTrueConverter}}" Grid.Column="1" Stretch="Fill" Stroke="Black" StrokeThickness="1" X1="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,0,24,0" />
-                                                        <!-- item star -->
-                                                        <CheckBox IsChecked="{Binding TodoItem.IsFavorite, Mode=TwoWay}" Grid.Column="2" VerticalAlignment="Center" Height="32" Width="32" Style="{StaticResource StarCheckBoxStyle}" />
+            <!-- vertical view -->
+            <Pivot Grid.Row="2" x:Name="VerticalView"
+                   ItemsSource="{Binding TodoLists}"
+                   SelectedItem="{Binding SelectedTodoList, Mode=TwoWay}"
+                   ItemTemplate="{StaticResource TodoListTemplate}" d:IsHidden="True">
+                <Pivot.HeaderTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding TodoList.Title}" />
+                    </DataTemplate>
+                </Pivot.HeaderTemplate>
+            </Pivot>
 
-                                                    </Grid>
-                                                </DataTemplate>
-                                            </ListView.ItemTemplate>
-                                        </ListView>
-                                    </ScrollViewer>
-                                </Grid>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </DataTemplate>
-            </HubSection>
-        </Hub>
-
-        <!-- list editor -->
-        <ContentDialog x:Name="ListEditorDialog" Title=" " PrimaryButtonText="Close" d:IsHidden="True"
+            <!-- list editor -->
+            <ContentDialog x:Name="ListEditorDialog" Title=" " 
+                           PrimaryButtonText="Close" 
+                           d:IsHidden="True"
                        SecondaryButtonText="Delete">
-            <ContentDialog.Content>
-                <StackPanel Margin="12,0,0,0" MaxWidth="300">
+                <ContentDialog.Content>
+                    <StackPanel Margin="12,0,0,0" MaxWidth="300">
 
-                    <!-- item details -->
-                    <TextBox Width="300" Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <!-- item details -->
+                        <TextBox Width="300" Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-                </StackPanel>
-            </ContentDialog.Content>
-        </ContentDialog>
+                    </StackPanel>
+                </ContentDialog.Content>
+            </ContentDialog>
+
+        </Grid>
 
         <!-- task editor -->
-        <ContentDialog x:Name="TodoEditorDialog" Title=" " PrimaryButtonText="Close" d:IsHidden="True"
-                       SecondaryButtonText="Delete" SecondaryButtonCommand="{Binding RemoveCommand}">
+        <ContentDialog x:Name="TodoEditorDialog" Title=" " 
+                       PrimaryButtonText="Close" d:IsHidden="True"
+                       SecondaryButtonText="Delete" 
+                       SecondaryButtonCommand="{Binding RemoveCommand}">
             <ContentDialog.Content>
                 <StackPanel Margin="12,0,0,0">
                     <Grid>

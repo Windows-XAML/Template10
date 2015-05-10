@@ -105,7 +105,7 @@
     <Compile Include="Services\NavigationService\INavigatable.cs" />
     <Compile Include="Services\NavigationService\NavigatingEventArgs.cs" />
     <Compile Include="Services\NavigationService\NavigatedEventArgs.cs" />
-    <Compile Include="Services\NavigationService\NavigationFacade.cs" />
+    <Compile Include="Services\NavigationService\FrameFacade.cs" />
     <Compile Include="Services\NavigationService\NavigationService.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="Views\MainPage.xaml.cs">

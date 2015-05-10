@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Template10.Mvvm;
+using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Navigation;
 
 namespace Template10.ViewModels
@@ -33,14 +34,14 @@ namespace Template10.ViewModels
             }
         }
 
-        public override void OnNavigatedTo(string parameter, NavigationMode mode, Dictionary<string, object> state)
+        public override void OnNavigatedTo(string parameter, NavigationMode mode, IDictionary<string, object> state)
         {
             LoadCommand.Execute(null);
         }
 
-        public override void OnNavigatedFrom(Dictionary<string, object> state, bool suspending)
+        public override async void OnNavigatingFrom(NavigatingEventArgs args)
         {
-            SaveCommand.Execute(null);
+            await ExecuteSaveCommand();
         }
 
         bool _busy = false;
@@ -48,6 +49,9 @@ namespace Template10.ViewModels
 
         private ObservableCollection<ViewModels.TodoListViewModel> _TodoLists = new ObservableCollection<TodoListViewModel>();
         public ObservableCollection<ViewModels.TodoListViewModel> TodoLists { get { return _TodoLists; } private set { Set(ref _TodoLists, value); } }
+
+        private ViewModels.TodoListViewModel _SelectedTodoList = default(ViewModels.TodoListViewModel);
+        public ViewModels.TodoListViewModel SelectedTodoList { get { return _SelectedTodoList; } set { Set(ref _SelectedTodoList, value); } }
 
         #region Commands
 
@@ -60,13 +64,14 @@ namespace Template10.ViewModels
             {
                 var item = new ViewModels.TodoListViewModel(_todoListRepository.Factory(title: "New List"));
                 this.TodoLists.Insert(0, item);
+                this.SelectedTodoList = item;
                 SaveCommand.Execute(null);
             }
             catch { }
         }
 
         Mvvm.Command<ViewModels.TodoListViewModel> _RemoveListCommand = default(Mvvm.Command<ViewModels.TodoListViewModel>);
-        public Mvvm.Command<ViewModels.TodoListViewModel> RemoveListCommand { get { return _RemoveListCommand  ?? (_RemoveListCommand = new Mvvm.Command<ViewModels.TodoListViewModel>(ExecuteRemoveListCommand, CanExecuteRemoveListCommand)); } }
+        public Mvvm.Command<ViewModels.TodoListViewModel> RemoveListCommand { get { return _RemoveListCommand ?? (_RemoveListCommand = new Mvvm.Command<ViewModels.TodoListViewModel>(ExecuteRemoveListCommand, CanExecuteRemoveListCommand)); } }
         private bool CanExecuteRemoveListCommand(ViewModels.TodoListViewModel list) { return !Busy && list != null; }
         private void ExecuteRemoveListCommand(ViewModels.TodoListViewModel list)
         {
@@ -99,9 +104,9 @@ namespace Template10.ViewModels
         }
 
         Mvvm.Command _SaveCommand = default(Mvvm.Command);
-        public Mvvm.Command SaveCommand { get { return _SaveCommand ?? (_SaveCommand = new Mvvm.Command(ExecuteSaveCommand, CanExecuteSaveCommand)); } }
+        public Mvvm.Command SaveCommand { get { return _SaveCommand ?? (_SaveCommand = new Mvvm.Command(async () => { await ExecuteSaveCommand(); }, CanExecuteSaveCommand)); } }
         private bool CanExecuteSaveCommand() { return true; }
-        private async void ExecuteSaveCommand()
+        private async Task ExecuteSaveCommand()
         {
             while (Busy)
             {

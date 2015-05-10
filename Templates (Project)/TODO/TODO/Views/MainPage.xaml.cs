@@ -10,11 +10,14 @@ namespace Template10.Views
         public MainPage()
         {
             this.InitializeComponent();
-            this.ViewModel = this.DataContext as ViewModels.MainPageViewModel;
-            CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar= true;
+            this.DataContextChanged += (s, e) => { this.ViewModel = this.DataContext as ViewModels.MainPageViewModel; };
+
+            // extend the app into the title for a custom look
+            CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
             Window.Current.SetTitleBar(AppTitle);
         }
 
+        // strongly-typed view models enable x:bind
         ViewModels.MainPageViewModel ViewModel { get; set; }
 
         private async void TodoItem_ItemClicked(object sender, ItemClickEventArgs e)

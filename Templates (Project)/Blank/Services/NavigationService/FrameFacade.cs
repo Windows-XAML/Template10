@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
@@ -10,12 +8,12 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Services.NavigationService
 {
-    public class NavigationFacade
+    public class FrameFacade
     {
-        public NavigationFacade(Frame frame)
+        public FrameFacade(Frame frame)
         {
             _frame = frame;
-            _navigatedEventHandlers = new List<EventHandler<NavigationEventArgs>>();
+            _navigatedEventHandlers = new List<EventHandler<NavigatedEventArgs>>();
 
             // setup animations
             var c = new TransitionCollection { };
@@ -44,10 +42,10 @@ namespace Template10.Services.NavigationService
 
         public void Refresh()
         {
-            var page = this.CurrentPageType;
-            var param = this.CurrentPageParam;
-            this._frame.BackStack.Remove(this._frame.BackStack.Last());
-            this.Navigate(page, param);
+            var page = CurrentPageType;
+            var param = CurrentPageParam;
+            _frame.BackStack.Remove(_frame.BackStack.Last());
+            Navigate(page, param);
         }
 
         public bool CanGoForward { get { return _frame.CanGoForward; } }
@@ -68,74 +66,68 @@ namespace Template10.Services.NavigationService
 
         #endregion
 
-        readonly List<EventHandler<NavigationEventArgs>> _navigatedEventHandlers;
-        public event EventHandler<NavigationEventArgs> Navigated
+        readonly List<EventHandler<NavigatedEventArgs>> _navigatedEventHandlers;
+        public event EventHandler<NavigatedEventArgs> Navigated
         {
             add
             {
-                if (!_navigatedEventHandlers.Contains(value))
-                {
-                    _navigatedEventHandlers.Add(value);
-                    if (_navigatedEventHandlers.Count == 1)
-                        _frame.Navigated += FacadeNavigatedEventHandler;
-                }
+                if (_navigatedEventHandlers.Contains(value))
+                    return;
+                _navigatedEventHandlers.Add(value);
+                if (_navigatedEventHandlers.Count == 1)
+                    _frame.Navigated += FacadeNavigatedEventHandler;
             }
 
             remove
             {
-                if (_navigatedEventHandlers.Contains(value))
-                {
-                    _navigatedEventHandlers.Remove(value);
-                    if (_navigatedEventHandlers.Count == 0)
-                        _frame.Navigated -= FacadeNavigatedEventHandler;
-                }
+                if (!_navigatedEventHandlers.Contains(value))
+                    return;
+                _navigatedEventHandlers.Remove(value);
+                if (_navigatedEventHandlers.Count == 0)
+                    _frame.Navigated -= FacadeNavigatedEventHandler;
             }
         }
 
         void FacadeNavigatedEventHandler(object sender, Windows.UI.Xaml.Navigation.NavigationEventArgs e)
         {
+            var args = new NavigatedEventArgs(e);
             foreach (var handler in _navigatedEventHandlers)
             {
-                var args = new NavigationEventArgs()
-                {
-                    NavigationMode = e.NavigationMode,
-                    Parameter = (e.Parameter == null) ? string.Empty : e.Parameter.ToString()
-                };
                 handler(this, args);
             }
-            this.CurrentPageType = e.SourcePageType;
-            this.CurrentPageParam = e.Parameter as String;
+            CurrentPageType = e.SourcePageType;
+            CurrentPageParam = e.Parameter as String;
         }
 
-        readonly List<EventHandler> _navigatingEventHandlers = new List<EventHandler>();
-        public event EventHandler Navigating
+        readonly List<EventHandler<NavigatingEventArgs>> _navigatingEventHandlers = new List<EventHandler<NavigatingEventArgs>>();
+        public event EventHandler<NavigatingEventArgs> Navigating
         {
             add
             {
-                if (!_navigatingEventHandlers.Contains(value))
-                {
-                    _navigatingEventHandlers.Add(value);
-                    if (_navigatingEventHandlers.Count == 1)
-                        _frame.Navigating += FacadeNavigatingCancelEventHandler;
-                }
+                if (_navigatingEventHandlers.Contains(value))
+                    return;
+                _navigatingEventHandlers.Add(value);
+                if (_navigatingEventHandlers.Count == 1)
+                    _frame.Navigating += FacadeNavigatingCancelEventHandler;
             }
             remove
             {
-                if (_navigatingEventHandlers.Contains(value))
-                {
-                    _navigatingEventHandlers.Remove(value);
-                    if (_navigatingEventHandlers.Count == 0)
-                        _frame.Navigating -= FacadeNavigatingCancelEventHandler;
-                }
+                if (!_navigatingEventHandlers.Contains(value))
+                    return;
+                _navigatingEventHandlers.Remove(value);
+                if (_navigatingEventHandlers.Count == 0)
+                    _frame.Navigating -= FacadeNavigatingCancelEventHandler;
             }
         }
 
         private void FacadeNavigatingCancelEventHandler(object sender, NavigatingCancelEventArgs e)
         {
+            var args = new NavigatingEventArgs(e);
             foreach (var handler in _navigatingEventHandlers)
             {
-                handler(this, new EventArgs());
+                handler(this, args);
             }
+            e.Cancel = args.Cancel;
         }
     }
 
