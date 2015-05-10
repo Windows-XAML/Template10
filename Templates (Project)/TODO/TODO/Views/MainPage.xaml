@@ -12,7 +12,6 @@
 
     <Page.Resources>
         <ResourceDictionary>
-
             <DataTemplate x:Key="TodoListTemplate">
                 <Grid Width="456" VerticalAlignment="Top" Margin="0,0,12,12" MaxHeight="{Binding Path=ActualHeight, FallbackValue=500, ElementName=HorizontalItems}">
 
@@ -96,6 +95,9 @@
     </Page.DataContext>
 
     <Grid>
+        
+        <!--#region Visual States -->
+        
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
                 <VisualStateGroup.Transitions>
@@ -148,6 +150,8 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
+        <!--#endregion-->
+        
         <Grid>
 
             <Grid.RowDefinitions>
@@ -160,19 +164,19 @@
                 <!-- bottom app bar -->
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            
+
             <!-- advert -->
             <Rectangle Height="400" Width="150" Fill="Red" Margin="12" 
                        VerticalAlignment="Top"
                        Grid.Column="1" Grid.Row="2" />
 
             <!-- page title -->
-            <Rectangle Grid.Row="0" Fill="SteelBlue" x:Name="AppTitle" />
+            <Rectangle Grid.Row="0" x:Name="AppTitle" />
             <TextBlock Grid.Row="0" Foreground="White" Text="CONTOSO STACKS" 
                        FontSize="15" Margin="12,0" VerticalAlignment="Center" />
 
@@ -217,7 +221,7 @@
                     </DataTemplate>
                 </Pivot.HeaderTemplate>
             </Pivot>
-         
+
         </Grid>
 
         <!-- busy indicator -->
