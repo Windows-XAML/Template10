@@ -142,10 +142,10 @@ namespace Template10.Common
                         await OnStartAsync(StartKind.Launch, e);
                         break;
                     }
-                case ApplicationExecutionState.Terminated:
+                case ApplicationExecutionState.ClosedByUser:
                     await OnStartAsync(StartKind.Launch, e);
                     break;
-                case ApplicationExecutionState.ClosedByUser:
+                case ApplicationExecutionState.Terminated:
                     {
                         // restore if you need to/can do
                         var restored = NavigationService.RestoreSavedNavigation();
