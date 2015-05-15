@@ -1,11 +1,12 @@
 ﻿<Page
-    x:Class="Template10.Views.Page2"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Template10.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:vm="using:Template10.ViewModels"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Controls="using:Template10.Controls"
+    x:Class="Template10.Views.Page2"
     mc:Ignorable="d">
 
     <Page.DataContext>
@@ -16,9 +17,11 @@
 
         <!-- content -->
         <StackPanel Margin="12" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Button Click="{x:Bind ViewModel.GoBack}" Style="{StaticResource NavigationBackButtonNormalStyle}" />
-            <TextBlock Text="{x:Bind ViewModel.Value}" Style="{StaticResource PageHeaderStyle}" />
+            <Button Style="{StaticResource NavigationBackButtonNormalStyle}" />
+            <TextBlock Style="{StaticResource PageHeaderStyle}" />
         </StackPanel>
+
+        <Controls:BackButton Margin="303,173,297,147" d:LayoutOverrides="Width, Height"/>
 
     </Grid>
 </Page>
