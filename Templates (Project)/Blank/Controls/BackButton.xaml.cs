@@ -34,13 +34,9 @@ namespace Template10.Controls
 
         private void BackButton_Loaded(object sender, RoutedEventArgs e)
         {
-            Page page = null;
-            var parent = this.Parent as FrameworkElement;
-            while (page == null)
-            {
-                parent = parent.Parent as FrameworkElement;
-                page = parent as Page;
-            }
+            DependencyObject item = this;
+            while (!((item = VisualTreeHelper.GetParent(item)) is Page)) { }
+            Page page = item as Page;
             this.Frame = page.Frame;
             this.Visibility = CalculateOnCanvasBackVisibility();
             Window.Current.SizeChanged += (s, arg) => this.Visibility = CalculateOnCanvasBackVisibility();
