@@ -12,8 +12,15 @@ namespace Template10
             InitializeComponent();
         }
 
+        public override Task OnInitializeAsync()
+        {
+            // runs before everything
+            return base.OnInitializeAsync();
+        }
+
         public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
+            // start the user experience
             NavigationService.Navigate(typeof(Views.MainPage));
             return Task.FromResult<object>(null);
         }

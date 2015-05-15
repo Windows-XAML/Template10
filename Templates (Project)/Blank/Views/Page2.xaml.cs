@@ -11,6 +11,7 @@ namespace Template10.Views
             DataContextChanged += (s, e) => { ViewModel = DataContext as Page2ViewModel; };
         }
 
+        // strongly-typed view models enable x:bind
         public Page2ViewModel ViewModel { get; set; }
     }
 }

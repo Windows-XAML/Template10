@@ -9,6 +9,8 @@ namespace Template10.Mvvm
 
         public void RaisePropertyChanged([CallerMemberName]string propertyName = null)
         {
+            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
+                return;
             (App.Current as Common.BootStrapper).Dispatch(() =>
             {
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
