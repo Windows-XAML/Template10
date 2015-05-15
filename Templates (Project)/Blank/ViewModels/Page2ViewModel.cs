@@ -26,7 +26,5 @@ namespace Template10.ViewModels
 
         private string _Value = "Default";
         public string Value { get { return _Value; } set { Set(ref _Value, value); } }
-
-        public void GoBack() { this.NavigationService.GoBack(); }
     }
 }

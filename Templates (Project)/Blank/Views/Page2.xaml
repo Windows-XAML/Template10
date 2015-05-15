@@ -17,11 +17,9 @@
 
         <!-- content -->
         <StackPanel Margin="12" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Button Style="{StaticResource NavigationBackButtonNormalStyle}" />
+            <Controls:BackButton />
             <TextBlock Style="{StaticResource PageHeaderStyle}" />
         </StackPanel>
-
-        <Controls:BackButton Margin="303,173,297,147" d:LayoutOverrides="Width, Height"/>
 
     </Grid>
 </Page>
