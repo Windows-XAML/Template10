@@ -3,22 +3,25 @@ using System.Runtime.CompilerServices;
 
 namespace Template10.Mvvm
 {
-public abstract class BindableBase : INotifyPropertyChanged
-{
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    public void RaisePropertyChanged([CallerMemberName]string propertyName = null)
+    public abstract class BindableBase : INotifyPropertyChanged
     {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
+        public event PropertyChangedEventHandler PropertyChanged;
 
-    public void Set<T>(ref T storage, T value, [CallerMemberName()]string propertyName = null)
-    {
-        if (!object.Equals(storage, value))
+        public void RaisePropertyChanged([CallerMemberName]string propertyName = null)
         {
-            storage = value;
+            (App.Current as Common.BootStrapper).Dispatch(() =>
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            });
+        }
+
+        public void Set<T>(ref T storage, T value, [CallerMemberName()]string propertyName = null)
+        {
+            if (!object.Equals(storage, value))
+            {
+                storage = value;
                 RaisePropertyChanged(propertyName);
+            }
         }
     }
-}
 }

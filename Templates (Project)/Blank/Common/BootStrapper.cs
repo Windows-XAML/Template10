@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.UI.Xaml.Controls;
 using Windows.ApplicationModel.Activation;
+using Windows.UI.Core;
 
 namespace Template10.Common
 {
@@ -24,24 +25,41 @@ namespace Template10.Common
 
         public BootStrapper()
         {
-            Resuming += (s, e) =>
-            {
-                OnResuming(s, e);
-            };
+            Resuming += (s, e) => { OnResuming(s, e); };
             Suspending += async (s, e) =>
             {
+                // one, global deferral
                 var deferral = e.SuspendingOperation.GetDeferral();
-                await NavigationService.SuspendingAsync();
-                await OnSuspendingAsync(s, e);
-                deferral.Complete();
+                try
+                {
+                    // date the cache
+                    NavigationService.State().Values[CacheKey] = DateTime.Now;
+                    // call view model suspend (OnNavigatedfrom)
+                    await NavigationService.SuspendingAsync();
+                    // call system-level suspend
+                    await OnSuspendingAsync(s, e);
+                }
+                finally { deferral.Complete(); }
+            };
+
+            // enable thread dispatch
+            var dispatcher = Window.Current.Dispatcher;
+            Dispatch = async action =>
+            {
+                if (dispatcher.HasThreadAccess) { action(); }
+                else { await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => action()); }
             };
         }
+
 
         #region properties
 
         public Frame RootFrame { get; set; }
+        public Action<Action> Dispatch { get; private set; }
         public Services.NavigationService.NavigationService NavigationService { get; private set; }
         protected Func<SplashScreen, Page> SplashFactory { get; set; }
+        public TimeSpan CacheMaxDuration { get; set; } = TimeSpan.MaxValue;
+        private const string CacheKey = "Setting-Cache-Date";
 
         #endregion
 
@@ -88,9 +106,29 @@ namespace Template10.Common
                 Window.Current.Content = splashScreen;
             }
 
+            // setup frame
             RootFrame = RootFrame ?? new Frame();
             RootFrame.Language = Windows.Globalization.ApplicationLanguages.Languages[0];
             NavigationService = new Services.NavigationService.NavigationService(RootFrame);
+
+            // expire state
+            var state = NavigationService.State();
+            if (state.Values.ContainsKey(CacheKey))
+            {
+                DateTime cacheDate;
+                if (DateTime.TryParse(state.Values[CacheKey]?.ToString(), out cacheDate))
+                {
+                    var cacheAge = DateTime.Now.Subtract(cacheDate);
+                    if (cacheAge >= CacheMaxDuration)
+                    {
+                        foreach (var item in state.Containers)
+                        {
+                            state.DeleteContainer(item.Key);
+                        }
+                        state.Values.Clear();
+                    }
+                }
+            }
 
             // the user may override to set custom content
             await OnInitializeAsync();
@@ -105,12 +143,16 @@ namespace Template10.Common
                         break;
                     }
                 case ApplicationExecutionState.Terminated:
+                    await OnStartAsync(StartKind.Launch, e);
+                    break;
                 case ApplicationExecutionState.ClosedByUser:
                     {
                         // restore if you need to/can do
                         var restored = NavigationService.RestoreSavedNavigation();
                         if (!restored)
+                        {
                             await OnStartAsync(StartKind.Launch, e);
+                        }
                         break;
                     }
             }
