@@ -15,12 +15,10 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
         <!-- content -->
-        <StackPanel Margin="12" HorizontalAlignment="Left">
-
-            <TextBlock Text="Welcome" Style="{StaticResource HeaderTextBlockStyle}" />
-            <TextBox Width="200" Margin="0,4" Header="Classic binding" Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBox Width="200" Margin="0,4" Header="Compiled binding" Text="{x:Bind ViewModel.Value, Mode=TwoWay}" />
-
+        <StackPanel Margin="12" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="Welcome" Style="{StaticResource PageHeaderStyle}" />
+            <TextBox Width="200" Margin="0,4" Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Button Click="{x:Bind ViewModel.GotoPage2}" Content="Go to page 2" Margin="0,4" />
         </StackPanel>
 
     </Grid>

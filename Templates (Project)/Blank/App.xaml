@@ -6,7 +6,7 @@
     xmlns:local="using:Template10">
 
     <common:BootStrapper.Resources>
-        <ResourceDictionary />
+        <ResourceDictionary Source="Styles\Custom.xaml" />
     </common:BootStrapper.Resources>
 
 </common:BootStrapper>

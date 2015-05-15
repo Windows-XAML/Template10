@@ -4,18 +4,21 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Template10.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:vm="using:Template10.ViewModels"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    
+
     <Page.DataContext>
-        <local:Page2ViewModel />
+        <vm:Page2ViewModel />
     </Page.DataContext>
-    
-    <Hub Header="{Binding Value}" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <HubSection Header="{x:Bind ViewModel.Value}">
-            <DataTemplate>
-                <Rectangle Height="100" Width="100" Fill="Red" />
-            </DataTemplate>
-        </HubSection>
-    </Hub>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <!-- content -->
+        <StackPanel Margin="12" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Button Click="{x:Bind ViewModel.GoBack}" Style="{StaticResource NavigationBackButtonNormalStyle}" />
+            <TextBlock Text="{x:Bind ViewModel.Value}" Style="{StaticResource PageHeaderStyle}" />
+        </StackPanel>
+
+    </Grid>
 </Page>

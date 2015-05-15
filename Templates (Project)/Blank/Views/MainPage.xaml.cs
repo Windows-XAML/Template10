@@ -12,5 +12,10 @@ namespace Template10.Views
 
         // strongly-typed view models enable x:bind
         public ViewModels.MainPageViewModel ViewModel { get; set; }
+
+        private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+        }
     }
 }
