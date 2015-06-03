@@ -18,7 +18,7 @@
         <!-- content -->
         <StackPanel Margin="12" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Controls:BackButton />
-            <TextBlock Style="{StaticResource PageHeaderStyle}" />
+            <TextBlock Text="{Binding Value}" Style="{StaticResource PageHeaderStyle}" />
         </StackPanel>
 
     </Grid>
