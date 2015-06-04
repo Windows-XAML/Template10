@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace Template10.Mvvm
 {
@@ -12,69 +7,51 @@ namespace Template10.Mvvm
 
     public class Command : System.Windows.Input.ICommand
     {
-        private readonly Action m_Execute;
-        private readonly Func<bool> m_CanExecute;
+        private readonly Action _execute;
+        private readonly Func<bool> _canExecute;
         public event EventHandler CanExecuteChanged;
 
-        public Command(Action execute)
-            : this(execute, () => true)
-        { /* empty */ }
-
-        public Command(Action execute, Func<bool> canexecute)
+        public Command(Action execute, Func<bool> canexecute = null)
         {
             if (execute == null)
                 throw new ArgumentNullException("execute");
-            m_Execute = execute;
-            m_CanExecute = canexecute;
+            _execute = execute;
+            _canExecute = canexecute ?? (() => true);
         }
 
         [DebuggerStepThrough]
         public bool CanExecute(object p)
         {
-            try
-            {
-                return m_CanExecute == null ? true : m_CanExecute();
-            }
-            catch
-            {
-                Debugger.Break();
-                return false;
-            }
+            try { return _canExecute(); }
+            catch { return false; }
         }
 
         public void Execute(object p)
         {
-            if (CanExecute(p))
-                try
-                {
-                    m_Execute();
-                }
-                catch { Debugger.Break(); }
+            if (!CanExecute(p))
+                return;
+            try { _execute(); }
+            catch { Debugger.Break(); }
         }
 
         public void RaiseCanExecuteChanged()
         {
-            if (CanExecuteChanged != null)
-                CanExecuteChanged(this, EventArgs.Empty);
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 
     public class Command<T> : System.Windows.Input.ICommand
     {
-        private readonly Action<T> m_Execute;
-        private readonly Func<T, bool> m_CanExecute;
+        private readonly Action<T> _execute;
+        private readonly Func<T, bool> _canExecute;
         public event EventHandler CanExecuteChanged;
 
-        public Command(Action<T> execute)
-            : this(execute, (x) => true)
-        { /* empty */ }
-
-        public Command(Action<T> execute, Func<T, bool> canexecute)
+        public Command(Action<T> execute, Func<T, bool> canexecute = null)
         {
             if (execute == null)
                 throw new ArgumentNullException("execute");
-            m_Execute = execute;
-            m_CanExecute = canexecute;
+            _execute = execute;
+            _canExecute = canexecute ?? (e => true);
         }
 
         [DebuggerStepThrough]
@@ -83,24 +60,17 @@ namespace Template10.Mvvm
             try
             {
                 var _Value = (T)Convert.ChangeType(p, typeof(T));
-                return m_CanExecute == null ? true : m_CanExecute(_Value);
+                return _canExecute == null ? true : _canExecute(_Value);
             }
-            catch
-            {
-                Debugger.Break();
-                return false;
-            }
+            catch { return false; }
         }
 
         public void Execute(object p)
         {
-            if (CanExecute(p))
-                try
-                {
-                    var _Value = (T)Convert.ChangeType(p, typeof(T));
-                    m_Execute(_Value);
-                }
-                catch { Debugger.Break(); }
+            if (!CanExecute(p))
+                return;
+            var _Value = (T)Convert.ChangeType(p, typeof(T));
+            _execute(_Value);
         }
 
         public void RaiseCanExecuteChanged()

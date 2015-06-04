@@ -1,8 +1,8 @@
 ﻿using Windows.UI.Xaml.Navigation;
 
-namespace Blank2.Services.NavigationService
+namespace Template10.Services.NavigationService
 {
-    public class NavigatingEventArgs : NavigatedEventArgs
+    public class NavigatingEventArgs: NavigatedEventArgs
     {
         public NavigatingEventArgs() { }
         public NavigatingEventArgs(NavigatingCancelEventArgs e)

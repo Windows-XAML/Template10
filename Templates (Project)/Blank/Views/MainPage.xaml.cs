@@ -1,4 +1,6 @@
 ﻿using Template10.ViewModels;
+using Windows.UI.ViewManagement;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace Template10.Views

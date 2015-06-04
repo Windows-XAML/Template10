@@ -1,4 +1,5 @@
-﻿using Windows.ApplicationModel.Core;
+﻿using System;
+using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.Resources.Core;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
@@ -10,11 +11,14 @@ namespace Template10.Controls
 {
     public sealed partial class BackButton : UserControl
     {
+        public event EventHandler VisibilityChanged;
+
         public BackButton()
         {
             this.InitializeComponent();
             Loaded += BackButton_Loaded;
             MyBackButton.Click += (s, e) => Frame.GoBack();
+            RegisterPropertyChangedCallback(VisibilityProperty, (s, e) => VisibilityChanged?.Invoke(this, EventArgs.Empty));
         }
 
         public Frame Frame { get; private set; }

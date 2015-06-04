@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates (Project)", "Temp
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates (Item)", "Templates (Item)", "{5204E224-99F0-4BFF-AB9C-85AB6E6319F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10", "Template10\Template10.csproj", "{278AEE33-62D0-4B73-8319-F7F5E5711874}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Full", "Template10\Full.csproj", "{278AEE33-62D0-4B73-8319-F7F5E5711874}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TODO", "Templates (Project)\TODO\TODO\TODO.csproj", "{8BE1FC83-8AC2-41F0-BEDF-D4F4F53A1450}"
 EndProject

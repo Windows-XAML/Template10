@@ -11,7 +11,7 @@ namespace Template10.ViewModels
             // designtime data
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
             {
-                Value = "Design value";
+                Value = "Designtime value";
             }
         }
 

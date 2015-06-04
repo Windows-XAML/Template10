@@ -14,14 +14,14 @@ namespace Template10.ViewModels
             // designtime data
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
             {
-                this.Value = "Design value";
+                this.Value = "Designtime value";
             }
         }
 
         public override void OnNavigatedTo(string parameter, NavigationMode mode, IDictionary<string, object> state)
         {
             // use navigation parameter
-            this.Value = parameter?.ToString();
+            this.Value = string.Format("You passed '{0}'", parameter?.ToString());
         }
 
         private string _Value = "Default";

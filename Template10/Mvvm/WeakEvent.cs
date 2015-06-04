@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
 
-namespace Template10
+namespace Template10.Mvvm
 {
     /// <summary>
     /// A base class that can monitor any event in a generic way.

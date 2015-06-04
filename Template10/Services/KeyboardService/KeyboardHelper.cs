@@ -11,12 +11,10 @@ namespace Template10.Services.KeyboardService
 {
     public class KeyboardHelper
     {
-        bool includeWindowsBackspaceAsBackGesture;
-        public KeyboardHelper(bool includeWindowsBackspaceAsBackGesture = true)
+        public KeyboardHelper()
         {
-            this.includeWindowsBackspaceAsBackGesture = includeWindowsBackspaceAsBackGesture;
             Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated += CoreDispatcher_AcceleratorKeyActivated;
-            Window.Current.CoreWindow.PointerPressed += this.CoreWindow_PointerPressed;
+            Window.Current.CoreWindow.PointerPressed += CoreWindow_PointerPressed;
         }
 
         private void CoreDispatcher_AcceleratorKeyActivated(CoreDispatcher sender, AcceleratorKeyEventArgs e)
@@ -43,11 +41,8 @@ namespace Template10.Services.KeyboardService
                     VirtualKey = virtualKey
                 };
 
-                if (this.KeyDown != null)
-                {
-                    try { this.KeyDown(keyDown); }
-                    catch { }
-                }
+                try { KeyDown?.Invoke(keyDown); }
+                catch { }
 
                 // Only investigate further when Left, Right, or the dedicated Previous or Next keys
                 // are pressed
@@ -67,14 +62,13 @@ namespace Template10.Services.KeyboardService
                         e.Handled = true;
                         RaiseGoBackGestured();
                     }
-                    else if (includeWindowsBackspaceAsBackGesture && virtualKey == VirtualKey.Back && winKey)
+                    else if (virtualKey == VirtualKey.Back && winKey)
                     {
                         // When the next key or Win+Backspace are pressed navigate backward
                         e.Handled = true;
                         RaiseGoBackGestured();
                     }
-                    else if (((int)virtualKey == 167 && noModifiers)
-                        || (virtualKey == VirtualKey.Right && onlyAlt))
+                    else if (((int)virtualKey == 167 && noModifiers) || (virtualKey == VirtualKey.Right && onlyAlt))
                     {
                         // When the next key or Alt+Right are pressed navigate forward
                         e.Handled = true;
@@ -122,33 +116,22 @@ namespace Template10.Services.KeyboardService
         public Action GoForwardGestured { get; set; }
         protected void RaiseGoForwardGestured()
         {
-            if (GoForwardGestured != null)
-                try { GoForwardGestured(); }
-                catch { }
+            try { GoForwardGestured?.Invoke(); }
+            catch { }
         }
 
         public Action GoBackGestured { get; set; }
         protected void RaiseGoBackGestured()
         {
-            if (GoBackGestured != null)
-                try { GoBackGestured(); }
-                catch { }
+            try { GoBackGestured?.Invoke(); }
+            catch { }
         }
 
         public Action ControlEGestured { get; set; }
         protected void RaiseControlEGestured()
         {
-            if (ControlEGestured != null)
-                try { ControlEGestured(); }
-                catch { }
-        }
-
-        public Action WindowBackspaceEGestured { get; set; }
-        protected void RaiseWindowBackspaceEGestured()
-        {
-            if (WindowBackspaceEGestured != null)
-                try { WindowBackspaceEGestured(); }
-                catch { }
+            try { ControlEGestured?.Invoke(); }
+            catch { }
         }
 
         private static char? ToChar(VirtualKey key, bool shift)

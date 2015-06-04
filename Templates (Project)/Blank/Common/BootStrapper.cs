@@ -55,6 +55,7 @@ namespace Template10.Common
         protected Func<SplashScreen, Page> SplashFactory { get; set; }
         public TimeSpan CacheMaxDuration { get; set; } = TimeSpan.MaxValue;
         private const string CacheKey = "Setting-Cache-Date";
+        public bool ShowShellBackButton { get; set; } = true;
 
         private CoreDispatcher _dispatcher;
         public async void Dispatch(Action action)
@@ -112,6 +113,11 @@ namespace Template10.Common
             RootFrame = RootFrame ?? new Frame();
             RootFrame.Language = Windows.Globalization.ApplicationLanguages.Languages[0];
             NavigationService = new Services.NavigationService.NavigationService(RootFrame);
+            RootFrame.Navigated += (s, args) =>
+            {
+                Windows.UI.Core.SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+                    (ShowShellBackButton && RootFrame.CanGoBack) ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
+            };
 
             // expire state
             var state = NavigationService.State();
@@ -190,7 +196,6 @@ namespace Template10.Common
             }
             state.Values.Clear();
         }
-
 
         /// <summary>
         /// Default Hardware/Shell Back handler overrides standard Back behavior that navigates to previous app

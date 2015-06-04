@@ -47,7 +47,7 @@ namespace Template10.ViewModels
             }
         }
 
-        public override void OnNavigatedTo(string parameter, NavigationMode mode, Dictionary<string, object> state)
+        public override void OnNavigatedTo(string parameter, NavigationMode mode, IDictionary<string, object> state)
         {
             this.PropertyChanged += (s, e) =>
             {

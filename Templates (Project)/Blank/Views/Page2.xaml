@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:vm="using:Template10.ViewModels"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:Controls="using:Template10.Controls"
+    xmlns:controls="using:Template10.Controls"
     x:Class="Template10.Views.Page2"
     mc:Ignorable="d">
 
@@ -15,10 +15,17 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <!-- header -->
+        <controls:PageHeader Text="Page 2" Grid.Row="0" />
+
         <!-- content -->
-        <StackPanel Margin="12" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Controls:BackButton />
-            <TextBlock Text="{Binding Value}" Style="{StaticResource PageHeaderStyle}" />
+        <StackPanel Grid.Row="1" Padding="12,0,0,0">
+            <TextBlock Text="{Binding Value}" Style="{StaticResource TitleTextBlockStyle}" />
         </StackPanel>
 
     </Grid>

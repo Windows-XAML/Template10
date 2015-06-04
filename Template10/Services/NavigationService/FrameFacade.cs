@@ -6,7 +6,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
-namespace Blank1.Services.NavigationService
+namespace Template10.Services.NavigationService
 {
     public class FrameFacade
     {

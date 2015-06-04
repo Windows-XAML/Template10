@@ -9,7 +9,12 @@ namespace Template10.Mvvm
 
         public void RaisePropertyChanged([CallerMemberName]string propertyName = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
+                return;
+            (App.Current as Common.BootStrapper).Dispatch(() =>
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            });
         }
 
         public void Set<T>(ref T storage, T value, [CallerMemberName()]string propertyName = null)
@@ -17,7 +22,7 @@ namespace Template10.Mvvm
             if (!object.Equals(storage, value))
             {
                 storage = value;
-                this.RaisePropertyChanged(propertyName);
+                RaisePropertyChanged(propertyName);
             }
         }
     }

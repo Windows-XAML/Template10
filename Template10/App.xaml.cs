@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Template10.Common;
 using Windows.ApplicationModel.Activation;
 
 namespace Template10
@@ -11,7 +12,7 @@ namespace Template10
             this.InitializeComponent();
         }
 
-        public override Task OnLaunchedAsync(ILaunchActivatedEventArgs e)
+        public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
             this.NavigationService.Navigate(typeof(Views.MainPage));
             return Task.FromResult<object>(null);
