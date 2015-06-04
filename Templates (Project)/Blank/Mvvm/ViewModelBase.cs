@@ -12,11 +12,10 @@ namespace Template10.Mvvm
         {
             if (!Windows.ApplicationModel.DesignMode.DesignModeEnabled)
             {
-                this.Dispatch = (App.Current as Common.BootStrapper).Dispatch;
                 this.NavigationService = (App.Current as Common.BootStrapper).NavigationService;
             }
         }
-        public Action<Action> Dispatch { get; private set; }
+        public string ViewModelIdentifier { get; set; }
         public NavigationService NavigationService { get; private set; }
         public virtual void OnNavigatedTo(string parameter, NavigationMode mode, IDictionary<string, object> state) { /* nothing by default */ }
         public virtual Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending) { return Task.FromResult<object>(null); }

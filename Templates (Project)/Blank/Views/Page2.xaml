@@ -6,6 +6,7 @@
     xmlns:vm="using:Template10.ViewModels"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Template10.Controls"
+    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" xmlns:Behaviors="using:Template10.Behaviors"
     x:Class="Template10.Views.Page2"
     mc:Ignorable="d">
 
@@ -13,7 +14,12 @@
         <vm:Page2ViewModel />
     </Page.DataContext>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.TopAppBar>
+        <CommandBar ClosedDisplayMode="Minimal" />
+    </Page.TopAppBar>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+		BorderBrush="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" BorderThickness="0,12,0,0">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="60" />
@@ -23,7 +29,6 @@
         <!-- header -->
         <controls:PageHeader Text="Page 2" Grid.Row="0" />
 
-        <!-- content -->
         <StackPanel Grid.Row="1" Padding="12,0,0,0">
             <TextBlock Text="{Binding Value}" Style="{StaticResource TitleTextBlockStyle}" />
         </StackPanel>

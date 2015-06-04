@@ -9,6 +9,7 @@ namespace Template10.Views
         public Page2()
         {
             InitializeComponent();
+            NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
             DataContextChanged += (s, e) => { ViewModel = DataContext as Page2ViewModel; };
         }
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Navigation;
 
@@ -17,7 +18,7 @@ namespace Template10.ViewModels
 
         public override void OnNavigatedTo(string parameter, NavigationMode mode, IDictionary<string, object> state)
         {
-            // restore state
+            // restore state 
             if (state.ContainsKey("Value"))
             {
                 Value = state["Value"]?.ToString();
@@ -34,12 +35,12 @@ namespace Template10.ViewModels
             return Task.FromResult<object>(null);
         }
 
+        private string _Value = string.Empty;
+        public string Value { get { return _Value; } set { Set(ref _Value, value); } }
+
         public void GotoPage2()
         {
             this.NavigationService.Navigate(typeof(Views.Page2), this.Value);
         }
-
-        private string _Value = "Hello Template 10";
-        public string Value { get { return _Value; } set { Set(ref _Value, value); } }
     }
 }

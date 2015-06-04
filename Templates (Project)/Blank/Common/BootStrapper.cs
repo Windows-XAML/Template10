@@ -5,6 +5,7 @@ using Windows.ApplicationModel;
 using Windows.UI.Xaml.Controls;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Core;
+using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Common
 {

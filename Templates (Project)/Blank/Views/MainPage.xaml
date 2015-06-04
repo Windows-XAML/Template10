@@ -1,5 +1,4 @@
 ﻿<Page
-    x:Class="Template10.Views.MainPage"
     xmlns:local="using:Template10.Views"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -7,14 +6,23 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:Template10.ViewModels"
     xmlns:controls="using:Template10.Controls"
+    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" 
+    xmlns:Behaviors="using:Template10.Behaviors" 
+    xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+    x:Class="Template10.Views.MainPage"
     mc:Ignorable="d">
 
     <Page.DataContext>
         <vm:MainPageViewModel />
     </Page.DataContext>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        
+    <Page.TopAppBar>
+        <CommandBar ClosedDisplayMode="Minimal" />
+    </Page.TopAppBar>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" 
+          BorderBrush="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" BorderThickness="0,12,0,0">
+
         <Grid.RowDefinitions>
             <RowDefinition Height="60" />
             <RowDefinition />
@@ -22,12 +30,24 @@
 
         <!-- header -->
         <controls:PageHeader Text="Page 1" Grid.Row="0" />
+        <controls:ForwardButton HorizontalAlignment="Right" />
 
-        <!-- content -->
+        <!--#region content-->
+        
         <RelativePanel Grid.Row="1" Padding="12,0,0,0">
-            <TextBox Header="Parameter to pass to Page 2" Width="200" Margin="0" Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="ParameterTextBox" />
-            <Button Click="{x:Bind ViewModel.GotoPage2}" Content="Submit" Margin="4,0" RelativePanel.RightOf="ParameterTextBox" RelativePanel.AlignBottomWith="ParameterTextBox" />
+            <TextBox Header="Parameter to pass to Page 2" Width="200" Margin="0" 
+                     Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="ParameterTextBox" >
+                <Interactivity:Interaction.Behaviors>
+                    <Behaviors:TextBoxEnterBehavior>
+                        <Core:CallMethodAction MethodName="GotoPage2" TargetObject="{Binding}" />
+                    </Behaviors:TextBoxEnterBehavior>
+                </Interactivity:Interaction.Behaviors>
+            </TextBox>
+            <Button Content="Submit" Click="{x:Bind ViewModel.GotoPage2}" Margin="4,0" 
+                    RelativePanel.RightOf="ParameterTextBox" RelativePanel.AlignBottomWith="ParameterTextBox" />
         </RelativePanel>
 
+        <!--#endregion-->
+        
     </Grid>
 </Page>

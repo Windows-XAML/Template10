@@ -51,9 +51,10 @@ namespace Template10.Services.NavigationService
             return container.Values;
         }
 
+        // before navigate (cancellable)
         bool NavigatingFrom(bool suspending)
         {
-            var page = _frame.Content as FrameworkElement;
+            var page = _frame.Content as Page;
             if (page != null)
             {
                 var dataContext = page.DataContext as INavigatable;
@@ -72,14 +73,17 @@ namespace Template10.Services.NavigationService
             return true;
         }
 
+        // after navigate
         async Task NavigateFromAsync(bool suspending)
         {
-            var page = _frame.Content as FrameworkElement;
+            var page = _frame.Content as Page;
             if (page != null)
             {
+                // call viewmodel
                 var dataContext = page.DataContext as INavigatable;
                 if (dataContext != null)
                 {
+                    dataContext.ViewModelIdentifier = string.Format("Page- {0}", _frame.BackStackDepth);
                     await dataContext.OnNavigatedFromAsync(State(CurrentPageType), suspending);
                 }
             }
@@ -100,14 +104,32 @@ namespace Template10.Services.NavigationService
                 }
             }
 
-            var page = _frame.Content as FrameworkElement;
+            var page = _frame.Content as Page;
             if (page != null)
             {
+                // call viewmodel
                 var dataContext = page.DataContext as INavigatable;
                 if (dataContext != null)
                 {
-                    var state = State(page.GetType());
-                    dataContext.OnNavigatedTo(parameter, mode, state);
+                    if (dataContext.ViewModelIdentifier != null && (mode == NavigationMode.Forward || mode == NavigationMode.Back))
+                    {
+                        // don't call load if cached && navigating back/forward
+                        return;
+                    }
+                    else
+                    {
+                        // setup dispatcher to correct thread
+                        var dispatch = new Action<Action>(async action =>
+                        {
+                            if (page.Dispatcher.HasThreadAccess) { action(); }
+                            else { await page.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => action()); }
+                        });
+                        dataContext.Dispatch = dispatch;
+
+                        // prepare for state load
+                        var state = State(page.GetType());
+                        dataContext.OnNavigatedTo(parameter, mode, state);
+                    }
                 }
             }
         }

@@ -18,8 +18,8 @@ namespace Template10.Services.NavigationService
             // setup animations
             var c = new TransitionCollection { };
             var t = new NavigationThemeTransition { };
-            //var i = new EntranceNavigationTransitionInfo();
-            //t.DefaultNavigationTransitionInfo = i;
+            var i = new EntranceNavigationTransitionInfo();
+            t.DefaultNavigationTransitionInfo = i;
             c.Add(t);
             _frame.ContentTransitions = c;
         }
