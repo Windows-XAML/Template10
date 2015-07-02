@@ -10,6 +10,13 @@ namespace Template10
         public App()
         {
             InitializeComponent();
+            this.ShowShellBackButton = true;
+        }
+
+        public override Task OnInitializeAsync()
+        {
+            // runs before everything
+            return base.OnInitializeAsync();
         }
 
         public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
