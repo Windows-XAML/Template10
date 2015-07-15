@@ -10,6 +10,7 @@ namespace Template10
         public App()
         {
             InitializeComponent();
+            this.SplashFactory = (e) => null;
         }
 
         public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)

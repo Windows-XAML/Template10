@@ -1,0 +1,47 @@
+﻿<Page
+    xmlns:local="using:Template10.Views"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Template10.ViewModels"
+    xmlns:controls="using:Template10.Controls"
+    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" 
+    xmlns:Behaviors="using:Template10.Behaviors" 
+    xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+    x:Class="Template10.Views.MainPage"
+    mc:Ignorable="d">
+
+    <Page.DataContext>
+        <vm:MainPageViewModel />
+    </Page.DataContext>
+
+    <Page.TopAppBar>
+        <CommandBar ClosedDisplayMode="Minimal" />
+    </Page.TopAppBar>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" 
+          BorderBrush="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" BorderThickness="0,12,0,0">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <controls:PageHeader Text="Service" Grid.Row="0" Grid.ColumnSpan="2" />
+
+        <TextBlock TextWrapping="Wrap" Grid.Row="1" Grid.Column="0" />
+        
+        <TextBlock TextWrapping="Wrap" Grid.Row="1" Grid.Column="1">
+            <Run Text="Service Description" FontWeight="Light" />
+            <LineBreak />
+            <Run Text="Lorem ipsum" />
+        </TextBlock>
+        
+    </Grid>
+</Page>
