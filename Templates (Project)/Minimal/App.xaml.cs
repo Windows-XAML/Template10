@@ -19,6 +19,11 @@ namespace Template10
             return base.OnInitializeAsync();
         }
 
+        public override void OnPrelaunch()
+        {
+            // handle prelaunch
+        }
+
         public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
             // start the user experience

@@ -15,6 +15,11 @@ namespace Template10
 
         public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
+            if ((args.Kind == ActivationKind.Launch) && ((args as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false))
+            {
+                // update pre-launch live tile
+            }
+
             // start the user experience
             NavigationService.Navigate(typeof(Views.MainPage));
             return Task.FromResult<object>(null);
