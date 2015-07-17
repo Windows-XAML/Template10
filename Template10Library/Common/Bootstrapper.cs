@@ -6,6 +6,10 @@ using Windows.UI.Xaml.Controls;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Navigation;
+using System.Collections.Generic;
+using System.Threading;
+using System.Linq;
+using Windows.UI.ViewManagement;
 
 namespace Template10.Common
 {
@@ -33,10 +37,13 @@ namespace Template10.Common
                 var deferral = e.SuspendingOperation.GetDeferral();
                 try
                 {
-                    // date the cache
-                    NavigationService.State().Values[CacheKey] = DateTime.Now.ToString();
-                    // call view model suspend (OnNavigatedfrom)
-                    await NavigationService.SuspendingAsync();
+                    foreach (var service in Windows.SelectMany(x => x.NavigationServices))
+                    {
+                        // date the cache
+                        service.State().Values[CacheKey] = DateTime.Now.ToString();
+                        // call view model suspend (OnNavigatedfrom)
+                        await service.SuspendingAsync();
+                    }
                     // call system-level suspend
                     await OnSuspendingAsync(s, e);
                 }
@@ -44,26 +51,14 @@ namespace Template10.Common
             };
         }
 
-        protected override void OnWindowCreated(WindowCreatedEventArgs args)
-        {
-            this._dispatcher = args.Window.Dispatcher;
-        }
-
         #region properties
 
-        public Frame RootFrame { get; set; }
-        public Services.NavigationService.NavigationService NavigationService { get; private set; }
+        public Services.NavigationService.NavigationService NavigationService { get { return Windows.First().NavigationServices.First(); } }
+
         protected Func<SplashScreen, Page> SplashFactory { get; set; }
         public TimeSpan CacheMaxDuration { get; set; } = TimeSpan.MaxValue;
         private const string CacheKey = "Setting-Cache-Date";
         public bool ShowShellBackButton { get; set; } = true;
-
-        private CoreDispatcher _dispatcher;
-        public async void Dispatch(Action action)
-        {
-            if (_dispatcher.HasThreadAccess) { action(); }
-            else { await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => action()); }
-        }
 
         #endregion
 
@@ -98,11 +93,29 @@ namespace Template10.Common
 
         #endregion
 
+        public event EventHandler<WindowCreatedEventArgs> WindowCreated;
+        protected override void OnWindowCreated(WindowCreatedEventArgs args)
+        {
+            Windows.Add(new WindowWrapper(args.Window));
+            WindowCreated?.Invoke(this, args);
+            base.OnWindowCreated(args);
+        }
+
+        public List<WindowWrapper> Windows { get; } = new List<WindowWrapper>();
+
         [Obsolete("Use OnStartAsync()")]
         protected override void OnLaunched(LaunchActivatedEventArgs e) { InternalLaunchAsync(e as ILaunchActivatedEventArgs); }
 
         private async void InternalLaunchAsync(ILaunchActivatedEventArgs e)
         {
+            // first handle prelaunch, which will not continue
+            if ((e.Kind == ActivationKind.Launch) && ((e as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false))
+            {
+                OnPrelaunch();
+                return;
+            }
+
+            // now handle normal activation
             UIElement splashScreen = default(UIElement);
             if (SplashFactory != null)
             {
@@ -110,18 +123,24 @@ namespace Template10.Common
                 Window.Current.Content = splashScreen;
             }
 
-            // setup frame
-            RootFrame = RootFrame ?? new Frame();
-            RootFrame.Language = Windows.Globalization.ApplicationLanguages.Languages[0];
-            NavigationService = new Services.NavigationService.NavigationService(RootFrame);
-            RootFrame.Navigated += (s, args) =>
-            {
-                Windows.UI.Core.SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
-                    (ShowShellBackButton && RootFrame.CanGoBack) ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
-            };
+            // setup default view
+            var view = Windows.First();
 
-            // expire state
-            var state = NavigationService.State();
+            // setup frame
+            var frame = new Frame
+            {
+                Language = global::Windows.Globalization.ApplicationLanguages.Languages[0]
+            };
+            frame.Navigated += (s, args) =>
+            {
+                global::Windows.UI.Core.SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+                    (ShowShellBackButton && frame.CanGoBack) ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
+            };
+            var nav = new Services.NavigationService.NavigationService(frame);
+            view.NavigationServices.Add(nav);
+
+            // expire state (based on expiry)
+            var state = nav.State();
             if (state.Values.ContainsKey(CacheKey))
             {
                 DateTime cacheDate;
@@ -130,7 +149,13 @@ namespace Template10.Common
                     var cacheAge = DateTime.Now.Subtract(cacheDate);
                     if (cacheAge >= CacheMaxDuration)
                     {
-                        ClearState();
+                        foreach (var cache in view.NavigationServices.Select(x => x.State()))
+                        {
+                            foreach (var container in cache.Containers)
+                            {
+                                cache.DeleteContainer(container.Key);
+                            }
+                        }
                     }
                 }
             }
@@ -151,7 +176,7 @@ namespace Template10.Common
                 case ApplicationExecutionState.Terminated:
                     {
                         // restore if you need to/can do
-                        var restored = NavigationService.RestoreSavedNavigation();
+                        var restored = nav.RestoreSavedNavigation();
                         if (!restored)
                         {
                             await OnStartAsync(StartKind.Launch, e);
@@ -161,20 +186,14 @@ namespace Template10.Common
             }
 
             // if the user didn't already set custom content use rootframe
-            if (Window.Current.Content == splashScreen)
-            {
-                Window.Current.Content = RootFrame;
-            }
-            if (Window.Current.Content == null)
-            {
-                Window.Current.Content = RootFrame;
-            }
+            if (Window.Current.Content == splashScreen) { Window.Current.Content = frame; }
+            if (Window.Current.Content == null) { Window.Current.Content = frame; }
 
             // ensure active
             Window.Current.Activate();
 
             // Hook up the default Back handler
-            Windows.UI.Core.SystemNavigationManager.GetForCurrentView().BackRequested += (s, args) =>
+            global::Windows.UI.Core.SystemNavigationManager.GetForCurrentView().BackRequested += (s, args) =>
             {
                 args.Handled = true;
                 RaiseBackRequested();
@@ -186,16 +205,6 @@ namespace Template10.Common
 
             // Hook up keyboard and house Forward handler
             keyboard.AfterForwardGesture = () => RaiseForwardRequested();
-        }
-
-        private void ClearState()
-        {
-            var state = NavigationService.State();
-            foreach (var item in state.Containers)
-            {
-                state.DeleteContainer(item.Key);
-            }
-            state.Values.Clear();
         }
 
         /// <summary>
@@ -213,6 +222,7 @@ namespace Template10.Common
 
             if (!args.Handled)
             {
+                // default to first window
                 NavigationService.GoBack();
                 args.Handled = true;
             }
@@ -225,6 +235,7 @@ namespace Template10.Common
 
             if (!args.Handled)
             {
+                // default to first window
                 NavigationService.GoForward();
                 args.Handled = true;
             }
@@ -233,6 +244,7 @@ namespace Template10.Common
         #region overrides
 
         public enum StartKind { Launch, Activate }
+        public virtual void OnPrelaunch() { }
         public abstract Task OnStartAsync(StartKind startKind, IActivatedEventArgs args);
         public virtual Task OnInitializeAsync() { return Task.FromResult<object>(null); }
         public virtual Task OnSuspendingAsync(object s, SuspendingEventArgs e) { return Task.FromResult<object>(null); }

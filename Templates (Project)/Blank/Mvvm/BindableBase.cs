@@ -10,25 +10,20 @@ namespace Template10.Mvvm
         {
             if (!Windows.ApplicationModel.DesignMode.DesignModeEnabled)
             {
-                // default to main dispatcher, developer must change when in diff UI thread
-                this.Dispatch = (App.Current as Common.BootStrapper).Dispatch;
+                // default to current dispatcher, developer must change for special-vase UI threads
+                this.Dispatch = Template10.Common.WindowWrapper.Current().Dispatch;
             }
         }
 
         public Action<Action> Dispatch { get; set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void RaisePropertyChanged([CallerMemberName]string propertyName = null)
         {
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
                 return;
-            Dispatch(() =>
-            {
-                (App.Current as Common.BootStrapper).Dispatch(() =>
-                {
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-                });
-            });
+            Dispatch(() => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)));
         }
 
         public void Set<T>(ref T storage, T value, [CallerMemberName()]string propertyName = null)
