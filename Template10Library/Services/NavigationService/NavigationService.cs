@@ -10,16 +10,16 @@ namespace Template10.Services.NavigationService
 {
     public class NavigationService
     {
-        private readonly FrameFacade _frame;
         private const string EmptyNavigation = "1,0";
 
+        public FrameFacade Frame { get; private set; }
         string LastNavigationParameter { get; set; }
         string LastNavigationType { get; set; }
 
         public NavigationService(Frame frame)
         {
-            _frame = new FrameFacade(frame);
-            _frame.Navigating += async (s, e) =>
+            Frame = new FrameFacade(frame);
+            Frame.Navigating += async (s, e) =>
             {
                 if (e.Suspending)
                     return;
@@ -31,7 +31,7 @@ namespace Template10.Services.NavigationService
                     await NavigateFromAsync(false);
                 }
             };
-            _frame.Navigated += (s, e) =>
+            Frame.Navigated += (s, e) =>
             {
                 NavigateTo(e.NavigationMode, e.Parameter);
             };
@@ -54,7 +54,7 @@ namespace Template10.Services.NavigationService
         // before navigate (cancellable)
         bool NavigatingFrom(bool suspending)
         {
-            var page = _frame.Content as Page;
+            var page = Frame.Content as Page;
             if (page != null)
             {
                 var dataContext = page.DataContext as INavigable;
@@ -62,8 +62,8 @@ namespace Template10.Services.NavigationService
                 {
                     var args = new NavigatingEventArgs
                     {
-                        PageType = _frame.CurrentPageType,
-                        Parameter = _frame.CurrentPageParam,
+                        PageType = Frame.CurrentPageType,
+                        Parameter = Frame.CurrentPageParam,
                         Suspending = suspending,
                     };
                     dataContext.OnNavigatingFrom(args);
@@ -76,14 +76,14 @@ namespace Template10.Services.NavigationService
         // after navigate
         async Task NavigateFromAsync(bool suspending)
         {
-            var page = _frame.Content as Page;
+            var page = Frame.Content as Page;
             if (page != null)
             {
                 // call viewmodel
                 var dataContext = page.DataContext as INavigable;
                 if (dataContext != null)
                 {
-                    dataContext.ViewModelIdentifier = string.Format("Page- {0}", _frame.BackStackDepth);
+                    dataContext.ViewModelIdentifier = string.Format("Page- {0}", Frame.BackStackDepth);
                     await dataContext.OnNavigatedFromAsync(State(CurrentPageType), suspending);
                 }
             }
@@ -92,7 +92,7 @@ namespace Template10.Services.NavigationService
         void NavigateTo(NavigationMode mode, string parameter)
         {
             LastNavigationParameter = parameter;
-            LastNavigationType = _frame.Content.GetType().FullName;
+            LastNavigationType = Frame.Content.GetType().FullName;
 
             if (mode == NavigationMode.New)
             {
@@ -104,7 +104,7 @@ namespace Template10.Services.NavigationService
                 }
             }
 
-            var page = _frame.Content as Page;
+            var page = Frame.Content as Page;
             if (page != null)
             {
                 // call viewmodel
@@ -141,7 +141,7 @@ namespace Template10.Services.NavigationService
             if (page.FullName.Equals(LastNavigationType)
                 && parameter == LastNavigationParameter)
                 return false;
-            return _frame.Navigate(page, parameter);
+            return Frame.Navigate(page, parameter);
         }
 
         public void SaveNavigation()
@@ -149,7 +149,7 @@ namespace Template10.Services.NavigationService
             var state = State(GetType());
             state["CurrentPageType"] = CurrentPageType.ToString();
             state["CurrentPageParam"] = CurrentPageParam;
-            state["NavigateState"] = _frame.GetNavigationState();
+            state["NavigateState"] = Frame.GetNavigationState();
         }
 
         public bool RestoreSavedNavigation()
@@ -157,24 +157,24 @@ namespace Template10.Services.NavigationService
             try
             {
                 var state = State(GetType());
-                _frame.CurrentPageType = Type.GetType(state["CurrentPageType"].ToString());
-                _frame.CurrentPageParam = state["CurrentPageParam"]?.ToString();
-                _frame.SetNavigationState(state["NavigateState"].ToString());
-                NavigateTo(NavigationMode.Refresh, _frame.CurrentPageParam);
+                Frame.CurrentPageType = Type.GetType(state["CurrentPageType"].ToString());
+                Frame.CurrentPageParam = state["CurrentPageParam"]?.ToString();
+                Frame.SetNavigationState(state["NavigateState"].ToString());
+                NavigateTo(NavigationMode.Refresh, Frame.CurrentPageParam);
                 return true;
             }
             catch { return false; }
         }
 
-        public void GoBack() { if (_frame.CanGoBack) _frame.GoBack(); }
+        public void GoBack() { if (Frame.CanGoBack) Frame.GoBack(); }
 
-        public bool CanGoBack { get { return _frame.CanGoBack; } }
+        public bool CanGoBack { get { return Frame.CanGoBack; } }
 
-        public void GoForward() { _frame.GoForward(); }
+        public void GoForward() { Frame.GoForward(); }
 
-        public bool CanGoForward { get { return _frame.CanGoForward; } }
+        public bool CanGoForward { get { return Frame.CanGoForward; } }
 
-        public void ClearHistory() { _frame.SetNavigationState(EmptyNavigation); }
+        public void ClearHistory() { Frame.SetNavigationState(EmptyNavigation); }
 
         public void Resuming() { /* nothing */ }
 
@@ -196,8 +196,8 @@ namespace Template10.Services.NavigationService
             flyout.Show();
         }
 
-        public Type CurrentPageType { get { return _frame.CurrentPageType; } }
-        public string CurrentPageParam { get { return _frame.CurrentPageParam; } }
+        public Type CurrentPageType { get { return Frame.CurrentPageType; } }
+        public string CurrentPageParam { get { return Frame.CurrentPageParam; } }
     }
 }
 
