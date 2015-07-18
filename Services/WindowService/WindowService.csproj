@@ -91,12 +91,18 @@
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\..\Templates %28Project%29\Minimal\Mvvm\BindableBase.cs">
+      <Link>Mvvm\BindableBase.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Templates %28Project%29\Minimal\Mvvm\DelegateCommand.cs">
+      <Link>Mvvm\DelegateCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Templates %28Project%29\Minimal\Mvvm\ViewModelBase.cs">
+      <Link>Mvvm\ViewModelBase.cs</Link>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Mvvm\BindableBase.cs" />
-    <Compile Include="Mvvm\DelegateCommand.cs" />
-    <Compile Include="Mvvm\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\WindowService\WindowHelper.cs" />
     <Compile Include="Services\WindowService\WindowService.cs" />

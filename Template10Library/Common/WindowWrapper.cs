@@ -11,40 +11,23 @@ namespace Template10.Common
 {
     public class WindowWrapper
     {
-        readonly static List<WindowWrapper> viewWrappers = new List<WindowWrapper>();
-        public static WindowWrapper Current() { return viewWrappers.First(x => x.Window.Dispatcher.HasThreadAccess); }
-        public static WindowWrapper Current(Window window) { return viewWrappers.First(x => x.Window == window); }
+        public readonly static List<WindowWrapper> ActiveWrappers = new List<WindowWrapper>();
+        public static WindowWrapper Current() { return ActiveWrappers.First(x => x.Window.Dispatcher.HasThreadAccess); }
+        public static WindowWrapper Current(Window window) { return ActiveWrappers.First(x => x.Window == window); }
 
         public WindowWrapper(Window window)
         {
+            if (ActiveWrappers.Any(x => x.Window == window))
+                throw new Exception("Windows already has a wrapper; use Current(window) to fetch.");
             Window = window;
-            viewWrappers.Add(this);
-            window.Closed += (s, e) => { viewWrappers.Remove(this); };
+            ActiveWrappers.Add(this);
+            Dispatcher = new DispatcherWrapper(window.Dispatcher);
+            window.Closed += (s, e) => { ActiveWrappers.Remove(this); };
         }
 
-        public Window Window { get; private set; }
-        public IEnumerable<FrameFacade> Frames { get { return NavigationServices.Select(x => x.Frame); } }
-        public List<Services.NavigationService.NavigationService> NavigationServices { get; } = new List<Services.NavigationService.NavigationService>();
-
-        public async void Dispatch(Action action)
-        {
-            if (Window.Dispatcher.HasThreadAccess) { action?.Invoke(); }
-            else { await Window.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => action?.Invoke()); }
-        }
-
-        public async Task DispatchAsync(Func<Task> func)
-        {
-            if (Window.Dispatcher.HasThreadAccess) { await func?.Invoke(); }
-            else
-            {
-                var tcs = new TaskCompletionSource<object>();
-                await Window.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    try { func(); tcs.TrySetResult(null); }
-                    catch (Exception ex) { tcs.TrySetException(ex); }
-                });
-                await tcs.Task;
-            }
-        }
+        Window Window { get; set; }
+        public void Close() { Window.Close(); }
+        public DispatcherWrapper Dispatcher { get; private set; }
+        public List<NavigationService> NavigationServices { get; } = new List<NavigationService>();
     }
 }

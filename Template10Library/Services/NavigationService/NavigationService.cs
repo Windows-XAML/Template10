@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Template10.Common;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation.Collections;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -37,20 +41,6 @@ namespace Template10.Services.NavigationService
             };
         }
 
-        public Windows.Storage.ApplicationDataContainer State()
-        {
-            var data = Windows.Storage.ApplicationData.Current;
-            var app = data.LocalSettings.CreateContainer("PageState", Windows.Storage.ApplicationDataCreateDisposition.Always);
-            return app;
-        }
-
-        public IPropertySet State(Type type)
-        {
-            var key = string.Format("{0}", type);
-            var container = State().CreateContainer(key, Windows.Storage.ApplicationDataCreateDisposition.Always);
-            return container.Values;
-        }
-
         // before navigate (cancellable)
         bool NavigatingFrom(bool suspending)
         {
@@ -83,8 +73,9 @@ namespace Template10.Services.NavigationService
                 var dataContext = page.DataContext as INavigable;
                 if (dataContext != null)
                 {
-                    dataContext.ViewModelIdentifier = string.Format("Page- {0}", Frame.BackStackDepth);
-                    await dataContext.OnNavigatedFromAsync(State(CurrentPageType), suspending);
+                    dataContext.Identifier = string.Format("Page- {0}", Frame.BackStackDepth);
+                    var pageState = Frame.PageStateContainer(page.GetType());
+                    await dataContext.OnNavigatedFromAsync(pageState, suspending);
                 }
             }
         }
@@ -96,12 +87,7 @@ namespace Template10.Services.NavigationService
 
             if (mode == NavigationMode.New)
             {
-                // clear state
-                var state = State();
-                foreach (var container in state.Containers)
-                {
-                    state.DeleteContainer(container.Key);
-                }
+                Frame.ClearFrameState();
             }
 
             var page = Frame.Content as Page;
@@ -111,27 +97,63 @@ namespace Template10.Services.NavigationService
                 var dataContext = page.DataContext as INavigable;
                 if (dataContext != null)
                 {
-                    if (dataContext.ViewModelIdentifier != null && (mode == NavigationMode.Forward || mode == NavigationMode.Back))
+                    if (dataContext.Identifier != null
+                        && (mode == NavigationMode.Forward || mode == NavigationMode.Back))
                     {
                         // don't call load if cached && navigating back/forward
                         return;
                     }
                     else
                     {
-                        // setup dispatcher to correct thread
-                        var dispatch = new Action<Action>(async action =>
-                        {
-                            if (page.Dispatcher.HasThreadAccess) { action(); }
-                            else { await page.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => action()); }
-                        });
-                        dataContext.Dispatch = dispatch;
-
                         // prepare for state load
-                        var state = State(page.GetType());
-                        dataContext.OnNavigatedTo(parameter, mode, state);
+                        dataContext.NavigationService = this;
+                        var pageState = Frame.PageStateContainer(page.GetType());
+                        dataContext.OnNavigatedTo(parameter, mode, pageState);
                     }
                 }
             }
+        }
+
+        // TODO: this will spawn a new window instead of navigating to an existing frame.
+        public async Task<int> OpenAsync(Type page, string parameter = null, ViewSizePreference size = ViewSizePreference.UseHalf)
+        {
+            var coreView = CoreApplication.CreateNewView();
+            ApplicationView view = null;
+            var create = new Action(() =>
+            {
+                // setup content
+                var frame = new Frame();
+                frame.NavigationFailed += (s, e) => { System.Diagnostics.Debugger.Break(); };
+                frame.Navigate(page, parameter);
+
+                // create window
+                var window = Window.Current;
+                window.Content = frame;
+
+                // setup view/collapse
+                view = ApplicationView.GetForCurrentView();
+                Windows.Foundation.TypedEventHandler<ApplicationView, ApplicationViewConsolidatedEventArgs> consolidated = null;
+                consolidated = new Windows.Foundation.TypedEventHandler<ApplicationView, ApplicationViewConsolidatedEventArgs>((s, e) =>
+                {
+                    (s as ApplicationView).Consolidated -= consolidated;
+                    if (CoreApplication.GetCurrentView().IsMain)
+                        return;
+                    try { window.Close(); }
+                    finally { CoreApplication.GetCurrentView().CoreWindow.Activate(); }
+                });
+                view.Consolidated += consolidated;
+            });
+
+            // execute create
+            await WindowWrapper.Current().Dispatcher.DispatchAsync(create);
+
+            // show view
+            if (await ApplicationViewSwitcher.TryShowAsStandaloneAsync(view.Id, size))
+            {
+                // change focus
+                await ApplicationViewSwitcher.SwitchAsync(view.Id);
+            }
+            return view.Id;
         }
 
         public bool Navigate(Type page, string parameter = null)
@@ -146,7 +168,7 @@ namespace Template10.Services.NavigationService
 
         public void SaveNavigation()
         {
-            var state = State(GetType());
+            var state = Frame.PageStateContainer(GetType());
             state["CurrentPageType"] = CurrentPageType.ToString();
             state["CurrentPageParam"] = CurrentPageParam;
             state["NavigateState"] = Frame.GetNavigationState();
@@ -156,7 +178,7 @@ namespace Template10.Services.NavigationService
         {
             try
             {
-                var state = State(GetType());
+                var state = Frame.PageStateContainer(GetType());
                 Frame.CurrentPageType = Type.GetType(state["CurrentPageType"].ToString());
                 Frame.CurrentPageParam = state["CurrentPageParam"]?.ToString();
                 Frame.SetNavigationState(state["NavigateState"].ToString());
