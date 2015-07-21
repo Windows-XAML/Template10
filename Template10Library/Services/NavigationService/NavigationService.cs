@@ -134,7 +134,7 @@ namespace Template10.Services.NavigationService
             }
         }
 
-        public bool Navigate(Type page, string parameter = null)
+        public bool Navigate(Type page, object parameter = null)
         {
             if (page == null)
                 throw new ArgumentNullException(nameof(page));

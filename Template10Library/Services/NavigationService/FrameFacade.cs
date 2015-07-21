@@ -28,7 +28,7 @@ namespace Template10.Services.NavigationService
 
         readonly Frame _frame;
 
-        public bool Navigate(Type page, string parameter) { return _frame.Navigate(page, parameter); }
+        public bool Navigate(Type page, object parameter) { return _frame.Navigate(page, parameter); }
 
         public void SetNavigationState(string state) { _frame.SetNavigationState(state); }
 
