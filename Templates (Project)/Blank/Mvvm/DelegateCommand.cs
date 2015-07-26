@@ -11,7 +11,7 @@ namespace Template10.Mvvm
         private readonly Func<bool> _canExecute;
         public event EventHandler CanExecuteChanged;
 
-        public DelegateCommand(Action execute, Func<bool> canexecute = null)
+        public DelegateCommand(Action execute, Func<bool> canexecute = null) 
         {
             if (execute == null)
                 throw new ArgumentNullException("execute");

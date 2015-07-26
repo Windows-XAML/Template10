@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Navigation;
 
 namespace Template10.ViewModels
@@ -39,6 +40,11 @@ namespace Template10.ViewModels
                 state[nameof(Value)] = Value;
             }
             return base.OnNavigatedFromAsync(state, suspending);
+        }
+
+        public override void OnNavigatingFrom(NavigatingEventArgs args)
+        {
+            base.OnNavigatingFrom(args);
         }
 
         private string _Value = string.Empty;
