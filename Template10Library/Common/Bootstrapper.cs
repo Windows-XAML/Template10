@@ -182,8 +182,7 @@ namespace Template10.Common
             // Hook up the default Back handler
             global::Windows.UI.Core.SystemNavigationManager.GetForCurrentView().BackRequested += (s, args) =>
             {
-                args.Handled = true;
-                RaiseBackRequested();
+                args.Handled = RaiseBackRequested();
             };
 
             // Hook up keyboard and mouse Back handler
@@ -202,7 +201,7 @@ namespace Template10.Common
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void RaiseBackRequested()
+        private bool RaiseBackRequested()
         {
             var args = new HandledEventArgs();
             BackRequested?.Invoke(this, args);
@@ -213,6 +212,8 @@ namespace Template10.Common
                 NavigationService.GoBack();
                 args.Handled = true;
             }
+
+            return args.Handled;
         }
 
         private void RaiseForwardRequested()
