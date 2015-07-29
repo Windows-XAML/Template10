@@ -107,13 +107,7 @@ namespace Template10.Services.NavigationService
 
         public bool CanGoBack { get { return _frame.CanGoBack; } }
 
-        public void GoBack()
-        {
-            if (_frame.CanGoBack)
-                _frame.GoBack();
-            else
-                Application.Current.Exit();
-        }
+        public void GoBack() { _frame.GoBack(); }
 
         public void Refresh()
         {
