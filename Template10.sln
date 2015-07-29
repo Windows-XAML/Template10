@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.22823.1
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates (Project)", "Templates (Project)", "{E9D12E06-A958-4FD7-A2BE-CE590A1FDFDB}"
 EndProject
@@ -12,8 +12,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Minimal", "Templates (Project)\Minimal\Minimal.csproj", "{E8E8BDD3-3BD0-4092-8387-385D01B414A4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample", "Templates (Project)\Sample\Sample.csproj", "{8BE1FC83-8AC2-41F0-BEDF-D4F4F53A1450}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Experimental", "Experimental\Experimental.csproj", "{278AEE33-62D0-4B73-8319-F7F5E5711874}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{C32F45A8-693A-4034-945E-F6F0023066AC}"
 EndProject
@@ -75,6 +73,7 @@ Global
 		{E8C68256-1D7B-4432-9733-3300C405244F}.Debug|x64.Build.0 = Debug|x64
 		{E8C68256-1D7B-4432-9733-3300C405244F}.Debug|x86.ActiveCfg = Debug|x86
 		{E8C68256-1D7B-4432-9733-3300C405244F}.Debug|x86.Build.0 = Debug|x86
+		{E8C68256-1D7B-4432-9733-3300C405244F}.Debug|x86.Deploy.0 = Debug|x86
 		{E8C68256-1D7B-4432-9733-3300C405244F}.Release|Any CPU.ActiveCfg = Release|x86
 		{E8C68256-1D7B-4432-9733-3300C405244F}.Release|Any CPU.Build.0 = Release|x86
 		{E8C68256-1D7B-4432-9733-3300C405244F}.Release|ARM.ActiveCfg = Release|ARM
@@ -112,6 +111,7 @@ Global
 		{E8E8BDD3-3BD0-4092-8387-385D01B414A4}.Debug|x64.Build.0 = Debug|x64
 		{E8E8BDD3-3BD0-4092-8387-385D01B414A4}.Debug|x86.ActiveCfg = Debug|x86
 		{E8E8BDD3-3BD0-4092-8387-385D01B414A4}.Debug|x86.Build.0 = Debug|x86
+		{E8E8BDD3-3BD0-4092-8387-385D01B414A4}.Debug|x86.Deploy.0 = Debug|x86
 		{E8E8BDD3-3BD0-4092-8387-385D01B414A4}.Release|Any CPU.ActiveCfg = Release|x86
 		{E8E8BDD3-3BD0-4092-8387-385D01B414A4}.Release|Any CPU.Build.0 = Release|x86
 		{E8E8BDD3-3BD0-4092-8387-385D01B414A4}.Release|ARM.ActiveCfg = Release|ARM
@@ -128,14 +128,6 @@ Global
 		{8BE1FC83-8AC2-41F0-BEDF-D4F4F53A1450}.Release|ARM.ActiveCfg = Release|ARM
 		{8BE1FC83-8AC2-41F0-BEDF-D4F4F53A1450}.Release|x64.ActiveCfg = Release|x64
 		{8BE1FC83-8AC2-41F0-BEDF-D4F4F53A1450}.Release|x86.ActiveCfg = Release|x86
-		{278AEE33-62D0-4B73-8319-F7F5E5711874}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{278AEE33-62D0-4B73-8319-F7F5E5711874}.Debug|ARM.ActiveCfg = Debug|ARM
-		{278AEE33-62D0-4B73-8319-F7F5E5711874}.Debug|x64.ActiveCfg = Debug|x64
-		{278AEE33-62D0-4B73-8319-F7F5E5711874}.Debug|x86.ActiveCfg = Debug|x86
-		{278AEE33-62D0-4B73-8319-F7F5E5711874}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{278AEE33-62D0-4B73-8319-F7F5E5711874}.Release|ARM.ActiveCfg = Release|ARM
-		{278AEE33-62D0-4B73-8319-F7F5E5711874}.Release|x64.ActiveCfg = Release|x64
-		{278AEE33-62D0-4B73-8319-F7F5E5711874}.Release|x86.ActiveCfg = Release|x86
 		{AF829A59-182C-4E59-85DE-C47C008B3A5F}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{AF829A59-182C-4E59-85DE-C47C008B3A5F}.Debug|ARM.ActiveCfg = Debug|ARM
 		{AF829A59-182C-4E59-85DE-C47C008B3A5F}.Debug|x64.ActiveCfg = Debug|x64

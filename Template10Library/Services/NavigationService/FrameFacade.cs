@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Template10.Common;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -24,6 +25,12 @@ namespace Template10.Services.NavigationService
             c.Add(t);
             _frame.ContentTransitions = c;
         }
+
+        public event EventHandler<HandledEventArgs> BackRequested;
+        public void RaiseBackRequested(HandledEventArgs args) { BackRequested?.Invoke(this, args); }
+
+        public event EventHandler<HandledEventArgs> ForwardRequested;
+        public void RaiseForwardRequested(HandledEventArgs args) { ForwardRequested?.Invoke(this, args); }
 
         #region state
 

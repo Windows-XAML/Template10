@@ -188,6 +188,8 @@ namespace Template10.Services.NavigationService
             catch { return false; }
         }
 
+        public void Refresh() { Frame.Refresh(); }
+
         public void GoBack() { if (Frame.CanGoBack) Frame.GoBack(); }
 
         public bool CanGoBack { get { return Frame.CanGoBack; } }

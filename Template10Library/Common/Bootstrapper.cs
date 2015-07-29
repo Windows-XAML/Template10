@@ -11,9 +11,6 @@ namespace Template10.Common
 {
     public abstract class BootStrapper : Application
     {
-        public event EventHandler<HandledEventArgs> BackRequested;
-        public event EventHandler<HandledEventArgs> ForwardRequested;
-
         public BootStrapper()
         {
             Resuming += (s, e) => { OnResuming(s, e); };
@@ -182,6 +179,7 @@ namespace Template10.Common
             // Hook up the default Back handler
             global::Windows.UI.Core.SystemNavigationManager.GetForCurrentView().BackRequested += (s, args) =>
             {
+                // TODO: handled=true canisn't true at end of backstack
                 args.Handled = true;
                 RaiseBackRequested();
             };
@@ -205,27 +203,29 @@ namespace Template10.Common
         private void RaiseBackRequested()
         {
             var args = new HandledEventArgs();
-            BackRequested?.Invoke(this, args);
-
-            if (!args.Handled)
+            foreach (var frame in WindowWrapper.Current().NavigationServices.Select(x => x.Frame))
             {
-                // default to first window
-                NavigationService.GoBack();
-                args.Handled = true;
+                frame.RaiseBackRequested(args);
+                if (args.Handled)
+                    return;
             }
+
+            // default to first window
+            NavigationService.GoBack();
         }
 
         private void RaiseForwardRequested()
         {
             var args = new HandledEventArgs();
-            ForwardRequested?.Invoke(this, args);
-
-            if (!args.Handled)
+            foreach (var frame in WindowWrapper.Current().NavigationServices.Select(x => x.Frame))
             {
-                // default to first window
-                NavigationService.GoForward();
-                args.Handled = true;
+                frame.RaiseForwardRequested(args);
+                if (args.Handled)
+                    return;
             }
+
+            // default to first window
+            NavigationService.GoForward();
         }
 
         #region overrides
