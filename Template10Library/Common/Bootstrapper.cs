@@ -5,26 +5,12 @@ using Windows.ApplicationModel;
 using Windows.UI.Xaml.Controls;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Core;
-using Windows.UI.Xaml.Navigation;
-using System.Collections.Generic;
-using System.Threading;
 using System.Linq;
-using Windows.UI.ViewManagement;
 
 namespace Template10.Common
 {
-    // BootStrapper is a drop-in replacement of Application
-    // - OnInitializeAsync is the first in the pipeline, if launching
-    // - OnStartAsync is required, and second in the pipeline
-    // - NavigationService is an automatic property of this class
     public abstract class BootStrapper : Application
     {
-        /// <summary>
-        /// Event to allow views and viewmodels to intercept the Hardware/Shell Back request and 
-        /// implement their own logic, such as closing a dialog. In your event handler, set the
-        /// Handled property of the BackRequestedEventArgs to true if you do not want a Page
-        /// Back navigation to occur.
-        /// </summary>
         public event EventHandler<HandledEventArgs> BackRequested;
         public event EventHandler<HandledEventArgs> ForwardRequested;
 
@@ -37,10 +23,10 @@ namespace Template10.Common
                 var deferral = e.SuspendingOperation.GetDeferral();
                 try
                 {
-                    foreach (var service in Windows.SelectMany(x => x.NavigationServices))
+                    foreach (var service in WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices))
                     {
-                        // date the cache
-                        service.State().Values[CacheKey] = DateTime.Now.ToString();
+                        // date the cache (which marks the date/time it was suspended)
+                        service.Frame.SetFrameState(CacheKey, DateTime.Now.ToString());
                         // call view model suspend (OnNavigatedfrom)
                         await service.SuspendingAsync();
                     }
@@ -53,7 +39,11 @@ namespace Template10.Common
 
         #region properties
 
-        public Services.NavigationService.NavigationService NavigationService { get { return Windows.First().NavigationServices.First(); } }
+        protected Services.NavigationService.NavigationService NavigationService
+        {
+            // because it is protected, we can safely assume it will ref the first view
+            get { return WindowWrapper.ActiveWrappers.First().NavigationServices.First(); }
+        }
 
         protected Func<SplashScreen, Page> SplashFactory { get; set; }
         public TimeSpan CacheMaxDuration { get; set; } = TimeSpan.MaxValue;
@@ -96,12 +86,10 @@ namespace Template10.Common
         public event EventHandler<WindowCreatedEventArgs> WindowCreated;
         protected override void OnWindowCreated(WindowCreatedEventArgs args)
         {
-            Windows.Add(new WindowWrapper(args.Window));
+            var window = new WindowWrapper(args.Window);
             WindowCreated?.Invoke(this, args);
             base.OnWindowCreated(args);
         }
-
-        public List<WindowWrapper> Windows { get; } = new List<WindowWrapper>();
 
         [Obsolete("Use OnStartAsync()")]
         protected override void OnLaunched(LaunchActivatedEventArgs e) { InternalLaunchAsync(e as ILaunchActivatedEventArgs); }
@@ -123,9 +111,6 @@ namespace Template10.Common
                 Window.Current.Content = splashScreen;
             }
 
-            // setup default view
-            var view = Windows.First();
-
             // setup frame
             var frame = new Frame
             {
@@ -136,28 +121,30 @@ namespace Template10.Common
                 global::Windows.UI.Core.SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
                     (ShowShellBackButton && frame.CanGoBack) ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
             };
-            var nav = new Services.NavigationService.NavigationService(frame);
-            view.NavigationServices.Add(nav);
+
+            // setup default view
+            var view = WindowWrapper.ActiveWrappers.First();
+            var navigationService = new Services.NavigationService.NavigationService(frame);
+            view.NavigationServices.Add(navigationService);
 
             // expire state (based on expiry)
-            var state = nav.State();
-            if (state.Values.ContainsKey(CacheKey))
+            DateTime cacheDate;
+            var otherwise = DateTime.MinValue.ToString();
+            if (DateTime.TryParse(navigationService.Frame.GetFrameState(CacheKey, otherwise), out cacheDate))
             {
-                DateTime cacheDate;
-                if (DateTime.TryParse(state.Values[CacheKey]?.ToString(), out cacheDate))
+                var cacheAge = DateTime.Now.Subtract(cacheDate);
+                if (cacheAge >= CacheMaxDuration)
                 {
-                    var cacheAge = DateTime.Now.Subtract(cacheDate);
-                    if (cacheAge >= CacheMaxDuration)
+                    // clear state in every nav service in every view
+                    foreach (var service in WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices))
                     {
-                        foreach (var cache in view.NavigationServices.Select(x => x.State()))
-                        {
-                            foreach (var container in cache.Containers)
-                            {
-                                cache.DeleteContainer(container.Key);
-                            }
-                        }
+                        service.Frame.ClearFrameState();
                     }
                 }
+            }
+            else
+            {
+                // no date, that's okay
             }
 
             // the user may override to set custom content
@@ -176,7 +163,7 @@ namespace Template10.Common
                 case ApplicationExecutionState.Terminated:
                     {
                         // restore if you need to/can do
-                        var restored = nav.RestoreSavedNavigation();
+                        var restored = navigationService.RestoreSavedNavigation();
                         if (!restored)
                         {
                             await OnStartAsync(StartKind.Launch, e);
@@ -251,7 +238,5 @@ namespace Template10.Common
         public virtual void OnResuming(object s, object e) { }
 
         #endregion
-
-        public class HandledEventArgs : EventArgs { public System.Boolean Handled { get; set; } }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
@@ -24,9 +25,77 @@ namespace Template10.Services.NavigationService
             _frame.ContentTransitions = c;
         }
 
+        #region state
+
+        private string GetFrameStateKey()
+        {
+            return string.Format("{0}-PageState", FrameId);
+        }
+
+        private Windows.Storage.ApplicationDataContainer frameStateContainer;
+        private Windows.Storage.ApplicationDataContainer FrameStateContainer()
+        {
+            if (frameStateContainer != null)
+                return frameStateContainer;
+            var data = Windows.Storage.ApplicationData.Current;
+            var key = GetFrameStateKey();
+            var container = data.LocalSettings.CreateContainer(key, Windows.Storage.ApplicationDataCreateDisposition.Always);
+            return container;
+        }
+
+        public void SetFrameState(string key, string value)
+        {
+            FrameStateContainer().Values[key] = value ?? string.Empty;
+        }
+
+        public string GetFrameState(string key, string otherwise)
+        {
+            if (!FrameStateContainer().Values.ContainsKey(key))
+                return otherwise;
+            try { return FrameStateContainer().Values[key].ToString(); }
+            catch { return otherwise; }
+        }
+
+        public void ClearFrameState()
+        {
+            FrameStateContainer().Values.Clear();
+            foreach (var container in FrameStateContainer().Containers)
+            {
+                FrameStateContainer().DeleteContainer(container.Key);
+            }
+            pageStateContainers.Clear();
+        }
+
+        private string GetPageStateKey(Type type)
+        {
+            return string.Format("{0}", type);
+        }
+
+        readonly Dictionary<Type, IPropertySet> pageStateContainers = new Dictionary<Type, IPropertySet>();
+        public IPropertySet PageStateContainer(Type type)
+        {
+            if (pageStateContainers.ContainsKey(type))
+                return pageStateContainers[type];
+            var key = GetPageStateKey(type);
+            var container = FrameStateContainer().CreateContainer(key, Windows.Storage.ApplicationDataCreateDisposition.Always);
+            pageStateContainers.Add(type, container.Values);
+            return container.Values;
+        }
+
+        public void ClearPageState(Type type)
+        {
+            var key = GetPageStateKey(type);
+            if (FrameStateContainer().Containers.ContainsKey(key))
+                FrameStateContainer().DeleteContainer(key);
+        }
+
+        #endregion
+
         #region frame facade
 
         readonly Frame _frame;
+
+        public string FrameId { get; set; } = string.Empty;
 
         public bool Navigate(Type page, string parameter) { return _frame.Navigate(page, parameter); }
 
