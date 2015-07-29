@@ -11,11 +11,10 @@ namespace Template10.Views
         {
             InitializeComponent();
             NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
-            DataContextChanged += (s, e) => ViewModel = DataContext as MainPageViewModel;
         }
 
         // strongly-typed view models enable x:bind
-        public MainPageViewModel ViewModel { get; set; }
+        public MainPageViewModel ViewModel { get { return this.DataContext as MainPageViewModel; } }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
