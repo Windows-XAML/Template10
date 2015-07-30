@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Networking.Connectivity;
 
-namespace Templaet10.Services.NetworkAvailableService
+namespace Template10.Services.NetworkAvailableService
 {
     public class NetworkAvailableService
     {
