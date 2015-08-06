@@ -7,7 +7,7 @@
     <ProjectGuid>{AC3E4F10-6615-4E16-BB0F-104760C92B95}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Template10Library</RootNamespace>
+    <RootNamespace>Template10</RootNamespace>
     <AssemblyName>Template10Library</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
