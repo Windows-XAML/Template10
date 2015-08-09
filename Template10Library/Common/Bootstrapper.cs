@@ -160,8 +160,17 @@ namespace Template10.Common
                 case ApplicationExecutionState.Terminated:
                     {
                         // restore if you need to/can do
-                        var restored = navigationService.RestoreSavedNavigation();
-                        if (!restored)
+                        // restore if there is no TileId or if the app is luanched via the primary tile
+                        if (e.TileId == null || e.TileId == "App")
+                        {
+                            var restored = navigationService.RestoreSavedNavigation();
+                            if (!restored)
+                            {
+                                await OnStartAsync(StartKind.Launch, e);
+                            }
+
+                        }
+                        else
                         {
                             await OnStartAsync(StartKind.Launch, e);
                         }

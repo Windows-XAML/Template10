@@ -169,9 +169,14 @@ namespace Template10.Services.NavigationService
         public void SaveNavigation()
         {
             var state = Frame.PageStateContainer(GetType());
-            state["CurrentPageType"] = CurrentPageType.ToString();
+            if (state == null)
+            {
+                throw new InvalidOperationException("State container is unexpectedly null");
+            }
+
+            state["CurrentPageType"] = CurrentPageType?.ToString();
             state["CurrentPageParam"] = CurrentPageParam;
-            state["NavigateState"] = Frame.GetNavigationState();
+            state["NavigateState"] = Frame?.GetNavigationState();
         }
 
         public bool RestoreSavedNavigation()

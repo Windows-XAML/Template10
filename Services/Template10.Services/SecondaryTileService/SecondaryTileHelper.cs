@@ -80,6 +80,15 @@ namespace Template10.Services.SecondaryTileService
             return result;
         }
 
+        public async Task<bool> UnpinAsync(string tileId)
+        {
+            System.Diagnostics.Contracts.Contract.Requires(tileId != null, "TileId");
+            if (!SecondaryTile.Exists(tileId))
+                return true;
+            var tile = new SecondaryTile(tileId);
+            return await tile.RequestDeleteAsync();
+        }
+
         public class TileInfo
         {
             public FrameworkElement AnchorElement { get; set; }
