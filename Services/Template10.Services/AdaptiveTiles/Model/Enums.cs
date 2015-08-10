@@ -7,6 +7,14 @@
         Right
     }
 
+    public enum VisualBranding
+    {
+        None,
+        Logo,
+        Name,
+        NameAndLogo
+    }
+
     public enum VisualHintPresentation
     {
         Photos,
@@ -27,7 +35,7 @@
         CaptionSubtle,
         Body,
         BodySubtle,
-        Base, // allows using a reserved word in an enum
+        Base, 
         BaseSubtle,
         Subtitle,
         SubtitleSubtle,

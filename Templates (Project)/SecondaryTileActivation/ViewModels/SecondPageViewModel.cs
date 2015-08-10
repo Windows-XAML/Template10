@@ -1,25 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Template10.Mvvm;
-using Template10.Services.SecondaryTileService;
 using Windows.UI;
+using Windows.UI.StartScreen;
 using Windows.UI.Xaml.Navigation;
+using Template10.Mvvm;
 using Template10.Services.AdaptiveTiles;
 using Template10.Services.AdaptiveTiles.Model;
+using Template10.Services.SecondaryTileService;
 
 namespace SecondaryTileActivation.ViewModels
 {
     public class SecondPageViewModel : ViewModelBase
     {
-        private string _navigationParameter;
-        private string _pinMeText;
         private const string PinMe = "Pin Me!";
         private const string UnPinMe = "Un-pin Me!";
         private const string TileId = "DemoAppID";
-        private SecondaryTileHelper _secondaryTileHelper;
+        private readonly SecondaryTileHelper _secondaryTileHelper;
+        private string _navigationParameter;
+        private string _pinMeText;
+
+        public SecondPageViewModel()
+        {
+            _secondaryTileHelper = new SecondaryTileHelper();
+            UpdatePinMeText();
+        }
 
         public string PinMeText
         {
@@ -29,21 +33,9 @@ namespace SecondaryTileActivation.ViewModels
 
         public string NavigationParameter
         { 
-            get
-            {
-                return _navigationParameter;
+            get { return _navigationParameter; }
+            set { Set(ref _navigationParameter, value); }
             } 
-            set
-            {
-                Set(ref _navigationParameter, value);
-            }
-        }
-
-        public SecondPageViewModel()
-        {
-            _secondaryTileHelper = new SecondaryTileHelper();
-            UpdatePinMeText();
-        }
 
         private void UpdatePinMeText()
         {
@@ -70,7 +62,7 @@ namespace SecondaryTileActivation.ViewModels
                     PhoneticName = "My Secondary Tile"
                 };
                 tileInfo.VisualElements.BackgroundColor = Colors.Green;
-                tileInfo.VisualElements.ForegroundText = Windows.UI.StartScreen.ForegroundText.Light;
+                tileInfo.VisualElements.ForegroundText = ForegroundText.Light;
                 tileInfo.VisualElements.ShowNameOnSquare150x150Logo = true;
                 tileInfo.VisualElements.Square150x150Logo = new Uri("ms-appx:///assets/Square150x150Logo.png");
                 await _secondaryTileHelper.PinAsync(
@@ -100,41 +92,41 @@ namespace SecondaryTileActivation.ViewModels
                         new Binding
                         {
                             HintTextStacking = VisualHintTextStacking.Center,
-                            Branding = VisualBindingBase.VisualBranding.None,
-                            Template="TileSmall",
+                            Branding = VisualBranding.None,
+                            Template = "TileSmall",
                             Children = new List<IVisualChild>
                             {
                                 new Text
                                 {
                                     HintStyle = TextStyle.Caption,
-                                    Content="TilesRTM"
+                                    Content = "TilesRTM"
                                 }
                             }
                         },
                         new Binding
                         {
-                            DisplayName="Refactored",
-                            Template="TileMedium",
-                            Branding=VisualBindingBase.VisualBranding.Name,
+                            DisplayName = "Refactored",
+                            Template = "TileMedium",
+                            Branding = VisualBranding.Name,
                             Children = new List<IVisualChild>
                             {
                                 new Text
                                 {
                                     HintStyle = TextStyle.Caption,
-                                    Content="9:50 AM, Wednesday"
+                                    Content = "9:50 AM, Wednesday"
                                 },
                                 new Text
                                 {
                                     HintStyle = TextStyle.CaptionSubtle,
-                                    HintWrap= true,
-                                    Content="263 Grove St, San Francisco, CA 94102"
-                                },
+                                    HintWrap = true,
+                                    Content = "263 Grove St, San Francisco, CA 94102"
+                                }
                             }
                         },
                         new Binding
                         {
-                            DisplayName="Refactored",
-                            Template="TileWide",
+                            DisplayName = "Refactored",
+                            Template = "TileWide",
                             Children = new List<IVisualChild>
                             {
                                 new Group
@@ -148,8 +140,8 @@ namespace SecondaryTileActivation.ViewModels
                                             {
                                                 new Image
                                                 {
-                                                    Placement=ImagePlacement.Inline,
-                                                    Source="ms-appx:///Assets/ToDo.png"
+                                                    Placement = ImagePlacement.Inline,
+                                                    Source = "ms-appx:///Assets/ToDo.png"
                                                 }
                                             }
                                         },
@@ -160,25 +152,25 @@ namespace SecondaryTileActivation.ViewModels
                                                 new Text
                                                 {
                                                     HintStyle = TextStyle.Caption,
-                                                    Content="9:50 AM, Wednesday"
+                                                    Content = "9:50 AM, Wednesday"
                                                 },
                                                 new Text
                                                 {
                                                     HintStyle = TextStyle.CaptionSubtle,
-                                                    HintWrap= true,
-                                                    HintMaxLines=3,
-                                                    Content="263 Grove St, San Francisco, CA 94102"
-                                                },
+                                                    HintWrap = true,
+                                                    HintMaxLines = 3,
+                                                    Content = "263 Grove St, San Francisco, CA 94102"
+                                                }
+                                            }
                                             }
                                         }
                                     }
-                                },
                             }
                         },
                         new Binding
                         {
-                            Template="TileLarge",
-                            DisplayName="Refactored",
+                            Template = "TileLarge",
+                            DisplayName = "Refactored",
                             Children = new List<IVisualChild>
                             {
                                 new Group
@@ -192,8 +184,8 @@ namespace SecondaryTileActivation.ViewModels
                                             {
                                                 new Image
                                                 {
-                                                    Placement=ImagePlacement.Inline,
-                                                    Source="ms-appx:///Assets/ToDo.png"
+                                                    Placement = ImagePlacement.Inline,
+                                                    Source = "ms-appx:///Assets/ToDo.png"
                                                 }
                                             }
                                         },
@@ -204,23 +196,23 @@ namespace SecondaryTileActivation.ViewModels
                                                 new Text
                                                 {
                                                     HintStyle = TextStyle.Caption,
-                                                    Content="9:50 AM, Wednesday"
+                                                    Content = "9:50 AM, Wednesday"
                                                 },
                                                 new Text
                                                 {
                                                     HintStyle = TextStyle.CaptionSubtle,
-                                                    HintWrap= true,
-                                                    HintMaxLines=3,
-                                                    Content="263 Grove St, San Francisco, CA 94102"
-                                                },
+                                                    HintWrap = true,
+                                                    HintMaxLines = 3,
+                                                    Content = "263 Grove St, San Francisco, CA 94102"
+                                                }
                                             }
-                                        },
+                                            }
                                     }
                                 },
                                 new Image
                                 {
-                                    Placement=ImagePlacement.Inline,
-                                    Source="ms-appx:///Assets/banner.png"
+                                    Placement = ImagePlacement.Inline,
+                                    Source = "ms-appx:///Assets/banner.png"
                                 }
                             }
                         }

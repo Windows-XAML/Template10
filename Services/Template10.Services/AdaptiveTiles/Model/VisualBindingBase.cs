@@ -8,15 +8,7 @@ namespace Template10.Services.AdaptiveTiles.Model
     {
         public string Lang { get; set; }
         public Uri BaseUri { get; set; }
-        public enum VisualBranding
-        {
-            None,
-            Logo,
-            Name,
-            NameAndLogo
-        }
         public VisualBranding? Branding { get; set; }
-
         public bool? AddImageQuery { get; set; }
         public string ContentId { get; set; }
         public string DisplayName { get; set; }
