@@ -100,7 +100,7 @@ namespace SecondaryTileActivation.ViewModels
                         new Binding
                         {
                             HintTextStacking = VisualHintTextStacking.Center,
-                            Branding = VisualBindingBase.VisualBranding.None,
+                            Branding = VisualBranding.None,
                             Template="TileSmall",
                             Children = new List<IVisualChild>
                             {
@@ -115,7 +115,7 @@ namespace SecondaryTileActivation.ViewModels
                         {
                             DisplayName="Refactored",
                             Template="TileMedium",
-                            Branding=VisualBindingBase.VisualBranding.Name,
+                            Branding=VisualBranding.Name,
                             Children = new List<IVisualChild>
                             {
                                 new Text

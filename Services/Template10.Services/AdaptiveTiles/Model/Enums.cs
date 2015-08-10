@@ -7,6 +7,14 @@
         Right
     }
 
+    public enum VisualBranding
+    {
+        None,
+        Logo,
+        Name,
+        NameAndLogo
+    }
+
     public enum VisualHintPresentation
     {
         Photos,
