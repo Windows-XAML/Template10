@@ -32,10 +32,10 @@ namespace SecondaryTileActivation.ViewModels
         }
 
         public string NavigationParameter
-        {
+        { 
             get { return _navigationParameter; }
             set { Set(ref _navigationParameter, value); }
-        }
+            } 
 
         private void UpdatePinMeText()
         {
@@ -162,9 +162,9 @@ namespace SecondaryTileActivation.ViewModels
                                                     Content = "263 Grove St, San Francisco, CA 94102"
                                                 }
                                             }
+                                            }
                                         }
                                     }
-                                }
                             }
                         },
                         new Binding
@@ -206,7 +206,7 @@ namespace SecondaryTileActivation.ViewModels
                                                     Content = "263 Grove St, San Francisco, CA 94102"
                                                 }
                                             }
-                                        }
+                                            }
                                     }
                                 },
                                 new Image
