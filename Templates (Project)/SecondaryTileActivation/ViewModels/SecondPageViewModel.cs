@@ -7,6 +7,8 @@ using Template10.Mvvm;
 using Template10.Services.SecondaryTileService;
 using Windows.UI;
 using Windows.UI.Xaml.Navigation;
+using Template10.Services.AdaptiveTiles;
+using Template10.Services.AdaptiveTiles.Model;
 
 namespace SecondaryTileActivation.ViewModels
 {
@@ -79,6 +81,154 @@ namespace SecondaryTileActivation.ViewModels
 
 
             UpdatePinMeText();
+        }
+
+        public void UpdatePrimaryTile()
+        {
+            var adaptiveTileHelper = new AdaptiveTileHelper();
+            adaptiveTileHelper.UpdatePrimaryTile(CreateTile());
+        }
+
+        private Tile CreateTile()
+        {
+            var tile = new Tile
+            {
+                Visual = new Visual
+                {
+                    Bindings = new List<Binding>
+                    {
+                        new Binding
+                        {
+                            HintTextStacking = VisualHintTextStacking.Center,
+                            Branding = VisualBindingBase.VisualBranding.None,
+                            Template="TileSmall",
+                            Children = new List<IVisualChild>
+                            {
+                                new Text
+                                {
+                                    HintStyle = TextStyle.Caption,
+                                    Content="TilesRTM"
+                                }
+                            }
+                        },
+                        new Binding
+                        {
+                            DisplayName="Refactored",
+                            Template="TileMedium",
+                            Branding=VisualBindingBase.VisualBranding.Name,
+                            Children = new List<IVisualChild>
+                            {
+                                new Text
+                                {
+                                    HintStyle = TextStyle.Caption,
+                                    Content="9:50 AM, Wednesday"
+                                },
+                                new Text
+                                {
+                                    HintStyle = TextStyle.CaptionSubtle,
+                                    HintWrap= true,
+                                    Content="263 Grove St, San Francisco, CA 94102"
+                                },
+                            }
+                        },
+                        new Binding
+                        {
+                            DisplayName="Refactored",
+                            Template="TileWide",
+                            Children = new List<IVisualChild>
+                            {
+                                new Group
+                                {
+                                    SubGroups = new List<SubGroup>
+                                    {
+                                        new SubGroup
+                                        {
+                                            HintWeight = 33,
+                                            Children = new List<ISubGroupChild>
+                                            {
+                                                new Image
+                                                {
+                                                    Placement=ImagePlacement.Inline,
+                                                    Source="ms-appx:///Assets/ToDo.png"
+                                                }
+                                            }
+                                        },
+                                        new SubGroup
+                                        {
+                                            Children = new List<ISubGroupChild>
+                                            {
+                                                new Text
+                                                {
+                                                    HintStyle = TextStyle.Caption,
+                                                    Content="9:50 AM, Wednesday"
+                                                },
+                                                new Text
+                                                {
+                                                    HintStyle = TextStyle.CaptionSubtle,
+                                                    HintWrap= true,
+                                                    HintMaxLines=3,
+                                                    Content="263 Grove St, San Francisco, CA 94102"
+                                                },
+                                            }
+                                        }
+                                    }
+                                },
+                            }
+                        },
+                        new Binding
+                        {
+                            Template="TileLarge",
+                            DisplayName="Refactored",
+                            Children = new List<IVisualChild>
+                            {
+                                new Group
+                                {
+                                    SubGroups = new List<SubGroup>
+                                    {
+                                        new SubGroup
+                                        {
+                                            HintWeight = 33,
+                                            Children = new List<ISubGroupChild>
+                                            {
+                                                new Image
+                                                {
+                                                    Placement=ImagePlacement.Inline,
+                                                    Source="ms-appx:///Assets/ToDo.png"
+                                                }
+                                            }
+                                        },
+                                        new SubGroup
+                                        {
+                                            Children = new List<ISubGroupChild>
+                                            {
+                                                new Text
+                                                {
+                                                    HintStyle = TextStyle.Caption,
+                                                    Content="9:50 AM, Wednesday"
+                                                },
+                                                new Text
+                                                {
+                                                    HintStyle = TextStyle.CaptionSubtle,
+                                                    HintWrap= true,
+                                                    HintMaxLines=3,
+                                                    Content="263 Grove St, San Francisco, CA 94102"
+                                                },
+                                            }
+                                        },
+                                    }
+                                },
+                                new Image
+                                {
+                                    Placement=ImagePlacement.Inline,
+                                    Source="ms-appx:///Assets/banner.png"
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            return tile;
         }
     }
 }

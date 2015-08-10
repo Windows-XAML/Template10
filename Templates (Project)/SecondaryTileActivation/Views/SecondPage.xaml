@@ -18,6 +18,8 @@
                    Style="{StaticResource TitleTextBlockStyle}"/>
             <Button Content="{x:Bind ViewModel.PinMeText, Mode=OneWay, FallbackValue='Design Pin Me'}"
                     Click="{x:Bind ViewModel.PinSecondaryTile}"/>
+            <Button Content="Update Primary Tile"
+                    Click="{x:Bind ViewModel.UpdatePrimaryTile}"/>
 
         </StackPanel>
     </Grid>

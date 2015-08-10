@@ -113,6 +113,20 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdaptiveTiles\AdaptiveTileHelper.cs" />
+    <Compile Include="AdaptiveTiles\Model\Binding.cs" />
+    <Compile Include="AdaptiveTiles\Model\Enums.cs" />
+    <Compile Include="AdaptiveTiles\Model\Extensions.cs" />
+    <Compile Include="AdaptiveTiles\Model\Group.cs" />
+    <Compile Include="AdaptiveTiles\Model\IAdaptiveTile.cs" />
+    <Compile Include="AdaptiveTiles\Model\Image.cs" />
+    <Compile Include="AdaptiveTiles\Model\ISubGroupChild.cs" />
+    <Compile Include="AdaptiveTiles\Model\IVisualChild.cs" />
+    <Compile Include="AdaptiveTiles\Model\SubGroup.cs" />
+    <Compile Include="AdaptiveTiles\Model\Text.cs" />
+    <Compile Include="AdaptiveTiles\Model\Tile.cs" />
+    <Compile Include="AdaptiveTiles\Model\Visual.cs" />
+    <Compile Include="AdaptiveTiles\Model\VisualBindingBase.cs" />
     <Compile Include="AzureBlobService\AzureBlobHelper.cs" />
     <Compile Include="AzureBlobService\BlobService.cs" />
     <Compile Include="ColorService\ColorHelper.cs" />
