@@ -23,7 +23,7 @@ namespace Template10.Common
                     foreach (var service in WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices))
                     {
                         // date the cache (which marks the date/time it was suspended)
-                        service.Frame.SetFrameState(CacheKey, DateTime.Now.ToString());
+                        service.Frame.SetFrameState(CacheDateKey, DateTime.Now.ToString());
                         // call view model suspend (OnNavigatedfrom)
                         await service.SuspendingAsync();
                     }
@@ -44,7 +44,7 @@ namespace Template10.Common
 
         protected Func<SplashScreen, Page> SplashFactory { get; set; }
         public TimeSpan CacheMaxDuration { get; set; } = TimeSpan.MaxValue;
-        private const string CacheKey = "Setting-Cache-Date";
+        private const string CacheDateKey = "Setting-Cache-Date";
         public bool ShowShellBackButton { get; set; } = true;
 
         #endregion
@@ -74,6 +74,7 @@ namespace Template10.Common
 
         private async Task InternalActivatedAsync(IActivatedEventArgs e)
         {
+            InitializeFrame(e as ILaunchActivatedEventArgs);
             await OnStartAsync(StartKind.Activate, e);
             Window.Current.Activate();
         }
@@ -100,49 +101,8 @@ namespace Template10.Common
                 return;
             }
 
-            // now handle normal activation
-            UIElement splashScreen = default(UIElement);
-            if (SplashFactory != null)
-            {
-                splashScreen = SplashFactory(e.SplashScreen);
-                Window.Current.Content = splashScreen;
-            }
-
-            // setup frame
-            var frame = new Frame
-            {
-                Language = global::Windows.Globalization.ApplicationLanguages.Languages[0]
-            };
-            frame.Navigated += (s, args) =>
-            {
-                global::Windows.UI.Core.SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
-                    (ShowShellBackButton && frame.CanGoBack) ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
-            };
-
-            // setup default view
-            var view = WindowWrapper.ActiveWrappers.First();
-            var navigationService = new Services.NavigationService.NavigationService(frame);
-            view.NavigationServices.Add(navigationService);
-
-            // expire state (based on expiry)
-            DateTime cacheDate;
-            var otherwise = DateTime.MinValue.ToString();
-            if (DateTime.TryParse(navigationService.Frame.GetFrameState(CacheKey, otherwise), out cacheDate))
-            {
-                var cacheAge = DateTime.Now.Subtract(cacheDate);
-                if (cacheAge >= CacheMaxDuration)
-                {
-                    // clear state in every nav service in every view
-                    foreach (var service in WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices))
-                    {
-                        service.Frame.ClearFrameState();
-                    }
-                }
-            }
-            else
-            {
-                // no date, that's okay
-            }
+            // create the root frame
+            var frame = InitializeFrame(e);
 
             // the user may override to set custom content
             await OnInitializeAsync();
@@ -163,12 +123,11 @@ namespace Template10.Common
                         // restore if there is no TileId or if the app is luanched via the primary tile
                         if (e.TileId == null || e.TileId == "App")
                         {
-                            var restored = navigationService.RestoreSavedNavigation();
+                            var restored = NavigationService.RestoreSavedNavigation();
                             if (!restored)
                             {
                                 await OnStartAsync(StartKind.Launch, e);
                             }
-
                         }
                         else
                         {
@@ -177,10 +136,6 @@ namespace Template10.Common
                         break;
                     }
             }
-
-            // if the user didn't already set custom content use rootframe
-            if (Window.Current.Content == splashScreen) { Window.Current.Content = frame; }
-            if (Window.Current.Content == null) { Window.Current.Content = frame; }
 
             // ensure active
             Window.Current.Activate();
@@ -199,6 +154,60 @@ namespace Template10.Common
 
             // Hook up keyboard and house Forward handler
             keyboard.AfterForwardGesture = () => RaiseForwardRequested();
+        }
+
+        private Frame InitializeFrame(ILaunchActivatedEventArgs e)
+        {
+            // do not recreate the frame
+            if (Window.Current.Content is Frame)
+                return Window.Current.Content as Frame;
+
+            // first show the splash 
+            var splashScreen = default(UIElement);
+            if (SplashFactory != null)
+            {
+                splashScreen = SplashFactory(e.SplashScreen);
+                Window.Current.Content = splashScreen;
+                Window.Current.Activate();
+            }
+
+            // next create frame
+            var frame = new Frame
+            {
+                Language = Windows.Globalization.ApplicationLanguages.Languages[0]
+            };
+            frame.Navigated += (s, args) =>
+            {
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+                    (ShowShellBackButton && frame.CanGoBack) 
+                        ? AppViewBackButtonVisibility.Visible 
+                        : AppViewBackButtonVisibility.Collapsed;
+            };
+            Window.Current.Content = frame;
+
+            // next setup the default view
+            var navigationService = new Services.NavigationService.NavigationService(frame);
+            WindowWrapper.Current().NavigationServices.Add(navigationService);
+
+            // expire any state (based on expiry)
+            DateTime cacheDate;
+            var otherwise = DateTime.MinValue.ToString();
+            if (DateTime.TryParse(navigationService.Frame.GetFrameState(CacheDateKey, otherwise), out cacheDate))
+            {
+                var cacheAge = DateTime.Now.Subtract(cacheDate);
+                if (cacheAge >= CacheMaxDuration)
+                {
+                    // clear state in every nav service in every view
+                    foreach (var service in WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices))
+                    {
+                        service.Frame.ClearFrameState();
+                    }
+                }
+            }
+            else { /* no date, that's okay */ }
+
+            // finally return the new frame
+            return frame;
         }
 
         /// <summary>
