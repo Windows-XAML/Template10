@@ -8,8 +8,9 @@ namespace Template10.Common
 {
     public class WindowWrapper
     {
+        public static WindowWrapper Default() { return ActiveWrappers.FirstOrDefault(); }
         public readonly static List<WindowWrapper> ActiveWrappers = new List<WindowWrapper>();
-        public static WindowWrapper Current() { return ActiveWrappers.First(x => x.Window == Window.Current); }
+        public static WindowWrapper Current() { return ActiveWrappers.FirstOrDefault(x => x.Window == Window.Current) ?? Default(); }
         public static WindowWrapper Current(Window window) { return ActiveWrappers.First(x => x.Window == window); }
 
         public WindowWrapper(Window window)
