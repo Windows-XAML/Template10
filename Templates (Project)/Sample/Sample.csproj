@@ -107,9 +107,6 @@
     <Compile Include="Converters\ValueWhenConverter.cs" />
     <Compile Include="Models\TodoItem.cs" />
     <Compile Include="Models\TodoList.cs" />
-    <Compile Include="Mvvm\BindableBase.cs" />
-    <Compile Include="Mvvm\Command.cs" />
-    <Compile Include="Mvvm\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\TodoItemRepository.cs" />
     <Compile Include="Repositories\TodoListRepository.cs" />

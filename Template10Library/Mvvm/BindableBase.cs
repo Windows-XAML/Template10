@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Template10.Common;
 
 namespace Template10.Mvvm
 {
@@ -9,14 +8,23 @@ namespace Template10.Mvvm
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public Common.WindowWrapper WindowWrapper { get; set; } = Common.WindowWrapper.Current();
+
         public async void RaisePropertyChanged([CallerMemberName]string propertyName = null)
         {
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
                 return;
-            await WindowWrapper.Current().Dispatcher.DispatchAsync(() =>
+            if (WindowWrapper == null)
             {
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            });
+            }
+            else
+            {
+                await WindowWrapper.Dispatcher.DispatchAsync(() =>
+                {
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                });
+            }
         }
 
         public void Set<T>(ref T storage, T value, [CallerMemberName()]string propertyName = null)
