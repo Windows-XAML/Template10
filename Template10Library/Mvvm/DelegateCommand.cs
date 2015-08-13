@@ -40,13 +40,13 @@ namespace Template10.Mvvm
         }
     }
 
-    public class Command<T> : System.Windows.Input.ICommand
+    public class DelegateCommand<T> : System.Windows.Input.ICommand
     {
         private readonly Action<T> _execute;
         private readonly Func<T, bool> _canExecute;
         public event EventHandler CanExecuteChanged;
 
-        public Command(Action<T> execute, Func<T, bool> canexecute = null)
+        public DelegateCommand(Action<T> execute, Func<T, bool> canexecute = null)
         {
             if (execute == null)
                 throw new ArgumentNullException("execute");

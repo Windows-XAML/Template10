@@ -23,7 +23,7 @@ namespace Template10.Common
                     foreach (var service in WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices))
                     {
                         // date the cache (which marks the date/time it was suspended)
-                        service.Frame.SetFrameState(CacheDateKey, DateTime.Now.ToString());
+                        service.FrameFacade.SetFrameState(CacheDateKey, DateTime.Now.ToString());
                         // call view model suspend (OnNavigatedfrom)
                         await service.SuspendingAsync();
                     }
@@ -192,7 +192,7 @@ namespace Template10.Common
             // expire any state (based on expiry)
             DateTime cacheDate;
             var otherwise = DateTime.MinValue.ToString();
-            if (DateTime.TryParse(navigationService.Frame.GetFrameState(CacheDateKey, otherwise), out cacheDate))
+            if (DateTime.TryParse(navigationService.FrameFacade.GetFrameState(CacheDateKey, otherwise), out cacheDate))
             {
                 var cacheAge = DateTime.Now.Subtract(cacheDate);
                 if (cacheAge >= CacheMaxDuration)
@@ -200,7 +200,7 @@ namespace Template10.Common
                     // clear state in every nav service in every view
                     foreach (var service in WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices))
                     {
-                        service.Frame.ClearFrameState();
+                        service.FrameFacade.ClearFrameState();
                     }
                 }
             }
@@ -221,7 +221,7 @@ namespace Template10.Common
         private void RaiseBackRequested()
         {
             var args = new HandledEventArgs();
-            foreach (var frame in WindowWrapper.Current().NavigationServices.Select(x => x.Frame))
+            foreach (var frame in WindowWrapper.Current().NavigationServices.Select(x => x.FrameFacade))
             {
                 frame.RaiseBackRequested(args);
                 if (args.Handled)
@@ -235,7 +235,7 @@ namespace Template10.Common
         private void RaiseForwardRequested()
         {
             var args = new HandledEventArgs();
-            foreach (var frame in WindowWrapper.Current().NavigationServices.Select(x => x.Frame))
+            foreach (var frame in WindowWrapper.Current().NavigationServices.Select(x => x.FrameFacade))
             {
                 frame.RaiseForwardRequested(args);
                 if (args.Handled)

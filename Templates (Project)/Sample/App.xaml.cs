@@ -20,7 +20,7 @@ namespace Template10
             }
             else
             {
-                this.NavigationService.Navigate(typeof(Views.SecondPage));
+                // this.NavigationService.Navigate(typeof(Views.SecondPage));
             }
             return Task.FromResult<object>(null);
         }

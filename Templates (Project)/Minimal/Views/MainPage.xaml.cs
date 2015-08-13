@@ -15,10 +15,5 @@ namespace Template10.Views
 
         // strongly-typed view models enable x:bind
         public MainPageViewModel ViewModel { get { return this.DataContext as MainPageViewModel; } }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

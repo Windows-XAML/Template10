@@ -16,14 +16,15 @@ namespace Template10.Services.NavigationService
     {
         private const string EmptyNavigation = "1,0";
 
-        public FrameFacade Frame { get; private set; }
+        public FrameFacade FrameFacade { get; private set; }
+        public Frame Frame { get { return FrameFacade.Frame; } }
         string LastNavigationParameter { get; set; }
         string LastNavigationType { get; set; }
 
         public NavigationService(Frame frame)
         {
-            Frame = new FrameFacade(frame);
-            Frame.Navigating += async (s, e) =>
+            FrameFacade = new FrameFacade(frame);
+            FrameFacade.Navigating += async (s, e) =>
             {
                 if (e.Suspending)
                     return;
@@ -35,7 +36,7 @@ namespace Template10.Services.NavigationService
                     await NavigateFromAsync(false);
                 }
             };
-            Frame.Navigated += (s, e) =>
+            FrameFacade.Navigated += (s, e) =>
             {
                 NavigateTo(e.NavigationMode, e.Parameter);
             };
@@ -44,7 +45,7 @@ namespace Template10.Services.NavigationService
         // before navigate (cancellable)
         bool NavigatingFrom(bool suspending)
         {
-            var page = Frame.Content as Page;
+            var page = FrameFacade.Content as Page;
             if (page != null)
             {
                 var dataContext = page.DataContext as INavigable;
@@ -52,8 +53,8 @@ namespace Template10.Services.NavigationService
                 {
                     var args = new NavigatingEventArgs
                     {
-                        PageType = Frame.CurrentPageType,
-                        Parameter = Frame.CurrentPageParam,
+                        PageType = FrameFacade.CurrentPageType,
+                        Parameter = FrameFacade.CurrentPageParam,
                         Suspending = suspending,
                     };
                     dataContext.OnNavigatingFrom(args);
@@ -66,15 +67,15 @@ namespace Template10.Services.NavigationService
         // after navigate
         async Task NavigateFromAsync(bool suspending)
         {
-            var page = Frame.Content as Page;
+            var page = FrameFacade.Content as Page;
             if (page != null)
             {
                 // call viewmodel
                 var dataContext = page.DataContext as INavigable;
                 if (dataContext != null)
                 {
-                    dataContext.Identifier = string.Format("Page- {0}", Frame.BackStackDepth);
-                    var pageState = Frame.PageStateContainer(page.GetType());
+                    dataContext.Identifier = string.Format("Page- {0}", FrameFacade.BackStackDepth);
+                    var pageState = FrameFacade.PageStateContainer(page.GetType());
                     await dataContext.OnNavigatedFromAsync(pageState, suspending);
                 }
             }
@@ -83,14 +84,14 @@ namespace Template10.Services.NavigationService
         void NavigateTo(NavigationMode mode, string parameter)
         {
             LastNavigationParameter = parameter;
-            LastNavigationType = Frame.Content.GetType().FullName;
+            LastNavigationType = FrameFacade.Content.GetType().FullName;
 
             if (mode == NavigationMode.New)
             {
-                Frame.ClearFrameState();
+                FrameFacade.ClearFrameState();
             }
 
-            var page = Frame.Content as Page;
+            var page = FrameFacade.Content as Page;
             if (page != null)
             {
                 // call viewmodel
@@ -107,7 +108,7 @@ namespace Template10.Services.NavigationService
                     {
                         // prepare for state load
                         dataContext.NavigationService = this;
-                        var pageState = Frame.PageStateContainer(page.GetType());
+                        var pageState = FrameFacade.PageStateContainer(page.GetType());
                         dataContext.OnNavigatedTo(parameter, mode, pageState);
                     }
                 }
@@ -163,12 +164,12 @@ namespace Template10.Services.NavigationService
             if (page.FullName.Equals(LastNavigationType)
                 && parameter == LastNavigationParameter)
                 return false;
-            return Frame.Navigate(page, parameter);
+            return FrameFacade.Navigate(page, parameter);
         }
 
         public void SaveNavigation()
         {
-            var state = Frame.PageStateContainer(GetType());
+            var state = FrameFacade.PageStateContainer(GetType());
             if (state == null)
             {
                 throw new InvalidOperationException("State container is unexpectedly null");
@@ -176,34 +177,34 @@ namespace Template10.Services.NavigationService
 
             state["CurrentPageType"] = CurrentPageType?.ToString();
             state["CurrentPageParam"] = CurrentPageParam;
-            state["NavigateState"] = Frame?.GetNavigationState();
+            state["NavigateState"] = FrameFacade?.GetNavigationState();
         }
 
         public bool RestoreSavedNavigation()
         {
             try
             {
-                var state = Frame.PageStateContainer(GetType());
-                Frame.CurrentPageType = Type.GetType(state["CurrentPageType"].ToString());
-                Frame.CurrentPageParam = state["CurrentPageParam"]?.ToString();
-                Frame.SetNavigationState(state["NavigateState"].ToString());
-                NavigateTo(NavigationMode.Refresh, Frame.CurrentPageParam);
+                var state = FrameFacade.PageStateContainer(GetType());
+                FrameFacade.CurrentPageType = Type.GetType(state["CurrentPageType"].ToString());
+                FrameFacade.CurrentPageParam = state["CurrentPageParam"]?.ToString();
+                FrameFacade.SetNavigationState(state["NavigateState"].ToString());
+                NavigateTo(NavigationMode.Refresh, FrameFacade.CurrentPageParam);
                 return true;
             }
             catch { return false; }
         }
 
-        public void Refresh() { Frame.Refresh(); }
+        public void Refresh() { FrameFacade.Refresh(); }
 
-        public void GoBack() { if (Frame.CanGoBack) Frame.GoBack(); }
+        public void GoBack() { if (FrameFacade.CanGoBack) FrameFacade.GoBack(); }
 
-        public bool CanGoBack { get { return Frame.CanGoBack; } }
+        public bool CanGoBack { get { return FrameFacade.CanGoBack; } }
 
-        public void GoForward() { Frame.GoForward(); }
+        public void GoForward() { FrameFacade.GoForward(); }
 
-        public bool CanGoForward { get { return Frame.CanGoForward; } }
+        public bool CanGoForward { get { return FrameFacade.CanGoForward; } }
 
-        public void ClearHistory() { Frame.SetNavigationState(EmptyNavigation); }
+        public void ClearHistory() { FrameFacade.SetNavigationState(EmptyNavigation); }
 
         public void Resuming() { /* nothing */ }
 
@@ -225,8 +226,8 @@ namespace Template10.Services.NavigationService
             flyout.Show();
         }
 
-        public Type CurrentPageType { get { return Frame.CurrentPageType; } }
-        public string CurrentPageParam { get { return Frame.CurrentPageParam; } }
+        public Type CurrentPageType { get { return FrameFacade.CurrentPageType; } }
+        public string CurrentPageParam { get { return FrameFacade.CurrentPageParam; } }
     }
 }
 

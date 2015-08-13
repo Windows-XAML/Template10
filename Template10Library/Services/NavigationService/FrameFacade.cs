@@ -14,7 +14,7 @@ namespace Template10.Services.NavigationService
     {
         public FrameFacade(Frame frame)
         {
-            _frame = frame;
+            Frame = frame;
             _navigatedEventHandlers = new List<EventHandler<NavigatedEventArgs>>();
 
             // setup animations
@@ -23,7 +23,7 @@ namespace Template10.Services.NavigationService
             var i = new EntranceNavigationTransitionInfo();
             t.DefaultNavigationTransitionInfo = i;
             c.Add(t);
-            _frame.ContentTransitions = c;
+            Frame.ContentTransitions = c;
         }
 
         public event EventHandler<HandledEventArgs> BackRequested;
@@ -100,45 +100,45 @@ namespace Template10.Services.NavigationService
 
         #region frame facade
 
-        readonly Frame _frame;
+        public Frame Frame { get; private set; }
 
         public string FrameId { get; set; } = string.Empty;
 
-        public bool Navigate(Type page, string parameter) { return _frame.Navigate(page, parameter); }
+        public bool Navigate(Type page, string parameter) { return Frame.Navigate(page, parameter); }
 
-        public void SetNavigationState(string state) { _frame.SetNavigationState(state); }
+        public void SetNavigationState(string state) { Frame.SetNavigationState(state); }
 
-        public string GetNavigationState() { return _frame.GetNavigationState(); }
+        public string GetNavigationState() { return Frame.GetNavigationState(); }
 
-        public int BackStackDepth { get { return _frame.BackStackDepth; } }
+        public int BackStackDepth { get { return Frame.BackStackDepth; } }
 
-        public bool CanGoBack { get { return _frame.CanGoBack; } }
+        public bool CanGoBack { get { return Frame.CanGoBack; } }
 
-        public void GoBack() { _frame.GoBack(); }
+        public void GoBack() { Frame.GoBack(); }
 
         public void Refresh()
         {
             var page = CurrentPageType;
             var param = CurrentPageParam;
-            _frame.BackStack.Remove(_frame.BackStack.Last());
+            Frame.BackStack.Remove(Frame.BackStack.Last());
             Navigate(page, param);
         }
 
-        public bool CanGoForward { get { return _frame.CanGoForward; } }
+        public bool CanGoForward { get { return Frame.CanGoForward; } }
 
-        public void GoForward() { _frame.GoForward(); }
+        public void GoForward() { Frame.GoForward(); }
 
-        public object Content { get { return _frame.Content; } }
+        public object Content { get { return Frame.Content; } }
 
         public Type CurrentPageType { get; internal set; }
 
         public string CurrentPageParam { get; internal set; }
 
-        public object GetValue(DependencyProperty dp) { return _frame.GetValue(dp); }
+        public object GetValue(DependencyProperty dp) { return Frame.GetValue(dp); }
 
-        public void SetValue(DependencyProperty dp, object value) { _frame.SetValue(dp, value); }
+        public void SetValue(DependencyProperty dp, object value) { Frame.SetValue(dp, value); }
 
-        public void ClearValue(DependencyProperty dp) { _frame.ClearValue(dp); }
+        public void ClearValue(DependencyProperty dp) { Frame.ClearValue(dp); }
 
         #endregion
 
@@ -151,7 +151,7 @@ namespace Template10.Services.NavigationService
                     return;
                 _navigatedEventHandlers.Add(value);
                 if (_navigatedEventHandlers.Count == 1)
-                    _frame.Navigated += FacadeNavigatedEventHandler;
+                    Frame.Navigated += FacadeNavigatedEventHandler;
             }
 
             remove
@@ -160,7 +160,7 @@ namespace Template10.Services.NavigationService
                     return;
                 _navigatedEventHandlers.Remove(value);
                 if (_navigatedEventHandlers.Count == 0)
-                    _frame.Navigated -= FacadeNavigatedEventHandler;
+                    Frame.Navigated -= FacadeNavigatedEventHandler;
             }
         }
 
@@ -184,7 +184,7 @@ namespace Template10.Services.NavigationService
                     return;
                 _navigatingEventHandlers.Add(value);
                 if (_navigatingEventHandlers.Count == 1)
-                    _frame.Navigating += FacadeNavigatingCancelEventHandler;
+                    Frame.Navigating += FacadeNavigatingCancelEventHandler;
             }
             remove
             {
@@ -192,7 +192,7 @@ namespace Template10.Services.NavigationService
                     return;
                 _navigatingEventHandlers.Remove(value);
                 if (_navigatingEventHandlers.Count == 0)
-                    _frame.Navigating -= FacadeNavigatingCancelEventHandler;
+                    Frame.Navigating -= FacadeNavigatingCancelEventHandler;
             }
         }
 

@@ -1,8 +1,9 @@
 ﻿using System;
+using Template10.Mvvm;
 
 namespace Template10.Models
 {
-    public class TodoItem : Mvvm.BindableBase
+    public class TodoItem : BindableBase
     {
         private string _Key = default(string);
         public string Key { get { return _Key; } set { Set(ref _Key, value); } }

@@ -96,7 +96,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Common\BootStrapper.cs" />
     <Compile Include="Controls\TodoItemEditor.xaml.cs">
       <DependentUpon>TodoItemEditor.xaml</DependentUpon>
     </Compile>
@@ -112,14 +111,6 @@
     <Compile Include="Repositories\TodoListRepository.cs" />
     <Compile Include="Services\FileService\FileHelper.cs" />
     <Compile Include="Services\FileService\FileService.cs" />
-    <Compile Include="Services\KeyboardService\KeyboardEventArgs.cs" />
-    <Compile Include="Services\KeyboardService\KeyboardHelper.cs" />
-    <Compile Include="Services\KeyboardService\KeyboardService.cs" />
-    <Compile Include="Services\NavigationService\FrameFacade.cs" />
-    <Compile Include="Services\NavigationService\INavigatable.cs" />
-    <Compile Include="Services\NavigationService\NavigatedEventArgs.cs" />
-    <Compile Include="Services\NavigationService\NavigatingEventArgs.cs" />
-    <Compile Include="Services\NavigationService\NavigationService.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\TodoItemViewModel.cs" />
     <Compile Include="ViewModels\TodoListViewModel.cs" />
@@ -172,6 +163,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Template10Library\Template10Library.csproj">
+      <Project>{ac3e4f10-6615-4e16-bb0f-104760c92b95}</Project>
+      <Name>Template10Library</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="BehaviorsXamlSDKManaged, Version=12.0">
+      <Name>Behaviors SDK %28XAML%29</Name>
+    </SDKReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

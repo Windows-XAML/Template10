@@ -50,9 +50,9 @@ namespace Template10.ViewModels
         private string _Value = string.Empty;
         public string Value { get { return _Value; } set { Set(ref _Value, value); } }
 
-        public void GotoPage2()
+        public void GotoDetailsPage()
         {
-            this.NavigationService.Navigate(typeof(Views.Page2), this.Value);
+            this.NavigationService.Navigate(typeof(Views.DetailPage), this.Value);
         }
     }
 }

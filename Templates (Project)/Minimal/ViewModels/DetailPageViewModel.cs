@@ -8,9 +8,9 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Template10.ViewModels
 {
-    public class Page2ViewModel : Mvvm.ViewModelBase
+    public class DetailPageViewModel : Mvvm.ViewModelBase
     {
-        public Page2ViewModel()
+        public DetailPageViewModel()
         {
             // designtime data
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)

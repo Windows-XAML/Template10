@@ -7,7 +7,7 @@
     <ProjectGuid>{AC3E4F10-6615-4E16-BB0F-104760C92B95}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Template10Library</RootNamespace>
+    <RootNamespace>Template10</RootNamespace>
     <AssemblyName>Template10Library</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
@@ -113,6 +113,7 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Behaviors\NavButtonBehavior.cs" />
     <Compile Include="Behaviors\TextBoxEnterKeyBehavior.cs" />
     <Compile Include="Behaviors\TimerTriggerBehavior.cs" />
     <Compile Include="Common\Bootstrapper.cs" />
@@ -120,10 +121,6 @@
     <Compile Include="Common\HandledEventArgs.cs" />
     <Compile Include="Common\Mdl2.cs" />
     <Compile Include="Common\WindowWrapper.cs" />
-    <Compile Include="Controls\BackAppBarButton.cs" />
-    <Compile Include="Controls\BackButton.cs" />
-    <Compile Include="Controls\ForwardAppBarButton.cs" />
-    <Compile Include="Controls\ForwardButton.cs" />
     <Compile Include="Controls\PageHeader.xaml.cs">
       <DependentUpon>PageHeader.xaml</DependentUpon>
     </Compile>

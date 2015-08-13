@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using Template10.Mvvm;
 
 namespace Template10.ViewModels
 {
@@ -30,8 +31,8 @@ namespace Template10.ViewModels
         private bool _SelectedItemIsSelected = default(bool);
         public bool SelectedItemIsSelected { get { return _SelectedItemIsSelected; } set { Set(ref _SelectedItemIsSelected, value); } }
 
-        Mvvm.Command<string> _AddCommand = default(Mvvm.Command<string>);
-        public Mvvm.Command<string> AddCommand { get { return _AddCommand ?? (_AddCommand = new Mvvm.Command<string>(ExecuteAddCommand, CanExecuteAddCommand)); } }
+        DelegateCommand<string> _AddCommand = default(DelegateCommand<string>);
+        public DelegateCommand<string> AddCommand { get { return _AddCommand ?? (_AddCommand = new DelegateCommand<string>(ExecuteAddCommand, CanExecuteAddCommand)); } }
         private bool CanExecuteAddCommand(string title) { return true; }
         private void ExecuteAddCommand(string title)
         {
@@ -46,8 +47,8 @@ namespace Template10.ViewModels
             catch { this.SelectedItem = null; }
         }
 
-        Mvvm.Command<Models.TodoItem> _RemoveCommand = default(Mvvm.Command<Models.TodoItem>);
-        public Mvvm.Command<Models.TodoItem> RemoveCommand { get { return _RemoveCommand ?? (_RemoveCommand = new Mvvm.Command<Models.TodoItem>(ExecuteRemoveCommand, CanExecuteRemoveCommand)); } }
+        DelegateCommand<Models.TodoItem> _RemoveCommand = default(DelegateCommand<Models.TodoItem>);
+        public DelegateCommand<Models.TodoItem> RemoveCommand { get { return _RemoveCommand ?? (_RemoveCommand = new DelegateCommand<Models.TodoItem>(ExecuteRemoveCommand, CanExecuteRemoveCommand)); } }
         private bool CanExecuteRemoveCommand(Models.TodoItem param) { return this.SelectedItem != null; }
         private void ExecuteRemoveCommand(Models.TodoItem param)
         {
