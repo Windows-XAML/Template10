@@ -17,12 +17,10 @@ namespace Template10.Views
         public Shell(NavigationService navigationService)
         {
             this.InitializeComponent();
-
             NavigationService = navigationService;
-            this.ShellSplitView.Content = navigationService.FrameFacade.Frame;
+            ShellSplitView.Content = navigationService.FrameFacade.Frame;
             navigationService.FrameFacade.Navigated += (s, e) => UpdateButtons(e);
-            this.Loaded += (s, e) => UpdateButtons();
-
+            Loaded += (s, e) => UpdateButtons();
             ShellSplitView.RegisterPropertyChangedCallback(SplitView.IsPaneOpenProperty, (s, e) =>
             {
                 PaneWidth = !ShellSplitView.IsPaneOpen ? ShellSplitView.CompactPaneLength : ShellSplitView.OpenPaneLength;
@@ -51,17 +49,18 @@ namespace Template10.Views
             }
             finally
             {
-                try
-                {
-                    if (commandInfo.ClearHistory)
-                        NavigationService.ClearHistory();
-                }
-                catch { }
+                if (commandInfo.ClearHistory)
+                    NavigationService.ClearHistory();
             }
-            var type = commandInfo.PageType;
         }
 
-        NavigationService NavigationService { get; set; }
+        // menu
+        DelegateCommand _menuCommand;
+        public DelegateCommand MenuCommand { get { return _menuCommand ?? (_menuCommand = new DelegateCommand(ExecuteMenu)); } }
+        private void ExecuteMenu()
+        {
+            ShellSplitView.IsPaneOpen = !ShellSplitView.IsPaneOpen;
+        }
 
         private void UpdateButtons(NavigatedEventArgs e) { UpdateButtons(e.PageType); }
         void UpdateButtons() { UpdateButtons(NavigationService.FrameFacade.CurrentPageType); }
@@ -75,15 +74,7 @@ namespace Template10.Views
                     continue;
                 radioButton.IsChecked = target.PageType.Equals(type);
             }
-            this.ShellSplitView.IsPaneOpen = false;
-        }
-
-        // menu
-        DelegateCommand _menuCommand;
-        public DelegateCommand MenuCommand { get { return _menuCommand ?? (_menuCommand = new DelegateCommand(ExecuteMenu)); } }
-        private void ExecuteMenu()
-        {
-            this.ShellSplitView.IsPaneOpen = !this.ShellSplitView.IsPaneOpen;
+            ShellSplitView.IsPaneOpen = false;
         }
 
         public double PaneWidth
@@ -92,8 +83,9 @@ namespace Template10.Views
             set { SetValue(PaneWidthProperty, value); }
         }
         public static readonly DependencyProperty PaneWidthProperty =
-            DependencyProperty.Register("PaneWidth", typeof(double),
-                typeof(Shell), new PropertyMetadata(220));
+            DependencyProperty.Register("PaneWidth", typeof(double), typeof(Shell), new PropertyMetadata(220));
+
+        NavigationService NavigationService { get; set; }
     }
 
     public class CommandInfo
