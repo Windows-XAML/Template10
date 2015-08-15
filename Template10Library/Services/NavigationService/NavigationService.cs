@@ -18,7 +18,7 @@ namespace Template10.Services.NavigationService
 
         public FrameFacade FrameFacade { get; private set; }
         public Frame Frame { get { return FrameFacade.Frame; } }
-        string LastNavigationParameter { get; set; }
+        object LastNavigationParameter { get; set; }
         string LastNavigationType { get; set; }
 
         public NavigationService(Frame frame)
@@ -157,7 +157,7 @@ namespace Template10.Services.NavigationService
             return view.Id;
         }
 
-        public bool Navigate(Type page, string parameter = null)
+        public bool Navigate(Type page, object parameter = null)
         {
             if (page == null)
                 throw new ArgumentNullException(nameof(page));

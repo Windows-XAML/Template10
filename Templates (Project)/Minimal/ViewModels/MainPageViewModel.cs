@@ -26,10 +26,6 @@ namespace Template10.ViewModels
                 // clear any cache
                 state.Clear();
             }
-            else
-            {
-                // parameters are not applicable 
-            }
         }
 
         public override Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending)

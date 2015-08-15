@@ -16,12 +16,8 @@ namespace Template10
         public override Task OnInitializeAsync()
         {
             // runs before everything
+            Windows.UI.Xaml.Window.Current.Content = new Views.Shell(NavigationService);
             return base.OnInitializeAsync();
-        }
-
-        public override void OnPrelaunch()
-        {
-            // handle prelaunch
         }
 
         public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)

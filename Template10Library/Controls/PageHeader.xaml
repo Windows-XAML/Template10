@@ -10,23 +10,21 @@
     xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
     mc:Ignorable="d" Height="48" d:DesignWidth="400" x:Name="ThisPage">
 
-    <Grid Grid.Row="0" VerticalAlignment="Center">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <CommandBar x:Name="HeaderCommandBar" Grid.Column="0" Grid.ColumnSpan="2" ClosedDisplayMode="Compact" />
-        <Grid Grid.Column="0" VerticalAlignment="Center" Visibility="{x:Bind BackButtonVisibility}">
-            <Button Height="48" Width="48" Style="{StaticResource NavigationBackButtonSmallStyle}">
-                <Interactivity:Interaction.Behaviors>
-                    <Behaviors:NavButtonBehavior Direction="Back" Frame="{x:Bind Frame, Mode=OneWay}"/>
-                </Interactivity:Interaction.Behaviors>
-            </Button>
-        </Grid>
-        <TextBlock Grid.Column="1" IsHitTestVisible="False" VerticalAlignment="Center" 
-                   Style="{StaticResource SubtitleTextBlockStyle}" 
-                   Text="{Binding Text, ElementName=ThisPage, FallbackValue='Page Header'}" Margin="16,0,0,0" />
-    </Grid>
-
+    <CommandBar x:Name="HeaderCommandBar" Grid.Column="0" Grid.ColumnSpan="2" Height="48" ClosedDisplayMode="Compact">
+        <CommandBar.Content>
+            <StackPanel Orientation="Horizontal" Height="48" VerticalAlignment="Center">
+                <Grid VerticalAlignment="Center" Visibility="{x:Bind BackButtonVisibility}">
+                    <Button Height="48" Width="48" Style="{StaticResource NavigationBackButtonSmallStyle}">
+                        <Interactivity:Interaction.Behaviors>
+                            <Behaviors:NavButtonBehavior Direction="Back" Frame="{x:Bind Frame, Mode=OneWay}"/>
+                        </Interactivity:Interaction.Behaviors>
+                    </Button>
+                </Grid>
+                <TextBlock IsHitTestVisible="False" VerticalAlignment="Center"
+                       Style="{StaticResource SubtitleTextBlockStyle}" 
+                       Text="{Binding Text, ElementName=ThisPage, FallbackValue='Page Header'}" Margin="16,0,0,0" />
+            </StackPanel>
+        </CommandBar.Content>
+    </CommandBar>
 
 </UserControl>
