@@ -10,8 +10,7 @@
     xmlns:controls="using:Template10.Controls"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" 
-          BorderBrush="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" BorderThickness="0,12,0,0">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -19,14 +18,17 @@
         </Grid.RowDefinitions>
 
         <!-- header -->
-
         <controls:PageHeader Text="Main Page" BackButtonVisibility="Collapsed" Frame="{x:Bind Frame, Mode=OneWay}" />
 
+        <!--#region content-->
+        
         <Grid Grid.Row="1" Padding="12,4,0,0">
             
             <!-- content -->
             
         </Grid>
-        
+
+        <!--#endregion-->
+
     </Grid>
 </Page>
