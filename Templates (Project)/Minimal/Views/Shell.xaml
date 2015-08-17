@@ -1,96 +1,33 @@
-﻿<Page
+﻿<Page xmlns:Controls="using:Template10.Controls" 
     x:Class="Template10.Views.Shell"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Template10.Views"
+      xmlns:views="using:Template10.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" x:Name="ThisPage">
 
-    <Page.Resources>
-        <ResourceDictionary>
-
-            <Style TargetType="RadioButton" x:Name="NavButton">
-                <Setter Property="Height" Value="48" />
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate>
-                            <ToggleButton VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="0"
-                                Command="{Binding Command, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
-                                CommandParameter="{Binding CommandParameter, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
-                                Width="{Binding Width, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
-                                Height="{Binding Height, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
-                                IsChecked="{Binding IsChecked, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
-                                Content="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" />
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-
-        </ResourceDictionary>
-    </Page.Resources>
-
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
-        <SplitView x:Name="ShellSplitView" DataContext="{Binding ElementName=ThisPage}" DisplayMode="CompactOverlay" 
-                   PaneBackground="Transparent" CompactPaneLength="48" OpenPaneLength="220">
-
-            <SplitView.Pane>
-                <Grid Background="#FF7D7D7D" Margin="0,48,0,0" >
-
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-
-                    <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="0">
-                        <StackPanel>
-
-                            <RadioButton Style="{StaticResource NavButton}" Width="{Binding PaneWidth, FallbackValue=220}" Command="{Binding NavCommand}" GroupName="Nav">
-                                <RadioButton.CommandParameter>
-                                    <local:CommandInfo PageType="local:MainPage" ClearHistory="True" />
-                                </RadioButton.CommandParameter>
-                                <RadioButton.Tag>
-                                    <StackPanel Orientation="Horizontal">
-                                        <SymbolIcon Symbol="Home" Width="48" Height="48" />
-                                        <TextBlock Text="Home" VerticalAlignment="Center" Margin="12,0,0,0" />
-                                    </StackPanel>
-                                </RadioButton.Tag>
-                            </RadioButton>
-
-                        </StackPanel>
-                    </ScrollViewer>
-
-                    <StackPanel Grid.Row="1">
-
-                        <RadioButton Style="{StaticResource NavButton}" Width="{Binding PaneWidth, FallbackValue=220}" Command="{Binding NavCommand, ElementName=ThisPage}" GroupName="Nav">
-                            <RadioButton.CommandParameter>
-                                <local:CommandInfo PageType="local:SettingsPage" />
-                            </RadioButton.CommandParameter>
-                            <RadioButton.Tag>
-                                <StackPanel Orientation="Horizontal">
-                                    <SymbolIcon Symbol="Setting" Width="48" Height="48" />
-                                    <TextBlock Text="Settings" VerticalAlignment="Center" Margin="12,0,0,0" />
-                                </StackPanel>
-                            </RadioButton.Tag>
-                        </RadioButton>
-
-                    </StackPanel>
-
-                </Grid>
-            </SplitView.Pane>
-        </SplitView>
-
-        <Button Width="48" Height="48" Padding="0" Margin="0" Command="{x:Bind HamburgerCommand}" 
-                HorizontalContentAlignment="Center" HorizontalAlignment="Left" VerticalContentAlignment="Center" VerticalAlignment="Top">
-            <Button.Background>
-                <SolidColorBrush Color="{StaticResource SystemAccentColor}" Opacity=".6" />
-            </Button.Background>
-            <StackPanel Orientation="Horizontal">
-                <FontIcon Glyph="&#xE700;" FontSize="20" />
-            </StackPanel>
-        </Button>
-
-    </Grid>
+    <Controls:HamburgerMenu x:Name="MyHamburgerMenu">
+        
+        <Controls:HamburgerMenu.PrimaryButtons>
+            <Controls:NavigationButtonInfo PageType="views:MainPage">
+                <StackPanel Orientation="Horizontal">
+                    <SymbolIcon Symbol="Home" Width="48" Height="48" />
+                    <TextBlock Text="Home" VerticalAlignment="Center" Margin="12,0,0,0" />
+                </StackPanel>
+            </Controls:NavigationButtonInfo>
+        </Controls:HamburgerMenu.PrimaryButtons>
+        
+        <Controls:HamburgerMenu.SecondaryButtons>
+            <Controls:NavigationButtonInfo PageType="views:SettingsPage">
+                <StackPanel Orientation="Horizontal">
+                    <SymbolIcon Symbol="Setting" Width="48" Height="48" />
+                    <TextBlock Text="Settings" VerticalAlignment="Center" Margin="12,0,0,0" />
+                </StackPanel>
+            </Controls:NavigationButtonInfo>
+        </Controls:HamburgerMenu.SecondaryButtons>
+        
+    </Controls:HamburgerMenu>
 
 </Page>

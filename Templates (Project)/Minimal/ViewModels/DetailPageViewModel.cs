@@ -19,7 +19,7 @@ namespace Template10.ViewModels
             }
         }
 
-        public override void OnNavigatedTo(string parameter, NavigationMode mode, IDictionary<string, object> state)
+        public override void OnNavigatedTo(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
             if (state.Any())
             {

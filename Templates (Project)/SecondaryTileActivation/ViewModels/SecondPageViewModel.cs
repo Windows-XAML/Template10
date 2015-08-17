@@ -16,7 +16,7 @@ namespace SecondaryTileActivation.ViewModels
         private const string UnPinMe = "Un-pin Me!";
         private const string TileId = "DemoAppID";
         private readonly SecondaryTileHelper _secondaryTileHelper;
-        private string _navigationParameter;
+        private object _navigationParameter;
         private string _pinMeText;
 
         public SecondPageViewModel()
@@ -31,18 +31,18 @@ namespace SecondaryTileActivation.ViewModels
             set { Set(ref _pinMeText, value); }
         }
 
-        public string NavigationParameter
-        { 
+        public object NavigationParameter
+        {
             get { return _navigationParameter; }
             set { Set(ref _navigationParameter, value); }
-            } 
+        }
 
         private void UpdatePinMeText()
         {
             PinMeText = _secondaryTileHelper.Exists(TileId) ? UnPinMe : PinMe;
         }
 
-        public override void OnNavigatedTo(string parameter, NavigationMode mode, IDictionary<string, object> state)
+        public override void OnNavigatedTo(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
             NavigationParameter = parameter;
             base.OnNavigatedTo(parameter, mode, state);

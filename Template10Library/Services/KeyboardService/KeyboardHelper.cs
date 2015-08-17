@@ -17,7 +17,58 @@ namespace Template10.Services.KeyboardService
             Window.Current.CoreWindow.PointerPressed += CoreWindow_PointerPressed;
         }
 
-        private void CoreDispatcher_AcceleratorKeyActivated(CoreDispatcher sender, AcceleratorKeyEventArgs e)
+        public void Cleanup()
+        {
+            Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated -= CoreDispatcher_AcceleratorKeyActivated;
+            Window.Current.CoreWindow.PointerPressed -= CoreWindow_PointerPressed;
+        }
+
+        private void CoreDispatcher_AcceleratorKeyActivated(CoreDispatcher sender, AcceleratorKeyEventArgs args)
+        {
+            if (args.EventType == CoreAcceleratorKeyEventType.SystemKeyDown
+                || args.EventType == CoreAcceleratorKeyEventType.KeyDown)
+            {
+                HandleKeyDown(args);
+            }
+        }
+
+        private void HandleKeyDown(AcceleratorKeyEventArgs args)
+        {
+            var alt = (Window.Current.CoreWindow.GetKeyState(VirtualKey.Menu) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
+            var shift = (Window.Current.CoreWindow.GetKeyState(VirtualKey.Shift) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
+            var control = (Window.Current.CoreWindow.GetKeyState(VirtualKey.Shift) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
+            var windows = ((Window.Current.CoreWindow.GetKeyState(VirtualKey.LeftWindows) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down) || ((Window.Current.CoreWindow.GetKeyState(VirtualKey.RightWindows) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down);
+            var character = ToChar(args.VirtualKey, shift);
+
+            System.Diagnostics.Debug.WriteLine("{0} alt:{1} shift:{2} control:{3} windows:{4} virt:{5}", character, alt, shift, control, windows, args.VirtualKey);
+
+            var keyDown = new KeyboardEventArgs
+            {
+                AltKey = alt,
+                Character = character,
+                ControlKey = control,
+                EventArgs = args,
+                ShiftKey = shift,
+                VirtualKey = args.VirtualKey
+            };
+            try { KeyDown?.Invoke(keyDown); } catch { }
+
+            if (windows && (character == 'z' || character == 'Z'))
+            {
+                RaiseWindowZGestured();
+            }
+            else if (args.KeyStatus.IsExtendedKey && args.VirtualKey == VirtualKey.Back)
+            {
+                RaiseGoBackGestured();
+            }
+            else
+            {
+                return;
+            }
+            args.Handled = true;
+        }
+
+        private void zCoreDispatcher_AcceleratorKeyActivated(CoreDispatcher sender, AcceleratorKeyEventArgs e)
         {
             if ((e.EventType == CoreAcceleratorKeyEventType.SystemKeyDown ||
                 e.EventType == CoreAcceleratorKeyEventType.KeyDown))
@@ -29,6 +80,8 @@ namespace Template10.Services.KeyboardService
                 bool altKey = (coreWindow.GetKeyState(VirtualKey.Menu) & downState) == downState;
                 bool controlKey = (coreWindow.GetKeyState(VirtualKey.Control) & downState) == downState;
                 bool shiftKey = (coreWindow.GetKeyState(VirtualKey.Shift) & downState) == downState;
+                bool noModifiers = !altKey && !controlKey && !shiftKey;
+                bool onlyAlt = altKey && !controlKey && !shiftKey;
 
                 // raise keydown actions
                 var keyDown = new KeyboardEventArgs
@@ -44,42 +97,23 @@ namespace Template10.Services.KeyboardService
                 try { KeyDown?.Invoke(keyDown); }
                 catch { }
 
-                // Only investigate further when Left, Right, or the dedicated Previous or Next keys
-                // are pressed
-                if (virtualKey == VirtualKey.Left
-                    || virtualKey == VirtualKey.Right
-                    || (int)virtualKey == 166
-                    || (int)virtualKey == 167
-                    || (int)virtualKey == 69)
+                if (((int)virtualKey == 166 && noModifiers) || (virtualKey == VirtualKey.Left && onlyAlt))
                 {
-                    bool noModifiers = !altKey && !controlKey && !shiftKey;
-                    bool onlyAlt = altKey && !controlKey && !shiftKey;
-
-                    if (((int)virtualKey == 166 && noModifiers)
-                        || (virtualKey == VirtualKey.Left && onlyAlt))
-                    {
-                        // When the previous key or Alt+Left are pressed navigate back
-                        e.Handled = true;
-                        RaiseGoBackGestured();
-                    }
-                    else if (virtualKey == VirtualKey.Back && winKey)
-                    {
-                        // When the next key or Win+Backspace are pressed navigate backward
-                        e.Handled = true;
-                        RaiseGoBackGestured();
-                    }
-                    else if (((int)virtualKey == 167 && noModifiers) || (virtualKey == VirtualKey.Right && onlyAlt))
-                    {
-                        // When the next key or Alt+Right are pressed navigate forward
-                        e.Handled = true;
-                        RaiseGoForwardGestured();
-                    }
-                    else if (((int)virtualKey == 69 && controlKey))
-                    {
-                        // when control-E
-                        e.Handled = true;
-                        RaiseControlEGestured();
-                    }
+                    // When the previous key or Alt+Left are pressed navigate back
+                    e.Handled = true;
+                    RaiseGoBackGestured();
+                }
+                else if (((int)virtualKey == 167 && noModifiers) || (virtualKey == VirtualKey.Right && onlyAlt))
+                {
+                    // When the next key or Alt+Right are pressed navigate forward
+                    e.Handled = true;
+                    RaiseGoForwardGestured();
+                }
+                else if (((int)virtualKey == 69 && controlKey))
+                {
+                    // when control-E
+                    e.Handled = true;
+                    RaiseControlEGestured();
                 }
             }
         }
@@ -131,6 +165,13 @@ namespace Template10.Services.KeyboardService
         protected void RaiseControlEGestured()
         {
             try { ControlEGestured?.Invoke(); }
+            catch { }
+        }
+
+        public Action WindowZGestured { get; set; }
+        protected void RaiseWindowZGestured()
+        {
+            try { WindowZGestured?.Invoke(); }
             catch { }
         }
 

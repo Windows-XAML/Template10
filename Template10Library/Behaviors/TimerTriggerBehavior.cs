@@ -6,7 +6,7 @@ using Windows.UI.Xaml.Markup;
 
 namespace Template10.Behaviors
 {
-    [ContentProperty(Name = "Actions")]
+    [ContentProperty(Name = nameof(Actions))]
     public sealed class TimerTriggerBehavior : DependencyObject, IBehavior
     {
         private int _tickCount;
