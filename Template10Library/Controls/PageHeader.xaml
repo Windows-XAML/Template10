@@ -5,46 +5,56 @@
     xmlns:local="using:Template10.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="using:Template10.Controls"
-    mc:Ignorable="d" Margin="4,0,0,0"
-    d:DesignHeight="60"
-    d:DesignWidth="400">
+    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" 
+    xmlns:Behaviors="using:Template10.Behaviors" 
+    xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+    mc:Ignorable="d" MinHeight="48" d:DesignWidth="400" x:Name="ThisPage">
 
-    <UserControl.Resources>
+    <CommandBar x:Name="HeaderCommandBar" DataContext="{Binding ElementName=ThisPage}" 
+                Grid.Column="0" Grid.ColumnSpan="2" ClosedDisplayMode="Compact">
 
-        <Style x:Key="PageHeaderStyle" TargetType="TextBlock" BasedOn="{StaticResource HeaderTextBlockStyle}">
-            <Setter Property="HorizontalAlignment" Value="Left" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="FontFamily" Value="Segoe UI" />
-            <Setter Property="FontWeight" Value="Light" />
-            <Setter Property="FontSize" Value="32" />
-            <Setter Property="TextWrapping" Value="NoWrap" />
-        </Style>
-
-    </UserControl.Resources>
-
-    <Grid Background="Transparent">
-
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition />
-            <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
-
-        <!-- on-canvas back button -->
-        <!-- (visible when Common.Bootstrapper.ShowShellBackButton is false) -->
-        <controls:BackButton Style="{StaticResource NavigationBackButtonNormalStyle}" Grid.Column="0" Margin="4,0,4,0" />
-
-        <!-- header text -->
-        <TextBlock Grid.Column="1" Margin="4,0,4,0" Text="{x:Bind Text, FallbackValue='Designtime Value'}" Style="{StaticResource PageHeaderStyle}" />
-
-        <!-- on-canvas forward button -->
-        <controls:ForwardButton Style="{StaticResource NavigationBackButtonNormalStyle}" Grid.Column="2" Margin="4,0,4,0" RenderTransformOrigin="0.5,0.5" >
-            <controls:ForwardButton.RenderTransform>
-                <CompositeTransform ScaleX="-1"/>
-            </controls:ForwardButton.RenderTransform>
-        </controls:ForwardButton>
-
-    </Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <VisualState x:Name="VisualStateNarrow">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="NarrowSpacer.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="VisualStateMedium">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger x:Name="VisualStateMediumTrigger" MinWindowWidth="521" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="VisualStateWide">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1024" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        
+        <CommandBar.Content>
+            <StackPanel Orientation="Horizontal" Height="48" VerticalAlignment="Center">
+                <Rectangle x:Name="NarrowSpacer" Width="48" Visibility="Collapsed" />
+                <Grid VerticalAlignment="Center" Visibility="{x:Bind BackButtonVisibility}">
+                    <Button Height="48" Width="48" Style="{StaticResource NavigationBackButtonSmallStyle}">
+                        <Interactivity:Interaction.Behaviors>
+                            <Behaviors:NavButtonBehavior Direction="Back" Frame="{Binding Frame}"/>
+                        </Interactivity:Interaction.Behaviors>
+                    </Button>
+                </Grid>
+                <TextBlock IsHitTestVisible="False" VerticalAlignment="Center"
+                       Style="{StaticResource SubtitleTextBlockStyle}" 
+                       Text="{Binding Text, FallbackValue='Page Header'}" Margin="16,0,0,0" />
+            </StackPanel>
+        </CommandBar.Content>
+    </CommandBar>
 
 </UserControl>

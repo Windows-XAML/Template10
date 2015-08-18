@@ -1,67 +1,84 @@
-﻿using System;
+﻿using System.ComponentModel;
+using Template10.Common;
+using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Markup;
 
 namespace Template10.Controls
 {
-    public sealed partial class PageHeader : UserControl
+    [ContentProperty(Name = "PrimaryCommands")]
+    public sealed partial class PageHeader : UserControl, INotifyPropertyChanged
     {
         public PageHeader()
         {
             this.InitializeComponent();
+            PrimaryCommands = HeaderCommandBar.PrimaryCommands;
+            SecondaryCommands = HeaderCommandBar.SecondaryCommands;
+            this.Background = HeaderCommandBar.Background;
+            HeaderCommandBar.SetBinding(CommandBar.BackgroundProperty, new Binding
+            {
+                Path = new PropertyPath(nameof(Background)),
+                Source = this
+            });
         }
+
+        public IObservableVector<ICommandBarElement> PrimaryCommands
+        {
+            get { return (IObservableVector<ICommandBarElement>)GetValue(PrimaryCommandsProperty); }
+            private set { SetValue(PrimaryCommandsProperty, value); }
+        }
+        public static readonly DependencyProperty PrimaryCommandsProperty =
+            DependencyProperty.Register("PrimaryCommands", typeof(IObservableVector<ICommandBarElement>),
+                typeof(PageHeader), new PropertyMetadata(null));
+
+        public IObservableVector<ICommandBarElement> SecondaryCommands
+        {
+            get { return (IObservableVector<ICommandBarElement>)GetValue(SecondaryCommandsProperty); }
+            private set { SetValue(SecondaryCommandsProperty, value); }
+        }
+        public static readonly DependencyProperty SecondaryCommandsProperty =
+            DependencyProperty.Register("SecondaryCommands", typeof(IObservableVector<ICommandBarElement>),
+                typeof(PageHeader), new PropertyMetadata(null));
+
+        public Frame Frame
+        {
+            get { return (Frame)GetValue(FrameProperty); }
+            set { SetValue(FrameProperty, value); PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Frame))); }
+        }
+        public static readonly DependencyProperty FrameProperty =
+            DependencyProperty.Register("Frame", typeof(Frame),
+                typeof(PageHeader), new PropertyMetadata(null));
 
         public string Text
         {
             get { return (string)GetValue(TextProperty); }
-            set { SetValue(TextProperty, value); }
+            set { SetValue(TextProperty, value); PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Text))); }
         }
         public static readonly DependencyProperty TextProperty =
             DependencyProperty.Register("Text", typeof(string),
                 typeof(PageHeader), new PropertyMetadata("Page Header"));
 
-        public bool ShowBack
+        public Visibility BackButtonVisibility
         {
-            get { return (bool)GetValue(ShowBackProperty); }
-            set { SetValue(ShowBackProperty, value); }
+            get { return (Visibility)GetValue(BackButtonVisibilityProperty); }
+            set { SetValue(BackButtonVisibilityProperty, value); PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(BackButtonVisibility))); }
         }
-        public static readonly DependencyProperty ShowBackProperty =
-            DependencyProperty.Register("ShowBack", typeof(bool),
-                typeof(PageHeader), new PropertyMetadata(true, ShowBackChanged));
-        private static void ShowBackChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        public static readonly DependencyProperty BackButtonVisibilityProperty =
+            DependencyProperty.Register("BackButtonVisibility", typeof(Visibility),
+                typeof(PageHeader), new PropertyMetadata(Visibility.Visible));
+
+        public Visibility ForwardButtonVisibility
         {
-            var p = d as PageHeader;
-            var g = p.Content as Grid;
-            if ((bool)e.NewValue)
-            {
-                g.ColumnDefinitions[0].Width = GridLength.Auto;
-            }
-            else
-            {
-                g.ColumnDefinitions[0].Width = new GridLength(0);
-            }
+            get { return (Visibility)GetValue(ForwardButtonVisibilityProperty); }
+            set { SetValue(ForwardButtonVisibilityProperty, value); PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ForwardButtonVisibility))); }
         }
 
-        public bool ShowForward
-        {
-            get { return (bool)GetValue(ShowForwardProperty); }
-            set { SetValue(ShowForwardProperty, value); }
-        }
-        public static readonly DependencyProperty ShowForwardProperty =
-            DependencyProperty.Register("ShowForward", typeof(bool),
-                typeof(PageHeader), new PropertyMetadata(true, ShowForwardChanged));
-        private static void ShowForwardChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var p = d as PageHeader;
-            var g = p.Content as Grid;
-            if ((bool)e.NewValue)
-            {
-                g.ColumnDefinitions[2].Width = GridLength.Auto;
-            }
-            else
-            {
-                g.ColumnDefinitions[2].Width = new GridLength(0);
-            }
-        }
+        public static readonly DependencyProperty ForwardButtonVisibilityProperty =
+            DependencyProperty.Register("ForwardButtonVisibility", typeof(Visibility),
+                typeof(PageHeader), new PropertyMetadata(Visibility.Visible));
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

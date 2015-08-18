@@ -14,7 +14,14 @@ namespace Template10
 
         public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
-            this.NavigationService.Navigate(typeof(Views.MainPage));
+            if (startKind == StartKind.Launch)
+            {
+                this.NavigationService.Navigate(typeof(Views.MainPage));
+            }
+            else
+            {
+                // this.NavigationService.Navigate(typeof(Views.SecondPage));
+            }
             return Task.FromResult<object>(null);
         }
     }

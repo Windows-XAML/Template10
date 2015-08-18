@@ -1,6 +1,4 @@
 ﻿using Template10.ViewModels;
-using Windows.UI.ViewManagement;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace Template10.Views
@@ -10,16 +8,10 @@ namespace Template10.Views
         public MainPage()
         {
             InitializeComponent();
-            NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
-            DataContextChanged += (s, e) => ViewModel = DataContext as MainPageViewModel;
+            NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Disabled;
         }
 
         // strongly-typed view models enable x:bind
-        public MainPageViewModel ViewModel { get; set; }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+        public MainPageViewModel ViewModel { get { return this.DataContext as MainPageViewModel; } }
     }
 }

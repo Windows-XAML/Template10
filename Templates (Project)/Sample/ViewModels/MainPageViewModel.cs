@@ -35,7 +35,7 @@ namespace Template10.ViewModels
             }
         }
 
-        public override void OnNavigatedTo(string parameter, NavigationMode mode, IDictionary<string, object> state)
+        public override void OnNavigatedTo(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
             LoadCommand.Execute(null);
         }
@@ -56,8 +56,8 @@ namespace Template10.ViewModels
 
         #region Commands
 
-        Mvvm.Command _AddListCommand = default(Mvvm.Command);
-        public Mvvm.Command AddListCommand { get { return _AddListCommand ?? (_AddListCommand = new Mvvm.Command(ExecuteAddListCommand, CanExecuteAddListCommand)); } }
+        DelegateCommand _AddListCommand = default(DelegateCommand);
+        public DelegateCommand AddListCommand { get { return _AddListCommand ?? (_AddListCommand = new DelegateCommand(ExecuteAddListCommand, CanExecuteAddListCommand)); } }
         private bool CanExecuteAddListCommand() { return !Busy; }
         private void ExecuteAddListCommand()
         {
@@ -71,8 +71,8 @@ namespace Template10.ViewModels
             catch { }
         }
 
-        Mvvm.Command<ViewModels.TodoListViewModel> _RemoveListCommand = default(Mvvm.Command<ViewModels.TodoListViewModel>);
-        public Mvvm.Command<ViewModels.TodoListViewModel> RemoveListCommand { get { return _RemoveListCommand ?? (_RemoveListCommand = new Mvvm.Command<ViewModels.TodoListViewModel>(ExecuteRemoveListCommand, CanExecuteRemoveListCommand)); } }
+        DelegateCommand<ViewModels.TodoListViewModel> _RemoveListCommand = default(DelegateCommand<ViewModels.TodoListViewModel>);
+        public DelegateCommand<ViewModels.TodoListViewModel> RemoveListCommand { get { return _RemoveListCommand ?? (_RemoveListCommand = new DelegateCommand<ViewModels.TodoListViewModel>(ExecuteRemoveListCommand, CanExecuteRemoveListCommand)); } }
         private bool CanExecuteRemoveListCommand(ViewModels.TodoListViewModel list) { return !Busy && list != null; }
         private void ExecuteRemoveListCommand(ViewModels.TodoListViewModel list)
         {
@@ -85,8 +85,8 @@ namespace Template10.ViewModels
             catch { }
         }
 
-        Mvvm.Command _LoadCommand = default(Mvvm.Command);
-        public Mvvm.Command LoadCommand { get { return _LoadCommand ?? (_LoadCommand = new Mvvm.Command(ExecuteLoadCommand, CanExecuteLoadCommand)); } }
+        DelegateCommand _LoadCommand = default(DelegateCommand);
+        public DelegateCommand LoadCommand { get { return _LoadCommand ?? (_LoadCommand = new DelegateCommand(ExecuteLoadCommand, CanExecuteLoadCommand)); } }
         private bool CanExecuteLoadCommand() { return !Busy; }
         private async void ExecuteLoadCommand()
         {
@@ -104,8 +104,8 @@ namespace Template10.ViewModels
             finally { Busy = false; }
         }
 
-        Mvvm.Command _SaveCommand = default(Mvvm.Command);
-        public Mvvm.Command SaveCommand { get { return _SaveCommand ?? (_SaveCommand = new Mvvm.Command(async () => { await ExecuteSaveCommand(); }, CanExecuteSaveCommand)); } }
+        DelegateCommand _SaveCommand = default(DelegateCommand);
+        public DelegateCommand SaveCommand { get { return _SaveCommand ?? (_SaveCommand = new DelegateCommand(async () => { await ExecuteSaveCommand(); }, CanExecuteSaveCommand)); } }
         private bool CanExecuteSaveCommand() { return true; }
         private async Task ExecuteSaveCommand()
         {

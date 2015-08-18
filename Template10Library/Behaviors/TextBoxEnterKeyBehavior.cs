@@ -6,7 +6,7 @@ using Windows.UI.Xaml.Markup;
 
 namespace Template10.Behaviors
 {
-    [ContentProperty(Name = "Actions")]
+    [ContentProperty(Name = nameof(Actions))]
     [TypeConstraint(typeof(TextBox))]
     public class TextBoxEnterKeyBehavior : DependencyObject, IBehavior
     {

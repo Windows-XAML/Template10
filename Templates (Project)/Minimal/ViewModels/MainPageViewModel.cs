@@ -17,7 +17,7 @@ namespace Template10.ViewModels
             }
         }
 
-        public override void OnNavigatedTo(string parameter, NavigationMode mode, IDictionary<string, object> state)
+        public override void OnNavigatedTo(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
             if (state.Any())
             {
@@ -25,10 +25,6 @@ namespace Template10.ViewModels
                 if (state.ContainsKey(nameof(Value))) Value = state[nameof(Value)]?.ToString();
                 // clear any cache
                 state.Clear();
-            }
-            else
-            {
-                // parameters are not applicable 
             }
         }
 
@@ -50,9 +46,9 @@ namespace Template10.ViewModels
         private string _Value = string.Empty;
         public string Value { get { return _Value; } set { Set(ref _Value, value); } }
 
-        public void GotoPage2()
+        public void GotoDetailsPage()
         {
-            this.NavigationService.Navigate(typeof(Views.Page2), this.Value);
+            this.NavigationService.Navigate(typeof(Views.DetailPage), this.Value);
         }
     }
 }
