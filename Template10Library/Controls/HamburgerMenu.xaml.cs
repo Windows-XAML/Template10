@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using Template10.Services.KeyboardService;
 using Template10.Services.NavigationService;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
@@ -14,12 +15,6 @@ namespace Template10.Controls
         public HamburgerMenu()
         {
             this.InitializeComponent();
-            Loaded += HamburgerMenu_Loaded;
-
-        }
-
-        private void HamburgerMenu_Loaded(object sender, RoutedEventArgs e)
-        {
             new KeyboardService().AfterWindowZGesture = () => { HamburgerCommand.Execute(null); };
         }
 
@@ -28,12 +23,15 @@ namespace Template10.Controls
         void UpdateButtons(Type type)
         {
             // update radiobuttons after frame navigates
-            foreach (var radioButton in Common.XamlHelper.AllChildren<RadioButton>(this))
+            foreach (var button in Common.XamlHelper.AllChildren<RadioButton>(this))
             {
-                var target = radioButton.CommandParameter as NavigationButtonInfo;
-                if (target == null)
+                var info = button.CommandParameter as NavigationButtonInfo;
+                if (info == null)
                     continue;
-                radioButton.IsChecked = target.PageType.Equals(type);
+                if (info.PageType == null)
+                    continue;
+                button.IsChecked = info.PageType.Equals(type);
+                button.IsEnabled = !button.IsChecked.Value;
             }
             ShellSplitView.IsPaneOpen = false;
         }
@@ -62,6 +60,12 @@ namespace Template10.Controls
                 if (commandInfo.ClearHistory)
                     NavigationService.ClearHistory();
             }
+        }
+
+        public Color AccentColor
+        {
+            get { return (Color)this.Resources["HamburgerAccentColor"]; }
+            set { this.Resources["HamburgerAccentColor"] = value; this.ApplyTemplate(); }
         }
 
         public ObservableCollection<NavigationButtonInfo> PrimaryButtons
@@ -95,15 +99,6 @@ namespace Template10.Controls
             }
         }
 
-        public Visibility HamburgerButtonVisibility
-        {
-            get { return (Visibility)GetValue(HamburgerButtonVisibilityProperty); }
-            set { SetValue(HamburgerButtonVisibilityProperty, value); }
-        }
-        public static readonly DependencyProperty HamburgerButtonVisibilityProperty =
-            DependencyProperty.Register("HamburgerButtonVisibility", typeof(Visibility),
-                typeof(HamburgerMenu), new PropertyMetadata(Visibility.Visible));
-
         public ObservableCollection<NavigationButtonInfo> SecondaryButtons
         {
             get
@@ -127,6 +122,11 @@ namespace Template10.Controls
         public static readonly DependencyProperty PaneWidthProperty =
             DependencyProperty.Register("PaneWidth", typeof(double),
                 typeof(HamburgerMenu), new PropertyMetadata(220));
+
+        private void NavButton_Loaded(object sender, RoutedEventArgs e)
+        {
+            UpdateButtons();
+        }
     }
 
     [ContentProperty(Name = nameof(Content))]

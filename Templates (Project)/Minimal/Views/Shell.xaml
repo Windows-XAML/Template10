@@ -8,10 +8,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" x:Name="ThisPage">
 
-    <Controls:HamburgerMenu x:Name="MyHamburgerMenu">
+    <Controls:HamburgerMenu x:Name="MyHamburgerMenu" AccentColor="#FF3E65EA">
         
         <Controls:HamburgerMenu.PrimaryButtons>
-            <Controls:NavigationButtonInfo PageType="views:MainPage">
+            <Controls:NavigationButtonInfo PageType="views:MainPage" ClearHistory="True">
                 <StackPanel Orientation="Horizontal">
                     <SymbolIcon Symbol="Home" Width="48" Height="48" />
                     <TextBlock Text="Home" VerticalAlignment="Center" Margin="12,0,0,0" />

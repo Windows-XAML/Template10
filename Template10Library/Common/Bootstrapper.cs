@@ -144,7 +144,7 @@ namespace Template10.Common
             global::Windows.UI.Core.SystemNavigationManager.GetForCurrentView().BackRequested += (s, args) =>
             {
                 // TODO: handled=true canisn't true at end of backstack
-                args.Handled = true;
+                args.Handled = !NavigationService.CanGoBack;
                 RaiseBackRequested();
             };
 
@@ -176,13 +176,15 @@ namespace Template10.Common
             {
                 Language = Windows.Globalization.ApplicationLanguages.Languages[0]
             };
-            frame.Navigated += (s, args) =>
+            Action updateShellBack = () =>
             {
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
-                    (ShowShellBackButton && frame.CanGoBack) 
-                        ? AppViewBackButtonVisibility.Visible 
-                        : AppViewBackButtonVisibility.Collapsed;
+                    (ShowShellBackButton && frame.CanGoBack)
+                    ? AppViewBackButtonVisibility.Visible
+                    : AppViewBackButtonVisibility.Collapsed;
             };
+            frame.RegisterPropertyChangedCallback(Frame.BackStackDepthProperty, (s, args) => updateShellBack());
+            frame.Navigated += (s, args) => updateShellBack();
             Window.Current.Content = frame;
 
             // next setup the default view

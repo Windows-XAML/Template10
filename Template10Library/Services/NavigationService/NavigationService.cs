@@ -204,7 +204,7 @@ namespace Template10.Services.NavigationService
 
         public bool CanGoForward { get { return FrameFacade.CanGoForward; } }
 
-        public void ClearHistory() { FrameFacade.SetNavigationState(EmptyNavigation); }
+        public void ClearHistory() { FrameFacade.Frame.BackStack.Clear(); }
 
         public void Resuming() { /* nothing */ }
 
