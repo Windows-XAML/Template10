@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel;
 using Template10.Common;
 using Windows.Foundation.Collections;
+using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Markup;
+using System;
 
 namespace Template10.Controls
 {
@@ -22,6 +24,16 @@ namespace Template10.Controls
                 Path = new PropertyPath(nameof(Background)),
                 Source = this
             });
+
+            // TODO
+            Action updateEllipse = () =>
+            {
+                var button = XamlHelper.AllChildren<Button>(this).FirstOrDefault(x => x.Name.Equals("MoreButton"));
+                if (button != null)
+                    button.Visibility = PrimaryCommands.Any() ? Visibility.Visible : Visibility.Collapsed;
+            };
+            PrimaryCommands.VectorChanged += (s, e) => updateEllipse();
+            Loaded += (s, e) => updateEllipse();
         }
 
         public IObservableVector<ICommandBarElement> PrimaryCommands
