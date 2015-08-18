@@ -12,15 +12,13 @@
     <UserControl.Resources>
         <ResourceDictionary>
 
-            <Color x:Key="HamburgerAccentColor">#FFD13438</Color>
-            <SolidColorBrush x:Key="HamburgerAccentBrush" Color="{StaticResource HamburgerAccentColor}" />
-            <Color x:Key="HamburgerForegroundColor">White</Color>
-            <SolidColorBrush x:Key="HamburgerForegroundBrush" Color="{StaticResource HamburgerForegroundColor}" />
+            <!-- defaults -->
+            <SolidColorBrush x:Key="HamburgerAccentBrush" Color="#FFD13438" />
+            <SolidColorBrush x:Key="HamburgerForegroundBrush" Color="White" />
 
             <Style TargetType="ToggleButton" x:Key="NavButtonStyle">
                 <Setter Property="Height" Value="48"/>
                 <Setter Property="MinWidth" Value="48"/>
-                <Setter Property="Foreground" Value="{StaticResource HamburgerForegroundBrush}"/>
                 <Setter Property="UseSystemFocusVisuals" Value="True"/>
                 <Setter Property="Template">
                     <Setter.Value>
@@ -89,12 +87,13 @@
                                     </VisualStateGroup>
                                 </VisualStateManager.VisualStateGroups>
                                 <Grid x:Name="CheckedOverlay" Visibility="Collapsed">
-                                    <Rectangle Fill="{StaticResource HamburgerAccentBrush}" />
+                                    <Rectangle Fill="{Binding AccentBrush, ElementName=ThisPage, Mode=OneWay, FallbackValue=DimGray}" />
                                     <Rectangle Fill="Black" Opacity=".4" />
                                 </Grid>
                                 <Rectangle x:Name="PressedOverlay" Fill="White" Opacity=".2" Visibility="Collapsed" />
                                 <Rectangle x:Name="HoverOverlay" Fill="White" Opacity=".1" Visibility="Collapsed" />
                                 <ContentPresenter Background="Transparent" FontSize="16" 
+                                        Foreground="{Binding ForegroundBrush, ElementName=ThisPage, Mode=OneWay}"
                                         VerticalAlignment="Stretch" HorizontalAlignment="Left"
                                         VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                                         x:Name="ContentPresenter" Content="{TemplateBinding Content}" />
@@ -113,7 +112,7 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
-                            <Grid x:Name="RootGrid" Background="{StaticResource HamburgerAccentBrush}">
+                            <Grid x:Name="RootGrid" Background="{Binding AccentBrush, Mode=OneWay, ElementName=ThisPage, FallbackValue=DimGray}">
                                 <VisualStateManager.VisualStateGroups>
                                     <VisualStateGroup x:Name="CommonStates">
                                         <VisualState x:Name="Normal">
@@ -142,7 +141,8 @@
                                 </VisualStateManager.VisualStateGroups>
                                 <Rectangle x:Name="PressedOverlay" Fill="White" Opacity=".2" Visibility="Collapsed" />
                                 <Rectangle x:Name="HoverOverlay" Fill="White" Opacity=".1" Visibility="Collapsed" />
-                                <FontIcon x:Name="ContentPresenter" Glyph="&#xE700;" Foreground="White" FontSize="20" />
+                                <FontIcon x:Name="ContentPresenter" Glyph="&#xE700;" FontSize="20"
+                                          Foreground="{Binding ForegroundBrush, ElementName=ThisPage, Mode=OneWay}" />
                             </Grid>
                         </ControlTemplate>
                     </Setter.Value>

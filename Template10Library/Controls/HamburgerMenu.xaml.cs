@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using Template10.Services.KeyboardService;
 using Template10.Services.NavigationService;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
+using Windows.UI.Xaml.Media;
 
 namespace Template10.Controls
 {
     [ContentProperty(Name = nameof(PrimaryButtons))]
-    public sealed partial class HamburgerMenu : UserControl
+    public sealed partial class HamburgerMenu : UserControl, INotifyPropertyChanged
     {
         public HamburgerMenu()
         {
@@ -62,10 +64,24 @@ namespace Template10.Controls
             }
         }
 
-        public Color AccentColor
+        public SolidColorBrush AccentBrush
         {
-            get { return (Color)this.Resources["HamburgerAccentColor"]; }
-            set { this.Resources["HamburgerAccentColor"] = value; this.ApplyTemplate(); }
+            get { return (SolidColorBrush)this.Resources["HamburgerAccentBrush"]; }
+            set
+            {
+                this.Resources["HamburgerAccentBrush"] = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AccentBrush)));
+            }
+        }
+
+        public SolidColorBrush ForegroundBrush
+        {
+            get { return (SolidColorBrush)this.Resources["HamburgerForegroundBrush"]; }
+            set
+            {
+                this.Resources["HamburgerForegroundBrush"] = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ForegroundBrush)));
+            }
         }
 
         public ObservableCollection<NavigationButtonInfo> PrimaryButtons
@@ -122,6 +138,8 @@ namespace Template10.Controls
         public static readonly DependencyProperty PaneWidthProperty =
             DependencyProperty.Register("PaneWidth", typeof(double),
                 typeof(HamburgerMenu), new PropertyMetadata(220));
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private void NavButton_Loaded(object sender, RoutedEventArgs e)
         {

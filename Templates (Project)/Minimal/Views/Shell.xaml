@@ -8,7 +8,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" x:Name="ThisPage">
 
-    <Controls:HamburgerMenu x:Name="MyHamburgerMenu" AccentColor="#FF3E65EA">
+    <Controls:HamburgerMenu x:Name="MyHamburgerMenu">
+        
+        <!--<Controls:HamburgerMenu.AccentBrush>
+            <SolidColorBrush Color="#FF3E65EA" />
+        </Controls:HamburgerMenu.AccentBrush>-->
         
         <Controls:HamburgerMenu.PrimaryButtons>
             <Controls:NavigationButtonInfo PageType="views:MainPage" ClearHistory="True">
