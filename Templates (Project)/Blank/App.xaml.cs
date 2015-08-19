@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Template10.Common;
 using Windows.ApplicationModel.Activation;
 
-namespace Template10
+namespace Blank
 {
-    sealed partial class App : Common.BootStrapper
+    sealed partial class App : Template10.Common.BootStrapper
     {
         public App()
         {
