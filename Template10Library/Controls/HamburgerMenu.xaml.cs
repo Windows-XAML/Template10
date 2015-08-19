@@ -18,7 +18,7 @@ namespace Template10.Controls
         public HamburgerMenu()
         {
             this.InitializeComponent();
-            new KeyboardService().AfterWindowZGesture = () => { HamburgerCommand.Execute(null); };
+            // new KeyboardService().AfterWindowZGesture = () => { HamburgerCommand.Execute(null); };
         }
 
         void UpdateButtons(NavigatedEventArgs e) { UpdateButtons(e.PageType); }
@@ -29,14 +29,12 @@ namespace Template10.Controls
             foreach (var button in Common.XamlHelper.AllChildren<RadioButton>(this))
             {
                 var info = button.CommandParameter as NavigationButtonInfo;
-                if (info == null)
-                    continue;
-                if (info.PageType == null)
+                if (info?.PageType == null)
                     continue;
                 button.IsChecked = info.PageType.Equals(type);
                 button.IsEnabled = !button.IsChecked.Value;
             }
-            ShellSplitView.IsPaneOpen = false;
+            PaneWidth = !ShellSplitView.IsPaneOpen ? ShellSplitView.CompactPaneLength : ShellSplitView.OpenPaneLength;
         }
 
         Mvvm.DelegateCommand _hamburgerCommand;
@@ -109,9 +107,7 @@ namespace Template10.Controls
                 _navigationService = value;
                 ShellSplitView.Content = NavigationService.FrameFacade.Frame;
                 NavigationService.FrameFacade.Navigated += (s, e) => UpdateButtons(e);
-                ShellSplitView.RegisterPropertyChangedCallback(SplitView.IsPaneOpenProperty, (s, e) =>
-                { PaneWidth = !ShellSplitView.IsPaneOpen ? ShellSplitView.CompactPaneLength : ShellSplitView.OpenPaneLength; });
-                PaneWidth = !ShellSplitView.IsPaneOpen ? ShellSplitView.CompactPaneLength : ShellSplitView.OpenPaneLength;
+                ShellSplitView.RegisterPropertyChangedCallback(SplitView.IsPaneOpenProperty, (s, e) => UpdateButtons());
                 UpdateButtons();
             }
         }

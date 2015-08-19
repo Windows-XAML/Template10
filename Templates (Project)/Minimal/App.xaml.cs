@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Template10;
+using Template10.Common;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace Minimal
 {
@@ -20,7 +22,11 @@ namespace Minimal
         public override Task OnInitializeAsync(IActivatedEventArgs args)
         {
             if (args.PreviousExecutionState == ApplicationExecutionState.Terminated)
-                Window.Current.Content = new Views.Shell(NavigationService);
+            {
+                var nav = new Template10.Services.NavigationService.NavigationService(new Frame());
+                Template10.Common.WindowWrapper.Current().NavigationServices.Add(nav);
+                Window.Current.Content = new Views.Shell(nav);
+            }
             return base.OnInitializeAsync(args);
         }
 

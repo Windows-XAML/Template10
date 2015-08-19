@@ -135,11 +135,11 @@ namespace Template10.Common
         // this is private because it is a specialized prelude to OnStartAsync
         private async void InternalLaunchAsync(ILaunchActivatedEventArgs e)
         {
-            // create the root frame
-            var defaultFrame = InitializeFrame(e);
-
             // the user may override to set custom content
             await OnInitializeAsync(e);
+
+            // create the root frame
+            var defaultFrame = InitializeFrame(e);
 
             // okay, now handle launch
             switch (e.PreviousExecutionState)
@@ -199,10 +199,6 @@ namespace Template10.Common
         // this is private because there's no reason for the developer to call this
         private Frame InitializeFrame(ILaunchActivatedEventArgs e)
         {
-            // do not recreate the frame
-            if (Window.Current.Content is Frame)
-                return Window.Current.Content as Frame;
-
             // first show the splash 
             var splashScreen = default(UIElement);
             if (SplashFactory != null)
@@ -217,7 +213,7 @@ namespace Template10.Common
             }
 
             // in any case, next create a new, default frame
-            var defaultFrame = new Frame
+            var defaultFrame = (Window.Current.Content as Frame) ?? new Frame
             {
                 Language = Windows.Globalization.ApplicationLanguages.Languages[0]
             };
