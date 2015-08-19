@@ -132,7 +132,6 @@
     <Compile Include="Converters\ValueWhenConverter.cs" />
     <Compile Include="Mvvm\BindableBase.cs" />
     <Compile Include="Mvvm\DelegateCommand.cs" />
-    <Compile Include="Mvvm\IBindable.cs" />
     <Compile Include="Mvvm\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\KeyboardService\KeyboardEventArgs.cs" />

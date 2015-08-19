@@ -6,7 +6,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Services.NavigationService
 {
-    public interface INavigable: IBindable
+    public interface INavigable
     {
         void OnNavigatedTo(object parameter, NavigationMode mode, IDictionary<string, object> state);
         Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending);

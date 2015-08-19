@@ -10,18 +10,15 @@ namespace Template10.Common
         public static List<T> AllChildren<T>(DependencyObject parent) where T : Control
         {
             var list = new List<T>();
-            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+            var count = VisualTreeHelper.GetChildrenCount(parent);
+            for (int i = 0; i < count; i++)
             {
                 var child = VisualTreeHelper.GetChild(parent, i);
                 if (child is T)
-                {
                     list.Add(child as T);
-                    continue;
-                }
                 list.AddRange(AllChildren<T>(child));
             }
             return list;
         }
-
     }
 }

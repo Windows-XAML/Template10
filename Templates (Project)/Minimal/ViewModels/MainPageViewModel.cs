@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Navigation;
 
-namespace Template10.ViewModels
+namespace Minimal.ViewModels
 {
-    public class MainPageViewModel : Mvvm.ViewModelBase
+    public class MainPageViewModel : Template10.Mvvm.ViewModelBase
     {
         public MainPageViewModel()
         {

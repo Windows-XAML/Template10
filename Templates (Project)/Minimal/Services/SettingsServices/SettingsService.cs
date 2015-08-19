@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Template10.Services.SettingsServices
+namespace Minimal.Services.SettingsServices
 {
     public class SettingsService
     {

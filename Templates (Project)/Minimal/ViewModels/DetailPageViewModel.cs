@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Navigation;
 
-namespace Template10.ViewModels
+namespace Minimal.ViewModels
 {
-    public class DetailPageViewModel : Mvvm.ViewModelBase
+    public class DetailPageViewModel : Template10.Mvvm.ViewModelBase
     {
         public DetailPageViewModel()
         {

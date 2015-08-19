@@ -1,7 +1,7 @@
-﻿using Template10.ViewModels;
+﻿using Minimal.ViewModels;
 using Windows.UI.Xaml.Controls;
 
-namespace Template10.Views
+namespace Minimal.Views
 {
     public sealed partial class SettingsPage : Page
     {

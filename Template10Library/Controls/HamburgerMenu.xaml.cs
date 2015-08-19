@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using Template10.Services.KeyboardService;
 using Template10.Services.NavigationService;
 using Windows.UI;
@@ -39,15 +40,15 @@ namespace Template10.Controls
         }
 
         Mvvm.DelegateCommand _hamburgerCommand;
-        public Mvvm.DelegateCommand HamburgerCommand { get { return _hamburgerCommand ?? (_hamburgerCommand = new Mvvm.DelegateCommand(ExecuteHamburger)); } }
-        private void ExecuteHamburger()
+        internal Mvvm.DelegateCommand HamburgerCommand { get { return _hamburgerCommand ?? (_hamburgerCommand = new Mvvm.DelegateCommand(ExecuteHamburger)); } }
+        void ExecuteHamburger()
         {
             ShellSplitView.IsPaneOpen = !ShellSplitView.IsPaneOpen;
         }
 
         Mvvm.DelegateCommand<NavigationButtonInfo> _navCommand;
         public Mvvm.DelegateCommand<NavigationButtonInfo> NavCommand { get { return _navCommand ?? (_navCommand = new Mvvm.DelegateCommand<NavigationButtonInfo>(ExecuteNav)); } }
-        private void ExecuteNav(NavigationButtonInfo commandInfo)
+        void ExecuteNav(NavigationButtonInfo commandInfo)
         {
             if (commandInfo == null)
                 throw new NullReferenceException("CommandParameter is not set");
@@ -141,7 +142,7 @@ namespace Template10.Controls
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void NavButton_Loaded(object sender, RoutedEventArgs e)
+        void NavButton_Loaded(object sender, RoutedEventArgs e)
         {
             UpdateButtons();
         }

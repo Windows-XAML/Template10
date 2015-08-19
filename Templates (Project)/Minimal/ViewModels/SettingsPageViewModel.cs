@@ -1,6 +1,7 @@
-﻿using Template10.Mvvm;
+﻿using System;
+using Template10.Mvvm;
 
-namespace Template10.ViewModels
+namespace Minimal.ViewModels
 {
     public class SettingsPageViewModel : ViewModelBase
     {
@@ -17,6 +18,18 @@ namespace Template10.ViewModels
         {
             get { return _settings.Something; }
             set { _settings.Something = value; base.RaisePropertyChanged(); }
+        }
+
+        public Uri Logo { get { return Windows.ApplicationModel.Package.Current.Logo; } }
+        public string DisplayName { get { return Windows.ApplicationModel.Package.Current.DisplayName; } }
+        public string Publisher { get { return Windows.ApplicationModel.Package.Current.PublisherDisplayName; } }
+        public string Version
+        {
+            get
+            {
+                var ver = Windows.ApplicationModel.Package.Current.Id.Version;
+                return ver.Major.ToString() + "." + ver.Minor.ToString() + "." + ver.Build.ToString() + "." + ver.Revision.ToString();
+            }
         }
     }
 }

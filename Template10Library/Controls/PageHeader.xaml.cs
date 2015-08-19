@@ -28,12 +28,18 @@ namespace Template10.Controls
             // TODO
             Action updateEllipse = () =>
             {
-                var button = XamlHelper.AllChildren<Button>(this).FirstOrDefault(x => x.Name.Equals("MoreButton"));
+                var controls = XamlHelper.AllChildren<Control>(HeaderCommandBar);
+                var buttons = controls.OfType<Button>();
+                var button = buttons.FirstOrDefault(x => x.Name.Equals("MoreButton"));
                 if (button != null)
-                    button.Visibility = PrimaryCommands.Any() ? Visibility.Visible : Visibility.Collapsed;
+                {
+                    var count = HeaderCommandBar.PrimaryCommands.OfType<Control>().Count(x => x.Visibility.Equals(Visibility.Visible));
+                    count += HeaderCommandBar.SecondaryCommands.OfType<Control>().Count(x => x.Visibility.Equals(Visibility.Visible));
+                    button.Visibility = (count > 0) ? Visibility.Visible : Visibility.Collapsed;
+                }
             };
             PrimaryCommands.VectorChanged += (s, e) => updateEllipse();
-            Loaded += (s, e) => updateEllipse();
+            HeaderCommandBar.Loaded += (s, e) => updateEllipse();
         }
 
         public IObservableVector<ICommandBarElement> PrimaryCommands
