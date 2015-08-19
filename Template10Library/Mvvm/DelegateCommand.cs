@@ -5,7 +5,7 @@ namespace Template10.Mvvm
     // http://codepaste.net/jgxazh
     using System.Diagnostics;
 
-    class DelegateCommand : System.Windows.Input.ICommand
+    public class DelegateCommand : System.Windows.Input.ICommand
     {
         private readonly Action _execute;
         private readonly Func<bool> _canExecute;

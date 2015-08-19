@@ -213,36 +213,46 @@ namespace Template10.Common
             }
 
             // in any case, next create a new, default frame
-            var defaultFrame = (Window.Current.Content as Frame) ?? new Frame
-            {
-                Language = Windows.Globalization.ApplicationLanguages.Languages[0]
-            };
+            var defaultFrame = FrameFactory(true).Frame;
 
             // set default frame as primary, default visual
             Window.Current.Content = defaultFrame;
 
-            // next setup the default view
-            var navigationService = new Services.NavigationService.NavigationService(defaultFrame);
+            // finally return our new frame
+            return defaultFrame;
+        }
+
+        protected Services.NavigationService.NavigationService FrameFactory(bool setupShellBackButtonForDefaultFrame)
+        {
+            var frame = (Window.Current.Content as Frame) ?? new Frame
+            {
+                Language = Windows.Globalization.ApplicationLanguages.Languages[0]
+            };
+            var navigationService = new Services.NavigationService.NavigationService(frame);
             WindowWrapper.Current().NavigationServices.Add(navigationService);
 
-            // this anon method will be used to refresh the shell back button
-            Action updateShellBack = () =>
+            if (setupShellBackButtonForDefaultFrame)
             {
-                // show the shell back only if there is anywhere to go in the default frame
-                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
-                    (ShowShellBackButton && NavigationService.Frame.CanGoBack)
-                        ? AppViewBackButtonVisibility.Visible
-                        : AppViewBackButtonVisibility.Collapsed;
-            };
+                // this anon method will be used to refresh the shell back button
+                Action updateShellBack = () =>
+                {
+                    // show the shell back only if there is anywhere to go in the default frame
+                    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+                            (ShowShellBackButton && navigationService.Frame.CanGoBack)
+                                ? AppViewBackButtonVisibility.Visible
+                                : AppViewBackButtonVisibility.Collapsed;
+                };
 
-            // update shell back when backstack changes
-            // only the default frame in this case because secondary should not dismiss the app
-            defaultFrame.RegisterPropertyChangedCallback(Frame.BackStackDepthProperty, (s, args) => updateShellBack());
+                // update shell back when backstack changes
+                // only the default frame in this case because secondary should not dismiss the app
+                frame.RegisterPropertyChangedCallback(Frame.BackStackDepthProperty, (s, args) => updateShellBack());
 
-            // update shell back when navigation occurs
-            // only the default frame in this case because secondary should not dismiss the app
-            defaultFrame.Navigated += (s, args) => updateShellBack();
+                // update shell back when navigation occurs
+                // only the default frame in this case because secondary should not dismiss the app
+                frame.Navigated += (s, args) => updateShellBack();
+            }
 
+            // this is always okayy to check, default or not
             // expire any state (based on expiry)
             DateTime cacheDate;
             // default the cache age to very fresh if not known
@@ -264,8 +274,7 @@ namespace Template10.Common
                 // no date, that's okay
             }
 
-            // finally return our new frame
-            return defaultFrame;
+            return navigationService;
         }
 
         /// <summary>

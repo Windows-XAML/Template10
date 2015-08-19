@@ -18,7 +18,7 @@ namespace Template10.Controls
         public HamburgerMenu()
         {
             this.InitializeComponent();
-            // new KeyboardService().AfterWindowZGesture = () => { HamburgerCommand.Execute(null); };
+            new KeyboardService().AfterWindowZGesture = () => { HamburgerCommand.Execute(null); };
         }
 
         void UpdateButtons(NavigatedEventArgs e) { UpdateButtons(e.PageType); }

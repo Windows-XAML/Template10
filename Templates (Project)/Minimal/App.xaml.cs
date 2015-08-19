@@ -23,9 +23,7 @@ namespace Minimal
         {
             if (args.PreviousExecutionState == ApplicationExecutionState.Terminated)
             {
-                var nav = new Template10.Services.NavigationService.NavigationService(new Frame());
-                Template10.Common.WindowWrapper.Current().NavigationServices.Add(nav);
-                Window.Current.Content = new Views.Shell(nav);
+                Window.Current.Content = new Views.Shell(this.FrameFactory(true));
             }
             return base.OnInitializeAsync(args);
         }
@@ -35,16 +33,16 @@ namespace Minimal
         {
             Window.Current.Content = new Views.Shell(NavigationService);
 
-            var largs = args as ILaunchActivatedEventArgs;
-            if (largs?.TileId != null && largs?.TileId != "App")
+            var launchArgs = args as ILaunchActivatedEventArgs;
+            if ((launchArgs?.TileId ?? "App") == "App")
             {
-                // launched via a secondary tile
-                NavigationService.Navigate(typeof(Views.DetailPage), largs.Arguments);
+                // launched via primary tile or toast
+                NavigationService.Navigate(typeof(Views.MainPage));
             }
             else
             {
-                // launched via other/primary method
-                NavigationService.Navigate(typeof(Views.MainPage));
+                // launched via a secondary tile
+                NavigationService.Navigate(typeof(Views.DetailPage), launchArgs.Arguments);
             }
             return Task.FromResult<object>(null);
         }
