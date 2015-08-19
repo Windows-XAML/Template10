@@ -21,10 +21,7 @@ namespace Minimal
         // runs even if restored from state
         public override Task OnInitializeAsync(IActivatedEventArgs args)
         {
-            if (args.PreviousExecutionState == ApplicationExecutionState.Terminated)
-            {
-                Window.Current.Content = new Views.Shell(this.FrameFactory(true));
-            }
+            Window.Current.Content = new Views.Shell(this.FrameFactory(true));
             return base.OnInitializeAsync(args);
         }
 

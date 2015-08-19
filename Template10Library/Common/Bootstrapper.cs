@@ -102,7 +102,10 @@ namespace Template10.Common
         private async Task InternalActivatedAsync(IActivatedEventArgs e)
         {
             // sometimes activate requires a frame to be built
-            InitializeFrame(e as ILaunchActivatedEventArgs);
+            if (Window.Current.Content == null)
+            {
+                await InitializeFrameAsync(e as ILaunchActivatedEventArgs);
+            }
 
             // onstart is shared with activate and launch
             await OnStartAsync(StartKind.Activate, e);
@@ -135,11 +138,7 @@ namespace Template10.Common
         // this is private because it is a specialized prelude to OnStartAsync
         private async void InternalLaunchAsync(ILaunchActivatedEventArgs e)
         {
-            // the user may override to set custom content
-            await OnInitializeAsync(e);
-
-            // create the root frame
-            var defaultFrame = InitializeFrame(e);
+            await InitializeFrameAsync(e);
 
             // okay, now handle launch
             switch (e.PreviousExecutionState)
@@ -157,10 +156,9 @@ namespace Template10.Common
                     {
                         // restore if you need to/can do
                         // restore if there is no TileId or if the app is luanched via the primary tile
-                        // TODO: is it actually possible to have a TileID of null? Don't think so.
-                        if (e.TileId == null || e.TileId == "App")
+                        if ((e.TileId ?? "App") == "App")
                         {
-                            // In the event that the cache ahs expired, attempting to restore
+                            // In the event that the cache has expired, attempting to restore
                             // from state will fail because of missing values. This is by design.
                             var restored = NavigationService.RestoreSavedNavigation();
                             if (!restored)
@@ -197,34 +195,29 @@ namespace Template10.Common
         }
 
         // this is private because there's no reason for the developer to call this
-        private Frame InitializeFrame(ILaunchActivatedEventArgs e)
+        private async Task InitializeFrameAsync(ILaunchActivatedEventArgs e)
         {
             // first show the splash 
-            var splashScreen = default(UIElement);
+            Page splash = null;
             if (SplashFactory != null)
             {
-                splashScreen = SplashFactory(e.SplashScreen);
-                Window.Current.Content = splashScreen;
+                Window.Current.Content = splash = SplashFactory(e.SplashScreen);
                 Window.Current.Activate();
             }
-            else
+
+            await OnInitializeAsync(e);
+
+            if (Window.Current.Content == splash || Window.Current.Content == null)
             {
-                // if there is no SplashScreen then the default/static splash will show.
+                // build the default frame
+                var result = FrameFactory(true);
+                Window.Current.Content = result.Frame;
             }
-
-            // in any case, next create a new, default frame
-            var defaultFrame = FrameFactory(true).Frame;
-
-            // set default frame as primary, default visual
-            Window.Current.Content = defaultFrame;
-
-            // finally return our new frame
-            return defaultFrame;
         }
 
         protected Services.NavigationService.NavigationService FrameFactory(bool setupShellBackButtonForDefaultFrame)
         {
-            var frame = (Window.Current.Content as Frame) ?? new Frame
+            var frame = new Frame
             {
                 Language = Windows.Globalization.ApplicationLanguages.Languages[0]
             };
@@ -238,9 +231,9 @@ namespace Template10.Common
                 {
                     // show the shell back only if there is anywhere to go in the default frame
                     SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
-                            (ShowShellBackButton && navigationService.Frame.CanGoBack)
-                                ? AppViewBackButtonVisibility.Visible
-                                : AppViewBackButtonVisibility.Collapsed;
+                        (ShowShellBackButton && navigationService.Frame.CanGoBack)
+                            ? AppViewBackButtonVisibility.Visible
+                            : AppViewBackButtonVisibility.Collapsed;
                 };
 
                 // update shell back when backstack changes
@@ -252,7 +245,7 @@ namespace Template10.Common
                 frame.Navigated += (s, args) => updateShellBack();
             }
 
-            // this is always okayy to check, default or not
+            // this is always okay to check, default or not
             // expire any state (based on expiry)
             DateTime cacheDate;
             // default the cache age to very fresh if not known
