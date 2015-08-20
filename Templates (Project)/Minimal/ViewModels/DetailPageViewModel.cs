@@ -8,7 +8,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Minimal.ViewModels
 {
-    public class DetailPageViewModel : Template10.Mvvm.ViewModelBase
+    public class DetailPageViewModel : Minimal.Mvvm.ViewModelBase
     {
         public DetailPageViewModel()
         {

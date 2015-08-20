@@ -6,7 +6,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Minimal.ViewModels
 {
-    public class MainPageViewModel : Template10.Mvvm.ViewModelBase
+    public class MainPageViewModel : Minimal.Mvvm.ViewModelBase
     {
         public MainPageViewModel()
         {
