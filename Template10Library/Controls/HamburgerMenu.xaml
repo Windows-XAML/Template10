@@ -13,8 +13,12 @@
         <ResourceDictionary>
 
             <!-- defaults -->
-            <SolidColorBrush x:Key="HamburgerAccentBrush" Color="#FFD13438" />
-            <SolidColorBrush x:Key="HamburgerForegroundBrush" Color="White" />
+            <SolidColorBrush x:Name="HamburgerBackgroundBrush" Color="#FFD13438" />
+            <SolidColorBrush x:Name="HamburgerForegroundBrush" Color="White" />
+            <SolidColorBrush x:Name="NavButtonBackgroundBrush" Color="#FFD13438" />
+            <SolidColorBrush x:Name="NavButtonForegroundBrush" Color="White" />
+            <SolidColorBrush x:Name="NavAreaBackgroundBrush" Color="White" />
+            <SolidColorBrush x:Name="SecondaryBorderBrush" Color="White" />
 
             <Style TargetType="ToggleButton" x:Key="NavButtonStyle">
                 <Setter Property="Height" Value="48"/>
@@ -87,13 +91,13 @@
                                     </VisualStateGroup>
                                 </VisualStateManager.VisualStateGroups>
                                 <Grid x:Name="CheckedOverlay" Visibility="Collapsed">
-                                    <Rectangle Fill="{Binding AccentBrush, ElementName=ThisPage, Mode=OneWay, FallbackValue=DimGray}" />
+                                    <Rectangle Fill="{Binding NavButtonBackground, ElementName=ThisPage, FallbackValue=DimGray}" />
                                     <Rectangle Fill="Black" Opacity=".4" />
                                 </Grid>
                                 <Rectangle x:Name="PressedOverlay" Fill="White" Opacity=".2" Visibility="Collapsed" />
                                 <Rectangle x:Name="HoverOverlay" Fill="White" Opacity=".1" Visibility="Collapsed" />
                                 <ContentPresenter Background="Transparent" FontSize="16" 
-                                        Foreground="{Binding ForegroundBrush, ElementName=ThisPage, Mode=OneWay}"
+                                        Foreground="{Binding NavButtonForeground, ElementName=ThisPage, FallbackValue=White}"
                                         VerticalAlignment="Stretch" HorizontalAlignment="Left"
                                         VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                                         x:Name="ContentPresenter" Content="{TemplateBinding Content}" />
@@ -112,7 +116,7 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
-                            <Grid x:Name="RootGrid" Background="{Binding AccentBrush, Mode=OneWay, ElementName=ThisPage, FallbackValue=DimGray}">
+                            <Grid x:Name="RootGrid" Background="{Binding HamburgerBackground, ElementName=ThisPage, FallbackValue=Navy}">
                                 <VisualStateManager.VisualStateGroups>
                                     <VisualStateGroup x:Name="CommonStates">
                                         <VisualState x:Name="Normal">
@@ -130,19 +134,13 @@
                                                 <Setter Target="PressedOverlay.Visibility" Value="Visible" />
                                             </VisualState.Setters>
                                         </VisualState>
-                                        <VisualState x:Name="Disabled">
-                                            <VisualState.Setters>
-                                                <Setter Target="RootGrid.Background" Value="{ThemeResource SystemControlBackgroundBaseLowBrush}" />
-                                                <Setter Target="ContentPresenter.BorderBrush" Value="{ThemeResource SystemControlDisabledBaseLowBrush}" />
-                                                <Setter Target="ContentPresenter.Foreground" Value="{ThemeResource SystemControlDisabledTransparentBrush}" />
-                                            </VisualState.Setters>
-                                        </VisualState>
+                                        <VisualState x:Name="Disabled"/>
                                     </VisualStateGroup>
                                 </VisualStateManager.VisualStateGroups>
                                 <Rectangle x:Name="PressedOverlay" Fill="White" Opacity=".2" Visibility="Collapsed" />
                                 <Rectangle x:Name="HoverOverlay" Fill="White" Opacity=".1" Visibility="Collapsed" />
-                                <FontIcon x:Name="ContentPresenter" Glyph="&#xE700;" FontSize="20"
-                                          Foreground="{Binding ForegroundBrush, ElementName=ThisPage, Mode=OneWay}" />
+                                <FontIcon x:Name="ContentPresenter" Glyph="&#xE700;" FontSize="20" 
+                                          Foreground="{Binding HamburgerForeground, ElementName=ThisPage, FallbackValue=White}" />
                             </Grid>
                         </ControlTemplate>
                     </Setter.Value>
@@ -175,7 +173,7 @@
             <VisualStateGroup x:Name="VisualStateGroup">
                 <VisualState x:Name="VisualStateNarrow">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="0" />
+                        <AdaptiveTrigger x:Name="VisualStateNarrowTrigger" MinWindowWidth="0" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="ShellSplitView.DisplayMode" Value="Overlay" />
@@ -193,7 +191,7 @@
                 </VisualState>
                 <VisualState x:Name="VisualStateWide">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="1024" />
+                        <AdaptiveTrigger x:Name="VisualStateWideTrigger" MinWindowWidth="1024" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="ShellSplitView.DisplayMode" Value="Inline" />
@@ -235,11 +233,12 @@
 
                     </ScrollViewer>
 
-                    <ItemsControl ItemsSource="{Binding SecondaryButtons, ElementName=ThisPage}"
-                            ItemTemplate="{StaticResource NavButtonTemplate}" Grid.Row="1">
+                    <ItemsControl Grid.Row="1"
+                            ItemsSource="{Binding SecondaryButtons, ElementName=ThisPage}"
+                            ItemTemplate="{StaticResource NavButtonTemplate}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <StackPanel />
+                                <StackPanel BorderBrush="DimGray" BorderThickness="0,1,0,0" />
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
@@ -248,7 +247,8 @@
             </SplitView.Pane>
         </SplitView>
 
-        <Button x:Name="HamburgerButton" Style="{StaticResource HamburgerButtonStyle}" Command="{x:Bind HamburgerCommand}">
+        <Button x:Name="HamburgerButton" 
+                Style="{StaticResource HamburgerButtonStyle}" Command="{x:Bind HamburgerCommand}">
             <StackPanel Orientation="Horizontal">
                 <FontIcon Glyph="&#xE700;" FontSize="20" />
             </StackPanel>

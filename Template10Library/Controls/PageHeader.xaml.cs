@@ -7,6 +7,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Markup;
 using System;
+using Windows.UI.Xaml.Media;
 
 namespace Template10.Controls
 {
@@ -41,6 +42,62 @@ namespace Template10.Controls
             PrimaryCommands.VectorChanged += (s, e) => updateEllipse();
             HeaderCommandBar.Loaded += (s, e) => updateEllipse();
         }
+
+        #region VisualStateValues
+
+        public double VisualStateNarrowMinWidth
+        {
+            get { return VisualStateNarrowTrigger.MinWindowWidth; }
+            set { SetValue(VisualStateNarrowMinWidthProperty, VisualStateNarrowTrigger.MinWindowWidth = value); }
+        }
+        public static readonly DependencyProperty VisualStateNarrowMinWidthProperty =
+            DependencyProperty.Register("VisualStateNarrowMinWidth", typeof(double), typeof(PageHeader), new PropertyMetadata(null, (d, e) => { (d as PageHeader).VisualStateNarrowMinWidth = (double)e.NewValue; }));
+        public double VisualStateMediumMinWidth
+        {
+            get { return VisualStateMediumTrigger.MinWindowWidth; }
+            set { SetValue(VisualStateMediumMinWidthProperty, VisualStateMediumTrigger.MinWindowWidth = value); }
+        }
+        public static readonly DependencyProperty VisualStateMediumMinWidthProperty =
+            DependencyProperty.Register("VisualStateMediumMinWidth", typeof(double), typeof(PageHeader), new PropertyMetadata(null, (d, e) => { (d as PageHeader).VisualStateMediumMinWidth = (double)e.NewValue; }));
+        public double VisualStateWideMinWidth
+        {
+            get { return VisualStateWideTrigger.MinWindowWidth; }
+            set { SetValue(VisualStateWideMinWidthProperty, VisualStateWideTrigger.MinWindowWidth = value); }
+        }
+        public static readonly DependencyProperty VisualStateWideMinWidthProperty =
+            DependencyProperty.Register("VisualStateWideMinWidth", typeof(double), typeof(PageHeader), new PropertyMetadata(null, (d, e) => { (d as PageHeader).VisualStateWideMinWidth = (double)e.NewValue; }));
+
+        #endregion
+
+        #region Styles
+
+        public SolidColorBrush HeaderBackground
+        {
+            get { return HeaderBackgroundBrush; }
+            set
+            {
+                SetValue(HeaderBackgroundProperty, HeaderBackgroundBrush = value);
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(HeaderBackground)));
+            }
+        }
+        public static readonly DependencyProperty HeaderBackgroundProperty =
+             DependencyProperty.Register("HeaderBackground", typeof(SolidColorBrush),
+                 typeof(PageHeader), new PropertyMetadata(null, (d, e) => { (d as PageHeader).HeaderBackground = (SolidColorBrush)e.NewValue; }));
+
+        public SolidColorBrush HeaderForeground
+        {
+            get { return HeaderForegroundBrush; }
+            set
+            {
+                SetValue(HeaderForegroundProperty, HeaderForegroundBrush = value);
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(HeaderForeground)));
+            }
+        }
+        public static readonly DependencyProperty HeaderForegroundProperty =
+              DependencyProperty.Register("HeaderForeground", typeof(SolidColorBrush),
+                  typeof(PageHeader), new PropertyMetadata(null, (d, e) => { (d as PageHeader).HeaderForeground = (SolidColorBrush)e.NewValue; }));
+
+        #endregion
 
         public IObservableVector<ICommandBarElement> PrimaryCommands
         {
