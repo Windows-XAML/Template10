@@ -11,8 +11,11 @@ namespace Template10.Common
 {
     public abstract class BootStrapper : Application
     {
+        public static new BootStrapper Current { get; private set; }
+
         public BootStrapper()
         {
+            Current = this;
             Resuming += (s, e) => { OnResuming(s, e); };
             Suspending += async (s, e) =>
             {
@@ -43,7 +46,7 @@ namespace Template10.Common
         /// it is only a helper property to provide the NavigatioNService for
         /// the first Frame ultimately aggregated in the static WindowWrapper class.
         /// </summary>
-        protected Services.NavigationService.NavigationService NavigationService
+        public Services.NavigationService.NavigationService NavigationService
         {
             // because it is protected, we can safely assume it will ref the first view
             get { return WindowWrapper.ActiveWrappers.First().NavigationServices.First(); }
@@ -324,23 +327,13 @@ namespace Template10.Common
 
             if (setupShellBackButtonForDefaultFrame)
             {
-                // this anon method will be used to refresh the shell back button
-                Action updateShellBack = () =>
-                {
-                    // show the shell back only if there is anywhere to go in the default frame
-                    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
-                        (ShowShellBackButton && navigationService.Frame.CanGoBack)
-                            ? AppViewBackButtonVisibility.Visible
-                            : AppViewBackButtonVisibility.Collapsed;
-                };
-
                 // update shell back when backstack changes
                 // only the default frame in this case because secondary should not dismiss the app
-                frame.RegisterPropertyChangedCallback(Frame.BackStackDepthProperty, (s, args) => updateShellBack());
+                frame.RegisterPropertyChangedCallback(Frame.BackStackDepthProperty, (s, args) => UpdateShellBackButton());
 
                 // update shell back when navigation occurs
                 // only the default frame in this case because secondary should not dismiss the app
-                frame.Navigated += (s, args) => updateShellBack();
+                frame.Navigated += (s, args) => UpdateShellBackButton();
             }
 
             // this is always okay to check, default or not
@@ -369,6 +362,15 @@ namespace Template10.Common
         }
 
         public const string DefaultTileID = "App";
+        public void UpdateShellBackButton()
+        {
+            // show the shell back only if there is anywhere to go in the default frame
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+                (ShowShellBackButton && NavigationService.Frame.CanGoBack)
+                    ? AppViewBackButtonVisibility.Visible
+                    : AppViewBackButtonVisibility.Collapsed;
+        }
+
         public enum AdditionalKinds { Primary, Toast, SecondaryTile, Other }
 
         /// <summary>

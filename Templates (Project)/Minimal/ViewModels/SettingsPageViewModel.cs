@@ -10,15 +10,24 @@ namespace Minimal.ViewModels
         public SettingsPageViewModel()
         {
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
+            {
+                // designtime data
                 return;
-            _settings = new Services.SettingsServices.SettingsService();
+            }
+            _settings = Services.SettingsServices.SettingsService.Instance;
         }
 
-        public bool Something
+        #region Settings
+
+        public bool UseShellBackButton
         {
-            get { return _settings.Something; }
-            set { _settings.Something = value; base.RaisePropertyChanged(); }
+            get { return _settings.UseShellBackButton; }
+            set { _settings.UseShellBackButton = value; base.RaisePropertyChanged(); }
         }
+
+        #endregion
+
+        #region About
 
         public Uri Logo { get { return Windows.ApplicationModel.Package.Current.Logo; } }
         public string DisplayName { get { return Windows.ApplicationModel.Package.Current.DisplayName; } }
@@ -31,5 +40,7 @@ namespace Minimal.ViewModels
                 return ver.Major.ToString() + "." + ver.Minor.ToString() + "." + ver.Build.ToString() + "." + ver.Revision.ToString();
             }
         }
+
+        #endregion  
     }
 }

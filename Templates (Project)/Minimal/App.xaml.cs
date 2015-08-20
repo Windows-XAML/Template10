@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Minimal.Services.SettingsServices;
+using System;
 using System.Threading.Tasks;
 using Template10;
 using Template10.Common;
@@ -15,8 +16,8 @@ namespace Minimal
         public App()
         {
             InitializeComponent();
-            ShowShellBackButton = true;
             CacheMaxDuration = TimeSpan.FromDays(2);
+            ShowShellBackButton = SettingsService.Instance.UseShellBackButton;
             SplashFactory = (e) => { return new Views.Splash(e); };
         }
 

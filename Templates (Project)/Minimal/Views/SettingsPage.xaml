@@ -32,7 +32,10 @@
         <Pivot Grid.Row="1">
             <PivotItem Header="Settings">
                 <StackPanel VerticalAlignment="Top">
-                    <ToggleSwitch Header="Something" IsOn="{Binding Something, Mode=TwoWay}" />
+                    <ToggleSwitch Header="Use shell-drawn back button" 
+                                  OnContent="Back button in titlebar or taskbar"
+                                  OffContent="Back button in page header"
+                                  IsOn="{Binding UseShellBackButton, Mode=TwoWay}" />
                 </StackPanel>
             </PivotItem>
             <PivotItem Header="Privacy statement" Padding="0">

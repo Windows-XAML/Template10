@@ -12,10 +12,11 @@ namespace Minimal.ViewModels
     {
         public DetailPageViewModel()
         {
-            // designtime data
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
             {
+                // designtime data
                 this.Value = "Designtime value";
+                return;
             }
         }
 

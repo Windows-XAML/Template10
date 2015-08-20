@@ -118,10 +118,8 @@ namespace Template10.Services.NavigationService
 
         public void Refresh()
         {
-            var page = CurrentPageType;
-            var param = CurrentPageParam;
-            Frame.BackStack.Remove(Frame.BackStack.Last());
-            Navigate(page, param);
+            var state = Frame.GetNavigationState();
+            Frame.SetNavigationState(state);
         }
 
         public bool CanGoForward { get { return Frame.CanGoForward; } }

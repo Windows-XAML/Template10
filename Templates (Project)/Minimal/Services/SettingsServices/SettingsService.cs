@@ -8,17 +8,31 @@ namespace Minimal.Services.SettingsServices
 {
     public class SettingsService
     {
+        public static SettingsService Instance { get; private set; }
+
+        static SettingsService()
+        {
+            // implement singleton pattern
+            Instance = Instance ?? new SettingsService();
+        }
+
         Template10.Services.SettingsService.SettingsHelper _helper;
 
-        public SettingsService()
+        private SettingsService()
         {
             _helper = new Template10.Services.SettingsService.SettingsHelper();
         }
 
-        public bool Something
+        public bool UseShellBackButton
         {
-            get { return _helper.Read<bool>(nameof(Something), false); }
-            set { _helper.Write(nameof(Something), value); }
+            get { return _helper.Read<bool>(nameof(UseShellBackButton), true); }
+            set
+            {
+                _helper.Write(nameof(UseShellBackButton), value);
+                Template10.Common.BootStrapper.Current.ShowShellBackButton = value;
+                Template10.Common.BootStrapper.Current.UpdateShellBackButton();
+                Template10.Common.BootStrapper.Current.NavigationService.Refresh();
+            }
         }
     }
 }
