@@ -98,7 +98,11 @@ namespace Template10.Common
         [Obsolete("Use OnStartAsync()")]
         protected override async void OnShareTargetActivated(ShareTargetActivatedEventArgs args) { await InternalActivatedAsync(args); }
 
-        // this is private because it is a specialized prelude to OnStartAsync
+        /// <summary>
+        /// This handles all the prelimimary stuff unique to Activated before calling OnStartAsync()
+        /// This is private because it is a specialized prelude to OnStartAsync().
+        /// OnStartAsync will not be called if state restore is determined.
+        /// </summary>
         private async Task InternalActivatedAsync(IActivatedEventArgs e)
         {
             // sometimes activate requires a frame to be built
@@ -118,11 +122,15 @@ namespace Template10.Common
 
         public event EventHandler<WindowCreatedEventArgs> WindowCreated;
 
-        // It is not possible to hide this override because it is part
-        // of the base class. however, should a developer override
-        // OnWindowCreated he would also need to call base.OnWindowCreated
-        // or the logic in this method, which is critical to Template 10
-        // would not be called and cause unstable, unpredictable behavior
+        /// <summary>
+        /// It is not possible to hide this override because it is part
+        /// of the base class. however, should a developer override
+        /// OnWindowCreated he would also need to call base.OnWindowCreated
+        /// or the logic in this method, which is critical to Template 10
+        /// would not be called and cause unstable, unpredictable behavior.
+        /// If you need to handle this overload, use the alternative 
+        /// WindowCreated event that will be raised by this implementation.
+        /// </summary>
         protected override void OnWindowCreated(WindowCreatedEventArgs args)
         {
             var window = new WindowWrapper(args.Window);
@@ -130,12 +138,18 @@ namespace Template10.Common
             base.OnWindowCreated(args);
         }
 
+        #region launch
+
         // it is the intent of Template 10 to no longer require Launched/Activated overrides, only OnStartAsync()
 
         [Obsolete("Use OnStartAsync()")]
         protected override void OnLaunched(LaunchActivatedEventArgs e) { InternalLaunchAsync(e as ILaunchActivatedEventArgs); }
 
-        // this is private because it is a specialized prelude to OnStartAsync
+        /// <summary>
+        /// This handles all the preliminary stuff unique to Launched before calling OnStartAsync().
+        /// This is private because it is a specialized prelude to OnStartAsync().
+        /// OnStartAsync will not be called if state restore is determined
+        /// </summary>
         private async void InternalLaunchAsync(ILaunchActivatedEventArgs e)
         {
             await InitializeFrameAsync(e);
@@ -143,23 +157,21 @@ namespace Template10.Common
             // okay, now handle launch
             switch (e.PreviousExecutionState)
             {
-                case ApplicationExecutionState.NotRunning:
-                case ApplicationExecutionState.Running:
-                case ApplicationExecutionState.Suspended:
-                    {
-                        // launch if not restored
-                        await OnStartAsync(StartKind.Launch, e);
-                        break;
-                    }
                 case ApplicationExecutionState.ClosedByUser:
                 case ApplicationExecutionState.Terminated:
                     {
-                        // restore if you need to/can do
-                        // restore if there is no TileId or if the app is luanched via the primary tile
-                        if ((e.TileId ?? "App") == "App")
+                        /*
+                            Restore state if you need to/can do.
+                            Remember that only the primary tile should restore.
+                            (this includes toast with no data payload)
+                            The rest are already providing a nav path.
+
+                            In the event that the cache has expired, attempting to restore
+                            from state will fail because of missing values. 
+                            This is okay & by design.
+                        */
+                        if (DecipherStartCause(e) == AdditionalKinds.Primary)
                         {
-                            // In the event that the cache has expired, attempting to restore
-                            // from state will fail because of missing values. This is by design.
                             var restored = NavigationService.RestoreSavedNavigation();
                             if (!restored)
                             {
@@ -170,6 +182,12 @@ namespace Template10.Common
                         {
                             await OnStartAsync(StartKind.Launch, e);
                         }
+                        break;
+                    }
+                default:
+                    {
+                        // launch if not restored
+                        await OnStartAsync(StartKind.Launch, e);
                         break;
                     }
             }
@@ -194,7 +212,78 @@ namespace Template10.Common
             keyboard.AfterForwardGesture = () => RaiseForwardRequested();
         }
 
-        // this is private because there's no reason for the developer to call this
+        #endregion
+
+        /// <summary>
+        /// Default Hardware/Shell Back handler overrides standard Back behavior 
+        /// that navigates to previous app in the app stack to instead cause a backward page navigation.
+        /// Views or Viewodels can override this behavior by handling the BackRequested 
+        /// event and setting the Handled property of the BackRequestedEventArgs to true.
+        /// </summary>
+        private void RaiseBackRequested()
+        {
+            var args = new HandledEventArgs();
+            foreach (var frame in WindowWrapper.Current().NavigationServices.Select(x => x.FrameFacade))
+            {
+                frame.RaiseBackRequested(args);
+                if (args.Handled)
+                    return;
+            }
+
+            // default to first window
+            NavigationService.GoBack();
+        }
+
+        private void RaiseForwardRequested()
+        {
+            var args = new HandledEventArgs();
+            foreach (var frame in WindowWrapper.Current().NavigationServices.Select(x => x.FrameFacade))
+            {
+                frame.RaiseForwardRequested(args);
+                if (args.Handled)
+                    return;
+            }
+
+            // default to first window
+            NavigationService.GoForward();
+        }
+
+        #region overrides
+
+        public enum StartKind { Launch, Activate }
+
+        /// <summary>
+        /// OnStartAsync is the one-stop-show override to handle when your app starts
+        /// Template 10 will not call OnStartAsync if the app is restored from state.
+        /// An app restores from state when the app was suspended and then terminated (PreviousExecutionState terminated).
+        /// </summary>
+        public abstract Task OnStartAsync(StartKind startKind, IActivatedEventArgs args);
+
+        /// <summary>
+        /// OnInitializeAsync is where your app will do must-have up-front operations
+        /// OnInitializeAsync will be called even if the application is restoring from state.
+        /// An app restores from state when the app was suspended and then terminated (PreviousExecutionState terminated).
+        /// </summary>
+        public virtual Task OnInitializeAsync(IActivatedEventArgs args) { return Task.FromResult<object>(null); }
+
+        /// <summary>
+        /// OnSuspendingAsync will be called when the application is suspending, but this override
+        /// should only be used by applications that have application-level operations that must
+        /// be completed during suspension. 
+        /// Using OnSuspendingAsync is a little better than handling the Suspending event manually
+        /// because the asunc operations are in a single, global deferral created when the suspension
+        /// begins and completed automatically when the last viewmodel has been called (including this method).
+        /// </summary>
+        public virtual Task OnSuspendingAsync(object s, SuspendingEventArgs e) { return Task.FromResult<object>(null); }
+        public virtual void OnResuming(object s, object e) { }
+
+        #endregion
+
+        /// <summary>
+        /// InitializeFrameAsync creates a default Frame preceeded by the optional 
+        /// splash screen, then OnInitialzieAsync, then the new frame (if necessary).
+        /// This is private because there's no reason for the developer to call this.
+        /// </summary>
         private async Task InitializeFrameAsync(ILaunchActivatedEventArgs e)
         {
             // first show the splash 
@@ -205,8 +294,10 @@ namespace Template10.Common
                 Window.Current.Activate();
             }
 
+            // allow the user to do things, even when restoring
             await OnInitializeAsync(e);
 
+            // create the default frame only if there's nothing already there
             if (Window.Current.Content == splash || Window.Current.Content == null)
             {
                 // build the default frame
@@ -215,6 +306,13 @@ namespace Template10.Common
             }
         }
 
+        /// <summary>
+        /// Craetes a new FamFrame and adds the resulting NavigationService to the 
+        /// WindowWrapper collection. In addition, it optionally will setup the 
+        /// shell back button to react to the nav of the Frame.
+        /// A developer should call this when creating a new/secondary frame.
+        /// The shell back button should only be setup one time.
+        /// </summary>
         protected Services.NavigationService.NavigationService FrameFactory(bool setupShellBackButtonForDefaultFrame)
         {
             var frame = new Frame
@@ -270,84 +368,24 @@ namespace Template10.Common
             return navigationService;
         }
 
+        public const string DefaultTileID = "App";
+        public enum AdditionalKinds { Primary, Toast, SecondaryTile, Other }
+
         /// <summary>
-        /// Default Hardware/Shell Back handler overrides standard Back behavior that navigates to previous app
-        /// in the app stack to instead cause a backward page navigation.
-        /// Views or Viewodels can override this behavior by handling the BackRequested event and setting the
-        /// Handled property of the BackRequestedEventArgs to true.
+        /// This determines the simplest case for starting. This should handle 80% of common scenarios. 
+        /// When Other is returned the developer must determine start manually using IActivatedEventArgs.Kind
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void RaiseBackRequested()
+        public static AdditionalKinds DecipherStartCause(IActivatedEventArgs args)
         {
-            var args = new HandledEventArgs();
-            foreach (var frame in WindowWrapper.Current().NavigationServices.Select(x => x.FrameFacade))
-            {
-                frame.RaiseBackRequested(args);
-                if (args.Handled)
-                    return;
-            }
-
-            // default to first window
-            NavigationService.GoBack();
+            var e = args as ILaunchActivatedEventArgs;
+            if (e?.TileId == DefaultTileID && string.IsNullOrEmpty(e?.Arguments))
+                return AdditionalKinds.Primary;
+            else if (e?.TileId == DefaultTileID && !string.IsNullOrEmpty(e?.Arguments))
+                return AdditionalKinds.Toast;
+            else if (e?.TileId != null && e?.TileId != DefaultTileID)
+                return AdditionalKinds.SecondaryTile;
+            else
+                return AdditionalKinds.Other;
         }
-
-        private void RaiseForwardRequested()
-        {
-            var args = new HandledEventArgs();
-            foreach (var frame in WindowWrapper.Current().NavigationServices.Select(x => x.FrameFacade))
-            {
-                frame.RaiseForwardRequested(args);
-                if (args.Handled)
-                    return;
-            }
-
-            // default to first window
-            NavigationService.GoForward();
-        }
-
-        #region overrides
-
-        public enum StartKind { Launch, Activate }
-
-        /// <summary>
-        /// OnStartAsync is the one-stop-show override to handle when your app starts
-        /// </summary>
-        /// <param name="startKind"></param>
-        /// <param name="args"></param>
-        /// <returns></returns>
-        /// <remarks>
-        /// Template 10 will not call OnStartAsync if the app is restored from state.
-        /// An app restores from state when the app was suspended and then terminated (PreviousExecutionState terminated).
-        /// </remarks>
-        public abstract Task OnStartAsync(StartKind startKind, IActivatedEventArgs args);
-
-        /// <summary>
-        /// OnInitializeAsync is where your app will do must-have up-front operations
-        /// </summary>
-        /// <returns></returns>
-        /// <remarks>
-        /// OnInitializeAsync will be called even if the application is restoring from state.
-        /// An app restores from state when the app was suspended and then terminated (PreviousExecutionState terminated).
-        /// </remarks>
-        public virtual Task OnInitializeAsync(IActivatedEventArgs args) { return Task.FromResult<object>(null); }
-
-        /// <summary>
-        /// OnSuspendingAsync will be called when the application is suspending, but this override
-        /// should only be used by applications that have application-level operations that must
-        /// be completed during suspension. 
-        /// </summary>
-        /// <param name="s"></param>
-        /// <param name="e"></param>
-        /// <returns></returns>
-        /// <remarks>
-        /// Using OnSuspendingAsync is a little better than handling the Suspending event manually
-        /// because the asunc operations are in a single, global deferral created when the suspension
-        /// begins and completed automatically when the last viewmodel has been called (including this method).
-        /// </remarks>
-        public virtual Task OnSuspendingAsync(object s, SuspendingEventArgs e) { return Task.FromResult<object>(null); }
-        public virtual void OnResuming(object s, object e) { }
-
-        #endregion
     }
 }

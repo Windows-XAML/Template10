@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Template10;
 using Template10.Common;
 using Windows.ApplicationModel.Activation;
+using Windows.Foundation;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -25,23 +27,23 @@ namespace Minimal
             return base.OnInitializeAsync(args);
         }
 
-        // runs unless restored from state
-        public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
+        // runs only when not restored from state
+        public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
-            Window.Current.Content = new Views.Shell(NavigationService);
+            await Task.Delay(1);
 
-            var launchArgs = args as ILaunchActivatedEventArgs;
-            if ((launchArgs?.TileId ?? "App") == "App")
+            switch (DecipherStartCause(args))
             {
-                // launched via primary tile or toast
-                NavigationService.Navigate(typeof(Views.MainPage));
+                case AdditionalKinds.Toast:
+                case AdditionalKinds.SecondaryTile:
+                    var e = (args as ILaunchActivatedEventArgs);
+                    NavigationService.Navigate(typeof(Views.DetailPage), e.Arguments);
+                    break;
+                default:
+                    NavigationService.Navigate(typeof(Views.MainPage));
+                    break;
             }
-            else
-            {
-                // launched via a secondary tile
-                NavigationService.Navigate(typeof(Views.DetailPage), launchArgs.Arguments);
-            }
-            return Task.FromResult<object>(null);
+            //return Task.FromResult<object>(null);
         }
     }
 }
