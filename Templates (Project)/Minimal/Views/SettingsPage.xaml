@@ -31,12 +31,14 @@
 
         <Pivot Grid.Row="1">
             <PivotItem Header="Settings">
-                <StackPanel VerticalAlignment="Top">
-                    <ToggleSwitch Header="Use shell-drawn back button" 
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,12,-12,0">
+                    <StackPanel>
+                        <ToggleSwitch Header="Use shell-drawn back button" 
                                   OnContent="Back button in titlebar or taskbar"
                                   OffContent="Back button in page header"
                                   IsOn="{Binding UseShellBackButton, Mode=TwoWay}" />
-                </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
             </PivotItem>
             <PivotItem Header="Privacy statement" Padding="0">
                 <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,0,-12,0">
