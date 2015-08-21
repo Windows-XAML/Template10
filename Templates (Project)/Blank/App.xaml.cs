@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 
 namespace Blank
@@ -9,13 +8,11 @@ namespace Blank
         public App()
         {
             InitializeComponent();
-            this.SplashFactory = (e) => null;
         }
 
         public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
-            // start the user experience
-            NavigationService.Navigate(typeof(Views.MainPage), "123");
+            NavigationService.Navigate(typeof(Views.MainPage));
             return Task.FromResult<object>(null);
         }
     }

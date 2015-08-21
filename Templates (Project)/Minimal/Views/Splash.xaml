@@ -1,16 +1,34 @@
-﻿<Page
-    x:Class="Minimal.Views.Splash"
+﻿<UserControl
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Minimal.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" xmlns:Core="using:Microsoft.Xaml.Interactions.Core" xmlns:Media="using:Microsoft.Xaml.Interactions.Media"
+    x:Class="Minimal.Views.Splash"
     mc:Ignorable="d">
+    
+    <UserControl.Resources>
+        <Storyboard x:Name="AnimateRing">
+            <DoubleAnimation Duration="0:0:0.3" From="0" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="progressRing" />
+        </Storyboard>
+    </UserControl.Resources>
+
+    <Interactivity:Interaction.Behaviors>
+        <Core:EventTriggerBehavior EventName="Loaded">
+            <Media:ControlStoryboardAction Storyboard="{StaticResource AnimateRing}"/>
+        </Core:EventTriggerBehavior>
+    </Interactivity:Interaction.Behaviors>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Canvas x:Name="MyCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Image x:Name="MyImage" Stretch="None" Source="ms-appx:///Assets/SplashScreen.png" />
         </Canvas>
-        <ProgressRing VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="100" Height="100" Margin="12" IsActive="True" />
+        <ProgressRing x:Name="progressRing" VerticalAlignment="Center" HorizontalAlignment="Center" Width="50" Height="50" IsActive="True" RenderTransformOrigin="0.5,0.5" >
+            <ProgressRing.RenderTransform>
+                <CompositeTransform x:Name="ProgressTransform" TranslateY="100"/>
+            </ProgressRing.RenderTransform>
+        </ProgressRing>
     </Grid>
-</Page>
+
+</UserControl>

@@ -5,7 +5,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Minimal.Views
 {
-    public sealed partial class Splash : Page
+    public sealed partial class Splash : UserControl
     {
         public Splash(SplashScreen splashScreen)
         {
@@ -17,6 +17,7 @@ namespace Minimal.Views
                 MyImage.Width = splashScreen.ImageLocation.Width;
                 MyImage.SetValue(Canvas.TopProperty, splashScreen.ImageLocation.Top);
                 MyImage.SetValue(Canvas.LeftProperty, splashScreen.ImageLocation.Left);
+                ProgressTransform.TranslateY = MyImage.Height / 2;
             };
             Window.Current.SizeChanged += (s, e) => resize();
             resize();

@@ -56,7 +56,7 @@ namespace Template10.Common
         /// The SplashFactory is a Func<> that returns an instantiated Splash view.
         /// Template 10 will automatically inject this visual before loading the app.
         /// </summary>
-        protected Func<SplashScreen, Page> SplashFactory { get; set; }
+        protected Func<SplashScreen, FrameworkElement> SplashFactory { get; set; }
 
         /// <summary>
         /// CacheMaxDuration indicates the maximum TimeSpan for which cache data
@@ -290,7 +290,7 @@ namespace Template10.Common
         private async Task InitializeFrameAsync(ILaunchActivatedEventArgs e)
         {
             // first show the splash 
-            Page splash = null;
+            FrameworkElement splash = null;
             if (SplashFactory != null)
             {
                 Window.Current.Content = splash = SplashFactory(e.SplashScreen);
@@ -301,10 +301,12 @@ namespace Template10.Common
             await OnInitializeAsync(e);
 
             // create the default frame only if there's nothing already there
+            // if it is not null, by the way, then the developer injected something & they win
             if (Window.Current.Content == splash || Window.Current.Content == null)
             {
                 // build the default frame
                 var result = FrameFactory(true);
+                result.Frame.Content = splash;
                 Window.Current.Content = result.Frame;
             }
         }

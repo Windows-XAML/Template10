@@ -24,15 +24,17 @@ namespace Minimal
         // runs even if restored from state
         public override Task OnInitializeAsync(IActivatedEventArgs args)
         {
-            Window.Current.Content = new Views.Shell(this.FrameFactory(true));
-            return base.OnInitializeAsync(args);
+            // use this when method not marked async
+            return Task.FromResult<object>(null);
         }
 
         // runs only when not restored from state
-        public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
+        public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
-            await Task.Delay(1);
+            // use splitview shell instead of default
+            Window.Current.Content = new Views.Shell(NavigationService);
 
+            // start user experience
             switch (DecipherStartCause(args))
             {
                 case AdditionalKinds.Toast:
@@ -44,7 +46,9 @@ namespace Minimal
                     NavigationService.Navigate(typeof(Views.MainPage));
                     break;
             }
-            //return Task.FromResult<object>(null);
+
+            // use this when method not marked async
+            return Task.FromResult<object>(null);
         }
     }
 }
