@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Template10.Common;
 using Windows.ApplicationModel.Activation;
@@ -218,6 +219,11 @@ namespace Template10.Services.NavigationService
             try
             {
                 var state = FrameFacade.PageStateContainer(GetType());
+                if (state == null || !state.Any() || !state.ContainsKey("CurrentPageType"))
+                {
+                    return false;
+                }
+
                 FrameFacade.CurrentPageType = Type.GetType(state["CurrentPageType"].ToString());
                 FrameFacade.CurrentPageParam = state["CurrentPageParam"];
                 FrameFacade.SetNavigationState(state["NavigateState"].ToString());

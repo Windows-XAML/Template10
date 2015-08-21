@@ -62,5 +62,14 @@ namespace Template10.Common
                 return tcs.Task.Result;
             }
         }
+
+        public void Dispatch(Action action)
+        {
+            if (dispatcher.HasThreadAccess) { action(); }
+            else
+            {
+                dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => action()).AsTask().Wait();
+            }
+        }
     }
 }
