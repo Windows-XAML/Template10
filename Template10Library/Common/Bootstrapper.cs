@@ -81,6 +81,8 @@ namespace Template10.Common
 
         // it is the intent of Template 10 to no longer require Launched/Activated overrides, only OnStartAsync()
 
+        #pragma warning disable 809
+
         [Obsolete("Use OnStartAsync()")]
         protected override async void OnActivated(IActivatedEventArgs e) { await InternalActivatedAsync(e); }
 
@@ -101,6 +103,8 @@ namespace Template10.Common
 
         [Obsolete("Use OnStartAsync()")]
         protected override async void OnShareTargetActivated(ShareTargetActivatedEventArgs args) { await InternalActivatedAsync(args); }
+
+        #pragma warning restore 809
 
         /// <summary>
         /// This handles all the prelimimary stuff unique to Activated before calling OnStartAsync()
@@ -146,8 +150,12 @@ namespace Template10.Common
 
         // it is the intent of Template 10 to no longer require Launched/Activated overrides, only OnStartAsync()
 
+        #pragma warning disable 809
+
         [Obsolete("Use OnStartAsync()")]
         protected override void OnLaunched(LaunchActivatedEventArgs e) { InternalLaunchAsync(e as ILaunchActivatedEventArgs); }
+
+        #pragma warning restore 809
 
         /// <summary>
         /// This handles all the preliminary stuff unique to Launched before calling OnStartAsync().

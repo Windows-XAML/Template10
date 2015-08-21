@@ -97,6 +97,10 @@ namespace Template10.Behaviors
 
         public static Visibility CalculateForwardVisibility(Frame frame)
         {
+            // in some cases frame may be null, esp. race conditions
+            if (frame == null)
+                return Visibility.Collapsed;
+
             // by design it is not visible when not applicable
             var cangoforward = frame.CanGoForward;
             if (!cangoforward)
@@ -108,6 +112,10 @@ namespace Template10.Behaviors
 
         public static Visibility CalculateBackVisibility(Frame frame)
         {
+            // in some cases frame may be null, esp. race conditions
+            if (frame == null)
+                return Visibility.Collapsed;
+
             // by design it is not visible when not applicable
             var cangoback = frame.CanGoBack;
             if (!cangoback)

@@ -15,12 +15,13 @@ namespace Template10.Mvvm
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public void Set<T>(ref T storage, T value, [CallerMemberName]string propertyName = null)
+        public bool Set<T>(ref T storage, T value, [CallerMemberName]string propertyName = null)
         {
             if (object.Equals(storage, value))
-                return;
+                return false;
             storage = value;
             RaisePropertyChanged(propertyName);
+            return true;
         }
     }
 }
