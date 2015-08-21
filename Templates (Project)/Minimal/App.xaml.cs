@@ -27,7 +27,8 @@ namespace Minimal
         public override Task OnInitializeAsync(IActivatedEventArgs args)
         {
             // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SplitView
-            Window.Current.Content = new Views.Shell(NavigationServiceFactory(true, true));
+            var nav = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include);
+            Window.Current.Content = new Views.Shell(nav);
 
             return Task.FromResult<object>(null);
         }
@@ -35,6 +36,7 @@ namespace Minimal
         // runs only when not restored from state
         public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
+            // simulated long-running load on startup
             await Task.Delay(5000);
 
             // start user experience
@@ -54,8 +56,6 @@ namespace Minimal
                     NavigationService.Navigate(typeof(Views.MainPage));
                     break;
             }
-
-            // return Task.FromResult<object>(null);
         }
     }
 }

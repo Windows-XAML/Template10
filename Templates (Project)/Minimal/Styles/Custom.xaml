@@ -7,28 +7,50 @@
     <x:Double x:Key="MediumMinWidth">521</x:Double>
     <x:Double x:Key="WideMinWidth">1024</x:Double>
 
-    <Style TargetType="controls:HamburgerMenu">
-        <!-- size -->
-        <Setter Property="VisualStateNarrowMinWidth" Value="{StaticResource NarrowMinWidth}" />
-        <Setter Property="VisualStateMediumMinWidth" Value="{StaticResource MediumMinWidth}" />
-        <Setter Property="VisualStateWideMinWidth" Value="{StaticResource WideMinWidth}" />
-        <!-- style-->
-        <Setter Property="HamburgerBackground" Value="#FFD13438" />
-        <Setter Property="HamburgerForeground" Value="White" />
-        <Setter Property="NavAreaBackground" Value="#FF2B2B2B" />
-        <Setter Property="NavButtonBackground" Value="#FFD13438" />
-        <Setter Property="NavButtonForeground" Value="White" />
-        <Setter Property="SecondarySeparator" Value="Gray" />
-    </Style>
+    <ResourceDictionary.ThemeDictionaries>
 
-    <Style TargetType="controls:PageHeader">
-        <!-- size -->
-        <Setter Property="VisualStateNarrowMinWidth" Value="{StaticResource NarrowMinWidth}" />
-        <Setter Property="VisualStateMediumMinWidth" Value="{StaticResource MediumMinWidth}" />
-        <Setter Property="VisualStateWideMinWidth" Value="{StaticResource WideMinWidth}" />
-        <!-- style -->
-        <Setter Property="HeaderBackground" Value="Gainsboro" />
-        <Setter Property="HeaderForeground" Value="#FF2B2B2B" />
-    </Style>
+        <!-- RequestedTheme=Dark -->
+        <ResourceDictionary x:Key="Default">
 
+            <SolidColorBrush x:Key="ExtendedSplashBackground" Color="Black" />
+            <SolidColorBrush x:Key="ExtendedSplashForeground" Color="White" />
+            
+            <!-- TODO: if you use the dark theme, add your styles here -->
+            
+        </ResourceDictionary>
+        
+        <!-- RequestedTheme=Light -->
+        <ResourceDictionary x:Key="Light">
+
+            <SolidColorBrush x:Key="ExtendedSplashBackground" Color="White" />
+            <SolidColorBrush x:Key="ExtendedSplashForeground" Color="DimGray" />
+            
+            <Style TargetType="controls:HamburgerMenu">
+                <!-- size -->
+                <Setter Property="VisualStateNarrowMinWidth" Value="{StaticResource NarrowMinWidth}" />
+                <Setter Property="VisualStateMediumMinWidth" Value="{StaticResource MediumMinWidth}" />
+                <Setter Property="VisualStateWideMinWidth" Value="{StaticResource WideMinWidth}" />
+                <!-- style-->
+                <Setter Property="HamburgerBackground" Value="#FFD13438" />
+                <Setter Property="HamburgerForeground" Value="White" />
+                <Setter Property="NavAreaBackground" Value="#FF2B2B2B" />
+                <Setter Property="NavButtonBackground" Value="#FFD13438" />
+                <Setter Property="NavButtonForeground" Value="White" />
+                <Setter Property="SecondarySeparator" Value="Gray" />
+            </Style>
+
+            <Style TargetType="controls:PageHeader">
+                <!-- size -->
+                <Setter Property="VisualStateNarrowMinWidth" Value="{StaticResource NarrowMinWidth}" />
+                <Setter Property="VisualStateMediumMinWidth" Value="{StaticResource MediumMinWidth}" />
+                <Setter Property="VisualStateWideMinWidth" Value="{StaticResource WideMinWidth}" />
+                <!-- style -->
+                <Setter Property="HeaderBackground" Value="Gainsboro" />
+                <Setter Property="HeaderForeground" Value="#FF2B2B2B" />
+            </Style>
+            
+        </ResourceDictionary>
+        
+    </ResourceDictionary.ThemeDictionaries>
+    
 </ResourceDictionary>

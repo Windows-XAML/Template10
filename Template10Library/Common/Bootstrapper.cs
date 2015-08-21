@@ -306,9 +306,12 @@ namespace Template10.Common
             if (Window.Current.Content == splash || Window.Current.Content == null)
             {
                 // build the default frame
-                Window.Current.Content = NavigationServiceFactory(true, true).Frame;
+                Window.Current.Content = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include).Frame;
             }
         }
+
+        public enum BackButton { Attach, Ignore }
+        public enum ExistingContent { Include, Exclude }
 
         /// <summary>
         /// Craetes a new FamFrame and adds the resulting NavigationService to the 
@@ -317,19 +320,21 @@ namespace Template10.Common
         /// A developer should call this when creating a new/secondary frame.
         /// The shell back button should only be setup one time.
         /// </summary>
-        public Services.NavigationService.NavigationService NavigationServiceFactory(bool setupShellBackButtonForDefaultFrame, bool fillWithExistingContent = false)
+        public Services.NavigationService.NavigationService NavigationServiceFactory(BackButton backButton, ExistingContent existingContent)
         {
             var frame = new Frame
             {
                 Language = Windows.Globalization.ApplicationLanguages.Languages[0],
-                Content = fillWithExistingContent ? Window.Current.Content : null,
+                Content = (existingContent == ExistingContent.Include) ? Window.Current.Content : null,
             };
 
             var navigationService = new Services.NavigationService.NavigationService(frame);
             WindowWrapper.Current().NavigationServices.Add(navigationService);
 
-            if (setupShellBackButtonForDefaultFrame)
+            if (backButton == BackButton.Attach)
             {
+                // TODO: unattach others
+
                 // update shell back when backstack changes
                 // only the default frame in this case because secondary should not dismiss the app
                 frame.RegisterPropertyChangedCallback(Frame.BackStackDepthProperty, (s, args) => UpdateShellBackButton());

@@ -20,11 +20,14 @@
         </Core:EventTriggerBehavior>
     </Interactivity:Interaction.Behaviors>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="{StaticResource ExtendedSplashBackground}">
         <Canvas x:Name="MyCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Image x:Name="MyImage" Stretch="None" Source="ms-appx:///Assets/SplashScreen.png" />
         </Canvas>
-        <ProgressRing x:Name="progressRing" VerticalAlignment="Center" HorizontalAlignment="Center" Width="50" Height="50" IsActive="True" RenderTransformOrigin="0.5,0.5" >
+        <ProgressRing x:Name="progressRing" VerticalAlignment="Center" 
+                      Foreground="{StaticResource ExtendedSplashForeground}"
+                      HorizontalAlignment="Center" Width="50" Height="50" 
+                      IsActive="True" RenderTransformOrigin="0.5,0.5" >
             <ProgressRing.RenderTransform>
                 <CompositeTransform x:Name="ProgressTransform" TranslateY="100"/>
             </ProgressRing.RenderTransform>

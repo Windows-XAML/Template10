@@ -10,9 +10,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles\Custom.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            
-            <!-- custom -->
-            
         </ResourceDictionary>
     </common:BootStrapper.Resources>
 

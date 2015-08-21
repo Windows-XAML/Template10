@@ -39,6 +39,7 @@ namespace Minimal.ViewModels
                 return ver.Major.ToString() + "." + ver.Minor.ToString() + "." + ver.Build.ToString() + "." + ver.Revision.ToString();
             }
         }
+        public Uri RateMe { get { return new Uri(""); } }
 
         #endregion  
     }
