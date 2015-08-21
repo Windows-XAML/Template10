@@ -1,8 +1,7 @@
 ﻿{
   "dependencies": {
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0",
-    "Newtonsoft.Json": "7.0.1",
-    "Nito.AsyncEx": "3.0.0"
+    "Newtonsoft.Json": "7.0.1"
   },
   "frameworks": {
     "uap10.0": {}
