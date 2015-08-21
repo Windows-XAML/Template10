@@ -149,7 +149,7 @@
 
             <DataTemplate x:Name="NavButtonTemplate">
                 <RadioButton Width="{Binding PaneWidth, ElementName=ThisPage, FallbackValue=220}" Height="48" 
-                    CommandParameter="{Binding}" Tag="{Binding Content}"
+                    CommandParameter="{Binding}" Tag="{Binding Content}" Tapped="NavButton_Tapped"
                     Command="{Binding NavCommand, ElementName=ThisPage}" GroupName="Nav">
                     <RadioButton.Template>
                         <ControlTemplate>
@@ -167,7 +167,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid>
+    <Grid x:Name="RootGrid">
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">

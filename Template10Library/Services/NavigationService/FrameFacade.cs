@@ -10,6 +10,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Services.NavigationService
 {
+    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-NavigationService
     public class FrameFacade
     {
         public FrameFacade(Frame frame)

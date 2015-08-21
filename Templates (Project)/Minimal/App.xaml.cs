@@ -1,54 +1,61 @@
 ﻿using Minimal.Services.SettingsServices;
 using System;
 using System.Threading.Tasks;
-using Template10;
-using Template10.Common;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 
 namespace Minimal
 {
+    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-Bootstrapper
     sealed partial class App : Template10.Common.BootStrapper
     {
         public App()
         {
             InitializeComponent();
+
+            // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-Cache
             CacheMaxDuration = TimeSpan.FromDays(2);
+
+            // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-BackButton
             ShowShellBackButton = SettingsService.Instance.UseShellBackButton;
-            SplashFactory = (e) => { return new Views.Splash(e); };
+
+            // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SplashScreen
+            SplashFactory = (e) => new Views.Splash(e);
         }
 
         // runs even if restored from state
         public override Task OnInitializeAsync(IActivatedEventArgs args)
         {
-            // use this when method not marked async
+            // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SplitView
+            Window.Current.Content = new Views.Shell(NavigationServiceFactory(true, true));
+
             return Task.FromResult<object>(null);
         }
 
         // runs only when not restored from state
-        public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
+        public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
-            // use splitview shell instead of default
-            Window.Current.Content = new Views.Shell(NavigationService);
+            await Task.Delay(5000);
 
             // start user experience
             switch (DecipherStartCause(args))
             {
+                // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-Toast
                 case AdditionalKinds.Toast:
+
+                // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SecondaryTile
                 case AdditionalKinds.SecondaryTile:
                     var e = (args as ILaunchActivatedEventArgs);
                     NavigationService.Navigate(typeof(Views.DetailPage), e.Arguments);
                     break;
+
+                // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-NavigationService
                 default:
                     NavigationService.Navigate(typeof(Views.MainPage));
                     break;
             }
 
-            // use this when method not marked async
-            return Task.FromResult<object>(null);
+            // return Task.FromResult<object>(null);
         }
     }
 }

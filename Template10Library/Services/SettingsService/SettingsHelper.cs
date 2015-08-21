@@ -12,6 +12,7 @@ using Windows.Storage;
 
 namespace Template10.Services.SettingsService
 {
+    // https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SettingsService
     public class SettingsHelper
     {
         const string parse = "Parse";

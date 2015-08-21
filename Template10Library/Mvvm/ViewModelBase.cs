@@ -10,7 +10,8 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Mvvm
 {
-    public abstract class ViewModelBase : INavigable
+    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-MVVM
+    public abstract class ViewModelBase : BindableBase, INavigable
     {
         public string Identifier { get; set; }
 
@@ -20,25 +21,5 @@ namespace Template10.Mvvm
 
         public NavigationService NavigationService { get; set; }
         public DispatcherWrapper Dispatcher { get { return Common.WindowWrapper.Current(NavigationService).Dispatcher; } }
-
-        #region INPC
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void RaisePropertyChanged([CallerMemberName]string propertyName = null)
-        {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-                return;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public void Set<T>(ref T storage, T value, [CallerMemberName]string propertyName = null)
-        {
-            if (object.Equals(storage, value))
-                return;
-            storage = value;
-            RaisePropertyChanged(propertyName);
-        }
-
-        #endregion  
     }
 }

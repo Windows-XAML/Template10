@@ -8,6 +8,7 @@ using Microsoft.Xaml.Interactivity;
 
 namespace Template10.Behaviors
 {
+    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-XamlBehaviors
     [Microsoft.Xaml.Interactivity.TypeConstraint(typeof(Button))]
     public class NavButtonBehavior : DependencyObject, IBehavior
     {

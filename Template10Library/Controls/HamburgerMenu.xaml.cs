@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Media;
 
 namespace Template10.Controls
 {
+    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-HamburgerMenu
     [ContentProperty(Name = nameof(PrimaryButtons))]
     public sealed partial class HamburgerMenu : UserControl, INotifyPropertyChanged
     {
@@ -68,14 +69,14 @@ namespace Template10.Controls
         }
 
         #region VisualStateValues
-       
+
         public double VisualStateNarrowMinWidth
         {
             get { return VisualStateNarrowTrigger.MinWindowWidth; }
             set { SetValue(VisualStateNarrowMinWidthProperty, VisualStateNarrowTrigger.MinWindowWidth = value); }
         }
         public static readonly DependencyProperty VisualStateNarrowMinWidthProperty =
-            DependencyProperty.Register("VisualStateNarrowMinWidth", typeof(double), 
+            DependencyProperty.Register("VisualStateNarrowMinWidth", typeof(double),
                 typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => { (d as HamburgerMenu).VisualStateNarrowMinWidth = (double)e.NewValue; }));
 
         public double VisualStateMediumMinWidth
@@ -84,7 +85,7 @@ namespace Template10.Controls
             set { SetValue(VisualStateMediumMinWidthProperty, VisualStateMediumTrigger.MinWindowWidth = value); }
         }
         public static readonly DependencyProperty VisualStateMediumMinWidthProperty =
-            DependencyProperty.Register("VisualStateMediumMinWidth", typeof(double), 
+            DependencyProperty.Register("VisualStateMediumMinWidth", typeof(double),
                 typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => { (d as HamburgerMenu).VisualStateMediumMinWidth = (double)e.NewValue; }));
 
         public double VisualStateWideMinWidth
@@ -203,7 +204,23 @@ namespace Template10.Controls
             set
             {
                 _navigationService = value;
-                ShellSplitView.Content = NavigationService.FrameFacade.Frame;
+                if (NavigationService.Frame.BackStackDepth > 0)
+                {
+                    // display content inside the splitview
+                    ShellSplitView.Content = NavigationService.Frame;
+                }
+                else if (NavigationService.Frame.Content != null)
+                {
+                    // display content without splitview (splash scenario)
+                    Action revert = () =>
+                    {
+                        RootGrid.Children.Remove(NavigationService.Frame);
+                        ShellSplitView.Content = NavigationService.Frame;
+                    };
+                    NavigationService.AfterRestoreSavedNavigation += (s, e) => revert();
+                    NavigationService.FrameFacade.Navigated += (s, e) => revert();
+                    RootGrid.Children.Add(NavigationService.Frame);
+                }
                 NavigationService.FrameFacade.Navigated += (s, e) => UpdateButtons(e);
                 NavigationService.AfterRestoreSavedNavigation += (s, e) => UpdateButtons();
                 ShellSplitView.RegisterPropertyChangedCallback(SplitView.IsPaneOpenProperty, (s, e) => UpdateButtons());
@@ -245,6 +262,11 @@ namespace Template10.Controls
         private void PaneContent_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
             HamburgerCommand.Execute(null);
+        }
+
+        private void NavButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            e.Handled = true;
         }
     }
 

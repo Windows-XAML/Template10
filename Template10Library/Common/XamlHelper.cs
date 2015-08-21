@@ -5,6 +5,7 @@ using Windows.UI.Xaml.Media;
 
 namespace Template10.Common
 {
+    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-XamlHelper
     public static class XamlHelper
     {
         public static List<T> AllChildren<T>(DependencyObject parent) where T : Control

@@ -6,6 +6,7 @@ using Windows.UI.Xaml;
 
 namespace Template10.Common
 {
+    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-WindowWrapper
     public class WindowWrapper
     {
         public static WindowWrapper Default() { return ActiveWrappers.FirstOrDefault(); }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Minimal.Services.SettingsServices
 {
+    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SettingsService
     public class SettingsService
     {
         public static SettingsService Instance { get; private set; }

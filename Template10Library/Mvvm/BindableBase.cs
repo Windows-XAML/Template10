@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace Template10.Mvvm
 {
+    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-MVVM
     public abstract class BindableBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;

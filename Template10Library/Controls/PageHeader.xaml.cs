@@ -11,6 +11,7 @@ using Windows.UI.Xaml.Media;
 
 namespace Template10.Controls
 {
+    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-PageHeader
     [ContentProperty(Name = "PrimaryCommands")]
     public sealed partial class PageHeader : UserControl, INotifyPropertyChanged
     {

@@ -33,6 +33,7 @@ namespace Template10.Common
                     // call system-level suspend
                     await OnSuspendingAsync(s, e);
                 }
+                catch { }
                 finally { deferral.Complete(); }
             };
         }
@@ -56,7 +57,7 @@ namespace Template10.Common
         /// The SplashFactory is a Func<> that returns an instantiated Splash view.
         /// Template 10 will automatically inject this visual before loading the app.
         /// </summary>
-        protected Func<SplashScreen, FrameworkElement> SplashFactory { get; set; }
+        protected Func<SplashScreen, UserControl> SplashFactory { get; set; }
 
         /// <summary>
         /// CacheMaxDuration indicates the maximum TimeSpan for which cache data
@@ -305,9 +306,7 @@ namespace Template10.Common
             if (Window.Current.Content == splash || Window.Current.Content == null)
             {
                 // build the default frame
-                var result = FrameFactory(true);
-                result.Frame.Content = splash;
-                Window.Current.Content = result.Frame;
+                Window.Current.Content = NavigationServiceFactory(true, true).Frame;
             }
         }
 
@@ -318,12 +317,14 @@ namespace Template10.Common
         /// A developer should call this when creating a new/secondary frame.
         /// The shell back button should only be setup one time.
         /// </summary>
-        protected Services.NavigationService.NavigationService FrameFactory(bool setupShellBackButtonForDefaultFrame)
+        public Services.NavigationService.NavigationService NavigationServiceFactory(bool setupShellBackButtonForDefaultFrame, bool fillWithExistingContent = false)
         {
             var frame = new Frame
             {
-                Language = Windows.Globalization.ApplicationLanguages.Languages[0]
+                Language = Windows.Globalization.ApplicationLanguages.Languages[0],
+                Content = fillWithExistingContent ? Window.Current.Content : null,
             };
+
             var navigationService = new Services.NavigationService.NavigationService(frame);
             WindowWrapper.Current().NavigationServices.Add(navigationService);
 
