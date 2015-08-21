@@ -18,12 +18,15 @@ namespace Template10.Controls
         public HamburgerMenu()
         {
             this.InitializeComponent();
-            Loaded += HamburgerMenu_Loaded;
+            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
+            {
+                return;
+            }
             new KeyboardService().AfterWindowZGesture = () => { HamburgerCommand.Execute(null); };
         }
 
         void UpdateButtons(NavigatedEventArgs e) { UpdateButtons(e.PageType); }
-        void UpdateButtons() { UpdateButtons(NavigationService.FrameFacade.CurrentPageType); }
+        void UpdateButtons() { UpdateButtons(NavigationService.Frame.Content?.GetType()); }
         void UpdateButtons(Type type)
         {
             // update radiobuttons after frame navigates
@@ -54,7 +57,7 @@ namespace Template10.Controls
             try
             {
                 // navigate only to new pages
-                if (NavigationService.CurrentPageType != null && NavigationService.CurrentPageType != commandInfo.PageType)
+                if (commandInfo.PageType != null && NavigationService.CurrentPageType != commandInfo.PageType)
                     NavigationService.Navigate(commandInfo.PageType, commandInfo.PageParameter);
             }
             finally
@@ -64,10 +67,36 @@ namespace Template10.Controls
             }
         }
 
-        private void HamburgerMenu_Loaded(object sender, RoutedEventArgs e)
+        #region VisualStateValues
+       
+        public double VisualStateNarrowMinWidth
         {
-            HamburgerBackground = HamburgerBackground;
+            get { return VisualStateNarrowTrigger.MinWindowWidth; }
+            set { SetValue(VisualStateNarrowMinWidthProperty, VisualStateNarrowTrigger.MinWindowWidth = value); }
         }
+        public static readonly DependencyProperty VisualStateNarrowMinWidthProperty =
+            DependencyProperty.Register("VisualStateNarrowMinWidth", typeof(double), 
+                typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => { (d as HamburgerMenu).VisualStateNarrowMinWidth = (double)e.NewValue; }));
+
+        public double VisualStateMediumMinWidth
+        {
+            get { return VisualStateMediumTrigger.MinWindowWidth; }
+            set { SetValue(VisualStateMediumMinWidthProperty, VisualStateMediumTrigger.MinWindowWidth = value); }
+        }
+        public static readonly DependencyProperty VisualStateMediumMinWidthProperty =
+            DependencyProperty.Register("VisualStateMediumMinWidth", typeof(double), 
+                typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => { (d as HamburgerMenu).VisualStateMediumMinWidth = (double)e.NewValue; }));
+
+        public double VisualStateWideMinWidth
+        {
+            get { return VisualStateWideTrigger.MinWindowWidth; }
+            set { SetValue(VisualStateWideMinWidthProperty, VisualStateWideTrigger.MinWindowWidth = value); }
+        }
+        public static readonly DependencyProperty VisualStateWideMinWidthProperty =
+            DependencyProperty.Register("VisualStateWideMinWidth", typeof(double),
+                typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => { (d as HamburgerMenu).VisualStateWideMinWidth = (double)e.NewValue; }));
+
+        #endregion
 
         #region Style
 
@@ -81,7 +110,7 @@ namespace Template10.Controls
             }
         }
         public static readonly DependencyProperty HamburgerBackgroundProperty =
-            DependencyProperty.Register("HamburgerBackground", typeof(SolidColorBrush),
+            DependencyProperty.Register(nameof(HamburgerBackground), typeof(SolidColorBrush),
                 typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => { (d as HamburgerMenu).HamburgerBackground = (SolidColorBrush)e.NewValue; }));
 
         public SolidColorBrush HamburgerForeground
@@ -94,7 +123,7 @@ namespace Template10.Controls
             }
         }
         public static readonly DependencyProperty HamburgerForegroundProperty =
-              DependencyProperty.Register("HamburgerForeground", typeof(SolidColorBrush),
+              DependencyProperty.Register(nameof(HamburgerForeground), typeof(SolidColorBrush),
                   typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => { (d as HamburgerMenu).HamburgerForeground = (SolidColorBrush)e.NewValue; }));
 
         public SolidColorBrush NavAreaBackground
@@ -107,7 +136,7 @@ namespace Template10.Controls
             }
         }
         public static readonly DependencyProperty NavAreaBackgroundProperty =
-              DependencyProperty.Register("NavAreaBackground", typeof(SolidColorBrush),
+              DependencyProperty.Register(nameof(NavAreaBackground), typeof(SolidColorBrush),
                   typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => { (d as HamburgerMenu).NavAreaBackground = (SolidColorBrush)e.NewValue; }));
 
         public SolidColorBrush NavButtonBackground
@@ -120,9 +149,8 @@ namespace Template10.Controls
             }
         }
         public static readonly DependencyProperty NavButtonBackgroundProperty =
-            DependencyProperty.Register("NavButtonBackground", typeof(SolidColorBrush),
+            DependencyProperty.Register(nameof(NavButtonBackground), typeof(SolidColorBrush),
                 typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => { (d as HamburgerMenu).NavButtonBackground = (SolidColorBrush)e.NewValue; }));
-
 
         public SolidColorBrush NavButtonForeground
         {
@@ -134,7 +162,7 @@ namespace Template10.Controls
             }
         }
         public static readonly DependencyProperty NavButtonForegroundProperty =
-              DependencyProperty.Register("NavButtonForeground", typeof(SolidColorBrush),
+              DependencyProperty.Register(nameof(NavButtonForeground), typeof(SolidColorBrush),
                   typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => { (d as HamburgerMenu).NavButtonForeground = (SolidColorBrush)e.NewValue; }));
 
         public SolidColorBrush SecondarySeparator
@@ -147,7 +175,7 @@ namespace Template10.Controls
             }
         }
         public static readonly DependencyProperty SecondarySeparatorProperty =
-              DependencyProperty.Register("NavButtonForeground", typeof(SolidColorBrush),
+              DependencyProperty.Register("SecondarySeparator", typeof(SolidColorBrush),
                   typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => { (d as HamburgerMenu).SecondarySeparator = (SolidColorBrush)e.NewValue; }));
 
 
@@ -177,6 +205,7 @@ namespace Template10.Controls
                 _navigationService = value;
                 ShellSplitView.Content = NavigationService.FrameFacade.Frame;
                 NavigationService.FrameFacade.Navigated += (s, e) => UpdateButtons(e);
+                NavigationService.AfterRestoreSavedNavigation += (s, e) => UpdateButtons();
                 ShellSplitView.RegisterPropertyChangedCallback(SplitView.IsPaneOpenProperty, (s, e) => UpdateButtons());
                 UpdateButtons();
             }
@@ -211,6 +240,11 @@ namespace Template10.Controls
         void NavButton_Loaded(object sender, RoutedEventArgs e)
         {
             UpdateButtons();
+        }
+
+        private void PaneContent_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            HamburgerCommand.Execute(null);
         }
     }
 

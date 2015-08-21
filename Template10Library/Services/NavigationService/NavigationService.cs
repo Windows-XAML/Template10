@@ -81,7 +81,7 @@ namespace Template10.Services.NavigationService
             }
         }
 
-        void NavigateTo(NavigationMode mode, string parameter)
+        void NavigateTo(NavigationMode mode, object parameter)
         {
             LastNavigationParameter = parameter;
             LastNavigationType = FrameFacade.Content.GetType().FullName;
@@ -116,7 +116,7 @@ namespace Template10.Services.NavigationService
         }
 
         // TODO: this will spawn a new window instead of navigating to an existing frame.
-        public async Task<int> OpenAsync(Type page, string parameter = null, ViewSizePreference size = ViewSizePreference.UseHalf)
+        public async Task<int> OpenAsync(Type page, object parameter = null, ViewSizePreference size = ViewSizePreference.UseHalf)
         {
             var coreView = CoreApplication.CreateNewView();
             ApplicationView view = null;
@@ -175,20 +175,27 @@ namespace Template10.Services.NavigationService
                 throw new InvalidOperationException("State container is unexpectedly null");
             }
 
-            state["CurrentPageType"] = CurrentPageType?.ToString();
-            state["CurrentPageParam"] = CurrentPageParam;
+            state["CurrentPageType"] = CurrentPageType.ToString();
+            try { state["CurrentPageParam"] = CurrentPageParam; }
+            catch
+            {
+                throw new Exception("Failed to serialize page parameter, override/implement ToString()");
+            }
             state["NavigateState"] = FrameFacade?.GetNavigationState();
         }
 
+        public event EventHandler AfterRestoreSavedNavigation;
         public bool RestoreSavedNavigation()
         {
             try
             {
                 var state = FrameFacade.PageStateContainer(GetType());
                 FrameFacade.CurrentPageType = Type.GetType(state["CurrentPageType"].ToString());
-                FrameFacade.CurrentPageParam = state["CurrentPageParam"]?.ToString();
+                FrameFacade.CurrentPageParam = state["CurrentPageParam"];
                 FrameFacade.SetNavigationState(state["NavigateState"].ToString());
                 NavigateTo(NavigationMode.Refresh, FrameFacade.CurrentPageParam);
+                while (Frame.Content == null) { /* wait */ }
+                AfterRestoreSavedNavigation?.Invoke(this, EventArgs.Empty);
                 return true;
             }
             catch { return false; }
@@ -227,7 +234,7 @@ namespace Template10.Services.NavigationService
         }
 
         public Type CurrentPageType { get { return FrameFacade.CurrentPageType; } }
-        public string CurrentPageParam { get { return FrameFacade.CurrentPageParam; } }
+        public object CurrentPageParam { get { return FrameFacade.CurrentPageParam; } }
     }
 }
 

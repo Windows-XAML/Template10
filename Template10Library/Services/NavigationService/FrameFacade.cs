@@ -130,7 +130,7 @@ namespace Template10.Services.NavigationService
 
         public Type CurrentPageType { get; internal set; }
 
-        public string CurrentPageParam { get; internal set; }
+        public object CurrentPageParam { get; internal set; }
 
         public object GetValue(DependencyProperty dp) { return Frame.GetValue(dp); }
 

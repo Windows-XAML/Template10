@@ -14,6 +14,6 @@ namespace Template10.Services.NavigationService
         }
         public NavigationMode NavigationMode { get; set; }
         public Type PageType { get; set; }
-        public string Parameter { get; set; }
+        public object Parameter { get; set; }
     }
 }

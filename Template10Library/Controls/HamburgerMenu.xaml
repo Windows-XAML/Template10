@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" x:Name="ThisPage"
-    d:DesignHeight="300"
+    d:DesignHeight="400"
     d:DesignWidth="400">
 
     <UserControl.Resources>
@@ -18,7 +18,7 @@
             <SolidColorBrush x:Name="NavButtonBackgroundBrush" Color="#FFD13438" />
             <SolidColorBrush x:Name="NavButtonForegroundBrush" Color="White" />
             <SolidColorBrush x:Name="NavAreaBackgroundBrush" Color="White" />
-            <SolidColorBrush x:Name="SecondaryBorderBrush" Color="White" />
+            <SolidColorBrush x:Name="SecondaryBorderBrush" Color="DimGray" />
 
             <Style TargetType="ToggleButton" x:Key="NavButtonStyle">
                 <Setter Property="Height" Value="48"/>
@@ -91,7 +91,7 @@
                                     </VisualStateGroup>
                                 </VisualStateManager.VisualStateGroups>
                                 <Grid x:Name="CheckedOverlay" Visibility="Collapsed">
-                                    <Rectangle Fill="{Binding NavButtonBackground, ElementName=ThisPage, FallbackValue=DimGray}" />
+                                    <Rectangle Fill="{Binding NavButtonBackground, ElementName=ThisPage, FallbackValue=Navy}" />
                                     <Rectangle Fill="Black" Opacity=".4" />
                                 </Grid>
                                 <Rectangle x:Name="PressedOverlay" Fill="White" Opacity=".2" Visibility="Collapsed" />
@@ -99,7 +99,7 @@
                                 <ContentPresenter Background="Transparent" FontSize="16" 
                                         Foreground="{Binding NavButtonForeground, ElementName=ThisPage, FallbackValue=White}"
                                         VerticalAlignment="Stretch" HorizontalAlignment="Left"
-                                        VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                        VerticalContentAlignment="Center" HorizontalContentAlignment="Left"
                                         x:Name="ContentPresenter" Content="{TemplateBinding Content}" />
                             </Grid>
                         </ControlTemplate>
@@ -167,7 +167,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
+    <Grid>
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
@@ -203,11 +203,15 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <SplitView x:Name="ShellSplitView" DisplayMode="Inline" 
-                   PaneBackground="Transparent" CompactPaneLength="48" OpenPaneLength="220">
+        <SplitView x:Name="ShellSplitView"
+                   PaneBackground="Transparent"
+                   DisplayMode="Inline" 
+                   OpenPaneLength="220"
+                   CompactPaneLength="48">
 
             <SplitView.Pane>
-                <Grid Background="#FF2B2B2B" x:Name="PaneContent" Margin="0,48,0,0" >
+                <Grid Background="{Binding NavAreaBackground, ElementName=ThisPage, FallbackValue='Blue'}" 
+                      x:Name="PaneContent" Margin="0,48,0,0" Tapped="PaneContent_Tapped">
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
@@ -223,12 +227,33 @@
                                     <StackPanel />
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
+
+                            <!-- design data -->
                             <local:NavigationButtonInfo>
                                 <StackPanel Orientation="Horizontal">
-                                    <SymbolIcon Symbol="Home" Width="48" Height="48" />
-                                    <TextBlock Text="Home" VerticalAlignment="Center" Margin="12,0,0,0" />
+                                    <SymbolIcon Symbol="Back" Width="48" Height="48" />
+                                    <TextBlock Text="Left" VerticalAlignment="Center" Margin="12,0,0,0" />
                                 </StackPanel>
                             </local:NavigationButtonInfo>
+                            <local:NavigationButtonInfo>
+                                <StackPanel Orientation="Horizontal">
+                                    <SymbolIcon Symbol="Up" Width="48" Height="48" />
+                                    <TextBlock Text="Top" VerticalAlignment="Center" Margin="12,0,0,0" />
+                                </StackPanel>
+                            </local:NavigationButtonInfo>
+                            <local:NavigationButtonInfo>
+                                <StackPanel Orientation="Horizontal">
+                                    <SymbolIcon Symbol="Forward" Width="48" Height="48" />
+                                    <TextBlock Text="Right" VerticalAlignment="Center" Margin="12,0,0,0" />
+                                </StackPanel>
+                            </local:NavigationButtonInfo>
+                            <local:NavigationButtonInfo>
+                                <StackPanel Orientation="Horizontal">
+                                    <SymbolIcon Symbol="Download" Width="48" Height="48" />
+                                    <TextBlock Text="Bottom" VerticalAlignment="Center" Margin="12,0,0,0" />
+                                </StackPanel>
+                            </local:NavigationButtonInfo>
+
                         </ItemsControl>
 
                     </ScrollViewer>
@@ -238,9 +263,18 @@
                             ItemTemplate="{StaticResource NavButtonTemplate}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <StackPanel BorderBrush="DimGray" BorderThickness="0,1,0,0" />
+                                <StackPanel BorderBrush="{Binding SecondarySeparator, ElementName=ThisPage, FallbackValue=White}" BorderThickness="0,1,0,0" />
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
+
+                        <!-- designtime -->
+                        <local:NavigationButtonInfo>
+                            <StackPanel Orientation="Horizontal">
+                                <SymbolIcon Symbol="Setting" Width="48" Height="48" />
+                                <TextBlock Text="Settings" VerticalAlignment="Center" Margin="12,0,0,0" />
+                            </StackPanel>
+                        </local:NavigationButtonInfo>
+
                     </ItemsControl>
 
                 </Grid>

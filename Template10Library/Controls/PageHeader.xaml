@@ -16,8 +16,8 @@
     </UserControl.Resources>
 
     <CommandBar x:Name="HeaderCommandBar" DataContext="{Binding ElementName=ThisPage}" 
-                Background="{Binding HeaderBackground, ElementName=ThisPage}"
-                Foreground="{Binding HeaderForeground, ElementName=ThisPage}"
+                Background="{x:Bind HeaderBackground, FallbackValue=Blue}"
+                Foreground="{x:Bind HeaderForeground, FallbackValue=White}"
                 Grid.Column="0" Grid.ColumnSpan="2" ClosedDisplayMode="Compact">
 
         <VisualStateManager.VisualStateGroups>
@@ -49,7 +49,7 @@
         
         <CommandBar.Content>
             <StackPanel Orientation="Horizontal" Height="48" VerticalAlignment="Center">
-                <Rectangle x:Name="NarrowSpacer" Width="48" Visibility="Collapsed" />
+                <Rectangle x:Name="NarrowSpacer" Width="48" Visibility="Collapsed" IsHitTestVisible="False" />
                 <Grid VerticalAlignment="Center" Visibility="{x:Bind BackButtonVisibility}">
                     <Button Height="48" Width="48" Style="{StaticResource NavigationBackButtonSmallStyle}">
                         <Interactivity:Interaction.Behaviors>

@@ -10,10 +10,6 @@
 
     <Controls:HamburgerMenu x:Name="MyHamburgerMenu">
         
-        <!--<Controls:HamburgerMenu.AccentBrush>
-            <SolidColorBrush Color="#FF3E65EA" />
-        </Controls:HamburgerMenu.AccentBrush>-->
-        
         <Controls:HamburgerMenu.PrimaryButtons>
             <Controls:NavigationButtonInfo PageType="views:MainPage" ClearHistory="True">
                 <StackPanel Orientation="Horizontal">
