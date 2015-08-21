@@ -194,7 +194,7 @@
                         <AdaptiveTrigger x:Name="VisualStateWideTrigger" MinWindowWidth="1024" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="ShellSplitView.DisplayMode" Value="Inline" />
+                        <Setter Target="ShellSplitView.DisplayMode" Value="CompactInline" />
                         <Setter Target="ShellSplitView.IsPaneOpen" Value="True" />
                         <Setter Target="PaneContent.Margin" Value="0,0,0,0" />
                         <Setter Target="HamburgerButton.Visibility" Value="Collapsed" />
