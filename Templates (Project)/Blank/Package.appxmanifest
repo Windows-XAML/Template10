@@ -7,20 +7,20 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="4a242f60-f709-4ae6-9032-0afe709f69c7"
-    Publisher="CN=Jerry"
+    Name="6906cf59-d9f6-4de4-90fb-cd8b07875b8e"
+    Publisher="CN=daren"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="4a242f60-f709-4ae6-9032-0afe709f69c7" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="6906cf59-d9f6-4de4-90fb-cd8b07875b8e" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>Blank</DisplayName>
-    <PublisherDisplayName>Jerry</PublisherDisplayName>
+    <PublisherDisplayName>daren</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
   <Dependencies>
-    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.10069.0" MaxVersionTested="10.0.10069.0" />
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
   </Dependencies>
 
   <Resources>
@@ -33,10 +33,11 @@
       EntryPoint="Blank.App">
       <uap:VisualElements
         DisplayName="Blank"
-        Square150x150Logo="Assets\Logo.png"
-        Square44x44Logo="Assets\SmallLogo.png"
+        Square150x150Logo="Assets\Square150x150Logo.png"
+        Square44x44Logo="Assets\Square44x44Logo.png"
         Description="Blank"
-        BackgroundColor="#464646">
+        BackgroundColor="transparent">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
     </Application>

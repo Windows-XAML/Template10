@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>System.Numerics.Vectors.WindowsRuntime</name>
+    </assembly>
+    <members>
+        <member name="T:System.Numerics.VectorExtensions">
+            <summary>
+            Contains conversions from Vector2 to Windows.Foundation.Point and Size, which are all structurally identical.
+            </summary>
+        </member>
+        <member name="M:System.Numerics.VectorExtensions.ToPoint(System.Numerics.Vector2)">
+            <summary>
+            Returns a Point whose coordinates are the same as the vector's.
+            </summary>
+            <param name="vector">The Vector2 to convert.</param>
+            <returns>The Point.</returns>
+        </member>
+        <member name="M:System.Numerics.VectorExtensions.ToSize(System.Numerics.Vector2)">
+            <summary>
+            Returns a Size whose width and height are equal to the vector's X and Y coordinates.
+            </summary>
+            <param name="vector">The Vector2 to convert.</param>
+            <returns>The Size.</returns>
+        </member>
+        <member name="M:System.Numerics.VectorExtensions.ToVector2(Windows.Foundation.Point)">
+            <summary>
+            Returns a Vector2 whose coordinates are the same as the Point's.
+            </summary>
+            <param name="point">The Point to convert.</param>
+            <returns>The Vector2.</returns>
+        </member>
+        <member name="M:System.Numerics.VectorExtensions.ToVector2(Windows.Foundation.Size)">
+            <summary>
+            Returns a Vector2 whose coordinates are the height and width of the Size.
+            </summary>
+            <param name="size">The Size to convert.</param>
+            <returns>The Vector2.</returns>
+        </member>
+    </members>
+</doc>
