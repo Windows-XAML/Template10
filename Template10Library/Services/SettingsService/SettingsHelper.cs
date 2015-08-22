@@ -7,40 +7,18 @@ using System.Reflection;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
+using Template10.Utils;
 using Windows.Foundation.Collections;
 using Windows.Storage;
 
 namespace Template10.Services.SettingsService
 {
     // https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SettingsService
+
+	[Obsolete("Use Settings.Local or Settings.Roaming instead")]
     public class SettingsHelper
     {
         const string parse = "Parse";
-        readonly Type[] primitives = new Type[]
-        {
-            typeof (Enum),
-            typeof (String),
-            typeof (Char),
-            typeof (Guid),
-
-            typeof (Boolean),
-            typeof (Byte),
-            typeof (Int16),
-            typeof (Int32),
-            typeof (Int64),
-            typeof (Single),
-            typeof (Double),
-            typeof (Decimal),
-
-            typeof (SByte),
-            typeof (UInt16),
-            typeof (UInt32),
-            typeof (UInt64),
-
-            typeof (DateTime),
-            typeof (DateTimeOffset),
-            typeof (TimeSpan),
-        };
 
         public IPropertySet Container(SettingsStrategy strategy)
         {
@@ -65,7 +43,7 @@ namespace Template10.Services.SettingsService
         public void Write<T>(string key, T value, SettingsStrategy strategy = SettingsStrategy.Local)
         {
             var settings = Container(strategy);
-            if (IsPrimitive(typeof(T)))
+            if (TypeUtil.IsPrimitive(typeof(T)))
             {
                 try { settings[key] = value.ToString(); }
                 catch { settings[key] = string.Empty; }
@@ -96,7 +74,7 @@ namespace Template10.Services.SettingsService
                     return otherwise;
                 }
                 // attempt to deserialize
-                if (IsPrimitive(typeof(T)))
+                if (TypeUtil.IsPrimitive(typeof(T)))
                 {
                     var parse = typeof(T).GetRuntimeMethod(SettingsHelper.parse, new[] { typeof(string) });
                     return (T)parse.Invoke(null, new[] { untyped });
@@ -120,17 +98,7 @@ namespace Template10.Services.SettingsService
             return JsonConvert.DeserializeObject<T>(json);
         }
 
-        private bool IsPrimitive(Type type)
-        {
-            var nulls = from t in primitives
-                        where t.GetTypeInfo().IsValueType
-                        select typeof(Nullable<>).MakeGenericType(t);
-            var all = primitives.Concat(nulls);
-            if (all.Any(x => x.GetTypeInfo().IsAssignableFrom(type.GetTypeInfo())))
-                return true;
-            var nullable = Nullable.GetUnderlyingType(type);
-            return nullable != null && nullable.GetTypeInfo().IsEnum;
-        }
+
 
         public enum SettingsStrategy { Local, Roam, Temp }
     }

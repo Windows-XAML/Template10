@@ -7,6 +7,7 @@ namespace Template10.Services.KeyboardService
     {
         KeyboardHelper _helper;
 
+
         public KeyboardService()
         {
             _helper = new KeyboardHelper();
@@ -15,6 +16,7 @@ namespace Template10.Services.KeyboardService
             _helper.ControlEGestured = () => { AfterControlEGesture?.Invoke(); };
             _helper.WindowZGestured = () => { AfterWindowZGesture?.Invoke(); };
         }
+
 
         public Action AfterBackGesture { get; set; }
         public Action AfterForwardGesture { get; set; }
