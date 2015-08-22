@@ -84,25 +84,25 @@ namespace Template10.Common
         #pragma warning disable 809
 
         [Obsolete("Use OnStartAsync()")]
-        protected override async void OnActivated(IActivatedEventArgs e) { await InternalActivatedAsync(e); }
+        protected override sealed async void OnActivated(IActivatedEventArgs e) { await InternalActivatedAsync(e); }
 
         [Obsolete("Use OnStartAsync()")]
-        protected override async void OnCachedFileUpdaterActivated(CachedFileUpdaterActivatedEventArgs args) { await InternalActivatedAsync(args); }
+        protected override sealed async void OnCachedFileUpdaterActivated(CachedFileUpdaterActivatedEventArgs args) { await InternalActivatedAsync(args); }
 
         [Obsolete("Use OnStartAsync()")]
-        protected override async void OnFileActivated(FileActivatedEventArgs args) { await InternalActivatedAsync(args); }
+        protected override sealed async void OnFileActivated(FileActivatedEventArgs args) { await InternalActivatedAsync(args); }
 
         [Obsolete("Use OnStartAsync()")]
-        protected override async void OnFileOpenPickerActivated(FileOpenPickerActivatedEventArgs args) { await InternalActivatedAsync(args); }
+        protected override sealed async void OnFileOpenPickerActivated(FileOpenPickerActivatedEventArgs args) { await InternalActivatedAsync(args); }
 
         [Obsolete("Use OnStartAsync()")]
-        protected override async void OnFileSavePickerActivated(FileSavePickerActivatedEventArgs args) { await InternalActivatedAsync(args); }
+        protected override sealed async void OnFileSavePickerActivated(FileSavePickerActivatedEventArgs args) { await InternalActivatedAsync(args); }
 
         [Obsolete("Use OnStartAsync()")]
-        protected override async void OnSearchActivated(SearchActivatedEventArgs args) { await InternalActivatedAsync(args); }
+        protected override sealed async void OnSearchActivated(SearchActivatedEventArgs args) { await InternalActivatedAsync(args); }
 
         [Obsolete("Use OnStartAsync()")]
-        protected override async void OnShareTargetActivated(ShareTargetActivatedEventArgs args) { await InternalActivatedAsync(args); }
+        protected override sealed async void OnShareTargetActivated(ShareTargetActivatedEventArgs args) { await InternalActivatedAsync(args); }
 
         #pragma warning restore 809
 
