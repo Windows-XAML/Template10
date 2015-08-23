@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace Template10.Utils
+namespace Template10.Services.SettingsService
 {
 	public interface IStoreConverter
 	{

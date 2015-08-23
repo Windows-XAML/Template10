@@ -1,9 +1,7 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using Windows.Foundation.Collections;
 
-namespace Template10.Utils
+namespace Template10.Services.SettingsService
 {
 	public class PropertyStore
 	{

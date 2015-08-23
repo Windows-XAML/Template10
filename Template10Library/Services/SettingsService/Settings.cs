@@ -1,5 +1,4 @@
-﻿using Template10.Utils;
-using Windows.Foundation.Collections;
+﻿using Windows.Foundation.Collections;
 using Windows.Storage;
 
 namespace Template10.Services.SettingsService
@@ -7,7 +6,7 @@ namespace Template10.Services.SettingsService
 	public class Settings : PropertyStore
 	{
 		public static readonly Settings Local;
-        public static readonly Settings Roaming;
+		public static readonly Settings Roaming;
 
 		private static readonly IPropertyMapping Mapping;
 

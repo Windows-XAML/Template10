@@ -1,13 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Template10.Utils;
+using Template10.Services.SettingsService;
 using Windows.Foundation.Collections;
 
-namespace Template10LibraryTests.Utils
+namespace Template10LibraryTests.Services.SettingsService
 {
 	[TestClass]
 	public class JsonStoreTest
