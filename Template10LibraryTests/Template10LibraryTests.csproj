@@ -101,7 +101,6 @@
       <DependentUpon>UnitTestApp.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\JsonStoreTest.cs" />
-    <Compile Include="Utils\PropertyStoreTest.cs" />
     <Compile Include="Utils\TypeUtilTest.cs" />
   </ItemGroup>
   <ItemGroup>

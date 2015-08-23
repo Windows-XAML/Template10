@@ -143,7 +143,6 @@
     <Compile Include="Services\NavigationService\NavigatingEventArgs.cs" />
     <Compile Include="Services\NavigationService\NavigationService.cs" />
     <Compile Include="Services\SettingsService\Settings.cs" />
-    <Compile Include="Services\SettingsService\SettingsHelper.cs" />
     <Compile Include="Utils\PropertyMapping.cs" />
     <Compile Include="Utils\PropertyStore.cs" />
     <Compile Include="Utils\TypeUtil.cs" />
