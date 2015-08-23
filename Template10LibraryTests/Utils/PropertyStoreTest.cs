@@ -10,39 +10,56 @@ using Windows.Foundation.Collections;
 namespace Template10LibraryTests.Utils
 {
 	[TestClass]
-	public class PropertyStoreTest
+	public class PropertyStoreTest : JsonStoreTest
 	{
+		//TODO nullable types
 
-		[TestMethod]
-		public void ConstructorTest()
+		public override void SetUp()
 		{
-			Assert.ThrowsException<ArgumentNullException>(() => new PropertyStore(null, new PropertyMapping()));
+			Values = new PropertySet();
+			Store = new PropertyStore(Values, new PropertyMapping());
 		}
 
 		[TestMethod]
-		public void ReadWriteTest()
+		public override void ConstructorTest()
 		{
-			var values = new PropertySet();
-			var store = new PropertyStore(values, new PropertyMapping());
+			Assert.ThrowsException<ArgumentNullException>(() => new PropertyStore(null, new PropertyMapping()));
+		}
+		
+		[TestMethod]
+		public override void ReadWriteBooleanTest()
+		{
+			base.ReadWriteBooleanTest();
+		}
 
-			store.Write("stringKey", "stringValue");
-			store.Write("intKey", 42);
+		[TestMethod]
+		public override void ReadWriteIntTest()
+		{
+			base.ReadWriteIntTest();
+		}
 
-			var date = DateTime.Now;
-			store.Write("dateKey", date);
+		[TestMethod]
+		public override void ReadWriteStringTest()
+		{
+			base.ReadWriteStringTest();
+		}
 
-			var dateOffset = DateTimeOffset.Now;
-			store.Write("dateOffsetKey", dateOffset);
+		[TestMethod]
+		public override void ReadWriteFloatTest()
+		{
+			base.ReadWriteFloatTest();
+		}
 
-			double doub = 2.34566;
-			store.Write("doubleKey", doub);
+		[TestMethod]
+		public override void ReadWriteEnumTest()
+		{
+			base.ReadWriteEnumTest();
+		}
 
-
-			Assert.AreEqual("stringValue", store.Read("stringKey", "none"));
-			Assert.AreEqual(42, store.Read("intKey", -1));
-			Assert.AreEqual(date, store.Read("dateKey", new DateTime()));
-			Assert.AreEqual(dateOffset, store.Read("dateOffsetKey", dateOffset));
-			Assert.AreEqual(doub, store.Read("doubleKey", 0.0));
+		[TestMethod]
+		public override void ReadWriteDateTest()
+		{
+			base.ReadWriteDateTest();
 		}
 	}
 }

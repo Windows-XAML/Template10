@@ -9,11 +9,11 @@ namespace Template10.Services.SettingsService
 		public static readonly Settings Local;
         public static readonly Settings Roaming;
 
-		private static readonly PropertyMapping Mapping;
+		private static readonly IPropertyMapping Mapping;
 
 		static Settings()
 		{
-			Mapping = new PropertyMapping();
+			Mapping = new JsonMapping();
 			Local = new Settings(ApplicationData.Current.LocalSettings.Values);
 			Roaming = new Settings(ApplicationData.Current.RoamingSettings.Values);
 		}
