@@ -5,7 +5,6 @@
 
     <x:Double x:Key="NarrowMinWidth">0</x:Double>
     <x:Double x:Key="MediumMinWidth">521</x:Double>
-    <x:Double x:Key="WideMinWidth">1024</x:Double>
 
     <ResourceDictionary.ThemeDictionaries>
 
@@ -29,7 +28,6 @@
                 <!-- size -->
                 <Setter Property="VisualStateNarrowMinWidth" Value="{StaticResource NarrowMinWidth}" />
                 <Setter Property="VisualStateMediumMinWidth" Value="{StaticResource MediumMinWidth}" />
-                <Setter Property="VisualStateWideMinWidth" Value="{StaticResource WideMinWidth}" />
                 <!-- style-->
                 <Setter Property="HamburgerBackground" Value="#FFD13438" />
                 <Setter Property="HamburgerForeground" Value="White" />
@@ -43,7 +41,6 @@
                 <!-- size -->
                 <Setter Property="VisualStateNarrowMinWidth" Value="{StaticResource NarrowMinWidth}" />
                 <Setter Property="VisualStateMediumMinWidth" Value="{StaticResource MediumMinWidth}" />
-                <Setter Property="VisualStateWideMinWidth" Value="{StaticResource WideMinWidth}" />
                 <!-- style -->
                 <Setter Property="HeaderBackground" Value="Gainsboro" />
                 <Setter Property="HeaderForeground" Value="#FF2B2B2B" />
