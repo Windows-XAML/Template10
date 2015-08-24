@@ -115,6 +115,7 @@
   <ItemGroup>
     <Compile Include="Behaviors\NavButtonBehavior.cs" />
     <Compile Include="Behaviors\TextBoxEnterKeyBehavior.cs" />
+    <Compile Include="Behaviors\TimeoutAction.cs" />
     <Compile Include="Behaviors\TimerTriggerBehavior.cs" />
     <Compile Include="Common\Bootstrapper.cs" />
     <Compile Include="Common\DispatcherWrapper.cs" />

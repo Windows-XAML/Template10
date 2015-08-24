@@ -50,9 +50,13 @@ namespace Template10.Common
             set
             {
                 if (value && !IsBusy)
-                    (Window.Content as Panel).Children.Add(_busyIndicator);
+                {
+                    
+                }
                 else if (!value && IsBusy)
-                    (Window.Content as Panel).Children.Remove(_busyIndicator);
+                {
+                    
+                }
             }
         }
 
