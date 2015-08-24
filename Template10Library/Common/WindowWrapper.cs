@@ -18,7 +18,7 @@ namespace Template10.Common
         public static WindowWrapper Current(Window window) { return ActiveWrappers.FirstOrDefault(x => x.Window == window); }
         public static WindowWrapper Current(NavigationService nav) { return ActiveWrappers.FirstOrDefault(x => x.NavigationServices.Contains(nav)); }
 
-        public WindowWrapper(Window window)
+        internal WindowWrapper(Window window)
         {
             if (ActiveWrappers.Any(x => x.Window == window))
                 throw new Exception("Windows already has a wrapper; use Current(window) to fetch.");

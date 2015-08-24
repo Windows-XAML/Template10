@@ -13,7 +13,7 @@ namespace Template10.Services.NavigationService
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-NavigationService
     public class FrameFacade
     {
-        public FrameFacade(Frame frame)
+        internal FrameFacade(Frame frame)
         {
             Frame = frame;
             _navigatedEventHandlers = new List<EventHandler<NavigatedEventArgs>>();

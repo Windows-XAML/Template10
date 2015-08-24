@@ -215,7 +215,7 @@ namespace Template10.Controls
                     // display content inside the splitview
                     ShellSplitView.Content = NavigationService.Frame;
                 }
-                else if (NavigationService.Frame.Content != null)
+                else
                 {
                     // display content without splitview (splash scenario)
                     Action revert = () =>
