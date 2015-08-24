@@ -198,6 +198,9 @@ namespace Template10.Services.NavigationService
 
         public void SaveNavigation()
         {
+            if (CurrentPageType == null)
+                return;
+
             var state = FrameFacade.PageStateContainer(GetType());
             if (state == null)
             {
