@@ -12,6 +12,6 @@ namespace Minimal.Views
         }
 
         // strongly-typed view models enable x:bind
-        public SettingsPageViewModel ViewModel { get { return this.DataContext as SettingsPageViewModel; } }
+        public SettingsPageViewModel ViewModel => this.DataContext as SettingsPageViewModel;
     }
 }

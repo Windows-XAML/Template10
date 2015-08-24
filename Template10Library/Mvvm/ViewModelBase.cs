@@ -11,7 +11,7 @@ using Windows.UI.Xaml.Navigation;
 namespace Template10.Mvvm
 {
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-MVVM
-    public abstract class ViewModelBase : BindableBase, INavigable
+    public abstract class ViewModelBase : BindableBase, INavigable, IBindable
     {
         public string Identifier { get; set; }
 

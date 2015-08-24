@@ -12,6 +12,6 @@ namespace Minimal.Views
         }
 
         // strongly-typed view models enable x:bind
-        public DetailPageViewModel ViewModel { get { return DataContext as DetailPageViewModel; } }
+        public DetailPageViewModel ViewModel => DataContext as DetailPageViewModel; 
     }
 }

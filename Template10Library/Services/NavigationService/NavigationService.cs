@@ -24,7 +24,7 @@ namespace Template10.Services.NavigationService
         object LastNavigationParameter { get; set; }
         string LastNavigationType { get; set; }
 
-        public NavigationService(Frame frame)
+        internal NavigationService(Frame frame)
         {
             FrameFacade = new FrameFacade(frame);
             FrameFacade.Navigating += async (s, e) =>
@@ -198,8 +198,8 @@ namespace Template10.Services.NavigationService
 
         public void SaveNavigation()
         {
-            // it is possible to close the application before we have navigated and created state
-            if (CurrentPageType == null) return;
+            if (CurrentPageType == null)
+                return;
 
             var state = FrameFacade.PageStateContainer(GetType());
             if (state == null)

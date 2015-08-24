@@ -13,7 +13,7 @@ namespace Template10.Common
     {
         public static new BootStrapper Current { get; private set; }
 
-        public BootStrapper()
+        protected BootStrapper()
         {
             Current = this;
             Resuming += (s, e) => { OnResuming(s, e); };
@@ -311,7 +311,7 @@ namespace Template10.Common
 
             // create the default frame only if there's nothing already there
             // if it is not null, by the way, then the developer injected something & they win
-            if (Window.Current.Content == splash || Window.Current.Content == null)
+            if (Window.Current.Content == null || Window.Current.Content == splash)
             {
                 // build the default frame
                 Window.Current.Content = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include).Frame;

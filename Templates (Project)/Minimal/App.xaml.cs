@@ -20,7 +20,7 @@ namespace Minimal
             ShowShellBackButton = SettingsService.Instance.UseShellBackButton;
 
             // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SplashScreen
-            SplashFactory = (e) => new Views.Splash(e);
+            //SplashFactory = (e) => new Views.Splash(e);
         }
 
         // runs even if restored from state
