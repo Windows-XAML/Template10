@@ -182,7 +182,7 @@
                 </VisualState>
                 <VisualState x:Name="VisualStateMedium">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger x:Name="VisualStateMediumTrigger" MinWindowWidth="521" />
+                        <AdaptiveTrigger x:Name="VisualStateNormalTrigger" MinWindowWidth="521" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="ShellSplitView.DisplayMode" Value="CompactOverlay" />
