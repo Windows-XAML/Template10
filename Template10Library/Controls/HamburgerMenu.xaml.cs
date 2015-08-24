@@ -56,8 +56,9 @@ namespace Template10.Controls
             if (commandInfo == null)
                 throw new NullReferenceException("CommandParameter is not set");
 
-            if (ShellSplitView.DisplayMode == SplitViewDisplayMode.Overlay
-                || ShellSplitView.DisplayMode == SplitViewDisplayMode.CompactOverlay)
+            if (ShellSplitView.DisplayMode == SplitViewDisplayMode.Inline && ShellSplitView.IsPaneOpen)
+                ShellSplitView.IsPaneOpen = false;
+            else if (ShellSplitView.DisplayMode == SplitViewDisplayMode.CompactInline && ShellSplitView.IsPaneOpen)
                 ShellSplitView.IsPaneOpen = false;
 
             try
