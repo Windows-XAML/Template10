@@ -27,7 +27,14 @@ namespace Template10.Mvvm
         {
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
                 return;
-            _handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            try
+            {
+                _handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+            catch
+            {
+                // nothing
+            }
         }
 
         public bool Set<T>(ref T storage, T value, [CallerMemberName]string propertyName = null)
