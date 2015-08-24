@@ -24,8 +24,10 @@ namespace Minimal.ViewModels
             set { _settings.UseShellBackButton = value; base.RaisePropertyChanged(); }
         }
 
-        public void ShowBusy() { Template10.Common.WindowWrapper.Current().IsBusy = true; }
-        public void HideBusy() { Template10.Common.WindowWrapper.Current().IsBusy = false; }
+        private string _BusyText = "Busy text";
+        public string BusyText { get { return _BusyText; } set { Set(ref _BusyText, BusyText); } }
+        public void ShowBusy() { Views.Shell.SetBusyIndicator(true, _BusyText); }
+        public void HideBusy() { Views.Shell.SetBusyIndicator(false); }
 
         #endregion
 

@@ -37,7 +37,7 @@ namespace Minimal
         public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
             // simulated long-running load on startup
-            await Task.Delay(5000);
+            await Task.Delay(0);
 
             // start user experience
             switch (DecipherStartCause(args))
