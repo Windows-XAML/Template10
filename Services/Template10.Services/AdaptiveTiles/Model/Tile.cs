@@ -7,17 +7,18 @@ namespace Template10.Services.AdaptiveTiles.Model
     {
         public Visual Visual { get; set; }
 
-        public XElement GetXElement()
+        public XElement ToXElement()
         {
-            return new XElement("tile",new XAttribute("version","3"), Visual.GetXElement());
+            return new XElement("tile",new XAttribute("version","3"), Visual.ToXElement());
         }
 
-        public XmlDocument GetXmlDocument()
+        public XmlDocument ToXmlDocument()
         {
-            XDocument document = new XDocument(this.GetXElement());
-            document.Declaration = new XDeclaration("1.0", "utf-8", "yes");
+            XDocument document = new XDocument(this.ToXElement())
+            {
+                Declaration = new XDeclaration("1.0", "utf-8", "yes")
+            };
             var xmlDoc = new XmlDocument();
-            var xmlAsString = document.ToString();
             xmlDoc.LoadXml(document.ToString());
             return xmlDoc;
         }

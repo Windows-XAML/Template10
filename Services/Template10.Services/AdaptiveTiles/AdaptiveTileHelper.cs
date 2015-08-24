@@ -13,14 +13,14 @@ namespace Template10.Services.AdaptiveTiles
         public void UpdatePrimaryTile(Tile tile)
         {
             var updater = TileUpdateManager.CreateTileUpdaterForApplication();
-            TileNotification notification = new TileNotification(tile.GetXmlDocument());
+            TileNotification notification = new TileNotification(tile.ToXmlDocument());
             updater.Update(notification);
         }
 
         public void UpdateSecondaryTile(Tile tile, string tileId)
         {
             var updater = TileUpdateManager.CreateTileUpdaterForSecondaryTile(tileId);
-            TileNotification notification = new TileNotification(tile.GetXmlDocument());
+            TileNotification notification = new TileNotification(tile.ToXmlDocument());
             updater.Update(notification);
         }
     }

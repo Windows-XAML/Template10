@@ -198,6 +198,9 @@ namespace Template10.Services.NavigationService
 
         public void SaveNavigation()
         {
+            // it is possible to close the application before we have navigated and created state
+            if (CurrentPageType == null) return;
+
             var state = FrameFacade.PageStateContainer(GetType());
             if (state == null)
             {

@@ -11,7 +11,7 @@ namespace Template10.Services.AdaptiveTiles.Model
         public TextStyle? HintStyle { get; set; }
         public TextHintAlign? HintAlign { get; set; }
 
-        public XElement GetXElement()
+        public XElement ToXElement()
         {
             var element = new XElement("text", Content);
 
