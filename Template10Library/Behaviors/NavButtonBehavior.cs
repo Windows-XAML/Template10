@@ -56,7 +56,6 @@ namespace Template10.Behaviors
 
         private void Calculate()
         {
-            System.Diagnostics.Debug.WriteLine("Calculate + " + Direction);
             switch (Direction)
             {
                 case Directions.Back:
