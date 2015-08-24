@@ -20,6 +20,6 @@ namespace Template10.Mvvm
         public virtual void OnNavigatingFrom(Services.NavigationService.NavigatingEventArgs args) { /* nothing by default */ }
 
         public NavigationService NavigationService { get; set; }
-        public DispatcherWrapper Dispatcher { get { return Common.WindowWrapper.Current(NavigationService).Dispatcher; } }
+        public DispatcherWrapper Dispatcher { get { return Common.WindowWrapper.Current(NavigationService)?.Dispatcher; } }
     }
 }
