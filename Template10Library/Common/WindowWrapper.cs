@@ -16,7 +16,7 @@ namespace Template10.Common
         public readonly static List<WindowWrapper> ActiveWrappers = new List<WindowWrapper>();
         public static WindowWrapper Current() { return ActiveWrappers.FirstOrDefault(x => x.Window == Window.Current) ?? Default(); }
         public static WindowWrapper Current(Window window) { return ActiveWrappers.FirstOrDefault(x => x.Window == window); }
-        public static WindowWrapper Current(NavigationService nav) { return ActiveWrappers.First(x => x.NavigationServices.Contains(nav)); }
+        public static WindowWrapper Current(NavigationService nav) { return ActiveWrappers.FirstOrDefault(x => x.NavigationServices.Contains(nav)); }
 
         public WindowWrapper(Window window)
         {
