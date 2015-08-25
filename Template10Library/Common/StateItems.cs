@@ -22,6 +22,21 @@ namespace Template10.Common
             return item;
         }
 
+        public void Remove(Type type)
+        {
+            this.RemoveAll(x => x.Type.Equals(type));
+        }
+
+        public void Remove(Type type, string key)
+        {
+            this.RemoveAll(x => x.Type.Equals(type) && x.Key.Equals(key));
+        }
+
+        public void Remove(object value)
+        {
+            this.RemoveAll(x => x.Value == value);
+        }
+
         public bool Contains(Type type, string key, object value)
         {
             return this.Any(x => (x.Type?.Equals(type) ?? false) && (x.Key?.Equals(key) ?? false) && (x.Value == value));
