@@ -21,6 +21,6 @@ namespace Template10.Mvvm
 
         public NavigationService NavigationService { get; set; }
         public DispatcherWrapper Dispatcher { get { return Common.WindowWrapper.Current(NavigationService)?.Dispatcher; } }
-        public List<Tuple<Type, String, Object>> SessionState { get { return BootStrapper.Current.SessionState; } }
+        public Common.StateItems SessionState { get { return BootStrapper.Current.SessionState; } }
     }
 }
