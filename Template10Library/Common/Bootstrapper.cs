@@ -14,8 +14,7 @@ namespace Template10.Common
     {
         public static new BootStrapper Current { get; private set; }
 
-        private List<Tuple<Type, String, Object>> _sessionState = new List<Tuple<Type, string, object>>();
-        public List<Tuple<Type, String, Object>> SessionState { get { return _sessionState; } }
+        public StateItems SessionState { get; set; } = new StateItems();
 
         protected BootStrapper()
         {
