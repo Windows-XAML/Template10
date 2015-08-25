@@ -7,6 +7,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.UI.Core;
 using System.Linq;
 using System.Collections.Generic;
+using Template10.Services.NavigationService;
 
 namespace Template10.Common
 {
@@ -16,7 +17,7 @@ namespace Template10.Common
 
         public virtual T Resolve<T>(Type type) { return default(T); }
 
-        public virtual Services.NavigationService.INavigable ResolveForPage(Type page) { return null; }
+        public virtual Services.NavigationService.INavigable ResolveForPage(Type page, NavigationService navigationService) { return null; }
 
         #endregion
 
