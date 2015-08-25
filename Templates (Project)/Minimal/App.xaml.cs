@@ -20,7 +20,7 @@ namespace Minimal
             ShowShellBackButton = SettingsService.Instance.UseShellBackButton;
 
             // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SplashScreen
-            SplashFactory = (e) => new Views.Splash(e);
+            //SplashFactory = (e) => new Views.Splash(e);
         }
 
         // runs even if restored from state
@@ -37,7 +37,7 @@ namespace Minimal
         public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
             // simulated long-running load on startup
-            await Task.Delay(5000);
+            await Task.Delay(0);
 
             // start user experience
             switch (DecipherStartCause(args))

@@ -32,7 +32,7 @@ namespace Template10.Services.AdaptiveTiles.Model
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException("HintOverlay", "Must in range of [0-100]");
+                    throw new ArgumentOutOfRangeException(nameof(HintOverlay), "Must in range of [0-100]");
                 }
             }
         }
@@ -43,7 +43,7 @@ namespace Template10.Services.AdaptiveTiles.Model
 
         public List<IVisualChild> Children { get; set; } = new List<IVisualChild>();
 
-        public XElement GetXElement()
+        public XElement ToXElement()
         {
             var element = new XElement("binding", GetXAttributes());
             element.Add(new XAttribute("template", Template));
@@ -84,7 +84,7 @@ namespace Template10.Services.AdaptiveTiles.Model
 
             foreach (var child in Children)
             {
-                element.Add(child.GetXElement());
+                element.Add(child.ToXElement());
             }
 
             return element;

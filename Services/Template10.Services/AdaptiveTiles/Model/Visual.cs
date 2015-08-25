@@ -11,7 +11,7 @@ namespace Template10.Services.AdaptiveTiles.Model
         {
             get; set;
         }
-        public XElement GetXElement()
+        public XElement ToXElement()
         {
             var element = new XElement("visual", GetXAttributes());
             if (!string.IsNullOrWhiteSpace(Version))
@@ -21,7 +21,7 @@ namespace Template10.Services.AdaptiveTiles.Model
 
             foreach (var binding in Bindings)
             {
-                element.Add(binding.GetXElement());
+                element.Add(binding.ToXElement());
             }
 
             return element;

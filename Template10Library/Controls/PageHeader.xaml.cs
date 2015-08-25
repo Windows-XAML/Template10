@@ -53,20 +53,13 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty VisualStateNarrowMinWidthProperty =
             DependencyProperty.Register("VisualStateNarrowMinWidth", typeof(double), typeof(PageHeader), new PropertyMetadata(null, (d, e) => { (d as PageHeader).VisualStateNarrowMinWidth = (double)e.NewValue; }));
-        public double VisualStateMediumMinWidth
+        public double VisualStateNormalMinWidth
         {
-            get { return VisualStateMediumTrigger.MinWindowWidth; }
-            set { SetValue(VisualStateMediumMinWidthProperty, VisualStateMediumTrigger.MinWindowWidth = value); }
+            get { return VisualStateNormalTrigger.MinWindowWidth; }
+            set { SetValue(VisualStateNormalMinWidthProperty, VisualStateNormalTrigger.MinWindowWidth = value); }
         }
-        public static readonly DependencyProperty VisualStateMediumMinWidthProperty =
-            DependencyProperty.Register("VisualStateMediumMinWidth", typeof(double), typeof(PageHeader), new PropertyMetadata(null, (d, e) => { (d as PageHeader).VisualStateMediumMinWidth = (double)e.NewValue; }));
-        public double VisualStateWideMinWidth
-        {
-            get { return VisualStateWideTrigger.MinWindowWidth; }
-            set { SetValue(VisualStateWideMinWidthProperty, VisualStateWideTrigger.MinWindowWidth = value); }
-        }
-        public static readonly DependencyProperty VisualStateWideMinWidthProperty =
-            DependencyProperty.Register("VisualStateWideMinWidth", typeof(double), typeof(PageHeader), new PropertyMetadata(null, (d, e) => { (d as PageHeader).VisualStateWideMinWidth = (double)e.NewValue; }));
+        public static readonly DependencyProperty VisualStateNormalMinWidthProperty =
+            DependencyProperty.Register("VisualStateNormalMinWidth", typeof(double), typeof(PageHeader), new PropertyMetadata(null, (d, e) => { (d as PageHeader).VisualStateNormalMinWidth = (double)e.NewValue; }));
 
         #endregion
 

@@ -56,8 +56,9 @@ namespace Template10.Controls
             if (commandInfo == null)
                 throw new NullReferenceException("CommandParameter is not set");
 
-            if (ShellSplitView.DisplayMode == SplitViewDisplayMode.Overlay
-                || ShellSplitView.DisplayMode == SplitViewDisplayMode.CompactOverlay)
+            if (ShellSplitView.DisplayMode == SplitViewDisplayMode.Overlay && ShellSplitView.IsPaneOpen)
+                ShellSplitView.IsPaneOpen = false;
+            else if (ShellSplitView.DisplayMode == SplitViewDisplayMode.CompactOverlay && ShellSplitView.IsPaneOpen)
                 ShellSplitView.IsPaneOpen = false;
 
             try
@@ -81,26 +82,17 @@ namespace Template10.Controls
             set { SetValue(VisualStateNarrowMinWidthProperty, VisualStateNarrowTrigger.MinWindowWidth = value); }
         }
         public static readonly DependencyProperty VisualStateNarrowMinWidthProperty =
-            DependencyProperty.Register("VisualStateNarrowMinWidth", typeof(double),
+            DependencyProperty.Register(nameof(VisualStateNarrowMinWidth), typeof(double),
                 typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => { (d as HamburgerMenu).VisualStateNarrowMinWidth = (double)e.NewValue; }));
 
-        public double VisualStateMediumMinWidth
+        public double VisualStateNormalMinWidth
         {
-            get { return VisualStateMediumTrigger.MinWindowWidth; }
-            set { SetValue(VisualStateMediumMinWidthProperty, VisualStateMediumTrigger.MinWindowWidth = value); }
+            get { return VisualStateNormalTrigger.MinWindowWidth; }
+            set { SetValue(VisualStateNormalMinWidthProperty, VisualStateNormalTrigger.MinWindowWidth = value); }
         }
-        public static readonly DependencyProperty VisualStateMediumMinWidthProperty =
-            DependencyProperty.Register("VisualStateMediumMinWidth", typeof(double),
-                typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => { (d as HamburgerMenu).VisualStateMediumMinWidth = (double)e.NewValue; }));
-
-        public double VisualStateWideMinWidth
-        {
-            get { return VisualStateWideTrigger.MinWindowWidth; }
-            set { SetValue(VisualStateWideMinWidthProperty, VisualStateWideTrigger.MinWindowWidth = value); }
-        }
-        public static readonly DependencyProperty VisualStateWideMinWidthProperty =
-            DependencyProperty.Register("VisualStateWideMinWidth", typeof(double),
-                typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => { (d as HamburgerMenu).VisualStateWideMinWidth = (double)e.NewValue; }));
+        public static readonly DependencyProperty VisualStateNormalMinWidthProperty =
+            DependencyProperty.Register(nameof(VisualStateNormalMinWidth), typeof(double),
+                typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => { (d as HamburgerMenu).VisualStateNormalMinWidth = (double)e.NewValue; }));
 
         #endregion
 
@@ -214,7 +206,7 @@ namespace Template10.Controls
                     // display content inside the splitview
                     ShellSplitView.Content = NavigationService.Frame;
                 }
-                else if (NavigationService.Frame.Content != null)
+                else
                 {
                     // display content without splitview (splash scenario)
                     Action revert = () =>

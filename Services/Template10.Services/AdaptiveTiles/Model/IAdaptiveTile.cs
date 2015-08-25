@@ -4,6 +4,6 @@ namespace Template10.Services.AdaptiveTiles.Model
 {
     public interface IAdaptiveTile
     {
-        XElement GetXElement();
+        XElement ToXElement();
     }
 }
