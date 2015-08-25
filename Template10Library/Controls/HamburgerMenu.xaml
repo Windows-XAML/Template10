@@ -180,7 +180,7 @@
                         <Setter Target="ShellSplitView.IsPaneOpen" Value="False" />
                     </VisualState.Setters>
                 </VisualState>
-                <VisualState x:Name="VisualStateMedium">
+                <VisualState x:Name="VisualStateNormal">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger x:Name="VisualStateNormalTrigger" MinWindowWidth="521" />
                     </VisualState.StateTriggers>

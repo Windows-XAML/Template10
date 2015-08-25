@@ -18,6 +18,25 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+        <!-- adaptive states -->
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <VisualState x:Name="VisualStateNarrow">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger x:Name="VisualStateNarrowTrigger" MinWindowWidth="{StaticResource NarrowMinWidth}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters />
+                </VisualState>
+                <VisualState x:Name="VisualStateNormal">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger x:Name="VisualStateNormalTrigger" MinWindowWidth="{StaticResource NormalMinWidth}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters />
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
@@ -25,13 +44,11 @@
 
         <!-- header -->
         <controls:PageHeader Text="Main Page" BackButtonVisibility="Collapsed" Frame="{x:Bind Frame, Mode=OneWay}">
-            <controls:PageHeader.PrimaryCommands>
-                <AppBarButton Icon="Forward" Label="Forward">
-                    <Interactivity:Interaction.Behaviors>
-                        <Behaviors:NavButtonBehavior Direction="Forward" Frame="{x:Bind Frame, Mode=OneWay}"/>
-                    </Interactivity:Interaction.Behaviors>
-                </AppBarButton>
-            </controls:PageHeader.PrimaryCommands>
+            <AppBarButton Icon="Forward" Label="Forward">
+                <Interactivity:Interaction.Behaviors>
+                    <Behaviors:NavButtonBehavior Direction="Forward" Frame="{x:Bind Frame, Mode=OneWay}"/>
+                </Interactivity:Interaction.Behaviors>
+            </AppBarButton>
         </controls:PageHeader>
 
         <!--#region content-->
