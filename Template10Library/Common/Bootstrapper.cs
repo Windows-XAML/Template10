@@ -12,6 +12,14 @@ namespace Template10.Common
 {
     public abstract class BootStrapper : Application
     {
+        #region dependency injection
+
+        public virtual T Resolve<T>(Type type) { return default(T); }
+
+        public virtual Services.NavigationService.INavigable ResolveForPage(Type page) { return null; }
+
+        #endregion
+
         public static new BootStrapper Current { get; private set; }
 
         public StateItems SessionState { get; set; } = new StateItems();
