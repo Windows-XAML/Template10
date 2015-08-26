@@ -2,7 +2,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Template10.Views
+namespace Blank.Views
 {
     public sealed partial class MainPage : Page
     {

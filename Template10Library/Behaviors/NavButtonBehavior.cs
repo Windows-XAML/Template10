@@ -8,6 +8,7 @@ using Microsoft.Xaml.Interactivity;
 
 namespace Template10.Behaviors
 {
+    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-XamlBehaviors
     [Microsoft.Xaml.Interactivity.TypeConstraint(typeof(Button))]
     public class NavButtonBehavior : DependencyObject, IBehavior
     {
@@ -55,7 +56,6 @@ namespace Template10.Behaviors
 
         private void Calculate()
         {
-            System.Diagnostics.Debug.WriteLine("Calculate + " + Direction);
             switch (Direction)
             {
                 case Directions.Back:
@@ -96,6 +96,10 @@ namespace Template10.Behaviors
 
         public static Visibility CalculateForwardVisibility(Frame frame)
         {
+            // in some cases frame may be null, esp. race conditions
+            if (frame == null)
+                return Visibility.Collapsed;
+
             // by design it is not visible when not applicable
             var cangoforward = frame.CanGoForward;
             if (!cangoforward)
@@ -107,6 +111,10 @@ namespace Template10.Behaviors
 
         public static Visibility CalculateBackVisibility(Frame frame)
         {
+            // in some cases frame may be null, esp. race conditions
+            if (frame == null)
+                return Visibility.Collapsed;
+
             // by design it is not visible when not applicable
             var cangoback = frame.CanGoBack;
             if (!cangoback)

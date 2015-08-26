@@ -9,12 +9,12 @@ namespace Template10.Services.AdaptiveTiles.Model
         {
             get; set;
         }
-        public XElement GetXElement()
+        public XElement ToXElement()
         {
             var element = new XElement("group");
             foreach (var subgroup in SubGroups)
             {
-                element.Add(subgroup.GetXElement());
+                element.Add(subgroup.ToXElement());
             }
 
             return element;

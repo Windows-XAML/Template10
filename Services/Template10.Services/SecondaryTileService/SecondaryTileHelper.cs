@@ -45,11 +45,6 @@ namespace Template10.Services.SecondaryTileService
                 tile.VisualElements.Square150x150Logo = info.VisualElements.Square150x150Logo;
             }
 
-            if (info.VisualElements.Square30x30Logo != null)
-            {
-                tile.VisualElements.Square30x30Logo = info.VisualElements.Square30x30Logo;
-            }
-
             if (info.VisualElements.Square310x310Logo != null)
             {
                 tile.VisualElements.Square310x310Logo = info.VisualElements.Square310x310Logo;
@@ -109,7 +104,6 @@ namespace Template10.Services.SecondaryTileService
                 public bool ShowNameOnSquare310x310Logo { get; set; }
                 public bool ShowNameOnWide310x150Logo { get; set; }
                 public Uri Square150x150Logo { get; set; }
-                public Uri Square30x30Logo { get; set; }
                 public Uri Square310x310Logo { get; set; }
                 public Uri Wide310x150Logo { get; set; }
             }

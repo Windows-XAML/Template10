@@ -10,29 +10,29 @@
     xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
     mc:Ignorable="d" MinHeight="48" d:DesignWidth="400" x:Name="ThisPage">
 
+    <UserControl.Resources>
+        <SolidColorBrush x:Name="HeaderBackgroundBrush" Color="Gainsboro" />
+        <SolidColorBrush x:Name="HeaderForegroundBrush" Color="Black" />
+    </UserControl.Resources>
+
     <CommandBar x:Name="HeaderCommandBar" DataContext="{Binding ElementName=ThisPage}" 
+                Background="{x:Bind HeaderBackground, FallbackValue=Blue}"
+                Foreground="{x:Bind HeaderForeground, FallbackValue=White}"
                 Grid.Column="0" Grid.ColumnSpan="2" ClosedDisplayMode="Compact">
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
                 <VisualState x:Name="VisualStateNarrow">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="0" />
+                        <AdaptiveTrigger x:Name="VisualStateNarrowTrigger" MinWindowWidth="0" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="NarrowSpacer.Visibility" Value="Visible" />
                     </VisualState.Setters>
                 </VisualState>
-                <VisualState x:Name="VisualStateMedium">
+                <VisualState x:Name="VisualStateNormal">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger x:Name="VisualStateMediumTrigger" MinWindowWidth="521" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="VisualStateWide">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="1024" />
+                        <AdaptiveTrigger x:Name="VisualStateNormalTrigger" MinWindowWidth="521" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                     </VisualState.Setters>
@@ -42,7 +42,7 @@
         
         <CommandBar.Content>
             <StackPanel Orientation="Horizontal" Height="48" VerticalAlignment="Center">
-                <Rectangle x:Name="NarrowSpacer" Width="48" Visibility="Collapsed" />
+                <Rectangle x:Name="NarrowSpacer" Width="48" Visibility="Collapsed" IsHitTestVisible="False" />
                 <Grid VerticalAlignment="Center" Visibility="{x:Bind BackButtonVisibility}">
                     <Button Height="48" Width="48" Style="{StaticResource NavigationBackButtonSmallStyle}">
                         <Interactivity:Interaction.Behaviors>

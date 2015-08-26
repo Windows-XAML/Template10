@@ -3,6 +3,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Services.NavigationService
 {
+    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-NavigationService
     public class NavigatedEventArgs : EventArgs
     {
         public NavigatedEventArgs() { }
@@ -14,6 +15,6 @@ namespace Template10.Services.NavigationService
         }
         public NavigationMode NavigationMode { get; set; }
         public Type PageType { get; set; }
-        public string Parameter { get; set; }
+        public object Parameter { get; set; }
     }
 }

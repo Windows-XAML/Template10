@@ -18,7 +18,7 @@ namespace Template10.Services.AdaptiveTiles.Model
         public bool? HintRemoveMargin { get; set; }
         public ImageHintAlign? HintAlign { get; set; }
 
-        public XElement GetXElement()
+        public XElement ToXElement()
         {
             var element = new XElement("image", new XAttribute("src", Source));
             if (Placement.HasValue)

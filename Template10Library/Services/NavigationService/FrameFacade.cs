@@ -10,9 +10,10 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Services.NavigationService
 {
+    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-NavigationService
     public class FrameFacade
     {
-        public FrameFacade(Frame frame)
+        internal FrameFacade(Frame frame)
         {
             Frame = frame;
             _navigatedEventHandlers = new List<EventHandler<NavigatedEventArgs>>();
@@ -39,15 +40,15 @@ namespace Template10.Services.NavigationService
             return string.Format("{0}-PageState", FrameId);
         }
 
-        private Windows.Storage.ApplicationDataContainer frameStateContainer;
+        private Windows.Storage.ApplicationDataContainer _frameStateContainer;
         private Windows.Storage.ApplicationDataContainer FrameStateContainer()
         {
-            if (frameStateContainer != null)
-                return frameStateContainer;
+            if (_frameStateContainer != null)
+                return _frameStateContainer;
             var data = Windows.Storage.ApplicationData.Current;
             var key = GetFrameStateKey();
-            var container = data.LocalSettings.CreateContainer(key, Windows.Storage.ApplicationDataCreateDisposition.Always);
-            return container;
+            _frameStateContainer = data.LocalSettings.CreateContainer(key, Windows.Storage.ApplicationDataCreateDisposition.Always);
+            return _frameStateContainer;
         }
 
         public void SetFrameState(string key, string value)
@@ -118,10 +119,8 @@ namespace Template10.Services.NavigationService
 
         public void Refresh()
         {
-            var page = CurrentPageType;
-            var param = CurrentPageParam;
-            Frame.BackStack.Remove(Frame.BackStack.Last());
-            Navigate(page, param);
+            var state = Frame.GetNavigationState();
+            Frame.SetNavigationState(state);
         }
 
         public bool CanGoForward { get { return Frame.CanGoForward; } }
@@ -132,7 +131,7 @@ namespace Template10.Services.NavigationService
 
         public Type CurrentPageType { get; internal set; }
 
-        public string CurrentPageParam { get; internal set; }
+        public object CurrentPageParam { get; internal set; }
 
         public object GetValue(DependencyProperty dp) { return Frame.GetValue(dp); }
 

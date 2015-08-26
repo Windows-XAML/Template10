@@ -4,16 +4,17 @@ using System.Threading.Tasks;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Navigation;
 
-namespace Template10.ViewModels
+namespace Minimal.ViewModels
 {
-    public class MainPageViewModel : Mvvm.ViewModelBase
+    public class MainPageViewModel : Minimal.Mvvm.ViewModelBase
     {
         public MainPageViewModel()
         {
-            // designtime data
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
             {
+                // designtime data
                 Value = "Designtime value";
+                return;
             }
         }
 

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Template10.Common;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -12,6 +14,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Services.NavigationService
 {
+    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-NavigationService
     public class NavigationService
     {
         private const string EmptyNavigation = "1,0";
@@ -21,7 +24,7 @@ namespace Template10.Services.NavigationService
         object LastNavigationParameter { get; set; }
         string LastNavigationType { get; set; }
 
-        public NavigationService(Frame frame)
+        internal NavigationService(Frame frame)
         {
             FrameFacade = new FrameFacade(frame);
             FrameFacade.Navigating += async (s, e) =>
@@ -81,7 +84,7 @@ namespace Template10.Services.NavigationService
             }
         }
 
-        void NavigateTo(NavigationMode mode, string parameter)
+        void NavigateTo(NavigationMode mode, object parameter)
         {
             LastNavigationParameter = parameter;
             LastNavigationType = FrameFacade.Content.GetType().FullName;
@@ -94,6 +97,14 @@ namespace Template10.Services.NavigationService
             var page = FrameFacade.Content as Page;
             if (page != null)
             {
+                if (page.DataContext == null)
+                {
+                    // to support dependency injection, but keeping it optional.
+                    var viewmodel = BootStrapper.Current.ResolveForPage(page.GetType(), this);
+                    if (viewmodel != null)
+                        page.DataContext = viewmodel;
+                }
+
                 // call viewmodel
                 var dataContext = page.DataContext as INavigable;
                 if (dataContext != null)
@@ -116,45 +127,71 @@ namespace Template10.Services.NavigationService
         }
 
         // TODO: this will spawn a new window instead of navigating to an existing frame.
-        public async Task<int> OpenAsync(Type page, string parameter = null, ViewSizePreference size = ViewSizePreference.UseHalf)
+        public async Task OpenAsync(Type page, object parameter = null, ViewSizePreference size = ViewSizePreference.UseHalf)
         {
-            var coreView = CoreApplication.CreateNewView();
-            ApplicationView view = null;
-            var create = new Action(() =>
-            {
-                // setup content
-                var frame = new Frame();
-                frame.NavigationFailed += (s, e) => { System.Diagnostics.Debugger.Break(); };
-                frame.Navigate(page, parameter);
+            throw new NotImplementedException();
 
-                // create window
-                var window = Window.Current;
-                window.Content = frame;
+            //int id = default(int);
+            //ApplicationView view = null;
+            //var coreview = CoreApplication.CreateNewView();
+            //var dispatcher = WindowWrapper.Current().Dispatcher;
+            //await coreview.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            //{
+            //    var nav = BootStrapper.Current.NavigationServiceFactory(false);
+            //    Window.Current.Content = nav.Frame;
+            //    nav.Navigate(page, parameter);
 
-                // setup view/collapse
-                view = ApplicationView.GetForCurrentView();
-                Windows.Foundation.TypedEventHandler<ApplicationView, ApplicationViewConsolidatedEventArgs> consolidated = null;
-                consolidated = new Windows.Foundation.TypedEventHandler<ApplicationView, ApplicationViewConsolidatedEventArgs>((s, e) =>
-                {
-                    (s as ApplicationView).Consolidated -= consolidated;
-                    if (CoreApplication.GetCurrentView().IsMain)
-                        return;
-                    try { window.Close(); }
-                    finally { CoreApplication.GetCurrentView().CoreWindow.Activate(); }
-                });
-                view.Consolidated += consolidated;
-            });
+            //    view = ApplicationView.GetForCurrentView();
+            //    view.Consolidated += (s, e) =>
+            //    {
+            //        if (!CoreApplication.GetCurrentView().IsMain)
+            //            Window.Current.Close();
+            //    };
+            //    id = view.Id;
+            //});
+            //if (await ApplicationViewSwitcher.TryShowAsStandaloneAsync(id))
+            //{
+            //    // Switch to new view
+            //    await ApplicationViewSwitcher.SwitchAsync(id);
+            //}
 
-            // execute create
-            await WindowWrapper.Current().Dispatcher.DispatchAsync(create);
+            //var coreView = CoreApplication.CreateNewView();
+            //ApplicationView view = null;
+            //var create = new Action(() =>
+            //{
+            //    // setup content
+            //    var frame = new Frame();
+            //    frame.NavigationFailed += (s, e) => { System.Diagnostics.Debugger.Break(); };
+            //    frame.Navigate(page, parameter);
 
-            // show view
-            if (await ApplicationViewSwitcher.TryShowAsStandaloneAsync(view.Id, size))
-            {
-                // change focus
-                await ApplicationViewSwitcher.SwitchAsync(view.Id);
-            }
-            return view.Id;
+            //    // create window
+            //    var window = Window.Current;
+            //    window.Content = frame;
+
+            //    // setup view/collapse
+            //    view = ApplicationView.GetForCurrentView();
+            //    Windows.Foundation.TypedEventHandler<ApplicationView, ApplicationViewConsolidatedEventArgs> consolidated = null;
+            //    consolidated = new Windows.Foundation.TypedEventHandler<ApplicationView, ApplicationViewConsolidatedEventArgs>((s, e) =>
+            //    {
+            //        (s as ApplicationView).Consolidated -= consolidated;
+            //        if (CoreApplication.GetCurrentView().IsMain)
+            //            return;
+            //        try { window.Close(); }
+            //        finally { CoreApplication.GetCurrentView().CoreWindow.Activate(); }
+            //    });
+            //    view.Consolidated += consolidated;
+            //});
+
+            //// execute create
+            //await WindowWrapper.Current().Dispatcher.DispatchAsync(create);
+
+            //// show view
+            //if (await ApplicationViewSwitcher.TryShowAsStandaloneAsync(view.Id, size))
+            //{
+            //    // change focus
+            //    await ApplicationViewSwitcher.SwitchAsync(view.Id);
+            //}
+            //return view.Id;
         }
 
         public bool Navigate(Type page, object parameter = null)
@@ -169,26 +206,41 @@ namespace Template10.Services.NavigationService
 
         public void SaveNavigation()
         {
+            if (CurrentPageType == null)
+                return;
+
             var state = FrameFacade.PageStateContainer(GetType());
             if (state == null)
             {
                 throw new InvalidOperationException("State container is unexpectedly null");
             }
 
-            state["CurrentPageType"] = CurrentPageType?.ToString();
-            state["CurrentPageParam"] = CurrentPageParam;
+            state["CurrentPageType"] = CurrentPageType.ToString();
+            try { state["CurrentPageParam"] = CurrentPageParam; }
+            catch
+            {
+                throw new Exception("Failed to serialize page parameter, override/implement ToString()");
+            }
             state["NavigateState"] = FrameFacade?.GetNavigationState();
         }
 
+        public event EventHandler AfterRestoreSavedNavigation;
         public bool RestoreSavedNavigation()
         {
             try
             {
                 var state = FrameFacade.PageStateContainer(GetType());
+                if (state == null || !state.Any() || !state.ContainsKey("CurrentPageType"))
+                {
+                    return false;
+                }
+
                 FrameFacade.CurrentPageType = Type.GetType(state["CurrentPageType"].ToString());
-                FrameFacade.CurrentPageParam = state["CurrentPageParam"]?.ToString();
+                FrameFacade.CurrentPageParam = state["CurrentPageParam"];
                 FrameFacade.SetNavigationState(state["NavigateState"].ToString());
                 NavigateTo(NavigationMode.Refresh, FrameFacade.CurrentPageParam);
+                while (Frame.Content == null) { /* wait */ }
+                AfterRestoreSavedNavigation?.Invoke(this, EventArgs.Empty);
                 return true;
             }
             catch { return false; }
@@ -204,7 +256,7 @@ namespace Template10.Services.NavigationService
 
         public bool CanGoForward { get { return FrameFacade.CanGoForward; } }
 
-        public void ClearHistory() { FrameFacade.SetNavigationState(EmptyNavigation); }
+        public void ClearHistory() { FrameFacade.Frame.BackStack.Clear(); }
 
         public void Resuming() { /* nothing */ }
 
@@ -227,7 +279,7 @@ namespace Template10.Services.NavigationService
         }
 
         public Type CurrentPageType { get { return FrameFacade.CurrentPageType; } }
-        public string CurrentPageParam { get { return FrameFacade.CurrentPageParam; } }
+        public object CurrentPageParam { get { return FrameFacade.CurrentPageParam; } }
     }
 }
 

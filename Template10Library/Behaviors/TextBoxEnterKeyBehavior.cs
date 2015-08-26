@@ -6,6 +6,7 @@ using Windows.UI.Xaml.Markup;
 
 namespace Template10.Behaviors
 {
+    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-XamlBehaviors
     [ContentProperty(Name = nameof(Actions))]
     [TypeConstraint(typeof(TextBox))]
     public class TextBoxEnterKeyBehavior : DependencyObject, IBehavior
@@ -29,6 +30,7 @@ namespace Template10.Behaviors
             if (e.Key == Windows.System.VirtualKey.Enter)
             {
                 Interaction.ExecuteActions(AssociatedObject, this.Actions, null);
+                e.Handled = true;
             }
         }
 

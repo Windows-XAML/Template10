@@ -1,60 +1,70 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
 using Template10.Services.KeyboardService;
 using Template10.Services.NavigationService;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
+using Windows.UI.Xaml.Media;
 
 namespace Template10.Controls
 {
+    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-HamburgerMenu
     [ContentProperty(Name = nameof(PrimaryButtons))]
-    public sealed partial class HamburgerMenu : UserControl
+    public sealed partial class HamburgerMenu : UserControl, INotifyPropertyChanged
     {
         public HamburgerMenu()
         {
             this.InitializeComponent();
-            Loaded += HamburgerMenu_Loaded;
-
-        }
-
-        private void HamburgerMenu_Loaded(object sender, RoutedEventArgs e)
-        {
+            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
+            {
+                return;
+            }
             new KeyboardService().AfterWindowZGesture = () => { HamburgerCommand.Execute(null); };
         }
 
         void UpdateButtons(NavigatedEventArgs e) { UpdateButtons(e.PageType); }
-        void UpdateButtons() { UpdateButtons(NavigationService.FrameFacade.CurrentPageType); }
+        void UpdateButtons() { UpdateButtons(NavigationService.Frame.Content?.GetType()); }
         void UpdateButtons(Type type)
         {
             // update radiobuttons after frame navigates
-            foreach (var radioButton in Common.XamlHelper.AllChildren<RadioButton>(this))
+            foreach (var button in Common.XamlHelper.AllChildren<RadioButton>(this))
             {
-                var target = radioButton.CommandParameter as NavigationButtonInfo;
-                if (target == null)
+                var info = button.CommandParameter as NavigationButtonInfo;
+                if (info?.PageType == null)
                     continue;
-                radioButton.IsChecked = target.PageType.Equals(type);
+                button.IsChecked = info.PageType.Equals(type);
+                button.IsEnabled = !button.IsChecked.Value;
             }
-            ShellSplitView.IsPaneOpen = false;
+            PaneWidth = !ShellSplitView.IsPaneOpen ? ShellSplitView.CompactPaneLength : ShellSplitView.OpenPaneLength;
         }
 
         Mvvm.DelegateCommand _hamburgerCommand;
-        public Mvvm.DelegateCommand HamburgerCommand { get { return _hamburgerCommand ?? (_hamburgerCommand = new Mvvm.DelegateCommand(ExecuteHamburger)); } }
-        private void ExecuteHamburger()
+        internal Mvvm.DelegateCommand HamburgerCommand { get { return _hamburgerCommand ?? (_hamburgerCommand = new Mvvm.DelegateCommand(ExecuteHamburger)); } }
+        void ExecuteHamburger()
         {
             ShellSplitView.IsPaneOpen = !ShellSplitView.IsPaneOpen;
         }
 
         Mvvm.DelegateCommand<NavigationButtonInfo> _navCommand;
         public Mvvm.DelegateCommand<NavigationButtonInfo> NavCommand { get { return _navCommand ?? (_navCommand = new Mvvm.DelegateCommand<NavigationButtonInfo>(ExecuteNav)); } }
-        private void ExecuteNav(NavigationButtonInfo commandInfo)
+        void ExecuteNav(NavigationButtonInfo commandInfo)
         {
             if (commandInfo == null)
                 throw new NullReferenceException("CommandParameter is not set");
+
+            if (ShellSplitView.DisplayMode == SplitViewDisplayMode.Overlay && ShellSplitView.IsPaneOpen)
+                ShellSplitView.IsPaneOpen = false;
+            else if (ShellSplitView.DisplayMode == SplitViewDisplayMode.CompactOverlay && ShellSplitView.IsPaneOpen)
+                ShellSplitView.IsPaneOpen = false;
+
             try
             {
                 // navigate only to new pages
-                if (NavigationService.CurrentPageType != null && NavigationService.CurrentPageType != commandInfo.PageType)
+                if (commandInfo.PageType != null && NavigationService.CurrentPageType != commandInfo.PageType)
                     NavigationService.Navigate(commandInfo.PageType, commandInfo.PageParameter);
             }
             finally
@@ -63,6 +73,111 @@ namespace Template10.Controls
                     NavigationService.ClearHistory();
             }
         }
+
+        #region VisualStateValues
+
+        public double VisualStateNarrowMinWidth
+        {
+            get { return VisualStateNarrowTrigger.MinWindowWidth; }
+            set { SetValue(VisualStateNarrowMinWidthProperty, VisualStateNarrowTrigger.MinWindowWidth = value); }
+        }
+        public static readonly DependencyProperty VisualStateNarrowMinWidthProperty =
+            DependencyProperty.Register(nameof(VisualStateNarrowMinWidth), typeof(double),
+                typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => { (d as HamburgerMenu).VisualStateNarrowMinWidth = (double)e.NewValue; }));
+
+        public double VisualStateNormalMinWidth
+        {
+            get { return VisualStateNormalTrigger.MinWindowWidth; }
+            set { SetValue(VisualStateNormalMinWidthProperty, VisualStateNormalTrigger.MinWindowWidth = value); }
+        }
+        public static readonly DependencyProperty VisualStateNormalMinWidthProperty =
+            DependencyProperty.Register(nameof(VisualStateNormalMinWidth), typeof(double),
+                typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => { (d as HamburgerMenu).VisualStateNormalMinWidth = (double)e.NewValue; }));
+
+        #endregion
+
+        #region Style
+
+        public SolidColorBrush HamburgerBackground
+        {
+            get { return (SolidColorBrush)HamburgerBackgroundBrush; }
+            set
+            {
+                SetValue(HamburgerBackgroundProperty, HamburgerBackgroundBrush = value);
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(HamburgerBackground)));
+            }
+        }
+        public static readonly DependencyProperty HamburgerBackgroundProperty =
+            DependencyProperty.Register(nameof(HamburgerBackground), typeof(SolidColorBrush),
+                typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => { (d as HamburgerMenu).HamburgerBackground = (SolidColorBrush)e.NewValue; }));
+
+        public SolidColorBrush HamburgerForeground
+        {
+            get { return HamburgerForegroundBrush; }
+            set
+            {
+                SetValue(HamburgerForegroundProperty, HamburgerForegroundBrush = value);
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(HamburgerForeground)));
+            }
+        }
+        public static readonly DependencyProperty HamburgerForegroundProperty =
+              DependencyProperty.Register(nameof(HamburgerForeground), typeof(SolidColorBrush),
+                  typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => { (d as HamburgerMenu).HamburgerForeground = (SolidColorBrush)e.NewValue; }));
+
+        public SolidColorBrush NavAreaBackground
+        {
+            get { return NavAreaBackgroundBrush; }
+            set
+            {
+                SetValue(NavAreaBackgroundProperty, NavAreaBackgroundBrush = value);
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(HamburgerForeground)));
+            }
+        }
+        public static readonly DependencyProperty NavAreaBackgroundProperty =
+              DependencyProperty.Register(nameof(NavAreaBackground), typeof(SolidColorBrush),
+                  typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => { (d as HamburgerMenu).NavAreaBackground = (SolidColorBrush)e.NewValue; }));
+
+        public SolidColorBrush NavButtonBackground
+        {
+            get { return (SolidColorBrush)NavButtonBackgroundBrush; }
+            set
+            {
+                SetValue(NavButtonBackgroundProperty, NavButtonBackgroundBrush = value);
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NavButtonBackground)));
+            }
+        }
+        public static readonly DependencyProperty NavButtonBackgroundProperty =
+            DependencyProperty.Register(nameof(NavButtonBackground), typeof(SolidColorBrush),
+                typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => { (d as HamburgerMenu).NavButtonBackground = (SolidColorBrush)e.NewValue; }));
+
+        public SolidColorBrush NavButtonForeground
+        {
+            get { return NavButtonForegroundBrush; }
+            set
+            {
+                SetValue(NavButtonForegroundProperty, NavButtonForegroundBrush = value);
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(HamburgerForeground)));
+            }
+        }
+        public static readonly DependencyProperty NavButtonForegroundProperty =
+              DependencyProperty.Register(nameof(NavButtonForeground), typeof(SolidColorBrush),
+                  typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => { (d as HamburgerMenu).NavButtonForeground = (SolidColorBrush)e.NewValue; }));
+
+        public SolidColorBrush SecondarySeparator
+        {
+            get { return SecondaryBorderBrush; }
+            set
+            {
+                SetValue(SecondarySeparatorProperty, SecondaryBorderBrush = value);
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(HamburgerForeground)));
+            }
+        }
+        public static readonly DependencyProperty SecondarySeparatorProperty =
+              DependencyProperty.Register("SecondarySeparator", typeof(SolidColorBrush),
+                  typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => { (d as HamburgerMenu).SecondarySeparator = (SolidColorBrush)e.NewValue; }));
+
+
+        #endregion
 
         public ObservableCollection<NavigationButtonInfo> PrimaryButtons
         {
@@ -86,23 +201,29 @@ namespace Template10.Controls
             set
             {
                 _navigationService = value;
-                ShellSplitView.Content = NavigationService.FrameFacade.Frame;
+                if (NavigationService.Frame.BackStackDepth > 0)
+                {
+                    // display content inside the splitview
+                    ShellSplitView.Content = NavigationService.Frame;
+                }
+                else
+                {
+                    // display content without splitview (splash scenario)
+                    Action revert = () =>
+                    {
+                        RootGrid.Children.Remove(NavigationService.Frame);
+                        ShellSplitView.Content = NavigationService.Frame;
+                    };
+                    NavigationService.AfterRestoreSavedNavigation += (s, e) => revert();
+                    NavigationService.FrameFacade.Navigated += (s, e) => revert();
+                    RootGrid.Children.Add(NavigationService.Frame);
+                }
                 NavigationService.FrameFacade.Navigated += (s, e) => UpdateButtons(e);
-                ShellSplitView.RegisterPropertyChangedCallback(SplitView.IsPaneOpenProperty, (s, e) =>
-                { PaneWidth = !ShellSplitView.IsPaneOpen ? ShellSplitView.CompactPaneLength : ShellSplitView.OpenPaneLength; });
-                PaneWidth = !ShellSplitView.IsPaneOpen ? ShellSplitView.CompactPaneLength : ShellSplitView.OpenPaneLength;
+                NavigationService.AfterRestoreSavedNavigation += (s, e) => UpdateButtons();
+                ShellSplitView.RegisterPropertyChangedCallback(SplitView.IsPaneOpenProperty, (s, e) => UpdateButtons());
                 UpdateButtons();
             }
         }
-
-        public Visibility HamburgerButtonVisibility
-        {
-            get { return (Visibility)GetValue(HamburgerButtonVisibilityProperty); }
-            set { SetValue(HamburgerButtonVisibilityProperty, value); }
-        }
-        public static readonly DependencyProperty HamburgerButtonVisibilityProperty =
-            DependencyProperty.Register("HamburgerButtonVisibility", typeof(Visibility),
-                typeof(HamburgerMenu), new PropertyMetadata(Visibility.Visible));
 
         public ObservableCollection<NavigationButtonInfo> SecondaryButtons
         {
@@ -127,6 +248,23 @@ namespace Template10.Controls
         public static readonly DependencyProperty PaneWidthProperty =
             DependencyProperty.Register("PaneWidth", typeof(double),
                 typeof(HamburgerMenu), new PropertyMetadata(220));
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        void NavButton_Loaded(object sender, RoutedEventArgs e)
+        {
+            UpdateButtons();
+        }
+
+        private void PaneContent_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            HamburgerCommand.Execute(null);
+        }
+
+        private void NavButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            e.Handled = true;
+        }
     }
 
     [ContentProperty(Name = nameof(Content))]

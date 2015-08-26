@@ -12,6 +12,7 @@ using Windows.Storage;
 
 namespace Template10.Services.SettingsService
 {
+    // https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SettingsService
     public class SettingsHelper
     {
         const string parse = "Parse";
@@ -84,15 +85,25 @@ namespace Template10.Services.SettingsService
                 return otherwise;
             try
             {
-                if (IsPrimitive(typeof(T)))
+                object untyped;
+                if (settings.TryGetValue(key, out untyped))
                 {
-                    var value = settings[key].ToString();
-                    var parse = typeof(T).GetRuntimeMethod(SettingsHelper.parse, new[] { typeof(string) });
-                    return (T)parse.Invoke(null, new[] { value });
+                    if (untyped == null)
+                        return otherwise;
                 }
                 else
                 {
-                    var json = settings[key].ToString();
+                    return otherwise;
+                }
+                // attempt to deserialize
+                if (IsPrimitive(typeof(T)))
+                {
+                    var parse = typeof(T).GetRuntimeMethod(SettingsHelper.parse, new[] { typeof(string) });
+                    return (T)parse.Invoke(null, new[] { untyped });
+                }
+                else
+                {
+                    var json = untyped.ToString();
                     return Deserialize<T>(json);
                 }
             }

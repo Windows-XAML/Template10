@@ -8,7 +8,7 @@ using Template10.Mvvm;
 
 namespace SecondaryTileActivation.ViewModels
 {
-    public class MainPageViewModel :ViewModelBase
+    public class MainPageViewModel : ViewModelBase
     {
         private string _greeting;
 

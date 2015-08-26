@@ -5,6 +5,7 @@ namespace Template10.Mvvm
     // http://codepaste.net/jgxazh
     using System.Diagnostics;
 
+    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-MVVM
     public class DelegateCommand : System.Windows.Input.ICommand
     {
         private readonly Action _execute;
@@ -40,6 +41,7 @@ namespace Template10.Mvvm
         }
     }
 
+    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-MVVM
     public class DelegateCommand<T> : System.Windows.Input.ICommand
     {
         private readonly Action<T> _execute;

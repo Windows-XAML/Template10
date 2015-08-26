@@ -1,30 +1,61 @@
-﻿using System;
+﻿using Minimal.Services.SettingsServices;
+using System;
 using System.Threading.Tasks;
-using Template10.Common;
 using Windows.ApplicationModel.Activation;
+using Windows.UI.Xaml;
 
-namespace Template10
+namespace Minimal
 {
-    sealed partial class App : Common.BootStrapper
+    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-Bootstrapper
+    sealed partial class App : Template10.Common.BootStrapper
     {
         public App()
         {
             InitializeComponent();
-            this.ShowShellBackButton = true;
+
+            // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-Cache
+            CacheMaxDuration = TimeSpan.FromDays(2);
+
+            // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-BackButton
+            ShowShellBackButton = SettingsService.Instance.UseShellBackButton;
+
+            // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SplashScreen
+            //SplashFactory = (e) => new Views.Splash(e);
         }
 
-        public override Task OnInitializeAsync()
+        // runs even if restored from state
+        public override Task OnInitializeAsync(IActivatedEventArgs args)
         {
-            // runs before everything
-            Windows.UI.Xaml.Window.Current.Content = new Views.Shell(NavigationService);
-            return base.OnInitializeAsync();
-        }
+            // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SplitView
+            var nav = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include);
+            Window.Current.Content = new Views.Shell(nav);
 
-        public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
-        {
-            // start the user experience
-            NavigationService.Navigate(typeof(Views.MainPage));
             return Task.FromResult<object>(null);
+        }
+
+        // runs only when not restored from state
+        public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
+        {
+            // simulated long-running load on startup
+            await Task.Delay(0);
+
+            // start user experience
+            switch (DecipherStartCause(args))
+            {
+                // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-Toast
+                case AdditionalKinds.Toast:
+
+                // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SecondaryTile
+                case AdditionalKinds.SecondaryTile:
+                    var e = (args as ILaunchActivatedEventArgs);
+                    NavigationService.Navigate(typeof(Views.DetailPage), e.Arguments);
+                    break;
+
+                // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-NavigationService
+                default:
+                    NavigationService.Navigate(typeof(Views.MainPage));
+                    break;
+            }
         }
     }
 }

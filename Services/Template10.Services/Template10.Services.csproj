@@ -148,8 +148,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SecondaryTileService\SecondaryTileHelper.cs" />
     <Compile Include="SecondaryTileService\SecondaryTileService.cs" />
-    <Compile Include="SettingsService\SettingsHelper.cs" />
-    <Compile Include="SettingsService\SettingsService.cs" />
     <Compile Include="ShareContractService\ShareContractHelper.cs" />
     <Compile Include="ShareContractService\ShareContractService.cs" />
     <Compile Include="ToastService\ToastHelper.cs" />
