@@ -1,0 +1,35 @@
+﻿<tile>
+  <visual branding="name">
+
+    <binding template="TileMedium">
+      <text hint-style="caption" />
+      <text hint-style="captionsubtle" hint-wrap="true" />
+    </binding>
+
+    <binding template="TileWide">
+      <group>
+        <subgroup hint-weight="33">
+          <image placement="inline" />
+        </subgroup>
+        <subgroup>
+          <text hint-style="caption" />
+          <text hint-style="captionsubtle" hint-wrap="true" hint-maxLines="3" />
+        </subgroup>
+      </group>
+    </binding>
+
+    <binding template="TileLarge">
+      <group>
+        <subgroup hint-weight="33">
+          <image placement="inline" />
+        </subgroup>
+        <subgroup>
+          <text hint-style="caption" />
+          <text hint-style="captionsubtle" hint-wrap="true" hint-maxLines="3" />
+        </subgroup>
+      </group>
+      
+    </binding>
+
+  </visual>
+</tile>
