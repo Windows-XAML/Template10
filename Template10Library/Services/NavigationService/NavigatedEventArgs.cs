@@ -10,7 +10,7 @@ namespace Template10.Services.NavigationService
         public NavigatedEventArgs(NavigationEventArgs e)
         {
             this.PageType = e.SourcePageType;
-            this.Parameter = e.Parameter?.ToString();
+            this.Parameter = e.Parameter;
             this.NavigationMode = e.NavigationMode;
         }
         public NavigationMode NavigationMode { get; set; }
