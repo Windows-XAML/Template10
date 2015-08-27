@@ -20,6 +20,7 @@ namespace Minimal.Views
         {
             Instance.BusyIndicator.Visibility = (busy)
                 ? Visibility.Visible : Visibility.Collapsed;
+            Instance.BusyRing.IsActive = busy;
             Instance.BusyText.Text = text ?? string.Empty;
         }
     }
