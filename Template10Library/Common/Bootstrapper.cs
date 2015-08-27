@@ -224,13 +224,20 @@ namespace Template10.Common
             global::Windows.UI.Core.SystemNavigationManager.GetForCurrentView().BackRequested += (s, args) =>
             {
                 // only handle as long as there is a default backstack
-                args.Handled = !NavigationService.CanGoBack;
-                RaiseBackRequested();
+                //args.Handled = !NavigationService.CanGoBack;
+                var handled = false;
+                RaiseBackRequested(ref handled);
+                args.Handled = handled;
             };
 
             // Hook up keyboard and mouse Back handler
             var keyboard = new Services.KeyboardService.KeyboardService();
-            keyboard.AfterBackGesture = () => RaiseBackRequested();
+            keyboard.AfterBackGesture = () =>
+                                        {
+                                            //the result is no matter
+                                            var handled = false;
+                                            RaiseBackRequested(ref handled);
+                                        };
 
             // Hook up keyboard and house Forward handler
             keyboard.AfterForwardGesture = () => RaiseForwardRequested();
@@ -244,13 +251,14 @@ namespace Template10.Common
         /// Views or Viewodels can override this behavior by handling the BackRequested 
         /// event and setting the Handled property of the BackRequestedEventArgs to true.
         /// </summary>
-        private void RaiseBackRequested()
+        private void RaiseBackRequested(ref bool handled)
         {
             var args = new HandledEventArgs();
             foreach (var frame in WindowWrapper.Current().NavigationServices.Select(x => x.FrameFacade))
             {
                 frame.RaiseBackRequested(args);
-                if (args.Handled)
+                handled = args.Handled;
+                if (handled)
                     return;
             }
 
