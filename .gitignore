@@ -187,3 +187,8 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
+
+# pfx and project.lock
+*.pfx
+project.lock.json
+/.vs

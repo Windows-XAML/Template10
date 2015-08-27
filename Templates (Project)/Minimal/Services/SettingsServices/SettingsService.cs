@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Template10.Services.SettingsService.Settings;
 
 namespace Minimal.Services.SettingsServices
 {
@@ -17,19 +18,17 @@ namespace Minimal.Services.SettingsServices
             Instance = Instance ?? new SettingsService();
         }
 
-        Template10.Services.SettingsService.SettingsHelper _helper;
 
         private SettingsService()
         {
-            _helper = new Template10.Services.SettingsService.SettingsHelper();
         }
 
         public bool UseShellBackButton
         {
-            get { return _helper.Read<bool>(nameof(UseShellBackButton), true); }
+            get { return Local.Read<bool>(nameof(UseShellBackButton), true); }
             set
             {
-                _helper.Write(nameof(UseShellBackButton), value);
+                Local.Write(nameof(UseShellBackButton), value);
                 Template10.Common.BootStrapper.Current.ShowShellBackButton = value;
                 Template10.Common.BootStrapper.Current.UpdateShellBackButton();
                 Template10.Common.BootStrapper.Current.NavigationService.Refresh();
