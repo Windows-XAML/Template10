@@ -146,7 +146,7 @@
     <Compile Include="Services\KeyboardService\KeyboardHelper.cs" />
     <Compile Include="Services\KeyboardService\KeyboardService.cs" />
     <Compile Include="Services\NavigationService\FrameFacade.cs" />
-    <Compile Include="Services\NavigationService\INavagable.cs" />
+    <Compile Include="Services\NavigationService\INavigable.cs" />
     <Compile Include="Services\NavigationService\NavigatedEventArgs.cs" />
     <Compile Include="Services\NavigationService\NavigatingEventArgs.cs" />
     <Compile Include="Services\NavigationService\NavigationService.cs" />

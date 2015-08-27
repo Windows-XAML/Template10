@@ -3,9 +3,9 @@
   <metadata minClientVersion="3.0">
     <id>Template10</id>
     <version>1.0.0-preview</version>
-    <title>Template 10 Library</title>
+    <title>Template 10 Library for UWP XAML apps on Windows 10</title>
     <authors>Windows developers</authors>
-    <owners>jerrynixon, darenmay</owners>
+    <owners>jerrynixon,darenmay</owners>
     <licenseUrl>http://aka.ms/Template10-License</licenseUrl>
     <projectUrl>http://aka.ms/Template10-Nuget</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/Windows-XAML/Template10/master/Assets/NuGetLogo.png</iconUrl>
