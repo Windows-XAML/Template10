@@ -12,19 +12,14 @@ namespace Template10.Services.KeyboardService
             _helper = new KeyboardHelper();
             _helper.KeyDown = (e) =>
             {
-                var onlyWindows = e.WindowsKey & !e.AltKey & !e.ControlKey & !e.ShiftKey;
-                var onlyAlt = !e.WindowsKey & e.AltKey & !e.ControlKey & !e.ShiftKey;
-                var onlyControl = !e.WindowsKey & !e.AltKey & e.ControlKey & !e.ShiftKey;
-                var onlyShift = !e.WindowsKey & !e.AltKey & !e.ControlKey & e.ShiftKey;
-
                 e.Handled = true;
 
                 // use this to hide and show the menu
-                if (onlyWindows && e.Character.ToString().ToLower().Equals("z"))
+                if (e.OnlyWindows && e.Character.ToString().ToLower().Equals("z"))
                     AfterWindowZGesture?.Invoke();
 
                 // use this to place focus in search box
-                else if (onlyControl && e.Character.ToString().ToLower().Equals("e"))
+                else if (e.OnlyControl && e.Character.ToString().ToLower().Equals("e"))
                     AfterControlEGesture?.Invoke();
 
                 // use this to nav back
@@ -34,9 +29,9 @@ namespace Template10.Services.KeyboardService
                     AfterBackGesture?.Invoke();
                 else if (e.VirtualKey == Windows.System.VirtualKey.GamepadLeftShoulder)
                     AfterBackGesture?.Invoke();
-                else if (onlyAlt && e.VirtualKey == Windows.System.VirtualKey.Back)
+                else if (e.OnlyAlt && e.VirtualKey == Windows.System.VirtualKey.Back)
                     AfterBackGesture?.Invoke();
-                else if (onlyAlt && e.VirtualKey == Windows.System.VirtualKey.Left)
+                else if (e.OnlyAlt && e.VirtualKey == Windows.System.VirtualKey.Left)
                     AfterBackGesture?.Invoke();
 
                 // use this to nav forward
@@ -46,7 +41,7 @@ namespace Template10.Services.KeyboardService
                     AfterForwardGesture?.Invoke();
                 else if (e.VirtualKey == Windows.System.VirtualKey.GamepadRightShoulder)
                     AfterForwardGesture?.Invoke();
-                else if (onlyAlt && e.VirtualKey == Windows.System.VirtualKey.Right)
+                else if (e.OnlyAlt && e.VirtualKey == Windows.System.VirtualKey.Right)
                     AfterForwardGesture?.Invoke();
                 else
                     e.Handled = false;

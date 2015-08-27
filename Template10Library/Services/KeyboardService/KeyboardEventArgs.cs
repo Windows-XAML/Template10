@@ -19,5 +19,11 @@ namespace Template10.Services.KeyboardService
         public AcceleratorKeyEventArgs EventArgs { get; set; }
         public char? Character { get; set; }
         public bool WindowsKey { get; internal set; }
+
+        public bool OnlyWindows => this.WindowsKey & !this.AltKey & !this.ControlKey & !this.ShiftKey;
+        public bool OnlyAlt => !this.WindowsKey & this.AltKey & !this.ControlKey & !this.ShiftKey;
+        public bool OnlyControl => !this.WindowsKey & !this.AltKey & this.ControlKey & !this.ShiftKey;
+        public bool OnlyShift => !this.WindowsKey & !this.AltKey & !this.ControlKey & this.ShiftKey;
+
     }
 }
