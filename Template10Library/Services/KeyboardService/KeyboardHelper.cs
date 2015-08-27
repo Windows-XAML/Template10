@@ -26,95 +26,28 @@ namespace Template10.Services.KeyboardService
 
         private void CoreDispatcher_AcceleratorKeyActivated(CoreDispatcher sender, AcceleratorKeyEventArgs args)
         {
-            if (args.EventType == CoreAcceleratorKeyEventType.SystemKeyDown
-                || args.EventType == CoreAcceleratorKeyEventType.KeyDown)
+            if (args.EventType.ToString().Contains("Down"))
             {
-                HandleKeyDown(args);
-            }
-        }
+                var alt = (Window.Current.CoreWindow.GetKeyState(VirtualKey.Menu) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
+                var shift = (Window.Current.CoreWindow.GetKeyState(VirtualKey.Shift) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
+                var control = (Window.Current.CoreWindow.GetKeyState(VirtualKey.Shift) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
+                var windows = ((Window.Current.CoreWindow.GetKeyState(VirtualKey.LeftWindows) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down) || ((Window.Current.CoreWindow.GetKeyState(VirtualKey.RightWindows) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down);
+                var character = ToChar(args.VirtualKey, shift);
 
-        private void HandleKeyDown(AcceleratorKeyEventArgs args)
-        {
-            var alt = (Window.Current.CoreWindow.GetKeyState(VirtualKey.Menu) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
-            var shift = (Window.Current.CoreWindow.GetKeyState(VirtualKey.Shift) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
-            var control = (Window.Current.CoreWindow.GetKeyState(VirtualKey.Shift) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
-            var windows = ((Window.Current.CoreWindow.GetKeyState(VirtualKey.LeftWindows) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down) || ((Window.Current.CoreWindow.GetKeyState(VirtualKey.RightWindows) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down);
-            var character = ToChar(args.VirtualKey, shift);
-
-            System.Diagnostics.Debug.WriteLine("{0} alt:{1} shift:{2} control:{3} windows:{4} virt:{5}", character, alt, shift, control, windows, args.VirtualKey);
-
-            var keyDown = new KeyboardEventArgs
-            {
-                AltKey = alt,
-                Character = character,
-                ControlKey = control,
-                EventArgs = args,
-                ShiftKey = shift,
-                VirtualKey = args.VirtualKey
-            };
-            try { KeyDown?.Invoke(keyDown); } catch { }
-
-            if (windows && (character == 'z' || character == 'Z'))
-            {
-                RaiseWindowZGestured();
-            }
-            else if (args.KeyStatus.IsExtendedKey && args.VirtualKey == VirtualKey.Back)
-            {
-                RaiseGoBackGestured();
-            }
-            else
-            {
-                return;
-            }
-            args.Handled = true;
-        }
-        
-        private void zCoreDispatcher_AcceleratorKeyActivated(CoreDispatcher sender, AcceleratorKeyEventArgs e)
-        {
-            if ((e.EventType == CoreAcceleratorKeyEventType.SystemKeyDown ||
-                e.EventType == CoreAcceleratorKeyEventType.KeyDown))
-            {
-                var coreWindow = Windows.UI.Xaml.Window.Current.CoreWindow;
-                var downState = CoreVirtualKeyStates.Down;
-                var virtualKey = e.VirtualKey;
-                bool winKey = ((coreWindow.GetKeyState(VirtualKey.LeftWindows) & downState) == downState || (coreWindow.GetKeyState(VirtualKey.RightWindows) & downState) == downState);
-                bool altKey = (coreWindow.GetKeyState(VirtualKey.Menu) & downState) == downState;
-                bool controlKey = (coreWindow.GetKeyState(VirtualKey.Control) & downState) == downState;
-                bool shiftKey = (coreWindow.GetKeyState(VirtualKey.Shift) & downState) == downState;
-                bool noModifiers = !altKey && !controlKey && !shiftKey;
-                bool onlyAlt = altKey && !controlKey && !shiftKey;
-
-                // raise keydown actions
                 var keyDown = new KeyboardEventArgs
                 {
-                    AltKey = altKey,
-                    Character = ToChar(virtualKey, shiftKey),
-                    ControlKey = controlKey,
-                    EventArgs = e,
-                    ShiftKey = shiftKey,
-                    VirtualKey = virtualKey
+                    AltKey = alt,
+                    Character = character,
+                    ControlKey = control,
+                    EventArgs = args,
+                    ShiftKey = shift,
+                    VirtualKey = args.VirtualKey
                 };
 
                 try { KeyDown?.Invoke(keyDown); }
-                catch { }
-
-                if (((int)virtualKey == 166 && noModifiers) || (virtualKey == VirtualKey.Left && onlyAlt))
+                finally
                 {
-                    // When the previous key or Alt+Left are pressed navigate back
-                    e.Handled = true;
-                    RaiseGoBackGestured();
-                }
-                else if (((int)virtualKey == 167 && noModifiers) || (virtualKey == VirtualKey.Right && onlyAlt))
-                {
-                    // When the next key or Alt+Right are pressed navigate forward
-                    e.Handled = true;
-                    RaiseGoForwardGestured();
-                }
-                else if (((int)virtualKey == 69 && controlKey))
-                {
-                    // when control-E
-                    e.Handled = true;
-                    RaiseControlEGestured();
+                    args.Handled = keyDown.Handled;
                 }
             }
         }
@@ -143,36 +76,22 @@ namespace Template10.Services.KeyboardService
             if (backPressed ^ forwardPressed)
             {
                 e.Handled = true;
-                if (backPressed) RaiseGoBackGestured();
-                if (forwardPressed) RaiseGoForwardGestured();
+                if (backPressed) RaisePointerGoBackGestured();
+                if (forwardPressed) RaisePointerGoForwardGestured();
             }
         }
 
-        public Action GoForwardGestured { get; set; }
-        protected void RaiseGoForwardGestured()
+        public Action PointerGoForwardGestured { get; set; }
+        protected void RaisePointerGoForwardGestured()
         {
-            try { GoForwardGestured?.Invoke(); }
+            try { PointerGoForwardGestured?.Invoke(); }
             catch { }
         }
 
-        public Action GoBackGestured { get; set; }
-        protected void RaiseGoBackGestured()
+        public Action GoPointerBackGestured { get; set; }
+        protected void RaisePointerGoBackGestured()
         {
-            try { GoBackGestured?.Invoke(); }
-            catch { }
-        }
-
-        public Action ControlEGestured { get; set; }
-        protected void RaiseControlEGestured()
-        {
-            try { ControlEGestured?.Invoke(); }
-            catch { }
-        }
-
-        public Action WindowZGestured { get; set; }
-        protected void RaiseWindowZGestured()
-        {
-            try { WindowZGestured?.Invoke(); }
+            try { GoPointerBackGestured?.Invoke(); }
             catch { }
         }
 
