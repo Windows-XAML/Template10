@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Template10.Services.NavigationService;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 namespace Minimal.ViewModels
@@ -50,6 +51,11 @@ namespace Minimal.ViewModels
         public void GotoDetailsPage()
         {
             this.NavigationService.Navigate(typeof(Views.DetailPage), this.Value);
+
+            // shows ability to provide a NavigationTransitionInfo. Sometimes you may want to use a different transition
+            // animation when you are "drilling" into details vs. navigating pages. 
+
+            // this.NavigationService.Navigate(typeof(Views.DetailPage), this.Value, new DrillInNavigationTransitionInfo());
         }
     }
 }
