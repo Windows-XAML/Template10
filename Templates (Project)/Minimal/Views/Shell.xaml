@@ -32,13 +32,13 @@
 
         </Controls:HamburgerMenu>
 
-        <Grid x:Name="BusyIndicator" Visibility="Collapsed">
+        <Grid x:Name="BusyIndicator" Visibility="Collapsed" IsHitTestVisible="True">
             <Grid.Background>
                 <SolidColorBrush Color="Black" Opacity=".5" />
             </Grid.Background>
             <Viewbox Height="32">
                 <StackPanel Orientation="Horizontal">
-                    <ProgressRing IsActive="True" Height="24" Width="24" Margin="12,0" Foreground="White" />
+                    <ProgressRing x:Name="BusyRing"  IsActive="True" Height="24" Width="24" Margin="12,0" Foreground="White" />
                     <TextBlock x:Name="BusyText" Foreground="White" VerticalAlignment="Center" />
                 </StackPanel>
             </Viewbox>
