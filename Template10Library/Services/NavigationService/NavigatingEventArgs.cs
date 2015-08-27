@@ -10,7 +10,7 @@ namespace Template10.Services.NavigationService
         {
             this.NavigationMode = e.NavigationMode;
             this.PageType = e.SourcePageType;
-            this.Parameter = e.Parameter?.ToString();
+            this.Parameter = e.Parameter;
         }
         public bool Cancel { get; set; } = false;
         public bool Suspending { get; set; } = false;
