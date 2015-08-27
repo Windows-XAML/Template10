@@ -198,7 +198,7 @@ echo 'manually cleaned during pre-build event command line'
     <!--<Copy SkipUnchangedFiles="true" SourceFiles="bin\$(Configuration)\Template10Library.xml" DestinationFiles="bin\$(Configuration)\nupkg\lib\dotnet\Template10Library.xml" />-->
     <!--<Copy SkipUnchangedFiles="true" SourceFiles="bin\$(Configuration)\Template10Library.pdb" DestinationFiles="bin\$(Configuration)\nupkg\lib\dotnet\Template10Library.pdb" />-->
     <Copy SkipUnchangedFiles="true" SourceFiles="Template10Library.nuspec" DestinationFiles="bin\$(Configuration)\nupkg\Template10Library.nuspec" />
-    <Exec Command="..\..\..\NuGet.exe pack Template10Library.nuspec -OutputDirectory .. -NonInteractive -Properties Configuration=Release" WorkingDirectory="bin\$(Configuration)\nupkg" Outputs="bin\$(Configuration)\*.nupkg" />
+    <Exec Command="NuGet.exe pack Template10Library.nuspec -OutputDirectory .. -NonInteractive -Properties Configuration=Release" WorkingDirectory="bin\$(Configuration)\nupkg" Outputs="bin\$(Configuration)\*.nupkg" />
     <!--<Copy SkipUnchangedFiles="true" SourceFiles="bin\$(Configuration)\*.nupkg" DestinationFolder="c:\nuget-local\" />-->
     <Exec Command="xcopy.exe bin\$(Configuration)\*.nupkg c:\nuget-local\ /m/y " />
   </Target>

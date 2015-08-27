@@ -11,7 +11,7 @@ namespace Template10.Services.SettingsService
 
 		public PropertyStore(IPropertySet values, IPropertyMapping converters)
 		{
-			if (values == null)
+			if (values == null || converters == null)
 				throw new ArgumentNullException();
 
 			Values = values;

@@ -29,6 +29,8 @@ namespace Template10LibraryTests.Services.SettingsService
 		public virtual void ConstructorTest()
 		{
 			Assert.ThrowsException<ArgumentNullException>(() => new PropertyStore(null, new JsonMapping()));
+			Assert.ThrowsException<ArgumentNullException>(() => new PropertyStore(new PropertySet(), null));
+			Assert.ThrowsException<ArgumentNullException>(() => new PropertyStore(null, null));
 		}
 
 		[TestMethod]
