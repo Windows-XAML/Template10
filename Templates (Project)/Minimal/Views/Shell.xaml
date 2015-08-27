@@ -8,26 +8,42 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" x:Name="ThisPage">
 
-    <Controls:HamburgerMenu x:Name="MyHamburgerMenu">
-        
-        <Controls:HamburgerMenu.PrimaryButtons>
-            <Controls:NavigationButtonInfo PageType="views:MainPage" ClearHistory="True">
+    <Grid>
+
+        <Controls:HamburgerMenu x:Name="MyHamburgerMenu">
+
+            <Controls:HamburgerMenu.PrimaryButtons>
+                <Controls:NavigationButtonInfo PageType="views:MainPage" ClearHistory="True">
+                    <StackPanel Orientation="Horizontal">
+                        <SymbolIcon Symbol="Home" Width="48" Height="48" />
+                        <TextBlock Text="Home" VerticalAlignment="Center" Margin="12,0,0,0" />
+                    </StackPanel>
+                </Controls:NavigationButtonInfo>
+            </Controls:HamburgerMenu.PrimaryButtons>
+
+            <Controls:HamburgerMenu.SecondaryButtons>
+                <Controls:NavigationButtonInfo PageType="views:SettingsPage">
+                    <StackPanel Orientation="Horizontal">
+                        <SymbolIcon Symbol="Setting" Width="48" Height="48" />
+                        <TextBlock Text="Settings" VerticalAlignment="Center" Margin="12,0,0,0" />
+                    </StackPanel>
+                </Controls:NavigationButtonInfo>
+            </Controls:HamburgerMenu.SecondaryButtons>
+
+        </Controls:HamburgerMenu>
+
+        <Grid x:Name="BusyIndicator" Visibility="Collapsed">
+            <Grid.Background>
+                <SolidColorBrush Color="Black" Opacity=".5" />
+            </Grid.Background>
+            <Viewbox Height="32">
                 <StackPanel Orientation="Horizontal">
-                    <SymbolIcon Symbol="Home" Width="48" Height="48" />
-                    <TextBlock Text="Home" VerticalAlignment="Center" Margin="12,0,0,0" />
+                    <ProgressRing IsActive="True" Height="24" Width="24" Margin="12,0" Foreground="White" />
+                    <TextBlock x:Name="BusyText" Foreground="White" VerticalAlignment="Center" />
                 </StackPanel>
-            </Controls:NavigationButtonInfo>
-        </Controls:HamburgerMenu.PrimaryButtons>
-        
-        <Controls:HamburgerMenu.SecondaryButtons>
-            <Controls:NavigationButtonInfo PageType="views:SettingsPage">
-                <StackPanel Orientation="Horizontal">
-                    <SymbolIcon Symbol="Setting" Width="48" Height="48" />
-                    <TextBlock Text="Settings" VerticalAlignment="Center" Margin="12,0,0,0" />
-                </StackPanel>
-            </Controls:NavigationButtonInfo>
-        </Controls:HamburgerMenu.SecondaryButtons>
-        
-    </Controls:HamburgerMenu>
+            </Viewbox>
+        </Grid>
+
+    </Grid>
 
 </Page>

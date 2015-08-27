@@ -30,16 +30,9 @@
                         <Setter Target="NarrowSpacer.Visibility" Value="Visible" />
                     </VisualState.Setters>
                 </VisualState>
-                <VisualState x:Name="VisualStateMedium">
+                <VisualState x:Name="VisualStateNormal">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger x:Name="VisualStateMediumTrigger" MinWindowWidth="521" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="VisualStateWide">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger x:Name="VisualStateWideTrigger" MinWindowWidth="1024" />
+                        <AdaptiveTrigger x:Name="VisualStateNormalTrigger" MinWindowWidth="521" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                     </VisualState.Setters>

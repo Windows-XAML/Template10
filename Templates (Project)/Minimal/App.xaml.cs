@@ -37,10 +37,10 @@ namespace Minimal
         public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
             // simulated long-running load on startup
-            await Task.Delay(5000);
+            await Task.Delay(50);
 
             // start user experience
-            switch (DecipherStartCause(args))
+            switch (DetermineStartCause(args))
             {
                 // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-Toast
                 case AdditionalKinds.Toast:

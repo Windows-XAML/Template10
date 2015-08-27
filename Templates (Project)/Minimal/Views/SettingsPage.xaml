@@ -31,12 +31,25 @@
 
         <Pivot Grid.Row="1">
             <PivotItem Header="Settings">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,12,-12,0">
-                    <StackPanel>
+                <ScrollViewer HorizontalContentAlignment="Left" VerticalScrollBarVisibility="Auto" Margin="0,12,-12,0">
+                    <StackPanel HorizontalAlignment="Left">
                         <ToggleSwitch Header="Use shell-drawn back button" 
                                   OnContent="Back button in titlebar or taskbar"
                                   OffContent="Back button in page header"
                                   IsOn="{Binding UseShellBackButton, Mode=TwoWay}" />
+                        <TextBox Margin="0,12,0,0" HorizontalAlignment="Left" Width="200"
+                                 Text="{Binding BusyText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                 Header="Please wait..." />
+                        <Button Content="Show Busy Indicator" Margin="0,12,0,0">
+                            <Interactivity:Interaction.Behaviors>
+                                <Core:EventTriggerBehavior EventName="Click">
+                                    <Core:CallMethodAction TargetObject="{Binding Mode=OneWay}" MethodName="ShowBusy"/>
+                                    <Behaviors:TimeoutAction>
+                                        <Core:CallMethodAction TargetObject="{Binding Mode=OneWay}" MethodName="HideBusy"/>
+                                    </Behaviors:TimeoutAction>
+                                </Core:EventTriggerBehavior>
+                            </Interactivity:Interaction.Behaviors>
+                        </Button>
                     </StackPanel>
                 </ScrollViewer>
             </PivotItem>

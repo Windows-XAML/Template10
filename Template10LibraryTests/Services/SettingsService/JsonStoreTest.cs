@@ -11,12 +11,14 @@ namespace Template10LibraryTests.Services.SettingsService
 		public IPropertySet Values;
 		public PropertyStore Store;
 
+		[TestInitialize]
 		public virtual void SetUp()
 		{
 			Values = new PropertySet();
 			Store = new PropertyStore(Values, new JsonMapping());
 		}
 
+		[TestCleanup]
 		public virtual void TearDown()
 		{
 			Values = null;
@@ -27,13 +29,13 @@ namespace Template10LibraryTests.Services.SettingsService
 		public virtual void ConstructorTest()
 		{
 			Assert.ThrowsException<ArgumentNullException>(() => new PropertyStore(null, new JsonMapping()));
+			Assert.ThrowsException<ArgumentNullException>(() => new PropertyStore(new PropertySet(), null));
+			Assert.ThrowsException<ArgumentNullException>(() => new PropertyStore(null, null));
 		}
 
 		[TestMethod]
 		public virtual void ReadWriteBooleanTest()
 		{
-			SetUp();
-
 			var key = "booleanKey";
 			Store.Write(key, true);
 			Assert.IsTrue(Store.Exists(key));
@@ -45,15 +47,11 @@ namespace Template10LibraryTests.Services.SettingsService
 			Store.Remove(key);
 			Assert.IsFalse(Store.Exists(key));
 			Assert.AreEqual(true, Store.Read(key, true));
-
-			TearDown();
 		}
 
 		[TestMethod]
 		public virtual void ReadWriteIntTest()
 		{
-			SetUp();
-
 			var key = "intKey";
 			var value = 42;
 			var empty = -1;
@@ -68,15 +66,11 @@ namespace Template10LibraryTests.Services.SettingsService
 			Store.Remove(key);
 			Assert.IsFalse(Store.Exists(key));
 			Assert.AreEqual(empty, Store.Read(key, empty));
-
-			TearDown();
 		}
 
 		[TestMethod]
 		public virtual void ReadWriteStringTest()
 		{
-			SetUp();
-
 			var key = "stringKey";
 			var value = "stringValue";
 			var empty = string.Empty;
@@ -91,15 +85,11 @@ namespace Template10LibraryTests.Services.SettingsService
 			Store.Remove(key);
 			Assert.IsFalse(Store.Exists(key));
 			Assert.AreEqual(empty, Store.Read(key, empty));
-
-			TearDown();
 		}
 
 		[TestMethod]
 		public virtual void ReadWriteFloatTest()
 		{
-			SetUp();
-
 			var key = "floatKey";
 			var value = 1.23456789;
 			var empty = 0.0;
@@ -114,15 +104,11 @@ namespace Template10LibraryTests.Services.SettingsService
 			Store.Remove(key);
 			Assert.IsFalse(Store.Exists(key));
 			Assert.AreEqual(empty, Store.Read(key, empty));
-
-			TearDown();
 		}
 
 		[TestMethod]
 		public virtual void ReadWriteEnumTest()
 		{
-			SetUp();
-
 			var key = "enumKey";
 			var value = TestEnum.One;
 			var empty = TestEnum.Empty;
@@ -137,15 +123,11 @@ namespace Template10LibraryTests.Services.SettingsService
 			Store.Remove(key);
 			Assert.IsFalse(Store.Exists(key));
 			Assert.AreEqual(empty, Store.Read(key, empty));
-
-			TearDown();
 		}
 
 		[TestMethod]
 		public virtual void ReadWriteDateTest()
 		{
-			SetUp();
-
 			var key = "dateKey";
 			DateTime? value = DateTime.Now;
 			DateTime? empty = null;
@@ -163,8 +145,6 @@ namespace Template10LibraryTests.Services.SettingsService
 			Store.Remove(key);
 			Assert.IsFalse(Store.Exists(key));
 			Assert.AreEqual(empty, Store.Read(key, empty));
-
-			TearDown();
 		}
 
 	}

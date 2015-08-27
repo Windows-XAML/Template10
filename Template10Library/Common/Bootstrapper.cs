@@ -6,14 +6,26 @@ using Windows.UI.Xaml.Controls;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Core;
 using System.Linq;
+using System.Collections.Generic;
+using Template10.Services.NavigationService;
 
 namespace Template10.Common
 {
     public abstract class BootStrapper : Application
     {
+        #region dependency injection
+
+        public virtual T Resolve<T>(Type type) { return default(T); }
+
+        public virtual Services.NavigationService.INavigable ResolveForPage(Type page, NavigationService navigationService) { return null; }
+
+        #endregion
+
         public static new BootStrapper Current { get; private set; }
 
-        public BootStrapper()
+        public StateItems SessionState { get; set; } = new StateItems();
+
+        protected BootStrapper()
         {
             Current = this;
             Resuming += (s, e) => { OnResuming(s, e); };
@@ -81,7 +93,7 @@ namespace Template10.Common
 
         // it is the intent of Template 10 to no longer require Launched/Activated overrides, only OnStartAsync()
 
-        #pragma warning disable 809
+#pragma warning disable 809
 
         [Obsolete("Use OnStartAsync()")]
         protected override async void OnActivated(IActivatedEventArgs e) { await InternalActivatedAsync(e); }
@@ -104,7 +116,7 @@ namespace Template10.Common
         [Obsolete("Use OnStartAsync()")]
         protected override async void OnShareTargetActivated(ShareTargetActivatedEventArgs args) { await InternalActivatedAsync(args); }
 
-        #pragma warning restore 809
+#pragma warning restore 809
 
         /// <summary>
         /// This handles all the prelimimary stuff unique to Activated before calling OnStartAsync()
@@ -150,12 +162,12 @@ namespace Template10.Common
 
         // it is the intent of Template 10 to no longer require Launched/Activated overrides, only OnStartAsync()
 
-        #pragma warning disable 809
+#pragma warning disable 809
 
         [Obsolete("Use OnStartAsync()")]
         protected override void OnLaunched(LaunchActivatedEventArgs e) { InternalLaunchAsync(e as ILaunchActivatedEventArgs); }
 
-        #pragma warning restore 809
+#pragma warning restore 809
 
         /// <summary>
         /// This handles all the preliminary stuff unique to Launched before calling OnStartAsync().
@@ -182,7 +194,7 @@ namespace Template10.Common
                             from state will fail because of missing values. 
                             This is okay & by design.
                         */
-                        if (DecipherStartCause(e) == AdditionalKinds.Primary)
+                        if (DetermineStartCause(e) == AdditionalKinds.Primary)
                         {
                             var restored = NavigationService.RestoreSavedNavigation();
                             if (!restored)
@@ -311,7 +323,7 @@ namespace Template10.Common
 
             // create the default frame only if there's nothing already there
             // if it is not null, by the way, then the developer injected something & they win
-            if (Window.Current.Content == splash || Window.Current.Content == null)
+            if (Window.Current.Content == null || Window.Current.Content == splash)
             {
                 // build the default frame
                 Window.Current.Content = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include).Frame;
@@ -393,7 +405,7 @@ namespace Template10.Common
         /// This determines the simplest case for starting. This should handle 80% of common scenarios. 
         /// When Other is returned the developer must determine start manually using IActivatedEventArgs.Kind
         /// </summary>
-        public static AdditionalKinds DecipherStartCause(IActivatedEventArgs args)
+        public static AdditionalKinds DetermineStartCause(IActivatedEventArgs args)
         {
             var e = args as ILaunchActivatedEventArgs;
             if (e?.TileId == DefaultTileID && string.IsNullOrEmpty(e?.Arguments))

@@ -27,7 +27,7 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="ToggleButton">
-                            <Grid x:Name="RootGrid" Background="Transparent" Loaded="NavButton_Loaded"
+                            <Grid x:Name="RootGrid" Background="Transparent"
                                   Width="{Binding PaneWidth, ElementName=ThisPage}">
                                 <VisualStateManager.VisualStateGroups>
                                     <VisualStateGroup x:Name="CommonStates">
@@ -150,7 +150,7 @@
             <DataTemplate x:Name="NavButtonTemplate">
                 <RadioButton Width="{Binding PaneWidth, ElementName=ThisPage, FallbackValue=220}" Height="48" 
                     CommandParameter="{Binding}" Tag="{Binding Content}" Tapped="NavButton_Tapped"
-                    Command="{Binding NavCommand, ElementName=ThisPage}" GroupName="Nav">
+                    Command="{Binding NavCommand, ElementName=ThisPage}" GroupName="Nav" Loaded="NavButton_Loaded">
                     <RadioButton.Template>
                         <ControlTemplate>
                             <ToggleButton Style="{StaticResource NavButtonStyle}"
@@ -180,24 +180,13 @@
                         <Setter Target="ShellSplitView.IsPaneOpen" Value="False" />
                     </VisualState.Setters>
                 </VisualState>
-                <VisualState x:Name="VisualStateMedium">
+                <VisualState x:Name="VisualStateNormal">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger x:Name="VisualStateMediumTrigger" MinWindowWidth="521" />
+                        <AdaptiveTrigger x:Name="VisualStateNormalTrigger" MinWindowWidth="521" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="ShellSplitView.DisplayMode" Value="CompactOverlay" />
                         <Setter Target="ShellSplitView.IsPaneOpen" Value="False" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="VisualStateWide">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger x:Name="VisualStateWideTrigger" MinWindowWidth="1024" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="ShellSplitView.DisplayMode" Value="CompactInline" />
-                        <Setter Target="ShellSplitView.IsPaneOpen" Value="True" />
-                        <Setter Target="PaneContent.Margin" Value="0,0,0,0" />
-                        <Setter Target="HamburgerButton.Visibility" Value="Collapsed" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -210,7 +199,8 @@
                    CompactPaneLength="48">
 
             <SplitView.Pane>
-                <Grid Background="{Binding NavAreaBackground, ElementName=ThisPage, FallbackValue='Blue'}" 
+                <Grid 
+                   Background="{Binding NavAreaBackground, ElementName=ThisPage, FallbackValue='Blue'}" 
                       x:Name="PaneContent" Margin="0,48,0,0" Tapped="PaneContent_Tapped">
 
                     <Grid.RowDefinitions>

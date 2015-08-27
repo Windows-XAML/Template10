@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 namespace Template10.Mvvm
 {
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-MVVM
-    public abstract class BindableBase : INotifyPropertyChanged
+    public abstract class BindableBase : IBindable
     {
         //public event PropertyChangedEventHandler PropertyChanged;
 
@@ -27,7 +27,14 @@ namespace Template10.Mvvm
         {
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
                 return;
-            _handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            try
+            {
+                _handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+            catch
+            {
+                // nothing
+            }
         }
 
         public bool Set<T>(ref T storage, T value, [CallerMemberName]string propertyName = null)

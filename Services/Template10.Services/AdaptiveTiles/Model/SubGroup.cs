@@ -25,14 +25,14 @@ namespace Template10.Services.AdaptiveTiles.Model
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException("HintWeight", "Must in range of [0-100]");
+                    throw new ArgumentOutOfRangeException(nameof(HintWeight), "Must in range of [0-100]");
                 }
             }
         }
         public SubGroupTextStacking? HintTextStacking { get; set; }
 
         public List<ISubGroupChild> Children { get; set; }
-        public XElement GetXElement()
+        public XElement ToXElement()
         {
             var element = new XElement("subgroup");
             if (HintWeight.HasValue)
@@ -46,7 +46,7 @@ namespace Template10.Services.AdaptiveTiles.Model
 
             foreach (var child in Children)
             {
-                element.Add(child.GetXElement());
+                element.Add(child.ToXElement());
             }
 
             return element;
