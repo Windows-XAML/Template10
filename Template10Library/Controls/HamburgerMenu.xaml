@@ -27,7 +27,7 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="ToggleButton">
-                            <Grid x:Name="RootGrid" Background="Transparent" Loaded="NavButton_Loaded"
+                            <Grid x:Name="RootGrid" Background="Transparent"
                                   Width="{Binding PaneWidth, ElementName=ThisPage}">
                                 <VisualStateManager.VisualStateGroups>
                                     <VisualStateGroup x:Name="CommonStates">
@@ -150,7 +150,7 @@
             <DataTemplate x:Name="NavButtonTemplate">
                 <RadioButton Width="{Binding PaneWidth, ElementName=ThisPage, FallbackValue=220}" Height="48" 
                     CommandParameter="{Binding}" Tag="{Binding Content}" Tapped="NavButton_Tapped"
-                    Command="{Binding NavCommand, ElementName=ThisPage}" GroupName="Nav">
+                    Command="{Binding NavCommand, ElementName=ThisPage}" GroupName="Nav" Loaded="NavButton_Loaded">
                     <RadioButton.Template>
                         <ControlTemplate>
                             <ToggleButton Style="{StaticResource NavButtonStyle}"

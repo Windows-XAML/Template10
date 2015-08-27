@@ -194,7 +194,7 @@ namespace Template10.Common
                             from state will fail because of missing values. 
                             This is okay & by design.
                         */
-                        if (DecipherStartCause(e) == AdditionalKinds.Primary)
+                        if (DetermineStartCause(e) == AdditionalKinds.Primary)
                         {
                             var restored = NavigationService.RestoreSavedNavigation();
                             if (!restored)
@@ -405,7 +405,7 @@ namespace Template10.Common
         /// This determines the simplest case for starting. This should handle 80% of common scenarios. 
         /// When Other is returned the developer must determine start manually using IActivatedEventArgs.Kind
         /// </summary>
-        public static AdditionalKinds DecipherStartCause(IActivatedEventArgs args)
+        public static AdditionalKinds DetermineStartCause(IActivatedEventArgs args)
         {
             var e = args as ILaunchActivatedEventArgs;
             if (e?.TileId == DefaultTileID && string.IsNullOrEmpty(e?.Arguments))

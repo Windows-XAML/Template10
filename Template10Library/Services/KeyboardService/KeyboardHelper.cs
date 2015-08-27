@@ -68,7 +68,7 @@ namespace Template10.Services.KeyboardService
             }
             args.Handled = true;
         }
-
+        
         private void zCoreDispatcher_AcceleratorKeyActivated(CoreDispatcher sender, AcceleratorKeyEventArgs e)
         {
             if ((e.EventType == CoreAcceleratorKeyEventType.SystemKeyDown ||

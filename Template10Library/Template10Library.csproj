@@ -35,6 +35,8 @@
     <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Template10Library.XML</DocumentationFile>
+    <GenerateLibraryLayout>true</GenerateLibraryLayout>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <PlatformTarget>ARM</PlatformTarget>
@@ -89,12 +91,13 @@
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x86\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
-    <NoWarn>;2008</NoWarn>
+    <NoWarn>;2008;1591</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
+    <DocumentationFile>bin\x86\Debug\Template10Library.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <PlatformTarget>x86</PlatformTarget>
@@ -111,13 +114,14 @@
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <None Include="project.json" />
+    <None Include="Template10Library.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Behaviors\NavButtonBehavior.cs" />
     <Compile Include="Behaviors\TextBoxEnterKeyBehavior.cs" />
     <Compile Include="Behaviors\TimeoutAction.cs" />
     <Compile Include="Behaviors\TimerTriggerBehavior.cs" />
-    <Compile Include="Common\Bootstrapper.cs" />
+    <Compile Include="Common\BootStrapper.cs" />
     <Compile Include="Common\DispatcherWrapper.cs" />
     <Compile Include="Common\HandledEventArgs.cs" />
     <Compile Include="Common\Mdl2.cs" />
@@ -179,11 +183,23 @@
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>rd /q/s "$(TargetDir)"
+echo 'manually cleaned during pre-build event command line'
+</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
-  <Target Name="AfterBuild">
-  </Target>
   -->
+  <Target Name="AfterBuild">
+    <Copy SkipUnchangedFiles="true" SourceFiles="bin\$(Configuration)\Template10Library.dll" DestinationFiles="bin\$(Configuration)\nupkg\lib\dotnet\Template10Library.dll" />
+    <!--<Copy SkipUnchangedFiles="true" SourceFiles="bin\$(Configuration)\Template10Library.xml" DestinationFiles="bin\$(Configuration)\nupkg\lib\dotnet\Template10Library.xml" />-->
+    <!--<Copy SkipUnchangedFiles="true" SourceFiles="bin\$(Configuration)\Template10Library.pdb" DestinationFiles="bin\$(Configuration)\nupkg\lib\dotnet\Template10Library.pdb" />-->
+    <Copy SkipUnchangedFiles="true" SourceFiles="Template10Library.nuspec" DestinationFiles="bin\$(Configuration)\nupkg\Template10Library.nuspec" />
+    <Exec Command="..\..\..\NuGet.exe pack Template10Library.nuspec -OutputDirectory .. -NonInteractive -Properties Configuration=Release" WorkingDirectory="bin\$(Configuration)\nupkg" Outputs="bin\$(Configuration)\*.nupkg" />
+    <!--<Copy SkipUnchangedFiles="true" SourceFiles="bin\$(Configuration)\*.nupkg" DestinationFolder="c:\nuget-local\" />-->
+    <Exec Command="xcopy.exe bin\$(Configuration)\*.nupkg c:\nuget-local\ /m/y " />
+  </Target>
 </Project>
