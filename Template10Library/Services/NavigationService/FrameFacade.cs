@@ -28,10 +28,34 @@ namespace Template10.Services.NavigationService
         }
 
         public event EventHandler<HandledEventArgs> BackRequested;
-        public void RaiseBackRequested(HandledEventArgs args) { BackRequested?.Invoke(this, args); }
+        public void RaiseBackRequested(HandledEventArgs args)
+        {
+            if (BackRequested == null)
+            {
+                args.Handled = this.Frame.BackStackDepth > 0;
+                if (args.Handled)
+                    this.GoBack();
+            }
+            else
+            {
+                BackRequested?.Invoke(this, args);
+            }
+        }
 
         public event EventHandler<HandledEventArgs> ForwardRequested;
-        public void RaiseForwardRequested(HandledEventArgs args) { ForwardRequested?.Invoke(this, args); }
+        public void RaiseForwardRequested(HandledEventArgs args)
+        {
+            if (ForwardRequested == null)
+            {
+                args.Handled = this.Frame.ForwardStack.Count > 0;
+                if (args.Handled)
+                    this.GoForward();
+            }
+            else
+            {
+                ForwardRequested?.Invoke(this, args);
+            }
+        }
 
         #region state
 

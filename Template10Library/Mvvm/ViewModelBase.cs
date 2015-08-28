@@ -13,8 +13,6 @@ namespace Template10.Mvvm
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-MVVM
     public abstract class ViewModelBase : BindableBase, INavigable, IBindable
     {
-        public string Identifier { get; set; }
-
         public virtual void OnNavigatedTo(object parameter, NavigationMode mode, IDictionary<string, object> state) { /* nothing by default */ }
         public virtual Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending) { return Task.FromResult<object>(null); }
         public virtual void OnNavigatingFrom(Services.NavigationService.NavigatingEventArgs args) { /* nothing by default */ }
