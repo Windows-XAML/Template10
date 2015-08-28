@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Template10.Mvvm;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Navigation;
 
@@ -10,6 +11,8 @@ namespace Minimal.ViewModels
 {
     public class DetailPageViewModel : Minimal.Mvvm.ViewModelBase
     {
+        Services.SecondaryTilesService.SecondaryTileService _SecondaryTileService;
+
         public DetailPageViewModel()
         {
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
@@ -17,6 +20,10 @@ namespace Minimal.ViewModels
                 // designtime data
                 this.Value = "Designtime value";
                 return;
+            }
+            else
+            {
+                _SecondaryTileService = new Services.SecondaryTilesService.SecondaryTileService();
             }
         }
 
@@ -53,5 +60,21 @@ namespace Minimal.ViewModels
 
         private string _Value = "Default";
         public string Value { get { return _Value; } set { Set(ref _Value, value); } }
+
+        Services.SecondaryTilesService.PinCommand _pinCommand;
+        public Services.SecondaryTilesService.PinCommand PinCommand
+        {
+            get
+            {
+                if (_pinCommand != null)
+                    return _pinCommand;
+                return _pinCommand = new Services.SecondaryTilesService.PinCommand
+                {
+                    Pin = () => _SecondaryTileService.Pin(this),
+                    Unpin = () => _SecondaryTileService.UnPin(this),
+                    IsPinned = _SecondaryTileService.IsPinned(this),
+                };
+            }
+        }
     }
 }

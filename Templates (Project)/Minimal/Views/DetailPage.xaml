@@ -44,7 +44,11 @@
 
         <!-- header -->
 
-        <controls:PageHeader Text="Detail Page" Frame="{x:Bind Frame, Mode=OneWay}" />
+        <controls:PageHeader Text="Detail Page" Frame="{x:Bind Frame, Mode=OneWay}">
+            <AppBarButton Label="{Binding PinCommand.Label}" 
+                          Icon="{Binding PinCommand.Icon}"
+                          Command="{Binding PinCommand.Command}" />
+        </controls:PageHeader>
 
         <!--#region content-->
 
