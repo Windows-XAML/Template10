@@ -15,7 +15,7 @@ namespace Template10.Mvvm
         public DelegateCommand(Action execute, Func<bool> canexecute = null)
         {
             if (execute == null)
-                throw new ArgumentNullException("execute");
+                throw new ArgumentNullException(nameof(execute));
             _execute = execute;
             _canExecute = canexecute ?? (() => true);
         }
@@ -51,7 +51,7 @@ namespace Template10.Mvvm
         public DelegateCommand(Action<T> execute, Func<T, bool> canexecute = null)
         {
             if (execute == null)
-                throw new ArgumentNullException("execute");
+                throw new ArgumentNullException(nameof(execute));
             _execute = execute;
             _canExecute = canexecute ?? (e => true);
         }

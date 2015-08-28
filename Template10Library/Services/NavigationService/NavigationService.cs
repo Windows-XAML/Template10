@@ -10,6 +10,7 @@ using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Services.NavigationService
@@ -194,14 +195,14 @@ namespace Template10.Services.NavigationService
             //return view.Id;
         }
 
-        public bool Navigate(Type page, object parameter = null)
+        public bool Navigate(Type page, object parameter = null, NavigationTransitionInfo infoOverride = null)
         {
             if (page == null)
                 throw new ArgumentNullException(nameof(page));
             if (page.FullName.Equals(LastNavigationType)
                 && parameter == LastNavigationParameter)
                 return false;
-            return FrameFacade.Navigate(page, parameter);
+            return FrameFacade.Navigate(page, parameter, infoOverride);
         }
 
         public void SaveNavigation()

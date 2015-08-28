@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -24,30 +25,20 @@ namespace Template10.Controls
                 return;
             }
             new KeyboardService().AfterWindowZGesture = () => { HamburgerCommand.Execute(null); };
+
         }
 
         void UpdateButtons(NavigatedEventArgs e) { UpdateButtons(e.PageType); }
         void UpdateButtons() { UpdateButtons(NavigationService.Frame.Content?.GetType()); }
         void UpdateButtons(Type type)
         {
-            // update radiobuttons after frame navigates
-            foreach (var button in Common.XamlHelper.AllChildren<RadioButton>(this))
-            {
-                var info = button.CommandParameter as NavigationButtonInfo;
-                if (info?.PageType == null)
-                    continue;
-                button.IsChecked = info.PageType.Equals(type);
-                button.IsEnabled = !button.IsChecked.Value;
-            }
-            PaneWidth = !ShellSplitView.IsPaneOpen ? ShellSplitView.CompactPaneLength : ShellSplitView.OpenPaneLength;
+            var info = _navButtons.FirstOrDefault(x => x.Value.PageType.Equals(type));
+            Selected = info.Value;
         }
 
         Mvvm.DelegateCommand _hamburgerCommand;
         internal Mvvm.DelegateCommand HamburgerCommand { get { return _hamburgerCommand ?? (_hamburgerCommand = new Mvvm.DelegateCommand(ExecuteHamburger)); } }
-        void ExecuteHamburger()
-        {
-            ShellSplitView.IsPaneOpen = !ShellSplitView.IsPaneOpen;
-        }
+        void ExecuteHamburger() { IsOpen = !IsOpen; }
 
         Mvvm.DelegateCommand<NavigationButtonInfo> _navCommand;
         public Mvvm.DelegateCommand<NavigationButtonInfo> NavCommand { get { return _navCommand ?? (_navCommand = new Mvvm.DelegateCommand<NavigationButtonInfo>(ExecuteNav)); } }
@@ -55,17 +46,12 @@ namespace Template10.Controls
         {
             if (commandInfo == null)
                 throw new NullReferenceException("CommandParameter is not set");
-
-            if (ShellSplitView.DisplayMode == SplitViewDisplayMode.Overlay && ShellSplitView.IsPaneOpen)
-                ShellSplitView.IsPaneOpen = false;
-            else if (ShellSplitView.DisplayMode == SplitViewDisplayMode.CompactOverlay && ShellSplitView.IsPaneOpen)
-                ShellSplitView.IsPaneOpen = false;
-
             try
             {
                 // navigate only to new pages
                 if (commandInfo.PageType != null && NavigationService.CurrentPageType != commandInfo.PageType)
                     NavigationService.Navigate(commandInfo.PageType, commandInfo.PageParameter);
+                Selected = commandInfo;
             }
             finally
             {
@@ -176,8 +162,84 @@ namespace Template10.Controls
               DependencyProperty.Register("SecondarySeparator", typeof(SolidColorBrush),
                   typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => { (d as HamburgerMenu).SecondarySeparator = (SolidColorBrush)e.NewValue; }));
 
-
         #endregion
+
+        public NavigationButtonInfo Selected
+        {
+            get
+            {
+                // do nothing if doesn't exist
+                if (!_navButtons.Any(x => x.Key.IsChecked.Value))
+                {
+                    if (GetValue(SelectedProperty) != null)
+                        SetValue(SelectedProperty, null);
+                    return null;
+                }
+
+                // get value && ensure dp is also correct
+                var value = _navButtons.First(x => x.Key.IsChecked.Value).Value;
+                if (GetValue(SelectedProperty) != value)
+                    SetValue(SelectedProperty, value);
+                return value;
+            }
+            set
+            {
+                // clear existing
+                foreach (var button in _navButtons)
+                {
+                    button.Key.IsChecked = false;
+                    button.Key.IsEnabled = true;
+                }
+
+                // don't continue if none 
+                if (!_navButtons.Any(x => x.Value.Equals(value)))
+                    return;
+
+                // collapse the window
+                if (ShellSplitView.DisplayMode == SplitViewDisplayMode.Overlay && ShellSplitView.IsPaneOpen)
+                    ShellSplitView.IsPaneOpen = false;
+                else if (ShellSplitView.DisplayMode == SplitViewDisplayMode.CompactOverlay && ShellSplitView.IsPaneOpen)
+                    ShellSplitView.IsPaneOpen = false;
+
+                // setup new value
+                var navButton = _navButtons.First(x => x.Value.Equals(value));
+                navButton.Key.IsChecked = true;
+                navButton.Key.IsEnabled = false;
+
+                // ensure dp is correct (if diff)
+                if (GetValue(SelectedProperty) != value)
+                    SetValue(SelectedProperty, value);
+            }
+        }
+        public static readonly DependencyProperty SelectedProperty =
+            DependencyProperty.Register("Selected", typeof(NavigationButtonInfo),
+                typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) =>
+                {
+                    (d as HamburgerMenu).Selected = (NavigationButtonInfo)e.NewValue;
+                }));
+
+        public bool IsOpen
+        {
+            get
+            {
+                var open = ShellSplitView.IsPaneOpen;
+                if (open != (bool)GetValue(IsOpenProperty))
+                    SetValue(IsOpenProperty, open);
+                return open;
+            }
+            set
+            {
+                var open = ShellSplitView.IsPaneOpen;
+                if (open == value)
+                    return;
+                ShellSplitView.IsPaneOpen = value;
+                SetValue(IsOpenProperty, value);
+            }
+        }
+        public static readonly DependencyProperty IsOpenProperty =
+            DependencyProperty.Register(nameof(IsOpen), typeof(bool),
+                typeof(HamburgerMenu), new PropertyMetadata(false,
+                    (d, e) => { (d as HamburgerMenu).IsOpen = (bool)e.NewValue; }));
 
         public ObservableCollection<NavigationButtonInfo> PrimaryButtons
         {
@@ -220,8 +282,11 @@ namespace Template10.Controls
                 }
                 NavigationService.FrameFacade.Navigated += (s, e) => UpdateButtons(e);
                 NavigationService.AfterRestoreSavedNavigation += (s, e) => UpdateButtons();
-                ShellSplitView.RegisterPropertyChangedCallback(SplitView.IsPaneOpenProperty, (s, e) => UpdateButtons());
-                UpdateButtons();
+                ShellSplitView.RegisterPropertyChangedCallback(SplitView.IsPaneOpenProperty, (s, e) =>
+                {
+                    // update width
+                    PaneWidth = !ShellSplitView.IsPaneOpen ? ShellSplitView.CompactPaneLength : ShellSplitView.OpenPaneLength;
+                });
             }
         }
 
@@ -251,8 +316,11 @@ namespace Template10.Controls
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        Dictionary<RadioButton, NavigationButtonInfo> _navButtons = new Dictionary<RadioButton, NavigationButtonInfo>();
         void NavButton_Loaded(object sender, RoutedEventArgs e)
         {
+            var radio = sender as RadioButton;
+            _navButtons.Add(radio, radio.DataContext as NavigationButtonInfo);
             UpdateButtons();
         }
 
@@ -274,5 +342,9 @@ namespace Template10.Controls
         public object PageParameter { get; set; }
         public bool ClearHistory { get; set; } = false;
         public UIElement Content { get; set; }
+        public override string ToString()
+        {
+            return string.Format("{0}({1})", PageType, PageParameter);
+        }
     }
 }

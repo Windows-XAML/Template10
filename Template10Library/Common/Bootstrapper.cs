@@ -96,25 +96,25 @@ namespace Template10.Common
 #pragma warning disable 809
 
         [Obsolete("Use OnStartAsync()")]
-        protected override async void OnActivated(IActivatedEventArgs e) { await InternalActivatedAsync(e); }
+        protected override sealed async void OnActivated(IActivatedEventArgs e) { await InternalActivatedAsync(e); }
 
         [Obsolete("Use OnStartAsync()")]
-        protected override async void OnCachedFileUpdaterActivated(CachedFileUpdaterActivatedEventArgs args) { await InternalActivatedAsync(args); }
+        protected override sealed async void OnCachedFileUpdaterActivated(CachedFileUpdaterActivatedEventArgs args) { await InternalActivatedAsync(args); }
 
         [Obsolete("Use OnStartAsync()")]
-        protected override async void OnFileActivated(FileActivatedEventArgs args) { await InternalActivatedAsync(args); }
+        protected override sealed async void OnFileActivated(FileActivatedEventArgs args) { await InternalActivatedAsync(args); }
 
         [Obsolete("Use OnStartAsync()")]
-        protected override async void OnFileOpenPickerActivated(FileOpenPickerActivatedEventArgs args) { await InternalActivatedAsync(args); }
+        protected override sealed async void OnFileOpenPickerActivated(FileOpenPickerActivatedEventArgs args) { await InternalActivatedAsync(args); }
 
         [Obsolete("Use OnStartAsync()")]
-        protected override async void OnFileSavePickerActivated(FileSavePickerActivatedEventArgs args) { await InternalActivatedAsync(args); }
+        protected override sealed async void OnFileSavePickerActivated(FileSavePickerActivatedEventArgs args) { await InternalActivatedAsync(args); }
 
         [Obsolete("Use OnStartAsync()")]
-        protected override async void OnSearchActivated(SearchActivatedEventArgs args) { await InternalActivatedAsync(args); }
+        protected override sealed async void OnSearchActivated(SearchActivatedEventArgs args) { await InternalActivatedAsync(args); }
 
         [Obsolete("Use OnStartAsync()")]
-        protected override async void OnShareTargetActivated(ShareTargetActivatedEventArgs args) { await InternalActivatedAsync(args); }
+        protected override sealed async void OnShareTargetActivated(ShareTargetActivatedEventArgs args) { await InternalActivatedAsync(args); }
 
 #pragma warning restore 809
 
@@ -194,7 +194,7 @@ namespace Template10.Common
                             from state will fail because of missing values. 
                             This is okay & by design.
                         */
-                        if (DecipherStartCause(e) == AdditionalKinds.Primary)
+                        if (DetermineStartCause(e) == AdditionalKinds.Primary)
                         {
                             var restored = NavigationService.RestoreSavedNavigation();
                             if (!restored)
@@ -224,13 +224,20 @@ namespace Template10.Common
             global::Windows.UI.Core.SystemNavigationManager.GetForCurrentView().BackRequested += (s, args) =>
             {
                 // only handle as long as there is a default backstack
-                args.Handled = !NavigationService.CanGoBack;
-                RaiseBackRequested();
+                //args.Handled = !NavigationService.CanGoBack;
+                var handled = false;
+                RaiseBackRequested(ref handled);
+                args.Handled = handled;
             };
 
             // Hook up keyboard and mouse Back handler
             var keyboard = new Services.KeyboardService.KeyboardService();
-            keyboard.AfterBackGesture = () => RaiseBackRequested();
+            keyboard.AfterBackGesture = () =>
+                                        {
+                                            //the result is no matter
+                                            var handled = false;
+                                            RaiseBackRequested(ref handled);
+                                        };
 
             // Hook up keyboard and house Forward handler
             keyboard.AfterForwardGesture = () => RaiseForwardRequested();
@@ -244,13 +251,14 @@ namespace Template10.Common
         /// Views or Viewodels can override this behavior by handling the BackRequested 
         /// event and setting the Handled property of the BackRequestedEventArgs to true.
         /// </summary>
-        private void RaiseBackRequested()
+        private void RaiseBackRequested(ref bool handled)
         {
             var args = new HandledEventArgs();
             foreach (var frame in WindowWrapper.Current().NavigationServices.Select(x => x.FrameFacade))
             {
                 frame.RaiseBackRequested(args);
-                if (args.Handled)
+                handled = args.Handled;
+                if (handled)
                     return;
             }
 
@@ -405,7 +413,7 @@ namespace Template10.Common
         /// This determines the simplest case for starting. This should handle 80% of common scenarios. 
         /// When Other is returned the developer must determine start manually using IActivatedEventArgs.Kind
         /// </summary>
-        public static AdditionalKinds DecipherStartCause(IActivatedEventArgs args)
+        public static AdditionalKinds DetermineStartCause(IActivatedEventArgs args)
         {
             var e = args as ILaunchActivatedEventArgs;
             if (e?.TileId == DefaultTileID && string.IsNullOrEmpty(e?.Arguments))

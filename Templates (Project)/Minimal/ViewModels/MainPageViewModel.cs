@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Template10.Services.NavigationService;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 namespace Minimal.ViewModels
@@ -49,7 +50,7 @@ namespace Minimal.ViewModels
 
         public void GotoDetailsPage()
         {
-            this.NavigationService.Navigate(typeof(Views.DetailPage), this.Value);
+            this.NavigationService.Navigate(typeof(Views.DetailPage), System.DateTime.Now);
         }
     }
 }

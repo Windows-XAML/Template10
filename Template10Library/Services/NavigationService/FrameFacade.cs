@@ -105,7 +105,7 @@ namespace Template10.Services.NavigationService
 
         public string FrameId { get; set; } = string.Empty;
 
-        public bool Navigate(Type page, object parameter) { return Frame.Navigate(page, parameter); }
+        public bool Navigate(Type page, object parameter, NavigationTransitionInfo infoOverride) { return Frame.Navigate(page, parameter, infoOverride); }
 
         public void SetNavigationState(string state) { Frame.SetNavigationState(state); }
 
@@ -115,7 +115,7 @@ namespace Template10.Services.NavigationService
 
         public bool CanGoBack { get { return Frame.CanGoBack; } }
 
-        public void GoBack() { Frame.GoBack(); }
+        public void GoBack() { if (CanGoBack) Frame.GoBack(); }
 
         public void Refresh()
         {
@@ -125,7 +125,7 @@ namespace Template10.Services.NavigationService
 
         public bool CanGoForward { get { return Frame.CanGoForward; } }
 
-        public void GoForward() { Frame.GoForward(); }
+        public void GoForward() { if (CanGoForward) Frame.GoForward(); }
 
         public object Content { get { return Frame.Content; } }
 
