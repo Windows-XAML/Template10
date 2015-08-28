@@ -24,7 +24,7 @@ namespace Minimal.ViewModels
             set { _settings.UseShellBackButton = value; base.RaisePropertyChanged(); }
         }
 
-        private string _BusyText = "Busy text";
+        private string _BusyText = "Please wait...";
         public string BusyText { get { return _BusyText; } set { Set(ref _BusyText, BusyText); } }
         public void ShowBusy() { Views.Shell.SetBusyIndicator(true, _BusyText); }
         public void HideBusy() { Views.Shell.SetBusyIndicator(false); }

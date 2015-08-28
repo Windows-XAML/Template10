@@ -143,8 +143,30 @@ namespace Template10.Services.NavigationService
 
         public void Refresh()
         {
-            var state = Frame.GetNavigationState();
-            Frame.SetNavigationState(state);
+            try
+            {
+                // this only works for apps using serializable types
+                var state = Frame.GetNavigationState();
+                Frame.SetNavigationState(state);
+            }
+            catch (Exception)
+            {
+                if (Frame.CanGoBack)
+                {
+                    Frame.GoBack();
+                    Frame.GoForward();
+                }
+                else if (Frame.CanGoForward)
+                {
+                    Frame.GoForward();
+                    Frame.GoBack();
+                }
+                else
+                {
+                    // not much we can really do in this case
+                    (Frame.Content as Page)?.UpdateLayout();
+                }
+            }
         }
 
         public bool CanGoForward { get { return Frame.CanGoForward; } }

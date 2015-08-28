@@ -50,7 +50,7 @@ namespace Minimal.ViewModels
 
         public void GotoDetailsPage()
         {
-            this.NavigationService.Navigate(typeof(Views.DetailPage), System.DateTime.Now);
+            this.NavigationService.Navigate(typeof(Views.DetailPage), this.Value);
         }
     }
 }
