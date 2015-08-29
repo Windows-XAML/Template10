@@ -20,6 +20,9 @@
             <SolidColorBrush x:Name="NavAreaBackgroundBrush" Color="White" />
             <SolidColorBrush x:Name="SecondaryBorderBrush" Color="DimGray" />
 
+            <SolidColorBrush x:Name="NavButtonCheckedOverlayBackgroundBrush" Color="#FF7D1F22" />
+            <SolidColorBrush x:Name="NavButtonHoverOverlayBackgroundBrush" Color="#FF434343" Opacity="0.1" />
+
             <Style TargetType="ToggleButton" x:Key="NavButtonStyle">
                 <Setter Property="Height" Value="48"/>
                 <Setter Property="MinWidth" Value="48"/>
@@ -91,11 +94,10 @@
                                     </VisualStateGroup>
                                 </VisualStateManager.VisualStateGroups>
                                 <Grid x:Name="CheckedOverlay" Visibility="Collapsed">
-                                    <Rectangle Fill="{Binding NavButtonBackground, ElementName=ThisPage, FallbackValue=Navy}" />
-                                    <Rectangle Fill="Black" Opacity=".4" />
+                                    <Rectangle Fill="{Binding NavButtonCheckedOverlayBackground, ElementName=ThisPage, FallbackValue=Navy}" />
                                 </Grid>
                                 <Rectangle x:Name="PressedOverlay" Fill="White" Opacity=".2" Visibility="Collapsed" />
-                                <Rectangle x:Name="HoverOverlay" Fill="White" Opacity=".1" Visibility="Collapsed" />
+                                <Rectangle x:Name="HoverOverlay" Fill="{Binding NavButtonHoverOverlayBackground, ElementName=ThisPage, FallbackValue=Gray}" Visibility="Collapsed" />
                                 <ContentPresenter Background="Transparent" FontSize="16" 
                                         Foreground="{Binding NavButtonForeground, ElementName=ThisPage, FallbackValue=White}"
                                         VerticalAlignment="Stretch" HorizontalAlignment="Left"
