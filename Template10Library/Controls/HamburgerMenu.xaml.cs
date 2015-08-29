@@ -48,9 +48,6 @@ namespace Template10.Controls
                 throw new NullReferenceException("CommandParameter is not set");
             try
             {
-                // navigate only to new pages
-                if (commandInfo.PageType != null && NavigationService.CurrentPageType != commandInfo.PageType)
-                    NavigationService.Navigate(commandInfo.PageType, commandInfo.PageParameter);
                 Selected = commandInfo;
             }
             finally
@@ -195,11 +192,7 @@ namespace Template10.Controls
                 if (!_navButtons.Any(x => x.Value.Equals(value)))
                     return;
 
-                // collapse the window
-                if (ShellSplitView.DisplayMode == SplitViewDisplayMode.Overlay && ShellSplitView.IsPaneOpen)
-                    ShellSplitView.IsPaneOpen = false;
-                else if (ShellSplitView.DisplayMode == SplitViewDisplayMode.CompactOverlay && ShellSplitView.IsPaneOpen)
-                    ShellSplitView.IsPaneOpen = false;
+                IsOpen = false;
 
                 // setup new value
                 var navButton = _navButtons.First(x => x.Value.Equals(value));
@@ -209,8 +202,15 @@ namespace Template10.Controls
                 // ensure dp is correct (if diff)
                 if (GetValue(SelectedProperty) != value)
                     SetValue(SelectedProperty, value);
+
+                // navigate only to new pages
+                if (value.PageType != null && NavigationService.CurrentPageType != value.PageType)
+                {
+                    NavigationService.Navigate(value.PageType, value.PageParameter);
+                }
             }
         }
+
         public static readonly DependencyProperty SelectedProperty =
             DependencyProperty.Register("Selected", typeof(NavigationButtonInfo),
                 typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) =>
@@ -232,7 +232,18 @@ namespace Template10.Controls
                 var open = ShellSplitView.IsPaneOpen;
                 if (open == value)
                     return;
-                ShellSplitView.IsPaneOpen = value;
+                if (value)
+                {
+                    ShellSplitView.IsPaneOpen = true;
+                }
+                else
+                {
+                    // collapse the window
+                    if (ShellSplitView.DisplayMode == SplitViewDisplayMode.Overlay && ShellSplitView.IsPaneOpen)
+                        ShellSplitView.IsPaneOpen = false;
+                    else if (ShellSplitView.DisplayMode == SplitViewDisplayMode.CompactOverlay && ShellSplitView.IsPaneOpen)
+                        ShellSplitView.IsPaneOpen = false;
+                }
                 SetValue(IsOpenProperty, value);
             }
         }

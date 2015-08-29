@@ -39,7 +39,7 @@
                                   IsOn="{Binding UseShellBackButton, Mode=TwoWay}" />
                         <TextBox Margin="0,12,0,0" HorizontalAlignment="Left" Width="200"
                                  Text="{Binding BusyText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                 Header="Please wait..." />
+                                 Header="Busy text" />
                         <Button Content="Show Busy Indicator" Margin="0,12,0,0">
                             <Interactivity:Interaction.Behaviors>
                                 <Core:EventTriggerBehavior EventName="Click">

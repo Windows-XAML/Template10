@@ -13,10 +13,5 @@ namespace Template10.Services.NavigationService
         Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending);
         void OnNavigatingFrom(Services.NavigationService.NavigatingEventArgs args);
         NavigationService NavigationService { get; set; }
-
-        /// <summary>
-        /// Used by NavigationService when NavigationCacheMode is Enabled, will load state when possible.
-        /// </summary>
-        string Identifier { get; set; }
     }
 }

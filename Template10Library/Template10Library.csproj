@@ -150,7 +150,11 @@
     <Compile Include="Services\NavigationService\NavigatedEventArgs.cs" />
     <Compile Include="Services\NavigationService\NavigatingEventArgs.cs" />
     <Compile Include="Services\NavigationService\NavigationService.cs" />
+    <Compile Include="Services\SettingsService\PropertyMapping.cs" />
+    <Compile Include="Services\SettingsService\PropertyStore.cs" />
+    <Compile Include="Services\SettingsService\Settings.cs" />
     <Compile Include="Services\SettingsService\SettingsHelper.cs" />
+    <Compile Include="Utils\TypeUtil.cs" />
     <Content Include="Properties\Template10Library.rd.xml" />
   </ItemGroup>
   <ItemGroup>

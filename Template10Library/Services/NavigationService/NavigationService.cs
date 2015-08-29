@@ -78,7 +78,6 @@ namespace Template10.Services.NavigationService
                 var dataContext = page.DataContext as INavigable;
                 if (dataContext != null)
                 {
-                    dataContext.Identifier = string.Format("Page- {0}", FrameFacade.BackStackDepth);
                     var pageState = FrameFacade.PageStateContainer(page.GetType());
                     await dataContext.OnNavigatedFromAsync(pageState, suspending);
                 }
@@ -110,19 +109,10 @@ namespace Template10.Services.NavigationService
                 var dataContext = page.DataContext as INavigable;
                 if (dataContext != null)
                 {
-                    if (dataContext.Identifier != null
-                        && (mode == NavigationMode.Forward || mode == NavigationMode.Back))
-                    {
-                        // don't call load if cached && navigating back/forward
-                        return;
-                    }
-                    else
-                    {
-                        // prepare for state load
-                        dataContext.NavigationService = this;
-                        var pageState = FrameFacade.PageStateContainer(page.GetType());
-                        dataContext.OnNavigatedTo(parameter, mode, pageState);
-                    }
+                    // prepare for state load
+                    dataContext.NavigationService = this;
+                    var pageState = FrameFacade.PageStateContainer(page.GetType());
+                    dataContext.OnNavigatedTo(parameter, mode, pageState);
                 }
             }
         }
