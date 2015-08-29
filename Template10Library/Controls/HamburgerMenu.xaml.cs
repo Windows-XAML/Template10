@@ -161,6 +161,39 @@ namespace Template10.Controls
 
         #endregion
 
+        #region added by dg2k
+
+        //******************************************************************************************************************************************************************
+
+        public SolidColorBrush NavButtonCheckedOverlayBackground
+        {
+            get { return NavButtonCheckedOverlayBackgroundBrush; }
+            set
+            {
+                SetValue(NavButtonCheckedOverlayBackgroundProperty, NavButtonCheckedOverlayBackgroundBrush = value);
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NavButtonCheckedOverlayBackground)));
+            }
+        }
+        public static readonly DependencyProperty NavButtonCheckedOverlayBackgroundProperty =
+              DependencyProperty.Register(nameof(NavButtonCheckedOverlayBackground), typeof(SolidColorBrush),
+                  typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => { (d as HamburgerMenu).NavButtonCheckedOverlayBackground = (SolidColorBrush)e.NewValue; }));
+
+
+        public SolidColorBrush NavButtonHoverOverlayBackground
+        {
+            get { return NavButtonHoverOverlayBackgroundBrush; }
+            set
+            {
+                SetValue(NavButtonHoverOverlayBackgroundProperty, NavButtonHoverOverlayBackgroundBrush = value);
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NavButtonHoverOverlayBackground)));
+            }
+        }
+        public static readonly DependencyProperty NavButtonHoverOverlayBackgroundProperty =
+              DependencyProperty.Register(nameof(NavButtonHoverOverlayBackground), typeof(SolidColorBrush),
+                  typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => { (d as HamburgerMenu).NavButtonHoverOverlayBackground = (SolidColorBrush)e.NewValue; }));
+
+        #endregion
+
         public NavigationButtonInfo Selected
         {
             get
