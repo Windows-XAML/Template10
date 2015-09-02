@@ -1,0 +1,80 @@
+<root>
+
+  <version>1.0.0.0</version>
+  <icon>http://bing.com</icon>
+  <text locale="en-us">Command</text>
+
+  <!-- only show when version mismatch -->
+  <command id="0">
+    <text locale="en-us">Upgrade required</text>
+  </command>
+
+  <!-- always show as last submenu item -->
+  <command id="1">
+    <text locale="en-us">Help</text>
+    <help>http://bing.com</help>
+  </command>
+
+  <command id="2">
+    <text locale="en-us">Add MVVM</text>
+
+    <command id="2.1">
+      <text locale="en-us">MVVM Light</text>
+      <file source="" target="">
+        <replace find="ProjectName" with="PROJECTNAME" />
+      </file>
+      <file source="" target="">
+        <replace find="ProjectName" with="PROJECTNAME" />
+      </file>
+      <nuget package="" version="" />
+      <nuget package="" version="" />
+      <help>http://bing.com</help>
+    </command>
+
+    <command id="2.2">
+      <text locale="en-us">MVVM Prism</text>
+      <file source="" target="">
+        <replace find="ProjectName" with="PROJECTNAME" />
+      </file>
+      <file source="" target="">
+        <replace find="ProjectName" with="PROJECTNAME" />
+      </file>
+      <nuget package="" version="" />
+      <nuget package="" version="" />
+      <help>http://bing.com</help>
+    </command>
+
+  </command>
+
+  <command id="3">
+    <text locale="en-us">Add Injection</text>
+
+    <command id="3.1">
+      <text locale="en-us">Unity</text>
+      <file source="" target="">
+        <replace find="ProjectName" with="PROJECTNAME" />
+      </file>
+      <file source="" target="">
+        <replace find="ProjectName" with="PROJECTNAME" />
+      </file>
+      <nuget command="Install-Package MvvmLightLibs" />
+      <nuget command="Install-Package Template10 -Pre" />
+      <help>http://bing.com</help>
+    </command>
+
+    <command id="3.2">
+      <text locale="en-us">Autofac</text>
+      <file source="" target="">
+        <replace find="ProjectName" with="PROJECTNAME" />
+      </file>
+      <file source="" target="">
+        <replace find="ProjectName" with="PROJECTNAME" />
+      </file>
+      <nuget package="" version="" />
+      <nuget package="" version="" />
+      <help>http://bing.com</help>
+    </command>
+
+  </command>
+
+</root>
