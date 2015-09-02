@@ -178,7 +178,10 @@ namespace Template10.Common
         /// </summary>
         private async void InternalLaunchAsync(ILaunchActivatedEventArgs e)
         {
-            await InitializeFrameAsync(e);
+            if (e.PreviousExecutionState != ApplicationExecutionState.Running)
+            {
+                await InitializeFrameAsync(e);
+            }
 
             // okay, now handle launch
             switch (e.PreviousExecutionState)

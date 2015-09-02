@@ -40,7 +40,13 @@ namespace Template10.Services.SettingsService
 		{
 			try
 			{
-				var type = typeof(T);
+                // let's not throw an exception when we can easily check this.
+                if (!Values.ContainsKey(key))
+                {
+                    return fallback;
+                }
+
+                var type = typeof(T);
 				var converter = Converters.GetConverter(type);
 				return (T)converter.FromStore(Values[key].ToString(), type);
 
