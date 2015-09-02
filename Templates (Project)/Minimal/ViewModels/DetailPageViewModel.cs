@@ -27,16 +27,8 @@ namespace Minimal.ViewModels
             }
         }
 
-        bool _hasEverLoaded = false;
         public override void OnNavigatedTo(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
-            if (_hasEverLoaded && (mode == NavigationMode.Forward || mode == NavigationMode.Back))
-            {
-                // (optional) When NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
-                // then, don't call load if cached && navigating back/forward
-                return;
-            }
-
             if (state.Any())
             {
                 // use cache value(s)
@@ -57,12 +49,6 @@ namespace Minimal.ViewModels
             {
                 // persist into cache
                 state[nameof(Value)] = Value;
-            }
-            else
-            {
-                // (optional) When NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
-                // then, create indicator that this has been pre-loaded
-                _hasEverLoaded = true;
             }
             return base.OnNavigatedFromAsync(state, suspending);
         }

@@ -7,6 +7,8 @@ using Windows.ApplicationModel.Activation;
 using Windows.UI.Core;
 using System.Linq;
 using System.Collections.Generic;
+using System.Diagnostics;
+using Windows.Foundation.Metadata;
 using Template10.Services.NavigationService;
 
 namespace Template10.Common
@@ -239,8 +241,19 @@ namespace Template10.Common
                                             RaiseBackRequested(ref handled);
                                         };
 
-            // Hook up keyboard and house Forward handler
+            // Hook up keyboard and mouse Forward handler
             keyboard.AfterForwardGesture = () => RaiseForwardRequested();
+
+            // Handle the back button press on Mobile
+            if (ApiInformation.IsApiContractPresent("Windows.Phone.PhoneContract", 1, 0))
+            {  
+                Windows.Phone.UI.Input.HardwareButtons.BackPressed += (s, a) =>
+                {
+                    bool handled = false;
+                    RaiseBackRequested(ref handled);
+                    a.Handled = handled;
+                };
+            }
         }
 
         #endregion

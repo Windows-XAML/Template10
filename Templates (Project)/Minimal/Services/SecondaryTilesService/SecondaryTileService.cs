@@ -45,8 +45,9 @@ namespace Minimal.Services.SecondaryTilesService
             try
             {
                 // prep for custom
-                var uri = new Uri("ms-appx:///Templates/DetailTile.xml");
-                var xml = XDocument.Load(uri.ToString());
+                var folder = Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync("Templates").AsTask().Result;
+                var file = folder.GetFileAsync("DetailTile.xml").AsTask().Result;
+                var xml = XDocument.Load(file.Path);
                 var visual = xml.Descendants("visual").First();
                 var bindings = visual.Descendants("binding").ToArray();
 
@@ -63,7 +64,7 @@ namespace Minimal.Services.SecondaryTilesService
 
                 // wide
                 {
-                    var binding = bindings[0];
+                    var binding = bindings[1];
                     var subgroups = binding.Descendants("subgroup").ToArray();
                     var image = subgroups[0].Descendants("image").First();
                     var texts = subgroups[1].Descendants("text").ToArray();
@@ -77,7 +78,7 @@ namespace Minimal.Services.SecondaryTilesService
 
                 // large
                 {
-                    var binding = bindings[0];
+                    var binding = bindings[2];
                     var subgroups = binding.Descendants("subgroup").ToArray();
                     var image = subgroups[0].Descendants("image").First();
                     var texts = subgroups[1].Descendants("text").ToArray();
@@ -90,14 +91,15 @@ namespace Minimal.Services.SecondaryTilesService
                 }
 
                 // pin
-                var updater = TileUpdateManager.CreateTileUpdaterForSecondaryTile(nameof(ViewModels.DetailPageViewModel));
+                var tileId = vm.GetType().ToString();
+                var updater = TileUpdateManager.CreateTileUpdaterForSecondaryTile(tileId);
                 var notification = new TileNotification(xml.ToXmlDocument());
                 updater.Update(notification);
-
                 return true;
             }
-            catch (Exception)
+            catch (Exception x)
             {
+                System.Diagnostics.Debugger.Break();
                 return false;
             }
         }
