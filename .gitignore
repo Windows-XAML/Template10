@@ -173,6 +173,7 @@ UpgradeLog*.htm
 
 # SQL Server files
 *.mdf
+*.lock
 *.ldf
 
 # Business Intelligence projects

@@ -43,7 +43,7 @@
         </Grid.RowDefinitions>
 
         <!-- header -->
-        <controls:PageHeader Text="Main Page" BackButtonVisibility="Collapsed" Frame="{x:Bind Frame, Mode=OneWay}">
+        <controls:PageHeader Text="Minimal Project | Main Page" BackButtonVisibility="Collapsed" Frame="{x:Bind Frame, Mode=OneWay}">
             <AppBarButton Icon="Forward" Label="Forward">
                 <Interactivity:Interaction.Behaviors>
                     <Behaviors:NavButtonBehavior Direction="Forward" Frame="{x:Bind Frame, Mode=OneWay}"/>

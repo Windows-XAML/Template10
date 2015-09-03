@@ -6,15 +6,13 @@ using Windows.ApplicationModel.Activation;
 
 namespace Minimal
 {
-    /*
-     Documentation on APIs used in this page:
-     https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-Bootstrapper
-     https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-Cache
-     https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-BackButton
-     https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SplashScreen
-     https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SplitView
-     https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-NavigationService
-    */
+    /// Documentation on APIs used in this page:
+    /// https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-Bootstrapper
+    /// https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-Cache
+    /// https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-BackButton
+    /// https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SplashScreen
+    /// https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SplitView
+    /// https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-NavigationService
 
     sealed partial class App : Template10.Common.BootStrapper
     {
