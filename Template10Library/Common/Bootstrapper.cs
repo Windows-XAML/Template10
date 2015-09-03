@@ -130,7 +130,7 @@ namespace Template10.Common
             // sometimes activate requires a frame to be built
             if (Window.Current.Content == null)
             {
-                await InitializeFrameAsync(e as ILaunchActivatedEventArgs);
+                await InitializeFrameAsync(e);
             }
 
             // onstart is shared with activate and launch
@@ -167,7 +167,7 @@ namespace Template10.Common
 #pragma warning disable 809
 
         [Obsolete("Use OnStartAsync()")]
-        protected override void OnLaunched(LaunchActivatedEventArgs e) { InternalLaunchAsync(e as ILaunchActivatedEventArgs); }
+        protected override void OnLaunched(LaunchActivatedEventArgs e) { InternalLaunchAsync(e); }
 
 #pragma warning restore 809
 
@@ -178,7 +178,10 @@ namespace Template10.Common
         /// </summary>
         private async void InternalLaunchAsync(ILaunchActivatedEventArgs e)
         {
-            await InitializeFrameAsync(e);
+            if (e.PreviousExecutionState != ApplicationExecutionState.Running)
+            {
+                await InitializeFrameAsync(e);
+            }
 
             // okay, now handle launch
             switch (e.PreviousExecutionState)
@@ -329,7 +332,7 @@ namespace Template10.Common
         /// splash screen, then OnInitialzieAsync, then the new frame (if necessary).
         /// This is private because there's no reason for the developer to call this.
         /// </summary>
-        private async Task InitializeFrameAsync(ILaunchActivatedEventArgs e)
+        private async Task InitializeFrameAsync(IActivatedEventArgs e)
         {
             // first show the splash 
             FrameworkElement splash = null;
