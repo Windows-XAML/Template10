@@ -1,17 +1,20 @@
-﻿using Minimal.Services.SettingsServices;
-using System;
-using System.Threading.Tasks;
-using Windows.ApplicationModel.Activation;
+﻿using System;
 using Windows.UI.Xaml;
+using System.Threading.Tasks;
+using Minimal.Services.SettingsServices;
+using Windows.ApplicationModel.Activation;
 
 namespace Minimal
 {
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-Bootstrapper
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-Cache
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-BackButton
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SplashScreen
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SplitView
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-NavigationService
+    /*
+     Documentation on APIs used in this page:
+     https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-Bootstrapper
+     https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-Cache
+     https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-BackButton
+     https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SplashScreen
+     https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SplitView
+     https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-NavigationService
+    */
 
     sealed partial class App : Template10.Common.BootStrapper
     {
