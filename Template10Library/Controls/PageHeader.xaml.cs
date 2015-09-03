@@ -73,6 +73,11 @@ namespace Template10.Controls
             {
                 SetValue(HeaderBackgroundProperty, HeaderBackgroundBrush = value);
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(HeaderBackground)));
+                if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+                {
+                    var statusBar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
+                    statusBar.BackgroundColor = value?.Color;
+                }
             }
         }
         public static readonly DependencyProperty HeaderBackgroundProperty =
@@ -86,6 +91,11 @@ namespace Template10.Controls
             {
                 SetValue(HeaderForegroundProperty, HeaderForegroundBrush = value);
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(HeaderForeground)));
+                if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+                {
+                    var statusBar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
+                    statusBar.ForegroundColor = value?.Color;
+                }
             }
         }
         public static readonly DependencyProperty HeaderForegroundProperty =
