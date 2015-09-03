@@ -25,6 +25,8 @@ namespace Template10.Services.NavigationService
         object LastNavigationParameter { get; set; }
         string LastNavigationType { get; set; }
 
+        public DispatcherWrapper Dispatcher { get { return WindowWrapper.Current(this).Dispatcher; } }
+
         internal NavigationService(Frame frame)
         {
             FrameFacade = new FrameFacade(frame);
@@ -117,72 +119,28 @@ namespace Template10.Services.NavigationService
             }
         }
 
-        // TODO: this will spawn a new window instead of navigating to an existing frame.
-        public async Task OpenAsync(Type page, object parameter = null, ViewSizePreference size = ViewSizePreference.UseHalf)
+        public async Task OpenAsync(Type page, object parameter = null, string title = "New Window", ViewSizePreference size = ViewSizePreference.UseHalf)
         {
-            throw new NotImplementedException();
+            var currentView = ApplicationView.GetForCurrentView();
+            var newView = CoreApplication.CreateNewView();
+            var dispatcher = new DispatcherWrapper(newView.Dispatcher);
+            await dispatcher.DispatchAsync(async () =>
+            {
+                var newWindow = Window.Current;
+                var newAppView = ApplicationView.GetForCurrentView();
+                newAppView.Title = title;
 
-            //int id = default(int);
-            //ApplicationView view = null;
-            //var coreview = CoreApplication.CreateNewView();
-            //var dispatcher = WindowWrapper.Current().Dispatcher;
-            //await coreview.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-            //{
-            //    var nav = BootStrapper.Current.NavigationServiceFactory(false);
-            //    Window.Current.Content = nav.Frame;
-            //    nav.Navigate(page, parameter);
+                var frame = BootStrapper.Current.NavigationServiceFactory(BootStrapper.BackButton.Ignore, BootStrapper.ExistingContent.Exclude);
+                frame.Navigate(page, parameter);
+                newWindow.Content = frame.Frame;
+                newWindow.Activate();
 
-            //    view = ApplicationView.GetForCurrentView();
-            //    view.Consolidated += (s, e) =>
-            //    {
-            //        if (!CoreApplication.GetCurrentView().IsMain)
-            //            Window.Current.Close();
-            //    };
-            //    id = view.Id;
-            //});
-            //if (await ApplicationViewSwitcher.TryShowAsStandaloneAsync(id))
-            //{
-            //    // Switch to new view
-            //    await ApplicationViewSwitcher.SwitchAsync(id);
-            //}
-
-            //var coreView = CoreApplication.CreateNewView();
-            //ApplicationView view = null;
-            //var create = new Action(() =>
-            //{
-            //    // setup content
-            //    var frame = new Frame();
-            //    frame.NavigationFailed += (s, e) => { System.Diagnostics.Debugger.Break(); };
-            //    frame.Navigate(page, parameter);
-
-            //    // create window
-            //    var window = Window.Current;
-            //    window.Content = frame;
-
-            //    // setup view/collapse
-            //    view = ApplicationView.GetForCurrentView();
-            //    Windows.Foundation.TypedEventHandler<ApplicationView, ApplicationViewConsolidatedEventArgs> consolidated = null;
-            //    consolidated = new Windows.Foundation.TypedEventHandler<ApplicationView, ApplicationViewConsolidatedEventArgs>((s, e) =>
-            //    {
-            //        (s as ApplicationView).Consolidated -= consolidated;
-            //        if (CoreApplication.GetCurrentView().IsMain)
-            //            return;
-            //        try { window.Close(); }
-            //        finally { CoreApplication.GetCurrentView().CoreWindow.Activate(); }
-            //    });
-            //    view.Consolidated += consolidated;
-            //});
-
-            //// execute create
-            //await WindowWrapper.Current().Dispatcher.DispatchAsync(create);
-
-            //// show view
-            //if (await ApplicationViewSwitcher.TryShowAsStandaloneAsync(view.Id, size))
-            //{
-            //    // change focus
-            //    await ApplicationViewSwitcher.SwitchAsync(view.Id);
-            //}
-            //return view.Id;
+                await ApplicationViewSwitcher.TryShowAsStandaloneAsync(
+                    newAppView.Id,
+                    ViewSizePreference.UseMinimum,
+                    currentView.Id,
+                    ViewSizePreference.UseMinimum);
+            });
         }
 
         public bool Navigate(Type page, object parameter = null, NavigationTransitionInfo infoOverride = null)

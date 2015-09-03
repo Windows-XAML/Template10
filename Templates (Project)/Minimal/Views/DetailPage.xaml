@@ -44,14 +44,7 @@
 
         <!-- header -->
 
-        <controls:PageHeader Text="Detail Page" Frame="{x:Bind Frame}">
-            <AppBarButton Label="{x:Bind ViewModel.PinCommand.Label}"  
-                          Command="{x:Bind ViewModel.PinCommand.Command}">
-                <AppBarButton.Icon>
-                    <FontIcon Glyph="{x:Bind ViewModel.PinCommand.Icon, FallbackValue=&#xE840;}" />
-                </AppBarButton.Icon>
-            </AppBarButton>
-        </controls:PageHeader>
+        <controls:PageHeader Text="Detail Page" Frame="{x:Bind Frame}" />
 
         <!--#region content-->
 
