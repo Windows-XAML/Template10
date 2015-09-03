@@ -8,22 +8,21 @@
     x:Class="Minimal.Views.Splash"
     mc:Ignorable="d">
 
-    <UserControl.Resources>
-        <Storyboard x:Name="AnimateRing">
-            <DoubleAnimation Duration="0:0:0.3" From="0" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="progressRing" />
-        </Storyboard>
-    </UserControl.Resources>
-
-    <Interactivity:Interaction.Behaviors>
-        <Core:EventTriggerBehavior EventName="Loaded">
-            <Media:ControlStoryboardAction Storyboard="{StaticResource AnimateRing}"/>
-        </Core:EventTriggerBehavior>
-    </Interactivity:Interaction.Behaviors>
-
     <Grid Background="{StaticResource ExtendedSplashBackground}">
 
         <Canvas x:Name="MyCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <Image x:Name="MyImage" Stretch="Uniform" Source="ms-appx:///Assets/SplashScreen.png" />
+            <Canvas.Background>
+                <ImageBrush Stretch="Uniform" ImageSource="ms-appx:///Assets/SplashScreen.png">
+                    <ImageBrush.Transform>
+                        <TranslateTransform Y="10" />
+                    </ImageBrush.Transform>
+                </ImageBrush>
+            </Canvas.Background>
+            <Viewbox x:Name="MyImage"
+                     Width="{Binding ActualWidth, ElementName=MyCanvas, Mode=OneWay}"
+                     Height="{Binding ActualHeight, ElementName=MyCanvas, Mode=OneWay}">
+                <Image Source="ms-appx:///Assets/SplashScreen.png" />
+            </Viewbox>
         </Canvas>
 
         <ProgressRing x:Name="progressRing" VerticalAlignment="Center" 
@@ -31,7 +30,7 @@
                       HorizontalAlignment="Center" Width="50" Height="50" 
                       IsActive="True" RenderTransformOrigin="0.5,0.5" >
             <ProgressRing.RenderTransform>
-                <CompositeTransform x:Name="ProgressTransform" TranslateY="100"/>
+                <CompositeTransform x:Name="ProgressTransform" TranslateY="120"/>
             </ProgressRing.RenderTransform>
         </ProgressRing>
 

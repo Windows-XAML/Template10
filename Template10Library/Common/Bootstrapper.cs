@@ -95,30 +95,13 @@ namespace Template10.Common
 
         // it is the intent of Template 10 to no longer require Launched/Activated overrides, only OnStartAsync()
 
-#pragma warning disable 809
-
-        [Obsolete("Use OnStartAsync()")]
         protected override sealed async void OnActivated(IActivatedEventArgs e) { await InternalActivatedAsync(e); }
-
-        [Obsolete("Use OnStartAsync()")]
         protected override sealed async void OnCachedFileUpdaterActivated(CachedFileUpdaterActivatedEventArgs args) { await InternalActivatedAsync(args); }
-
-        [Obsolete("Use OnStartAsync()")]
         protected override sealed async void OnFileActivated(FileActivatedEventArgs args) { await InternalActivatedAsync(args); }
-
-        [Obsolete("Use OnStartAsync()")]
         protected override sealed async void OnFileOpenPickerActivated(FileOpenPickerActivatedEventArgs args) { await InternalActivatedAsync(args); }
-
-        [Obsolete("Use OnStartAsync()")]
         protected override sealed async void OnFileSavePickerActivated(FileSavePickerActivatedEventArgs args) { await InternalActivatedAsync(args); }
-
-        [Obsolete("Use OnStartAsync()")]
         protected override sealed async void OnSearchActivated(SearchActivatedEventArgs args) { await InternalActivatedAsync(args); }
-
-        [Obsolete("Use OnStartAsync()")]
         protected override sealed async void OnShareTargetActivated(ShareTargetActivatedEventArgs args) { await InternalActivatedAsync(args); }
-
-#pragma warning restore 809
 
         /// <summary>
         /// This handles all the prelimimary stuff unique to Activated before calling OnStartAsync()
@@ -130,7 +113,7 @@ namespace Template10.Common
             // sometimes activate requires a frame to be built
             if (Window.Current.Content == null)
             {
-                await InitializeFrameAsync(e as ILaunchActivatedEventArgs);
+                await InitializeFrameAsync(e);
             }
 
             // onstart is shared with activate and launch
@@ -143,17 +126,7 @@ namespace Template10.Common
         #endregion
 
         public event EventHandler<WindowCreatedEventArgs> WindowCreated;
-
-        /// <summary>
-        /// It is not possible to hide this override because it is part
-        /// of the base class. however, should a developer override
-        /// OnWindowCreated he would also need to call base.OnWindowCreated
-        /// or the logic in this method, which is critical to Template 10
-        /// would not be called and cause unstable, unpredictable behavior.
-        /// If you need to handle this overload, use the alternative 
-        /// WindowCreated event that will be raised by this implementation.
-        /// </summary>
-        protected override void OnWindowCreated(WindowCreatedEventArgs args)
+        protected sealed override void OnWindowCreated(WindowCreatedEventArgs args)
         {
             var window = new WindowWrapper(args.Window);
             WindowCreated?.Invoke(this, args);
@@ -164,12 +137,7 @@ namespace Template10.Common
 
         // it is the intent of Template 10 to no longer require Launched/Activated overrides, only OnStartAsync()
 
-#pragma warning disable 809
-
-        [Obsolete("Use OnStartAsync()")]
-        protected override void OnLaunched(LaunchActivatedEventArgs e) { InternalLaunchAsync(e as ILaunchActivatedEventArgs); }
-
-#pragma warning restore 809
+        protected override sealed void OnLaunched(LaunchActivatedEventArgs e) { InternalLaunchAsync(e); }
 
         /// <summary>
         /// This handles all the preliminary stuff unique to Launched before calling OnStartAsync().
@@ -178,7 +146,10 @@ namespace Template10.Common
         /// </summary>
         private async void InternalLaunchAsync(ILaunchActivatedEventArgs e)
         {
-            await InitializeFrameAsync(e);
+            if (e.PreviousExecutionState != ApplicationExecutionState.Running)
+            {
+                await InitializeFrameAsync(e);
+            }
 
             // okay, now handle launch
             switch (e.PreviousExecutionState)
@@ -329,7 +300,7 @@ namespace Template10.Common
         /// splash screen, then OnInitialzieAsync, then the new frame (if necessary).
         /// This is private because there's no reason for the developer to call this.
         /// </summary>
-        private async Task InitializeFrameAsync(ILaunchActivatedEventArgs e)
+        private async Task InitializeFrameAsync(IActivatedEventArgs e)
         {
             // first show the splash 
             FrameworkElement splash = null;

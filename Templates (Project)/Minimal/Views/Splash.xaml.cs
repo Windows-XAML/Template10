@@ -14,6 +14,16 @@ namespace Minimal.Views
 
             Action resize = () =>
             {
+                if (splashScreen.ImageLocation.Top == 0)
+                {
+                    MyImage.Visibility = Visibility.Collapsed;
+                    return;
+                }
+                else
+                {
+                    MyCanvas.Background = null;
+                    MyImage.Visibility = Visibility.Visible;
+                }
                 MyImage.Height = splashScreen.ImageLocation.Height;
                 MyImage.Width = splashScreen.ImageLocation.Width;
                 MyImage.SetValue(Canvas.TopProperty, splashScreen.ImageLocation.Top);

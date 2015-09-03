@@ -27,7 +27,6 @@ namespace Template10.Controls
                 Source = this
             });
 
-            // TODO
             Action updateEllipse = () =>
             {
                 var controls = XamlHelper.AllChildren<Control>(HeaderCommandBar);
@@ -43,6 +42,8 @@ namespace Template10.Controls
             PrimaryCommands.VectorChanged += (s, e) => updateEllipse();
             HeaderCommandBar.Loaded += (s, e) => updateEllipse();
         }
+
+        public new object Content { get { return HeaderCommandBar.Content; } set { HeaderCommandBar.Content = value; } }
 
         #region VisualStateValues
 
@@ -72,6 +73,11 @@ namespace Template10.Controls
             {
                 SetValue(HeaderBackgroundProperty, HeaderBackgroundBrush = value);
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(HeaderBackground)));
+                if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+                {
+                    var statusBar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
+                    statusBar.BackgroundColor = value?.Color;
+                }
             }
         }
         public static readonly DependencyProperty HeaderBackgroundProperty =
@@ -85,6 +91,11 @@ namespace Template10.Controls
             {
                 SetValue(HeaderForegroundProperty, HeaderForegroundBrush = value);
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(HeaderForeground)));
+                if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+                {
+                    var statusBar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
+                    statusBar.ForegroundColor = value?.Color;
+                }
             }
         }
         public static readonly DependencyProperty HeaderForegroundProperty =
@@ -136,15 +147,6 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty BackButtonVisibilityProperty =
             DependencyProperty.Register(nameof(BackButtonVisibility), typeof(Visibility),
-                typeof(PageHeader), new PropertyMetadata(Visibility.Visible));
-
-        public Visibility ForwardButtonVisibility
-        {
-            get { return (Visibility)GetValue(ForwardButtonVisibilityProperty); }
-            set { SetValue(ForwardButtonVisibilityProperty, value); PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ForwardButtonVisibility))); }
-        }
-        public static readonly DependencyProperty ForwardButtonVisibilityProperty =
-            DependencyProperty.Register(nameof(ForwardButtonVisibility), typeof(Visibility),
                 typeof(PageHeader), new PropertyMetadata(Visibility.Visible));
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -15,6 +15,11 @@ namespace Template10.Common
             this.dispatcher = dispatcher;
         }
 
+        public bool HasThreadAccess()
+        {
+            return dispatcher.HasThreadAccess;
+        }
+
         private CoreDispatcher dispatcher;
 
         public async Task DispatchAsync(Action action)

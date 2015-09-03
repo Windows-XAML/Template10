@@ -30,9 +30,12 @@ namespace Minimal.Services.SettingsServices
             set
             {
                 _helper.Write(nameof(UseShellBackButton), value);
-                Template10.Common.BootStrapper.Current.ShowShellBackButton = value;
-                Template10.Common.BootStrapper.Current.UpdateShellBackButton();
-                Template10.Common.BootStrapper.Current.NavigationService.Refresh();
+                Template10.Common.BootStrapper.Current.NavigationService.Dispatcher.Dispatch(() =>
+                {
+                    Template10.Common.BootStrapper.Current.ShowShellBackButton = value;
+                    Template10.Common.BootStrapper.Current.UpdateShellBackButton();
+                    Template10.Common.BootStrapper.Current.NavigationService.Refresh();
+                });
             }
         }
     }

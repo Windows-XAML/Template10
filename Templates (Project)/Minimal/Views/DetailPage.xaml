@@ -10,7 +10,7 @@
     xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" 
     xmlns:Behaviors="using:Template10.Behaviors" 
     xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
-    mc:Ignorable="d">
+    mc:Ignorable="d" x:Name="ThisPage">
 
     <Page.DataContext>
         <vm:DetailPageViewModel />
@@ -44,11 +44,7 @@
 
         <!-- header -->
 
-        <controls:PageHeader Text="Detail Page" Frame="{x:Bind Frame, Mode=OneWay}">
-            <AppBarButton Label="{Binding PinCommand.Label}" 
-                          Icon="{Binding PinCommand.Icon}"
-                          Command="{Binding PinCommand.Command}" />
-        </controls:PageHeader>
+        <controls:PageHeader Text="Detail Page" Frame="{x:Bind Frame}" />
 
         <!--#region content-->
 

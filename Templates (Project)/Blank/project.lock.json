@@ -1543,6 +1543,17 @@
         "runtime": {
           "lib/netcore50/System.Xml.XmlSerializer.dll": {}
         }
+      },
+      "Template10/1.0.1-preview": {
+        "dependencies": {
+          "Newtonsoft.Json": "[7.0.1, )"
+        },
+        "compile": {
+          "lib/dotnet/Template10Library.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/Template10Library.dll": {}
+        }
       }
     },
     "UAP,Version=v10.0/win10-arm": {
@@ -3176,6 +3187,17 @@
         "runtime": {
           "lib/netcore50/System.Xml.XmlSerializer.dll": {}
         }
+      },
+      "Template10/1.0.1-preview": {
+        "dependencies": {
+          "Newtonsoft.Json": "[7.0.1, )"
+        },
+        "compile": {
+          "lib/dotnet/Template10Library.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/Template10Library.dll": {}
+        }
       }
     },
     "UAP,Version=v10.0/win10-arm-aot": {
@@ -4780,6 +4802,17 @@
         },
         "runtime": {
           "runtimes/win8-aot/lib/netcore50/System.Xml.XmlSerializer.dll": {}
+        }
+      },
+      "Template10/1.0.1-preview": {
+        "dependencies": {
+          "Newtonsoft.Json": "[7.0.1, )"
+        },
+        "compile": {
+          "lib/dotnet/Template10Library.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/Template10Library.dll": {}
         }
       }
     },
@@ -6419,6 +6452,17 @@
         "runtime": {
           "lib/netcore50/System.Xml.XmlSerializer.dll": {}
         }
+      },
+      "Template10/1.0.1-preview": {
+        "dependencies": {
+          "Newtonsoft.Json": "[7.0.1, )"
+        },
+        "compile": {
+          "lib/dotnet/Template10Library.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/Template10Library.dll": {}
+        }
       }
     },
     "UAP,Version=v10.0/win10-x86-aot": {
@@ -8023,6 +8067,17 @@
         },
         "runtime": {
           "runtimes/win8-aot/lib/netcore50/System.Xml.XmlSerializer.dll": {}
+        }
+      },
+      "Template10/1.0.1-preview": {
+        "dependencies": {
+          "Newtonsoft.Json": "[7.0.1, )"
+        },
+        "compile": {
+          "lib/dotnet/Template10Library.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/Template10Library.dll": {}
         }
       }
     },
@@ -9662,6 +9717,17 @@
         "runtime": {
           "lib/netcore50/System.Xml.XmlSerializer.dll": {}
         }
+      },
+      "Template10/1.0.1-preview": {
+        "dependencies": {
+          "Newtonsoft.Json": "[7.0.1, )"
+        },
+        "compile": {
+          "lib/dotnet/Template10Library.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/Template10Library.dll": {}
+        }
       }
     },
     "UAP,Version=v10.0/win10-x64-aot": {
@@ -11266,6 +11332,17 @@
         },
         "runtime": {
           "runtimes/win8-aot/lib/netcore50/System.Xml.XmlSerializer.dll": {}
+        }
+      },
+      "Template10/1.0.1-preview": {
+        "dependencies": {
+          "Newtonsoft.Json": "[7.0.1, )"
+        },
+        "compile": {
+          "lib/dotnet/Template10Library.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/Template10Library.dll": {}
         }
       }
     }
@@ -14641,11 +14718,23 @@
         "package/services/metadata/core-properties/c80d56868865446d9ee122fad8e0fdb9.psmdcp",
         "[Content_Types].xml"
       ]
+    },
+    "Template10/1.0.1-preview": {
+      "sha512": "MasHQw+v8fInMHt9WOSejbvlOrtMDtqZ3wX4g8CWlj5vK95QX8AWbWJx4xpCm1szqvfgjQ5b0ukVzSAYM8rl5Q==",
+      "type": "Package",
+      "files": [
+        "_rels/.rels",
+        "Template10.nuspec",
+        "lib/dotnet/Template10Library.dll",
+        "package/services/metadata/core-properties/dee1594a5169474a8859e0b00dc5e583.psmdcp",
+        "[Content_Types].xml"
+      ]
     }
   },
   "projectFileDependencyGroups": {
     "": [
-      "Microsoft.NETCore.UniversalWindowsPlatform >= 5.0.0"
+      "Microsoft.NETCore.UniversalWindowsPlatform >= 5.0.0",
+      "Template10 >= 1.0.1-preview"
     ],
     "UAP,Version=v10.0": []
   }
