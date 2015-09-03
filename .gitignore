@@ -173,7 +173,6 @@ UpgradeLog*.htm
 
 # SQL Server files
 *.mdf
-*.lock
 *.ldf
 
 # Business Intelligence projects
@@ -188,3 +187,5 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
+
+*.lock.json
