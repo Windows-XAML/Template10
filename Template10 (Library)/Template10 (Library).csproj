@@ -180,7 +180,6 @@
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
@@ -199,16 +198,16 @@
 rd $(ProjectDir)$(OutDir)\nupkg\ /s/q
 
 :copy dll
-xcopy.exe $(ProjectDir)$(OutDir)$(TargetFileName) $(ProjectDir)$(OutDir)\nupkg\lib\dotnet\ /y 
+xcopy.exe "$(ProjectDir)$(OutDir)$(TargetFileName)" "$(ProjectDir)$(OutDir)\nupkg\lib\dotnet\" /y 
 
 :copy nuspec
-xcopy.exe $(ProjectDir)$(TargetName).nuspec $(ProjectDir)$(OutDir)nupkg /y 
+xcopy.exe "$(ProjectDir)$(TargetName).nuspec" "$(ProjectDir)$(OutDir)nupkg" /y 
 
 :execute pack
-$(ProjectDir)NuGet.exe pack $(ProjectDir)$(OutDir)nupkg\$(TargetName).nuspec -Build -Verbosity normal -OutputDirectory "$(ProjectDir)$(OutDir)nupkg" -NonInteractive 
+"$(ProjectDir)NuGet.exe" pack "$(ProjectDir)$(OutDir)nupkg\$(TargetName).nuspec" -Build -Verbosity normal -OutputDirectory "$(ProjectDir)$(OutDir)nupkg" -NonInteractive 
 
 :copy nupkg
-xcopy.exe $(ProjectDir)$(OutDir)nupkg\*.nupkg c:\nuget-local\ /y 
+xcopy.exe "$(ProjectDir)$(OutDir)nupkg\*.nupkg" c:\nuget-local\ /y 
 
 echo -- NuGet Process End --</PostBuildEvent>
   </PropertyGroup>
