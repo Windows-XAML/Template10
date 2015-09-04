@@ -8,6 +8,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Markup;
 using System;
 using Windows.UI.Xaml.Media;
+using Template10.Utils;
 
 namespace Template10.Controls
 {
@@ -29,7 +30,7 @@ namespace Template10.Controls
 
             Action updateEllipse = () =>
             {
-                var controls = XamlHelper.AllChildren<Control>(HeaderCommandBar);
+                var controls = XamlUtil.AllChildren<Control>(HeaderCommandBar);
                 var buttons = controls.OfType<Button>();
                 var button = buttons.FirstOrDefault(x => x.Name.Equals("MoreButton"));
                 if (button != null)

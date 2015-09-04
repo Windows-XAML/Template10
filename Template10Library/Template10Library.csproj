@@ -97,7 +97,8 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
-    <DocumentationFile>bin\x86\Debug\Template10Library.XML</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <PlatformTarget>x86</PlatformTarget>
@@ -128,7 +129,7 @@
     <Compile Include="Common\StateItem.cs" />
     <Compile Include="Common\StateItems.cs" />
     <Compile Include="Common\WindowWrapper.cs" />
-    <Compile Include="Common\XamlHelper.cs" />
+    <Compile Include="Utils\XamlUtil.cs" />
     <Compile Include="Controls\HamburgerMenu.xaml.cs">
       <DependentUpon>HamburgerMenu.xaml</DependentUpon>
     </Compile>
@@ -183,24 +184,43 @@
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+  </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>rd /q/s "$(TargetDir)"
-echo 'manually cleaned during pre-build event command line'
-</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>echo -- NuGet Process Start --
+
+:clear previous
+rd $(ProjectDir)$(OutDir)\nupkg\ /s/q
+
+:copy dll
+xcopy.exe $(ProjectDir)$(OutDir)$(TargetFileName) $(ProjectDir)$(OutDir)\nupkg\lib\dotnet\ /y 
+
+:copy nuspec
+xcopy.exe $(ProjectDir)$(TargetName).nuspec $(ProjectDir)$(OutDir)nupkg /y 
+
+:execute pack
+$(ProjectDir)NuGet.exe pack $(ProjectDir)$(OutDir)nupkg\$(TargetName).nuspec -Build -Verbosity normal -OutputDirectory "$(ProjectDir)$(OutDir)nupkg" -NonInteractive 
+
+:copy nupkg
+xcopy.exe $(ProjectDir)$(OutDir)nupkg\*.nupkg c:\nuget-local\ /y 
+
+echo -- NuGet Process End --</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
   -->
-  <Target Name="AfterBuild">
+  <!--<Target Name="AfterBuild">
     <Copy SkipUnchangedFiles="true" SourceFiles="bin\$(Configuration)\Template10Library.dll" DestinationFiles="bin\$(Configuration)\nupkg\lib\dotnet\Template10Library.dll" />
-    <!--<Copy SkipUnchangedFiles="true" SourceFiles="bin\$(Configuration)\Template10Library.xml" DestinationFiles="bin\$(Configuration)\nupkg\lib\dotnet\Template10Library.xml" />-->
-    <!--<Copy SkipUnchangedFiles="true" SourceFiles="bin\$(Configuration)\Template10Library.pdb" DestinationFiles="bin\$(Configuration)\nupkg\lib\dotnet\Template10Library.pdb" />-->
     <Copy SkipUnchangedFiles="true" SourceFiles="Template10Library.nuspec" DestinationFiles="bin\$(Configuration)\nupkg\Template10Library.nuspec" />
-    <Exec Command="..\..\..\NuGet.exe pack Template10Library.nuspec -OutputDirectory .. -NonInteractive -Properties Configuration=Release" WorkingDirectory="bin\$(Configuration)\nupkg" Outputs="bin\$(Configuration)\*.nupkg" />
-    <!--<Copy SkipUnchangedFiles="true" SourceFiles="bin\$(Configuration)\*.nupkg" DestinationFolder="c:\nuget-local\" />-->
+    <Exec Command="..\..\..\NuGet.exe pack Template10Library.nuspec -Build -Symbols -Verbosity Detailed -OutputDirectory .. -NonInteractive" WorkingDirectory="bin\$(Configuration)\nupkg" Outputs="bin\$(Configuration)\*.nupkg" />
     <Exec Command="xcopy.exe bin\$(Configuration)\*.nupkg c:\nuget-local\ /m/y " />
-  </Target>
+  </Target>-->
 </Project>

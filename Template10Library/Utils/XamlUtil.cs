@@ -3,10 +3,10 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
-namespace Template10.Common
+namespace Template10.Utils
 {
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-XamlHelper
-    public static class XamlHelper
+    public static class XamlUtil
     {
         public static List<T> AllChildren<T>(DependencyObject parent) where T : Control
         {
