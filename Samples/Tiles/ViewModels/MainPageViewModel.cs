@@ -1,22 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Template10.Mvvm;
 using Template10.Services.NavigationService;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 namespace Sample.ViewModels
 {
-    public class DetailPageViewModel : Sample.Mvvm.ViewModelBase
+    public class MainPageViewModel : Template10.Mvvm.ViewModelBase
     {
-        public DetailPageViewModel()
+        public MainPageViewModel()
         {
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
             {
                 // designtime data
-                this.Value = "Designtime value";
+                Value = "Designtime value";
                 return;
             }
         }
@@ -29,11 +27,6 @@ namespace Sample.ViewModels
                 if (state.ContainsKey(nameof(Value))) Value = state[nameof(Value)]?.ToString();
                 // clear any cache
                 state.Clear();
-            }
-            else
-            {
-                // use navigation parameter
-                Value = string.Format("You passed '{0}'", parameter?.ToString());
             }
         }
 
@@ -49,10 +42,15 @@ namespace Sample.ViewModels
 
         public override void OnNavigatingFrom(NavigatingEventArgs args)
         {
-            args.Cancel = false;
+            base.OnNavigatingFrom(args);
         }
 
-        private string _Value = "Default";
+        private string _Value = string.Empty;
         public string Value { get { return _Value; } set { Set(ref _Value, value); } }
+
+        public void GotoDetailsPage()
+        {
+            this.NavigationService.Navigate(typeof(Views.DetailPage), this.Value);
+        }
     }
 }

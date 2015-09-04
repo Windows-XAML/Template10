@@ -14,5 +14,10 @@ namespace Sample.Views
 
         // strongly-typed view models enable x:bind
         public DetailPageViewModel ViewModel => DataContext as DetailPageViewModel;
+
+        private void AppBarButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+        }
     }
 }

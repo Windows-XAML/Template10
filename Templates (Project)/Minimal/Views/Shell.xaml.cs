@@ -2,7 +2,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Minimal.Views
+namespace Sample.Views
 {
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SplitView
     public sealed partial class Shell : Page

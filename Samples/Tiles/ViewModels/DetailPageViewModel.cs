@@ -1,15 +1,17 @@
-﻿using System;
+﻿using Sample.Services.TileService;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Template10.Mvvm;
 using Template10.Services.NavigationService;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
 
 namespace Sample.ViewModels
 {
-    public class DetailPageViewModel : Sample.Mvvm.ViewModelBase
+    public class DetailPageViewModel : Template10.Mvvm.ViewModelBase
     {
         public DetailPageViewModel()
         {
@@ -35,6 +37,8 @@ namespace Sample.ViewModels
                 // use navigation parameter
                 Value = string.Format("You passed '{0}'", parameter?.ToString());
             }
+
+            UpdatePins();
         }
 
         public override Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending)
@@ -54,5 +58,28 @@ namespace Sample.ViewModels
 
         private string _Value = "Default";
         public string Value { get { return _Value; } set { Set(ref _Value, value); } }
+
+        #region Tile
+
+        TileService _TileSerivice = new TileService();
+
+        Visibility _PinVisibility = default(Visibility);
+        public Visibility PinVisibility { get { return _PinVisibility; } set { Set(ref _PinVisibility, value); } }
+
+        Visibility _UnPinVisibility = default(Visibility);
+        public Visibility UnPinVisibility { get { return _UnPinVisibility; } set { Set(ref _UnPinVisibility, value); } }
+
+        public async void Pin() { await _TileSerivice.PinAsync(this); UpdatePins(); }
+
+        public async void UnPin() { await _TileSerivice.UnPinAsync(this); UpdatePins(); }
+
+        async void UpdatePins()
+        {
+            var isPinned = await _TileSerivice.IsPinned(this);
+            PinVisibility = (isPinned) ? Visibility.Collapsed : Visibility.Visible;
+            UnPinVisibility = (isPinned) ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        #endregion  
     }
 }

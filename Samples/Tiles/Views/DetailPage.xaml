@@ -17,20 +17,20 @@
     </Page.DataContext>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        
+
         <!-- adaptive states -->
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
                 <VisualState x:Name="VisualStateNarrow">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger x:Name="VisualStateNarrowTrigger" MinWindowWidth="{StaticResource NarrowMinWidth}" />
+                        <AdaptiveTrigger x:Name="VisualStateNarrowTrigger" MinWindowWidth="0" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters />
                 </VisualState>
                 <VisualState x:Name="VisualStateNormal">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger x:Name="VisualStateNormalTrigger" MinWindowWidth="{StaticResource NormalMinWidth}" />
+                        <AdaptiveTrigger x:Name="VisualStateNormalTrigger" MinWindowWidth="520" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters />
                 </VisualState>
@@ -44,7 +44,14 @@
 
         <!-- header -->
 
-        <controls:PageHeader Text="Detail Page" Frame="{x:Bind Frame}" />
+        <controls:PageHeader Text="Detail Page" Frame="{x:Bind Frame}">
+            <controls:PageHeader.PrimaryCommands>
+                <AppBarButton Icon="Pin" Label="Pin" Click="{x:Bind ViewModel.Pin}"
+                          Visibility="{x:Bind ViewModel.PinVisibility, Mode=OneWay}" />
+                <AppBarButton Icon="UnPin" Label="UnPin" Click="{x:Bind ViewModel.UnPin}"
+                          Visibility="{x:Bind ViewModel.UnPinVisibility, Mode=OneWay}" />
+            </controls:PageHeader.PrimaryCommands>
+        </controls:PageHeader>
 
         <!--#region content-->
 
