@@ -33,7 +33,7 @@ namespace Sample.ViewModels
             else
             {
                 // use navigation parameter
-                Value = string.Format("You passed '{0}'", parameter?.ToString());
+                Value = parameter?.ToString();
             }
         }
 

@@ -57,7 +57,10 @@
 
         <Grid Grid.Row="1">
             <ScrollViewer Padding="12,8,0,0" VerticalScrollBarVisibility="Auto">
-                <TextBlock Text="{Binding Value}" Style="{StaticResource TitleTextBlockStyle}" />
+                <TextBlock Style="{StaticResource TitleTextBlockStyle}">
+                    <Run Text="You passed: " />
+                    <Run Text="{Binding Value}" />
+                </TextBlock>
             </ScrollViewer>
         </Grid>
 

@@ -35,7 +35,7 @@ namespace Sample.ViewModels
             else
             {
                 // use navigation parameter
-                Value = string.Format("You passed '{0}'", parameter?.ToString());
+                Value = parameter?.ToString();
             }
 
             UpdatePins();
@@ -63,14 +63,7 @@ namespace Sample.ViewModels
 
         TileService _TileSerivice = new TileService();
 
-        Visibility _PinVisibility = default(Visibility);
-        public Visibility PinVisibility { get { return _PinVisibility; } set { Set(ref _PinVisibility, value); } }
-
-        Visibility _UnPinVisibility = default(Visibility);
-        public Visibility UnPinVisibility { get { return _UnPinVisibility; } set { Set(ref _UnPinVisibility, value); } }
-
         public async void Pin() { await _TileSerivice.PinAsync(this); UpdatePins(); }
-
         public async void UnPin() { await _TileSerivice.UnPinAsync(this); UpdatePins(); }
 
         async void UpdatePins()
@@ -79,6 +72,12 @@ namespace Sample.ViewModels
             PinVisibility = (isPinned) ? Visibility.Collapsed : Visibility.Visible;
             UnPinVisibility = (isPinned) ? Visibility.Visible : Visibility.Collapsed;
         }
+
+        Visibility _PinVisibility = default(Visibility);
+        public Visibility PinVisibility { get { return _PinVisibility; } set { Set(ref _PinVisibility, value); } }
+
+        Visibility _UnPinVisibility = default(Visibility);
+        public Visibility UnPinVisibility { get { return _UnPinVisibility; } set { Set(ref _UnPinVisibility, value); } }
 
         #endregion  
     }
