@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Minimal", "Templates (Proje
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blank", "Templates (Project)\Blank\Blank.csproj", "{AF358EF5-8E5F-495D-B9E4-7FF123089AAA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10LibraryTests", "Template10LibraryTests\Template10LibraryTests.csproj", "{AA237976-E095-407C-9D86-3EE69F5ED1CC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +81,26 @@ Global
 		{AF358EF5-8E5F-495D-B9E4-7FF123089AAA}.Release|x86.ActiveCfg = Release|x86
 		{AF358EF5-8E5F-495D-B9E4-7FF123089AAA}.Release|x86.Build.0 = Release|x86
 		{AF358EF5-8E5F-495D-B9E4-7FF123089AAA}.Release|x86.Deploy.0 = Release|x86
+		{AA237976-E095-407C-9D86-3EE69F5ED1CC}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{AA237976-E095-407C-9D86-3EE69F5ED1CC}.Debug|ARM.ActiveCfg = Debug|ARM
+		{AA237976-E095-407C-9D86-3EE69F5ED1CC}.Debug|ARM.Build.0 = Debug|ARM
+		{AA237976-E095-407C-9D86-3EE69F5ED1CC}.Debug|ARM.Deploy.0 = Debug|ARM
+		{AA237976-E095-407C-9D86-3EE69F5ED1CC}.Debug|x64.ActiveCfg = Debug|x64
+		{AA237976-E095-407C-9D86-3EE69F5ED1CC}.Debug|x64.Build.0 = Debug|x64
+		{AA237976-E095-407C-9D86-3EE69F5ED1CC}.Debug|x64.Deploy.0 = Debug|x64
+		{AA237976-E095-407C-9D86-3EE69F5ED1CC}.Debug|x86.ActiveCfg = Debug|x86
+		{AA237976-E095-407C-9D86-3EE69F5ED1CC}.Debug|x86.Build.0 = Debug|x86
+		{AA237976-E095-407C-9D86-3EE69F5ED1CC}.Debug|x86.Deploy.0 = Debug|x86
+		{AA237976-E095-407C-9D86-3EE69F5ED1CC}.Release|Any CPU.ActiveCfg = Release|x86
+		{AA237976-E095-407C-9D86-3EE69F5ED1CC}.Release|ARM.ActiveCfg = Release|ARM
+		{AA237976-E095-407C-9D86-3EE69F5ED1CC}.Release|ARM.Build.0 = Release|ARM
+		{AA237976-E095-407C-9D86-3EE69F5ED1CC}.Release|ARM.Deploy.0 = Release|ARM
+		{AA237976-E095-407C-9D86-3EE69F5ED1CC}.Release|x64.ActiveCfg = Release|x64
+		{AA237976-E095-407C-9D86-3EE69F5ED1CC}.Release|x64.Build.0 = Release|x64
+		{AA237976-E095-407C-9D86-3EE69F5ED1CC}.Release|x64.Deploy.0 = Release|x64
+		{AA237976-E095-407C-9D86-3EE69F5ED1CC}.Release|x86.ActiveCfg = Release|x86
+		{AA237976-E095-407C-9D86-3EE69F5ED1CC}.Release|x86.Build.0 = Release|x86
+		{AA237976-E095-407C-9D86-3EE69F5ED1CC}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
