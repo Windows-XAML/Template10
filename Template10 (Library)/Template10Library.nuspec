@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/01/nuspec.xsd">
+  <metadata minClientVersion="3.0">
+    <id>Template10</id>
+    <version>1.0.2.1-preview</version>
+    <title>Template 10 Library for UWP XAML apps on Windows 10</title>
+    <authors>Windows developers</authors>
+    <owners>jerrynixon,darenmay</owners>
+    <licenseUrl>http://aka.ms/Template10-License</licenseUrl>
+    <projectUrl>http://aka.ms/Template10-Nuget</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/Windows-XAML/Template10/master/Assets/NuGetLogo.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Originally built as a companion to the Template 10 project templates in the Visual Studio Gallery (better templates with real patterns), this library is for any project wanting less boilerplate code and more awesome-sauce.</description>
+    <summary>A rich library of helpers, services, and base classes for new and existing Windows UWP apps to maximize awesomeness and minimize boilerplate garbage.</summary>
+    <releaseNotes>This is an early release.</releaseNotes>
+    <copyright>Jerry Nixon (c) 2015-2016</copyright>
+    <language />
+    <tags>Windows 10, UAP, UWP, WinRT, XAML, Template 10, Template10</tags>
+    <dependencies>
+      <group targetFramework=".NETCore5.0">
+        <dependency id="Newtonsoft.Json" version="7.0.1" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="lib\dotnet\Template10Library.dll" target="lib\dotnet\Template10Library.dll" />
+  </files>
+</package>

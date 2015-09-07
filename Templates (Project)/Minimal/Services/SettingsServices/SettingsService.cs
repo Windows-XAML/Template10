@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Minimal.Services.SettingsServices
+namespace Sample.Services.SettingsServices
 {
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SettingsService
     public class SettingsService
@@ -30,9 +30,12 @@ namespace Minimal.Services.SettingsServices
             set
             {
                 _helper.Write(nameof(UseShellBackButton), value);
-                Template10.Common.BootStrapper.Current.ShowShellBackButton = value;
-                Template10.Common.BootStrapper.Current.UpdateShellBackButton();
-                Template10.Common.BootStrapper.Current.NavigationService.Refresh();
+                Template10.Common.BootStrapper.Current.NavigationService.Dispatcher.Dispatch(() =>
+                {
+                    Template10.Common.BootStrapper.Current.ShowShellBackButton = value;
+                    Template10.Common.BootStrapper.Current.UpdateShellBackButton();
+                    Template10.Common.BootStrapper.Current.NavigationService.Refresh();
+                });
             }
         }
     }

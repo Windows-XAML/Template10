@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Minimal.ViewModels
+namespace Sample.ViewModels
 {
-    public class SettingsPageViewModel : Minimal.Mvvm.ViewModelBase
+    public class SettingsPageViewModel : Sample.Mvvm.ViewModelBase
     {
         Services.SettingsServices.SettingsService _settings;
 
