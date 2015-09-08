@@ -204,7 +204,7 @@ xcopy.exe "$(ProjectDir)$(OutDir)$(TargetFileName)" "$(ProjectDir)$(OutDir)\nupk
 xcopy.exe "$(ProjectDir)$(TargetName).nuspec" "$(ProjectDir)$(OutDir)nupkg" /y 
 
 :execute pack
-"$(ProjectDir)NuGet.exe" pack "$(ProjectDir)$(OutDir)nupkg\$(TargetName).nuspec" -Build -Verbosity normal -OutputDirectory "$(ProjectDir)$(OutDir)nupkg" -NonInteractive 
+"$(ProjectDir)NuGet.exe" pack "$(ProjectDir)$(OutDir)nupkg\$(TargetName).nuspec" -Verbosity normal -Symbols -OutputDirectory "$(ProjectDir)$(OutDir)nupkg" -NonInteractive 
 
 :copy nupkg
 xcopy.exe "$(ProjectDir)$(OutDir)nupkg\*.nupkg" c:\nuget-local\ /y 
