@@ -1,4 +1,4 @@
-﻿using static Template10.Services.SettingsService.Settings;
+﻿using static Template10.Services.SettingsService.SettingsService;
 
 namespace Template10.Services.SettingsService
 {
@@ -6,7 +6,7 @@ namespace Template10.Services.SettingsService
 	// according to suggestions: https://github.com/Windows-XAML/Template10/pull/50
 	public class SettingsHelper
     {
-        public Settings Container(SettingsStrategy strategy)
+        public SettingsService Container(SettingsStrategy strategy)
         {
             return (strategy == SettingsStrategy.Local)
                 ? Local

@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/01/nuspec.xsd">
   <metadata minClientVersion="3.0">
     <id>Template10</id>
-    <version>1.0.2.2-preview</version>
+    <version>1.0.2-preview-2015090905</version>
     <title>Template 10 Library for UWP XAML apps on Windows 10</title>
     <authors>Windows developers</authors>
     <owners>jerrynixon,darenmay</owners>
@@ -10,7 +10,7 @@
     <projectUrl>http://aka.ms/Template10-Nuget</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/Windows-XAML/Template10/master/Assets/NuGetLogo.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Originally built as a companion to the Template 10 project templates in the Visual Studio Gallery (better templates with real patterns), this library is for any project wanting less boilerplate code and more awesome-sauce.</description>
+    <description>A rich library of helpers, services, and base classes for new and existing Windows UWP apps to maximize awesomeness and minimize boilerplate garbage.</description>
     <summary>A rich library of helpers, services, and base classes for new and existing Windows UWP apps to maximize awesomeness and minimize boilerplate garbage.</summary>
     <releaseNotes>This is an early release.</releaseNotes>
     <copyright>Jerry Nixon (c) 2015-2016</copyright>
@@ -23,6 +23,8 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="lib\dotnet\Template10Library.dll" target="lib\dotnet\Template10Library.dll" />
+    <file src="lib\dotnet\" target="lib\dotnet\" />
+    <file src="lib\dotnet\Template10Library\Controls\" target="lib\dotnet\Template10Library\Controls\" />
+    <file src="lib\dotnet\Template10Library\Styles\" target="lib\dotnet\Template10Library\Styles\" />
   </files>
 </package>

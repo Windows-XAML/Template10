@@ -115,7 +115,9 @@
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <None Include="project.json" />
-    <None Include="Template10Library.nuspec" />
+    <None Include="Template10Library.nuspec">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Behaviors\NavButtonBehavior.cs" />
@@ -129,6 +131,7 @@
     <Compile Include="Common\StateItem.cs" />
     <Compile Include="Common\StateItems.cs" />
     <Compile Include="Common\WindowWrapper.cs" />
+    <Compile Include="Services\NavigationService\INavigationService.cs" />
     <Compile Include="Utils\XamlUtil.cs" />
     <Compile Include="Controls\HamburgerMenu.xaml.cs">
       <DependentUpon>HamburgerMenu.xaml</DependentUpon>
@@ -198,7 +201,25 @@
 rd $(ProjectDir)$(OutDir)\nupkg\ /s/q
 
 :copy dll
-xcopy.exe "$(ProjectDir)$(OutDir)$(TargetFileName)" "$(ProjectDir)$(OutDir)\nupkg\lib\dotnet\" /y 
+xcopy.exe "$(ProjectDir)$(OutDir)*.dll" "$(ProjectDir)$(OutDir)\nupkg\lib\dotnet\$(TargetName)\" /y 
+
+:copy xr.xml
+xcopy.exe "$(ProjectDir)$(OutDir)*.xr.xml" "$(ProjectDir)$(OutDir)\nupkg\lib\dotnet\$(TargetName)\" /y 
+
+:copy pri
+:https://msdn.microsoft.com/en-us/library/windows/apps/jj552947.aspx
+xcopy.exe "$(ProjectDir)$(OutDir)*.pri" "$(ProjectDir)$(OutDir)\nupkg\lib\dotnet\$(TargetName)\" /y 
+
+:copy rd.xml
+xcopy.exe "$(ProjectDir)Properties\*.rd.xml" "$(ProjectDir)$(OutDir)\nupkg\lib\dotnet\$(TargetName)\Properties\" /y 
+
+:copy xbf
+xcopy.exe "$(ProjectDir)$(OutDir)Controls" "$(ProjectDir)$(OutDir)\nupkg\lib\dotnet\$(TargetName)\Controls\" /y 
+xcopy.exe "$(ProjectDir)$(OutDir)Styles" "$(ProjectDir)$(OutDir)\nupkg\lib\dotnet\$(TargetName)\Styles\" /y 
+
+:copy xaml
+xcopy.exe "$(ProjectDir)Controls\*.xaml" "$(ProjectDir)$(OutDir)\nupkg\lib\dotnet\$(TargetName)\Controls\" /y 
+xcopy.exe "$(ProjectDir)Styles\*.xaml" "$(ProjectDir)$(OutDir)\nupkg\lib\dotnet\$(TargetName)\Styles\" /y 
 
 :copy nuspec
 xcopy.exe "$(ProjectDir)$(TargetName).nuspec" "$(ProjectDir)$(OutDir)nupkg" /y 
