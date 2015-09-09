@@ -168,7 +168,10 @@
     </UserControl.Resources>
 
     <Grid x:Name="RootGrid">
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
                 <VisualState x:Name="VisualStateNarrow">
@@ -189,10 +192,22 @@
                         <Setter Target="ShellSplitView.IsPaneOpen" Value="False" />
                     </VisualState.Setters>
                 </VisualState>
+              
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-
-        <SplitView x:Name="ShellSplitView"
+        <Grid Grid.Row="0" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="48"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="HamburgerButton" Grid.Column="0" Style="{StaticResource HamburgerButtonStyle}" Command="{x:Bind HamburgerCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <FontIcon Glyph="&#xE700;" FontSize="20" />
+                </StackPanel>
+            </Button>
+            <ItemsControl Grid.Column="1" ItemsSource="{Binding HeaderItems, ElementName=ThisPage}"/>
+        </Grid>
+        <SplitView x:Name="ShellSplitView" Grid.Row="1" 
                    PaneBackground="Transparent"
                    DisplayMode="Inline" 
                    OpenPaneLength="220"
@@ -200,9 +215,8 @@
 
             <SplitView.Pane>
                 <Grid 
-                   Background="{Binding NavAreaBackground, ElementName=ThisPage, FallbackValue='Blue'}" 
-                      x:Name="PaneContent" Margin="0,48,0,0" Tapped="PaneContent_Tapped">
-
+                    Background="{Binding NavAreaBackground, ElementName=ThisPage, FallbackValue='Blue'}"
+                      x:Name="PaneContent" Tapped="PaneContent_Tapped">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
@@ -270,14 +284,5 @@
                 </Grid>
             </SplitView.Pane>
         </SplitView>
-
-        <Button x:Name="HamburgerButton" 
-                Style="{StaticResource HamburgerButtonStyle}" Command="{x:Bind HamburgerCommand}">
-            <StackPanel Orientation="Horizontal">
-                <FontIcon Glyph="&#xE700;" FontSize="20" />
-            </StackPanel>
-        </Button>
-
     </Grid>
-
 </UserControl>
