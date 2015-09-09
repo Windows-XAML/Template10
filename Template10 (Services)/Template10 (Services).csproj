@@ -125,6 +125,9 @@
     <None Include="obj\Debug\resources.resfiles.intermediate" />
     <None Include="obj\Debug\Template10 %28Services%29.csprojResolveAssemblyReference.cache" />
     <None Include="project.json" />
+    <None Include="..\template10.snk">
+      <Link>template10.snk</Link>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdaptiveTiles\AdaptiveTileHelper.cs" />
@@ -208,6 +211,12 @@
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\template10.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
