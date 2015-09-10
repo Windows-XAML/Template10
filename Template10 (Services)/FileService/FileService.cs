@@ -3,25 +3,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Storage;
 
 namespace Template10.Services.FileService
 {
-    class FileService
+    public class FileService : IFileService
     {
         FileHelper _helper = new FileHelper();
 
-        //public async Task<List<Models.ColorInfo>> ReadColorsAsync(string key)
-        //{
-        //    try
-        //    {
-        //        return await _helper.ReadFileAsync<List<Models.ColorInfo>>(key, FileHelper.StorageStrategies.Roaming);
-        //    }
-        //    catch { return null; }
-        //}
+        public Task<bool> FileExistsAsync(string key, StorageStrategies location = StorageStrategies.Local)
+        {
+            return _helper.FileExistsAsync(key, location);
+        }
 
-        //public async Task WriteColors(string key, List<Models.ColorInfo> colors)
-        //{
-        //    await _helper.WriteFileAsync(key, colors, FileHelper.StorageStrategies.Roaming);
-        //}
+        public Task<bool> FileExistsAsync(string key, StorageFolder folder)
+        {
+            return _helper.FileExistsAsync(key, folder);
+        }
+
+        public Task<bool> DeleteFileAsync(string key, StorageStrategies location = StorageStrategies.Local)
+        {
+            return _helper.DeleteFileAsync(key, location);
+        }
+
+        public Task<T> ReadFileAsync<T>(string key, StorageStrategies location = StorageStrategies.Local)
+        {
+            return _helper.ReadFileAsync<T>(key, location);
+        }
+
+        public Task<bool> WriteFileAsync<T>(string key, T value, StorageStrategies location = StorageStrategies.Local)
+        {
+            return _helper.WriteFileAsync<T>(key, value, location);
+        }
     }
 }

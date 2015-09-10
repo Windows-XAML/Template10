@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Template10.Services.FileService
 {
-    class FileHelper
+    public class FileHelper
     {
         /// <summary>Returns if a file is found in the specified storage strategy</summary>
         /// <param name="key">Path of the file in storage</param>
@@ -157,7 +157,5 @@ namespace Template10.Services.FileService
         {
             return JsonConvert.DeserializeObject<T>(json);
         }
-
-        public enum StorageStrategies { Local, Roaming, Temporary }
     }
 }

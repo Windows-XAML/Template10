@@ -6,7 +6,7 @@ using Windows.Devices.Geolocation;
 
 namespace Template10.Services.LocationService
 {
-    class LocationService 
+    public class LocationService : ILocationService
     {
         LocationHelper _helper = new LocationHelper();
 

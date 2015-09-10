@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Template10.Services.ShareContractService
 {
-    class ShareContractService
+    public class ShareContractService : IShareContractService
     {
         ShareContractHelper _helper = new ShareContractHelper();
 

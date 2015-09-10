@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace Template10.Services.MarketplaceService
 {
-    public class MarketplaceHelper
+    public interface IMarketplaceService
     {
-        public void LaunchAppInStore()
-        {
-
-        }
+        void LaunchAppInStore();
     }
 }
