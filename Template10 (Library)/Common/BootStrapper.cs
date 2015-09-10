@@ -136,14 +136,7 @@ namespace Template10.Common
         protected sealed override void OnWindowCreated(WindowCreatedEventArgs args)
         {
             var window = new WindowWrapper(args.Window);
-            if (UseAccentColorForTitleBar)
-            {
-                ApplicationViewTitleBar titlebar = ApplicationView.GetForCurrentView().TitleBar;
-                titlebar.BackgroundColor = (Color)Current.Resources["SystemAccentColor"];
-                titlebar.ForegroundColor = Colors.White;
-                titlebar.ButtonBackgroundColor = (Color)Current.Resources["SystemAccentColor"];
-                titlebar.ButtonForegroundColor = Colors.White;
-            }
+            
             WindowCreated?.Invoke(this, args);
             base.OnWindowCreated(args);
         }
@@ -204,6 +197,14 @@ namespace Template10.Common
                     }
             }
 
+            if (UseAccentColorForTitleBar)
+            {
+                ApplicationViewTitleBar titlebar = ApplicationView.GetForCurrentView().TitleBar;
+                titlebar.BackgroundColor = (Color)Current.Resources["SystemAccentColor"];
+                titlebar.ForegroundColor = Colors.White;
+                titlebar.ButtonBackgroundColor = (Color)Current.Resources["SystemAccentColor"];
+                titlebar.ButtonForegroundColor = Colors.White;
+            }
 
             // ensure active (this will hide any custom splashscreen)
             Window.Current.Activate();
