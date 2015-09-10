@@ -132,6 +132,7 @@
     <Compile Include="Common\StateItems.cs" />
     <Compile Include="Common\WindowWrapper.cs" />
     <Compile Include="Services\NavigationService\INavigationService.cs" />
+    <Compile Include="Utils\MonitorUtil.cs" />
     <Compile Include="Utils\XamlUtil.cs" />
     <Compile Include="Controls\HamburgerMenu.xaml.cs">
       <DependentUpon>HamburgerMenu.xaml</DependentUpon>
@@ -197,38 +198,39 @@
   <PropertyGroup>
     <PostBuildEvent>echo -- NuGet Process Start --
 
-:clear previous
-rd $(ProjectDir)$(OutDir)\nupkg\ /s/q
+rd C:\Users\jerry\.nuget\packages\Template10 /s/q &gt;&gt; null
+rd C:\nuget-local /s/q &gt;&gt; null
+rd "$(ProjectDir)$(OutDir)\nupkg" /s/q &gt;&gt;null
 
 :copy dll
-xcopy.exe "$(ProjectDir)$(OutDir)*.dll" "$(ProjectDir)$(OutDir)\nupkg\lib\dotnet\$(TargetName)\" /y 
+xcopy.exe "$(TargetPath)" "$(ProjectDir)$(OutDir)\nupkg\lib\dotnet\" /y &gt;null
 
 :copy xr.xml
-xcopy.exe "$(ProjectDir)$(OutDir)*.xr.xml" "$(ProjectDir)$(OutDir)\nupkg\lib\dotnet\$(TargetName)\" /y 
+xcopy.exe "$(TargetDir)$(TargetName).xr.xml" "$(ProjectDir)$(OutDir)\nupkg\lib\dotnet\$(TargetName)\" /y  &gt;null
 
 :copy pri
 :https://msdn.microsoft.com/en-us/library/windows/apps/jj552947.aspx
-xcopy.exe "$(ProjectDir)$(OutDir)*.pri" "$(ProjectDir)$(OutDir)\nupkg\lib\dotnet\$(TargetName)\" /y 
+xcopy.exe "$(TargetDir)$(TargetName).pri" "$(TargetDir)\nupkg\lib\dotnet\$(TargetName)\" /y  &gt;null
 
 :copy rd.xml
-xcopy.exe "$(ProjectDir)Properties\*.rd.xml" "$(ProjectDir)$(OutDir)\nupkg\lib\dotnet\$(TargetName)\Properties\" /y 
+xcopy.exe "$(ProjectDir)Properties\$(TargetName).rd.xml" "$(TargetDir)\nupkg\lib\dotnet\$(TargetName)\Properties\" /y  &gt;null
 
 :copy xbf
-xcopy.exe "$(ProjectDir)$(OutDir)Controls" "$(ProjectDir)$(OutDir)\nupkg\lib\dotnet\$(TargetName)\Controls\" /y 
-xcopy.exe "$(ProjectDir)$(OutDir)Styles" "$(ProjectDir)$(OutDir)\nupkg\lib\dotnet\$(TargetName)\Styles\" /y 
+xcopy.exe "$(TargetDir)Controls" "$(TargetDir)\nupkg\lib\dotnet\$(TargetName)\Controls\" /y  &gt;null
+xcopy.exe "$(TargetDir)Styles" "$(TargetDir)\nupkg\lib\dotnet\$(TargetName)\Styles\" /y  &gt;null
 
 :copy xaml
-xcopy.exe "$(ProjectDir)Controls\*.xaml" "$(ProjectDir)$(OutDir)\nupkg\lib\dotnet\$(TargetName)\Controls\" /y 
-xcopy.exe "$(ProjectDir)Styles\*.xaml" "$(ProjectDir)$(OutDir)\nupkg\lib\dotnet\$(TargetName)\Styles\" /y 
+xcopy.exe "$(ProjectDir)Controls\*.xaml" "$(ProjectDir)$(OutDir)\nupkg\lib\dotnet\$(TargetName)\Controls\" /y  &gt;null
+xcopy.exe "$(ProjectDir)Styles\*.xaml" "$(ProjectDir)$(OutDir)\nupkg\lib\dotnet\$(TargetName)\Styles\" /y  &gt;null
 
 :copy nuspec
-xcopy.exe "$(ProjectDir)$(TargetName).nuspec" "$(ProjectDir)$(OutDir)nupkg" /y 
+xcopy.exe "$(ProjectDir)$(TargetName).nuspec" "$(ProjectDir)$(OutDir)nupkg" /y   &gt;null
 
 :execute pack
-"$(ProjectDir)NuGet.exe" pack "$(ProjectDir)$(OutDir)nupkg\$(TargetName).nuspec" -Verbosity normal -Symbols -OutputDirectory "$(ProjectDir)$(OutDir)nupkg" -NonInteractive 
+"$(ProjectDir)NuGet.exe" pack "$(ProjectDir)$(OutDir)nupkg\$(TargetName).nuspec" -Build -Verbosity normal -OutputDirectory "$(ProjectDir)$(OutDir)nupkg" -NonInteractive 
 
 :copy nupkg
-xcopy.exe "$(ProjectDir)$(OutDir)nupkg\*.nupkg" c:\nuget-local\ /y 
+xcopy.exe "$(ProjectDir)$(OutDir)nupkg\*.nupkg" c:\nuget-local\ /y  &gt;null
 
 echo -- NuGet Process End --</PostBuildEvent>
   </PropertyGroup>
