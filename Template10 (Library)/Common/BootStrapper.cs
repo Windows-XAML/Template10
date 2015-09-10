@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Windows.Foundation.Metadata;
 using Template10.Services.NavigationService;
+using Windows.UI.ViewManagement;
+using Windows.UI;
 
 namespace Template10.Common
 {
@@ -123,12 +125,18 @@ namespace Template10.Common
             Window.Current.Activate();
         }
 
+        // Added this for programmer's benefit,
+        // Allows developers to use an easy default,
+        // Or change it to suit their app's theme.
+        // This is good.
+        public bool UseAccentColorForTitleBar { get; set; } = true;
         #endregion
 
         public event EventHandler<WindowCreatedEventArgs> WindowCreated;
         protected sealed override void OnWindowCreated(WindowCreatedEventArgs args)
         {
             var window = new WindowWrapper(args.Window);
+            
             WindowCreated?.Invoke(this, args);
             base.OnWindowCreated(args);
         }
@@ -189,6 +197,14 @@ namespace Template10.Common
                     }
             }
 
+            if (UseAccentColorForTitleBar)
+            {
+                ApplicationViewTitleBar titlebar = ApplicationView.GetForCurrentView().TitleBar;
+                titlebar.BackgroundColor = (Color)Current.Resources["SystemAccentColor"];
+                titlebar.ForegroundColor = Colors.White;
+                titlebar.ButtonBackgroundColor = (Color)Current.Resources["SystemAccentColor"];
+                titlebar.ButtonForegroundColor = Colors.White;
+            }
 
             // ensure active (this will hide any custom splashscreen)
             Window.Current.Activate();

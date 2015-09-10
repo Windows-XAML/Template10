@@ -22,6 +22,24 @@ namespace Template10.Controls
             PrimaryCommands = HeaderCommandBar.PrimaryCommands;
             SecondaryCommands = HeaderCommandBar.SecondaryCommands;
             this.Background = HeaderCommandBar.Background;
+            
+            // Show header back button based on BootStrapper's ShowShellBackButton property.
+            // WIP: Still haven't quite figured out how to
+            // Update this when the setting changes,
+            // Using a dash of MVVM magic, maybe?
+            if (BootStrapper.Current.ShowShellBackButton)
+            {
+                //Shell back button is enabled,
+                //Disable this back button.
+                this.BackButtonVisibility = Visibility.Collapsed;
+            }
+            else
+            {
+                // Shell back button is disabled,
+                // Enable this one.
+                this.BackButtonVisibility = Visibility.Visible;
+            }
+
             HeaderCommandBar.SetBinding(CommandBar.BackgroundProperty, new Binding
             {
                 Path = new PropertyPath(nameof(Background)),
