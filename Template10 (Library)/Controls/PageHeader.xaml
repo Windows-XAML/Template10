@@ -11,8 +11,8 @@
     mc:Ignorable="d" MinHeight="48" d:DesignWidth="400" x:Name="ThisPage">
 
     <UserControl.Resources>
-        <SolidColorBrush x:Name="HeaderBackgroundBrush" Color="Gainsboro" />
-        <SolidColorBrush x:Name="HeaderForegroundBrush" Color="Black" />
+        <SolidColorBrush x:Name="HeaderBackgroundBrush" Color="{ThemeResource SystemAccentColor}" />
+        <SolidColorBrush x:Name="HeaderForegroundBrush" Color="{ThemeResource SystemBaseHighColor}" />
     </UserControl.Resources>
 
     <CommandBar x:Name="HeaderCommandBar" DataContext="{Binding ElementName=ThisPage}" 
