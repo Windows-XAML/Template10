@@ -12,7 +12,7 @@
 
     <UserControl.Resources>
         <SolidColorBrush x:Name="HeaderBackgroundBrush" Color="{ThemeResource SystemAccentColor}" />
-        <SolidColorBrush x:Name="HeaderForegroundBrush" Color="{ThemeResource SystemBaseHighColor}" />
+        <SolidColorBrush x:Name="HeaderForegroundBrush" Color="White" />
     </UserControl.Resources>
 
     <CommandBar x:Name="HeaderCommandBar" DataContext="{Binding ElementName=ThisPage}" 
