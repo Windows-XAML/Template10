@@ -3,6 +3,8 @@ using Windows.UI.Xaml;
 using System.Threading.Tasks;
 using Sample.Services.SettingsServices;
 using Windows.ApplicationModel.Activation;
+using Windows.UI.ViewManagement;
+using Windows.UI;
 
 namespace Sample
 {
@@ -27,7 +29,26 @@ namespace Sample
         // runs even if restored from state
         public override Task OnInitializeAsync(IActivatedEventArgs args)
         {
+
             var nav = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include);
+
+            // This code sets up the title bar
+            // To use the user's chosen accent color by default.
+            // If you want to set your own defaults,
+            // Just update this code to match your chosen colors.
+            ApplicationViewTitleBar titlebar = ApplicationView.GetForCurrentView().TitleBar;
+            titlebar.BackgroundColor = (Color)Resources["SystemAccentColor"];
+            titlebar.ForegroundColor = Colors.White;
+            titlebar.InactiveBackgroundColor = (Resources["MediumAccentBrush"] as SolidColorBrush).Color;
+            titlebar.ButtonInactiveBackgroundColor = (Resources["MediumAccentBrush"] as SolidColorBrush).Color;
+            titlebar.InactiveForegroundColor = Colors.White;
+            titlebar.ButtonInactiveForegroundColor = Colors.White;
+            titlebar.ButtonHoverBackgroundColor = (Resources["MediumAccentBrush"] as SolidColorBrush).Color;
+            titlebar.ButtonHoverForegroundColor = Colors.White;
+            titlebar.ButtonPressedBackgroundColor = (Resources["DarkAccentBrush"] as SolidColorBrush).Color;
+            titlebar.ButtonPressedForegroundColor = Colors.White;
+            titlebar.ButtonBackgroundColor = (Color)Resources["SystemAccentColor"];
+            titlebar.ButtonForegroundColor = Colors.White;
             Window.Current.Content = new Views.Shell(nav);
             return Task.FromResult<object>(null);
         }

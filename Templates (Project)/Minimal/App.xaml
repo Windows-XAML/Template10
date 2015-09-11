@@ -3,9 +3,16 @@
     xmlns:common="using:Template10.Common" 
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-    xmlns:local="using:Sample">
+    xmlns:local="using:Sample"
+    xmlns:converters="using:Sample.Converters">
 
     <common:BootStrapper.Resources>
+        
+            <converters:DarkenColorConverter x:Key="Darken" />
+            <SolidColorBrush x:Key="AccentBrush" Color="{ThemeResource SystemAccentColor}" />
+            <SolidColorBrush x:Key="DarkAccentBrush" Color="{Binding Source={ThemeResource AccentBrush}, Converter={StaticResource Darken}}" />
+            <SolidColorBrush x:Key="MediumAccentBrush" Color="{Binding Source={ThemeResource AccentBrush}, Converter={StaticResource Darken}}" />
+
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles\Custom.xaml" />
