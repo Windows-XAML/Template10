@@ -256,6 +256,37 @@ namespace Template10.Controls
                 typeof(HamburgerMenu), new PropertyMetadata(false,
                     (d, e) => { (d as HamburgerMenu).IsOpen = (bool)e.NewValue; }));
 
+	    private bool isHidden = false;
+		
+	    public bool IsHidden
+	    {
+		    get
+		    {
+				if (isHidden != (bool)GetValue(IsHiddenProperty))
+					SetValue(IsHiddenProperty, isHidden);
+				return isHidden;
+			}
+		    set
+		    {
+				if (value)
+				{
+
+					HamburgerButton.Visibility = Visibility.Collapsed;
+					ShellSplitView.CompactPaneLength = 0;
+				}
+				else
+				{
+					HamburgerButton.Visibility = Visibility.Visible;
+					ShellSplitView.CompactPaneLength = 48;
+				}
+				SetValue(IsHiddenProperty, value);
+			}
+	    }
+
+	    public static readonly DependencyProperty IsHiddenProperty =
+		    DependencyProperty.Register(nameof(IsHidden), typeof(bool),
+			    typeof(HamburgerMenu), new PropertyMetadata(false, (d, e) => { (d as HamburgerMenu).IsHidden = (bool)e.NewValue; }));
+
         public ObservableCollection<NavigationButtonInfo> PrimaryButtons
         {
             get

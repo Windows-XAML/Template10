@@ -5,6 +5,7 @@
     xmlns:local="using:Template10.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:system="using:System"
     mc:Ignorable="d" x:Name="ThisPage"
     d:DesignHeight="400"
     d:DesignWidth="400">
@@ -135,6 +136,11 @@
                                             </VisualState.Setters>
                                         </VisualState>
                                         <VisualState x:Name="Disabled"/>
+										<VisualState x:Name="Hidden">
+                                            <VisualState.Setters>
+												<Setter Target="RootGrid.Visibility" Value="Collapsed" />
+											</VisualState.Setters>
+										</VisualState>
                                     </VisualStateGroup>
                                 </VisualStateManager.VisualStateGroups>
                                 <Rectangle x:Name="PressedOverlay" Fill="White" Opacity=".2" Visibility="Collapsed" />
