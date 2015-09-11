@@ -15,9 +15,9 @@
             <!-- defaults -->
             <SolidColorBrush x:Name="HamburgerBackgroundBrush" Color="#FFD13438" />
             <SolidColorBrush x:Name="HamburgerForegroundBrush" Color="White" />
-            <SolidColorBrush x:Name="NavButtonBackgroundBrush" Color="#FFD13438" />
+            <SolidColorBrush x:Name="NavButtonBackgroundBrush" Color="{ThemeResource SystemAccentColor}" />
             <SolidColorBrush x:Name="NavButtonForegroundBrush" Color="White" />
-            <SolidColorBrush x:Name="NavAreaBackgroundBrush" Color="White" />
+            <SolidColorBrush x:Name="NavAreaBackgroundBrush" Color="{ThemeResource SystemAccentColor}" />
             <SolidColorBrush x:Name="SecondaryBorderBrush" Color="DimGray" />
 
             <Style TargetType="ToggleButton" x:Key="NavButtonStyle">
