@@ -114,8 +114,11 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <None Include="Nuget\Build.cmd" />
+    <None Include="Nuget\Template10.targets" />
+    <None Include="Nuget\Init.ps1" />
     <None Include="project.json" />
-    <None Include="Template10Library.nuspec">
+    <None Include="Nuget\Template10Library.nuspec">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
@@ -184,6 +187,7 @@
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
@@ -196,43 +200,7 @@
     </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>echo -- NuGet Process Start --
-
-rd C:\Users\jerry\.nuget\packages\Template10 /s/q &gt;&gt; null
-rd C:\nuget-local /s/q &gt;&gt; null
-rd "$(ProjectDir)$(OutDir)\nupkg" /s/q &gt;&gt;null
-
-:copy dll
-xcopy.exe "$(TargetPath)" "$(ProjectDir)$(OutDir)\nupkg\lib\dotnet\" /y &gt;null
-
-:copy xr.xml
-xcopy.exe "$(TargetDir)$(TargetName).xr.xml" "$(ProjectDir)$(OutDir)\nupkg\lib\dotnet\$(TargetName)\" /y  &gt;null
-
-:copy pri
-:https://msdn.microsoft.com/en-us/library/windows/apps/jj552947.aspx
-xcopy.exe "$(TargetDir)$(TargetName).pri" "$(TargetDir)\nupkg\lib\dotnet\$(TargetName)\" /y  &gt;null
-
-:copy rd.xml
-xcopy.exe "$(ProjectDir)Properties\$(TargetName).rd.xml" "$(TargetDir)\nupkg\lib\dotnet\$(TargetName)\Properties\" /y  &gt;null
-
-:copy xbf
-xcopy.exe "$(TargetDir)Controls" "$(TargetDir)\nupkg\lib\dotnet\$(TargetName)\Controls\" /y  &gt;null
-xcopy.exe "$(TargetDir)Styles" "$(TargetDir)\nupkg\lib\dotnet\$(TargetName)\Styles\" /y  &gt;null
-
-:copy xaml
-xcopy.exe "$(ProjectDir)Controls\*.xaml" "$(ProjectDir)$(OutDir)\nupkg\lib\dotnet\$(TargetName)\Controls\" /y  &gt;null
-xcopy.exe "$(ProjectDir)Styles\*.xaml" "$(ProjectDir)$(OutDir)\nupkg\lib\dotnet\$(TargetName)\Styles\" /y  &gt;null
-
-:copy nuspec
-xcopy.exe "$(ProjectDir)$(TargetName).nuspec" "$(ProjectDir)$(OutDir)nupkg" /y   &gt;null
-
-:execute pack
-"$(ProjectDir)NuGet.exe" pack "$(ProjectDir)$(OutDir)nupkg\$(TargetName).nuspec" -Build -Verbosity normal -OutputDirectory "$(ProjectDir)$(OutDir)nupkg" -NonInteractive 
-
-:copy nupkg
-xcopy.exe "$(ProjectDir)$(OutDir)nupkg\*.nupkg" c:\nuget-local\ /y  &gt;null
-
-echo -- NuGet Process End --</PostBuildEvent>
+    <PostBuildEvent>call "$(ProjectDir)\Nuget\Build.cmd" "$(TargetDir)" "$(TargetName)" "$(ProjectDir)"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
