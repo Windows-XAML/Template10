@@ -136,11 +136,11 @@
                                             </VisualState.Setters>
                                         </VisualState>
                                         <VisualState x:Name="Disabled"/>
-										<VisualState x:Name="Hidden">
+                                        <VisualState x:Name="Hidden">
                                             <VisualState.Setters>
-												<Setter Target="RootGrid.Visibility" Value="Collapsed" />
-											</VisualState.Setters>
-										</VisualState>
+                                                <Setter Target="RootGrid.Visibility" Value="Collapsed" />
+                                            </VisualState.Setters>
+                                        </VisualState>
                                     </VisualStateGroup>
                                 </VisualStateManager.VisualStateGroups>
                                 <Rectangle x:Name="PressedOverlay" Fill="White" Opacity=".2" Visibility="Collapsed" />
