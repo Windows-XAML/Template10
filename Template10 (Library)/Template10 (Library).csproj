@@ -131,6 +131,7 @@
     <Compile Include="Common\StateItem.cs" />
     <Compile Include="Common\StateItems.cs" />
     <Compile Include="Common\WindowWrapper.cs" />
+    <Compile Include="Converters\DarkenColorConverter.cs" />
     <Compile Include="Services\NavigationService\INavigationService.cs" />
     <Compile Include="Utils\MonitorUtil.cs" />
     <Compile Include="Utils\XamlUtil.cs" />
