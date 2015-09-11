@@ -7,7 +7,7 @@ using Windows.UI;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
 
-namespace Sample.Converters
+namespace Template10.Converters
 {
     // DarkenColorConverter class:
     // Allows you to darken the color of an XAML color resource.
@@ -25,7 +25,7 @@ namespace Sample.Converters
                     double.TryParse(parameter.ToString(), out percentage);
                 }
                 Color color = (value as SolidColorBrush).Color;
-               return Color.FromArgb((byte)(color.A * percentage), (byte)(color.R * percentage), (byte)(color.G * percentage), (byte)(color.B * percentage));
+                return Color.FromArgb((byte)(color.A * percentage), (byte)(color.R * percentage), (byte)(color.G * percentage), (byte)(color.B * percentage));
             }
             return value;
         }
