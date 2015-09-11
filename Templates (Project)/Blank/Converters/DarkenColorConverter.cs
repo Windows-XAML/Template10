@@ -9,6 +9,10 @@ using Windows.UI.Xaml.Media;
 
 namespace Blank.Converters
 {
+    // DarkenColorConverter class:
+    // Allows you to darken the color of an XAML color resource.
+    // This is currently utilised in the App.xaml class
+    // To facilitate a good-looking default titlebar.
     public class DarkenColorConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
