@@ -5,6 +5,7 @@ using Sample.Services.SettingsServices;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.ViewManagement;
 using Windows.UI;
+using Windows.UI.Xaml.Media;
 
 namespace Sample
 {
