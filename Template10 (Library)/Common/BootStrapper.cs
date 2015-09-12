@@ -154,7 +154,7 @@ namespace Template10.Common
             // okay, now handle launch
             switch (e.PreviousExecutionState)
             {
-                case ApplicationExecutionState.ClosedByUser:
+                //case ApplicationExecutionState.ClosedByUser:
                 case ApplicationExecutionState.Terminated:
                     {
                         /*
