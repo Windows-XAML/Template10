@@ -331,6 +331,21 @@ namespace Template10.Controls
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public ObservableCollection<Control> HeaderItems
+        {
+            get
+            {
+                var headerItems = (ObservableCollection<Control>)base.GetValue(HeaderItemsProperty);
+                if (headerItems == null)
+                    base.SetValue(HeaderItemsProperty, headerItems = new ObservableCollection<Control>());
+                return headerItems;
+            }
+            set { SetValue(HeaderItemsProperty, value); }
+        }
+        public static readonly DependencyProperty HeaderItemsProperty =
+            DependencyProperty.Register("HeaderItems", typeof(ObservableCollection<Control>),
+                typeof(HamburgerMenu), new PropertyMetadata(null));
+
         Dictionary<RadioButton, NavigationButtonInfo> _navButtons = new Dictionary<RadioButton, NavigationButtonInfo>();
         void NavButton_Loaded(object sender, RoutedEventArgs e)
         {
