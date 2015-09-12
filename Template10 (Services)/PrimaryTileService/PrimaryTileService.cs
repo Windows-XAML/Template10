@@ -8,13 +8,13 @@ using Windows.UI.Notifications;
 
 namespace Template10.Services.PrimaryTileService
 {
-    class PrimaryTileService
+    public class PrimaryTileService : IPrimaryTileService
     {
-        PrimaryTileHelper _Helper = new PrimaryTileHelper();
+        PrimaryTileHelper _helper = new PrimaryTileHelper();
 
         public void UpdateBadge(int value)
         {
-            this._Helper.UpdateBadge(value);
+            this._helper.UpdateBadge(value);
         }
     }
 

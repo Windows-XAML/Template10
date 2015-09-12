@@ -10,7 +10,7 @@ using Windows.Foundation;
 
 namespace Template10.Services.MapService
 {
-    public class MapService 
+    public class MapService : IMapService
     {
         MapHelper _helper = default(MapHelper);
 

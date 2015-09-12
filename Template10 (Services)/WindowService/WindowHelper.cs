@@ -30,6 +30,7 @@ namespace Template10.Services.WindowService
             }
 
             this.CoreView = CoreApplication.CreateNewView();
+
             await CoreView.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
             {
                 this.Window = Window.Current;
@@ -40,6 +41,7 @@ namespace Template10.Services.WindowService
                 this.View = ApplicationView.GetForCurrentView();
                 this.View.Consolidated += Helper_Consolidated;
             });
+
             if (await ApplicationViewSwitcher.TryShowAsStandaloneAsync(this.View.Id, size))
             {
                 await ApplicationViewSwitcher.SwitchAsync(this.View.Id);
