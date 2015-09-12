@@ -114,8 +114,13 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <None Include="Nuget\Build.cmd" />
+    <None Include="Nuget\Template10.targets" />
+    <None Include="Nuget\Init.ps1" />
     <None Include="project.json" />
-    <None Include="Template10Library.nuspec" />
+    <None Include="Nuget\Template10Library.nuspec">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Behaviors\NavButtonBehavior.cs" />
@@ -129,6 +134,8 @@
     <Compile Include="Common\StateItem.cs" />
     <Compile Include="Common\StateItems.cs" />
     <Compile Include="Common\WindowWrapper.cs" />
+    <Compile Include="Services\NavigationService\INavigationService.cs" />
+    <Compile Include="Utils\MonitorUtil.cs" />
     <Compile Include="Utils\XamlUtil.cs" />
     <Compile Include="Controls\HamburgerMenu.xaml.cs">
       <DependentUpon>HamburgerMenu.xaml</DependentUpon>
@@ -180,6 +187,7 @@
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
@@ -192,24 +200,7 @@
     </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>echo -- NuGet Process Start --
-
-:clear previous
-rd $(ProjectDir)$(OutDir)\nupkg\ /s/q
-
-:copy dll
-xcopy.exe "$(ProjectDir)$(OutDir)$(TargetFileName)" "$(ProjectDir)$(OutDir)\nupkg\lib\dotnet\" /y 
-
-:copy nuspec
-xcopy.exe "$(ProjectDir)$(TargetName).nuspec" "$(ProjectDir)$(OutDir)nupkg" /y 
-
-:execute pack
-"$(ProjectDir)NuGet.exe" pack "$(ProjectDir)$(OutDir)nupkg\$(TargetName).nuspec" -Build -Verbosity normal -OutputDirectory "$(ProjectDir)$(OutDir)nupkg" -NonInteractive 
-
-:copy nupkg
-xcopy.exe "$(ProjectDir)$(OutDir)nupkg\*.nupkg" c:\nuget-local\ /y 
-
-echo -- NuGet Process End --</PostBuildEvent>
+    <PostBuildEvent>call "$(ProjectDir)\Nuget\Build.cmd" "$(TargetDir)" "$(TargetName)" "$(ProjectDir)"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

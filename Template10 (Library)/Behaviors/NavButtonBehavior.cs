@@ -26,6 +26,7 @@ namespace Template10.Behaviors
             {
                 element.Click += Element_Click;
                 Window.Current.SizeChanged += Current_SizeChanged;
+                Calculate();
             }
         }
 

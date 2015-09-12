@@ -16,7 +16,7 @@ using Windows.UI.Xaml.Navigation;
 namespace Template10.Services.NavigationService
 {
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-NavigationService
-    public class NavigationService
+    public class NavigationService : INavigationService
     {
         private const string EmptyNavigation = "1,0";
 
@@ -119,9 +119,11 @@ namespace Template10.Services.NavigationService
             }
         }
 
-        public async Task OpenAsync(Type page, object parameter = null, string title = "New Window", ViewSizePreference size = ViewSizePreference.UseHalf)
+        public async Task OpenAsync(Type page, object parameter = null, string title = null, ViewSizePreference size = ViewSizePreference.UseHalf)
         {
             var currentView = ApplicationView.GetForCurrentView();
+            title = title ?? currentView.Title;
+
             var newView = CoreApplication.CreateNewView();
             var dispatcher = new DispatcherWrapper(newView.Dispatcher);
             await dispatcher.DispatchAsync(async () =>
@@ -135,11 +137,8 @@ namespace Template10.Services.NavigationService
                 newWindow.Content = frame.Frame;
                 newWindow.Activate();
 
-                await ApplicationViewSwitcher.TryShowAsStandaloneAsync(
-                    newAppView.Id,
-                    ViewSizePreference.UseMinimum,
-                    currentView.Id,
-                    ViewSizePreference.UseMinimum);
+                await ApplicationViewSwitcher
+                    .TryShowAsStandaloneAsync(newAppView.Id, ViewSizePreference.Default, currentView.Id, size);
             });
         }
 

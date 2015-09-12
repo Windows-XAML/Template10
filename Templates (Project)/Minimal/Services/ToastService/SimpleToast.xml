@@ -1,0 +1,10 @@
+﻿<toast>
+  <visual>
+    <binding template="ToastGeneric">
+      <image placement="inline" />
+      <text hint-style="caption" hint-wrap="true" hint-maxLines="2" />
+      <text hint-style="captionsubtle" hint-wrap="true" />
+    </binding>
+  </visual>
+  <audio src="ms-winsoundevent:Notification.Reminder"/>
+</toast>

@@ -22,14 +22,14 @@ namespace Template10.Controls
             this.InitializeComponent();
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
             {
-                return;
+                // nothing
             }
-            new KeyboardService().AfterWindowZGesture = () => { HamburgerCommand.Execute(null); };
-
-            //workaround to avoid that, if the developer decides not to have primary or secondary buttons, the design time commands are displayed also at runtime
-            PrimaryButtons = new ObservableCollection<NavigationButtonInfo>();
-            SecondaryButtons = new ObservableCollection<NavigationButtonInfo>();
-
+            else
+            {
+                PrimaryButtons = new ObservableCollection<NavigationButtonInfo>();
+                SecondaryButtons = new ObservableCollection<NavigationButtonInfo>();
+                new KeyboardService().AfterWindowZGesture = () => { HamburgerCommand.Execute(null); };
+            }
         }
 
         void UpdateButtons(NavigatedEventArgs e) { UpdateButtons(e.PageType); }
