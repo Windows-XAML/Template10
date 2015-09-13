@@ -121,6 +121,9 @@
     <None Include="Nuget\Template10Library.nuspec">
       <SubType>Designer</SubType>
     </None>
+    <None Include="..\template10.snk">
+      <Link>template10.snk</Link>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Behaviors\NavButtonBehavior.cs" />
@@ -193,6 +196,12 @@
   </PropertyGroup>
   <PropertyGroup>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\template10.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <PropertyGroup>
