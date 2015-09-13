@@ -18,8 +18,7 @@
         </Grid.RowDefinitions>
 
         <!-- header -->
-        <controls:PageHeader Text="Blank App | Main Page" BackButtonVisibility="Collapsed" Frame="{x:Bind Frame, Mode=OneWay}">
-        </controls:PageHeader>
+        <controls:PageHeader Text="Blank App | Main Page" BackButtonVisibility="Collapsed" Frame="{x:Bind Frame, Mode=OneWay}" VisualStateNarrowMinWidth="-1" />
 
         <!--#region content-->
         

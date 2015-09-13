@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Minimal.ViewModels
+namespace Sample.ViewModels
 {
-    public class SettingsPageViewModel : Minimal.Mvvm.ViewModelBase
+    public class SettingsPageViewModel : Sample.Mvvm.ViewModelBase
     {
         Services.SettingsServices.SettingsService _settings;
 
@@ -25,7 +25,7 @@ namespace Minimal.ViewModels
         }
 
         private string _BusyText = "Please wait...";
-        public string BusyText { get { return _BusyText; } set { Set(ref _BusyText, BusyText); } }
+        public string BusyText { get { return _BusyText; } set { Set(ref _BusyText, value); } }
         public void ShowBusy() { Views.Shell.SetBusyIndicator(true, _BusyText); }
         public void HideBusy() { Views.Shell.SetBusyIndicator(false); }
 

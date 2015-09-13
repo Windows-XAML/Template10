@@ -1,10 +1,10 @@
 ﻿using System;
 using Windows.UI.Xaml;
 using System.Threading.Tasks;
-using Minimal.Services.SettingsServices;
+using Sample.Services.SettingsServices;
 using Windows.ApplicationModel.Activation;
 
-namespace Minimal
+namespace Sample
 {
     /// Documentation on APIs used in this page:
     /// https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-Bootstrapper

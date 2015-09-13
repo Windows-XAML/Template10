@@ -7,9 +7,9 @@ using Template10.Mvvm;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Navigation;
 
-namespace Minimal.ViewModels
+namespace Sample.ViewModels
 {
-    public class DetailPageViewModel : Minimal.Mvvm.ViewModelBase
+    public class DetailPageViewModel : Sample.Mvvm.ViewModelBase
     {
         public DetailPageViewModel()
         {
@@ -33,7 +33,7 @@ namespace Minimal.ViewModels
             else
             {
                 // use navigation parameter
-                Value = string.Format("You passed '{0}'", parameter?.ToString());
+                Value = parameter?.ToString();
             }
         }
 
