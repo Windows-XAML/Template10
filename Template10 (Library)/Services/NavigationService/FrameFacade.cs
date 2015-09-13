@@ -217,7 +217,7 @@ namespace Template10.Services.NavigationService
                 handler(this, args);
             }
             CurrentPageType = e.SourcePageType;
-            CurrentPageParam = e.Parameter as String;
+            CurrentPageParam = e.Parameter;
         }
 
         readonly List<EventHandler<NavigatingEventArgs>> _navigatingEventHandlers = new List<EventHandler<NavigatingEventArgs>>();

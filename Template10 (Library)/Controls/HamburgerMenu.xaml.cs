@@ -22,14 +22,14 @@ namespace Template10.Controls
             this.InitializeComponent();
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
             {
-                return;
+                // nothing
             }
-            new KeyboardService().AfterWindowZGesture = () => { HamburgerCommand.Execute(null); };
-
-            //workaround to avoid that, if the developer decides not to have primary or secondary buttons, the design time commands are displayed also at runtime
-            PrimaryButtons = new ObservableCollection<NavigationButtonInfo>();
-            SecondaryButtons = new ObservableCollection<NavigationButtonInfo>();
-
+            else
+            {
+                PrimaryButtons = new ObservableCollection<NavigationButtonInfo>();
+                SecondaryButtons = new ObservableCollection<NavigationButtonInfo>();
+                new KeyboardService().AfterWindowZGesture = () => { HamburgerCommand.Execute(null); };
+            }
         }
 
         void UpdateButtons(NavigatedEventArgs e) { UpdateButtons(e.PageType); }
@@ -330,6 +330,21 @@ namespace Template10.Controls
                 typeof(HamburgerMenu), new PropertyMetadata(220));
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public ObservableCollection<Control> HeaderItems
+        {
+            get
+            {
+                var headerItems = (ObservableCollection<Control>)base.GetValue(HeaderItemsProperty);
+                if (headerItems == null)
+                    base.SetValue(HeaderItemsProperty, headerItems = new ObservableCollection<Control>());
+                return headerItems;
+            }
+            set { SetValue(HeaderItemsProperty, value); }
+        }
+        public static readonly DependencyProperty HeaderItemsProperty =
+            DependencyProperty.Register("HeaderItems", typeof(ObservableCollection<Control>),
+                typeof(HamburgerMenu), new PropertyMetadata(null));
 
         Dictionary<RadioButton, NavigationButtonInfo> _navButtons = new Dictionary<RadioButton, NavigationButtonInfo>();
         void NavButton_Loaded(object sender, RoutedEventArgs e)

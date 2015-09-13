@@ -25,7 +25,7 @@ namespace Sample.ViewModels
         }
 
         private string _BusyText = "Please wait...";
-        public string BusyText { get { return _BusyText; } set { Set(ref _BusyText, BusyText); } }
+        public string BusyText { get { return _BusyText; } set { Set(ref _BusyText, value); } }
         public void ShowBusy() { Views.Shell.SetBusyIndicator(true, _BusyText); }
         public void HideBusy() { Views.Shell.SetBusyIndicator(false); }
 
