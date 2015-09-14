@@ -81,6 +81,15 @@ namespace Template10.Controls
             DependencyProperty.Register(nameof(VisualStateNormalMinWidth), typeof(double),
                 typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => { (d as HamburgerMenu).VisualStateNormalMinWidth = (double)e.NewValue; }));
 
+        public double VisualStateWideMinWidth
+        {
+            get { return VisualStateWideTrigger.MinWindowWidth; }
+            set { SetValue(VisualStateWideMinWidthProperty, VisualStateWideTrigger.MinWindowWidth = value); }
+        }
+        public static readonly DependencyProperty VisualStateWideMinWidthProperty =
+            DependencyProperty.Register(nameof(VisualStateWideMinWidth), typeof(double),
+                typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => { (d as HamburgerMenu).VisualStateWideMinWidth = (double)e.NewValue; }));
+
         #endregion
 
         #region Style
@@ -355,7 +364,6 @@ namespace Template10.Controls
                     {
                         if (menu.RootGrid.Children.Contains(menu.NavigationService.Frame))
                             menu.RootGrid.Children.Remove(menu.NavigationService.Frame);
-                        menu.NavigationService.Frame.Margin = new Thickness(0, -48, 0, 0);
                         menu.ShellSplitView.Content = menu.NavigationService.Frame;
                     }
                 }));
