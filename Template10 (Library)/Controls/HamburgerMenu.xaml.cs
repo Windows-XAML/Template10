@@ -317,15 +317,9 @@ namespace Template10.Controls
                 else
                 {
                     // display content without splitview (splash scenario)
-                    Action revert = () =>
-                    {
-                        RootGrid.Children.Remove(NavigationService.Frame);
-                        NavigationService.Frame.Margin = new Thickness(0, -48, 0, 0);
-                        ShellSplitView.Content = NavigationService.Frame;
-                    };
-                    NavigationService.AfterRestoreSavedNavigation += (s, e) => revert();
-                    NavigationService.FrameFacade.Navigated += (s, e) => revert();
-                    RootGrid.Children.Add(NavigationService.Frame);
+                    NavigationService.AfterRestoreSavedNavigation += (s, e) => IsFullScreen = false;
+                    NavigationService.FrameFacade.Navigated += (s, e) => IsFullScreen = false;
+                    IsFullScreen = true;
                 }
                 NavigationService.FrameFacade.Navigated += (s, e) => UpdateButtons(e);
                 NavigationService.AfterRestoreSavedNavigation += (s, e) => UpdateButtons();
@@ -336,6 +330,36 @@ namespace Template10.Controls
                 });
             }
         }
+
+        public bool IsFullScreen
+        {
+            get { return (bool)GetValue(IsFullScreenProperty); }
+            set { SetValue(IsFullScreenProperty, value); }
+        }
+        public static readonly DependencyProperty IsFullScreenProperty =
+            DependencyProperty.Register(nameof(IsFullScreen), typeof(bool),
+                typeof(HamburgerMenu), new PropertyMetadata(false, (d, e) =>
+                {
+                    var menu = d as HamburgerMenu;
+                    if ((bool)e.NewValue)
+                    {
+                        if (menu.RootGrid.Children.Contains(menu.NavigationService.Frame))
+                            return;
+                        menu.NavigationService.Frame.SetValue(Grid.ColumnProperty, 0);
+                        menu.NavigationService.Frame.SetValue(Grid.ColumnSpanProperty, int.MaxValue);
+                        menu.NavigationService.Frame.SetValue(Grid.RowProperty, 0);
+                        menu.NavigationService.Frame.SetValue(Grid.RowSpanProperty, int.MaxValue);
+                        menu.RootGrid.Children.Add(menu.NavigationService.Frame);
+                    }
+                    else
+                    {
+                        if (menu.RootGrid.Children.Contains(menu.NavigationService.Frame))
+                            menu.RootGrid.Children.Remove(menu.NavigationService.Frame);
+                        menu.NavigationService.Frame.Margin = new Thickness(0, -48, 0, 0);
+                        menu.ShellSplitView.Content = menu.NavigationService.Frame;
+                    }
+                }));
+
 
         public ObservableCollection<NavigationButtonInfo> SecondaryButtons
         {
@@ -369,7 +393,7 @@ namespace Template10.Controls
             set { SetValue(HeaderContentProperty, value); }
         }
         public static readonly DependencyProperty HeaderContentProperty =
-            DependencyProperty.Register(nameof(HeaderContent), typeof(UIElement), 
+            DependencyProperty.Register(nameof(HeaderContent), typeof(UIElement),
                 typeof(HamburgerMenu), null);
 
         Dictionary<RadioButton, NavigationButtonInfo> _navButtons = new Dictionary<RadioButton, NavigationButtonInfo>();
