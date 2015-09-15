@@ -64,6 +64,8 @@
             </TextBox>
             <Button Content="Submit" Click="{x:Bind ViewModel.GotoDetailsPage}" Margin="4,0" 
                     RelativePanel.RightOf="ParameterTextBox" RelativePanel.AlignBottomWith="ParameterTextBox" />
+            <TextBlock Text="For more Demo, tap on Settings menu" RelativePanel.Below ="ParameterTextBox" Margin="0,12"/>
+
         </RelativePanel>
 
         <!--#endregion-->
