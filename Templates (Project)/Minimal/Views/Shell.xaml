@@ -38,12 +38,55 @@
             </Grid.Background>
             <Viewbox Height="32">
                 <StackPanel Orientation="Horizontal">
-                    <ProgressRing x:Name="BusyRing"  IsActive="False" Height="24" Width="24" Margin="12,0" Foreground="White" />
+                    <ProgressRing x:Name="BusyRing"  IsActive="True" Height="24" Width="24" Margin="12,0" Foreground="White" />
                     <TextBlock x:Name="BusyText" Foreground="White" VerticalAlignment="Center" />
                 </StackPanel>
             </Viewbox>
         </Grid>
+        <RelativePanel>
+            <StackPanel x:Name="StatusPanel"
+                        Orientation="Vertical"
+                        RelativePanel.AlignBottomWithPanel="True"
+                        RelativePanel.AlignRightWithPanel="True"
+                        RelativePanel.AlignLeftWithPanel="True" 
+                        Visibility="Collapsed">
+                
+                <Border x:Name="StatusBorder"
+                        Margin="0,0,0,0">
+                    
+                    <ScrollViewer VerticalScrollMode="Auto" 
+                                  VerticalScrollBarVisibility="Auto"
+                                  MaxHeight="200">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            
+                            <TextBlock x:Name="StatusBlock"
+                                       Grid.Column="0"
+                                       Foreground="White"
+                                       MaxWidth="{Binding ElementName=Splitter, Path=ActualWidth}"
+                                       Margin="10,10,10,20"
+                                       TextWrapping="Wrap"/>
+                            
+                            <Button  Grid.Column="1"
+                                     x:Uid="OK"
+                                     Content="OK"
+                                     Width="100"
+                                     Margin="6,0"
+                                     FontWeight="Bold"
+                                     Foreground="Gainsboro"
+                                     BorderBrush="LightGray"
+                                     Opacity="0.8"
+                                     Style="{StaticResource NotifyMessageButtonStyle}"
+                                     Tapped="StatusBlock_Tapped"/>
+                        </Grid>
 
+                    </ScrollViewer>
+                </Border>
+            </StackPanel>
+        </RelativePanel>
     </Grid>
 
 </Page>

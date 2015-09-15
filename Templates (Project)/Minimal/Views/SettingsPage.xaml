@@ -40,7 +40,7 @@
                         <TextBox Margin="0,12,0,0" HorizontalAlignment="Left" Width="200"
                                  Text="{Binding BusyText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                  Header="Busy text" />
-                        <Button Content="Show Busy Indicator" Margin="0,12,0,0">
+                        <Button Content="Show Busy Indicator" Margin="0,12,0,0" MinWidth="200">
                             <Interactivity:Interaction.Behaviors>
                                 <Core:EventTriggerBehavior EventName="Click">
                                     <Core:CallMethodAction TargetObject="{Binding Mode=OneWay}" MethodName="ShowBusy"/>
@@ -50,6 +50,23 @@
                                 </Core:EventTriggerBehavior>
                             </Interactivity:Interaction.Behaviors>
                         </Button>
+
+                        <Button Content="Show Status Message" Margin="0,12,0,0" MinWidth="200">
+                            <Interactivity:Interaction.Behaviors>
+                                <Core:EventTriggerBehavior EventName="Click">
+                                    <Core:CallMethodAction TargetObject="{Binding Mode=OneWay}" MethodName="ShowStatusMessage"/>
+                                </Core:EventTriggerBehavior>
+                            </Interactivity:Interaction.Behaviors>
+                        </Button>
+
+                        <Button Content="Show Error Message" Margin="0,12,0,0" MinWidth="200">
+                            <Interactivity:Interaction.Behaviors>
+                                <Core:EventTriggerBehavior EventName="Click">
+                                    <Core:CallMethodAction TargetObject="{Binding Mode=OneWay}" MethodName="ShowErrorMessage"/>
+                                </Core:EventTriggerBehavior>
+                            </Interactivity:Interaction.Behaviors>
+                        </Button>
+
                     </StackPanel>
                 </ScrollViewer>
             </PivotItem>

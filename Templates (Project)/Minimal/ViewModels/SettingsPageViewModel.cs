@@ -24,12 +24,16 @@ namespace Sample.ViewModels
             set { _settings.UseShellBackButton = value; base.RaisePropertyChanged(); }
         }
 
-        private string _BusyText = "Please wait...";
+        private string _BusyText = "Please wait for 5 secs...";
         public string BusyText { get { return _BusyText; } set { Set(ref _BusyText, value); } }
         public void ShowBusy() { Views.Shell.SetBusyIndicator(true, _BusyText); }
         public void HideBusy() { Views.Shell.SetBusyIndicator(false); }
 
         #endregion
+
+
+        public void ShowStatusMessage() { Views.Shell.NotifyStatusMessage("This is an example of status notify message. This line will wrap to accommodate more info. Check wraping in compact mode or in Windows 10 Mobile emulator."); }
+        public void ShowErrorMessage() { Views.Shell.NotifyErrorMessage("Boom! This is an example of error notify message. This line will wrap to accommodate more info. Check wraping in compact mode or in Windows 10 Mobile emulator."); }
 
         #region About
 
