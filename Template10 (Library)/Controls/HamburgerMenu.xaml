@@ -205,9 +205,15 @@
                     <FontIcon Glyph="&#xE700;" FontSize="20" />
                 </StackPanel>
             </Button>
-            <ItemsControl Grid.Column="1" ItemsSource="{Binding HeaderItems, ElementName=ThisPage}"/>
+            <ItemsControl Grid.Column="1" ItemsSource="{Binding HeaderItems, ElementName=ThisPage}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
         </Grid>
-        <SplitView x:Name="ShellSplitView" Grid.Row="1" 
+        <SplitView x:Name="ShellSplitView" Grid.Row="1"
                    PaneBackground="Transparent"
                    DisplayMode="Inline" 
                    OpenPaneLength="220"
