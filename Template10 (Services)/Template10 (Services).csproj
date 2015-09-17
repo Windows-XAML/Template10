@@ -110,20 +110,6 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <None Include="bin\Debug\Template10.Services.pri" />
-    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
-    <None Include="obj\Debug\embed.resfiles" />
-    <None Include="obj\Debug\embed.resfiles.intermediate" />
-    <None Include="obj\Debug\layout.resfiles" />
-    <None Include="obj\Debug\layout.resfiles.intermediate" />
-    <None Include="obj\Debug\pri.resfiles" />
-    <None Include="obj\Debug\pri.resfiles.intermediate" />
-    <None Include="obj\Debug\priconfig.xml.intermediate" />
-    <None Include="obj\Debug\qualifiers.txt.intermediate" />
-    <None Include="obj\Debug\ResourceHandlingTask.state" />
-    <None Include="obj\Debug\resources.resfiles" />
-    <None Include="obj\Debug\resources.resfiles.intermediate" />
-    <None Include="obj\Debug\Template10 %28Services%29.csprojResolveAssemblyReference.cache" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
@@ -166,9 +152,6 @@
     <Compile Include="NetworkAvailableService\INetworkAvailableService.cs" />
     <Compile Include="NetworkAvailableService\NetworkAvailableHelper.cs" />
     <Compile Include="NetworkAvailableService\NetworkAvailableService.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="PrimaryTileService\IPrimaryTileService.cs" />
     <Compile Include="PrimaryTileService\PrimaryTileHelper.cs" />
     <Compile Include="PrimaryTileService\PrimaryTileService.cs" />
@@ -188,24 +171,9 @@
     <Compile Include="WindowService\IWindowService.cs" />
     <Compile Include="WindowService\WindowHelper.cs" />
     <Compile Include="WindowService\WindowService.cs" />
-    <Content Include="bin\Debug\Template10.Services.dll" />
-    <Content Include="bin\Debug\Template10.Services.pdb" />
-    <Content Include="obj\Debug\MultipleQualifiersPerDimensionFound.txt" />
-    <Content Include="obj\Debug\priconfig.xml" />
-    <Content Include="obj\Debug\qualifiers.txt" />
-    <Content Include="obj\Debug\Template10 %28Services%29.csproj.FileListAbsolute.txt" />
-    <Content Include="obj\Debug\Template10.Services.dll" />
-    <Content Include="obj\Debug\Template10.Services.pdb" />
     <Content Include="Properties\Template10.Services.rd.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="bin\ARM\" />
-    <Folder Include="bin\Release\" />
-    <Folder Include="bin\x64\" />
-    <Folder Include="bin\x86\" />
-    <Folder Include="obj\Debug\TempPE\" />
-    <Folder Include="obj\x86\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
