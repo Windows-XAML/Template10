@@ -17,7 +17,7 @@
                 <!--  size  -->
                 <Setter Property="VisualStateNarrowMinWidth" Value="{StaticResource NarrowMinWidth}" />
                 <Setter Property="VisualStateNormalMinWidth" Value="{StaticResource NormalMinWidth}" />
-                <Setter Property="VisualStateWideMinWidth" Value="-1" />
+                <!--<Setter Property="VisualStateWideMinWidth" Value="-1" />-->
                 <!--  style  -->
                 <Setter Property="HamburgerBackground" Value="#FFD13438" />
                 <Setter Property="HamburgerForeground" Value="White" />
@@ -56,7 +56,7 @@
                 <!--  size  -->
                 <Setter Property="VisualStateNarrowMinWidth" Value="{StaticResource NarrowMinWidth}" />
                 <Setter Property="VisualStateNormalMinWidth" Value="{StaticResource NormalMinWidth}" />
-                <Setter Property="VisualStateWideMinWidth" Value="-1" />
+                <!--<Setter Property="VisualStateWideMinWidth" Value="-1" />-->
                 <!--  style  -->
                 <Setter Property="HamburgerBackground" Value="Gainsboro" /> 
                 <!--  cf. #FFD13438 for Dark  -->
