@@ -108,6 +108,7 @@
     <None Include="Blank_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Help.htm" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -128,13 +129,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Template10Library\Template10Library.csproj">
-      <Project>{ac3e4f10-6615-4e16-bb0f-104760c92b95}</Project>
-      <Name>Template10Library</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
     <SDKReference Include="BehaviorsXamlSDKManaged, Version=12.0">
       <Name>Behaviors SDK %28XAML%29</Name>
     </SDKReference>
@@ -143,6 +137,10 @@
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>rd /q/s "$(TargetDir)"
+echo 'manually cleaned during pre-build event command line'</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

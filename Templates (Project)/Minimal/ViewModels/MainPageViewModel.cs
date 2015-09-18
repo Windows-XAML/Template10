@@ -2,11 +2,12 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Template10.Services.NavigationService;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
-namespace Minimal.ViewModels
+namespace Sample.ViewModels
 {
-    public class MainPageViewModel : Minimal.Mvvm.ViewModelBase
+    public class MainPageViewModel : Sample.Mvvm.ViewModelBase
     {
         public MainPageViewModel()
         {

@@ -1,0 +1,76 @@
+<root src="https://raw.githubusercontent.com/Windows-XAML/Template10/master/VisualStudio/menu.xml">
+
+  <version>1.0.0.0</version>
+  <icon>http://bing.com</icon>
+  <text locale="en-us">Command</text>
+
+  <!-- only show when version mismatch -->
+  
+  <template10 id="UPGRADE">
+    <text locale="en-us">Upgrade required</text>
+    <help>http://bing.com</help>
+  </template10>
+
+  <!-- always show (last in list) -->
+
+  <template10 id="HELP">
+    <text locale="en-us">Learn more</text>
+    <help>http://bing.com</help>
+  </template10>
+
+  <!-- all other commands visible only when up to date -->
+  
+  <command>
+    <text locale="en-us">Add MVVM</text>
+
+    <command>
+      <text locale="en-us">MVVM Light</text>
+      <file source="https://raw.githubusercontent.com/Windows-XAML/Template10/master/VisualStudio/Sample.cs" target="$/Mvvm/Sample.cs">
+        <replace find="Project" with="PROJECTNAME" />
+      </file>
+      <file source="https://raw.githubusercontent.com/Windows-XAML/Template10/master/VisualStudio/Sample2.cs" target="$/Mvvm/Sample2.cs">
+        <replace find="ProjectName" with="PROJECTNAME" />
+      </file>
+      <nuget command="Install-Package MvvmLightLibs" />
+      <nuget command="Install-Package Template10 -Pre" />
+      <help>http://bing.com</help>
+    </command>
+
+    <command>
+      <text locale="en-us">MVVM Prism</text>
+      <help>http://bing.com</help>
+    </command>
+
+  </command>
+
+  <command>
+    <text locale="en-us">Add Messaging</text>
+
+    <command>
+      <text locale="en-us">PubSubEvents</text>
+      <help>http://bing.com</help>
+    </command>
+
+    <command>
+      <text locale="en-us">MVVM Light Messenger</text>
+      <help>http://bing.com</help>
+    </command>
+
+  </command>
+
+  <command>
+    <text locale="en-us">Add Injection</text>
+
+    <command>
+      <text locale="en-us">Unity</text>
+      <help>http://bing.com</help>
+    </command>
+
+    <command>
+      <text locale="en-us">Autofac</text>
+      <help>http://bing.com</help>
+    </command>
+
+  </command>
+
+</root>

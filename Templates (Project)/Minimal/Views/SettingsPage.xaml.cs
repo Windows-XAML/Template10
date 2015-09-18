@@ -1,7 +1,7 @@
-﻿using Minimal.ViewModels;
+﻿using Sample.ViewModels;
 using Windows.UI.Xaml.Controls;
 
-namespace Minimal.Views
+namespace Sample.Views
 {
     public sealed partial class SettingsPage : Page
     {
@@ -12,6 +12,6 @@ namespace Minimal.Views
         }
 
         // strongly-typed view models enable x:bind
-        public SettingsPageViewModel ViewModel { get { return this.DataContext as SettingsPageViewModel; } }
+        public SettingsPageViewModel ViewModel => this.DataContext as SettingsPageViewModel;
     }
 }
