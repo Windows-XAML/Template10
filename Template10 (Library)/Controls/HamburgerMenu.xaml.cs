@@ -8,6 +8,7 @@ using Template10.Services.NavigationService;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 
@@ -229,7 +230,7 @@ namespace Template10.Controls
                 foreach (var button in _navButtons)
                 {
                     button.Key.IsChecked = false;
-                    button.Key.IsEnabled = true;
+                    button.Key.IsEnabled = button.Value.IsEnabled;
                 }
 
                 // don't continue if none 
@@ -424,12 +425,64 @@ namespace Template10.Controls
     }
 
     [ContentProperty(Name = nameof(Content))]
-    public class NavigationButtonInfo
+    public class NavigationButtonInfo : DependencyObject
     {
         public Type PageType { get; set; }
         public object PageParameter { get; set; }
         public bool ClearHistory { get; set; } = false;
-        public UIElement Content { get; set; }
+
+        public Visibility Visibility
+        {
+            get { return (Visibility)GetValue(VisibilityProperty); }
+            set { SetValue(VisibilityProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Visibility.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty VisibilityProperty =
+            DependencyProperty.Register("Visibility", typeof(Visibility), typeof(NavigationButtonInfo), new PropertyMetadata(Visibility.Visible));
+
+
+
+        public bool IsEnabled
+        {
+            get { return (bool)GetValue(IsEnabledProperty); }
+            set { SetValue(IsEnabledProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for IsEnabled.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IsEnabledProperty =
+            DependencyProperty.Register("IsEnabled", typeof(bool), typeof(NavigationButtonInfo), new PropertyMetadata(true));
+
+
+
+        public UIElement Content
+        {
+            get { return (UIElement)GetValue(ContentProperty); }
+            set { SetValue(ContentProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Content.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ContentProperty =
+            DependencyProperty.Register("Content", typeof(UIElement), typeof(NavigationButtonInfo), new PropertyMetadata(null, ContentChangedCallback));
+
+        static void ContentChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            NavigationButtonInfo navButton = (NavigationButtonInfo)d;
+            UIElement oldValue = e.OldValue as UIElement;
+            UIElement newValue = e.NewValue as UIElement;
+            if (oldValue != null)
+                BindingOperations.SetBinding(oldValue, UIElement.VisibilityProperty, null);
+            if (newValue != null)
+                BindingOperations.SetBinding(newValue, UIElement.VisibilityProperty, new Binding() { Source = navButton, Path = new PropertyPath("Visibility") });
+
+            Control oldControl = e.OldValue as Control;
+            Control newControl = e.NewValue as Control;
+            if (oldControl != null)
+                BindingOperations.SetBinding(oldControl, Control.IsEnabledProperty, null);
+            if (newControl != null)
+                BindingOperations.SetBinding(newControl, Control.IsEnabledProperty, new Binding() { Source = navButton, Path = new PropertyPath("IsEnabled") });
+        }
+
         public override string ToString()
         {
             return string.Format("{0}({1})", PageType, PageParameter);
