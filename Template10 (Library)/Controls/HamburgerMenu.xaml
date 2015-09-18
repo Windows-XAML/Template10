@@ -188,6 +188,7 @@
                                                ElementName=ThisPage}"
                              CommandParameter="{Binding}"
                              GroupName="Nav"
+                             Visibility="{Binding Visibility}"
                              Loaded="NavButton_Loaded"
                              Tag="{Binding Content}"
                              Tapped="NavButton_Tapped">
@@ -256,7 +257,7 @@
         </VisualStateManager.VisualStateGroups>
 
         <ContentControl x:Name="contentControl" Content="{Binding HeaderContent, ElementName=ThisPage}">
-
+            
             <Interactivity:Interaction.Behaviors>
                 <Core:DataTriggerBehavior Binding="{Binding Visibility, ElementName=HamburgerButton}" Value="Visible">
                     <Core:ChangePropertyAction PropertyName="Margin" TargetObject="{Binding ElementName=PaneContent}">
