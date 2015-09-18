@@ -252,12 +252,10 @@
                         <Setter Target="ShellSplitView.IsPaneOpen" Value="True" />
                     </VisualState.Setters>
                 </VisualState>
-              
+
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-
-        <ContentControl x:Name="contentControl" Content="{Binding HeaderContent, ElementName=ThisPage}">
-            
+        <ContentControl Margin="48,0,0,0" Height="48" Content="{Binding HeaderContent, ElementName=ThisPage}"  HorizontalContentAlignment="Stretch" VerticalAlignment="Top">
             <Interactivity:Interaction.Behaviors>
                 <Core:DataTriggerBehavior Binding="{Binding Visibility, ElementName=HamburgerButton}" Value="Visible">
                     <Core:ChangePropertyAction PropertyName="Margin" TargetObject="{Binding ElementName=PaneContent}">
@@ -270,16 +268,12 @@
                     <Core:ChangePropertyAction PropertyName="Margin" TargetObject="{Binding ElementName=PaneContent}" />
                 </Core:DataTriggerBehavior>
             </Interactivity:Interaction.Behaviors>
-
         </ContentControl>
-
         <SplitView x:Name="ShellSplitView"
-                   Grid.Column="0"
-                   Grid.ColumnSpan="2"
+                   Grid.Column="0" 
                    DisplayMode="Inline" 
                    OpenPaneLength="220"
                    PaneBackground="Transparent">
-
             <SplitView.Pane>
                 <Grid x:Name="PaneContent"
                       Background="{Binding NavAreaBackground,
@@ -386,7 +380,7 @@
                 </Grid>
             </SplitView.Pane>
         </SplitView>
-
+        
         <Button x:Name="HamburgerButton"
                 Grid.Row="0" Command="{x:Bind HamburgerCommand}"
                 Style="{StaticResource HamburgerButtonStyle}">
