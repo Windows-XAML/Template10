@@ -1,7 +1,16 @@
-﻿namespace Template10.Services.WindowService
+﻿using System;
+using System.Threading.Tasks;
+using Windows.UI.ViewManagement;
+
+namespace Template10.Services.WindowService
 {
-    public class WindowService
+    public class WindowService : IWindowService
     {
-        WindowHelper _Helper = new WindowHelper();
+        WindowHelper _helper = new WindowHelper();
+
+        public Task ShowAsync<T>(object param = null, ViewSizePreference size = ViewSizePreference.UseHalf)
+        {
+            return _helper.ShowAsync<T>(param, size);
+        }
     }
 }

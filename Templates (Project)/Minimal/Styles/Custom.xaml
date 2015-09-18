@@ -1,53 +1,94 @@
-﻿<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-    xmlns:controls="using:Template10.Controls"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="using:Template10.Controls">
 
     <x:Double x:Key="NarrowMinWidth">0</x:Double>
     <x:Double x:Key="NormalMinWidth">521</x:Double>
 
     <ResourceDictionary.ThemeDictionaries>
 
-        <!-- RequestedTheme=Dark -->
+        <!--  RequestedTheme=Dark  -->
         <ResourceDictionary x:Key="Default">
 
             <SolidColorBrush x:Key="ExtendedSplashBackground" Color="Black" />
             <SolidColorBrush x:Key="ExtendedSplashForeground" Color="White" />
-            
-            <!-- TODO: if you use the dark theme, add your styles here -->
-            
-        </ResourceDictionary>
-        
-        <!-- RequestedTheme=Light -->
-        <ResourceDictionary x:Key="Light">
 
-            <SolidColorBrush x:Key="ExtendedSplashBackground" Color="White" />
-            <SolidColorBrush x:Key="ExtendedSplashForeground" Color="DimGray" />
-            
             <Style TargetType="controls:HamburgerMenu">
-                <!-- size -->
+                <!--  size  -->
                 <Setter Property="VisualStateNarrowMinWidth" Value="{StaticResource NarrowMinWidth}" />
                 <Setter Property="VisualStateNormalMinWidth" Value="{StaticResource NormalMinWidth}" />
-                <!-- style-->
+                <!--<Setter Property="VisualStateWideMinWidth" Value="-1" />-->
+                <!--  style  -->
                 <Setter Property="HamburgerBackground" Value="#FFD13438" />
                 <Setter Property="HamburgerForeground" Value="White" />
                 <Setter Property="NavAreaBackground" Value="#FF2B2B2B" />
                 <Setter Property="NavButtonBackground" Value="#FFD13438" />
                 <Setter Property="NavButtonForeground" Value="White" />
                 <Setter Property="SecondarySeparator" Value="Gray" />
+
+                <!--
+                    Previous color [#FFD13438 + Black @ 0.4 opacity] changed to an equivalent #FF7D1F22
+                    so that Dark and Light themes can be defined with ease of a single property NavButtonCheckedOverlayBackground.
+                    The [+ Black @ 0.4 opacity] for Dark just complicates matters when it comes to doing for Light.
+                -->
+                <Setter Property="NavButtonCheckedOverlayBackground" Value="#FF7D1F22" />
+                <Setter Property="NavButtonHoverOverlayBackground" Value="#FF434343" />
             </Style>
 
             <Style TargetType="controls:PageHeader">
-                <!-- size -->
+                <!--  size  -->
                 <Setter Property="VisualStateNarrowMinWidth" Value="{StaticResource NarrowMinWidth}" />
                 <Setter Property="VisualStateNormalMinWidth" Value="{StaticResource NormalMinWidth}" />
-                <!-- style -->
+                <!--  style  -->
                 <Setter Property="HeaderBackground" Value="Gainsboro" />
                 <Setter Property="HeaderForeground" Value="#FF2B2B2B" />
             </Style>
-            
+
         </ResourceDictionary>
-        
+
+        <!--  RequestedTheme=Light  -->
+        <ResourceDictionary x:Key="Light">
+
+            <SolidColorBrush x:Key="ExtendedSplashBackground" Color="White" />
+            <SolidColorBrush x:Key="ExtendedSplashForeground" Color="DimGray" />
+
+            <Style TargetType="controls:HamburgerMenu">
+                <!--  size  -->
+                <Setter Property="VisualStateNarrowMinWidth" Value="{StaticResource NarrowMinWidth}" />
+                <Setter Property="VisualStateNormalMinWidth" Value="{StaticResource NormalMinWidth}" />
+                <!--<Setter Property="VisualStateWideMinWidth" Value="-1" />-->
+                <!--  style  -->
+                <Setter Property="HamburgerBackground" Value="Gainsboro" /> 
+                <!--  cf. #FFD13438 for Dark  -->
+                <Setter Property="HamburgerForeground" Value="Black" /> 
+                <!--  cf. White for Dark  -->
+                <Setter Property="NavAreaBackground" Value="#FFF2F2F2" /> 
+                <!--  cf. #FF2B2B2B for Dark  -->
+                <Setter Property="NavButtonBackground" Value="PowderBlue" />  
+                <!--  cf. #FFD13438 for Dark  -->
+
+                <Setter Property="NavButtonForeground" Value="Black" /> 
+                <!--  cf.  White for Dark  -->
+                <Setter Property="SecondarySeparator" Value="Gray" />
+
+                <!--  PowderBlue colorfor Light theme picked as a demo; there may be a nicer Light color ;-)  -->
+                <Setter Property="NavButtonCheckedOverlayBackground" Value="PowderBlue" />
+                <Setter Property="NavButtonHoverOverlayBackground" Value="#FFCCE3F5" />
+
+            </Style>
+
+            <Style TargetType="controls:PageHeader">
+                <!--  size  -->
+                <Setter Property="VisualStateNarrowMinWidth" Value="{StaticResource NarrowMinWidth}" />
+                <Setter Property="VisualStateNormalMinWidth" Value="{StaticResource NormalMinWidth}" />
+                <!--  style  -->
+                <Setter Property="HeaderBackground" Value="WhiteSmoke" /> 
+                <!--  cf. Gainsboro for Dark  -->
+                <Setter Property="HeaderForeground" Value="#FF2B2B2B" />
+            </Style>
+
+        </ResourceDictionary>
+
     </ResourceDictionary.ThemeDictionaries>
-    
+
 </ResourceDictionary>

@@ -14,5 +14,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("http://jerrynixon.com")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
 [assembly: ComVisible(false)]

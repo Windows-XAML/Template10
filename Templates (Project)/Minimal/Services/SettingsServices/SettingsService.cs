@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Sample.Services.SettingsServices
 {
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SettingsService
-    public class SettingsService
+    public class SettingsService : ISettingsService
     {
         public static SettingsService Instance { get; private set; }
 

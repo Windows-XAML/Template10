@@ -8,6 +8,7 @@ using Template10.Services.NavigationService;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 
@@ -22,14 +23,14 @@ namespace Template10.Controls
             this.InitializeComponent();
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
             {
-                return;
+                // nothing
             }
-            new KeyboardService().AfterWindowZGesture = () => { HamburgerCommand.Execute(null); };
-
-            //workaround to avoid that, if the developer decides not to have primary or secondary buttons, the design time commands are displayed also at runtime
-            PrimaryButtons = new ObservableCollection<NavigationButtonInfo>();
-            SecondaryButtons = new ObservableCollection<NavigationButtonInfo>();
-
+            else
+            {
+                PrimaryButtons = new ObservableCollection<NavigationButtonInfo>();
+                SecondaryButtons = new ObservableCollection<NavigationButtonInfo>();
+                new KeyboardService().AfterWindowZGesture = () => { HamburgerCommand.Execute(null); };
+            }
         }
 
         void UpdateButtons(NavigatedEventArgs e) { UpdateButtons(e.PageType); }
@@ -80,6 +81,15 @@ namespace Template10.Controls
         public static readonly DependencyProperty VisualStateNormalMinWidthProperty =
             DependencyProperty.Register(nameof(VisualStateNormalMinWidth), typeof(double),
                 typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => { (d as HamburgerMenu).VisualStateNormalMinWidth = (double)e.NewValue; }));
+
+        public double VisualStateWideMinWidth
+        {
+            get { return VisualStateWideTrigger.MinWindowWidth; }
+            set { SetValue(VisualStateWideMinWidthProperty, VisualStateWideTrigger.MinWindowWidth = value); }
+        }
+        public static readonly DependencyProperty VisualStateWideMinWidthProperty =
+            DependencyProperty.Register(nameof(VisualStateWideMinWidth), typeof(double),
+                typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => { (d as HamburgerMenu).VisualStateWideMinWidth = (double)e.NewValue; }));
 
         #endregion
 
@@ -165,6 +175,37 @@ namespace Template10.Controls
 
         #endregion
 
+        #region added by dg2k for HamburgerMenu enhancement
+
+        public SolidColorBrush NavButtonCheckedOverlayBackground
+        {
+            get { return NavButtonCheckedOverlayBackgroundBrush; }
+            set
+            {
+                SetValue(NavButtonCheckedOverlayBackgroundProperty, NavButtonCheckedOverlayBackgroundBrush = value);
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NavButtonCheckedOverlayBackground)));
+            }
+        }
+        public static readonly DependencyProperty NavButtonCheckedOverlayBackgroundProperty =
+              DependencyProperty.Register(nameof(NavButtonCheckedOverlayBackground), typeof(SolidColorBrush),
+                  typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => { (d as HamburgerMenu).NavButtonCheckedOverlayBackground = (SolidColorBrush)e.NewValue; }));
+
+
+        public SolidColorBrush NavButtonHoverOverlayBackground
+        {
+            get { return NavButtonHoverOverlayBackgroundBrush; }
+            set
+            {
+                SetValue(NavButtonHoverOverlayBackgroundProperty, NavButtonHoverOverlayBackgroundBrush = value);
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NavButtonHoverOverlayBackground)));
+            }
+        }
+        public static readonly DependencyProperty NavButtonHoverOverlayBackgroundProperty =
+              DependencyProperty.Register(nameof(NavButtonHoverOverlayBackground), typeof(SolidColorBrush),
+                  typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => { (d as HamburgerMenu).NavButtonHoverOverlayBackground = (SolidColorBrush)e.NewValue; }));
+
+        #endregion
+
         public NavigationButtonInfo Selected
         {
             get
@@ -189,7 +230,7 @@ namespace Template10.Controls
                 foreach (var button in _navButtons)
                 {
                     button.Key.IsChecked = false;
-                    button.Key.IsEnabled = true;
+                    button.Key.IsEnabled = button.Value.IsEnabled;
                 }
 
                 // don't continue if none 
@@ -286,14 +327,9 @@ namespace Template10.Controls
                 else
                 {
                     // display content without splitview (splash scenario)
-                    Action revert = () =>
-                    {
-                        RootGrid.Children.Remove(NavigationService.Frame);
-                        ShellSplitView.Content = NavigationService.Frame;
-                    };
-                    NavigationService.AfterRestoreSavedNavigation += (s, e) => revert();
-                    NavigationService.FrameFacade.Navigated += (s, e) => revert();
-                    RootGrid.Children.Add(NavigationService.Frame);
+                    NavigationService.AfterRestoreSavedNavigation += (s, e) => IsFullScreen = false;
+                    NavigationService.FrameFacade.Navigated += (s, e) => IsFullScreen = false;
+                    IsFullScreen = true;
                 }
                 NavigationService.FrameFacade.Navigated += (s, e) => UpdateButtons(e);
                 NavigationService.AfterRestoreSavedNavigation += (s, e) => UpdateButtons();
@@ -304,6 +340,35 @@ namespace Template10.Controls
                 });
             }
         }
+
+        public bool IsFullScreen
+        {
+            get { return (bool)GetValue(IsFullScreenProperty); }
+            set { SetValue(IsFullScreenProperty, value); }
+        }
+        public static readonly DependencyProperty IsFullScreenProperty =
+            DependencyProperty.Register(nameof(IsFullScreen), typeof(bool),
+                typeof(HamburgerMenu), new PropertyMetadata(false, (d, e) =>
+                {
+                    var menu = d as HamburgerMenu;
+                    if ((bool)e.NewValue)
+                    {
+                        if (menu.RootGrid.Children.Contains(menu.NavigationService.Frame))
+                            return;
+                        menu.NavigationService.Frame.SetValue(Grid.ColumnProperty, 0);
+                        menu.NavigationService.Frame.SetValue(Grid.ColumnSpanProperty, int.MaxValue);
+                        menu.NavigationService.Frame.SetValue(Grid.RowProperty, 0);
+                        menu.NavigationService.Frame.SetValue(Grid.RowSpanProperty, int.MaxValue);
+                        menu.RootGrid.Children.Add(menu.NavigationService.Frame);
+                    }
+                    else
+                    {
+                        if (menu.RootGrid.Children.Contains(menu.NavigationService.Frame))
+                            menu.RootGrid.Children.Remove(menu.NavigationService.Frame);
+                        menu.ShellSplitView.Content = menu.NavigationService.Frame;
+                    }
+                }));
+
 
         public ObservableCollection<NavigationButtonInfo> SecondaryButtons
         {
@@ -331,20 +396,14 @@ namespace Template10.Controls
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public ObservableCollection<Control> HeaderItems
+        public UIElement HeaderContent
         {
-            get
-            {
-                var headerItems = (ObservableCollection<Control>)base.GetValue(HeaderItemsProperty);
-                if (headerItems == null)
-                    base.SetValue(HeaderItemsProperty, headerItems = new ObservableCollection<Control>());
-                return headerItems;
-            }
-            set { SetValue(HeaderItemsProperty, value); }
+            get { return (UIElement)GetValue(HeaderContentProperty); }
+            set { SetValue(HeaderContentProperty, value); }
         }
-        public static readonly DependencyProperty HeaderItemsProperty =
-            DependencyProperty.Register("HeaderItems", typeof(ObservableCollection<Control>),
-                typeof(HamburgerMenu), new PropertyMetadata(null));
+        public static readonly DependencyProperty HeaderContentProperty =
+            DependencyProperty.Register(nameof(HeaderContent), typeof(UIElement),
+                typeof(HamburgerMenu), null);
 
         Dictionary<RadioButton, NavigationButtonInfo> _navButtons = new Dictionary<RadioButton, NavigationButtonInfo>();
         void NavButton_Loaded(object sender, RoutedEventArgs e)
@@ -366,12 +425,64 @@ namespace Template10.Controls
     }
 
     [ContentProperty(Name = nameof(Content))]
-    public class NavigationButtonInfo
+    public class NavigationButtonInfo : DependencyObject
     {
         public Type PageType { get; set; }
         public object PageParameter { get; set; }
         public bool ClearHistory { get; set; } = false;
-        public UIElement Content { get; set; }
+
+        public Visibility Visibility
+        {
+            get { return (Visibility)GetValue(VisibilityProperty); }
+            set { SetValue(VisibilityProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Visibility.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty VisibilityProperty =
+            DependencyProperty.Register("Visibility", typeof(Visibility), typeof(NavigationButtonInfo), new PropertyMetadata(Visibility.Visible));
+
+
+
+        public bool IsEnabled
+        {
+            get { return (bool)GetValue(IsEnabledProperty); }
+            set { SetValue(IsEnabledProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for IsEnabled.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IsEnabledProperty =
+            DependencyProperty.Register("IsEnabled", typeof(bool), typeof(NavigationButtonInfo), new PropertyMetadata(true));
+
+
+
+        public UIElement Content
+        {
+            get { return (UIElement)GetValue(ContentProperty); }
+            set { SetValue(ContentProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Content.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ContentProperty =
+            DependencyProperty.Register("Content", typeof(UIElement), typeof(NavigationButtonInfo), new PropertyMetadata(null, ContentChangedCallback));
+
+        static void ContentChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            NavigationButtonInfo navButton = (NavigationButtonInfo)d;
+            UIElement oldValue = e.OldValue as UIElement;
+            UIElement newValue = e.NewValue as UIElement;
+            if (oldValue != null)
+                BindingOperations.SetBinding(oldValue, UIElement.VisibilityProperty, null);
+            if (newValue != null)
+                BindingOperations.SetBinding(newValue, UIElement.VisibilityProperty, new Binding() { Source = navButton, Path = new PropertyPath("Visibility") });
+
+            Control oldControl = e.OldValue as Control;
+            Control newControl = e.NewValue as Control;
+            if (oldControl != null)
+                BindingOperations.SetBinding(oldControl, Control.IsEnabledProperty, null);
+            if (newControl != null)
+                BindingOperations.SetBinding(newControl, Control.IsEnabledProperty, new Binding() { Source = navButton, Path = new PropertyPath("IsEnabled") });
+        }
+
         public override string ToString()
         {
             return string.Format("{0}({1})", PageType, PageParameter);

@@ -17,15 +17,15 @@ namespace Template10.Behaviors
         public void Attach(DependencyObject associatedObject)
         {
             AssociatedObject = associatedObject;
-            AssociatedTextBox.KeyDown += AssociatedTextBox_KeyDown;
+            AssociatedTextBox.KeyUp += AssociatedTextBox_KeyUp;
         }
 
         public void Detach()
         {
-            AssociatedTextBox.KeyDown -= AssociatedTextBox_KeyDown;
+            AssociatedTextBox.KeyUp -= AssociatedTextBox_KeyUp;
         }
 
-        private void AssociatedTextBox_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
+        private void AssociatedTextBox_KeyUp(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
         {
             if (e.Key == Windows.System.VirtualKey.Enter)
             {

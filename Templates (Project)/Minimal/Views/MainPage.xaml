@@ -54,7 +54,7 @@
         <!--#region content-->
 
         <RelativePanel Grid.Row="1" Padding="12,8,0,0">
-            <TextBox Header="Parameter to pass to this page" Width="200" Margin="0" 
+            <TextBox Header="Parameter to pass to the next page" Width="200" Margin="0" 
                      Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="ParameterTextBox" >
                 <Interactivity:Interaction.Behaviors>
                     <Behaviors:TextBoxEnterKeyBehavior>

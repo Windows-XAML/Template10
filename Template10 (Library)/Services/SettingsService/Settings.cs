@@ -4,27 +4,27 @@ using Windows.Storage;
 namespace Template10.Services.SettingsService
 {
 	// lazy initialization: https://github.com/Windows-XAML/Template10/pull/50
-	public class Settings : PropertyStore
+	public class SettingsService : PropertyStore
 	{
-		private static Settings _local;
-		public static Settings Local
+		private static SettingsService _local;
+		public static SettingsService Local
 		{
 			get
 			{
 				if (_local == null)
-					_local = new Settings(ApplicationData.Current.LocalSettings.Values);
+					_local = new SettingsService(ApplicationData.Current.LocalSettings.Values);
 
 				return _local;
 			}
 		}
 
-		private static Settings _roaming;
-		public static Settings Roaming
+		private static SettingsService _roaming;
+		public static SettingsService Roaming
 		{
 			get
 			{
 				if(_roaming == null)
-					_roaming = new Settings(ApplicationData.Current.RoamingSettings.Values);
+					_roaming = new SettingsService(ApplicationData.Current.RoamingSettings.Values);
 
 				return _roaming;
 			}
@@ -32,12 +32,13 @@ namespace Template10.Services.SettingsService
 
 		private static readonly IPropertyMapping Mapping;
 
-		static Settings()
+		static SettingsService()
 		{
+            // static constructor
 			Mapping = new JsonMapping();
 		}
 
-		private Settings(IPropertySet values) : base(values, Mapping)
-		{ }
+		private SettingsService(IPropertySet values) : base(values, Mapping)
+		{ /* private constructor */ }
 	}
 }
