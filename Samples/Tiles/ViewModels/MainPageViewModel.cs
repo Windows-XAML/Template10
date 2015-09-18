@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+using Template10.Mvvm;
 
 namespace Sample.ViewModels
 {
@@ -46,11 +47,27 @@ namespace Sample.ViewModels
         }
 
         private string _Value = string.Empty;
-        public string Value { get { return _Value; } set { Set(ref _Value, value); } }
-
-        public void GotoDetailsPage()
+        public string Value
         {
-            this.NavigationService.Navigate(typeof(Views.DetailPage), this.Value);
+            get { return _Value; }
+            set
+            {
+                if (Set(ref _Value, value))
+                    GotoDetailsPageCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        private DelegateCommand gotoDetailsPageCommand;
+        public DelegateCommand GotoDetailsPageCommand
+        {
+            get
+            {
+                return gotoDetailsPageCommand ?? (gotoDetailsPageCommand = new DelegateCommand(() =>
+                {
+                    NavigationService.Navigate(typeof(Views.DetailPage), Value);
+                },
+                    () => !string.IsNullOrEmpty(_Value)));
+            }
         }
     }
 }
