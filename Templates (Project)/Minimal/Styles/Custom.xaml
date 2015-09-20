@@ -54,7 +54,8 @@
             <Color x:Key="TitleBarButtonHoverBackground">#Green</Color>
             <Color x:Key="TitleBarButtonHoverForeground">White</Color>
             
-            <Color x:Key="TitleBarButtonPressedBackground" A="255" R="0" G="120" B="0" />
+            <!--<Color x:Key="TitleBarButtonPressedBackground" A="255" R="0" G="120" B="0" />-->
+            <Color x:Key="TitleBarButtonPressedBackground">#FF007800</Color>
             <Color x:Key="TitleBarButtonPressedForeground">White</Color>
             
             <Color x:Key="TitleBarButtonInactiveBackground">DarkGray</Color>
