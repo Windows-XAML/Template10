@@ -30,23 +30,27 @@ if exist "%NUPKG%" (
 :copy dll
 xcopy.exe "%TARGETDIR%*.dll" "%NUPKG%\lib\" /y >null
 
+:copy library
+echo TEST
+echo xcopy.exe "%TARGETDIR%%TARGETNAME%" "%NUPKG%\lib\%TARGETNAME%\" /s/e/y 
+xcopy.exe "%TARGETDIR%%TARGETNAME%" "%NUPKG%\lib\%TARGETNAME%\" /s/e/y 
+
 :copy xr.xml
 xcopy.exe "%TARGETDIR%%TARGETNAME%\%TARGETNAME%.xr.xml" "%NUPKG%\lib\%TARGETNAME%\" /y  >null
 
-:copy pri
-:https://msdn.microsoft.com/en-us/library/windows/apps/jj552947.aspx
-xcopy.exe "%TARGETDIR%%TARGETNAME%.pri" "%NUPKG%\lib\" /y  >null
-
 :copy rd.xml
-xcopy.exe "%PROJECTDIR%Properties\%TARGETNAME%.rd.xml" "%NUPKG%\lib\%TARGETNAME%\Properties\" /y  >null
+:xcopy.exe "%PROJECTDIR%Properties\%TARGETNAME%.rd.xml" "%NUPKG%\lib\" /y  >null
+
+:copy pri
+:xcopy.exe "%TARGETDIR%%TARGETNAME%.pri" "%NUPKG%\lib\" /y  >null
 
 :copy xbf
-xcopy.exe "%TARGETDIR%%TARGETNAME%\Controls" "%NUPKG%\lib\%TARGETNAME%\Controls\" /y  >null
-xcopy.exe "%TARGETDIR%%TARGETNAME%\Styles" "%NUPKG%\lib\%TARGETNAME%\Styles\" /y  >null
+:xcopy.exe "%TARGETDIR%%TARGETNAME%\Controls" "%NUPKG%\lib\%TARGETNAME%\Controls\" /y  >null
+:xcopy.exe "%TARGETDIR%%TARGETNAME%\Styles" "%NUPKG%\lib\%TARGETNAME%\Styles\" /y  >null
 
 :copy xaml
-xcopy.exe "%PROJECTDIR%Controls\*.xaml" "%NUPKG%\lib\%TARGETNAME%\Controls\" /y  >null
-xcopy.exe "%PROJECTDIR%Styles\*.xaml" "%NUPKG%\lib\%TARGETNAME%\Styles\" /y  >null
+:xcopy.exe "%PROJECTDIR%Controls\*.xaml" "%NUPKG%\lib\%TARGETNAME%\Controls\" /y  >null
+:xcopy.exe "%PROJECTDIR%Styles\*.xaml" "%NUPKG%\lib\%TARGETNAME%\Styles\" /y  >null
 
 :copy msbuild
 xcopy.exe "%PROJECTDIR%Nuget\*.targets" "%NUPKG%\build\" /y  >null
