@@ -43,6 +43,26 @@
                 <Setter Property="HeaderBackground" Value="Gainsboro" />
                 <Setter Property="HeaderForeground" Value="#FF2B2B2B" />
             </Style>
+            
+            <!-- TitleBar colors (colors defined picked as a demo; these are the same as in the Excel app) -->
+            <Color x:Key="TitleBarBackground">DarkGreen</Color>
+            <Color x:Key="TitleBarForeground">White</Color>
+            
+            <Color x:Key="TitleBarButtonBackground">DarkGreen</Color>
+            <Color x:Key="TitleBarButtonForeground">White</Color>
+            
+            <Color x:Key="TitleBarButtonHoverBackground">#Green</Color>
+            <Color x:Key="TitleBarButtonHoverForeground">White</Color>
+            
+            <!--<Color x:Key="TitleBarButtonPressedBackground" A="255" R="0" G="120" B="0" />-->
+            <Color x:Key="TitleBarButtonPressedBackground">#FF007800</Color>
+            <Color x:Key="TitleBarButtonPressedForeground">White</Color>
+            
+            <Color x:Key="TitleBarButtonInactiveBackground">DarkGray</Color>
+            <Color x:Key="TitleBarButtonInactiveForeground">Gray</Color>
+            
+            <Color x:Key="TitleBarInactiveBackground">DarkGreen</Color>
+            <Color x:Key="TitleBarInactiveForeground">Gray</Color>
 
         </ResourceDictionary>
 
@@ -86,6 +106,20 @@
                 <!--  cf. Gainsboro for Dark  -->
                 <Setter Property="HeaderForeground" Value="#FF2B2B2B" />
             </Style>
+            
+            <!-- TitleBar colors (colors defined picked as a demo; these are the same as in the Groove Music app) -->
+            <Color x:Key="TitleBarBackground">#FFE6E6E6</Color>
+            <Color x:Key="TitleBarForeground">Black</Color>
+            <Color x:Key="TitleBarButtonBackground">#FFE6E6E6</Color>
+            <Color x:Key="TitleBarButtonForeground">Black</Color>
+            <Color x:Key="TitleBarButtonHoverBackground">#FFCECECE</Color>
+            <Color x:Key="TitleBarButtonHoverForeground">Black</Color>
+            <Color x:Key="TitleBarButtonPressedBackground">#FFB8B8B8</Color>
+            <Color x:Key="TitleBarButtonPressedForeground">Black</Color>
+            <Color x:Key="TitleBarButtonInactiveBackground">#FFE6E6E6</Color>
+            <Color x:Key="TitleBarButtonInactiveForeground">#FF8C8C8C</Color>
+            <Color x:Key="TitleBarInactiveBackground">#FFE6E6E6</Color>
+            <Color x:Key="TitleBarInactiveForeground">#FF8C8C8C</Color>
 
         </ResourceDictionary>
 
