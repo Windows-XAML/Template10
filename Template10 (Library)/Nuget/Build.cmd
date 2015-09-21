@@ -5,11 +5,17 @@ set TARGETDIR=%~1
 set TARGETNAME=%~2
 set PROJECTDIR=%~3
 set NUPKG=%TARGETDIR%nupkg
-set CACHE="C:\Users\jerry\.nuget\packages\Template10\"
+if "%NuGetCachePath%"=="" (  
+	set CACHE="%USERPROFILE%\.nuget\packages\Template10\"  
+) else (  
+	set CACHE="%NuGetCachePath%\Template10\"  
+)  
+
 
 :clear nuget cache
 if exist %CACHE% (
 	echo OK Nuget cache will be cleared: %CACHE%
+	rmdir %CACHE% /S/Q 
 ) else (
 	echo OK No nuget cache to clear: %CACHE%
 )
@@ -25,7 +31,7 @@ if exist "%NUPKG%" (
 xcopy.exe "%TARGETDIR%*.dll" "%NUPKG%\lib\" /y >null
 
 :copy xr.xml
-xcopy.exe "%TARGETDIR%%TARGETNAME%.xr.xml" "%NUPKG%\lib\%TARGETNAME%\" /y  >null
+xcopy.exe "%TARGETDIR%%TARGETNAME%\%TARGETNAME%.xr.xml" "%NUPKG%\lib\%TARGETNAME%\" /y  >null
 
 :copy pri
 :https://msdn.microsoft.com/en-us/library/windows/apps/jj552947.aspx
@@ -35,8 +41,8 @@ xcopy.exe "%TARGETDIR%%TARGETNAME%.pri" "%NUPKG%\lib\" /y  >null
 xcopy.exe "%PROJECTDIR%Properties\%TARGETNAME%.rd.xml" "%NUPKG%\lib\%TARGETNAME%\Properties\" /y  >null
 
 :copy xbf
-xcopy.exe "%TARGETDIR%Controls" "%NUPKG%\lib\%TARGETNAME%\Controls\" /y  >null
-xcopy.exe "%TARGETDIR%Styles" "%NUPKG%\lib\%TARGETNAME%\Styles\" /y  >null
+xcopy.exe "%TARGETDIR%%TARGETNAME%\Controls" "%NUPKG%\lib\%TARGETNAME%\Controls\" /y  >null
+xcopy.exe "%TARGETDIR%%TARGETNAME%\Styles" "%NUPKG%\lib\%TARGETNAME%\Styles\" /y  >null
 
 :copy xaml
 xcopy.exe "%PROJECTDIR%Controls\*.xaml" "%NUPKG%\lib\%TARGETNAME%\Controls\" /y  >null
@@ -52,7 +58,7 @@ xcopy.exe "%PROJECTDIR%Nuget\init.ps1" "%NUPKG%\Tools\" /y  >null
 xcopy.exe "%PROJECTDIR%nuget\%TARGETNAME%.nuspec" "%NUPKG%" /y   >null
 
 :execute pack
-"%PROJECTDIR%nuget\NuGet.exe" pack "%NUPKG%\%TARGETNAME%.nuspec" -Build -Verbosity normal -OutputDirectory "%NUPKG%" -NonInteractive 
+"%PROJECTDIR%nuget\NuGet.exe" pack "%NUPKG%\%TARGETNAME%.nuspec" -Build -Verbosity normal -OutputDirectory "%NUPKG%" -NonInteractive -Symbols
 
 :copy nupkg
 xcopy.exe "%NUPKG%\*.nupkg" c:\nuget-local\ /y  >null

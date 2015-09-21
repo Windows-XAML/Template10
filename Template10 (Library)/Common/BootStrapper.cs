@@ -68,7 +68,7 @@ namespace Template10.Common
         }
 
         /// <summary>
-        /// The SplashFactory is a Func<> that returns an instantiated Splash view.
+        /// The SplashFactory is a Func that returns an instantiated Splash view.
         /// Template 10 will automatically inject this visual before loading the app.
         /// </summary>
         protected Func<SplashScreen, UserControl> SplashFactory { get; set; }
