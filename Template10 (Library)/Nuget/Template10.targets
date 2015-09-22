@@ -4,7 +4,7 @@
   <PropertyGroup>
     <SourcePath>$(MSBuildThisFileDirectory)..\..\lib\uap10.0</SourcePath>
     <ObjPath>$(TargetDir.Replace("\bin\", "\obj\"))</ObjPath>
-</PropertyGroup>
+  </PropertyGroup>
 
   <Target Name="Template10" BeforeTargets="Compile">
 
@@ -14,9 +14,12 @@
 
     <!-- test -->
     <Error Text="[SOURCE] $(SourcePath)\Template10Library does not exist." Condition="!Exists('$(SourcePath)\Template10Library')" />
-    
-    <Message Importance="high" Text='xcopy "$(SourcePath)" "$(ObjPath)" /e/y >>null' />
-    <Exec Command='xcopy "$(SourcePath)" "$(ObjPath)" /e/y >>null' />
+
+    <!-- alert -->
+    <Message Importance="high" Text='xcopy "$(SourcePath)" "$(ObjPath)" /e/s/y >>null' />
+
+    <!-- exec -->
+    <Exec Command='xcopy "$(SourcePath)" "$(ObjPath)" /e/s/y >>null' />
 
     <!-- test -->
     <Error Text="[TARGET] $(ObjPath)Template10Library does not exist." Condition="!Exists('$(ObjPath)Template10Library')" />

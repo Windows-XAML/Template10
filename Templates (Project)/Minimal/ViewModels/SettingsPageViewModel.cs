@@ -1,4 +1,5 @@
 ﻿using System;
+using Windows.UI.Xaml;
 
 namespace Sample.ViewModels
 {
@@ -24,10 +25,18 @@ namespace Sample.ViewModels
             set { _settings.UseShellBackButton = value; base.RaisePropertyChanged(); }
         }
 
+        public bool UseLightThemeButton
+        {
+            get { return _settings.AppTheme.Equals(ApplicationTheme.Light); }
+            set { _settings.AppTheme = value ? ApplicationTheme.Light : ApplicationTheme.Dark; base.RaisePropertyChanged(); }
+        }
+
         private string _BusyText = "Please wait...";
         public string BusyText { get { return _BusyText; } set { Set(ref _BusyText, value); } }
-        public void ShowBusy() { Views.Shell.SetBusyIndicator(true, _BusyText); }
-        public void HideBusy() { Views.Shell.SetBusyIndicator(false); }
+        public void ShowBusy() { Views.Shell.SetBusyVisibility(Visibility.Visible, _BusyText); }
+        public void HideBusy() { Views.Shell.SetBusyVisibility(Visibility.Collapsed); }
+
+        public void ShowLogin() { Views.Shell.SetLoginVisibility(Visibility.Visible); }
 
         #endregion
 

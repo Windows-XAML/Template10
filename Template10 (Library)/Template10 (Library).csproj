@@ -37,6 +37,7 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\Template10Library.XML</DocumentationFile>
     <GenerateLibraryLayout>true</GenerateLibraryLayout>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <PlatformTarget>ARM</PlatformTarget>
@@ -114,6 +115,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <None Include="ClassDiagram1.cd" />
     <None Include="Nuget\Build.cmd" />
     <None Include="Nuget\Template10.targets" />
     <None Include="Nuget\Init.ps1" />
@@ -138,6 +140,8 @@
     <Compile Include="Common\StateItems.cs" />
     <Compile Include="Common\WindowWrapper.cs" />
     <Compile Include="Services\NavigationService\INavigationService.cs" />
+    <Compile Include="Services\SettingsService\ISettingsHelper.cs" />
+    <Compile Include="Services\SettingsService\SettingsStrategy.cs" />
     <Compile Include="Utils\MonitorUtil.cs" />
     <Compile Include="Utils\XamlUtil.cs" />
     <Compile Include="Controls\HamburgerMenu.xaml.cs">

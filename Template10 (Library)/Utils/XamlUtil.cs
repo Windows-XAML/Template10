@@ -21,5 +21,17 @@ namespace Template10.Utils
             }
             return list;
         }
+
+        public static T GetResource<T>(string resourceName, T otherwise)
+        {
+            try
+            {
+                return (T)Application.Current.Resources[resourceName];
+            }
+            catch
+            {
+                return otherwise;
+            }
+        }
     }
 }

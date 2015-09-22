@@ -5,11 +5,41 @@ set TARGETDIR=%~1
 set TARGETNAME=%~2
 set PROJECTDIR=%~3
 set NUPKG=%TARGETDIR%nupkg
-set CACHE="C:\Users\jerry\.nuget\packages\Template10\"
+
+echo.%NUPKG%|findstr /r "Release" >nul:
+if %errorlevel%==1 (
+   echo ERROR Debug build - nuget must be Release
+   goto end
+)
+
+echo.%NUPKG%|findstr /C:"x86" >nul 2>&1
+if %errorlevel%==0 (
+   echo ERROR targets x86 - nuget must target AnyCPU
+   goto end
+)
+
+echo.%NUPKG%|findstr /C:"x64" >nul 2>&1
+if %errorlevel%==0 (
+   echo ERROR targets x64 - nuget must target AnyCPU
+   goto end
+)
+
+echo.%NUPKG%|findstr /C:"ARM" >nul 2>&1
+if %errorlevel%==0 (
+   echo ERROR targets ARM - nuget must target AnyCPU
+   goto end
+)
+
+if "%NuGetCachePath%"=="" (  
+	set CACHE="%USERPROFILE%\.nuget\packages\Template10\"  
+) else (  
+	set CACHE="%NuGetCachePath%\Template10\"  
+)  
 
 :clear nuget cache
-if exist %CACHE% (
+if exist "%CACHE%" (
 	echo OK Nuget cache will be cleared: %CACHE%
+	rmdir "%CACHE%" /S/Q >null
 ) else (
 	echo OK No nuget cache to clear: %CACHE%
 )
@@ -17,44 +47,35 @@ if exist %CACHE% (
 :clear previous build
 if exist "%NUPKG%" (
 	echo OK Previous build will be cleared: "%NUPKG%"
+	rmdir "%NUPKG%" /S/Q >null
 ) else (
 	echo OK No previous build to clear: "%NUPKG%"
 )
 
-:copy dll
+echo Copy \lib\*.dll(s)
 xcopy.exe "%TARGETDIR%*.dll" "%NUPKG%\lib\" /y >null
 
-:copy xr.xml
-xcopy.exe "%TARGETDIR%%TARGETNAME%.xr.xml" "%NUPKG%\lib\%TARGETNAME%\" /y  >null
+echo Copy \lib\*.dll(s)
+xcopy.exe "%TARGETDIR%*.pri" "%NUPKG%\lib\" /y >null
 
-:copy pri
-:https://msdn.microsoft.com/en-us/library/windows/apps/jj552947.aspx
-xcopy.exe "%TARGETDIR%%TARGETNAME%.pri" "%NUPKG%\lib\" /y  >null
+echo Copy \%TARGETNAME%\[Library] (incl. XAML)
+xcopy.exe "%TARGETDIR%%TARGETNAME%\*.*" "%NUPKG%\lib\%TARGETNAME%\" /s/e/y >null
 
-:copy rd.xml
-xcopy.exe "%PROJECTDIR%Properties\%TARGETNAME%.rd.xml" "%NUPKG%\lib\%TARGETNAME%\Properties\" /y  >null
+echo Copy \build\%TARGETNAME%.targets
+xcopy.exe "%PROJECTDIR%Nuget\*.targets" "%NUPKG%\build\" /y >null
 
-:copy xbf
-xcopy.exe "%TARGETDIR%Controls" "%NUPKG%\lib\%TARGETNAME%\Controls\" /y  >null
-xcopy.exe "%TARGETDIR%Styles" "%NUPKG%\lib\%TARGETNAME%\Styles\" /y  >null
+echo Copy \tools\init.ps1
+xcopy.exe "%PROJECTDIR%Nuget\init.ps1" "%NUPKG%\Tools\" /y >null
 
-:copy xaml
-xcopy.exe "%PROJECTDIR%Controls\*.xaml" "%NUPKG%\lib\%TARGETNAME%\Controls\" /y  >null
-xcopy.exe "%PROJECTDIR%Styles\*.xaml" "%NUPKG%\lib\%TARGETNAME%\Styles\" /y  >null
+echo Copy \%TARGETNAME%.nuspec
+xcopy.exe "%PROJECTDIR%nuget\%TARGETNAME%.nuspec" "%NUPKG%" /y >null
 
-:copy msbuild
-xcopy.exe "%PROJECTDIR%Nuget\*.targets" "%NUPKG%\build\" /y  >null
+echo Execute Pack
+"%PROJECTDIR%nuget\NuGet.exe" pack "%NUPKG%\%TARGETNAME%.nuspec" -Verbosity normal -OutputDirectory "%NUPKG%" -NonInteractive -Symbols
 
-:copy init
-xcopy.exe "%PROJECTDIR%Nuget\init.ps1" "%NUPKG%\Tools\" /y  >null
+echo Copy %NUPKG%\*.nupkg
+xcopy.exe "%NUPKG%\*.nupkg" "c:\nuget-local\" /y >null
 
-:copy nuspec
-xcopy.exe "%PROJECTDIR%nuget\%TARGETNAME%.nuspec" "%NUPKG%" /y   >null
-
-:execute pack
-"%PROJECTDIR%nuget\NuGet.exe" pack "%NUPKG%\%TARGETNAME%.nuspec" -Build -Verbosity normal -OutputDirectory "%NUPKG%" -NonInteractive 
-
-:copy nupkg
-xcopy.exe "%NUPKG%\*.nupkg" c:\nuget-local\ /y  >null
-
+:end
 echo -- NuGet Process End --
+exit /b 0

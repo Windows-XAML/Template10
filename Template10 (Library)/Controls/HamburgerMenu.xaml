@@ -188,7 +188,6 @@
                                                ElementName=ThisPage}"
                              CommandParameter="{Binding}"
                              GroupName="Nav"
-                             Visibility="{Binding Visibility}"
                              Loaded="NavButton_Loaded"
                              Tag="{Binding Content}"
                              Tapped="NavButton_Tapped">
@@ -276,6 +275,7 @@
                    PaneBackground="Transparent">
             <SplitView.Pane>
                 <Grid x:Name="PaneContent"
+                      BorderBrush="{Binding SecondarySeparator, ElementName=ThisPage, FallbackValue=White}" BorderThickness="0,0,1,0"
                       Background="{Binding NavAreaBackground,
                                            ElementName=ThisPage,
                                            FallbackValue=Blue}"
@@ -380,7 +380,7 @@
                 </Grid>
             </SplitView.Pane>
         </SplitView>
-        
+
         <Button x:Name="HamburgerButton"
                 Grid.Row="0" Command="{x:Bind HamburgerCommand}"
                 Style="{StaticResource HamburgerButtonStyle}">
