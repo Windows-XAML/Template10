@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Windows.Foundation.Metadata;
 using Template10.Services.NavigationService;
+using Windows.UI.ViewManagement;
+using Template10.Utils;
 
 namespace Template10.Common
 {
@@ -68,7 +70,7 @@ namespace Template10.Common
         }
 
         /// <summary>
-        /// The SplashFactory is a Func<> that returns an instantiated Splash view.
+        /// The SplashFactory is a Func that returns an instantiated Splash view.
         /// Template 10 will automatically inject this visual before loading the app.
         /// </summary>
         protected Func<SplashScreen, UserControl> SplashFactory { get; set; }
@@ -217,7 +219,7 @@ namespace Template10.Common
 
             // Handle the back button press on Mobile
             if (ApiInformation.IsApiContractPresent("Windows.Phone.PhoneContract", 1, 0))
-            {  
+            {
                 Windows.Phone.UI.Input.HardwareButtons.BackPressed += (s, a) =>
                 {
                     bool handled = false;
@@ -312,6 +314,7 @@ namespace Template10.Common
 
             // allow the user to do things, even when restoring
             await OnInitializeAsync(e);
+            UpdateTitleBarStyle();
 
             // create the default frame only if there's nothing already there
             // if it is not null, by the way, then the developer injected something & they win
@@ -320,6 +323,23 @@ namespace Template10.Common
                 // build the default frame
                 Window.Current.Content = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include).Frame;
             }
+        }
+
+        private static void UpdateTitleBarStyle()
+        {
+            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+            titleBar.BackgroundColor = XamlUtil.GetResource("TitleBarBackground", titleBar.BackgroundColor);
+            titleBar.ForegroundColor = XamlUtil.GetResource("TitleBarForeground", titleBar.ForegroundColor);
+            titleBar.ButtonBackgroundColor = XamlUtil.GetResource("TitleBarButtonBackground", titleBar.ButtonBackgroundColor);
+            titleBar.ButtonForegroundColor = XamlUtil.GetResource("TitleBarButtonForeground", titleBar.ButtonForegroundColor);
+            titleBar.ButtonHoverBackgroundColor = XamlUtil.GetResource("TitleBarButtonHoverBackground", titleBar.ButtonHoverBackgroundColor);
+            titleBar.ButtonHoverForegroundColor = XamlUtil.GetResource("TitleBarButtonHoverForeground", titleBar.ButtonHoverForegroundColor);
+            titleBar.ButtonPressedBackgroundColor = XamlUtil.GetResource("TitleBarButtonPressedBackground", titleBar.ButtonPressedBackgroundColor);
+            titleBar.ButtonPressedForegroundColor = XamlUtil.GetResource("TitleBarButtonPressedForeground", titleBar.ButtonPressedForegroundColor);
+            titleBar.ButtonInactiveBackgroundColor = XamlUtil.GetResource("TitleBarButtonInactiveBackground", titleBar.ButtonInactiveBackgroundColor);
+            titleBar.ButtonInactiveForegroundColor = XamlUtil.GetResource("TitleBarButtonInactiveForeground", titleBar.ButtonInactiveForegroundColor);
+            titleBar.InactiveBackgroundColor = XamlUtil.GetResource("TitleBarInactiveBackground", titleBar.InactiveBackgroundColor);
+            titleBar.InactiveForegroundColor = XamlUtil.GetResource("TitleBarInactiveForeground", titleBar.InactiveForegroundColor);
         }
 
         public enum BackButton { Attach, Ignore }
