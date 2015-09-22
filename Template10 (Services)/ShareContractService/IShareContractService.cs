@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Template10.Services.ShareContractService
 {
-    interface IShareContractService
+    public interface IShareContractService
     {
         void ShowUI();
     }

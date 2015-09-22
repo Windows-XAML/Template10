@@ -275,6 +275,7 @@
                    PaneBackground="Transparent">
             <SplitView.Pane>
                 <Grid x:Name="PaneContent"
+                      BorderBrush="{Binding SecondarySeparator, ElementName=ThisPage, FallbackValue=White}" BorderThickness="0,0,1,0"
                       Background="{Binding NavAreaBackground,
                                            ElementName=ThisPage,
                                            FallbackValue=Blue}"

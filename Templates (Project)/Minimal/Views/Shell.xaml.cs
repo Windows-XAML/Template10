@@ -1,4 +1,5 @@
 ﻿using Template10.Services.NavigationService;
+using Template10.Utils;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -9,7 +10,7 @@ namespace Sample.Views
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SplitView
     public sealed partial class Shell : Page
     {
-        private static Shell Instance { get; set; }
+        public static Shell Instance { get; set; }
         private static Template10.Common.WindowWrapper Window { get; set; }
 
         public Shell(NavigationService navigationService)
@@ -18,50 +19,40 @@ namespace Sample.Views
             this.InitializeComponent();
             Window = Template10.Common.WindowWrapper.Current();
             MyHamburgerMenu.NavigationService = navigationService;
-            CustomizeTitleBarColors();
+            VisualStateManager.GoToState(this, NormalVisualState.Name, false);
         }
 
-        public static void SetBusyIndicator(bool busy, string text = null)
+        public static void SetBusyVisibility(Visibility visible, string text = null)
         {
             Window.Dispatcher.Dispatch(() =>
             {
-                Instance.BusyIndicator.Visibility = (busy)
-               ? Visibility.Visible : Visibility.Collapsed;
-                Instance.BusyRing.IsActive = busy;
-                Instance.BusyText.Text = text ?? string.Empty;
+                switch (visible)
+                {
+                    case Visibility.Visible:
+                        Instance.BusyText.Text = text ?? string.Empty;
+                        VisualStateManager.GoToState(Instance, Instance.BusyVisualState.Name, true);
+                        break;
+                    default:
+                        VisualStateManager.GoToState(Instance, Instance.NormalVisualState.Name, true);
+                        break;
+                }
             });
         }
 
-        private static void CustomizeTitleBarColors()
+        public static void SetLoginVisibility(Visibility visible)
         {
-            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-            titleBar.BackgroundColor = SetColorFromResources(titleBar.BackgroundColor, "TitleBarBackground");
-            titleBar.ForegroundColor = SetColorFromResources(titleBar.ForegroundColor, "TitleBarForeground");
-            titleBar.ButtonBackgroundColor = SetColorFromResources(titleBar.ButtonBackgroundColor, "TitleBarButtonBackground");
-            titleBar.ButtonForegroundColor = SetColorFromResources(titleBar.ButtonForegroundColor, "TitleBarButtonForeground");
-            titleBar.ButtonHoverBackgroundColor = SetColorFromResources(titleBar.ButtonHoverBackgroundColor, "TitleBarButtonHoverBackground");
-            titleBar.ButtonHoverForegroundColor = SetColorFromResources(titleBar.ButtonHoverForegroundColor, "TitleBarButtonHoverForeground");
-            titleBar.ButtonPressedBackgroundColor = SetColorFromResources(titleBar.ButtonPressedBackgroundColor, "TitleBarButtonPressedBackground");
-            titleBar.ButtonPressedForegroundColor = SetColorFromResources(titleBar.ButtonPressedForegroundColor, "TitleBarButtonPressedForeground");
-            titleBar.ButtonInactiveBackgroundColor = SetColorFromResources(titleBar.ButtonInactiveBackgroundColor, "TitleBarButtonInactiveBackground");
-            titleBar.ButtonInactiveForegroundColor = SetColorFromResources(titleBar.ButtonInactiveForegroundColor, "TitleBarButtonInactiveForeground");
-            titleBar.InactiveBackgroundColor = SetColorFromResources(titleBar.InactiveBackgroundColor, "TitleBarInactiveBackground");
-            titleBar.InactiveForegroundColor = SetColorFromResources(titleBar.InactiveForegroundColor, "TitleBarInactiveForeground");
-        }
-
-        private static Color? SetColorFromResources(Color? actualColor, string resourceName)
-        {
-            try
+            Window.Dispatcher.Dispatch(() =>
             {
-                if (Application.Current.Resources[resourceName] is Color)
+                switch (visible)
                 {
-                    return (Color)Application.Current.Resources[resourceName];
+                    case Visibility.Visible:
+                        VisualStateManager.GoToState(Instance, Instance.LoginVisualState.Name, true);
+                        break;
+                    default:
+                        VisualStateManager.GoToState(Instance, Instance.NormalVisualState.Name, true);
+                        break;
                 }
-            }
-            catch {}
-
-            return actualColor;
+            });
         }
-
     }
 }
