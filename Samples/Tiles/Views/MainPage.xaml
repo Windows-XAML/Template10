@@ -58,11 +58,11 @@
                      Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="ParameterTextBox" >
                 <Interactivity:Interaction.Behaviors>
                     <Behaviors:TextBoxEnterKeyBehavior>
-                        <Core:CallMethodAction MethodName="GotoDetailsPage" TargetObject="{Binding}" />
+                        <Core:InvokeCommandAction Command="{x:Bind ViewModel.GotoDetailsPageCommand, Mode=OneTime}"/>
                     </Behaviors:TextBoxEnterKeyBehavior>
                 </Interactivity:Interaction.Behaviors>
             </TextBox>
-            <Button Content="Submit" Click="{x:Bind ViewModel.GotoDetailsPage}" Margin="4,0" 
+            <Button Content="Submit" Command="{x:Bind ViewModel.GotoDetailsPageCommand, Mode=OneTime}" Margin="4,0" 
                     RelativePanel.RightOf="ParameterTextBox" RelativePanel.AlignBottomWith="ParameterTextBox" />
         </RelativePanel>
 

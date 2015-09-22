@@ -8,7 +8,8 @@
     <common:BootStrapper.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles\Custom.xaml" />
+                <ResourceDictionary Source="Styles\Custom.Dark.xaml" />
+                <ResourceDictionary Source="Styles\Custom.Light.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </common:BootStrapper.Resources>
