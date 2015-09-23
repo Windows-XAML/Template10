@@ -15,12 +15,8 @@
             <SolidColorBrush x:Name="NavButtonForegroundBrush" Color="White" />
             <SolidColorBrush x:Name="NavAreaBackgroundBrush" Color="White" />
             <SolidColorBrush x:Name="SecondaryBorderBrush" Color="DimGray" />
-
-
             <SolidColorBrush x:Name="NavButtonCheckedOverlayBackgroundBrush" Color="#FF7D1F22" />
-            <!--  previous [#FFD13438 + Black @ 0.4 opacity]  -->
             <SolidColorBrush x:Name="NavButtonHoverOverlayBackgroundBrush" Color="#FF434343" />
-            <!--  approximates previous [White @ Opacity 0.1]  -->
 
             <Style x:Key="NavButtonStyle" TargetType="ToggleButton">
                 <Setter Property="Height" Value="48" />
@@ -248,9 +244,9 @@
 
             <SplitView.Pane>
 
-                <Grid x:Name="PaneContent" Background="{Binding NavAreaBackground, ElementName=ThisPage, FallbackValue=Blue}"
-                      BorderBrush="{Binding SecondarySeparator, ElementName=ThisPage, FallbackValue=White}" BorderThickness="0,0,1,0"
-                      Tapped="PaneContent_Tapped">
+                <Grid x:Name="PaneContent" Margin="0,48,0,0"
+                      Background="{Binding NavAreaBackground, ElementName=ThisPage, FallbackValue=Blue}" BorderBrush="{Binding SecondarySeparator, ElementName=ThisPage, FallbackValue=White}"
+                      BorderThickness="0,0,1,0" Tapped="PaneContent_Tapped">
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
@@ -258,7 +254,7 @@
                     </Grid.RowDefinitions>
 
                     <Interactivity:Interaction.Behaviors>
-                        <Core:DataTriggerBehavior Binding="{Binding Visibility, ElementName=HamburgerButton}" Value="Visible">
+                        <Core:DataTriggerBehavior Binding="{Binding Visibility, ElementName=HamburgerButton, Mode=OneWay}" Value="Visible">
                             <Core:ChangePropertyAction PropertyName="Margin" TargetObject="{Binding ElementName=PaneContent}">
                                 <Core:ChangePropertyAction.Value>
                                     <Thickness>0,48,0,0</Thickness>
@@ -266,7 +262,11 @@
                             </Core:ChangePropertyAction>
                         </Core:DataTriggerBehavior>
                         <Core:DataTriggerBehavior Binding="{Binding Visibility, ElementName=HamburgerButton, Mode=OneWay}" Value="Collapsed">
-                            <Core:ChangePropertyAction PropertyName="Margin" TargetObject="{Binding ElementName=PaneContent}" />
+                            <Core:ChangePropertyAction PropertyName="Margin" TargetObject="{Binding ElementName=PaneContent}">
+                                <Core:ChangePropertyAction.Value>
+                                    <Thickness>0,0,0,0</Thickness>
+                                </Core:ChangePropertyAction.Value>
+                            </Core:ChangePropertyAction>
                         </Core:DataTriggerBehavior>
                     </Interactivity:Interaction.Behaviors>
 

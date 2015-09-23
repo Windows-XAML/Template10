@@ -23,7 +23,7 @@
                                 <EasingDoubleKeyFrame KeyTime="0" Value="-348" />
                                 <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="0">
                                     <EasingDoubleKeyFrame.EasingFunction>
-                                        <BackEase EasingMode="EaseOut" Amplitude=".1" />
+                                        <BackEase Amplitude=".1" EasingMode="EaseOut" />
                                     </EasingDoubleKeyFrame.EasingFunction>
                                 </EasingDoubleKeyFrame>
                             </DoubleAnimationUsingKeyFrames>
@@ -42,7 +42,7 @@
                                 <EasingDoubleKeyFrame KeyTime="0" Value="-348" />
                                 <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="0">
                                     <EasingDoubleKeyFrame.EasingFunction>
-                                        <BackEase EasingMode="EaseOut" Amplitude=".1" />
+                                        <BackEase Amplitude=".1" EasingMode="EaseOut" />
                                     </EasingDoubleKeyFrame.EasingFunction>
                                 </EasingDoubleKeyFrame>
                             </DoubleAnimationUsingKeyFrames>
@@ -132,31 +132,6 @@
                     <TextBlock x:Name="BusyText" VerticalAlignment="Center" Foreground="White" />
                 </StackPanel>
             </Viewbox>
-        </Grid>
-
-        <Grid x:Name="LoginScreen" Background="{StaticResource ModalBackground}"
-              Visibility="Collapsed" x:DeferLoadStrategy="Lazy">
-            <views:LoginPart x:Name="loginPart" Margin="48,0,0,0"
-                             HorizontalAlignment="Left" VerticalAlignment="Stretch"
-                             RenderTransformOrigin="0.5,0.5">
-                <views:LoginPart.RenderTransform>
-                    <CompositeTransform />
-                </views:LoginPart.RenderTransform>
-            </views:LoginPart>
-        </Grid>
-
-        <Grid x:Name="SearchScreen" Margin="48,0,0,0"
-              Background="{StaticResource ModalBackground}" Visibility="Collapsed"
-              x:DeferLoadStrategy="Lazy">
-            <views:SearchPart x:Name="searchPart" HorizontalAlignment="Left"
-                              VerticalAlignment="Stretch" RenderTransformOrigin="0.5,0.5">
-                <views:SearchPart.Projection>
-                    <PlaneProjection />
-                </views:SearchPart.Projection>
-                <views:SearchPart.RenderTransform>
-                    <CompositeTransform />
-                </views:SearchPart.RenderTransform>
-            </views:SearchPart>
         </Grid>
 
     </Grid>

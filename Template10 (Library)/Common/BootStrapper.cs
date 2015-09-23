@@ -312,7 +312,14 @@ namespace Template10.Common
 
             // allow the user to do things, even when restoring
             await OnInitializeAsync(e);
-            UpdateTitleBarStyle();
+
+            // setup custom titlebar
+            foreach (var resource in Application.Current.Resources
+                .Where(x => x.Key.Equals(typeof(Controls.CustomTitleBar))))
+            {
+                var control = new Controls.CustomTitleBar();
+                control.Style = resource.Value as Style;
+            }
 
             // create the default frame only if there's nothing already there
             // if it is not null, by the way, then the developer injected something & they win
@@ -321,23 +328,6 @@ namespace Template10.Common
                 // build the default frame
                 Window.Current.Content = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include).Frame;
             }
-        }
-
-        private static void UpdateTitleBarStyle()
-        {
-            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-            titleBar.BackgroundColor = XamlUtil.GetResource("TitleBarBackground", titleBar.BackgroundColor);
-            titleBar.ForegroundColor = XamlUtil.GetResource("TitleBarForeground", titleBar.ForegroundColor);
-            titleBar.ButtonBackgroundColor = XamlUtil.GetResource("TitleBarButtonBackground", titleBar.ButtonBackgroundColor);
-            titleBar.ButtonForegroundColor = XamlUtil.GetResource("TitleBarButtonForeground", titleBar.ButtonForegroundColor);
-            titleBar.ButtonHoverBackgroundColor = XamlUtil.GetResource("TitleBarButtonHoverBackground", titleBar.ButtonHoverBackgroundColor);
-            titleBar.ButtonHoverForegroundColor = XamlUtil.GetResource("TitleBarButtonHoverForeground", titleBar.ButtonHoverForegroundColor);
-            titleBar.ButtonPressedBackgroundColor = XamlUtil.GetResource("TitleBarButtonPressedBackground", titleBar.ButtonPressedBackgroundColor);
-            titleBar.ButtonPressedForegroundColor = XamlUtil.GetResource("TitleBarButtonPressedForeground", titleBar.ButtonPressedForegroundColor);
-            titleBar.ButtonInactiveBackgroundColor = XamlUtil.GetResource("TitleBarButtonInactiveBackground", titleBar.ButtonInactiveBackgroundColor);
-            titleBar.ButtonInactiveForegroundColor = XamlUtil.GetResource("TitleBarButtonInactiveForeground", titleBar.ButtonInactiveForegroundColor);
-            titleBar.InactiveBackgroundColor = XamlUtil.GetResource("TitleBarInactiveBackground", titleBar.InactiveBackgroundColor);
-            titleBar.InactiveForegroundColor = XamlUtil.GetResource("TitleBarInactiveForeground", titleBar.InactiveForegroundColor);
         }
 
         public enum BackButton { Attach, Ignore }

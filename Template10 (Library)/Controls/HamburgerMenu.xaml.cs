@@ -34,13 +34,12 @@ namespace Template10.Controls
             }
         }
 
-        void HighlightButton(Type type)
+        void HighlightButton()
         {
-            foreach (var button in _navButtons)
-            {
-                button.Value.IsChecked = button.Value.Equals(type);
-            }
-            Selected = _navButtons.Select(x => x.Value).FirstOrDefault(x => x.IsChecked);
+            var type = NavigationService.Frame.Content?.GetType();
+            var values = _navButtons.Select(x => x.Value);
+            var button = values.FirstOrDefault(x => type.Equals(x.PageType));
+            Selected = button;
         }
 
         #region commands
@@ -103,7 +102,7 @@ namespace Template10.Controls
 
         public SolidColorBrush HamburgerBackground
         {
-            get { return (SolidColorBrush)HamburgerBackgroundBrush; }
+            get { return HamburgerBackgroundBrush; }
             set
             {
                 SetValue(HamburgerBackgroundProperty, HamburgerBackgroundBrush = value);
@@ -215,32 +214,29 @@ namespace Template10.Controls
             {
                 IsOpen = false;
 
-                // clear existing
-                foreach (var button in _navButtons)
+                // undo previous
+                if (Selected != null)
                 {
-                    button.Value.IsChecked = false;
-                    button.Value.IsEnabled = true;
+                    Selected.IsEnabled = false;
+                    Selected.IsChecked = false;
                 }
 
                 // ensure dp is correct (if diff)
-                if (GetValue(SelectedProperty) == value)
-                    return;
-                else
+                if (Selected != value)
                     SetValue(SelectedProperty, value);
 
-                // avoid nulls
+                // that's it if null
                 if (value == null)
                     return;
 
                 // setup new value
-                var navButton = _navButtons.First(x => x.Value.Equals(value));
-                navButton.Value.IsChecked = true;
+                value.IsChecked = true;
 
                 // navigate only to new pages
                 if (value.PageType != null && NavigationService.CurrentPageType != value.PageType)
                 {
                     NavigationService.Navigate(value.PageType, value.PageParameter);
-                    navButton.Value.IsEnabled = false;
+                    value.IsEnabled = false;
                 }
             }
         }
@@ -320,8 +316,8 @@ namespace Template10.Controls
                     NavigationService.FrameFacade.Navigated += (s, e) => IsFullScreen = false;
                     IsFullScreen = true;
                 }
-                NavigationService.FrameFacade.Navigated += (s, e) => HighlightButton(e.PageType);
-                NavigationService.AfterRestoreSavedNavigation += (s, e) => HighlightButton(e);
+                NavigationService.FrameFacade.Navigated += (s, e) => HighlightButton();
+                NavigationService.AfterRestoreSavedNavigation += (s, e) => HighlightButton();
                 ShellSplitView.RegisterPropertyChangedCallback(SplitView.IsPaneOpenProperty, (s, e) =>
                 {
                     // update width
@@ -405,7 +401,7 @@ namespace Template10.Controls
             radio.Unchecked += (s, args) => info.RaiseUnchecked(args);
 
             // udpate UI
-            HighlightButton(NavigationService.Frame.Content?.GetType());
+            HighlightButton();
         }
 
         private void PaneContent_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
