@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blank", "Templates (Project
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{3F06506F-F7DA-4A64-B12B-5A9592139493}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tiles", "Samples\Tiles\Tiles.csproj", "{2BB9DA4B-F926-4523-9AE9-D670A9181317}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tiles (and Toast)", "Samples\Tiles\Tiles (and Toast).csproj", "{2BB9DA4B-F926-4523-9AE9-D670A9181317}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{BCA5051F-8AA7-4DCA-A945-C4C1503ED5A9}"
 EndProject
