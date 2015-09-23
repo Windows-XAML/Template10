@@ -191,15 +191,12 @@ namespace Template10.Common
                     }
             }
 
-
             // ensure active (this will hide any custom splashscreen)
             Window.Current.Activate();
 
             // Hook up the default Back handler
             SystemNavigationManager.GetForCurrentView().BackRequested += (s, args) =>
             {
-                // only handle as long as there is a default backstack
-                //args.Handled = !NavigationService.CanGoBack;
                 var handled = false;
                 if (ApiInformation.IsApiContractPresent("Windows.Phone.PhoneContract", 1, 0))
                 {
@@ -218,7 +215,7 @@ namespace Template10.Common
             };
 
             // Hook up keyboard and mouse Back handler
-            var keyboard = new KeyboardService();
+            var keyboard = new Services.KeyboardService.KeyboardService();
             keyboard.AfterBackGesture = () =>
             {
                 //the result is no matter
@@ -228,17 +225,6 @@ namespace Template10.Common
 
             // Hook up keyboard and mouse Forward handler
             keyboard.AfterForwardGesture = RaiseForwardRequested;
-
-            //// Handle the back button press on Mobile
-            //if (ApiInformation.IsApiContractPresent("Windows.Phone.PhoneContract", 1, 0))
-            //{
-            //    HardwareButtons.BackPressed += (s, a) =>
-            //    {
-            //        var handled = false;
-            //        RaiseBackRequested(ref handled);
-            //        a.Handled = handled;
-            //    };
-            //}
         }
 
         #endregion
