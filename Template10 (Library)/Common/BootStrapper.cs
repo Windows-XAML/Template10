@@ -12,6 +12,7 @@ using Windows.Foundation.Metadata;
 using Template10.Services.NavigationService;
 using Windows.UI.ViewManagement;
 using Template10.Utils;
+using Template10.Services.KeyboardService;
 
 namespace Template10.Common
 {
