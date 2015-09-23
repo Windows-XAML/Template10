@@ -21,11 +21,10 @@ namespace Sample.Views
         public Shell(NavigationService navigationService)
         {
             Instance = this;
-            this.InitializeComponent();
-            Window = Template10.Common.WindowWrapper.Current();
+            InitializeComponent();
+            Window = WindowWrapper.Current();
             MyHamburgerMenu.NavigationService = navigationService;
-            navigationService.FrameFacade.Navigated += (s, e) => ToggleState(string.Empty);
-            ToggleState(string.Empty);
+            VisualStateManager.GoToState(Instance, Instance.NormalVisualState.Name, true);
         }
 
         public static void SetBusyVisibility(Visibility visible, string text = null)
@@ -40,39 +39,10 @@ namespace Sample.Views
                         VisualStateManager.GoToState(Instance, Instance.BusyVisualState.Name, true);
                         break;
                     default:
-                        Instance.ToggleState(string.Empty);
+                        VisualStateManager.GoToState(Instance, Instance.NormalVisualState.Name, true);
                         break;
                 }
             });
-        }
-
-        private void SearchTapped(object sender, RoutedEventArgs e)
-        {
-            var info = sender as HamburgerButtonInfo;
-            info.IsChecked = false;
-            ToggleState(SearchVisualState.Name);
-        }
-
-        private void LoginTapped(object sender, RoutedEventArgs e)
-        {
-            var info = sender as HamburgerButtonInfo;
-            info.IsChecked = false;
-            ToggleState(LoginVisualState.Name);
-        }
-
-        public void ToggleState(string state)
-        {
-            if (string.IsNullOrEmpty(state))
-            {
-                VisualStateManager.GoToState(this, NormalVisualState.Name, false);
-            }
-            else
-            {
-                var current = VisualStateGroup.CurrentState.Name;
-                if (current.Equals(state))
-                    state = NormalVisualState.Name;
-                VisualStateManager.GoToState(this, state, true);
-            }
         }
     }
 }

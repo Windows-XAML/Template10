@@ -9,60 +9,6 @@
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
-                <VisualStateGroup.Transitions>
-                    <VisualTransition GeneratedDuration="0" To="LoginVisualState">
-                        <Storyboard>
-                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LoginScreen" Storyboard.TargetProperty="(UIElement.Visibility)">
-                                <DiscreteObjectKeyFrame KeyTime="0">
-                                    <DiscreteObjectKeyFrame.Value>
-                                        <Visibility>Visible</Visibility>
-                                    </DiscreteObjectKeyFrame.Value>
-                                </DiscreteObjectKeyFrame>
-                            </ObjectAnimationUsingKeyFrames>
-                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="loginPart" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)">
-                                <EasingDoubleKeyFrame KeyTime="0" Value="-348" />
-                                <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="0">
-                                    <EasingDoubleKeyFrame.EasingFunction>
-                                        <BackEase Amplitude=".1" EasingMode="EaseOut" />
-                                    </EasingDoubleKeyFrame.EasingFunction>
-                                </EasingDoubleKeyFrame>
-                            </DoubleAnimationUsingKeyFrames>
-                        </Storyboard>
-                    </VisualTransition>
-                    <VisualTransition GeneratedDuration="0" To="SearchVisualState">
-                        <Storyboard>
-                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SearchScreen" Storyboard.TargetProperty="(UIElement.Visibility)">
-                                <DiscreteObjectKeyFrame KeyTime="0">
-                                    <DiscreteObjectKeyFrame.Value>
-                                        <Visibility>Visible</Visibility>
-                                    </DiscreteObjectKeyFrame.Value>
-                                </DiscreteObjectKeyFrame>
-                            </ObjectAnimationUsingKeyFrames>
-                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="searchPart" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)">
-                                <EasingDoubleKeyFrame KeyTime="0" Value="-348" />
-                                <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="0">
-                                    <EasingDoubleKeyFrame.EasingFunction>
-                                        <BackEase Amplitude=".1" EasingMode="EaseOut" />
-                                    </EasingDoubleKeyFrame.EasingFunction>
-                                </EasingDoubleKeyFrame>
-                            </DoubleAnimationUsingKeyFrames>
-                        </Storyboard>
-                    </VisualTransition>
-                    <VisualTransition From="LoginVisualState" GeneratedDuration="0">
-                        <Storyboard>
-                            <DoubleAnimation Duration="0:0:0.6" Storyboard.TargetName="searchPart"
-                                             Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationY)" To="-348"
-                                             d:IsOptimized="True" />
-                        </Storyboard>
-                    </VisualTransition>
-                    <VisualTransition From="SearchVisualState" GeneratedDuration="0">
-                        <Storyboard>
-                            <DoubleAnimation Duration="0:0:0.6" Storyboard.TargetName="searchPart"
-                                             Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" To="-348"
-                                             d:IsOptimized="True" />
-                        </Storyboard>
-                    </VisualTransition>
-                </VisualStateGroup.Transitions>
                 <VisualState x:Name="NormalVisualState">
                     <VisualState.Setters>
                         <Setter Target="MyHamburgerMenu.(UIElement.IsEnabled)" Value="True" />
@@ -72,17 +18,6 @@
                     <VisualState.Setters>
                         <Setter Target="BusyRing.(ProgressRing.IsActive)" Value="True" />
                         <Setter Target="BusyScreen.(UIElement.Visibility)" Value="Visible" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="LoginVisualState">
-                    <VisualState.Setters>
-                        <Setter Target="LoginScreen.(UIElement.Visibility)" Value="Visible" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="SearchVisualState">
-                    <VisualState.Setters>
-                        <Setter Target="MyHamburgerMenu.(UIElement.IsEnabled)" Value="True" />
-                        <Setter Target="SearchScreen.(UIElement.Visibility)" Value="Visible" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -97,21 +32,9 @@
                         <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Home" />
                     </StackPanel>
                 </Controls:HamburgerButtonInfo>
-                <Controls:HamburgerButtonInfo Tapped="SearchTapped">
-                    <StackPanel Orientation="Horizontal">
-                        <SymbolIcon Width="48" Height="48" Symbol="Find" />
-                        <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Search" />
-                    </StackPanel>
-                </Controls:HamburgerButtonInfo>
             </Controls:HamburgerMenu.PrimaryButtons>
 
             <Controls:HamburgerMenu.SecondaryButtons>
-                <Controls:HamburgerButtonInfo Tapped="LoginTapped">
-                    <StackPanel Orientation="Horizontal">
-                        <SymbolIcon Width="48" Height="48" Symbol="Contact" />
-                        <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Profile" />
-                    </StackPanel>
-                </Controls:HamburgerButtonInfo>
                 <Controls:HamburgerButtonInfo PageType="views:SettingsPage">
                     <StackPanel Orientation="Horizontal">
                         <SymbolIcon Width="48" Height="48" Symbol="Setting" />

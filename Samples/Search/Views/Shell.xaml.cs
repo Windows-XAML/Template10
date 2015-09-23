@@ -43,8 +43,16 @@ namespace Sample.Views
         private void SearchTapped(object sender, RoutedEventArgs e)
         {
             var info = sender as HamburgerButtonInfo;
+            info.IsEnabled = true;
             info.IsChecked = false;
             ToggleState(SearchVisualState.Name);
+        }
+
+        private void LoginTapped(object sender, RoutedEventArgs e)
+        {
+            var info = sender as HamburgerButtonInfo;
+            info.IsChecked = false;
+            ToggleState(LoginVisualState.Name);
         }
 
         public void ToggleState(string state)
@@ -61,6 +69,11 @@ namespace Sample.Views
             {
                 VisualStateManager.GoToState(this, NormalVisualState.Name, false);
             }
+        }
+
+        private void LoginHide(object sender, System.EventArgs e)
+        {
+            VisualStateManager.GoToState(this, NormalVisualState.Name, false);
         }
     }
 }

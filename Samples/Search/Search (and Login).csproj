@@ -96,6 +96,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\LoginPart.xaml.cs">
+      <DependentUpon>LoginPart.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SearchPart.xaml.cs">
       <DependentUpon>SearchPart.xaml</DependentUpon>
     </Compile>
@@ -132,6 +135,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Controls\LoginPart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\SearchPart.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

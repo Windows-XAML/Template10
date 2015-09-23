@@ -217,7 +217,7 @@ namespace Template10.Controls
                 // undo previous
                 if (Selected != null)
                 {
-                    Selected.IsEnabled = false;
+                    Selected.IsEnabled = true;
                     Selected.IsChecked = false;
                 }
 
@@ -230,6 +230,7 @@ namespace Template10.Controls
                     return;
 
                 // setup new value
+                value.IsEnabled = false;
                 value.IsChecked = true;
 
                 // navigate only to new pages

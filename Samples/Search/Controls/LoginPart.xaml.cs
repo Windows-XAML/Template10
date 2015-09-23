@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml;
+﻿using System;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace Sample.Controls
@@ -10,9 +11,11 @@ namespace Sample.Controls
             this.InitializeComponent();
         }
 
-        private void LoginClick(object sender, RoutedEventArgs e)
+        public event EventHandler Hide;
+
+        private void LoginClicked(object sender, RoutedEventArgs e)
         {
-            Views.Shell.Instance.ToggleState(string.Empty);
+            Hide?.Invoke(this, EventArgs.Empty);
         }
     }
 }

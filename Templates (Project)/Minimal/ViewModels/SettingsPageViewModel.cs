@@ -8,4 +8,76 @@ namespace Sample.ViewModels
         public SettingsPartViewModel SettingsPartViewModel { get; } = new SettingsPartViewModel();
         public AboutPartViewModel AboutPartViewModel { get; } = new AboutPartViewModel();
     }
+
+    public class SettingsPartViewModel : Mvvm.ViewModelBase
+    {
+        Services.SettingsServices.SettingsService _settings;
+
+        public SettingsPartViewModel()
+        {
+            if (!Windows.ApplicationModel.DesignMode.DesignModeEnabled)
+                _settings = Services.SettingsServices.SettingsService.Instance;
+        }
+
+        public bool UseShellBackButton
+        {
+            get { return _settings.UseShellBackButton; }
+            set { _settings.UseShellBackButton = value; base.RaisePropertyChanged(); }
+        }
+
+        public bool UseLightThemeButton
+        {
+            get { return _settings.AppTheme.Equals(ApplicationTheme.Light); }
+            set { _settings.AppTheme = value ? ApplicationTheme.Light : ApplicationTheme.Dark; base.RaisePropertyChanged(); }
+        }
+
+        private string _BusyText = "Please wait...";
+        public string BusyText
+        {
+            get { return _BusyText; }
+            set { Set(ref _BusyText, value); }
+        }
+
+        public void ShowBusy()
+        {
+            Views.Shell.SetBusyVisibility(Visibility.Visible, _BusyText);
+        }
+
+        public void HideBusy()
+        {
+            Views.Shell.SetBusyVisibility(Visibility.Collapsed);
+        }
+    }
+
+    public class AboutPartViewModel : Mvvm.ViewModelBase
+    {
+        public Uri Logo
+        {
+            get { return Windows.ApplicationModel.Package.Current.Logo; }
+        }
+
+        public string DisplayName
+        {
+            get { return Windows.ApplicationModel.Package.Current.DisplayName; }
+        }
+
+        public string Publisher
+        {
+            get { return Windows.ApplicationModel.Package.Current.PublisherDisplayName; }
+        }
+
+        public string Version
+        {
+            get
+            {
+                var ver = Windows.ApplicationModel.Package.Current.Id.Version;
+                return ver.Major.ToString() + "." + ver.Minor.ToString() + "." + ver.Build.ToString() + "." + ver.Revision.ToString();
+            }
+        }
+
+        public Uri RateMe
+        {
+            get { return new Uri("http://bing.com"); }
+        }
+    }
 }
