@@ -1,4 +1,9 @@
-﻿using Template10.Services.NavigationService;
+﻿using System;
+using System.ComponentModel;
+using System.Linq;
+using Template10.Common;
+using Template10.Controls;
+using Template10.Services.NavigationService;
 using Template10.Utils;
 using Windows.UI;
 using Windows.UI.ViewManagement;
@@ -19,7 +24,8 @@ namespace Sample.Views
             this.InitializeComponent();
             Window = Template10.Common.WindowWrapper.Current();
             MyHamburgerMenu.NavigationService = navigationService;
-            VisualStateManager.GoToState(this, NormalVisualState.Name, false);
+            navigationService.FrameFacade.Navigated += (s, e) => ToggleState(string.Empty);
+            ToggleState(string.Empty);
         }
 
         public static void SetBusyVisibility(Visibility visible, string text = null)
@@ -29,30 +35,44 @@ namespace Sample.Views
                 switch (visible)
                 {
                     case Visibility.Visible:
+                        Instance.FindName(nameof(BusyScreen));
                         Instance.BusyText.Text = text ?? string.Empty;
                         VisualStateManager.GoToState(Instance, Instance.BusyVisualState.Name, true);
                         break;
                     default:
-                        VisualStateManager.GoToState(Instance, Instance.NormalVisualState.Name, true);
+                        Instance.ToggleState(string.Empty);
                         break;
                 }
             });
         }
 
-        public static void SetLoginVisibility(Visibility visible)
+        private void SearchTapped(object sender, RoutedEventArgs e)
         {
-            Window.Dispatcher.Dispatch(() =>
+            var info = sender as HamburgerButtonInfo;
+            info.IsChecked = false;
+            ToggleState(SearchVisualState.Name);
+        }
+
+        private void LoginTapped(object sender, RoutedEventArgs e)
+        {
+            var info = sender as HamburgerButtonInfo;
+            info.IsChecked = false;
+            ToggleState(LoginVisualState.Name);
+        }
+
+        public void ToggleState(string state)
+        {
+            if (string.IsNullOrEmpty(state))
             {
-                switch (visible)
-                {
-                    case Visibility.Visible:
-                        VisualStateManager.GoToState(Instance, Instance.LoginVisualState.Name, true);
-                        break;
-                    default:
-                        VisualStateManager.GoToState(Instance, Instance.NormalVisualState.Name, true);
-                        break;
-                }
-            });
+                VisualStateManager.GoToState(this, NormalVisualState.Name, false);
+            }
+            else
+            {
+                var current = VisualStateGroup.CurrentState.Name;
+                if (current.Equals(state))
+                    state = NormalVisualState.Name;
+                VisualStateManager.GoToState(this, state, true);
+            }
         }
     }
 }

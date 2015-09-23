@@ -138,7 +138,10 @@
     <Compile Include="Common\Mdl2.cs" />
     <Compile Include="Common\StateItem.cs" />
     <Compile Include="Common\StateItems.cs" />
+    <Compile Include="Common\TypedEventHandler.cs" />
     <Compile Include="Common\WindowWrapper.cs" />
+    <Compile Include="Common\ObservableItemCollection.cs" />
+    <Compile Include="Controls\HamburgerButtonInfo.cs" />
     <Compile Include="Services\NavigationService\INavigationService.cs" />
     <Compile Include="Services\SettingsService\ISettingsHelper.cs" />
     <Compile Include="Services\SettingsService\SettingsStrategy.cs" />

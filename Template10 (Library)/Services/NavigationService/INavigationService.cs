@@ -17,7 +17,7 @@ namespace Template10.Services.NavigationService
         Frame Frame { get; }
         FrameFacade FrameFacade { get; }
 
-        event EventHandler AfterRestoreSavedNavigation;
+        event TypedEventHandler<Type> AfterRestoreSavedNavigation;
 
         void ClearHistory();
         void GoBack();
