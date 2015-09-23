@@ -34,7 +34,7 @@ namespace Template10.Controls
             }
         }
 
-        void HighlightButton()
+        public void HighlightCorrectButton()
         {
             var type = NavigationService.Frame.Content?.GetType();
             var values = _navButtons.Select(x => x.Value);
@@ -56,7 +56,8 @@ namespace Template10.Controls
                 throw new NullReferenceException("CommandParameter is not set");
             try
             {
-                Selected = commandInfo;
+                if (commandInfo.PageType != null)
+                    Selected = commandInfo;
             }
             finally
             {
@@ -214,24 +215,34 @@ namespace Template10.Controls
             {
                 IsOpen = false;
 
-                // undo previous
-                if (Selected != null)
+                // ensure dp is correct (if diff)
+                var previous = Selected;
+                if (previous != value)
                 {
-                    Selected.IsEnabled = true;
-                    Selected.IsChecked = false;
+                    SetValue(SelectedProperty, value);
+                    // undo previous
+                    if (previous != null)
+                    {
+                        previous.RaiseUnselected();
+                    }
                 }
 
-                // ensure dp is correct (if diff)
-                if (Selected != value)
-                    SetValue(SelectedProperty, value);
+                // reset all
+                var values = _navButtons.Select(x => x.Value);
+                foreach (var item in values)
+                {
+                    item.IsEnabled = true;
+                    item.IsChecked = false;
+                }
 
                 // that's it if null
                 if (value == null)
                     return;
 
                 // setup new value
-                value.IsEnabled = false;
                 value.IsChecked = true;
+                if (previous != value)
+                    value.RaiseSelected();
 
                 // navigate only to new pages
                 if (value.PageType != null && NavigationService.CurrentPageType != value.PageType)
@@ -317,8 +328,8 @@ namespace Template10.Controls
                     NavigationService.FrameFacade.Navigated += (s, e) => IsFullScreen = false;
                     IsFullScreen = true;
                 }
-                NavigationService.FrameFacade.Navigated += (s, e) => HighlightButton();
-                NavigationService.AfterRestoreSavedNavigation += (s, e) => HighlightButton();
+                NavigationService.FrameFacade.Navigated += (s, e) => HighlightCorrectButton();
+                NavigationService.AfterRestoreSavedNavigation += (s, e) => HighlightCorrectButton();
                 ShellSplitView.RegisterPropertyChangedCallback(SplitView.IsPaneOpenProperty, (s, e) =>
                 {
                     // update width
@@ -402,7 +413,7 @@ namespace Template10.Controls
             radio.Unchecked += (s, args) => info.RaiseUnchecked(args);
 
             // udpate UI
-            HighlightButton();
+            HighlightCorrectButton();
         }
 
         private void PaneContent_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)

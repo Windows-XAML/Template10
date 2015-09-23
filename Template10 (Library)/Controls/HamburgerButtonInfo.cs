@@ -84,6 +84,18 @@ namespace Template10.Controls
             return string.Format("{0}({1})", PageType?.ToString() ?? "null", PageParameter?.ToString() ?? "null");
         }
 
+        public event RoutedEventHandler Selected;
+        internal void RaiseSelected()
+        {
+            Selected?.Invoke(this, new RoutedEventArgs());
+        }
+
+        public event RoutedEventHandler Unselected;
+        internal void RaiseUnselected()
+        {
+            Unselected?.Invoke(this, new RoutedEventArgs());
+        }
+
         public event RoutedEventHandler Checked;
         internal void RaiseChecked(RoutedEventArgs args)
         {
