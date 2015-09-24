@@ -1,4 +1,9 @@
-﻿using Template10.Services.NavigationService;
+﻿using System;
+using System.ComponentModel;
+using System.Linq;
+using Template10.Common;
+using Template10.Controls;
+using Template10.Services.NavigationService;
 using Template10.Utils;
 using Windows.UI;
 using Windows.UI.ViewManagement;
@@ -16,10 +21,10 @@ namespace Sample.Views
         public Shell(NavigationService navigationService)
         {
             Instance = this;
-            this.InitializeComponent();
-            Window = Template10.Common.WindowWrapper.Current();
+            InitializeComponent();
+            Window = WindowWrapper.Current();
             MyHamburgerMenu.NavigationService = navigationService;
-            VisualStateManager.GoToState(this, NormalVisualState.Name, false);
+            VisualStateManager.GoToState(Instance, Instance.NormalVisualState.Name, true);
         }
 
         public static void SetBusyVisibility(Visibility visible, string text = null)
@@ -29,24 +34,9 @@ namespace Sample.Views
                 switch (visible)
                 {
                     case Visibility.Visible:
+                        Instance.FindName(nameof(BusyScreen));
                         Instance.BusyText.Text = text ?? string.Empty;
                         VisualStateManager.GoToState(Instance, Instance.BusyVisualState.Name, true);
-                        break;
-                    default:
-                        VisualStateManager.GoToState(Instance, Instance.NormalVisualState.Name, true);
-                        break;
-                }
-            });
-        }
-
-        public static void SetLoginVisibility(Visibility visible)
-        {
-            Window.Dispatcher.Dispatch(() =>
-            {
-                switch (visible)
-                {
-                    case Visibility.Visible:
-                        VisualStateManager.GoToState(Instance, Instance.LoginVisualState.Name, true);
                         break;
                     default:
                         VisualStateManager.GoToState(Instance, Instance.NormalVisualState.Name, true);

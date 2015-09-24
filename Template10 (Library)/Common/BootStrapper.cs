@@ -12,6 +12,7 @@ using Windows.Foundation.Metadata;
 using Template10.Services.NavigationService;
 using Windows.UI.ViewManagement;
 using Template10.Utils;
+using Template10.Services.KeyboardService;
 
 namespace Template10.Common
 {
@@ -191,42 +192,40 @@ namespace Template10.Common
                     }
             }
 
-
             // ensure active (this will hide any custom splashscreen)
             Window.Current.Activate();
 
             // Hook up the default Back handler
-            global::Windows.UI.Core.SystemNavigationManager.GetForCurrentView().BackRequested += (s, args) =>
+            SystemNavigationManager.GetForCurrentView().BackRequested += (s, args) =>
             {
-                // only handle as long as there is a default backstack
-                //args.Handled = !NavigationService.CanGoBack;
                 var handled = false;
-                RaiseBackRequested(ref handled);
+                if (ApiInformation.IsApiContractPresent("Windows.Phone.PhoneContract", 1, 0))
+                {
+                    if (NavigationService.CanGoBack)
+                    {
+                        handled = true;
+                    }
+                }
+                else
+                {
+                    handled = !NavigationService.CanGoBack;
+                }
+
                 args.Handled = handled;
+                RaiseBackRequested(ref handled);
             };
 
             // Hook up keyboard and mouse Back handler
             var keyboard = new Services.KeyboardService.KeyboardService();
             keyboard.AfterBackGesture = () =>
-                                        {
-                                            //the result is no matter
-                                            var handled = false;
-                                            RaiseBackRequested(ref handled);
-                                        };
+            {
+                //the result is no matter
+                var handled = false;
+                RaiseBackRequested(ref handled);
+            };
 
             // Hook up keyboard and mouse Forward handler
-            keyboard.AfterForwardGesture = () => RaiseForwardRequested();
-
-            // Handle the back button press on Mobile
-            if (ApiInformation.IsApiContractPresent("Windows.Phone.PhoneContract", 1, 0))
-            {
-                Windows.Phone.UI.Input.HardwareButtons.BackPressed += (s, a) =>
-                {
-                    bool handled = false;
-                    RaiseBackRequested(ref handled);
-                    a.Handled = handled;
-                };
-            }
+            keyboard.AfterForwardGesture = RaiseForwardRequested;
         }
 
         #endregion
@@ -314,7 +313,14 @@ namespace Template10.Common
 
             // allow the user to do things, even when restoring
             await OnInitializeAsync(e);
-            UpdateTitleBarStyle();
+
+            // setup custom titlebar
+            foreach (var resource in Application.Current.Resources
+                .Where(x => x.Key.Equals(typeof(Controls.CustomTitleBar))))
+            {
+                var control = new Controls.CustomTitleBar();
+                control.Style = resource.Value as Style;
+            }
 
             // create the default frame only if there's nothing already there
             // if it is not null, by the way, then the developer injected something & they win
@@ -323,23 +329,6 @@ namespace Template10.Common
                 // build the default frame
                 Window.Current.Content = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include).Frame;
             }
-        }
-
-        private static void UpdateTitleBarStyle()
-        {
-            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-            titleBar.BackgroundColor = XamlUtil.GetResource("TitleBarBackground", titleBar.BackgroundColor);
-            titleBar.ForegroundColor = XamlUtil.GetResource("TitleBarForeground", titleBar.ForegroundColor);
-            titleBar.ButtonBackgroundColor = XamlUtil.GetResource("TitleBarButtonBackground", titleBar.ButtonBackgroundColor);
-            titleBar.ButtonForegroundColor = XamlUtil.GetResource("TitleBarButtonForeground", titleBar.ButtonForegroundColor);
-            titleBar.ButtonHoverBackgroundColor = XamlUtil.GetResource("TitleBarButtonHoverBackground", titleBar.ButtonHoverBackgroundColor);
-            titleBar.ButtonHoverForegroundColor = XamlUtil.GetResource("TitleBarButtonHoverForeground", titleBar.ButtonHoverForegroundColor);
-            titleBar.ButtonPressedBackgroundColor = XamlUtil.GetResource("TitleBarButtonPressedBackground", titleBar.ButtonPressedBackgroundColor);
-            titleBar.ButtonPressedForegroundColor = XamlUtil.GetResource("TitleBarButtonPressedForeground", titleBar.ButtonPressedForegroundColor);
-            titleBar.ButtonInactiveBackgroundColor = XamlUtil.GetResource("TitleBarButtonInactiveBackground", titleBar.ButtonInactiveBackgroundColor);
-            titleBar.ButtonInactiveForegroundColor = XamlUtil.GetResource("TitleBarButtonInactiveForeground", titleBar.ButtonInactiveForegroundColor);
-            titleBar.InactiveBackgroundColor = XamlUtil.GetResource("TitleBarInactiveBackground", titleBar.InactiveBackgroundColor);
-            titleBar.InactiveForegroundColor = XamlUtil.GetResource("TitleBarInactiveForeground", titleBar.InactiveForegroundColor);
         }
 
         public enum BackButton { Attach, Ignore }

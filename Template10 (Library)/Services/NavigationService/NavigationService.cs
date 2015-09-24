@@ -172,7 +172,7 @@ namespace Template10.Services.NavigationService
             state["NavigateState"] = FrameFacade?.GetNavigationState();
         }
 
-        public event EventHandler AfterRestoreSavedNavigation;
+        public event TypedEventHandler<Type> AfterRestoreSavedNavigation;
         public bool RestoreSavedNavigation()
         {
             try
@@ -188,7 +188,7 @@ namespace Template10.Services.NavigationService
                 FrameFacade.SetNavigationState(state["NavigateState"].ToString());
                 NavigateTo(NavigationMode.Refresh, FrameFacade.CurrentPageParam);
                 while (Frame.Content == null) { /* wait */ }
-                AfterRestoreSavedNavigation?.Invoke(this, EventArgs.Empty);
+                AfterRestoreSavedNavigation?.Invoke(this, FrameFacade.CurrentPageType);
                 return true;
             }
             catch { return false; }

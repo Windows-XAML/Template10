@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
 
 namespace Sample.Services.SettingsServices
 {
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SettingsService
-    public class SettingsService : ISettingsService
+    public partial class SettingsService : ISettingsService
     {
         public static SettingsService Instance { get; private set; }
-
         static SettingsService()
         {
             // implement singleton pattern
@@ -19,7 +14,6 @@ namespace Sample.Services.SettingsServices
         }
 
         Template10.Services.SettingsService.ISettingsHelper _helper;
-
         private SettingsService()
         {
             _helper = new Template10.Services.SettingsService.SettingsHelper();
@@ -31,14 +25,7 @@ namespace Sample.Services.SettingsServices
             set
             {
                 _helper.Write(nameof(UseShellBackButton), value);
-
-                // implement
-                Template10.Common.BootStrapper.Current.NavigationService.Dispatcher.Dispatch(() =>
-                {
-                    Template10.Common.BootStrapper.Current.ShowShellBackButton = value;
-                    Template10.Common.BootStrapper.Current.UpdateShellBackButton();
-                    Template10.Common.BootStrapper.Current.NavigationService.Refresh();
-                });
+                ApplyUseShellBackButton(value);
             }
         }
 
@@ -54,31 +41,18 @@ namespace Sample.Services.SettingsServices
             set
             {
                 _helper.Write(nameof(AppTheme), value.ToString());
-
-                // implement
-                Template10.Common.BootStrapper.Current.NavigationService.Dispatcher.Dispatch(() =>
-                {
-                    switch (value)
-                    {
-                        case ApplicationTheme.Light:
-                            Views.Shell.Instance.RequestedTheme = ElementTheme.Light;
-                            break;
-                        case ApplicationTheme.Dark:
-                            Views.Shell.Instance.RequestedTheme = ElementTheme.Dark;
-                            break;
-                        default:
-                            Views.Shell.Instance.RequestedTheme = ElementTheme.Default;
-                            break;
-                    }
-                    Template10.Common.BootStrapper.Current.NavigationService.Refresh();
-                });
+                ApplyAppTheme(value);
             }
         }
 
         public TimeSpan CacheMaxDuration
         {
             get { return _helper.Read<TimeSpan>(nameof(CacheMaxDuration), TimeSpan.FromDays(2)); }
-            set { _helper.Write(nameof(CacheMaxDuration), value); }
+            set
+            {
+                _helper.Write(nameof(CacheMaxDuration), value);
+                ApplyCacheMaxDuration(value);
+            }
         }
     }
 }

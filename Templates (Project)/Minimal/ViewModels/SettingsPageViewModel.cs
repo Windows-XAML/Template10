@@ -5,19 +5,19 @@ namespace Sample.ViewModels
 {
     public class SettingsPageViewModel : Sample.Mvvm.ViewModelBase
     {
+        public SettingsPartViewModel SettingsPartViewModel { get; } = new SettingsPartViewModel();
+        public AboutPartViewModel AboutPartViewModel { get; } = new AboutPartViewModel();
+    }
+
+    public class SettingsPartViewModel : Mvvm.ViewModelBase
+    {
         Services.SettingsServices.SettingsService _settings;
 
-        public SettingsPageViewModel()
+        public SettingsPartViewModel()
         {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-            {
-                // designtime data
-                return;
-            }
-            _settings = Services.SettingsServices.SettingsService.Instance;
+            if (!Windows.ApplicationModel.DesignMode.DesignModeEnabled)
+                _settings = Services.SettingsServices.SettingsService.Instance;
         }
-
-        #region Settings
 
         public bool UseShellBackButton
         {
@@ -32,19 +32,40 @@ namespace Sample.ViewModels
         }
 
         private string _BusyText = "Please wait...";
-        public string BusyText { get { return _BusyText; } set { Set(ref _BusyText, value); } }
-        public void ShowBusy() { Views.Shell.SetBusyVisibility(Visibility.Visible, _BusyText); }
-        public void HideBusy() { Views.Shell.SetBusyVisibility(Visibility.Collapsed); }
+        public string BusyText
+        {
+            get { return _BusyText; }
+            set { Set(ref _BusyText, value); }
+        }
 
-        public void ShowLogin() { Views.Shell.SetLoginVisibility(Visibility.Visible); }
+        public void ShowBusy()
+        {
+            Views.Shell.SetBusyVisibility(Visibility.Visible, _BusyText);
+        }
 
-        #endregion
+        public void HideBusy()
+        {
+            Views.Shell.SetBusyVisibility(Visibility.Collapsed);
+        }
+    }
 
-        #region About
+    public class AboutPartViewModel : Mvvm.ViewModelBase
+    {
+        public Uri Logo
+        {
+            get { return Windows.ApplicationModel.Package.Current.Logo; }
+        }
 
-        public Uri Logo { get { return Windows.ApplicationModel.Package.Current.Logo; } }
-        public string DisplayName { get { return Windows.ApplicationModel.Package.Current.DisplayName; } }
-        public string Publisher { get { return Windows.ApplicationModel.Package.Current.PublisherDisplayName; } }
+        public string DisplayName
+        {
+            get { return Windows.ApplicationModel.Package.Current.DisplayName; }
+        }
+
+        public string Publisher
+        {
+            get { return Windows.ApplicationModel.Package.Current.PublisherDisplayName; }
+        }
+
         public string Version
         {
             get
@@ -53,8 +74,10 @@ namespace Sample.ViewModels
                 return ver.Major.ToString() + "." + ver.Minor.ToString() + "." + ver.Build.ToString() + "." + ver.Revision.ToString();
             }
         }
-        public Uri RateMe { get { return new Uri(""); } }
 
-        #endregion  
+        public Uri RateMe
+        {
+            get { return new Uri("http://bing.com"); }
+        }
     }
 }
