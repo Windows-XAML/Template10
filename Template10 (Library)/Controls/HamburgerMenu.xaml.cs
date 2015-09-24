@@ -36,9 +36,10 @@ namespace Template10.Controls
 
         public void HighlightCorrectButton()
         {
-            var type = NavigationService.Frame.Content?.GetType();
+            var pageType = NavigationService.CurrentPageType;
+            var pageParam = NavigationService.CurrentPageParam;
             var values = _navButtons.Select(x => x.Value);
-            var button = values.FirstOrDefault(x => type.Equals(x.PageType));
+            var button = values.FirstOrDefault(x => x.PageType == pageType && x.PageParameter == pageParam);
             Selected = button;
         }
 
@@ -245,10 +246,11 @@ namespace Template10.Controls
                     value.RaiseSelected();
 
                 // navigate only to new pages
-                if (value.PageType != null && NavigationService.CurrentPageType != value.PageType)
+                if (value.PageType != null && (NavigationService.CurrentPageType != value.PageType || NavigationService.CurrentPageParam != value.PageParameter))
                 {
                     NavigationService.Navigate(value.PageType, value.PageParameter);
                     value.IsEnabled = false;
+                    HighlightCorrectButton();
                 }
             }
         }
