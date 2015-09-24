@@ -115,7 +115,6 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <None Include="ClassDiagram1.cd" />
     <None Include="Nuget\Build.cmd" />
     <None Include="Nuget\Template10.targets" />
     <None Include="Nuget\Init.ps1" />

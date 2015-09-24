@@ -7,7 +7,11 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:Sample.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      mc:Ignorable="d">
+      RequestedTheme="Light" mc:Ignorable="d">
+
+    <Page.DataContext>
+        <Binding Path="MainPageViewModel" Source="{StaticResource Locator}" />
+    </Page.DataContext>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -24,7 +28,7 @@
 
         <Grid Grid.Row="1" Padding="12,4,0,0">
 
-            <!--  content  -->
+            <TextBlock Style="{StaticResource HeaderTextBlockStyle}" Text="{Binding Value}" />
 
         </Grid>
 
