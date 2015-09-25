@@ -31,6 +31,6 @@ namespace Template10.Common
         public void Close() { Window.Close(); }
         public Window Window { get; private set; }
         public DispatcherWrapper Dispatcher { get; private set; }
-        public List<NavigationService> NavigationServices { get; } = new List<NavigationService>();
+        public NavigationServiceList NavigationServices { get; } = new NavigationServiceList();
     }
 }

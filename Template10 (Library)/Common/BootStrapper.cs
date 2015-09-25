@@ -64,7 +64,7 @@ namespace Template10.Common
         /// it is only a helper property to provide the NavigatioNService for
         /// the first Frame ultimately aggregated in the static WindowWrapper class.
         /// </summary>
-        public Services.NavigationService.NavigationService NavigationService
+        public Services.NavigationService.INavigationService NavigationService
         {
             // because it is protected, we can safely assume it will ref the first view
             get { return WindowWrapper.ActiveWrappers.First().NavigationServices.First(); }

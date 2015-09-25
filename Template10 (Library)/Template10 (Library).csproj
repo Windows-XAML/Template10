@@ -142,6 +142,7 @@
     <Compile Include="Controls\CustomTitleBar.cs" />
     <Compile Include="Controls\HamburgerButtonInfo.cs" />
     <Compile Include="Services\NavigationService\INavigationService.cs" />
+    <Compile Include="Services\NavigationService\NavigationServiceList.cs" />
     <Compile Include="Services\SettingsService\ISettingsHelper.cs" />
     <Compile Include="Services\SettingsService\SettingsStrategy.cs" />
     <Compile Include="Utils\AudioUtils.cs" />

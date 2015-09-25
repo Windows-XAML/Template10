@@ -40,7 +40,7 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <Controls:HamburgerMenu x:Name="MyHamburgerMenu" IsEnabled="False">
+        <Controls:HamburgerMenu x:Name="MyHamburgerMenu" IsEnabled="False" SecondaryButtonOrientation="Horizontal">
 
             <Controls:HamburgerMenu.PrimaryButtons>
 
@@ -62,10 +62,15 @@
 
             <Controls:HamburgerMenu.SecondaryButtons>
 
-                <Controls:HamburgerButtonInfo Tapped="LoginTapped">
+                <Controls:HamburgerButtonInfo MaxWidth="48" Tapped="LoginTapped">
                     <StackPanel Orientation="Horizontal">
                         <SymbolIcon Width="48" Height="48" Symbol="Contact" />
-                        <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Profile" />
+                    </StackPanel>
+                </Controls:HamburgerButtonInfo>
+
+                <Controls:HamburgerButtonInfo MaxWidth="48">
+                    <StackPanel Orientation="Horizontal">
+                        <SymbolIcon Width="48" Height="48" Symbol="Setting" />
                     </StackPanel>
                 </Controls:HamburgerButtonInfo>
 
