@@ -79,6 +79,20 @@ namespace Template10.Controls
             set { Set(ref _content, value); }
         }
 
+        double _MaxWidth = 9999;
+        public double MaxWidth
+        {
+            get { return _MaxWidth; }
+            set { Set(ref _MaxWidth, value); }
+        }
+
+        HorizontalAlignment _HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Left;
+        public HorizontalAlignment HorizontalAlignment
+        {
+            get { return _HorizontalAlignment; }
+            set { Set(ref _HorizontalAlignment, value); }
+        }
+
         public override string ToString()
         {
             return string.Format("{0}({1})", PageType?.ToString() ?? "null", PageParameter?.ToString() ?? "null");

@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Template10.Common;
-using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
-using Windows.Foundation.Collections;
-using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -16,7 +13,7 @@ using Windows.UI.Xaml.Navigation;
 namespace Template10.Services.NavigationService
 {
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-NavigationService
-    public class NavigationService : INavigationService
+    public partial class NavigationService : INavigationService
     {
         private const string EmptyNavigation = "1,0";
 
@@ -146,6 +143,42 @@ namespace Template10.Services.NavigationService
         {
             if (page == null)
                 throw new ArgumentNullException(nameof(page));
+            if (page.FullName.Equals(LastNavigationType)
+                && parameter == LastNavigationParameter)
+                return false;
+            return FrameFacade.Navigate(page, parameter, infoOverride);
+        }
+
+        /*
+            Navigate<T> allows developers to navigate using a
+            page key instead of the view type. This is accomplished by
+            creating a custom Enum and setting up the PageKeys dict
+            with the Key/Type pairs for your views. The dict is
+            shared by all NavigationServices and is stored in
+            the BootStrapper (or Application) of the app.
+
+            Implementation example:
+
+            // define your Enum
+            public Enum Pages { MainPage, DetailPage }
+
+            // setup the keys dict
+            var keys = NavigationService.PageKeys<Views>();
+            keys.Add(Pages.MainPage, typeof(Views.MainPage));
+            keys.Add(Pages.DetailPage, typeof(Views.DetailPage));
+
+            // use Navigate<T>()
+            NavigationService.Navigate(Pages.MainPage);
+        */
+
+        // T must be the same custom Enum used with BootStrapper.PageKeys()
+        public bool Navigate<T>(T key, object parameter = null, NavigationTransitionInfo infoOverride = null)
+            where T : struct, IConvertible
+        {
+            var keys = Common.BootStrapper.Current.PageKeys<T>();
+            if (!keys.ContainsKey(key))
+                throw new KeyNotFoundException(key.ToString());
+            var page = keys[key];
             if (page.FullName.Equals(LastNavigationType)
                 && parameter == LastNavigationParameter)
                 return false;

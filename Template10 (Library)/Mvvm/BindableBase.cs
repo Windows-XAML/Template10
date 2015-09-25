@@ -12,8 +12,6 @@ namespace Template10.Mvvm
 
         public void RaisePropertyChanged([CallerMemberName]string propertyName = null)
         {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-                return;
             try
             {
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

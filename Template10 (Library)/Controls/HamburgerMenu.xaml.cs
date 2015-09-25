@@ -31,6 +31,13 @@ namespace Template10.Controls
                 PrimaryButtons = new ObservableItemCollection<HamburgerButtonInfo>();
                 SecondaryButtons = new ObservableItemCollection<HamburgerButtonInfo>();
                 new KeyboardService().AfterWindowZGesture = () => { HamburgerCommand.Execute(null); };
+                ShellSplitView.RegisterPropertyChangedCallback(SplitView.IsPaneOpenProperty, (d, e) =>
+                {
+                    if (SecondaryButtonOrientation.Equals(Orientation.Horizontal) && ShellSplitView.IsPaneOpen)
+                        _SecondaryButtonStackPanel.Orientation = Orientation.Horizontal;
+                    else
+                        _SecondaryButtonStackPanel.Orientation = Orientation.Vertical;
+                });
             }
         }
 
@@ -101,6 +108,15 @@ namespace Template10.Controls
         #endregion
 
         #region Style
+
+        public Orientation SecondaryButtonOrientation
+        {
+            get { return (Orientation)GetValue(SecondaryButtonOrientationProperty); }
+            set { SetValue(SecondaryButtonOrientationProperty, value); }
+        }
+        public static readonly DependencyProperty SecondaryButtonOrientationProperty =
+            DependencyProperty.Register(nameof(SecondaryButtonOrientation), typeof(Orientation),
+                typeof(HamburgerMenu), new PropertyMetadata(Orientation.Vertical));
 
         public SolidColorBrush HamburgerBackground
         {
@@ -428,9 +444,18 @@ namespace Template10.Controls
             var radio = sender as RadioButton;
             var info = radio.DataContext as HamburgerButtonInfo;
             info.RaiseTapped(e);
+
+            // why is it handled?
+            // so we don't re-select
             e.Handled = true;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        StackPanel _SecondaryButtonStackPanel;
+        private void SecondaryButtonStackPanel_Loaded(object sender, RoutedEventArgs e)
+        {
+            _SecondaryButtonStackPanel = sender as StackPanel;
+        }
     }
 }

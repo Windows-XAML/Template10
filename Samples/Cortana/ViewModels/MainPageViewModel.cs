@@ -1,0 +1,78 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Template10.Mvvm;
+using Windows.Media.SpeechRecognition;
+using Windows.Media.SpeechSynthesis;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
+
+namespace Sample.ViewModels
+{
+    public class MainPageViewModel : Template10.Mvvm.ViewModelBase
+    {
+        public static MainPageViewModel Instance { get; private set; }
+
+        Services.SpeechService.SpeechService _SpeechService;
+
+        public MainPageViewModel()
+        {
+            _SpeechService = new Services.SpeechService.SpeechService();
+            Instance = this;
+        }
+
+        public override async void OnNavigatedTo(object parameter, NavigationMode mode, IDictionary<string, object> state)
+        {
+            Value = parameter?.ToString() ?? "No value";
+            try
+            {
+                await _SpeechService.LoadRecognizerAsync();
+                _ListenCanExecute = true;
+            }
+            finally
+            {
+                ListenCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        public override Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending)
+        {
+            _SpeechService.Dispose();
+            return Task.FromResult<object>(null);
+        }
+
+        private string _Value;
+        public string Value
+        {
+            get
+            {
+                return string.IsNullOrWhiteSpace(_Value) ? "No value" : _Value;
+            }
+            set { Set(ref _Value, value); }
+        }
+
+        public DelegateCommand _ListenCommand;
+        public DelegateCommand ListenCommand
+        {
+            get
+            {
+                return _ListenCommand ?? (_ListenCommand = new DelegateCommand(ListenExecute, ListenCanExecute));
+            }
+        }
+
+        private bool _ListenCanExecute = false;
+        private bool ListenCanExecute() { return _ListenCanExecute; }
+
+        private async void ListenExecute()
+        {
+            Value = await _SpeechService.ListenAsync("Cortana Sample", "Try saying, 'The quick brown fox jumps over the lazy dog.'");
+        }
+
+        public async Task Speak()
+        {
+            await _SpeechService.SpeakAsync(Value);
+        }
+    }
+}
