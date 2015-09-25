@@ -153,18 +153,17 @@
             </Style>
 
             <DataTemplate x:Name="NavButtonTemplate">
-                <RadioButton Width="{Binding PaneWidth, ElementName=ThisPage}"
-                              MaxWidth="{Binding MaxWidth}" VerticalAlignment="Stretch"
-                             HorizontalAlignment="{Binding HorizontalAlignment}"
+                <Grid MaxWidth="{Binding MaxWidth}" HorizontalAlignment="{Binding HorizontalAlignment}">
+                    <RadioButton Width="{Binding PaneWidth, ElementName=ThisPage}"
                              Command="{Binding NavCommand, ElementName=ThisPage}"
                              CommandParameter="{Binding}" GroupName="Nav"
                              IsChecked="{Binding IsChecked, Mode=TwoWay}"
                              IsEnabled="{Binding IsEnabled, Mode=TwoWay}" Loaded="NavButton_Loaded"
                              Tag="{Binding Content}" Tapped="NavButton_Tapped"
                              Visibility="{Binding Visibility, Mode=TwoWay}">
-                    <RadioButton.Template>
-                        <ControlTemplate>
-                            <ToggleButton
+                        <RadioButton.Template>
+                            <ControlTemplate>
+                                <ToggleButton
                                           MaxWidth="{Binding MaxWidth, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                           HorizontalAlignment="{Binding HorizontalAlignment, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                           Command="{Binding Command, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
@@ -172,9 +171,10 @@
                                           Content="{Binding Tag, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                           IsChecked="{Binding IsChecked, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                           Style="{StaticResource NavButtonStyle}" />
-                        </ControlTemplate>
-                    </RadioButton.Template>
-                </RadioButton>
+                            </ControlTemplate>
+                        </RadioButton.Template>
+                    </RadioButton>
+                </Grid>
             </DataTemplate>
 
         </ResourceDictionary>
