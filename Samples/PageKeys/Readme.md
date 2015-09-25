@@ -25,7 +25,7 @@ public override Task OnInitializeAsync(IActivatedEventArgs args)
 }
 ````
 
-##NavigationSerice.Navigate<T>()
+##NavigationService.Navigate<T>()
 
 In this way, we can use an overload of the NavigationService.Navigate method that takes as first argument the enum value corresponding to the page type we want to navigate to (instead of use the page type directly).
 
