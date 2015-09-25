@@ -18,6 +18,8 @@ namespace Template10.Services.NavigationService
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-NavigationService
     public class NavigationService : INavigationService
     {
+        private readonly Dictionary<string, Type> pagesByKey = new Dictionary<string, Type>(StringComparer.CurrentCultureIgnoreCase);
+
         private const string EmptyNavigation = "1,0";
 
         public FrameFacade FrameFacade { get; private set; }
@@ -224,6 +226,32 @@ namespace Template10.Services.NavigationService
                 dataContext.OnNavigatedTo(parameter, NavigationMode.New, null);
             }
             flyout.Show();
+        }
+
+        public void Register(string key, Type page)
+        {
+            pagesByKey[key] = page;
+        }
+
+        public bool Navigate(string pageKey, object parameter = null, NavigationTransitionInfo infoOverride = null)
+        {
+            var page = GetPageByKey(pageKey);
+            return Navigate(page, parameter, infoOverride);
+        }
+
+        public Task OpenAsync(string pageKey, object parameter = null, string title = null, ViewSizePreference size = ViewSizePreference.UseHalf)
+        {
+            var page = GetPageByKey(pageKey);
+            return OpenAsync(page, parameter, title, size);
+        }
+
+        private Type GetPageByKey(string pageKey)
+        {
+            Type page;
+            if (!pagesByKey.TryGetValue(pageKey, out page))
+                throw new ArgumentException($"No page registered with key '{pageKey}'");
+
+            return page;
         }
 
         public Type CurrentPageType { get { return FrameFacade.CurrentPageType; } }
