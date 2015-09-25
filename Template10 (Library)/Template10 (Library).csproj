@@ -130,7 +130,6 @@
     <Compile Include="Behaviors\NavButtonBehavior.cs" />
     <Compile Include="Behaviors\TextBoxEnterKeyBehavior.cs" />
     <Compile Include="Behaviors\TimeoutAction.cs" />
-    <Compile Include="Behaviors\TimerTriggerBehavior.cs" />
     <Compile Include="Common\BootStrapper.cs" />
     <Compile Include="Common\DispatcherWrapper.cs" />
     <Compile Include="Common\HandledEventArgs.cs" />
@@ -145,6 +144,7 @@
     <Compile Include="Services\NavigationService\INavigationService.cs" />
     <Compile Include="Services\SettingsService\ISettingsHelper.cs" />
     <Compile Include="Services\SettingsService\SettingsStrategy.cs" />
+    <Compile Include="Utils\AudioUtils.cs" />
     <Compile Include="Utils\MonitorUtil.cs" />
     <Compile Include="Utils\XamlUtil.cs" />
     <Compile Include="Controls\HamburgerMenu.xaml.cs">
