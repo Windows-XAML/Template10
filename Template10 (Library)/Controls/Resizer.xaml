@@ -4,6 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="using:Template10.Controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             HorizontalAlignment="Left" VerticalAlignment="Top"
              d:DesignHeight="60" d:DesignWidth="200"
              mc:Ignorable="d">
 
