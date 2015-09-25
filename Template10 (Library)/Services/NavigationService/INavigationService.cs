@@ -22,8 +22,11 @@ namespace Template10.Services.NavigationService
         void ClearHistory();
         void GoBack();
         void GoForward();
+        void Register(string key, Type page);
         bool Navigate(Type page, object parameter = null, NavigationTransitionInfo infoOverride = null);
+        bool Navigate(string pageKey, object parameter = null, NavigationTransitionInfo infoOverride = null);
         Task OpenAsync(Type page, object parameter = null, string title = null, ViewSizePreference size = ViewSizePreference.UseHalf);
+        Task OpenAsync(string pageKey, object parameter = null, string title = null, ViewSizePreference size = ViewSizePreference.UseHalf);
         void Refresh();
         bool RestoreSavedNavigation();
         void Resuming();
