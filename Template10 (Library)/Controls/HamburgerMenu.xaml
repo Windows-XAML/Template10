@@ -28,8 +28,8 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="ToggleButton">
-                            <Grid x:Name="RootGrid" Width="{Binding PaneWidth, ElementName=ThisPage}" 
-                                         Background="Transparent" d:IsHidden="True">
+                            <Grid x:Name="RootGrid" Width="{Binding PaneWidth, ElementName=ThisPage}"
+                                  Background="Transparent" d:IsHidden="True">
                                 <VisualStateManager.VisualStateGroups>
                                     <VisualStateGroup x:Name="CommonStates">
                                         <VisualState x:Name="Normal">
@@ -153,9 +153,10 @@
             </Style>
 
             <DataTemplate x:Name="NavButtonTemplate">
-                <RadioButton Width="{Binding PaneWidth, ElementName=ThisPage}"
+                <RadioButton Width="{Binding PaneWidth, ElementName=ThisPage}" MinWidth="0"
+                             MaxWidth="{Binding MaxWidth}"
+                             HorizontalAlignment="{Binding HorizontalAlignment}"
                              Command="{Binding NavCommand, ElementName=ThisPage}"
-                                 MaxWidth="{Binding MaxWidth}" HorizontalAlignment="{Binding HorizontalAlignment}" MinWidth="0"
                              CommandParameter="{Binding}" GroupName="Nav"
                              IsChecked="{Binding IsChecked, Mode=TwoWay}"
                              IsEnabled="{Binding IsEnabled, Mode=TwoWay}" Loaded="NavButton_Loaded"
@@ -163,8 +164,7 @@
                              Visibility="{Binding Visibility, Mode=TwoWay}">
                     <RadioButton.Template>
                         <ControlTemplate>
-                            <ToggleButton
-                                          MaxWidth="{Binding MaxWidth, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                            <ToggleButton MaxWidth="{Binding MaxWidth, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                           HorizontalAlignment="{Binding HorizontalAlignment, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                           Command="{Binding Command, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                           CommandParameter="{Binding CommandParameter, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"

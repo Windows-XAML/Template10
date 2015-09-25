@@ -6,13 +6,10 @@ using Windows.UI.Xaml.Controls;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Core;
 using System.Linq;
-using System.Collections.Generic;
-using System.Diagnostics;
 using Windows.Foundation.Metadata;
 using Template10.Services.NavigationService;
-using Windows.UI.ViewManagement;
-using Template10.Utils;
-using Template10.Services.KeyboardService;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace Template10.Common
 {
@@ -417,6 +414,18 @@ namespace Template10.Common
                 return AdditionalKinds.SecondaryTile;
             else
                 return AdditionalKinds.Other;
+        }
+
+        private object _PageKeys;
+        // T must be a custom Enum
+        public Dictionary<T, Type> PageKeys<T>()
+            where T : struct, IConvertible
+        {
+            if (!typeof(T).GetTypeInfo().IsEnum)
+                throw new ArgumentException("T must be an enumerated type");
+            if (_PageKeys != null && _PageKeys is Dictionary<T, Type>)
+                return _PageKeys as Dictionary<T, Type>;
+            return (_PageKeys = new Dictionary<T, Type>()) as Dictionary<T, Type>;
         }
     }
 }

@@ -19,12 +19,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10 (Library)", "Tem
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10 (Services)", "Template10 (Services)\Template10 (Services).csproj", "{8C139B94-9B85-4CE6-ADCD-7E9365F45263}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates (Zips)", "Templates (Zips)", "{23E156AD-BA5F-473F-ACE0-509B4B730FD9}"
-	ProjectSection(SolutionItems) = preProject
-		Manually Add A Template to VS2015.txt = Manually Add A Template to VS2015.txt
-		Templates (Zips)\T10Minimal.zip = Templates (Zips)\T10Minimal.zip
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Search (and Login)", "Samples\Search\Search (and Login).csproj", "{4BAA93EC-B25A-4A7D-953D-0F4C07390078}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TitleBar", "Samples\TitleBar\TitleBar.csproj", "{C27B1DB1-93BD-4070-9B6B-FEBD28B5CAB7}"
@@ -32,6 +26,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvvmLight", "Samples\MvvmLight\MvvmLight.csproj", "{0CE3C531-CD61-4AF9-A7D4-7EB93EA46A9F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cortana (and Speech)", "Samples\Cortana\Cortana (and Speech).csproj", "{BE334D79-1D64-4638-B547-75400AA9A58B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PageKeys", "Samples\PageKeys\PageKeys.csproj", "{AA1ADA35-B0C0-4EDF-8BAD-56D1021BE922}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -222,6 +218,26 @@ Global
 		{BE334D79-1D64-4638-B547-75400AA9A58B}.Release|x86.ActiveCfg = Release|x86
 		{BE334D79-1D64-4638-B547-75400AA9A58B}.Release|x86.Build.0 = Release|x86
 		{BE334D79-1D64-4638-B547-75400AA9A58B}.Release|x86.Deploy.0 = Release|x86
+		{AA1ADA35-B0C0-4EDF-8BAD-56D1021BE922}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{AA1ADA35-B0C0-4EDF-8BAD-56D1021BE922}.Debug|ARM.ActiveCfg = Debug|ARM
+		{AA1ADA35-B0C0-4EDF-8BAD-56D1021BE922}.Debug|ARM.Build.0 = Debug|ARM
+		{AA1ADA35-B0C0-4EDF-8BAD-56D1021BE922}.Debug|ARM.Deploy.0 = Debug|ARM
+		{AA1ADA35-B0C0-4EDF-8BAD-56D1021BE922}.Debug|x64.ActiveCfg = Debug|x64
+		{AA1ADA35-B0C0-4EDF-8BAD-56D1021BE922}.Debug|x64.Build.0 = Debug|x64
+		{AA1ADA35-B0C0-4EDF-8BAD-56D1021BE922}.Debug|x64.Deploy.0 = Debug|x64
+		{AA1ADA35-B0C0-4EDF-8BAD-56D1021BE922}.Debug|x86.ActiveCfg = Debug|x86
+		{AA1ADA35-B0C0-4EDF-8BAD-56D1021BE922}.Debug|x86.Build.0 = Debug|x86
+		{AA1ADA35-B0C0-4EDF-8BAD-56D1021BE922}.Debug|x86.Deploy.0 = Debug|x86
+		{AA1ADA35-B0C0-4EDF-8BAD-56D1021BE922}.Release|Any CPU.ActiveCfg = Release|x86
+		{AA1ADA35-B0C0-4EDF-8BAD-56D1021BE922}.Release|ARM.ActiveCfg = Release|ARM
+		{AA1ADA35-B0C0-4EDF-8BAD-56D1021BE922}.Release|ARM.Build.0 = Release|ARM
+		{AA1ADA35-B0C0-4EDF-8BAD-56D1021BE922}.Release|ARM.Deploy.0 = Release|ARM
+		{AA1ADA35-B0C0-4EDF-8BAD-56D1021BE922}.Release|x64.ActiveCfg = Release|x64
+		{AA1ADA35-B0C0-4EDF-8BAD-56D1021BE922}.Release|x64.Build.0 = Release|x64
+		{AA1ADA35-B0C0-4EDF-8BAD-56D1021BE922}.Release|x64.Deploy.0 = Release|x64
+		{AA1ADA35-B0C0-4EDF-8BAD-56D1021BE922}.Release|x86.ActiveCfg = Release|x86
+		{AA1ADA35-B0C0-4EDF-8BAD-56D1021BE922}.Release|x86.Build.0 = Release|x86
+		{AA1ADA35-B0C0-4EDF-8BAD-56D1021BE922}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -236,5 +252,6 @@ Global
 		{C27B1DB1-93BD-4070-9B6B-FEBD28B5CAB7} = {3F06506F-F7DA-4A64-B12B-5A9592139493}
 		{0CE3C531-CD61-4AF9-A7D4-7EB93EA46A9F} = {3F06506F-F7DA-4A64-B12B-5A9592139493}
 		{BE334D79-1D64-4638-B547-75400AA9A58B} = {3F06506F-F7DA-4A64-B12B-5A9592139493}
+		{AA1ADA35-B0C0-4EDF-8BAD-56D1021BE922} = {3F06506F-F7DA-4A64-B12B-5A9592139493}
 	EndGlobalSection
 EndGlobal

@@ -52,15 +52,19 @@
         <!--  #region content  -->
 
         <RelativePanel Grid.Row="1" Padding="12,8,0,0">
-            <TextBox x:Name="ParameterTextBox" Width="200"
-                     Margin="0" Header="Parameter to pass"
-                     Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                <Interactivity:Interaction.Behaviors>
-                    <Behaviors:TextBoxEnterKeyBehavior>
-                        <Core:CallMethodAction MethodName="GotoDetailsPage" TargetObject="{Binding}" />
-                    </Behaviors:TextBoxEnterKeyBehavior>
-                </Interactivity:Interaction.Behaviors>
-            </TextBox>
+            <controls:Resizer>
+                <TextBox x:Name="ParameterTextBox" Width="200"
+                         Margin="0" AcceptsReturn="True"
+                         Header="Parameter to pass"
+                         Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         TextWrapping="Wrap">
+                    <Interactivity:Interaction.Behaviors>
+                        <Behaviors:TextBoxEnterKeyBehavior>
+                            <Core:CallMethodAction MethodName="GotoDetailsPage" TargetObject="{Binding}" />
+                        </Behaviors:TextBoxEnterKeyBehavior>
+                    </Interactivity:Interaction.Behaviors>
+                </TextBox>
+            </controls:Resizer>
             <Button Margin="4,0" Click="{x:Bind ViewModel.GotoDetailsPage}"
                     Content="Submit" RelativePanel.AlignBottomWith="ParameterTextBox"
                     RelativePanel.RightOf="ParameterTextBox" />
