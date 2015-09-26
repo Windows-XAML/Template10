@@ -30,7 +30,7 @@ namespace Template10.Services.DialogService
                 await Task.Delay(1000);
             }
             _open = true;
-            var dialog = new MessageDialog(content, title);
+            var dialog = (title == default(string))? new MessageDialog(content) : new MessageDialog(content, title);
             if (commands != null && commands.Any())
                 foreach (var item in commands)
                     dialog.Commands.Add(item);
