@@ -247,7 +247,10 @@ namespace Template10.Services.NavigationService
 			}
 			else
 			{
-				FrameFacade.Frame.CacheSize = FrameFacade.Frame.BackStackDepth;
+				if (Frame.BackStackDepth == 0)
+					Frame.CacheSize = 1;
+				else
+					Frame.CacheSize = Frame.BackStackDepth;
 			}
 
 			FrameFacade.Frame.CacheSize = currentSize;
