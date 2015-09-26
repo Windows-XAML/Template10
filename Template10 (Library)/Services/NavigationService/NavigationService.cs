@@ -237,7 +237,23 @@ namespace Template10.Services.NavigationService
 
         public bool CanGoForward { get { return FrameFacade.CanGoForward; } }
 
-        public void ClearHistory() { FrameFacade.Frame.BackStack.Clear(); }
+		public void ClearCache(bool removeCachedPagesInBackStack = false)
+		{
+			int currentSize = FrameFacade.Frame.CacheSize;
+
+			if (removeCachedPagesInBackStack)
+			{
+				FrameFacade.Frame.CacheSize = 0;
+			}
+			else
+			{
+				FrameFacade.Frame.CacheSize = FrameFacade.Frame.BackStackDepth;
+			}
+
+			FrameFacade.Frame.CacheSize = currentSize;
+		}
+
+		public void ClearHistory() { FrameFacade.Frame.BackStack.Clear(); }
 
         public void Resuming() { /* nothing */ }
 
