@@ -1,24 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Windows.UI.Xaml;
 
-namespace Minimal.Services.SettingsServices
+namespace Sample.Services.SettingsServices
 {
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SettingsService
-    public class SettingsService
+    public partial class SettingsService : ISettingsService
     {
         public static SettingsService Instance { get; private set; }
-
         static SettingsService()
         {
             // implement singleton pattern
             Instance = Instance ?? new SettingsService();
         }
 
-        Template10.Services.SettingsService.SettingsHelper _helper;
-
+        Template10.Services.SettingsService.ISettingsHelper _helper;
         private SettingsService()
         {
             _helper = new Template10.Services.SettingsService.SettingsHelper();
@@ -30,12 +25,33 @@ namespace Minimal.Services.SettingsServices
             set
             {
                 _helper.Write(nameof(UseShellBackButton), value);
-                Template10.Common.BootStrapper.Current.NavigationService.Dispatcher.Dispatch(() =>
-                {
-                    Template10.Common.BootStrapper.Current.ShowShellBackButton = value;
-                    Template10.Common.BootStrapper.Current.UpdateShellBackButton();
-                    Template10.Common.BootStrapper.Current.NavigationService.Refresh();
-                });
+                ApplyUseShellBackButton(value);
+            }
+        }
+
+        public ApplicationTheme AppTheme
+        {
+            get
+            {
+                var theme = ApplicationTheme.Light;
+                var value = _helper.Read<string>(nameof(AppTheme), theme.ToString());
+                Enum.TryParse<ApplicationTheme>(value, out theme);
+                return theme;
+            }
+            set
+            {
+                _helper.Write(nameof(AppTheme), value.ToString());
+                ApplyAppTheme(value);
+            }
+        }
+
+        public TimeSpan CacheMaxDuration
+        {
+            get { return _helper.Read<TimeSpan>(nameof(CacheMaxDuration), TimeSpan.FromDays(2)); }
+            set
+            {
+                _helper.Write(nameof(CacheMaxDuration), value);
+                ApplyCacheMaxDuration(value);
             }
         }
     }
