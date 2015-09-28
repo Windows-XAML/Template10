@@ -59,9 +59,9 @@ This project also includes a sample XML file illustrating the natural language v
     </VoiceCommands>
 
 This sample file implements a phrase "Handle {spoken phrase}" with optional words.  Here are some examples of phrases you can say:
-- *TemplateTen* handle **hello world**
-- *TemplateTen* please handle **hello world**
-- Please handle **hello world** *TemplateTen*
-- Handle **hello world** *TemplateTen*
+- *TemplateTen* add statement **hello world**
+- *TemplateTen* please add statement **hello world**
+- Please add statement **hello world** *TemplateTen*
+- Add statement **hello world** *TemplateTen*
 
 More details about natural language voice commands can be found here: https://msdn.microsoft.com/en-us/library/windows/apps/xaml/dn997786.aspx
