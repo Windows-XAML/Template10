@@ -17,12 +17,14 @@ namespace Template10.Services.NavigationService
         Frame Frame { get; }
         FrameFacade FrameFacade { get; }
 
-        event EventHandler AfterRestoreSavedNavigation;
+        event TypedEventHandler<Type> AfterRestoreSavedNavigation;
 
-        void ClearHistory();
+		void ClearCache(bool removeCachedPagesInBackStack = false);
+		void ClearHistory();
         void GoBack();
         void GoForward();
         bool Navigate(Type page, object parameter = null, NavigationTransitionInfo infoOverride = null);
+        bool Navigate<T>(T key, object parameter = null, NavigationTransitionInfo infoOverride = null) where T : struct, IConvertible;
         Task OpenAsync(Type page, object parameter = null, string title = null, ViewSizePreference size = ViewSizePreference.UseHalf);
         void Refresh();
         bool RestoreSavedNavigation();

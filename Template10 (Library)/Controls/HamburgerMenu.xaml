@@ -6,10 +6,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="using:Template10.Controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             x:Name="ThisPage"
-             d:DesignHeight="400"
-             d:DesignWidth="400"
-             mc:Ignorable="d">
+             x:Name="ThisPage" d:DesignHeight="400"
+             d:DesignWidth="400" mc:Ignorable="d">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -21,24 +19,17 @@
             <SolidColorBrush x:Name="NavButtonForegroundBrush" Color="White" />
             <SolidColorBrush x:Name="NavAreaBackgroundBrush" Color="White" />
             <SolidColorBrush x:Name="SecondaryBorderBrush" Color="DimGray" />
-
-
             <SolidColorBrush x:Name="NavButtonCheckedOverlayBackgroundBrush" Color="#FF7D1F22" />
-            <!--  previous [#FFD13438 + Black @ 0.4 opacity]  -->
             <SolidColorBrush x:Name="NavButtonHoverOverlayBackgroundBrush" Color="#FF434343" />
-            <!--  approximates previous [White @ Opacity 0.1]  -->
 
             <Style x:Key="NavButtonStyle" TargetType="ToggleButton">
                 <Setter Property="Height" Value="48" />
                 <Setter Property="MinWidth" Value="48" />
-                <Setter Property="UseSystemFocusVisuals" Value="True" />
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="ToggleButton">
-                            <Grid x:Name="RootGrid"
-                                  Width="{Binding PaneWidth,
-                                                  ElementName=ThisPage}"
-                                  Background="Transparent">
+                            <Grid x:Name="RootGrid" Width="{Binding PaneWidth, ElementName=ThisPage}"
+                                  Background="Transparent" d:IsHidden="True">
                                 <VisualStateManager.VisualStateGroups>
                                     <VisualStateGroup x:Name="CommonStates">
                                         <VisualState x:Name="Normal">
@@ -103,38 +94,24 @@
                                 <Grid x:Name="CheckedOverlay" Visibility="Collapsed">
                                     <Rectangle Fill="{Binding NavButtonCheckedOverlayBackground, ElementName=ThisPage, FallbackValue=Navy}" />
                                 </Grid>
-                                <Rectangle x:Name="PressedOverlay"
-                                           Fill="White"
-                                           Opacity=".2"
-                                           Visibility="Collapsed" />
-                                <Rectangle x:Name="HoverOverlay"
-                                           Fill="{Binding NavButtonHoverOverlayBackground,
-                                                          ElementName=ThisPage,
-                                                          FallbackValue=Gray}"
-                                           Visibility="Collapsed" />
-                                <ContentPresenter x:Name="ContentPresenter"
-                                                  HorizontalAlignment="Left"
-                                                  VerticalAlignment="Stretch"
-                                                  HorizontalContentAlignment="Left"
-                                                  VerticalContentAlignment="Center"
-                                                  Background="Transparent"
-                                                  Content="{TemplateBinding Content}"
-                                                  FontSize="16"
-                                                  Foreground="{Binding NavButtonForeground,
-                                                                       ElementName=ThisPage,
-                                                                       FallbackValue=White}" />
+                                <Rectangle x:Name="PressedOverlay" Fill="White"
+                                           Opacity=".2" Visibility="Collapsed" />
+                                <Rectangle x:Name="HoverOverlay" Fill="{Binding NavButtonHoverOverlayBackground, ElementName=ThisPage, FallbackValue=Gray}" Visibility="Collapsed" />
+                                <ContentPresenter x:Name="ContentPresenter" HorizontalAlignment="Left"
+                                                  VerticalAlignment="Stretch" HorizontalContentAlignment="Left"
+                                                  VerticalContentAlignment="Center" Background="Transparent"
+                                                  Content="{TemplateBinding Content}" FontSize="16"
+                                                  Foreground="{Binding NavButtonForeground, ElementName=ThisPage, FallbackValue=White}" />
                             </Grid>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
+                <Setter Property="UseSystemFocusVisuals" Value="True" />
             </Style>
 
             <Style x:Key="HamburgerButtonStyle" TargetType="Button">
-                <Setter Property="Width" Value="48" />
                 <Setter Property="Height" Value="48" />
                 <Setter Property="HorizontalAlignment" Value="Left" />
-                <Setter Property="VerticalAlignment" Value="Top" />
-                <Setter Property="UseSystemFocusVisuals" Value="True" />
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
@@ -159,55 +136,40 @@
                                         <VisualState x:Name="Disabled" />
                                     </VisualStateGroup>
                                 </VisualStateManager.VisualStateGroups>
-                                <Rectangle x:Name="PressedOverlay"
-                                           Fill="White"
-                                           Opacity=".2"
-                                           Visibility="Collapsed" />
-                                <Rectangle x:Name="HoverOverlay"
-                                           Fill="White"
-                                           Opacity=".1"
-                                           Visibility="Collapsed" />
-                                <FontIcon x:Name="ContentPresenter"
-                                          FontSize="20"
-                                          Foreground="{Binding HamburgerForeground,
-                                                               ElementName=ThisPage,
-                                                               FallbackValue=White}"
+                                <Rectangle x:Name="PressedOverlay" Fill="White"
+                                           Opacity=".2" Visibility="Collapsed" />
+                                <Rectangle x:Name="HoverOverlay" Fill="White"
+                                           Opacity=".1" Visibility="Collapsed" />
+                                <FontIcon x:Name="ContentPresenter" FontSize="20"
+                                          Foreground="{Binding HamburgerForeground, ElementName=ThisPage, FallbackValue=White}"
                                           Glyph="&#xE700;" />
                             </Grid>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
+                <Setter Property="UseSystemFocusVisuals" Value="True" />
+                <Setter Property="VerticalAlignment" Value="Top" />
+                <Setter Property="Width" Value="48" />
             </Style>
 
             <DataTemplate x:Name="NavButtonTemplate">
-                <RadioButton Width="{Binding PaneWidth,
-                                             ElementName=ThisPage,
-                                             FallbackValue=220}"
-                             Height="48"
-                             Command="{Binding NavCommand,
-                                               ElementName=ThisPage}"
-                             CommandParameter="{Binding}"
-                             GroupName="Nav"
-                             Loaded="NavButton_Loaded"
-                             Tag="{Binding Content}"
-                             Tapped="NavButton_Tapped">
+                <RadioButton Width="{Binding PaneWidth, ElementName=ThisPage}" MinWidth="0"
+                             MaxWidth="{Binding MaxWidth}"
+                             HorizontalAlignment="{Binding HorizontalAlignment}"
+                             Command="{Binding NavCommand, ElementName=ThisPage}"
+                             CommandParameter="{Binding}" GroupName="Nav"
+                             IsChecked="{Binding IsChecked, Mode=TwoWay}"
+                             IsEnabled="{Binding IsEnabled, Mode=TwoWay}" Loaded="NavButton_Loaded"
+                             Tag="{Binding Content}" Tapped="NavButton_Tapped"
+                             Visibility="{Binding Visibility, Mode=TwoWay}">
                     <RadioButton.Template>
                         <ControlTemplate>
-                            <ToggleButton Width="{Binding Width,
-                                                          Mode=TwoWay,
-                                                          RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                          Command="{Binding Command,
-                                                            Mode=TwoWay,
-                                                            RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                          CommandParameter="{Binding CommandParameter,
-                                                                     Mode=TwoWay,
-                                                                     RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                          Content="{Binding Tag,
-                                                            Mode=TwoWay,
-                                                            RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                          IsChecked="{Binding IsChecked,
-                                                              Mode=TwoWay,
-                                                              RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                            <ToggleButton MaxWidth="{Binding MaxWidth, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                          HorizontalAlignment="{Binding HorizontalAlignment, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                          Command="{Binding Command, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                          CommandParameter="{Binding CommandParameter, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                          Content="{Binding Tag, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                          IsChecked="{Binding IsChecked, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                           Style="{StaticResource NavButtonStyle}" />
                         </ControlTemplate>
                     </RadioButton.Template>
@@ -221,6 +183,21 @@
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
+
+                <VisualStateGroup.Transitions>
+                    <VisualTransition GeneratedDuration="0" To="VisualStateWide">
+                        <Storyboard>
+                            <DoubleAnimation Duration="0:0:0.6" Storyboard.TargetName="HamburgerButton"
+                                             Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)"
+                                             To="-48" d:IsOptimized="True">
+                                <DoubleAnimation.EasingFunction>
+                                    <BackEase EasingMode="EaseIn" />
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </VisualTransition>
+                </VisualStateGroup.Transitions>
+
                 <VisualState x:Name="VisualStateNarrow">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger x:Name="VisualStateNarrowTrigger" MinWindowWidth="0" />
@@ -231,6 +208,7 @@
                         <Setter Target="HamburgerButton.Visibility" Value="Visible" />
                     </VisualState.Setters>
                 </VisualState>
+
                 <VisualState x:Name="VisualStateNormal">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger x:Name="VisualStateNormalTrigger" MinWindowWidth="521" />
@@ -241,9 +219,10 @@
                         <Setter Target="HamburgerButton.Visibility" Value="Visible" />
                     </VisualState.Setters>
                 </VisualState>
+
                 <VisualState x:Name="VisualStateWide">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger x:Name="VisualStateWideTrigger" MinWindowWidth="9999999" />
+                        <AdaptiveTrigger x:Name="VisualStateWideTrigger" MinWindowWidth="-1" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="ShellSplitView.DisplayMode" Value="CompactInline" />
@@ -255,8 +234,9 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <ContentControl x:Name="contentControl" Content="{Binding HeaderContent, ElementName=ThisPage}">
-
+        <ContentControl Height="48" Margin="48,0,0,0"
+                        VerticalAlignment="Top" HorizontalContentAlignment="Stretch"
+                        Content="{Binding HeaderContent, ElementName=ThisPage}">
             <Interactivity:Interaction.Behaviors>
                 <Core:DataTriggerBehavior Binding="{Binding Visibility, ElementName=HamburgerButton}" Value="Visible">
                     <Core:ChangePropertyAction PropertyName="Margin" TargetObject="{Binding ElementName=PaneContent}">
@@ -269,29 +249,26 @@
                     <Core:ChangePropertyAction PropertyName="Margin" TargetObject="{Binding ElementName=PaneContent}" />
                 </Core:DataTriggerBehavior>
             </Interactivity:Interaction.Behaviors>
-
         </ContentControl>
 
-        <SplitView x:Name="ShellSplitView"
-                   Grid.Column="0"
-                   Grid.ColumnSpan="2"
-                   DisplayMode="Inline"
-                   OpenPaneLength="220"
+        <SplitView x:Name="ShellSplitView" Grid.Column="0"
+                   DisplayMode="Inline" OpenPaneLength="220"
                    PaneBackground="Transparent">
 
             <SplitView.Pane>
-                <Grid x:Name="PaneContent"
-                      Background="{Binding NavAreaBackground,
-                                           ElementName=ThisPage,
-                                           FallbackValue=Blue}"
-                      Tapped="PaneContent_Tapped">
+
+                <Grid x:Name="PaneContent" Margin="0,48,0,0"
+                      Background="{Binding NavAreaBackground, ElementName=ThisPage, FallbackValue=Blue}"
+                      BorderBrush="{Binding SecondarySeparator, ElementName=ThisPage, FallbackValue=White}"
+                      BorderThickness="0,0,1,0" Tapped="PaneContent_Tapped">
+
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <Interactivity:Interaction.Behaviors>
-                        <Core:DataTriggerBehavior Binding="{Binding Visibility, ElementName=HamburgerButton}" Value="Visible">
+                        <Core:DataTriggerBehavior Binding="{Binding Visibility, ElementName=HamburgerButton, Mode=OneWay}" Value="Visible">
                             <Core:ChangePropertyAction PropertyName="Margin" TargetObject="{Binding ElementName=PaneContent}">
                                 <Core:ChangePropertyAction.Value>
                                     <Thickness>0,48,0,0</Thickness>
@@ -299,7 +276,11 @@
                             </Core:ChangePropertyAction>
                         </Core:DataTriggerBehavior>
                         <Core:DataTriggerBehavior Binding="{Binding Visibility, ElementName=HamburgerButton, Mode=OneWay}" Value="Collapsed">
-                            <Core:ChangePropertyAction PropertyName="Margin" TargetObject="{Binding ElementName=PaneContent}" />
+                            <Core:ChangePropertyAction PropertyName="Margin" TargetObject="{Binding ElementName=PaneContent}">
+                                <Core:ChangePropertyAction.Value>
+                                    <Thickness>0,0,0,0</Thickness>
+                                </Core:ChangePropertyAction.Value>
+                            </Core:ChangePropertyAction>
                         </Core:DataTriggerBehavior>
                     </Interactivity:Interaction.Behaviors>
 
@@ -313,82 +294,64 @@
                             </ItemsControl.ItemsPanel>
 
                             <!--  design data  -->
-                            <local:NavigationButtonInfo>
+                            <local:HamburgerButtonInfo>
                                 <StackPanel Orientation="Horizontal">
-                                    <SymbolIcon Width="48"
-                                                Height="48"
-                                                Symbol="Back" />
-                                    <TextBlock Margin="12,0,0,0"
-                                               VerticalAlignment="Center"
-                                               Text="Left" />
+                                    <SymbolIcon Width="48" Height="48" Symbol="Back" />
+                                    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Left" />
                                 </StackPanel>
-                            </local:NavigationButtonInfo>
-                            <local:NavigationButtonInfo>
+                            </local:HamburgerButtonInfo>
+                            <local:HamburgerButtonInfo>
                                 <StackPanel Orientation="Horizontal">
-                                    <SymbolIcon Width="48"
-                                                Height="48"
-                                                Symbol="Up" />
-                                    <TextBlock Margin="12,0,0,0"
-                                               VerticalAlignment="Center"
-                                               Text="Top" />
+                                    <SymbolIcon Width="48" Height="48" Symbol="Up" />
+                                    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Top" />
                                 </StackPanel>
-                            </local:NavigationButtonInfo>
-                            <local:NavigationButtonInfo>
+                            </local:HamburgerButtonInfo>
+                            <local:HamburgerButtonInfo>
                                 <StackPanel Orientation="Horizontal">
-                                    <SymbolIcon Width="48"
-                                                Height="48"
-                                                Symbol="Forward" />
-                                    <TextBlock Margin="12,0,0,0"
-                                               VerticalAlignment="Center"
-                                               Text="Right" />
+                                    <SymbolIcon Width="48" Height="48" Symbol="Forward" />
+                                    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Right" />
                                 </StackPanel>
-                            </local:NavigationButtonInfo>
-                            <local:NavigationButtonInfo>
+                            </local:HamburgerButtonInfo>
+                            <local:HamburgerButtonInfo>
                                 <StackPanel Orientation="Horizontal">
-                                    <SymbolIcon Width="48"
-                                                Height="48"
-                                                Symbol="Download" />
-                                    <TextBlock Margin="12,0,0,0"
-                                               VerticalAlignment="Center"
-                                               Text="Bottom" />
+                                    <SymbolIcon Width="48" Height="48" Symbol="Download" />
+                                    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Bottom" />
                                 </StackPanel>
-                            </local:NavigationButtonInfo>
+                            </local:HamburgerButtonInfo>
 
                         </ItemsControl>
 
                     </ScrollViewer>
 
-                    <ItemsControl Grid.Row="1"
-                                  ItemTemplate="{StaticResource NavButtonTemplate}"
-                                  ItemsSource="{Binding SecondaryButtons,
-                                                        ElementName=ThisPage}">
+                    <ItemsControl Grid.Row="1" ItemTemplate="{StaticResource NavButtonTemplate}" ItemsSource="{Binding SecondaryButtons, ElementName=ThisPage}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <StackPanel BorderBrush="{Binding SecondarySeparator, ElementName=ThisPage, FallbackValue=White}" BorderThickness="0,1,0,0" />
+                                <StackPanel BorderBrush="{Binding SecondarySeparator, ElementName=ThisPage, FallbackValue=White}" BorderThickness="0,1,0,0" Loaded="SecondaryButtonStackPanel_Loaded" />
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
 
                         <!--  designtime  -->
-                        <local:NavigationButtonInfo>
+                        <local:HamburgerButtonInfo>
                             <StackPanel Orientation="Horizontal">
-                                <SymbolIcon Width="48"
-                                            Height="48"
-                                            Symbol="Setting" />
-                                <TextBlock Margin="12,0,0,0"
-                                           VerticalAlignment="Center"
-                                           Text="Settings" />
+                                <SymbolIcon Width="48" Height="48" Symbol="Setting" />
+                                <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Settings" />
                             </StackPanel>
-                        </local:NavigationButtonInfo>
+                        </local:HamburgerButtonInfo>
 
                     </ItemsControl>
 
                 </Grid>
+
             </SplitView.Pane>
+
         </SplitView>
 
-        <Button x:Name="HamburgerButton"
-                Grid.Row="0" Command="{x:Bind HamburgerCommand}"
+        <Button x:Name="HamburgerButton" Grid.Row="0"
+                Command="{x:Bind HamburgerCommand}" RenderTransformOrigin="0.5,0.5"
                 Style="{StaticResource HamburgerButtonStyle}">
+            <Button.RenderTransform>
+                <CompositeTransform />
+            </Button.RenderTransform>
             <StackPanel Orientation="Horizontal">
                 <FontIcon FontSize="20" Glyph="&#xE700;" />
             </StackPanel>

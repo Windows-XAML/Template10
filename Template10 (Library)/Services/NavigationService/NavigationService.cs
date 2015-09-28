@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Template10.Common;
-using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
-using Windows.Foundation.Collections;
-using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -16,7 +13,7 @@ using Windows.UI.Xaml.Navigation;
 namespace Template10.Services.NavigationService
 {
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-NavigationService
-    public class NavigationService : INavigationService
+    public partial class NavigationService : INavigationService
     {
         private const string EmptyNavigation = "1,0";
 
@@ -152,6 +149,42 @@ namespace Template10.Services.NavigationService
             return FrameFacade.Navigate(page, parameter, infoOverride);
         }
 
+        /*
+            Navigate<T> allows developers to navigate using a
+            page key instead of the view type. This is accomplished by
+            creating a custom Enum and setting up the PageKeys dict
+            with the Key/Type pairs for your views. The dict is
+            shared by all NavigationServices and is stored in
+            the BootStrapper (or Application) of the app.
+
+            Implementation example:
+
+            // define your Enum
+            public Enum Pages { MainPage, DetailPage }
+
+            // setup the keys dict
+            var keys = BootStrapper.PageKeys<Views>();
+            keys.Add(Pages.MainPage, typeof(Views.MainPage));
+            keys.Add(Pages.DetailPage, typeof(Views.DetailPage));
+
+            // use Navigate<T>()
+            NavigationService.Navigate(Pages.MainPage);
+        */
+
+        // T must be the same custom Enum used with BootStrapper.PageKeys()
+        public bool Navigate<T>(T key, object parameter = null, NavigationTransitionInfo infoOverride = null)
+            where T : struct, IConvertible
+        {
+            var keys = Common.BootStrapper.Current.PageKeys<T>();
+            if (!keys.ContainsKey(key))
+                throw new KeyNotFoundException(key.ToString());
+            var page = keys[key];
+            if (page.FullName.Equals(LastNavigationType)
+                && parameter == LastNavigationParameter)
+                return false;
+            return FrameFacade.Navigate(page, parameter, infoOverride);
+        }
+
         public void SaveNavigation()
         {
             if (CurrentPageType == null)
@@ -172,7 +205,7 @@ namespace Template10.Services.NavigationService
             state["NavigateState"] = FrameFacade?.GetNavigationState();
         }
 
-        public event EventHandler AfterRestoreSavedNavigation;
+        public event TypedEventHandler<Type> AfterRestoreSavedNavigation;
         public bool RestoreSavedNavigation()
         {
             try
@@ -188,7 +221,7 @@ namespace Template10.Services.NavigationService
                 FrameFacade.SetNavigationState(state["NavigateState"].ToString());
                 NavigateTo(NavigationMode.Refresh, FrameFacade.CurrentPageParam);
                 while (Frame.Content == null) { /* wait */ }
-                AfterRestoreSavedNavigation?.Invoke(this, EventArgs.Empty);
+                AfterRestoreSavedNavigation?.Invoke(this, FrameFacade.CurrentPageType);
                 return true;
             }
             catch { return false; }
@@ -204,7 +237,26 @@ namespace Template10.Services.NavigationService
 
         public bool CanGoForward { get { return FrameFacade.CanGoForward; } }
 
-        public void ClearHistory() { FrameFacade.Frame.BackStack.Clear(); }
+		public void ClearCache(bool removeCachedPagesInBackStack = false)
+		{
+			int currentSize = FrameFacade.Frame.CacheSize;
+
+			if (removeCachedPagesInBackStack)
+			{
+				FrameFacade.Frame.CacheSize = 0;
+			}
+			else
+			{
+				if (Frame.BackStackDepth == 0)
+					Frame.CacheSize = 1;
+				else
+					Frame.CacheSize = Frame.BackStackDepth;
+			}
+
+			FrameFacade.Frame.CacheSize = currentSize;
+		}
+
+		public void ClearHistory() { FrameFacade.Frame.BackStack.Clear(); }
 
         public void Resuming() { /* nothing */ }
 

@@ -21,13 +21,13 @@ namespace Template10.Mvvm
         }
 
         [DebuggerStepThrough]
-        public bool CanExecute(object p)
+        public bool CanExecute(object p = null)
         {
             try { return _canExecute(); }
             catch { return false; }
         }
 
-        public void Execute(object p)
+        public void Execute(object p = null)
         {
             if (!CanExecute(p))
                 return;

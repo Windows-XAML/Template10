@@ -3,7 +3,6 @@ using Windows.Storage;
 
 namespace Template10.Services.SettingsService
 {
-	// lazy initialization: https://github.com/Windows-XAML/Template10/pull/50
 	public class SettingsService : PropertyStore
 	{
 		private static SettingsService _local;
@@ -13,7 +12,6 @@ namespace Template10.Services.SettingsService
 			{
 				if (_local == null)
 					_local = new SettingsService(ApplicationData.Current.LocalSettings.Values);
-
 				return _local;
 			}
 		}

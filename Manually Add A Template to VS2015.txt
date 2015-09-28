@@ -4,6 +4,6 @@ To manually add a new Template to Visual Studio 2015, copy the zip file to the f
 
 For example, copy T10Minimal.zip to
 
-c:\users\username\Visual Studio 2015\Templates\ProjectTemplates\Visual C#\Windows
+c:\users\username\Documents\Visual Studio 2015\Templates\ProjectTemplates\Visual C#\Windows
 
 You do not need to expand the zip file.

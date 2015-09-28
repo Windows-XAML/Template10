@@ -37,6 +37,7 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\Template10Library.XML</DocumentationFile>
     <GenerateLibraryLayout>true</GenerateLibraryLayout>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <PlatformTarget>ARM</PlatformTarget>
@@ -129,15 +130,25 @@
     <Compile Include="Behaviors\NavButtonBehavior.cs" />
     <Compile Include="Behaviors\TextBoxEnterKeyBehavior.cs" />
     <Compile Include="Behaviors\TimeoutAction.cs" />
-    <Compile Include="Behaviors\TimerTriggerBehavior.cs" />
     <Compile Include="Common\BootStrapper.cs" />
     <Compile Include="Common\DispatcherWrapper.cs" />
     <Compile Include="Common\HandledEventArgs.cs" />
     <Compile Include="Common\Mdl2.cs" />
     <Compile Include="Common\StateItem.cs" />
     <Compile Include="Common\StateItems.cs" />
+    <Compile Include="Common\TypedEventHandler.cs" />
     <Compile Include="Common\WindowWrapper.cs" />
+    <Compile Include="Common\ObservableItemCollection.cs" />
+    <Compile Include="Controls\CustomTitleBar.cs" />
+    <Compile Include="Controls\HamburgerButtonInfo.cs" />
+    <Compile Include="Controls\Resizer.xaml.cs">
+      <DependentUpon>Resizer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Services\NavigationService\INavigationService.cs" />
+    <Compile Include="Services\NavigationService\NavigationServiceList.cs" />
+    <Compile Include="Services\SettingsService\ISettingsHelper.cs" />
+    <Compile Include="Services\SettingsService\SettingsStrategy.cs" />
+    <Compile Include="Utils\AudioUtils.cs" />
     <Compile Include="Utils\MonitorUtil.cs" />
     <Compile Include="Utils\XamlUtil.cs" />
     <Compile Include="Controls\HamburgerMenu.xaml.cs">
@@ -176,6 +187,10 @@
     <Page Include="Controls\PageHeader.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Resizer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\Mdl2.xaml">
       <Generator>MSBuild:Compile</Generator>
