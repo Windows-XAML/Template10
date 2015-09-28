@@ -15,11 +15,14 @@ namespace Sample
             switch (DetermineStartCause(args))
             {
                 case AdditionalKinds.SecondaryTile:
-                    var e = args as LaunchActivatedEventArgs;
-                    NavigationService.Navigate(typeof(Views.DetailPage), e.Arguments);
+                    var tileargs = args as LaunchActivatedEventArgs;
+                    NavigationService.Navigate(typeof(Views.DetailPage), tileargs.Arguments);
+                    break;
+                case AdditionalKinds.Toast:
+                    var toastargs = args as ToastNotificationActivatedEventArgs;
+                    NavigationService.Navigate(typeof(Views.DetailPage), toastargs.Argument);
                     break;
                 case AdditionalKinds.Primary:
-                case AdditionalKinds.Toast:
                 case AdditionalKinds.Other:
                     NavigationService.Navigate(typeof(Views.MainPage));
                     break;

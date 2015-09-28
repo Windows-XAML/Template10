@@ -19,7 +19,8 @@ namespace Template10.Services.NavigationService
 
         event TypedEventHandler<Type> AfterRestoreSavedNavigation;
 
-        void ClearHistory();
+		void ClearCache(bool removeCachedPagesInBackStack = false);
+		void ClearHistory();
         void GoBack();
         void GoForward();
         bool Navigate(Type page, object parameter = null, NavigationTransitionInfo infoOverride = null);

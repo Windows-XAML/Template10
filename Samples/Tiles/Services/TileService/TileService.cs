@@ -5,8 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Sample.ViewModels;
 using Windows.UI.StartScreen;
-using AdaptiveTileExtensions;
 using Windows.UI.Notifications;
+using NotificationsExtensions.Tiles;
+using NotificationsExtensions.Toasts;
+using Windows.ApplicationModel.DataTransfer;
 
 namespace Sample.Services.TileService
 {
@@ -20,40 +22,53 @@ namespace Sample.Services.TileService
 
         internal async Task<bool> PinAsync(DetailPageViewModel detailPageViewModel)
         {
-            // prepare content
+            var name = "Tiles sample";
+            var title = "Template 10";
+            var body = detailPageViewModel.Value;
+            var image = "https://raw.githubusercontent.com/Windows-XAML/Template10/master/Assets/Template10.png";
 
-            var header = new Text("Template 10")
+            var bindingContent = new TileBindingContentAdaptive()
             {
-                Style = TextStyle.Subtitle
+                PeekImage = new TilePeekImage()
+                {
+                    Source = new TileImageSource(image)
+                },
+
+                Children =
+                {
+                    new TileText()
+                    {
+                        Text = title,
+                        Style = TileTextStyle.Body
+                    },
+
+                    new TileText()
+                    {
+                        Text = body,
+                        Wrap = true,
+                        Style = TileTextStyle.CaptionSubtle
+                    }
+                }
             };
 
-            var content = new Text(detailPageViewModel.Value)
+            var binding = new TileBinding()
             {
-                Style = TextStyle.Caption,
-                WrapText = true
+                Branding = TileBranding.NameAndLogo,
+                DisplayName = name,
+                Content = bindingContent
             };
 
-            var logo = new TileImage(ImagePlacement.Inline)
+            var content = new TileContent()
             {
-                Source = "https://raw.githubusercontent.com/Windows-XAML/Template10/master/Assets/Template10.png"
+                Visual = new TileVisual()
+                {
+                    TileMedium = binding,
+                    TileWide = binding,
+                    TileLarge = binding
+                }
             };
 
-            // build tile
-
-            var tile = AdaptiveTile.CreateTile(string.Empty);
-            var binding = TileBinding.Create(TemplateType.TileWide);
-            binding.Branding = Branding.Name;
-
-            var sub1 = new SubGroup { Width = 33 };
-            binding.Add(sub1);
-            sub1.AddImage(logo);
-
-            var sub2 = new SubGroup();
-            binding.Add(sub2);
-            sub2.AddText(header);
-            sub2.AddText(content);
-
-            tile.Tiles.Add(binding);
+            var xml = content.GetXml();
 
             // show tile
 
@@ -62,16 +77,17 @@ namespace Sample.Services.TileService
             if (!await IsPinned(detailPageViewModel))
             {
                 // initial pin
+                var logo = new Uri("ms-appx:///Assets/Logo.png");
                 var secondaryTile = new SecondaryTile(tileId)
                 {
                     Arguments = detailPageViewModel.Value,
-                    DisplayName = "Detail page",
+                    DisplayName = name,
                     VisualElements =
                         {
-                            Square44x44Logo = new Uri("ms-appx:///Assets/Logo.png"),
-                            Square150x150Logo = new Uri("ms-appx:///Assets/Logo.png"),
-                            Wide310x150Logo = new Uri("ms-appx:///Assets/Logo.png"),
-                            Square310x310Logo = new Uri("ms-appx:///Assets/Logo.png"),
+                            Square44x44Logo = logo,
+                            Square150x150Logo = logo,
+                            Wide310x150Logo = logo,
+                            Square310x310Logo = logo,
                             ShowNameOnSquare150x150Logo = true,
                         },
                 };
@@ -82,15 +98,56 @@ namespace Sample.Services.TileService
                 }
             }
 
-            // update pin
-            var xml = tile.GetNotification().Content;
-            xml.DocumentElement.RemoveAttribute("version");
-            var value = xml.GetXml();
-            var tileUpdater = TileUpdateManager.CreateTileUpdaterForSecondaryTile(tileId);
+            // add notifications
+
             var tileNotification = new TileNotification(xml);
+            var tileUpdater = TileUpdateManager.CreateTileUpdaterForSecondaryTile(tileId);
             tileUpdater.Update(tileNotification);
 
+            // show toast
+
+            ShowToast(detailPageViewModel);
+
+            // result
+
             return true;
+        }
+
+        void ShowToast(DetailPageViewModel detailPageViewModel)
+        {
+            var data = detailPageViewModel.Value;
+            var image = "https://raw.githubusercontent.com/Windows-XAML/Template10/master/Assets/Template10.png";
+
+            var content = new ToastContent()
+            {
+                Launch = data,
+                Visual = new ToastVisual()
+                {
+                    TitleText = new ToastText()
+                    {
+                        Text = "Secondary tile pinned"
+                    },
+
+                    BodyTextLine1 = new ToastText()
+                    {
+                        Text = detailPageViewModel.Value
+                    },
+
+                    AppLogoOverride = new ToastAppLogo()
+                    {
+                        Crop = ToastImageCrop.Circle,
+                        Source = new ToastImageSource(image)
+                    }
+                },
+                Audio = new ToastAudio()
+                {
+                    Src = new Uri("ms-winsoundevent:Notification.IM")
+                }
+            };
+
+            var notification = new ToastNotification(content.GetXml());
+            var notifier = ToastNotificationManager.CreateToastNotifier();
+            notifier.Show(notification);
         }
 
         internal async Task<bool> UnPinAsync(DetailPageViewModel detailPageViewModel)

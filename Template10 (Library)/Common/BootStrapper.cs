@@ -405,11 +405,11 @@ namespace Template10.Common
         /// </summary>
         public static AdditionalKinds DetermineStartCause(IActivatedEventArgs args)
         {
+            if (args is ToastNotificationActivatedEventArgs)
+                return AdditionalKinds.Toast;
             var e = args as ILaunchActivatedEventArgs;
             if (e?.TileId == DefaultTileID && string.IsNullOrEmpty(e?.Arguments))
                 return AdditionalKinds.Primary;
-            else if (e?.TileId == DefaultTileID && !string.IsNullOrEmpty(e?.Arguments))
-                return AdditionalKinds.Toast;
             else if (e?.TileId != null && e?.TileId != DefaultTileID)
                 return AdditionalKinds.SecondaryTile;
             else
