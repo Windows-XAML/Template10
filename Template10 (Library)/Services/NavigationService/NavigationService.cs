@@ -163,7 +163,7 @@ namespace Template10.Services.NavigationService
             public Enum Pages { MainPage, DetailPage }
 
             // setup the keys dict
-            var keys = NavigationService.PageKeys<Views>();
+            var keys = BootStrapper.PageKeys<Views>();
             keys.Add(Pages.MainPage, typeof(Views.MainPage));
             keys.Add(Pages.DetailPage, typeof(Views.DetailPage));
 
