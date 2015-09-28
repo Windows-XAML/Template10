@@ -39,6 +39,8 @@ namespace Template10.Controls
             {
                 MyGrabber.Width = value.Width;
                 MyGrabber.Height = value.Height;
+
+                // move it
                 var transform = MyGrabber.RenderTransform as CompositeTransform;
                 transform.TranslateX = value.Width * .3;
                 transform.TranslateY = value.Height * .3;
@@ -49,7 +51,7 @@ namespace Template10.Controls
                 typeof(Resizer), new PropertyMetadata(new Size(30, 30), (d, e) =>
                 { (d as Resizer).GrabberSize = (Size)e.NewValue; }));
 
-        Size originalSize;
+        Windows.Foundation.Size originalSize;
         private void GrabLoaded(object sender, RoutedEventArgs e)
         {
             originalSize = Element.RenderSize;

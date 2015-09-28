@@ -16,7 +16,6 @@ namespace Sample
         {
             var keys = PageKeys<Pages>();
             keys.Add(Pages.MainPage, typeof(Views.MainPage));
-
             return base.OnInitializeAsync(args);
         }
 

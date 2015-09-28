@@ -51,11 +51,11 @@
 
         <!--  #region content  -->
 
-        <RelativePanel Grid.Row="1" Padding="12,8,0,0">
+        <StackPanel Grid.Row="1" VerticalAlignment="Top"
+                    Orientation="Horizontal" Padding="12,8,0,0">
             <controls:Resizer>
-                <TextBox x:Name="ParameterTextBox" Width="200"
-                         Margin="0" AcceptsReturn="True"
-                         Header="Parameter to pass"
+                <TextBox Width="200" Margin="0"
+                         AcceptsReturn="True" Header="Parameter to pass"
                          Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          TextWrapping="Wrap">
                     <Interactivity:Interaction.Behaviors>
@@ -65,10 +65,9 @@
                     </Interactivity:Interaction.Behaviors>
                 </TextBox>
             </controls:Resizer>
-            <Button Margin="4,0" Click="{x:Bind ViewModel.GotoDetailsPage}"
-                    Content="Submit" RelativePanel.AlignBottomWith="ParameterTextBox"
-                    RelativePanel.RightOf="ParameterTextBox" />
-        </RelativePanel>
+            <Button Margin="4,0" VerticalAlignment="Bottom"
+                    Click="{x:Bind ViewModel.GotoDetailsPage}" Content="Submit" />
+        </StackPanel>
 
         <!--  #endregion  -->
 
