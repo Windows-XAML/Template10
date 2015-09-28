@@ -407,7 +407,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty PaneWidthProperty =
             DependencyProperty.Register("PaneWidth", typeof(double),
-                typeof(HamburgerMenu), new PropertyMetadata(220));
+                typeof(HamburgerMenu), new PropertyMetadata(220d));
 
         public UIElement HeaderContent
         {
