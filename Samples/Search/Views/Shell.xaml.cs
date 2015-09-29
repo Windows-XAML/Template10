@@ -48,6 +48,7 @@ namespace Sample.Views
 
         private void LoginHide(object sender, System.EventArgs e)
         {
+            IsAuthenticated = true;
             VisualStateManager.GoToState(this, NormalVisualState.Name, true);
         }
 
@@ -60,5 +61,17 @@ namespace Sample.Views
         {
             VisualStateManager.GoToState(this, NormalVisualState.Name, true);
         }
+
+        public bool IsAuthenticated
+        {
+            get { return (bool)GetValue(IsAuthenticatedProperty); }
+            set { SetValue(IsAuthenticatedProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for IsAuthenticated.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IsAuthenticatedProperty =
+            DependencyProperty.Register("IsAuthenticated", typeof(bool), typeof(Shell), new PropertyMetadata(false));
+
+
     }
 }
