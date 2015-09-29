@@ -49,7 +49,6 @@ namespace Sample.Views
         private void LoginHide(object sender, System.EventArgs e)
         {
             VisualStateManager.GoToState(this, NormalVisualState.Name, true);
-            MyHamburgerMenu.HighlightCorrectButton();
         }
 
         private void SearchChecked(object sender, RoutedEventArgs e)
@@ -60,7 +59,6 @@ namespace Sample.Views
         private void SearchUnchecked(object sender, RoutedEventArgs e)
         {
             VisualStateManager.GoToState(this, NormalVisualState.Name, true);
-            MyHamburgerMenu.HighlightCorrectButton();
         }
     }
 }

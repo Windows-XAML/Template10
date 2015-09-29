@@ -14,33 +14,27 @@
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
-                <VisualState x:Name="NormalVisualState">
-                    <VisualState.Setters>
-                        <Setter Target="MyHamburgerMenu.(UIElement.IsEnabled)" Value="True" />
-                    </VisualState.Setters>
-                </VisualState>
+                <VisualState x:Name="NormalVisualState" />
                 <VisualState x:Name="BusyVisualState">
                     <VisualState.Setters>
-                        <Setter Target="BusyRing.(ProgressRing.IsActive)" Value="True" />
                         <Setter Target="BusyScreen.(UIElement.Visibility)" Value="Visible" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="SearchVisualState">
                     <VisualState.Setters>
-                        <Setter Target="MyHamburgerMenu.(UIElement.IsEnabled)" Value="True" />
                         <Setter Target="SearchScreen.(UIElement.Visibility)" Value="Visible" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="LoginVisualState">
                     <VisualState.Setters>
-                        <Setter Target="MyHamburgerMenu.(UIElement.IsEnabled)" Value="False" />
+                        <Setter Target="MyHamburgerMenu.(UIElement.Visibility)" Value="Collapsed" />
                         <Setter Target="LoginScreen.(UIElement.Visibility)" Value="Visible" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <Controls:HamburgerMenu x:Name="MyHamburgerMenu" IsEnabled="False" SecondaryButtonOrientation="Horizontal">
+        <Controls:HamburgerMenu x:Name="MyHamburgerMenu" SecondaryButtonOrientation="Horizontal">
 
             <Controls:HamburgerMenu.PrimaryButtons>
 
@@ -78,8 +72,7 @@
 
         </Controls:HamburgerMenu>
 
-        <Grid x:Name="BusyScreen" Background="{StaticResource ModalBackground}"
-              Visibility="Collapsed" x:DeferLoadStrategy="Lazy">
+        <Grid x:Name="BusyScreen" Background="{StaticResource ModalBackground}" Visibility="Collapsed" x:DeferLoadStrategy="Lazy">
             <Viewbox Height="32">
                 <StackPanel Orientation="Horizontal">
                     <ProgressRing x:Name="BusyRing" Width="24"
@@ -93,8 +86,7 @@
         <Grid x:Name="SearchScreen" Margin="48,0,0,0"
               Background="{StaticResource ModalBackground}" Visibility="Collapsed"
               x:DeferLoadStrategy="Lazy">
-            <sample:SearchPart x:Name="searchPart" HorizontalAlignment="Left"
-                               VerticalAlignment="Stretch" RenderTransformOrigin="0.5,0.5">
+            <sample:SearchPart x:Name="searchPart" HorizontalAlignment="Left" VerticalAlignment="Stretch" RenderTransformOrigin="0.5,0.5">
                 <UserControl.RenderTransform>
                     <CompositeTransform />
                 </UserControl.RenderTransform>
@@ -102,8 +94,7 @@
 
         </Grid>
 
-        <Grid x:Name="LoginScreen" Background="{StaticResource ModalBackground}"
-              Visibility="Collapsed" x:DeferLoadStrategy="Lazy">
+        <Grid x:Name="LoginScreen" Background="{StaticResource ModalBackground}" Visibility="Collapsed" x:DeferLoadStrategy="Lazy">
             <sample:LoginPart x:Name="loginPart" Margin="48,0,0,0"
                               HorizontalAlignment="Left" VerticalAlignment="Stretch"
                               Hide="LoginHide" RenderTransformOrigin="0.5,0.5">

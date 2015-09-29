@@ -28,11 +28,8 @@ private void SearchChecked(object sender, RoutedEventArgs e)
 private void SearchUnchecked(object sender, RoutedEventArgs e)
 {
     VisualStateManager.GoToState(this, NormalVisualState.Name, true);
-    MyHamburgerMenu.HighlightCorrectButton();
 }
 ````
-
-The only special logic here is resetting the HamburgerMenu with HamburgerMenu.HighlightCorrectButton(). This ignores any custom logic and re-selects the button that matches the current Frame.Page.GetType() value. If no match is found, this methid simply results in Unchecking every button. 
 
 ##Login example:
 
@@ -50,7 +47,6 @@ private void LoginTapped(object sender, RoutedEventArgs e)
 private void LoginHide(object sender, System.EventArgs e)
 {
     VisualStateManager.GoToState(this, NormalVisualState.Name, true);
-    MyHamburgerMenu.HighlightCorrectButton();
 }
 ````
 

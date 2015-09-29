@@ -70,8 +70,7 @@ namespace Template10.Controls
             pageParam = pageParam ?? NavigationService.CurrentPageParam;
             var values = _navButtons.Select(x => x.Value);
             var button = values.FirstOrDefault(x => x.PageType == pageType && x.PageParameter == pageParam);
-            if (button?.IsEnabled ?? false)
-                Selected = button;
+            Selected = button;
         }
 
         #region commands
@@ -281,7 +280,12 @@ namespace Template10.Controls
         public HamburgerButtonInfo Selected
         {
             get { return GetValue(SelectedProperty) as HamburgerButtonInfo; }
-            set { SetValue(SelectedProperty, value); }
+            set
+            {
+                if (value?.Equals(Selected) ?? false)
+                    value.IsChecked = true;
+                SetValue(SelectedProperty, value);
+            }
         }
         public static readonly DependencyProperty SelectedProperty =
             DependencyProperty.Register(nameof(Selected), typeof(HamburgerButtonInfo),
@@ -290,40 +294,39 @@ namespace Template10.Controls
         private void SetSelected(HamburgerButtonInfo previous, HamburgerButtonInfo value)
         {
             IsOpen = false;
-            if (previous != value && previous != null)
+
+            // undo previous
+            if (previous != null && previous != value)
             {
                 previous.RaiseUnselected();
             }
 
             // reset all
             var values = _navButtons.Select(x => x.Value);
-            foreach (var item in values)
+            foreach (var item in values.Where(x => x != value))
             {
-                item.IsEnabled = true;
                 item.IsChecked = false;
             }
 
             // that's it if null
             if (value == null)
+            {
                 return;
-
-            // basic setup
-            value.IsChecked = true;
-
-            // signal event
-            if (previous != value)
-                value.RaiseSelected();
+            }
+            else
+            {
+                value.IsChecked = true;
+                if (previous != value)
+                {
+                    value.RaiseSelected();
+                }
+            }
 
             // navigate only to new pages
-            if (value.PageType == null)
-                return;
-            if (value.PageType.Equals(NavigationService.CurrentPageType) && (value.PageParameter?.Equals(NavigationService.CurrentPageParam) ?? false))
-                return;
+            if (value.PageType == null) return;
+            if (value.PageType.Equals(NavigationService.CurrentPageType) && (value.PageParameter?.Equals(NavigationService.CurrentPageParam) ?? false)) return;
             NavigationService.Navigate(value.PageType, value.PageParameter);
-            HighlightCorrectButton(value.PageType, value.PageParameter);
-            value.IsEnabled = false;
         }
-
 
         public bool IsOpen
         {
@@ -476,7 +479,12 @@ namespace Template10.Controls
             _navButtons.Add(radio, info);
 
             // map clicked
-            radio.Checked += (s, args) => info.RaiseChecked(args);
+            radio.Checked += (s, args) =>
+            {
+                info.RaiseChecked(args);
+                Selected = radio.DataContext as HamburgerButtonInfo;
+            };
+            radio.Unchecked += (s, args) => HighlightCorrectButton();
             radio.Unchecked += (s, args) => info.RaiseUnchecked(args);
 
             // udpate UI
