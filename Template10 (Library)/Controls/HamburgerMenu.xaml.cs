@@ -248,7 +248,6 @@ namespace Template10.Controls
                 var values = _navButtons.Select(x => x.Value);
                 foreach (var item in values)
                 {
-                    item.IsEnabled = true;
                     item.IsChecked = false;
                 }
 
@@ -265,7 +264,6 @@ namespace Template10.Controls
                 if (value.PageType != null && (NavigationService.CurrentPageType != value.PageType || NavigationService.CurrentPageParam != value.PageParameter))
                 {
                     NavigationService.Navigate(value.PageType, value.PageParameter);
-                    value.IsEnabled = false;
                     HighlightCorrectButton();
                 }
             }
