@@ -144,11 +144,13 @@
     <Compile Include="Controls\Resizer.xaml.cs">
       <DependentUpon>Resizer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\ColorLighteningConverter.cs" />
     <Compile Include="Services\NavigationService\INavigationService.cs" />
     <Compile Include="Services\NavigationService\NavigationServiceList.cs" />
     <Compile Include="Services\SettingsService\ISettingsHelper.cs" />
     <Compile Include="Services\SettingsService\SettingsStrategy.cs" />
     <Compile Include="Utils\AudioUtils.cs" />
+    <Compile Include="Utils\ColorUtils.cs" />
     <Compile Include="Utils\MonitorUtil.cs" />
     <Compile Include="Utils\XamlUtil.cs" />
     <Compile Include="Controls\HamburgerMenu.xaml.cs">

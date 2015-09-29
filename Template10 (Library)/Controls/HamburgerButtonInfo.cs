@@ -66,10 +66,10 @@ namespace Template10.Controls
         }
 
         bool _isChecked = false;
-        public bool IsChecked
+        public bool? IsChecked
         {
             get { return _isChecked; }
-            set { Set(ref _isChecked, value); }
+            set { Set(ref _isChecked, value ?? false); }
         }
 
         UIElement _content = null;
@@ -84,13 +84,6 @@ namespace Template10.Controls
         {
             get { return _MaxWidth; }
             set { Set(ref _MaxWidth, value); }
-        }
-
-        HorizontalAlignment _HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Left;
-        public HorizontalAlignment HorizontalAlignment
-        {
-            get { return _HorizontalAlignment; }
-            set { Set(ref _HorizontalAlignment, value); }
         }
 
         public override string ToString()
