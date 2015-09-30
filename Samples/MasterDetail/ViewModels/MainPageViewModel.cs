@@ -55,9 +55,16 @@ namespace Sample.ViewModels
             }
         }
 
-        public void Search()
+        DelegateCommand _SearchCommand;
+        public DelegateCommand SearchCommand
         {
-            Messages = _MessageService.Search(SearchText);
+            get
+            {
+                return _SearchCommand ?? (_SearchCommand = new DelegateCommand(() =>
+                {
+                    Messages = _MessageService.Search(SearchText);
+                }));
+            }
         }
     }
 }

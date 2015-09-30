@@ -129,6 +129,7 @@
   <ItemGroup>
     <Compile Include="Behaviors\NavButtonBehavior.cs" />
     <Compile Include="Behaviors\TextBoxEnterKeyBehavior.cs" />
+    <Compile Include="Behaviors\ConditionalAction.cs" />
     <Compile Include="Behaviors\TimeoutAction.cs" />
     <Compile Include="Common\BootStrapper.cs" />
     <Compile Include="Common\DispatcherWrapper.cs" />
@@ -145,6 +146,8 @@
       <DependentUpon>Resizer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\ColorLighteningConverter.cs" />
+    <Compile Include="Converters\DateTimeOffsetConverter.cs" />
+    <Compile Include="Converters\NumberFormatConverter.cs" />
     <Compile Include="Services\NavigationService\INavigationService.cs" />
     <Compile Include="Services\NavigationService\NavigationServiceList.cs" />
     <Compile Include="Services\SettingsService\ISettingsHelper.cs" />

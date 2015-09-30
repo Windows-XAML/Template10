@@ -28,7 +28,9 @@ namespace Sample.Services.MessageService
         public ObservableCollection<Models.Message> Search(string value)
         {
             return GetMessages()
-                .Where(x => x.Subject.ToLower().Contains(value.ToLower()))
+                .Where(x => x.Subject.ToLower().Contains(value.ToLower())
+                || x.From.ToLower().Contains(value.ToLower())
+                || x.Body.ToLower().Contains(value.ToLower()))
                 .ToObservableCollection();
         }
 
