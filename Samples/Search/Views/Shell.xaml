@@ -68,7 +68,7 @@
 
                 <Controls:HamburgerButtonInfo x:Name="SearchButton" Checked="SearchChecked" Unchecked="SearchUnchecked">
                     <StackPanel Orientation="Horizontal">
-                        <SymbolIcon Width="48" Height="48" Symbol="Find" />
+                        <SymbolIcon Width="48" Height="48" Symbol="Find"/>
                         <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Search" />
                     </StackPanel>
                 </Controls:HamburgerButtonInfo>
@@ -79,11 +79,11 @@
 
                 <Controls:HamburgerButtonInfo MaxWidth="48" Tapped="LoginTapped">
                     <StackPanel Orientation="Horizontal">
-                        <SymbolIcon Width="48" Height="48" Symbol="Contact" />
+                        <SymbolIcon Width="48" Height="48" Symbol="Contact" ToolTipService.ToolTip="You must login to access settings"/>
                     </StackPanel>
                 </Controls:HamburgerButtonInfo>
 
-                <Controls:HamburgerButtonInfo MaxWidth="48">
+                <Controls:HamburgerButtonInfo MaxWidth="48" IsEnabled="{x:Bind IsAuthenticated,Mode=OneWay}">
                     <StackPanel Orientation="Horizontal">
                         <SymbolIcon Width="48" Height="48" Symbol="Setting" />
                     </StackPanel>
