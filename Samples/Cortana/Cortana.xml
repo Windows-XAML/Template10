@@ -5,7 +5,7 @@
     <Example> Handle my text with Template 10. </Example>
 
     <Command Name="FreeTextCommand">
-      <Example> Add statement my text </Example>
+      <Example> Add statement Hello World </Example>
       <ListenFor RequireAppName="BeforeOrAfterPhrase"> [please] add statement {textPhrase} [with] </ListenFor>
       <Feedback> Adding statement for you now. </Feedback>
       <Navigate />

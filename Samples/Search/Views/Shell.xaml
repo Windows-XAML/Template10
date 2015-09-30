@@ -13,7 +13,28 @@
     <Grid x:Name="RootGrid">
 
         <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="VisualStateGroup">
+            <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
+                <VisualState x:Name="VisualStateNarrow">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource NarrowMinWidth}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SearchButton.Visibility" Value="Collapsed" />
+                        <Setter Target="SearchScreen.(UIElement.Visibility)" Value="Collapsed" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="VisualStateNormal">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource NormalMinWidth}" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="VisualStateWide">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource WideMinWidth}" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+            </VisualStateGroup>
+            <VisualStateGroup x:Name="ShellVisualStateGroup">
                 <VisualState x:Name="NormalVisualState" />
                 <VisualState x:Name="BusyVisualState">
                     <VisualState.Setters>
@@ -45,7 +66,7 @@
                     </StackPanel>
                 </Controls:HamburgerButtonInfo>
 
-                <Controls:HamburgerButtonInfo Checked="SearchChecked" Unchecked="SearchUnchecked">
+                <Controls:HamburgerButtonInfo x:Name="SearchButton" Checked="SearchChecked" Unchecked="SearchUnchecked">
                     <StackPanel Orientation="Horizontal">
                         <SymbolIcon Width="48" Height="48" Symbol="Find" />
                         <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Search" />
