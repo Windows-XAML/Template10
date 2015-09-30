@@ -83,8 +83,8 @@
                     </StackPanel>
                 </Controls:HamburgerButtonInfo>
 
-                <Controls:HamburgerButtonInfo MaxWidth="48">
-                    <StackPanel Orientation="Horizontal">
+                <Controls:HamburgerButtonInfo MaxWidth="48" IsEnabled="{x:Bind IsAuthenticated, Mode=OneWay}">
+                    <StackPanel Orientation="Horizontal" ToolTipService.ToolTip="You must login to access.">
                         <SymbolIcon Width="48" Height="48" Symbol="Setting" />
                     </StackPanel>
                 </Controls:HamburgerButtonInfo>

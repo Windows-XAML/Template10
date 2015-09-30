@@ -69,8 +69,8 @@
                                           CommandParameter="{Binding CommandParameter, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                           Content="{Binding Tag, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                           IsChecked="{Binding IsChecked, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                          Visibility="{Binding Visibility, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                          UseSystemFocusVisuals="True">
+                                          UseSystemFocusVisuals="True"
+                                          Visibility="{Binding Visibility, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}">
                                 <ToggleButton.Template>
                                     <ControlTemplate TargetType="ToggleButton">
                                         <Grid x:Name="RootGrid" Width="{Binding PaneWidth, ElementName=ThisPage}">
@@ -103,7 +103,11 @@
                                                             <PointerDownThemeAnimation Storyboard.TargetName="RootGrid" />
                                                         </Storyboard>
                                                     </VisualState>
-                                                    <VisualState x:Name="Disabled" />
+                                                    <VisualState x:Name="Disabled">
+                                                        <VisualState.Setters>
+                                                            <Setter Target="NormalFore.Opacity" Value=".5" />
+                                                        </VisualState.Setters>
+                                                    </VisualState>
                                                     <VisualState x:Name="Checked">
                                                         <VisualState.Setters>
                                                             <Setter Target="CheckedBack.Visibility" Value="Visible" />
