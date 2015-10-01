@@ -31,18 +31,31 @@
             <PivotItem DataContext="{Binding SettingsPartViewModel}" Header="Settings">
                 <ScrollViewer Margin="0,12,-12,0" HorizontalContentAlignment="Left" VerticalScrollBarVisibility="Auto">
                     <RelativePanel HorizontalAlignment="Left">
-                        <ToggleSwitch x:Name="UseShellDrawnBackButtonToggleSwtich"
-                                      Header="Use shell-drawn back button"
+
+                        <Border x:Name="UseShellDrawnBackButtonToggleSwtichBorder" BorderBrush="Silver" Margin="6,0,0,12" Padding="6" BorderThickness="1" Width="{StaticResource SettingItemsBorderWidth}">
+                            <ToggleSwitch  Header="Use shell-drawn back button"
                                       IsOn="{Binding UseShellBackButton, Mode=TwoWay}"
                                       OffContent="Back button in page header"
                                       OnContent="Back button in titlebar or taskbar" />
-                        <ToggleSwitch x:Name="UseLightThemeToggleSwitch" Header="Use Light Theme"
+                        </Border>
+
+                        <Border x:Name="UseLightThemeToggleSwitchBorder" BorderBrush="Silver" Margin="6,0,0,12" Padding="6" BorderThickness="1" Width="{StaticResource SettingItemsBorderWidth}"  RelativePanel.Below="UseShellDrawnBackButtonToggleSwtichBorder" >
+                            <ToggleSwitch  Header="Use Light Theme"
                                       IsOn="{Binding UseLightThemeButton, Mode=TwoWay}"
-                                      OffContent="Dark theme" OnContent="Light theme"
-                                      RelativePanel.Below="UseShellDrawnBackButtonToggleSwtich" />
+                                           OffContent="Dark theme"
+                                           OnContent="Light theme" />
+                        </Border>
+
+                        <Border x:Name="WideVisualMenuModeToggleSwitchBorder" BorderBrush="Silver" Margin="6,0,0,12" Padding="6" BorderThickness="1" Width="{StaticResource SettingItemsBorderWidth}" RelativePanel.Below="UseLightThemeToggleSwitchBorder">
+                            <ToggleSwitch Header="Menu mode for wide screen"
+                                          IsOn="{Binding UseNarrowMenuPaneForWideVisual, Mode=TwoWay}"
+                                          OffContent="Normal"
+                                          OnContent="Compact" />
+                        </Border>
+                        
                         <TextBox x:Name="BusyTextTextBox" Width="200"
                                  Margin="0,12,0,0" HorizontalAlignment="Left"
-                                 Header="Busy text" RelativePanel.Below="UseLightThemeToggleSwitch"
+                                 Header="Busy text" RelativePanel.Below="WideVisualMenuModeToggleSwitchBorder"
                                  Text="{Binding BusyText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <Button Margin="0,12,0,0" Content="Show Busy Indicator"
                                 RelativePanel.AlignBottomWith="BusyTextTextBox"

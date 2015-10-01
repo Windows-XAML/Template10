@@ -25,6 +25,7 @@ namespace Sample.Views
             Window = WindowWrapper.Current();
             MyHamburgerMenu.NavigationService = navigationService;
             VisualStateManager.GoToState(Instance, Instance.NormalVisualState.Name, true);
+            ApplyCompactOverlayForWideVisual(Services.SettingsServices.SettingsService.Instance.UseCompactMenuForWideScreen);
         }
 
         public static void SetBusyVisibility(Visibility visible, string text = null)
@@ -43,6 +44,16 @@ namespace Sample.Views
                         break;
                 }
             });
+        }
+
+        public static void ApplyCompactOverlayForWideVisual(bool value)
+        {
+
+            Window.Dispatcher.Dispatch(() =>
+            {
+                Instance.MyHamburgerMenu.IsCompactOverlayForWideVisual = value;
+            });
+
         }
     }
 }

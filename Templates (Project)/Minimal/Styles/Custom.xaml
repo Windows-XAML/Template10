@@ -5,6 +5,7 @@
     <x:Double x:Key="NarrowMinWidth">0</x:Double>
     <x:Double x:Key="NormalMinWidth">521</x:Double>
     <x:Double x:Key="WideMinWidth">1200</x:Double>
+    <x:Double x:Key="SettingItemsBorderWidth">264</x:Double>
 
     <SolidColorBrush x:Key="CustomColorBrush" Color="{StaticResource CustomColor}" />
     <SolidColorBrush x:Key="ExtendedSplashBackground" Color="White" />

@@ -178,7 +178,7 @@
     <Grid x:Name="RootGrid">
 
         <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="VisualStateGroup">
+            <VisualStateGroup x:Name="VisualStateGroup" CurrentStateChanged="OnVisualStateGroupChanged">
 
                 <VisualStateGroup.Transitions>
                     <VisualTransition GeneratedDuration="0" To="VisualStateWide">
@@ -220,10 +220,29 @@
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger x:Name="VisualStateWideTrigger" MinWindowWidth="-1" />
                     </VisualState.StateTriggers>
+                </VisualState>
+
+            </VisualStateGroup>
+
+            <!-- Visual states for menu mode -->
+
+            <VisualStateGroup>
+                
+                <VisualState x:Name="WideVisualStateCompactInline">
                     <VisualState.Setters>
                         <Setter Target="ShellSplitView.DisplayMode" Value="CompactInline" />
                         <Setter Target="HamburgerButton.Visibility" Value="Collapsed" />
                         <Setter Target="ShellSplitView.IsPaneOpen" Value="True" />
+                        <Setter Target="HamburgerButton.Visibility" Value="Collapsed" />
+                    </VisualState.Setters>
+                </VisualState>
+
+
+                <VisualState x:Name="WideVisualStateCompactOverlay">
+                    <VisualState.Setters>
+                        <Setter Target="ShellSplitView.DisplayMode" Value="CompactOverlay" />
+                        <Setter Target="ShellSplitView.IsPaneOpen" Value="False" />
+                        <Setter Target="HamburgerButton.Visibility" Value="Visible" />
                     </VisualState.Setters>
                 </VisualState>
 

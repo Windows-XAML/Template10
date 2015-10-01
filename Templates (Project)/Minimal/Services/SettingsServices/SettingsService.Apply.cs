@@ -43,5 +43,12 @@ namespace Sample.Services.SettingsServices
         {
             Template10.Common.BootStrapper.Current.CacheMaxDuration = value;
         }
+
+        private void ApplyCompactMenuForWideScreen(bool value)
+        {
+            Views.Shell.ApplyCompactOverlayForWideVisual(value);
+        }
+        
+
     }
 }
