@@ -4,13 +4,14 @@
     xmlns:local="using:Template10"
     xmlns:controls="using:Template10.Controls">
     <Style TargetType="controls:Resizer">
+        <Setter Property="GrabberBrush" Value="{ThemeResource SystemAccentColor}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:Resizer">
                     <Grid x:Name="PART_ROOT">
                         <Grid.Resources>
                             <!--<Color x:Key="SystemAccentColor">#FFDA6010</Color>-->
-                            <SolidColorBrush x:Name="SystemAccentBrush" Color="{ThemeResource SystemAccentColor}" />
+                            <!--<SolidColorBrush x:Key="SystemAccentBrush" Color="{StaticResource SystemAccentColor}" />-->
                             <Style TargetType="Polygon">
                                 <Setter Property="IsHitTestVisible" Value="False" />
                                 <Setter Property="Margin" Value="5" />

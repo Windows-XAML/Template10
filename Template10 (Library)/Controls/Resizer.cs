@@ -117,7 +117,7 @@ namespace Template10.Controls
 
         public Brush GrabberBrush
         {
-            get { return (Brush)GetValue(GrabberBrushProperty) ?? Resources["SystemAccentBrush"] as SolidColorBrush; }
+            get { return (Brush)GetValue(GrabberBrushProperty); }
             set { SetValue(GrabberBrushProperty, value); }
         }
 
