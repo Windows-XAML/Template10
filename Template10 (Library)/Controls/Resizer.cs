@@ -9,6 +9,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 
 // The Templated Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234235
@@ -18,7 +19,8 @@ namespace Template10.Controls
     [TemplatePart(Name = PART_ROOT_NAME, Type = typeof(Grid))]
     [TemplatePart(Name = PART_THUMB_NAME, Type = typeof(Thumb))]
     [TemplatePart(Name = PART_GRABBER_NAME, Type = typeof(Grid))]
-    [TemplatePart(Name = PART_CONTENT_NAME, Type = typeof(ContentPresenter))]
+    [TemplatePart(Name = PART_CONTENT_NAME, Type = typeof(ContentControl))]
+    [ContentProperty(Name = nameof(ElementControl))]
     public sealed class Resizer : ContentControl
     {
         private const string PART_THUMB_NAME = "PART_THUMB";
@@ -27,9 +29,9 @@ namespace Template10.Controls
         private const string PART_ROOT_NAME = "PART_ROOT";
         private Grid _rootGrid;
         private Grid _grabberGrid;
-        private ContentPresenter _contentPresenter;
+        private ContentControl _contentPresenter;
         private Thumb _thumb;
-        private Size originalSize;
+        private Size _originalSize;
         public Resizer()
         {
             this.DefaultStyleKey = typeof(Resizer);
@@ -39,7 +41,7 @@ namespace Template10.Controls
         {
             _rootGrid = GetTemplateChild(PART_ROOT_NAME) as Grid;
             _grabberGrid = GetTemplateChild(PART_GRABBER_NAME) as Grid;
-            _contentPresenter = GetTemplateChild(PART_CONTENT_NAME) as ContentPresenter;
+            _contentPresenter = GetTemplateChild(PART_CONTENT_NAME) as ContentControl;
             _thumb = GetTemplateChild(PART_THUMB_NAME) as Thumb;
 
             InitEvents();
@@ -54,19 +56,19 @@ namespace Template10.Controls
 
         private void thumb_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
-            _contentPresenter.Height = originalSize.Height;
-            _contentPresenter.Width = originalSize.Width;
+            ElementControl.Height = _originalSize.Height;
+            ElementControl.Width = _originalSize.Width;
         }
 
         private void thumb_DragDelta(object sender, DragDeltaEventArgs e)
         {
-            _contentPresenter.Width = Math.Max(0, _contentPresenter.ActualWidth + e.HorizontalChange); //HorizontalChange could become negative
-            _contentPresenter.Height = Math.Max(0, _contentPresenter.ActualHeight + e.VerticalChange); //VerticalChange could become negative
+            ElementControl.Width = Math.Max(0, ElementControl.ActualWidth + e.HorizontalChange); //HorizontalChange could become negative
+            ElementControl.Height = Math.Max(0, ElementControl.ActualHeight + e.VerticalChange); //VerticalChange could become negative
         }
 
         private void thumb_Loaded(object sender, RoutedEventArgs e)
         {
-            originalSize = _contentPresenter.RenderSize;
+            _originalSize = ElementControl.RenderSize;
         }
 
 
