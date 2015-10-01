@@ -514,5 +514,47 @@ namespace Template10.Controls
         {
             _SecondaryButtonStackPanel = sender as StackPanel;
         }
+
+        public bool IsCompactOverlayForWideVisual
+        {
+            get { return (bool)GetValue(IsCompactOverlayWhenWideProperty); }
+            set { SetValue(IsCompactOverlayWhenWideProperty, value); }
+        }
+
+        public readonly static DependencyProperty IsCompactOverlayWhenWideProperty =
+            DependencyProperty.Register(nameof(IsCompactOverlayForWideVisual), typeof(bool),
+                typeof(HamburgerMenu), new PropertyMetadata(false, OnWideVisualStateModeChanged));
+
+        private void OnVisualStateGroupChanged(object sender, VisualStateChangedEventArgs e)
+        {
+            if (e.NewState != this.VisualStateWide) return;
+
+            if (IsCompactOverlayForWideVisual)
+            {
+                VisualStateManager.GoToState(this, WideVisualStateCompactOverlay.Name, false);
+            }
+            else
+            {
+                VisualStateManager.GoToState(this, WideVisualStateCompactInline.Name, false);
+            }
+        }
+
+        private static void OnWideVisualStateModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            HamburgerMenu hm = d as HamburgerMenu;
+
+            if (hm.ActualWidth >= hm.VisualStateWideMinWidth)
+            {
+                bool isCompactOverlay = (bool)e.NewValue;
+
+                if (isCompactOverlay)
+                {
+                    VisualStateManager.GoToState(hm, hm.WideVisualStateCompactOverlay.Name, true);
+                }else
+                {
+                    VisualStateManager.GoToState(hm, hm.WideVisualStateCompactInline.Name, true);
+                }
+            }
+        }
     }
 }

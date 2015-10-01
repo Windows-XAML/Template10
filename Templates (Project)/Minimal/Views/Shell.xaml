@@ -23,7 +23,7 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <Controls:HamburgerMenu x:Name="MyHamburgerMenu" IsEnabled="False">
+        <Controls:HamburgerMenu x:Name="MyHamburgerMenu" IsEnabled="False" IsCompactOverlayForWideVisual="False">
 
             <Controls:HamburgerMenu.PrimaryButtons>
                 <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:MainPage">
