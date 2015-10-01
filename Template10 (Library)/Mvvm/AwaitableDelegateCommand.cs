@@ -8,7 +8,7 @@ namespace Template10.Mvvm
     using System.Windows.Input;
     using Windows.UI.Xaml;
 
-    public class AwaitableDelegateCommand<TCommand> : System.Windows.Input.ICommand where TCommand : ICommand
+    public class AwaitableDelegateCommand : System.Windows.Input.ICommand
     {
 
 
