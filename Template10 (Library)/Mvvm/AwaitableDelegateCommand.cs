@@ -101,7 +101,7 @@ namespace Template10.Mvvm
 
         // Using a DependencyProperty as the backing store for ExecutionKey.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ExecutionKeyProperty =
-            DependencyProperty.Register("ExecutionKey", typeof(string), typeof(AwaitableDelegateCommandParameter), new PropertyMetadata(Guid.NewGuid()));
+            DependencyProperty.Register("ExecutionKey", typeof(string), typeof(AwaitableDelegateCommandParameter), new PropertyMetadata(Guid.NewGuid().ToString()));
 
 
 
