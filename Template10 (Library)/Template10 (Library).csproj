@@ -145,7 +145,6 @@
     <Compile Include="Controls\Resizer.xaml.cs">
       <DependentUpon>Resizer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Converters\ColorLighteningConverter.cs" />
     <Compile Include="Converters\DateTimeOffsetConverter.cs" />
     <Compile Include="Converters\NumberFormatConverter.cs" />
     <Compile Include="Services\NavigationService\INavigationService.cs" />
