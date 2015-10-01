@@ -78,9 +78,8 @@ namespace Template10.Controls
             set { SetValue(ElementControlProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for ElementControl.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ElementControlProperty =
-            DependencyProperty.Register("ElementControl", typeof(Control), typeof(Resizer), new PropertyMetadata(default(Control)));
+            DependencyProperty.Register(nameof(ElementControl), typeof(Control), typeof(Resizer), new PropertyMetadata(default(Control)));
 
         public Visibility GrabberVisibility
         {
@@ -88,9 +87,8 @@ namespace Template10.Controls
             set { SetValue(GrabberVisibilityProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for GrabberVisibility.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty GrabberVisibilityProperty =
-            DependencyProperty.Register("GrabberVisibility", typeof(Visibility), typeof(Resizer), new PropertyMetadata(default(Visibility)));
+            DependencyProperty.Register(nameof(GrabberVisibility), typeof(Visibility), typeof(Resizer), new PropertyMetadata(default(Visibility)));
 
 
 
@@ -112,9 +110,8 @@ namespace Template10.Controls
             }
         }
 
-        // Using a DependencyProperty as the backing store for GrabberSize.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty GrabberSizeProperty =
-            DependencyProperty.Register("GrabberSize", typeof(Size), typeof(Resizer), new PropertyMetadata(default(Size)));
+            DependencyProperty.Register(nameof(GrabberSize), typeof(Size), typeof(Resizer), new PropertyMetadata(default(Size)));
 
 
         public Brush GrabberBrush
@@ -123,9 +120,8 @@ namespace Template10.Controls
             set { SetValue(GrabberBrushProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for GrabberBrush.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty GrabberBrushProperty =
-            DependencyProperty.Register("GrabberBrush", typeof(Brush), typeof(Resizer), new PropertyMetadata(default(Brush)));
+            DependencyProperty.Register(nameof(GrabberBrush), typeof(Brush), typeof(Resizer), new PropertyMetadata(default(Brush)));
 
 
 
