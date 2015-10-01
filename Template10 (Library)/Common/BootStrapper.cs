@@ -10,6 +10,7 @@ using Windows.Foundation.Metadata;
 using Template10.Services.NavigationService;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Dynamic;
 
 namespace Template10.Common
 {
@@ -25,7 +26,7 @@ namespace Template10.Common
 
         public static new BootStrapper Current { get; private set; }
 
-        public StateItems SessionState { get; set; } = new StateItems();
+        public IDictionary<string, object> SessionState { get; set; } = new ExpandoObject();
 
         protected BootStrapper()
         {

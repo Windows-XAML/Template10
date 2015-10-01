@@ -19,6 +19,9 @@ namespace Template10.Mvvm
         [JsonIgnore]
         public DispatcherWrapper Dispatcher { get { return Common.WindowWrapper.Current(NavigationService)?.Dispatcher; } }
         [JsonIgnore]
-        public Common.StateItems SessionState { get { return BootStrapper.Current.SessionState; } }
+        public IDictionary<string, object> SessionState { get { return BootStrapper.Current.SessionState; } }
+
+        [JsonIgnore]
+        public dynamic SessionStateBag { get { return BootStrapper.Current.SessionState; } }
     }
 }
