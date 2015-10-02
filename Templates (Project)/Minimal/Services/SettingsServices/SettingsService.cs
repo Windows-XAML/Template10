@@ -54,5 +54,15 @@ namespace Sample.Services.SettingsServices
                 ApplyCacheMaxDuration(value);
             }
         }
+
+        public bool UseCompactMenuForWideScreen
+        {
+            get { return _helper.Read<bool>(nameof(UseCompactMenuForWideScreen), false); }
+            set
+            {
+                _helper.Write(nameof(UseCompactMenuForWideScreen), value);
+                ApplyCompactMenuForWideScreen(value);
+            }
+        }
     }
 }

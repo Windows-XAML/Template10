@@ -25,6 +25,7 @@ namespace Sample.Views
             Window = WindowWrapper.Current();
             MyHamburgerMenu.NavigationService = navigationService;
             VisualStateManager.GoToState(Instance, Instance.NormalVisualState.Name, true);
+            ApplyCompactOverlayForWideVisual(Services.SettingsServices.SettingsService.Instance.UseCompactMenuForWideScreen);
         }
 
         public static void SetBusyVisibility(Visibility visible, string text = null)
@@ -44,5 +45,19 @@ namespace Sample.Views
                 }
             });
         }
+
+        public static void ApplyCompactOverlayForWideVisual(bool value)
+        {
+
+            Window.Dispatcher.Dispatch(() =>
+            {
+                double wideMinWidth = 1200;
+                if (App.Current.Resources.ContainsKey("WideMinWidth")) wideMinWidth = (double)App.Current.Resources["WideMinWidth"];
+                Instance.MyHamburgerMenu.VisualStateWideMinWidth = (value) ? -1 : wideMinWidth;
+            });
+
+        }
+
+
     }
 }
