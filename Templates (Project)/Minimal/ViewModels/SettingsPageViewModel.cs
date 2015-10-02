@@ -47,6 +47,12 @@ namespace Sample.ViewModels
         {
             Views.Shell.SetBusyVisibility(Visibility.Collapsed);
         }
+
+        public bool UseNarrowMenuPaneForWideVisual
+        {
+            get { return _settings.UseCompactMenuForWideScreen; }
+            set { _settings.UseCompactMenuForWideScreen = value; base.RaisePropertyChanged(); }
+        }
     }
 
     public class AboutPartViewModel : Mvvm.ViewModelBase
