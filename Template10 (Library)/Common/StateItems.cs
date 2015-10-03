@@ -8,17 +8,12 @@ namespace Template10.Common
 {
     public class StateItems : Dictionary<StateItemKey, Object>
     {
-        
+
         public KeyValuePair<StateItemKey, Object> Add(Type type, string key, object value)
         {
             if (Contains(type, key))
                 throw new ArgumentException("Same type+key exists.");
-            var stateKey = new StateItemKey
-            {
-                Type = type,
-                Key = key,
-            };
-
+            var stateKey = new StateItemKey(type, key);
             this.Add(stateKey, value);
             var item = new KeyValuePair<StateItemKey, object>(stateKey, value);
             return item;
@@ -34,7 +29,7 @@ namespace Template10.Common
 
         public void Remove(Type type, string key) //
         {
-            this.Remove(new StateItemKey { Key = key, Type = type });
+            this.Remove(new StateItemKey(type, key));
         }
 
         //this method is not a good idea in any senioro cos values can always be dupe,
@@ -52,7 +47,7 @@ namespace Template10.Common
         public bool Contains(Type type, string key, object value)
         {
             object tryGetValue;
-            if (this.TryGetValue(new StateItemKey { Type = type, Key = key }, out tryGetValue))
+            if (this.TryGetValue(new StateItemKey(type, key), out tryGetValue))
             {
                 return tryGetValue == value;
             }
@@ -63,7 +58,7 @@ namespace Template10.Common
 
         public bool Contains(Type type, string key)
         {
-            return this.ContainsKey(new StateItemKey { Type = type, Key = key });
+            return this.ContainsKey(new StateItemKey(type, key));
 
         }
 
@@ -81,7 +76,7 @@ namespace Template10.Common
         public T Get<T>(string key)
         {
             object tryGetValue;
-            if (this.TryGetValue(new StateItemKey { Type = typeof(T), Key = key }, out tryGetValue))
+            if (this.TryGetValue(new StateItemKey(typeof(T), key), out tryGetValue))
             {
                 return (T)tryGetValue;
             }
@@ -92,7 +87,7 @@ namespace Template10.Common
         public bool TryGet<T>(string key, out T value)
         {
             object tryGetValue;
-            var found = this.TryGetValue(new StateItemKey { Type = typeof(T), Key = key }, out tryGetValue);
+            var found = this.TryGetValue(new StateItemKey(typeof(T), key), out tryGetValue);
             value = (T)tryGetValue;
             return found;
         }
