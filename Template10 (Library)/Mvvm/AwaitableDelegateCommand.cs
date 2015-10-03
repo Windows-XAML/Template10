@@ -52,25 +52,55 @@ namespace Template10.Mvvm
 
         public void Execute(object p = null)
         {
+
+            string appKey = null;
+            InternalExecute(p, out appKey);
+        }
+
+        private bool InternalExecute(object p, out string appKey)
+        {
+            appKey = null;
             if (!CanExecute(p))
-                return;
+                return false;
             try
             {
                 var ap = p as AwaitableDelegateCommandParameter;
+                appKey = ap?.ExecutionKey ?? Guid.NewGuid().ToString();
+
                 Func<Task> e2 =
                    async () =>
-                     {
-                         await _execute(p as AwaitableDelegateCommandParameter);
-                         Task taskSelf;
-                         tasksInProgress.TryRemove(ap.ExecutionKey, out taskSelf);
-                     };
+                   {
+                       try
+                       {
+                           await _execute(p as AwaitableDelegateCommandParameter);
+                           Task taskSelf;
+                           tasksInProgress.TryRemove(ap.ExecutionKey, out taskSelf);
+                       }
+                       catch { Debugger.Break(); }
+                   };
 
                 var exeTask = e2();
-                tasksInProgress.AddOrUpdate(ap.ExecutionKey, exeTask, (_, __) => exeTask);
 
+                tasksInProgress.AddOrUpdate(ap.ExecutionKey, exeTask, (_, __) => exeTask);
+                return true;
             }
             catch { Debugger.Break(); }
+            return false;
         }
+
+        public async Task ExecuteAsync(AwaitableDelegateCommandParameter p = null)
+        {
+
+            string appKey = null;
+            InternalExecute(p, out appKey);
+            if (appKey == null)
+            {
+                throw new InvalidOperationException("unexpected execution key");
+            }
+            await AwaitByKey(appKey);
+
+        }
+
 
         public async Task AwaitByKey(string executionKey)
         {
