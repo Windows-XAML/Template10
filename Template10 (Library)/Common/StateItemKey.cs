@@ -26,7 +26,25 @@ namespace Template10.Common
                 throw new InvalidOperationException(nameof(Key) + " is null, cannot get hash");
             }
 
-            return th.Value ^ kh.Value;
+            unchecked // Overflow is fine, just wrap
+            {
+                int hash = 17;
+                hash = hash * 23 + th.Value;
+                hash = hash * 23 + kh.Value;
+                return hash;
+            }
+
 
         }
+        public static bool operator ==(StateItemKey left, StateItemKey right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(StateItemKey left, StateItemKey right)
+        {
+            return !left.Equals(right);
+        }
     }
+
+}
