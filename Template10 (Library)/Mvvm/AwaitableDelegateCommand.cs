@@ -9,13 +9,10 @@ namespace Template10.Mvvm
     using Windows.UI.Xaml;
 
     public class AwaitableDelegateCommand : System.Windows.Input.ICommand
-    {
-
-
+    {        
         private readonly Func<AwaitableDelegateCommandParameter, Task> _execute;
         private readonly Func<AwaitableDelegateCommandParameter, bool> _canExecute;
         public event EventHandler CanExecuteChanged;
-
 
         ConcurrentDictionary<string, Task> tasksInProgress = new ConcurrentDictionary<string, Task>();
         public AwaitableDelegateCommand(Func<AwaitableDelegateCommandParameter, Task> execute, Func<AwaitableDelegateCommandParameter, bool> canexecute = null)
@@ -41,7 +38,6 @@ namespace Template10.Mvvm
                 return (canexecute ?? (op => true))(ap);
             };
         }
-
 
         [DebuggerStepThrough]
         public bool CanExecute(object p = null)
@@ -128,8 +124,6 @@ namespace Template10.Mvvm
             get { return (string)GetValue(ExecutionKeyProperty); }
             set { SetValue(ExecutionKeyProperty, value); }
         }
-
-        // Using a DependencyProperty as the backing store for ExecutionKey.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ExecutionKeyProperty =
             DependencyProperty.Register("ExecutionKey", typeof(string), typeof(AwaitableDelegateCommandParameter), new PropertyMetadata(Guid.NewGuid().ToString()));
 
@@ -141,11 +135,10 @@ namespace Template10.Mvvm
             get { return (object)GetValue(InnerCommandExecutionParameterProperty); }
             set { SetValue(InnerCommandExecutionParameterProperty, value); }
         }
-
-        // Using a DependencyProperty as the backing store for InnerCommandExecutionParameter.  This enables animation, styling, binding, etc...
+                
         public static readonly DependencyProperty InnerCommandExecutionParameterProperty =
             DependencyProperty.Register("InnerCommandExecutionParameter", typeof(object), typeof(AwaitableDelegateCommandParameter), new PropertyMetadata(null));
-
+         
 
 
     }
