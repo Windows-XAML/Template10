@@ -134,7 +134,7 @@
     <Compile Include="Common\DispatcherWrapper.cs" />
     <Compile Include="Common\HandledEventArgs.cs" />
     <Compile Include="Common\Mdl2.cs" />
-    <Compile Include="Common\StateItem.cs" />
+    <Compile Include="Common\StateItemKey.cs" />
     <Compile Include="Common\StateItems.cs" />
     <Compile Include="Common\TypedEventHandler.cs" />
     <Compile Include="Common\WindowWrapper.cs" />
