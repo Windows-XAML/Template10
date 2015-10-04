@@ -35,6 +35,8 @@ namespace Sample.ViewModels
             set
             {
                 Set(ref _Selected, value);
+                if (value != null)
+                    value.IsRead = true;
                 DeleteCommand.RaiseCanExecuteChanged();
             }
         }
@@ -63,6 +65,18 @@ namespace Sample.ViewModels
                 return _SearchCommand ?? (_SearchCommand = new DelegateCommand(() =>
                 {
                     Messages = _MessageService.Search(SearchText);
+                }));
+            }
+        }
+
+        DelegateCommand _ClearCommand;
+        public DelegateCommand ClearCommand
+        {
+            get
+            {
+                return _ClearCommand ?? (_ClearCommand = new DelegateCommand(() =>
+                {
+                    Messages = _MessageService.Search(SearchText = string.Empty);
                 }));
             }
         }
