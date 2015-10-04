@@ -1,0 +1,98 @@
+﻿<Page x:Class="Sample.Views.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Sample.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Template10.Controls"
+    xmlns:converters="using:Template10.Converters"
+    xmlns:vm="using:Sample.ViewModels" 
+      xmlns:sys="System"
+    mc:Ignorable="d">
+    <Page.DataContext>
+        <vm:MainPageViewModel />
+    </Page.DataContext>
+    <Page.Resources>
+        <converters:DateTimeFormatConverter x:Key="DateTimeFormatConverter" />
+        <converters:NumberFormatConverter x:Key="NumberFormatConverter" />
+        <converters:DateTimeOffsetConverter x:Key="DateTimeOffsetConverter" />
+    </Page.Resources>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <!--  header  -->
+        <controls:PageHeader BackButtonVisibility="Collapsed" Frame="{x:Bind Frame, Mode=OneWay}"
+                             Text="Main Page" VisualStateNarrowMinWidth="-1" />
+
+        <!--  #region content  -->
+
+        <StackPanel Grid.Row="1" Padding="12,4,0,0">
+
+            <DatePicker Header="Date Picker Control" Date="{Binding DateTimeValue, Mode=TwoWay, Converter={StaticResource DateTimeOffsetConverter}}" />
+
+            <TextBlock Margin="0,20">
+                <Run Text="Date Conversions:" FontWeight="Bold" FontStyle="Italic" FontSize="20" />
+                <LineBreak />
+                <Run Text="Long date pattern:" FontWeight="Bold" />
+                <Run Text="{Binding DateTimeValue, Mode=OneWay, Converter={StaticResource DateTimeFormatConverter}, ConverterParameter=D}" />
+                <LineBreak />
+                <Run Text="Full date/time pattern (short time):" FontWeight="Bold" />
+                <Run Text="{Binding DateTimeValue, Mode=OneWay, Converter={StaticResource DateTimeFormatConverter}, ConverterParameter=f}" />
+                <LineBreak />
+                <Run Text="Year month pattern:" FontWeight="Bold" />
+                <Run Text="{Binding DateTimeValue, Mode=OneWay, Converter={StaticResource DateTimeFormatConverter}, ConverterParameter=Y}" />
+                <LineBreak />
+                <Run Text="RFC1123 pattern:" FontWeight="Bold" />
+                <Run Text="{Binding DateTimeValue, Mode=OneWay, Converter={StaticResource DateTimeFormatConverter}, ConverterParameter=r}" />
+            </TextBlock>
+
+            <ComboBox ItemsSource="{Binding NumberValues, Mode=OneWay}" SelectedItem="{Binding NumberValue, Mode=TwoWay}" />
+
+            <TextBlock Margin="0,20">
+                <Run Text="Number Conversions:" FontWeight="Bold" FontStyle="Italic" FontSize="20" />
+                <LineBreak />
+                <Run Text="Currency:" FontWeight="Bold" />
+                <Run Text="{Binding NumberValue, Mode=OneWay, Converter={StaticResource NumberFormatConverter}, ConverterParameter=C}" />
+                <LineBreak />
+                <Run Text="Exponential (3):" FontWeight="Bold" />
+                <Run Text="{Binding NumberValue, Mode=OneWay, Converter={StaticResource NumberFormatConverter}, ConverterParameter=e3}" />
+                <LineBreak />
+                <Run Text="Fixed-point (4):" FontWeight="Bold" />
+                <Run Text="{Binding NumberValue, Mode=OneWay, Converter={StaticResource NumberFormatConverter}, ConverterParameter=F4}" />
+                <LineBreak />
+                <Run Text="Percent:" FontWeight="Bold" />
+                <Run Text="{Binding NumberValue, Mode=OneWay, Converter={StaticResource NumberFormatConverter}, ConverterParameter=p}" />
+            </TextBlock>
+
+            <CheckBox Content="Change the value below by clicking on the CheckBox" IsChecked="{Binding BooleanValue, Mode=TwoWay}" />
+            
+            <TextBlock Margin="0,20">
+                <Run Text="Value-When Conversion:" FontWeight="Bold" FontStyle="Italic" FontSize="20" />
+                <LineBreak />
+                <Run Text="Response:" FontWeight="Bold" />
+                <Run>
+                    <Run.Text>
+                        <Binding Path="BooleanValue" Mode="OneWay">
+                            <Binding.Converter>
+                                <converters:ValueWhenConverter Value="Checkbox is selected" Otherwise="Checkbox is NOT selected, please select the checkbox">
+                                    <converters:ValueWhenConverter.When>
+                                        <x:Boolean>True</x:Boolean>
+                                    </converters:ValueWhenConverter.When>
+                                </converters:ValueWhenConverter>
+                            </Binding.Converter>
+                        </Binding>
+                    </Run.Text>
+                </Run>
+            </TextBlock>
+
+
+        </StackPanel>
+
+        <!--  #endregion  -->
+
+    </Grid>
+</Page>

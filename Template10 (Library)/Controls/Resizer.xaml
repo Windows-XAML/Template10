@@ -8,32 +8,38 @@
              d:DesignHeight="60" d:DesignWidth="200"
              mc:Ignorable="d">
 
+    <UserControl.Resources>
+        <Color x:Key="SystemAccentColor">#FFDA6010</Color>
+        <SolidColorBrush x:Name="SystemAccentBrush" Color="{StaticResource SystemAccentColor}" />
+        <Style TargetType="Polygon">
+            <Setter Property="IsHitTestVisible" Value="False" />
+            <Setter Property="Margin" Value="5" />
+        </Style>
+        <Style TargetType="Thumb">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style TargetType="ContentControl">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+        </Style>
+        <Style x:Key="GrabberStyle" TargetType="Grid">
+            <Setter Property="Height" Value="30" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="VerticalAlignment" Value="Bottom" />
+            <Setter Property="Width" Value="30" />
+        </Style>
+    </UserControl.Resources>
+
     <Grid x:Name="RootGrid">
-        <Grid.Resources>
-            <Style TargetType="Polygon">
-                <Setter Property="Fill" Value="{ThemeResource TextBoxBorderThemeBrush}" />
-                <Setter Property="IsHitTestVisible" Value="False" />
-                <Setter Property="Margin" Value="5" />
-            </Style>
-            <Style TargetType="Thumb">
-                <Setter Property="Background" Value="Transparent" />
-                <Setter Property="BorderBrush" Value="Transparent" />
-            </Style>
-            <Style TargetType="ContentControl">
-                <Setter Property="HorizontalAlignment" Value="Stretch" />
-                <Setter Property="VerticalAlignment" Value="Stretch" />
-            </Style>
-        </Grid.Resources>
-        <ContentControl x:Name="MyContentControl" />
-        <Grid x:Name="MyGrabber" Width="30"
-              Height="30" HorizontalAlignment="Right"
-              VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5">
+        <ContentControl Content="{x:Bind Element}" />
+        <Grid Style="{StaticResource GrabberStyle}" Visibility="{x:Bind GrabberVisibility}">
             <Grid.RenderTransform>
                 <CompositeTransform TranslateX="10" TranslateY="10" />
             </Grid.RenderTransform>
             <Thumb DoubleTapped="GrabDoubleTapped" DragDelta="GrabDelta" Loaded="GrabLoaded" />
             <Viewbox>
-                <Polygon Points="0,19 19,0, 19,19" />
+                <Polygon Fill="{x:Bind GrabberBrush}" Points="0,19 19,0, 19,19" />
             </Viewbox>
         </Grid>
     </Grid>

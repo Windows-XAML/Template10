@@ -163,7 +163,7 @@ namespace Template10.Services.NavigationService
             public Enum Pages { MainPage, DetailPage }
 
             // setup the keys dict
-            var keys = NavigationService.PageKeys<Views>();
+            var keys = BootStrapper.PageKeys<Views>();
             keys.Add(Pages.MainPage, typeof(Views.MainPage));
             keys.Add(Pages.DetailPage, typeof(Views.DetailPage));
 
@@ -237,7 +237,26 @@ namespace Template10.Services.NavigationService
 
         public bool CanGoForward { get { return FrameFacade.CanGoForward; } }
 
-        public void ClearHistory() { FrameFacade.Frame.BackStack.Clear(); }
+		public void ClearCache(bool removeCachedPagesInBackStack = false)
+		{
+			int currentSize = FrameFacade.Frame.CacheSize;
+
+			if (removeCachedPagesInBackStack)
+			{
+				FrameFacade.Frame.CacheSize = 0;
+			}
+			else
+			{
+				if (Frame.BackStackDepth == 0)
+					Frame.CacheSize = 1;
+				else
+					Frame.CacheSize = Frame.BackStackDepth;
+			}
+
+			FrameFacade.Frame.CacheSize = currentSize;
+		}
+
+		public void ClearHistory() { FrameFacade.Frame.BackStack.Clear(); }
 
         public void Resuming() { /* nothing */ }
 

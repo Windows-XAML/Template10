@@ -54,56 +54,39 @@ namespace Template10.Controls
             set { SetValue(VisualStateNarrowMinWidthProperty, VisualStateNarrowTrigger.MinWindowWidth = value); }
         }
         public static readonly DependencyProperty VisualStateNarrowMinWidthProperty =
-            DependencyProperty.Register("VisualStateNarrowMinWidth", typeof(double), typeof(PageHeader), new PropertyMetadata(null, (d, e) => { (d as PageHeader).VisualStateNarrowMinWidth = (double)e.NewValue; }));
+            DependencyProperty.Register(nameof(VisualStateNarrowMinWidth), typeof(double),
+                typeof(PageHeader), new PropertyMetadata(null, (d, e) =>
+                    { (d as PageHeader).VisualStateNarrowMinWidth = (double)e.NewValue; }));
+
         public double VisualStateNormalMinWidth
         {
             get { return VisualStateNormalTrigger.MinWindowWidth; }
             set { SetValue(VisualStateNormalMinWidthProperty, VisualStateNormalTrigger.MinWindowWidth = value); }
         }
         public static readonly DependencyProperty VisualStateNormalMinWidthProperty =
-            DependencyProperty.Register("VisualStateNormalMinWidth", typeof(double), typeof(PageHeader), new PropertyMetadata(null, (d, e) => { (d as PageHeader).VisualStateNormalMinWidth = (double)e.NewValue; }));
+            DependencyProperty.Register(nameof(VisualStateNormalMinWidth), typeof(double),
+                typeof(PageHeader), new PropertyMetadata(null, (d, e) =>
+                    { (d as PageHeader).VisualStateNormalMinWidth = (double)e.NewValue; }));
 
         #endregion
 
-        #region Styles
-
-        public SolidColorBrush HeaderBackground
+        public Brush HeaderBackground
         {
-            get { return HeaderBackgroundBrush; }
-            set
-            {
-                SetValue(HeaderBackgroundProperty, HeaderBackgroundBrush = value);
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(HeaderBackground)));
-                if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
-                {
-                    var statusBar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
-                    statusBar.BackgroundColor = value?.Color;
-                }
-            }
+            get { return (Brush)GetValue(HeaderBackgroundProperty) ?? Resources["DefaultHeaderBackground"] as Brush; }
+            set { SetValue(HeaderBackgroundProperty, value); }
         }
         public static readonly DependencyProperty HeaderBackgroundProperty =
-             DependencyProperty.Register(nameof(HeaderBackground), typeof(SolidColorBrush),
-                 typeof(PageHeader), new PropertyMetadata(null, (d, e) => { (d as PageHeader).HeaderBackground = (SolidColorBrush)e.NewValue; }));
+            DependencyProperty.Register(nameof(HeaderBackground), typeof(Brush),
+                typeof(PageHeader), new PropertyMetadata(null));
 
-        public SolidColorBrush HeaderForeground
+        public Brush HeaderForeground
         {
-            get { return HeaderForegroundBrush; }
-            set
-            {
-                SetValue(HeaderForegroundProperty, HeaderForegroundBrush = value);
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(HeaderForeground)));
-                if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
-                {
-                    var statusBar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
-                    statusBar.ForegroundColor = value?.Color;
-                }
-            }
+            get { return (Brush)GetValue(HeaderForegroundProperty) ?? Resources["DefaultHeaderForeground"] as Brush; }
+            set { SetValue(HeaderForegroundProperty, value); }
         }
         public static readonly DependencyProperty HeaderForegroundProperty =
-              DependencyProperty.Register(nameof(HeaderForeground), typeof(SolidColorBrush),
-                  typeof(PageHeader), new PropertyMetadata(null, (d, e) => { (d as PageHeader).HeaderForeground = (SolidColorBrush)e.NewValue; }));
-
-        #endregion
+            DependencyProperty.Register(nameof(HeaderForeground), typeof(Brush),
+                typeof(PageHeader), new PropertyMetadata(null));
 
         public IObservableVector<ICommandBarElement> PrimaryCommands
         {
@@ -126,7 +109,7 @@ namespace Template10.Controls
         public Frame Frame
         {
             get { return (Frame)GetValue(FrameProperty); }
-            set { SetValue(FrameProperty, value); PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Frame))); }
+            set { SetValue(FrameProperty, value); }
         }
         public static readonly DependencyProperty FrameProperty =
             DependencyProperty.Register(nameof(Frame), typeof(Frame),
@@ -135,7 +118,7 @@ namespace Template10.Controls
         public string Text
         {
             get { return (string)GetValue(TextProperty); }
-            set { SetValue(TextProperty, value); PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Text))); }
+            set { SetValue(TextProperty, value); }
         }
         public static readonly DependencyProperty TextProperty =
             DependencyProperty.Register(nameof(Text), typeof(string),
@@ -144,11 +127,21 @@ namespace Template10.Controls
         public Visibility BackButtonVisibility
         {
             get { return (Visibility)GetValue(BackButtonVisibilityProperty); }
-            set { SetValue(BackButtonVisibilityProperty, value); PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(BackButtonVisibility))); }
+            set { SetValue(BackButtonVisibilityProperty, value); }
         }
         public static readonly DependencyProperty BackButtonVisibilityProperty =
             DependencyProperty.Register(nameof(BackButtonVisibility), typeof(Visibility),
                 typeof(PageHeader), new PropertyMetadata(Visibility.Visible));
+
+        public Boolean IsCommandBarOpen
+        {
+            get { return HeaderCommandBar.IsOpen; }
+            set { SetValue(IsCommandBarOpenProperty, HeaderCommandBar.IsOpen = value); }
+        }
+        public static readonly DependencyProperty IsCommandBarOpenProperty =
+            DependencyProperty.Register(nameof(IsCommandBarOpen), typeof(Boolean),
+                typeof(PageHeader), new PropertyMetadata(false, (d, e) =>
+                { (d as PageHeader).IsCommandBarOpen = (Boolean)e.NewValue; }));
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

@@ -1,10 +1,13 @@
 ﻿using Windows.Foundation;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 
 namespace Template10.Controls
 {
+    [ContentProperty(Name = nameof(Element))]
     public sealed partial class Resizer : UserControl
     {
         public Resizer()
@@ -14,42 +17,30 @@ namespace Template10.Controls
 
         public Control Element
         {
-            get { return MyContentControl.Content as Control; }
-            set { MyContentControl.Content = value; }
+            get { return (Control)GetValue(ElementProperty); }
+            set { SetValue(ElementProperty, value); }
         }
         public static readonly DependencyProperty ElementProperty =
-            DependencyProperty.Register(nameof(Element), typeof(Control),
-                typeof(Resizer), new PropertyMetadata(null, (d, e) =>
-                { (d as Resizer).Element = e.NewValue as Control; }));
+            DependencyProperty.Register("Element", typeof(Control), 
+                typeof(Resizer), new PropertyMetadata(null));
 
         public Visibility GrabberVisibility
         {
-            get { return MyGrabber.Visibility; }
-            set { MyGrabber.Visibility = value; }
+            get { return (Visibility)GetValue(GrabberVisibilityProperty); }
+            set { SetValue(GrabberVisibilityProperty, value); }
         }
         public static readonly DependencyProperty GrabberVisibilityProperty =
-            DependencyProperty.Register(nameof(GrabberVisibility), typeof(Visibility),
-                typeof(Resizer), new PropertyMetadata(Visibility.Visible, (d, e) =>
-                { (d as Resizer).GrabberVisibility = (Visibility)e.NewValue; }));
+            DependencyProperty.Register("GrabberVisibility", typeof(Visibility), 
+                typeof(Resizer), new PropertyMetadata(Visibility.Visible));
 
-        public Size GrabberSize
+        public Brush GrabberBrush
         {
-            get { return MyGrabber.RenderSize; }
-            set
-            {
-                MyGrabber.Width = value.Width;
-                MyGrabber.Height = value.Height;
-
-                // move it
-                var transform = MyGrabber.RenderTransform as CompositeTransform;
-                transform.TranslateX = value.Width * .3;
-                transform.TranslateY = value.Height * .3;
-            }
+            get { return (Brush)GetValue(GrabberBrushProperty) ?? Resources["SystemAccentBrush"] as SolidColorBrush; }
+            set { SetValue(GrabberBrushProperty, value); }
         }
-        public static readonly DependencyProperty GrabberSizeProperty =
-            DependencyProperty.Register("GrabberSize", typeof(Size),
-                typeof(Resizer), new PropertyMetadata(new Size(30, 30), (d, e) =>
-                { (d as Resizer).GrabberSize = (Size)e.NewValue; }));
+        public static readonly DependencyProperty GrabberBrushProperty =    
+            DependencyProperty.Register("GrabberBrush", typeof(Brush), typeof(Resizer), 
+                new PropertyMetadata(null));
 
         Windows.Foundation.Size originalSize;
         private void GrabLoaded(object sender, RoutedEventArgs e)

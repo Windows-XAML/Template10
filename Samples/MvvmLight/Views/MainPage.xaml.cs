@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using Sample.ViewModels;
+using Windows.UI.Xaml.Controls;
 
 namespace Sample.Views
 {
@@ -9,9 +10,6 @@ namespace Sample.Views
             InitializeComponent();
         }
 
-        public ViewModels.MainPageViewModel ViewModel
-        {
-            get { return DataContext as ViewModels.MainPageViewModel; }
-        }
+        public MainPageViewModel ViewModel => this.DataContext as MainPageViewModel;
     }
 }
