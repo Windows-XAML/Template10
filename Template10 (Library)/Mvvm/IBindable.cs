@@ -10,17 +10,22 @@ namespace Template10.Mvvm
         void RaisePropertyChanged([CallerMemberName]string propertyName = null);
    
 
-        void Set<T>(
-            T oldValue,
-            T newValue,
+        bool Set<T>(
+            T previous,
+            T value,
             out T storage,
             Func<T, T, bool> equalCompare=null,
             [CallerMemberName]string propertyName = null);
 
-        void Set<T>(
+        bool Set<T>(
             ref T storage,
             T value,
-            Func<T, T, bool> equalCompare = null,
             [CallerMemberName]string propertyName = null);
+
+        bool Set<T>(
+          ref T storage,
+          T value,
+          Func<T, T, bool> equalCompare = null,
+          [CallerMemberName]string propertyName = null);
     }
 }
