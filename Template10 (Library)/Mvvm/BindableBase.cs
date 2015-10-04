@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Windows.UI.Xaml;
@@ -9,6 +11,7 @@ namespace Template10.Mvvm
     public abstract class BindableBase : IBindable
     {
         public event PropertyChangedEventHandler PropertyChanged;
+
 
         public void RaisePropertyChanged([CallerMemberName]string propertyName = null)
         {
@@ -22,14 +25,17 @@ namespace Template10.Mvvm
             }
         }
 
-        public bool Set<T>(ref T storage, T value, [CallerMemberName]string propertyName = null)
+        public void Set<T>(T oldValue, T newValue, out T setToField, Func<T, T, bool> equalCompare = null, [CallerMemberName] string propertyName = null)
         {
-            if (object.Equals(storage, value))
-                return false;
-            storage = value;
-            RaisePropertyChanged(propertyName);
-            return true;
+            IBindable model = this;
+            setToField = this.CompareAndRiseEventIfChanged(oldValue, newValue, equalCompare, propertyName);
         }
+
+        public void Set<T>(ref T oldValueField, T newValue, Func<T, T, bool> equalCompare = null, [CallerMemberName] string propertyName = null)
+        {
+            Set(oldValueField, newValue, out oldValueField, equalCompare, propertyName);
+        }
+
     }
 
     public abstract class DependencyBindableBase : DependencyObject, IBindable
@@ -49,14 +55,50 @@ namespace Template10.Mvvm
                 // nothing
             }
         }
-
-        public bool Set<T>(ref T storage, T value, [CallerMemberName]string propertyName = null)
+        public void Set<T>(T oldValue, T newValue, out T setToField, Func<T, T, bool> equalCompare = null, [CallerMemberName] string propertyName = null)
         {
-            if (object.Equals(storage, value))
-                return false;
-            storage = value;
-            RaisePropertyChanged(propertyName);
-            return true;
+            IBindable model = this;
+            setToField = this.CompareAndRiseEventIfChanged(oldValue, newValue, equalCompare, propertyName);
         }
+
+        public void Set<T>(ref T oldValueField, T newValue, Func<T, T, bool> equalCompare = null, [CallerMemberName] string propertyName = null)
+        {
+            Set(oldValueField, newValue, out oldValueField, equalCompare, propertyName);
+        }
+
     }
+
+    internal static class BindableHelper
+    {
+        public static T CompareAndRiseEventIfChanged<T>(this IBindable model, T oldValue, T newValue, Func<T, T, bool> equalCompare, string propertyName)
+        {
+            T setToField;
+            bool isEq;
+            if (equalCompare != null)
+            {
+                isEq = equalCompare(oldValue, newValue);
+            }
+            else
+            {
+                var cpr = EqualityComparer<T>.Default;
+                isEq = cpr.Equals(oldValue, newValue);
+            }
+
+            if (!isEq)
+            {
+                setToField = newValue;
+                model.RaisePropertyChanged(propertyName);
+            }
+            else
+            {
+                setToField = oldValue;
+            }
+
+            return setToField;
+        }
+
+
+    }
+
+
 }
