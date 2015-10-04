@@ -278,7 +278,7 @@ namespace Template10.Common
         /// OnInitializeAsync will be called even if the application is restoring from state.
         /// An app restores from state when the app was suspended and then terminated (PreviousExecutionState terminated).
         /// </summary>
-        public virtual Task OnInitializeAsync(IActivatedEventArgs args) { return Task.FromResult<object>(null); }
+        public virtual async Task OnInitializeAsync(IActivatedEventArgs args) { await Task.Yield(); }
 
         /// <summary>
         /// OnSuspendingAsync will be called when the application is suspending, but this override
@@ -288,7 +288,7 @@ namespace Template10.Common
         /// because the asunc operations are in a single, global deferral created when the suspension
         /// begins and completed automatically when the last viewmodel has been called (including this method).
         /// </summary>
-        public virtual Task OnSuspendingAsync(object s, SuspendingEventArgs e) { return Task.FromResult<object>(null); }
+        public virtual async Task OnSuspendingAsync(object s, SuspendingEventArgs e) { await Task.Yield(); }
         public virtual void OnResuming(object s, object e) { }
 
         #endregion
