@@ -125,7 +125,7 @@ namespace Template10.Mvvm
             set { SetValue(ExecutionKeyProperty, value); }
         }
         public static readonly DependencyProperty ExecutionKeyProperty =
-            DependencyProperty.Register("ExecutionKey", typeof(string), typeof(AwaitableDelegateCommandParameter), new PropertyMetadata(Guid.NewGuid().ToString()));
+            DependencyProperty.Register(nameof(ExecutionKey), typeof(string), typeof(AwaitableDelegateCommandParameter), new PropertyMetadata(Guid.NewGuid().ToString()));
 
 
 
@@ -137,7 +137,7 @@ namespace Template10.Mvvm
         }
                 
         public static readonly DependencyProperty InnerCommandExecutionParameterProperty =
-            DependencyProperty.Register("InnerCommandExecutionParameter", typeof(object), typeof(AwaitableDelegateCommandParameter), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(InnerCommandExecutionParameter), typeof(object), typeof(AwaitableDelegateCommandParameter), new PropertyMetadata(null));
          
 
 
