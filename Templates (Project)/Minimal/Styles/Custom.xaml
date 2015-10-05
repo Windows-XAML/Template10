@@ -40,9 +40,9 @@
                 <Setter Property="HeaderForeground" Value="#FF2B2B2B" />
             </Style>
 
-            <Style BasedOn="{StaticResource ResizerStyle}" TargetType="controls:Resizer">
+            <!--<Style BasedOn="{StaticResource ResizerStyle}" TargetType="controls:Resizer">
                 <Setter Property="GrabberBrush" Value="{StaticResource CustomColorBrush}" />
-            </Style>
+            </Style>-->
 
         </ResourceDictionary>
 
