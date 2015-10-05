@@ -129,6 +129,7 @@
   <ItemGroup>
     <Compile Include="Behaviors\NavButtonBehavior.cs" />
     <Compile Include="Behaviors\TextBoxEnterKeyBehavior.cs" />
+    <Compile Include="Behaviors\ConditionalAction.cs" />
     <Compile Include="Behaviors\TimeoutAction.cs" />
     <Compile Include="Common\BootStrapper.cs" />
     <Compile Include="Common\DispatcherWrapper.cs" />
@@ -142,7 +143,8 @@
     <Compile Include="Controls\CustomTitleBar.cs" />
     <Compile Include="Controls\HamburgerButtonInfo.cs" />
     <Compile Include="Controls\Resizer.cs" />
-    <Compile Include="Converters\ColorLighteningConverter.cs" />
+    <Compile Include="Converters\DateTimeOffsetConverter.cs" />
+    <Compile Include="Converters\NumberFormatConverter.cs" />
     <Compile Include="Services\NavigationService\INavigationService.cs" />
     <Compile Include="Services\NavigationService\NavigationServiceList.cs" />
     <Compile Include="Services\SettingsService\ISettingsHelper.cs" />

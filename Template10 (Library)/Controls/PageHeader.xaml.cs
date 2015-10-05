@@ -133,6 +133,16 @@ namespace Template10.Controls
             DependencyProperty.Register(nameof(BackButtonVisibility), typeof(Visibility),
                 typeof(PageHeader), new PropertyMetadata(Visibility.Visible));
 
+        public Boolean IsCommandBarOpen
+        {
+            get { return HeaderCommandBar.IsOpen; }
+            set { SetValue(IsCommandBarOpenProperty, HeaderCommandBar.IsOpen = value); }
+        }
+        public static readonly DependencyProperty IsCommandBarOpenProperty =
+            DependencyProperty.Register(nameof(IsCommandBarOpen), typeof(Boolean),
+                typeof(PageHeader), new PropertyMetadata(false, (d, e) =>
+                { (d as PageHeader).IsCommandBarOpen = (Boolean)e.NewValue; }));
+
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }

@@ -49,6 +49,9 @@ namespace Sample.Views
         private void LoginHide(object sender, System.EventArgs e)
         {
             VisualStateManager.GoToState(this, NormalVisualState.Name, true);
+            // only for demonstration purposes
+            // the user would need to really login in the real world
+            IsAuthenticated = true;
         }
 
         private void SearchChecked(object sender, RoutedEventArgs e)
@@ -60,5 +63,14 @@ namespace Sample.Views
         {
             VisualStateManager.GoToState(this, NormalVisualState.Name, true);
         }
+
+        public bool IsAuthenticated
+        {
+            get { return (bool)GetValue(IsAuthenticatedProperty); }
+            set { SetValue(IsAuthenticatedProperty, value); }
+        }
+        public static readonly DependencyProperty IsAuthenticatedProperty =
+            DependencyProperty.Register(nameof(IsAuthenticated), typeof(bool),
+                typeof(Shell), new PropertyMetadata(false));
     }
 }

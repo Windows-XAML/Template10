@@ -47,12 +47,14 @@ namespace Template10.Controls
         /// Sets and gets the Visibility property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        Visibility _visibility = Visibility.Visible;
         public Visibility Visibility
         {
-            get { return _visibility; }
-            set { Set(ref _visibility, value); }
+            get { return (Visibility)GetValue(VisibilityProperty); }
+            set { SetValue(VisibilityProperty, value); }
         }
+        public static readonly DependencyProperty VisibilityProperty =
+            DependencyProperty.Register(nameof(Visibility), typeof(Visibility), 
+                typeof(HamburgerButtonInfo), new PropertyMetadata(Visibility.Visible));
 
         /// <summary>
         /// Sets and gets the IsEnabled property.
