@@ -14,7 +14,7 @@
 
     <Page.Resources>
 
-        <Converters:DateTimeFormatConverter x:Key="DateTimeFormatConverter" />
+        <Converters:StringFormatConverter x:Key="DateTimeFormatConverter" />
         <c:ValueWhenConverter xmlns:c="using:Template10.Converters" x:Name="VisibleWhenFalseConverter">
             <c:ValueWhenConverter.When>
                 <x:Boolean>False</x:Boolean>
