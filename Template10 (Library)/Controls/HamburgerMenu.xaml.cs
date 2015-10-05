@@ -35,10 +35,7 @@ namespace Template10.Controls
                 new KeyboardService().AfterWindowZGesture = () => { HamburgerCommand.Execute(null); };
                 ShellSplitView.RegisterPropertyChangedCallback(SplitView.IsPaneOpenProperty, (d, e) =>
                 {
-                    if (SecondaryButtonOrientation.Equals(Orientation.Horizontal) && ShellSplitView.IsPaneOpen)
-                        _SecondaryButtonStackPanel.Orientation = Orientation.Horizontal;
-                    else
-                        _SecondaryButtonStackPanel.Orientation = Orientation.Vertical;
+                    UpdateSecondaryPanelOrientation();
                 });
                 ShellSplitView.RegisterPropertyChangedCallback(SplitView.DisplayModeProperty, (d, e) =>
                 {
@@ -52,6 +49,17 @@ namespace Template10.Controls
                     if (!any)
                         AccentColor = Colors.DarkGreen;
                 };
+            }
+        }
+
+        void UpdateSecondaryPanelOrientation()
+        {
+            if (_SecondaryButtonStackPanel != null)
+            {
+                if (SecondaryButtonOrientation.Equals(Orientation.Horizontal) && ShellSplitView.IsPaneOpen)
+                    _SecondaryButtonStackPanel.Orientation = Orientation.Horizontal;
+                else
+                    _SecondaryButtonStackPanel.Orientation = Orientation.Vertical;
             }
         }
 
@@ -513,6 +521,7 @@ namespace Template10.Controls
         private void SecondaryButtonStackPanel_Loaded(object sender, RoutedEventArgs e)
         {
             _SecondaryButtonStackPanel = sender as StackPanel;
+            UpdateSecondaryPanelOrientation();
         }
     }
 }
