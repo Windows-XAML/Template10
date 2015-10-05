@@ -9,11 +9,13 @@
       xmlns:local="using:Sample.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:vm="using:Sample.ViewModels" mc:Ignorable="d">
+    
     <Page.DataContext>
         <vm:MainPageViewModel />
     </Page.DataContext>
+    
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <!--  adaptive states  -->
+        
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
                 <VisualState x:Name="VisualStateNarrow">
@@ -32,10 +34,11 @@
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <!--  header  -->
+
         <controls:PageHeader BackButtonVisibility="Collapsed" Frame="{x:Bind Frame, Mode=OneWay}" Text="Main Page"/>
       
         <!--  #region content  -->
+        
         <StackPanel Grid.Row="1" VerticalAlignment="Top"
                     Orientation="Horizontal" Padding="12,8,0,0">
             <controls:Resizer>
@@ -54,6 +57,8 @@
             <Button Margin="12,0" VerticalAlignment="Bottom"
                     Click="{x:Bind ViewModel.GotoDetailsPage}" Content="Submit" />
         </StackPanel>
+        
         <!--  #endregion  -->
+        
     </Grid>
 </Page>
