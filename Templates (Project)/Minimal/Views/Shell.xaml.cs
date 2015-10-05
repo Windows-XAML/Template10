@@ -52,7 +52,8 @@ namespace Sample.Views
                         SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
                             (SettingsService.Instance.UseShellBackButton && Instance.MyHamburgerMenu.NavigationService.CanGoBack)
                                 ? AppViewBackButtonVisibility.Visible
-                                : AppViewBackButtonVisibility.Collapsed; break;
+                                : AppViewBackButtonVisibility.Collapsed;
+                        break;
                 }
             });
         }
