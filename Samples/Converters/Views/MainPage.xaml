@@ -13,8 +13,7 @@
         <vm:MainPageViewModel />
     </Page.DataContext>
     <Page.Resources>
-        <converters:DateTimeFormatConverter x:Key="DateTimeFormatConverter" />
-        <converters:NumberFormatConverter x:Key="NumberFormatConverter" />
+        <converters:StringFormatConverter x:Key="StringFormatConverter" />
         <converters:DateTimeOffsetConverter x:Key="DateTimeOffsetConverter" />
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -38,16 +37,16 @@
                 <Run Text="Date Conversions:" FontWeight="Bold" FontStyle="Italic" FontSize="20" />
                 <LineBreak />
                 <Run Text="Long date pattern:" FontWeight="Bold" />
-                <Run Text="{Binding DateTimeValue, Mode=OneWay, Converter={StaticResource DateTimeFormatConverter}, ConverterParameter=D}" />
+                <Run Text="{Binding DateTimeValue, Mode=OneWay, Converter={StaticResource StringFormatConverter}, ConverterParameter=\{0:D\}}" />
                 <LineBreak />
                 <Run Text="Full date/time pattern (short time):" FontWeight="Bold" />
-                <Run Text="{Binding DateTimeValue, Mode=OneWay, Converter={StaticResource DateTimeFormatConverter}, ConverterParameter=f}" />
+                <Run Text="{Binding DateTimeValue, Mode=OneWay, Converter={StaticResource StringFormatConverter}, ConverterParameter=\{0:f\}}" />
                 <LineBreak />
                 <Run Text="Year month pattern:" FontWeight="Bold" />
-                <Run Text="{Binding DateTimeValue, Mode=OneWay, Converter={StaticResource DateTimeFormatConverter}, ConverterParameter=Y}" />
+                <Run Text="{Binding DateTimeValue, Mode=OneWay, Converter={StaticResource StringFormatConverter}, ConverterParameter=\{0:Y\}}" />
                 <LineBreak />
                 <Run Text="RFC1123 pattern:" FontWeight="Bold" />
-                <Run Text="{Binding DateTimeValue, Mode=OneWay, Converter={StaticResource DateTimeFormatConverter}, ConverterParameter=r}" />
+                <Run Text="{Binding DateTimeValue, Mode=OneWay, Converter={StaticResource StringFormatConverter}, ConverterParameter=\{0:r\}}" />
             </TextBlock>
 
             <ComboBox ItemsSource="{Binding NumberValues, Mode=OneWay}" SelectedItem="{Binding NumberValue, Mode=TwoWay}" />
@@ -56,16 +55,16 @@
                 <Run Text="Number Conversions:" FontWeight="Bold" FontStyle="Italic" FontSize="20" />
                 <LineBreak />
                 <Run Text="Currency:" FontWeight="Bold" />
-                <Run Text="{Binding NumberValue, Mode=OneWay, Converter={StaticResource NumberFormatConverter}, ConverterParameter=C}" />
+                <Run Text="{Binding NumberValue, Mode=OneWay, Converter={StaticResource StringFormatConverter}, ConverterParameter=\{0:C\}}" />
                 <LineBreak />
                 <Run Text="Exponential (3):" FontWeight="Bold" />
-                <Run Text="{Binding NumberValue, Mode=OneWay, Converter={StaticResource NumberFormatConverter}, ConverterParameter=e3}" />
+                <Run Text="{Binding NumberValue, Mode=OneWay, Converter={StaticResource StringFormatConverter}, ConverterParameter=\{0:e3\}}" />
                 <LineBreak />
                 <Run Text="Fixed-point (4):" FontWeight="Bold" />
-                <Run Text="{Binding NumberValue, Mode=OneWay, Converter={StaticResource NumberFormatConverter}, ConverterParameter=F4}" />
+                <Run Text="{Binding NumberValue, Mode=OneWay, Converter={StaticResource StringFormatConverter}, ConverterParameter=\{0:F4\}}" />
                 <LineBreak />
                 <Run Text="Percent:" FontWeight="Bold" />
-                <Run Text="{Binding NumberValue, Mode=OneWay, Converter={StaticResource NumberFormatConverter}, ConverterParameter=p}" />
+                <Run Text="{Binding NumberValue, Mode=OneWay, Converter={StaticResource StringFormatConverter}, ConverterParameter=\{0:p\}}" />
             </TextBlock>
 
             <CheckBox Content="Change the value below by clicking on the CheckBox" IsChecked="{Binding BooleanValue, Mode=TwoWay}" />
