@@ -73,7 +73,7 @@
                                           Visibility="{Binding Visibility, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}">
                                 <ToggleButton.Template>
                                     <ControlTemplate TargetType="ToggleButton">
-                                        <Grid x:Name="RootGrid" Width="{Binding PaneWidth, ElementName=ThisPage}">
+                                        <Grid x:Name="RootGrid" Width="{Binding PaneWidth, ElementName=ThisPage}" Background="Transparent">
                                             <VisualStateManager.VisualStateGroups>
                                                 <VisualStateGroup x:Name="CommonStates">
                                                     <VisualState x:Name="Normal">
@@ -157,12 +157,11 @@
                                                     <Setter Property="Visibility" Value="Collapsed" />
                                                 </Style>
                                             </Grid.Resources>
-                                            <Rectangle x:Name="NormalBack" Fill="{Binding NavButtonBackground, ElementName=ThisPage}" Visibility="Collapsed" />
-                                            <Rectangle x:Name="PressedBack" Fill="{Binding NavButtonPressedBackground, ElementName=ThisPage}" Visibility="Collapsed" />
-                                            <Rectangle x:Name="HoverBack" Fill="{Binding NavButtonHoverBackground, ElementName=ThisPage}" Visibility="Collapsed" />
-                                            <Rectangle x:Name="CheckedBack" Fill="{Binding NavButtonCheckedBackground, ElementName=ThisPage}" Visibility="Collapsed" />
-                                            <ContentControl x:Name="NormalFore" Content="{TemplateBinding Content}" Foreground="{Binding NavButtonForeground, ElementName=ThisPage, FallbackValue=White}" />
-                                            <!--<ContentControl x:Name="CheckedFore" Content="{TemplateBinding Content}" Foreground="{Binding NavButtonCheckedForeground, ElementName=ThisPage, FallbackValue=White}" />-->
+                                            <Rectangle x:Name="NormalBack" Fill="{Binding NavButtonBackground, ElementName=ThisPage}" Visibility="Collapsed" IsHitTestVisible="False" />
+                                            <Rectangle x:Name="PressedBack" Fill="{Binding NavButtonPressedBackground, ElementName=ThisPage}" Visibility="Collapsed" IsHitTestVisible="False" />
+                                            <Rectangle x:Name="HoverBack" Fill="{Binding NavButtonHoverBackground, ElementName=ThisPage}" Visibility="Collapsed" IsHitTestVisible="False" />
+                                            <Rectangle x:Name="CheckedBack" Fill="{Binding NavButtonCheckedBackground, ElementName=ThisPage}" Visibility="Collapsed" IsHitTestVisible="False" />
+                                            <ContentControl x:Name="NormalFore" Content="{TemplateBinding Content}" Foreground="{Binding NavButtonForeground, ElementName=ThisPage, FallbackValue=White}" IsHitTestVisible="False" />
                                         </Grid>
                                     </ControlTemplate>
                                 </ToggleButton.Template>
