@@ -362,19 +362,19 @@ namespace Template10.Controls
                 typeof(HamburgerMenu), new PropertyMetadata(false,
                     (d, e) => { (d as HamburgerMenu).IsOpen = (bool)e.NewValue; }));
 
-        public ObservableItemCollection<HamburgerButtonInfo> PrimaryButtons
+        public ObservableCollection<HamburgerButtonInfo> PrimaryButtons
         {
             get
             {
-                var PrimaryButtons = (ObservableItemCollection<HamburgerButtonInfo>)base.GetValue(PrimaryButtonsProperty);
+                var PrimaryButtons = (ObservableCollection<HamburgerButtonInfo>)base.GetValue(PrimaryButtonsProperty);
                 if (PrimaryButtons == null)
-                    base.SetValue(PrimaryButtonsProperty, PrimaryButtons = new ObservableItemCollection<HamburgerButtonInfo>());
+                    base.SetValue(PrimaryButtonsProperty, PrimaryButtons = new ObservableCollection<HamburgerButtonInfo>());
                 return PrimaryButtons;
             }
             set { SetValue(PrimaryButtonsProperty, value); }
         }
         public static readonly DependencyProperty PrimaryButtonsProperty =
-            DependencyProperty.Register(nameof(PrimaryButtons), typeof(ObservableItemCollection<HamburgerButtonInfo>),
+            DependencyProperty.Register(nameof(PrimaryButtons), typeof(ObservableCollection<HamburgerButtonInfo>),
                 typeof(HamburgerMenu), new PropertyMetadata(null));
 
         private NavigationService _navigationService;
@@ -435,19 +435,19 @@ namespace Template10.Controls
                 }));
 
 
-        public ObservableItemCollection<HamburgerButtonInfo> SecondaryButtons
+        public ObservableCollection<HamburgerButtonInfo> SecondaryButtons
         {
             get
             {
-                var SecondaryButtons = (ObservableItemCollection<HamburgerButtonInfo>)base.GetValue(SecondaryButtonsProperty);
+                var SecondaryButtons = (ObservableCollection<HamburgerButtonInfo>)base.GetValue(SecondaryButtonsProperty);
                 if (SecondaryButtons == null)
-                    base.SetValue(SecondaryButtonsProperty, SecondaryButtons = new ObservableItemCollection<HamburgerButtonInfo>());
+                    base.SetValue(SecondaryButtonsProperty, SecondaryButtons = new ObservableCollection<HamburgerButtonInfo>());
                 return SecondaryButtons;
             }
             set { SetValue(SecondaryButtonsProperty, value); }
         }
         public static readonly DependencyProperty SecondaryButtonsProperty =
-            DependencyProperty.Register(nameof(SecondaryButtons), typeof(ObservableItemCollection<HamburgerButtonInfo>),
+            DependencyProperty.Register(nameof(SecondaryButtons), typeof(ObservableCollection<HamburgerButtonInfo>),
                 typeof(HamburgerMenu), new PropertyMetadata(null));
 
         public double PaneWidth

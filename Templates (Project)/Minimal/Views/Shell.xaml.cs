@@ -18,33 +18,35 @@ namespace Sample.Views
     public sealed partial class Shell : Page
     {
         public static Shell Instance { get; set; }
-        private static Template10.Common.WindowWrapper Window { get; set; }
 
         public Shell(NavigationService navigationService)
         {
             Instance = this;
             InitializeComponent();
-            Window = WindowWrapper.Current();
             MyHamburgerMenu.NavigationService = navigationService;
             VisualStateManager.GoToState(Instance, Instance.NormalVisualState.Name, true);
         }
 
         public static void SetBusyVisibility(Visibility visible, string text = null)
         {
-            Window.Dispatcher.Dispatch(() =>
+            WindowWrapper.Current().Dispatcher.Dispatch(() =>
             {
                 switch (visible)
                 {
                     case Visibility.Visible:
                         Instance.FindName(nameof(BusyScreen));
                         Instance.BusyText.Text = text ?? string.Empty;
-                        VisualStateManager.GoToState(Instance, Instance.BusyVisualState.Name, true);
-                        SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
-                            AppViewBackButtonVisibility.Collapsed;
+                        if (VisualStateManager.GoToState(Instance, Instance.BusyVisualState.Name, true))
+                        {
+                            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+                                AppViewBackButtonVisibility.Collapsed;
+                        }
                         break;
-                    default:
-                        VisualStateManager.GoToState(Instance, Instance.NormalVisualState.Name, true);
-                        BootStrapper.Current.UpdateShellBackButton();
+                    case Visibility.Collapsed:
+                        if (VisualStateManager.GoToState(Instance, Instance.NormalVisualState.Name, true))
+                        {
+                            BootStrapper.Current.UpdateShellBackButton();
+                        }
                         break;
                 }
             });
