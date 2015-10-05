@@ -6,9 +6,11 @@ using Template10.Controls;
 using Template10.Services.NavigationService;
 using Template10.Utils;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Sample.Services.SettingsServices;
 
 namespace Sample.Views
 {
@@ -37,10 +39,20 @@ namespace Sample.Views
                         Instance.FindName(nameof(BusyScreen));
                         Instance.BusyText.Text = text ?? string.Empty;
                         VisualStateManager.GoToState(Instance, Instance.BusyVisualState.Name, true);
+                        if (SettingsService.Instance.UseShellBackButton &&
+                            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility ==
+                            AppViewBackButtonVisibility.Visible)
+                        {
+                            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+                                AppViewBackButtonVisibility.Collapsed;
+                        }
                         break;
                     default:
                         VisualStateManager.GoToState(Instance, Instance.NormalVisualState.Name, true);
-                        break;
+                        SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+                            (SettingsService.Instance.UseShellBackButton && Instance.MyHamburgerMenu.NavigationService.CanGoBack)
+                                ? AppViewBackButtonVisibility.Visible
+                                : AppViewBackButtonVisibility.Collapsed; break;
                 }
             });
         }
