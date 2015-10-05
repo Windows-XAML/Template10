@@ -39,20 +39,12 @@ namespace Sample.Views
                         Instance.FindName(nameof(BusyScreen));
                         Instance.BusyText.Text = text ?? string.Empty;
                         VisualStateManager.GoToState(Instance, Instance.BusyVisualState.Name, true);
-                        if (SettingsService.Instance.UseShellBackButton &&
-                            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility ==
-                            AppViewBackButtonVisibility.Visible)
-                        {
-                            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
-                                AppViewBackButtonVisibility.Collapsed;
-                        }
+                        SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+                            AppViewBackButtonVisibility.Collapsed;
                         break;
                     default:
                         VisualStateManager.GoToState(Instance, Instance.NormalVisualState.Name, true);
-                        SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
-                            (SettingsService.Instance.UseShellBackButton && Instance.MyHamburgerMenu.NavigationService.CanGoBack)
-                                ? AppViewBackButtonVisibility.Visible
-                                : AppViewBackButtonVisibility.Collapsed;
+                        BootStrapper.Current.UpdateShellBackButton();
                         break;
                 }
             });
