@@ -190,5 +190,3 @@ _Pvt_Extensions/
 ModelManifest.xml
 
 *.lock.json
-/Templates (Project)/Blank/null
-/Templates (Project)/Blank/Blank.nuget.targets
