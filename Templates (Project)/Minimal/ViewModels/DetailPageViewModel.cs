@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Template10.Mvvm;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.Xaml.Media;
 
 namespace Sample.ViewModels
 {
@@ -54,5 +55,15 @@ namespace Sample.ViewModels
 
         private string _Value = "Default";
         public string Value { get { return _Value; } set { Set(ref _Value, value); } }
+
+        public Brush HeaderBackgroundBrush
+        {
+            get { return (Brush)Views.Shell.HeaderBackgroundBrush; }
+        }
+
+        public SolidColorBrush HeaderForegroundBrush
+        {
+            get { return Views.Shell.HeaderForegroundBrush; }
+        }
     }
 }

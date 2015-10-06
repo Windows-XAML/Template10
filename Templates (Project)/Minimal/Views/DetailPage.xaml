@@ -44,7 +44,10 @@
 
         <!-- header -->
 
-        <controls:PageHeader Text="Detail Page" Frame="{x:Bind Frame}" />
+        <controls:PageHeader Frame="{x:Bind Frame, Mode=OneWay}"
+                             Text="Detail Page" 
+                             HeaderBackground="{Binding HeaderBackgroundBrush, Mode=OneTime}"
+                             HeaderForeground="{Binding HeaderForegroundBrush, Mode=OneWay}"/>
 
         <!--#region content-->
 
