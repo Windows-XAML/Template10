@@ -39,10 +39,14 @@ namespace Template10.Controls
                     {
                         item.PropertyChanged -= itemPropertyChanged;
                     }
-                    foreach (INotifyPropertyChanged item in e.NewItems)
+                    if (e.NewItems != null)
                     {
-                        item.PropertyChanged += itemPropertyChanged;
+                        foreach (INotifyPropertyChanged item in e.NewItems)
+                        {
+                            item.PropertyChanged += itemPropertyChanged;
+                        }
                     }
+
                     break;
                 case NotifyCollectionChangedAction.Reset:
                     break;
@@ -54,7 +58,7 @@ namespace Template10.Controls
         {
             ItemPropertyChanged?.Invoke(sender, e);
         }
-        public EventHandler<PropertyChangedEventArgs> ItemPropertyChanged;
+        public event EventHandler<PropertyChangedEventArgs> ItemPropertyChanged;
 
         public void AddRange(IEnumerable<T> items)
         {

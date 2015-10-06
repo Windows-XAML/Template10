@@ -1,29 +1,31 @@
-﻿<Page x:Class="Sample.Views.Shell" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Controls="using:Template10.Controls"
-      xmlns:Core="using:Microsoft.Xaml.Interactions.Core" xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="using:Sample.Views"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:views="using:Sample.Views"
-      x:Name="ThisPage" mc:Ignorable="d">
+﻿<Page x:Class="Sample.Views.Shell"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:Controls="using:Template10.Controls"
+      xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+      xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="using:Sample.Views"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:views="using:Sample.Views" x:Name="ThisPage"
+      mc:Ignorable="d">
 
     <Grid x:Name="RootGrid">
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
-                <VisualState x:Name="NormalVisualState">
-                    <VisualState.Setters>
-                        <Setter Target="MyHamburgerMenu.(UIElement.IsEnabled)" Value="True" />
-                    </VisualState.Setters>
-                </VisualState>
+                <VisualState x:Name="NormalVisualState" />
                 <VisualState x:Name="BusyVisualState">
                     <VisualState.Setters>
                         <Setter Target="BusyRing.(ProgressRing.IsActive)" Value="True" />
                         <Setter Target="BusyScreen.(UIElement.Visibility)" Value="Visible" />
+                        <Setter Target="MyHamburgerMenu.(UIElement.IsEnabled)" Value="True" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <Controls:HamburgerMenu x:Name="MyHamburgerMenu" IsEnabled="False">
+        <Controls:HamburgerMenu x:Name="MyHamburgerMenu">
 
             <Controls:HamburgerMenu.PrimaryButtons>
                 <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:MainPage">
@@ -45,8 +47,7 @@
 
         </Controls:HamburgerMenu>
 
-        <Grid x:Name="BusyScreen" Background="{StaticResource ModalBackground}"
-              Visibility="Collapsed" x:DeferLoadStrategy="Lazy">
+        <Grid x:Name="BusyScreen" Background="{StaticResource ModalBackground}" Visibility="Collapsed" x:DeferLoadStrategy="Lazy">
             <Viewbox Height="32">
                 <StackPanel Orientation="Horizontal">
                     <ProgressRing x:Name="BusyRing" Width="24"

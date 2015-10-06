@@ -11,14 +11,26 @@ namespace Template10.Behaviors
     [ContentProperty(Name = nameof(Actions))]
     public sealed class ConditionalAction : DependencyObject, IAction
     {
-        public ComparisonConditionType Operator
+        public enum Operators
         {
-            get { return (ComparisonConditionType)GetValue(OperatorProperty); }
+            Equal = 0,
+            NotEqual = 1,
+            LessThan = 2,
+            LessThanOrEqual = 3,
+            GreaterThan = 4,
+            GreaterThanOrEqual = 5,
+            IsNull = 6,
+            IsNotNull = 7,
+        }
+
+        public Operators Operator
+        {
+            get { return (Operators)GetValue(OperatorProperty); }
             set { SetValue(OperatorProperty, value); }
         }
         public static readonly DependencyProperty OperatorProperty =
-            DependencyProperty.Register(nameof(Operator), typeof(ComparisonConditionType),
-                typeof(ConditionalAction), new PropertyMetadata(ComparisonConditionType.Equal));
+            DependencyProperty.Register(nameof(Operator), typeof(Operators),
+                typeof(ConditionalAction), new PropertyMetadata(Operators.Equal));
 
         public object LeftValue
         {
@@ -62,50 +74,43 @@ namespace Template10.Behaviors
 
         public object Execute(object sender, object parameter)
         {
-            if (LeftValue == null && RightValue == null)
+            var leftType = LeftValue?.GetType();
+            var rightValue = (RightValue == null) ? null : Convert.ChangeType(RightValue, leftType);
+            switch (Operator)
             {
-                Interaction.ExecuteActions(this, this.Actions, null);
-            }
-            else if (LeftValue == null && RightValue != null)
-            {
-                // nothing
-            }
-            else if (LeftValue != null && RightValue == null)
-            {
-                // nothing
-            }
-            else
-            {
-                var leftType = LeftValue.GetType();
-                var rightValue = Convert.ChangeType(RightValue, leftType);
-                switch (Operator)
-                {
-                    case ComparisonConditionType.Equal:
-                    default:
-                        if (Compare(LeftValue, rightValue) == 0)
-                            Interaction.ExecuteActions(this, this.Actions, null);
-                        break;
-                    case ComparisonConditionType.NotEqual:
-                        if (Compare(LeftValue, rightValue) != 0)
-                            Interaction.ExecuteActions(this, this.Actions, null);
-                        break;
-                    case ComparisonConditionType.LessThan:
-                        if (Compare(LeftValue, rightValue) > 0)
-                            Interaction.ExecuteActions(this, this.Actions, null);
-                        break;
-                    case ComparisonConditionType.LessThanOrEqual:
-                        if (Compare(LeftValue, rightValue) >= 0)
-                            Interaction.ExecuteActions(this, this.Actions, null);
-                        break;
-                    case ComparisonConditionType.GreaterThan:
-                        if (Compare(LeftValue, rightValue) < 0)
-                            Interaction.ExecuteActions(this, this.Actions, null);
-                        break;
-                    case ComparisonConditionType.GreaterThanOrEqual:
-                        if (Compare(LeftValue, rightValue) <= 0)
-                            Interaction.ExecuteActions(this, this.Actions, null);
-                        break;
-                }
+                case Operators.Equal:
+                default:
+                    if (Compare(LeftValue, rightValue) == 0)
+                        Interaction.ExecuteActions(this, this.Actions, null);
+                    break;
+                case Operators.NotEqual:
+                    if (Compare(LeftValue, rightValue) != 0)
+                        Interaction.ExecuteActions(this, this.Actions, null);
+                    break;
+                case Operators.LessThan:
+                    if (Compare(LeftValue, rightValue) > 0)
+                        Interaction.ExecuteActions(this, this.Actions, null);
+                    break;
+                case Operators.LessThanOrEqual:
+                    if (Compare(LeftValue, rightValue) >= 0)
+                        Interaction.ExecuteActions(this, this.Actions, null);
+                    break;
+                case Operators.GreaterThan:
+                    if (Compare(LeftValue, rightValue) < 0)
+                        Interaction.ExecuteActions(this, this.Actions, null);
+                    break;
+                case Operators.GreaterThanOrEqual:
+                    if (Compare(LeftValue, rightValue) <= 0)
+                        Interaction.ExecuteActions(this, this.Actions, null);
+                    break;
+                case Operators.IsNull:
+                    if (LeftValue == null)
+                        Interaction.ExecuteActions(this, this.Actions, null);
+                    break;
+                case Operators.IsNotNull:
+                    if (LeftValue != null)
+                        Interaction.ExecuteActions(this, this.Actions, null);
+                    break;
             }
             return null;
         }

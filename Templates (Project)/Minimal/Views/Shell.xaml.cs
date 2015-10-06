@@ -6,9 +6,11 @@ using Template10.Controls;
 using Template10.Services.NavigationService;
 using Template10.Utils;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Sample.Services.SettingsServices;
 
 namespace Sample.Views
 {
@@ -16,30 +18,35 @@ namespace Sample.Views
     public sealed partial class Shell : Page
     {
         public static Shell Instance { get; set; }
-        private static Template10.Common.WindowWrapper Window { get; set; }
 
         public Shell(NavigationService navigationService)
         {
             Instance = this;
             InitializeComponent();
-            Window = WindowWrapper.Current();
             MyHamburgerMenu.NavigationService = navigationService;
             VisualStateManager.GoToState(Instance, Instance.NormalVisualState.Name, true);
         }
 
         public static void SetBusyVisibility(Visibility visible, string text = null)
         {
-            Window.Dispatcher.Dispatch(() =>
+            WindowWrapper.Current().Dispatcher.Dispatch(() =>
             {
                 switch (visible)
                 {
                     case Visibility.Visible:
                         Instance.FindName(nameof(BusyScreen));
                         Instance.BusyText.Text = text ?? string.Empty;
-                        VisualStateManager.GoToState(Instance, Instance.BusyVisualState.Name, true);
+                        if (VisualStateManager.GoToState(Instance, Instance.BusyVisualState.Name, true))
+                        {
+                            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+                                AppViewBackButtonVisibility.Collapsed;
+                        }
                         break;
-                    default:
-                        VisualStateManager.GoToState(Instance, Instance.NormalVisualState.Name, true);
+                    case Visibility.Collapsed:
+                        if (VisualStateManager.GoToState(Instance, Instance.NormalVisualState.Name, true))
+                        {
+                            BootStrapper.Current.UpdateShellBackButton();
+                        }
                         break;
                 }
             });
