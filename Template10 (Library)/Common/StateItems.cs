@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Template10.Common
 {
-    public class StateItems : List<StateItem>
+    public class StateItems : List<StateKey>
     {
-        public StateItem Add(Type type, string key, object value)
+        public StateKey Add(Type type, string key, object value)
         {
             if (Contains(type, key))
                 throw new ArgumentException("Same type+key exists.");
-            var item = new StateItem
+            var item = new StateKey
             {
                 Type = type,
                 Key = key,
@@ -52,7 +52,7 @@ namespace Template10.Common
             return this.Any(x => x.Value == value);
         }
 
-        public new bool Contains(StateItem item)
+        public new bool Contains(StateKey item)
         {
             return Contains(item.Type, item.Key, item.Value);
         }
