@@ -14,9 +14,9 @@ namespace Template10.Controls
 {
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-PageHeader
     [ContentProperty(Name = "PrimaryCommands")]
-    public sealed partial class PageHeader : UserControl, INotifyPropertyChanged
+    public sealed partial class PageHeaderUC : UserControl, INotifyPropertyChanged
     {
-        public PageHeader()
+        public PageHeaderUC()
         {
             this.InitializeComponent();
             PrimaryCommands = HeaderCommandBar.PrimaryCommands;
@@ -55,8 +55,8 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty VisualStateNarrowMinWidthProperty =
             DependencyProperty.Register(nameof(VisualStateNarrowMinWidth), typeof(double),
-                typeof(PageHeader), new PropertyMetadata(null, (d, e) =>
-                    { (d as PageHeader).VisualStateNarrowMinWidth = (double)e.NewValue; }));
+                typeof(PageHeaderUC), new PropertyMetadata(null, (d, e) =>
+                    { (d as PageHeaderUC).VisualStateNarrowMinWidth = (double)e.NewValue; }));
 
         public double VisualStateNormalMinWidth
         {
@@ -65,8 +65,8 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty VisualStateNormalMinWidthProperty =
             DependencyProperty.Register(nameof(VisualStateNormalMinWidth), typeof(double),
-                typeof(PageHeader), new PropertyMetadata(null, (d, e) =>
-                    { (d as PageHeader).VisualStateNormalMinWidth = (double)e.NewValue; }));
+                typeof(PageHeaderUC), new PropertyMetadata(null, (d, e) =>
+                    { (d as PageHeaderUC).VisualStateNormalMinWidth = (double)e.NewValue; }));
 
         #endregion
 
@@ -77,7 +77,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty HeaderBackgroundProperty =
             DependencyProperty.Register(nameof(HeaderBackground), typeof(Brush),
-                typeof(PageHeader), new PropertyMetadata(null));
+                typeof(PageHeaderUC), new PropertyMetadata(null));
 
         public Brush HeaderForeground
         {
@@ -86,7 +86,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty HeaderForegroundProperty =
             DependencyProperty.Register(nameof(HeaderForeground), typeof(Brush),
-                typeof(PageHeader), new PropertyMetadata(null));
+                typeof(PageHeaderUC), new PropertyMetadata(null));
 
         public IObservableVector<ICommandBarElement> PrimaryCommands
         {
@@ -95,7 +95,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty PrimaryCommandsProperty =
             DependencyProperty.Register(nameof(PrimaryCommands), typeof(IObservableVector<ICommandBarElement>),
-                typeof(PageHeader), new PropertyMetadata(null));
+                typeof(PageHeaderUC), new PropertyMetadata(null));
 
         public IObservableVector<ICommandBarElement> SecondaryCommands
         {
@@ -104,7 +104,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty SecondaryCommandsProperty =
             DependencyProperty.Register(nameof(SecondaryCommands), typeof(IObservableVector<ICommandBarElement>),
-                typeof(PageHeader), new PropertyMetadata(null));
+                typeof(PageHeaderUC), new PropertyMetadata(null));
 
         public Frame Frame
         {
@@ -113,7 +113,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty FrameProperty =
             DependencyProperty.Register(nameof(Frame), typeof(Frame),
-                typeof(PageHeader), new PropertyMetadata(null));
+                typeof(PageHeaderUC), new PropertyMetadata(null));
 
         public string Text
         {
@@ -122,7 +122,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty TextProperty =
             DependencyProperty.Register(nameof(Text), typeof(string),
-                typeof(PageHeader), new PropertyMetadata("Page Header"));
+                typeof(PageHeaderUC), new PropertyMetadata("Page Header"));
 
         public Visibility BackButtonVisibility
         {
@@ -131,7 +131,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty BackButtonVisibilityProperty =
             DependencyProperty.Register(nameof(BackButtonVisibility), typeof(Visibility),
-                typeof(PageHeader), new PropertyMetadata(Visibility.Visible));
+                typeof(PageHeaderUC), new PropertyMetadata(Visibility.Visible));
 
         public Boolean IsCommandBarOpen
         {
@@ -140,8 +140,8 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty IsCommandBarOpenProperty =
             DependencyProperty.Register(nameof(IsCommandBarOpen), typeof(Boolean),
-                typeof(PageHeader), new PropertyMetadata(false, (d, e) =>
-                { (d as PageHeader).IsCommandBarOpen = (Boolean)e.NewValue; }));
+                typeof(PageHeaderUC), new PropertyMetadata(false, (d, e) =>
+                { (d as PageHeaderUC).IsCommandBarOpen = (Boolean)e.NewValue; }));
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

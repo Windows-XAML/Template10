@@ -17,7 +17,7 @@
         <Setter Property="VisualStateWideMinWidth" Value="{StaticResource WideMinWidth}" />
     </Style>
 
-    <Style x:Key="PageHeaderStyle" TargetType="controls:PageHeader">
+    <Style x:Key="PageHeaderStyle" TargetType="controls:PageHeaderUC">
         <Setter Property="VisualStateNarrowMinWidth" Value="{StaticResource NarrowMinWidth}" />
         <Setter Property="VisualStateNormalMinWidth" Value="{StaticResource NormalMinWidth}" />
     </Style>
@@ -35,7 +35,7 @@
                 <Setter Property="AccentColor" Value="{StaticResource CustomColor}" />
             </Style>
 
-            <Style BasedOn="{StaticResource PageHeaderStyle}" TargetType="controls:PageHeader">
+            <Style BasedOn="{StaticResource PageHeaderStyle}" TargetType="controls:PageHeaderUC">
                 <Setter Property="HeaderBackground" Value="Gainsboro" />
                 <Setter Property="HeaderForeground" Value="#FF2B2B2B" />
             </Style>
@@ -53,7 +53,7 @@
                 <Setter Property="AccentColor" Value="{StaticResource CustomColor}" />
             </Style>
 
-            <Style BasedOn="{StaticResource PageHeaderStyle}" TargetType="controls:PageHeader">
+            <Style BasedOn="{StaticResource PageHeaderStyle}" TargetType="controls:PageHeaderUC">
                 <Setter Property="HeaderBackground" Value="WhiteSmoke" />
                 <Setter Property="HeaderForeground" Value="#FF2B2B2B" />
             </Style>
@@ -82,7 +82,7 @@
                 <Setter Property="SecondarySeparator" Value="White" />
             </Style>
 
-            <Style BasedOn="{StaticResource PageHeaderStyle}" TargetType="controls:PageHeader">
+            <Style BasedOn="{StaticResource PageHeaderStyle}" TargetType="controls:PageHeaderUC">
                 <Setter Property="HeaderBackground" Value="Black" />
                 <Setter Property="HeaderForeground" Value="White" />
             </Style>

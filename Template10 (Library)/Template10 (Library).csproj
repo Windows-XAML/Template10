@@ -156,8 +156,8 @@
     <Compile Include="Controls\HamburgerMenu.xaml.cs">
       <DependentUpon>HamburgerMenu.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\PageHeader.xaml.cs">
-      <DependentUpon>PageHeader.xaml</DependentUpon>
+    <Compile Include="Controls\PageHeaderUC.xaml.cs">
+      <DependentUpon>PageHeaderUC.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\ValueWhenConverter.cs" />
     <Compile Include="Mvvm\BindableBase.cs" />
@@ -185,7 +185,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\PageHeader.xaml">
+    <Page Include="Controls\PageHeaderUC.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

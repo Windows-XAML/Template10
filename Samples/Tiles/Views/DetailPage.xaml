@@ -44,14 +44,14 @@
 
         <!-- header -->
 
-        <controls:PageHeader Text="Detail Page" Frame="{x:Bind Frame}">
-            <controls:PageHeader.PrimaryCommands>
+        <controls:PageHeaderUC Text="Detail Page" Frame="{x:Bind Frame}">
+            <controls:PageHeaderUC.PrimaryCommands>
                 <AppBarButton Icon="Pin" Label="Pin" Click="{x:Bind ViewModel.Pin}"
                           Visibility="{x:Bind ViewModel.PinVisibility, Mode=OneWay}" />
                 <AppBarButton Icon="UnPin" Label="UnPin" Click="{x:Bind ViewModel.UnPin}"
                           Visibility="{x:Bind ViewModel.UnPinVisibility, Mode=OneWay}" />
-            </controls:PageHeader.PrimaryCommands>
-        </controls:PageHeader>
+            </controls:PageHeaderUC.PrimaryCommands>
+        </controls:PageHeaderUC>
 
         <!--#region content-->
 
