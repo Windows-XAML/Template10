@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.Xaml.Media;
 
 namespace Sample.ViewModels
 {
@@ -51,6 +52,16 @@ namespace Sample.ViewModels
         public void GotoDetailsPage()
         {
             this.NavigationService.Navigate(typeof(Views.DetailPage), this.Value);
+        }
+
+        public Brush HeaderBackgroundBrush
+        {
+            get { return (Brush)Views.Shell.HeaderBackgroundBrush; }
+        }
+
+        public SolidColorBrush HeaderForegroundBrush
+        {
+            get { return Views.Shell.HeaderForegroundBrush; }
         }
     }
 }

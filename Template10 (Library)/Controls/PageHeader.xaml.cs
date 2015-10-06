@@ -72,20 +72,20 @@ namespace Template10.Controls
 
         public Brush HeaderBackground
         {
-            get { return (Brush)GetValue(HeaderBackgroundProperty) ?? Resources["DefaultHeaderBackground"] as Brush; }
+            get { return (Brush)GetValue(HeaderBackgroundProperty) as Brush; }
             set { SetValue(HeaderBackgroundProperty, value); }
         }
         public static readonly DependencyProperty HeaderBackgroundProperty =
             DependencyProperty.Register(nameof(HeaderBackground), typeof(Brush),
                 typeof(PageHeader), new PropertyMetadata(null));
 
-        public Brush HeaderForeground
+        public SolidColorBrush HeaderForeground
         {
-            get { return (Brush)GetValue(HeaderForegroundProperty) ?? Resources["DefaultHeaderForeground"] as Brush; }
+            get { return GetValue(HeaderForegroundProperty) as SolidColorBrush; }
             set { SetValue(HeaderForegroundProperty, value); }
         }
         public static readonly DependencyProperty HeaderForegroundProperty =
-            DependencyProperty.Register(nameof(HeaderForeground), typeof(Brush),
+            DependencyProperty.Register(nameof(HeaderForeground), typeof(SolidColorBrush),
                 typeof(PageHeader), new PropertyMetadata(null));
 
         public IObservableVector<ICommandBarElement> PrimaryCommands

@@ -1,5 +1,6 @@
 ﻿using System;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Media;
 
 namespace Sample.ViewModels
 {
@@ -7,6 +8,16 @@ namespace Sample.ViewModels
     {
         public SettingsPartViewModel SettingsPartViewModel { get; } = new SettingsPartViewModel();
         public AboutPartViewModel AboutPartViewModel { get; } = new AboutPartViewModel();
+
+        public Brush HeaderBackgroundBrush
+        {
+            get { return (Brush)Views.Shell.HeaderBackgroundBrush; }
+        }
+
+        public SolidColorBrush HeaderForegroundBrush
+        {
+            get { return Views.Shell.HeaderForegroundBrush; }
+        }
     }
 
     public class SettingsPartViewModel : Mvvm.ViewModelBase

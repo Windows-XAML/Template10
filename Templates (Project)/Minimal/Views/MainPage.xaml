@@ -35,7 +35,11 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <controls:PageHeader BackButtonVisibility="Collapsed" Frame="{x:Bind Frame, Mode=OneWay}" Text="Main Page"/>
+        <controls:PageHeader BackButtonVisibility="Collapsed"
+                             Frame="{x:Bind Frame, Mode=OneWay}"
+                             Text="Main Page"
+                             HeaderBackground="{Binding HeaderBackgroundBrush, Mode=OneTime}"
+                             HeaderForeground="{Binding HeaderForegroundBrush, Mode=OneWay}"/>
       
         <!--  #region content  -->
         

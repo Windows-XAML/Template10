@@ -10,17 +10,12 @@
              x:Name="ThisPage" MinHeight="48"
              d:DesignWidth="400" mc:Ignorable="d">
 
-    <UserControl.Resources>
-        <SolidColorBrush x:Name="DefaultHeaderBackground" Color="Gainsboro" />
-        <SolidColorBrush x:Name="DefaultHeaderForeground" Color="Black" />
-    </UserControl.Resources>
-
     <CommandBar x:Name="HeaderCommandBar" Grid.Column="0"
                 Grid.ColumnSpan="2"
-                Background="{x:Bind HeaderBackground, FallbackValue=Blue}"
+                Background="{x:Bind HeaderBackground, FallbackValue=Gainsboro, Mode=OneWay}"
                 ClosedDisplayMode="Compact"
                 DataContext="{Binding ElementName=ThisPage}"
-                Foreground="{x:Bind HeaderForeground, FallbackValue=White}">
+                Foreground="{x:Bind HeaderForeground, FallbackValue=Black, Mode=OneWay}">
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
