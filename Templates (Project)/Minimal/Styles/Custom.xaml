@@ -10,16 +10,19 @@
     <SolidColorBrush x:Key="ExtendedSplashBackground" Color="White" />
     <SolidColorBrush x:Key="ExtendedSplashForeground" Color="{StaticResource CustomColor}" />
     <SolidColorBrush x:Key="ModalBackground" Opacity=".5" Color="{StaticResource CustomColor}" />
-
+    <!--<SolidColorBrush x:Key="CustomHeaderBackground" Color="DarkKhaki" />
+    <SolidColorBrush x:Key="CustomHeaderForeground" Color="#FF2B2B2B" />-->
     <Style x:Key="HamburgerMenuStyle" TargetType="controls:HamburgerMenu">
         <Setter Property="VisualStateNarrowMinWidth" Value="{StaticResource NarrowMinWidth}" />
         <Setter Property="VisualStateNormalMinWidth" Value="{StaticResource NormalMinWidth}" />
         <Setter Property="VisualStateWideMinWidth" Value="{StaticResource WideMinWidth}" />
     </Style>
 
-    <Style x:Key="PageHeaderStyle" TargetType="controls:PageHeaderUC">
+    <Style TargetType="controls:PageHeader">
         <Setter Property="VisualStateNarrowMinWidth" Value="{StaticResource NarrowMinWidth}" />
         <Setter Property="VisualStateNormalMinWidth" Value="{StaticResource NormalMinWidth}" />
+        <Setter Property="Background" Value="{ThemeResource CustomHeaderBackground}" />
+        <Setter Property="Foreground" Value="{ThemeResource CustomHeaderForeground}" />
     </Style>
 
     <Style x:Key="ResizerStyle" TargetType="controls:Resizer">
@@ -29,16 +32,13 @@
     <ResourceDictionary.ThemeDictionaries>
 
         <!--  RequestedTheme=Dark  -->
-        <ResourceDictionary x:Key="Default">
+        <ResourceDictionary x:Key="Dark">
 
             <Style BasedOn="{StaticResource HamburgerMenuStyle}" TargetType="controls:HamburgerMenu">
                 <Setter Property="AccentColor" Value="{StaticResource CustomColor}" />
             </Style>
-
-            <Style BasedOn="{StaticResource PageHeaderStyle}" TargetType="controls:PageHeaderUC">
-                <Setter Property="HeaderBackground" Value="Gainsboro" />
-                <Setter Property="HeaderForeground" Value="#FF2B2B2B" />
-            </Style>
+            <SolidColorBrush x:Key="CustomHeaderBackground" Color="Gainsboro" />
+            <SolidColorBrush x:Key="CustomHeaderForeground" Color="#FF2B2B2B" />
 
             <!--<Style BasedOn="{StaticResource ResizerStyle}" TargetType="controls:Resizer">
                 <Setter Property="GrabberBrush" Value="{StaticResource CustomColorBrush}" />
@@ -52,11 +52,12 @@
             <Style BasedOn="{StaticResource HamburgerMenuStyle}" TargetType="controls:HamburgerMenu">
                 <Setter Property="AccentColor" Value="{StaticResource CustomColor}" />
             </Style>
-
-            <Style BasedOn="{StaticResource PageHeaderStyle}" TargetType="controls:PageHeaderUC">
-                <Setter Property="HeaderBackground" Value="WhiteSmoke" />
-                <Setter Property="HeaderForeground" Value="#FF2B2B2B" />
-            </Style>
+            <SolidColorBrush x:Key="CustomHeaderBackground" Color="WhiteSmoke" />
+            <SolidColorBrush x:Key="CustomHeaderForeground" Color="#FF2B2B2B" />
+            <!--<Style BasedOn="{StaticResource PageHeaderStyle}" TargetType="controls:PageHeader">
+                <Setter Property="Background" Value="Blue" />
+                <Setter Property="Foreground" Value="#FF2B2B2B" />
+            </Style>-->
 
             <Style BasedOn="{StaticResource ResizerStyle}" TargetType="controls:Resizer">
                 <Setter Property="GrabberBrush" Value="{StaticResource CustomColorBrush}" />
@@ -81,12 +82,8 @@
                 <Setter Property="NavButtonHoverBackground" Value="White" />
                 <Setter Property="SecondarySeparator" Value="White" />
             </Style>
-
-            <Style BasedOn="{StaticResource PageHeaderStyle}" TargetType="controls:PageHeaderUC">
-                <Setter Property="HeaderBackground" Value="Black" />
-                <Setter Property="HeaderForeground" Value="White" />
-            </Style>
-
+            <SolidColorBrush x:Key="CustomHeaderBackground" Color="Black" />
+            <SolidColorBrush x:Key="CustomHeaderForeground" Color="White" />
             <Style BasedOn="{StaticResource ResizerStyle}" TargetType="controls:Resizer">
                 <Setter Property="GrabberBrush" Value="Black" />
             </Style>

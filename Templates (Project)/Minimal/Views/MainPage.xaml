@@ -34,8 +34,12 @@
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-
-        <controls:PageHeaderUC BackButtonVisibility="Collapsed" Frame="{x:Bind Frame, Mode=OneWay}" Text="Main Page"/>
+        <controls:PageHeader BackButtonVisibility="Collapsed" Frame="{x:Bind Frame, Mode=OneWay}" Text="Main Page">
+            <controls:PageHeader.PrimaryCommands>
+                <AppBarButton Icon="Play"></AppBarButton>
+                <AppBarButton Icon="Pause"></AppBarButton>
+            </controls:PageHeader.PrimaryCommands>
+        </controls:PageHeader>
       
         <!--  #region content  -->
         
