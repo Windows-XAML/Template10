@@ -62,21 +62,23 @@
         <Setter Property="Height" Value="48"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Background" Value="{ThemeResource AppBarBackgroundThemeBrush}"/>
-        <Setter Property="Foreground" Value="{ThemeResource AppBarItemForegroundThemeBrush}"/>
+        <Setter Property="HeaderBackgroundBrush" Value="{ThemeResource AppBarBackgroundThemeBrush}"/>
+        <Setter Property="HeaderForegroundBrush" Value="{ThemeResource AppBarItemForegroundThemeBrush}"/>
+        <Setter Property="VisualStateNarrowMinWidth" Value="0"/>
+        <Setter Property="VisualStateNormalMinWidth" Value="521"/>
         <Setter Property="Text" Value="Page Header"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:PageHeader">
                     <CommandBar x:Name="PART_COMMANDBAR"
-                                Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}"
-                                Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Foreground}"
+                                Background="{TemplateBinding HeaderBackgroundBrush}"
+                                Foreground="{TemplateBinding HeaderForegroundBrush}"
                                 ClosedDisplayMode="Compact">
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="VisualStateGroup">
                                 <VisualState x:Name="VisualStateNarrow">
                                     <VisualState.StateTriggers>
-                                        <AdaptiveTrigger x:Name="VisualStateNarrowTrigger" MinWindowWidth="{TemplateBinding VisualStateNarrowMinWidth}" />
+                                        <AdaptiveTrigger x:Name="VisualStateNarrowTrigger" MinWindowWidth="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=VisualStateNarrowMinWidth}" />
                                     </VisualState.StateTriggers>
                                     <VisualState.Setters>
                                         <Setter Target="PART_SPACER.Visibility" Value="Visible" />
@@ -84,9 +86,11 @@
                                 </VisualState>
                                 <VisualState x:Name="VisualStateNormal">
                                     <VisualState.StateTriggers>
-                                        <AdaptiveTrigger x:Name="VisualStateNormalTrigger" MinWindowWidth="{TemplateBinding VisualStateNormalMinWidth}" />
+                                        <AdaptiveTrigger x:Name="VisualStateNormalTrigger" MinWindowWidth="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=VisualStateNormalMinWidth}"/>
                                     </VisualState.StateTriggers>
-                                    <VisualState.Setters />
+                                    <VisualState.Setters>
+                                        <Setter Target="PART_SPACER.Visibility" Value="Collapsed" />
+                                    </VisualState.Setters>
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>

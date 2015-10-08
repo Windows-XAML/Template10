@@ -10,20 +10,44 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Shapes;
+using Template10.Utils;
 
 // The Templated Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234235
 
 namespace Template10.Controls
 {
     [TemplatePart(Name = PART_COMMANDBAR_NAME, Type = typeof(CommandBar))]
+    [TemplatePart(Name= PART_BACK_BTN_GRID_NAME, Type = typeof(Grid))]
+    [TemplatePart(Name = PART_SPACER_NAME, Type = typeof(Rectangle))]
+    [TemplatePart(Name = PART_COMMAND_MAIN_STACK_NAME, Type = typeof(StackPanel))]
     public sealed class PageHeader : Control
     {
         private const string PART_COMMANDBAR_NAME = "PART_COMMANDBAR";
-        protected CommandBar _commandBar;
+        private const string PART_BACK_BTN_GRID_NAME = "PART_BACK_BTN_GRID";
+        private const string PART_SPACER_NAME = "PART_SPACER";
+        private const string PART_COMMAND_MAIN_STACK_NAME = "PART_COMMAND_MAIN_STACK";
+        private CommandBar _commandBar;
         public PageHeader()
         {
             this.DefaultStyleKey = typeof(PageHeader);
             PrimaryCommands = new ObservableCollection<ICommandBarElement>();
+        }
+
+        private void UpdateEllipse()
+        {
+            if (_commandBar == null)
+                return;
+            var controls = XamlUtil.AllChildren<Control>(_commandBar);
+            var buttons = controls.OfType<Button>();
+            var button = buttons.FirstOrDefault(x => x.Name.Equals("MoreButton"));
+            if (button != null)
+            {
+                var count =
+                    _commandBar.PrimaryCommands.OfType<Control>().Count(x => x.Visibility.Equals(Visibility.Visible));
+                count += _commandBar.SecondaryCommands.OfType<Control>().Count(x => x.Visibility.Equals(Visibility.Visible));
+                button.Visibility = (count > 0) ? Visibility.Visible : Visibility.Collapsed;
+            }
         }
 
         protected override void OnApplyTemplate()
@@ -33,7 +57,7 @@ namespace Template10.Controls
         }
 
         private void UpdateCommandBar()
-        {
+        {            
             if (PrimaryCommands != null)
             {
                 foreach (var command in PrimaryCommands)
@@ -48,7 +72,8 @@ namespace Template10.Controls
                     _commandBar.SecondaryCommands.Add(command);
                 }
             }
-
+            _commandBar.Loaded += (s, e) => UpdateEllipse();           
+            //UpdateEllipse();            
         }
 
         public ObservableCollection<ICommandBarElement> PrimaryCommands
@@ -76,6 +101,7 @@ namespace Template10.Controls
                         {
                             pageHeader._commandBar.PrimaryCommands.Remove(command);
                         }
+                    pageHeader.UpdateEllipse();
                 }));
 
         public ObservableCollection<ICommandBarElement> SecondaryCommands
@@ -103,6 +129,7 @@ namespace Template10.Controls
                         {
                             pageHeader._commandBar.SecondaryCommands.Remove(command);
                         }
+                    pageHeader.UpdateEllipse();
                 }));
 
 
@@ -113,7 +140,7 @@ namespace Template10.Controls
         }
 
         public static readonly DependencyProperty BackButtonVisibilityProperty =
-            DependencyProperty.Register(nameof(BackButtonVisibility), typeof(Visibility), typeof(PageHeader), new PropertyMetadata(default(Visibility)));
+            DependencyProperty.Register(nameof(BackButtonVisibility), typeof(Visibility), typeof(PageHeader), new PropertyMetadata(Windows.UI.Xaml.Visibility.Visible));
 
 
         public Frame Frame
