@@ -139,7 +139,7 @@ namespace Template10.Controls
         }
 
         public static readonly DependencyProperty BackButtonVisibilityProperty =
-            DependencyProperty.Register(nameof(BackButtonVisibility), typeof(Visibility), typeof(PageHeader), new PropertyMetadata(Windows.UI.Xaml.Visibility.Visible));
+            DependencyProperty.Register(nameof(BackButtonVisibility), typeof(Visibility), typeof(PageHeader), new PropertyMetadata(default(Visibility)));
 
 
         public Frame Frame
