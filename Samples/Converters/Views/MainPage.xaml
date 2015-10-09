@@ -24,7 +24,7 @@
         </Grid.RowDefinitions>
 
         <!--  header  -->
-        <controls:PageHeaderUC BackButtonVisibility="Collapsed" Frame="{x:Bind Frame, Mode=OneWay}"
+        <controls:PageHeader BackButtonVisibility="Collapsed" Frame="{x:Bind Frame, Mode=OneWay}"
                              Text="Main Page" VisualStateNarrowMinWidth="-1" />
 
         <!--  #region content  -->

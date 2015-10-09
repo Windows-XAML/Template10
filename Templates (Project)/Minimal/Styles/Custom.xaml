@@ -21,8 +21,8 @@
         <Setter Property="SecondarySeparator" Value="White" />
     </Style>
     <Style TargetType="controls:PageHeader">
-        <!--<Setter Property="VisualStateNarrowMinWidth" Value="{StaticResource NarrowMinWidth}" />
-        <Setter Property="VisualStateNormalMinWidth" Value="{StaticResource NormalMinWidth}" />-->
+        <Setter Property="VisualStateNarrowMinWidth" Value="{StaticResource NarrowMinWidth}" />
+        <Setter Property="VisualStateNormalMinWidth" Value="{StaticResource NormalMinWidth}" />
         <Setter Property="HeaderBackgroundBrush" Value="{ThemeResource CustomHeaderBackground}" />
         <Setter Property="HeaderForegroundBrush" Value="{ThemeResource CustomHeaderForeground}" />
     </Style>

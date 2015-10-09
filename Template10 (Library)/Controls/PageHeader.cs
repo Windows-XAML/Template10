@@ -9,6 +9,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
 using Template10.Utils;
@@ -21,6 +22,7 @@ namespace Template10.Controls
     [TemplatePart(Name= PART_BACK_BTN_GRID_NAME, Type = typeof(Grid))]
     [TemplatePart(Name = PART_SPACER_NAME, Type = typeof(Rectangle))]
     [TemplatePart(Name = PART_COMMAND_MAIN_STACK_NAME, Type = typeof(StackPanel))]
+    [ContentProperty(Name = nameof(PrimaryCommands))]
     public sealed class PageHeader : Control
     {
         private const string PART_COMMANDBAR_NAME = "PART_COMMANDBAR";
@@ -32,6 +34,7 @@ namespace Template10.Controls
         {
             this.DefaultStyleKey = typeof(PageHeader);
             PrimaryCommands = new ObservableCollection<ICommandBarElement>();
+            SecondaryCommands = new ObservableCollection<ICommandBarElement>();
         }
 
         private void UpdateEllipse()
@@ -175,25 +178,25 @@ namespace Template10.Controls
 
 
 
-        public int VisualStateNarrowMinWidth
+        public double VisualStateNarrowMinWidth
         {
-            get { return (int)GetValue(VisualStateNarrowMinWidthProperty); }
+            get { return (double)GetValue(VisualStateNarrowMinWidthProperty); }
             set { SetValue(VisualStateNarrowMinWidthProperty, value); }
         }
 
         public static readonly DependencyProperty VisualStateNarrowMinWidthProperty =
-            DependencyProperty.Register(nameof(VisualStateNarrowMinWidth), typeof(int), typeof(PageHeader), new PropertyMetadata(default(int)));
+            DependencyProperty.Register(nameof(VisualStateNarrowMinWidth), typeof(double), typeof(PageHeader), new PropertyMetadata(default(double)));
 
 
 
-        public int VisualStateNormalMinWidth
+        public double VisualStateNormalMinWidth
         {
-            get { return (int)GetValue(VisualStateNormalMinWidthProperty); }
+            get { return (double)GetValue(VisualStateNormalMinWidthProperty); }
             set { SetValue(VisualStateNormalMinWidthProperty, value); }
         }
 
         public static readonly DependencyProperty VisualStateNormalMinWidthProperty =
-            DependencyProperty.Register(nameof(VisualStateNormalMinWidth), typeof(int), typeof(PageHeader), new PropertyMetadata(default(int)));
+            DependencyProperty.Register(nameof(VisualStateNormalMinWidth), typeof(double), typeof(PageHeader), new PropertyMetadata(default(double)));
 
 
 

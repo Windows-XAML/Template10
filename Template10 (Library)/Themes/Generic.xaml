@@ -5,16 +5,6 @@
     xmlns:controls="using:Template10.Controls"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:behaviors="using:Template10.Behaviors">
-    <ResourceDictionary.ThemeDictionaries>
-        <ResourceDictionary x:Key="Default">
-            <SolidColorBrush x:Key="HeaderBackground" Color="Green" />
-            <SolidColorBrush x:Key="HeaderForeground" Color="#FF2B2B2B" />
-        </ResourceDictionary>
-        <ResourceDictionary x:Key="Light">
-            <SolidColorBrush x:Key="HeaderBackground" Color="Red" />
-            <SolidColorBrush x:Key="HeaderForeground" Color="#FF2B2B2B" />
-        </ResourceDictionary>
-    </ResourceDictionary.ThemeDictionaries>
     <Style TargetType="controls:Resizer">
         <Setter Property="GrabberBrush" Value="{ThemeResource SystemAccentColor}"/>
         <Setter Property="Template">
@@ -62,8 +52,8 @@
         <Setter Property="Height" Value="48"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="HeaderBackgroundBrush" Value="{ThemeResource AppBarBackgroundThemeBrush}"/>
-        <Setter Property="HeaderForegroundBrush" Value="{ThemeResource AppBarItemForegroundThemeBrush}"/>
+        <Setter Property="HeaderBackgroundBrush" Value="{ThemeResource ButtonBackgroundThemeBrush}"/>
+        <Setter Property="HeaderForegroundBrush" Value="{ThemeResource ButtonForegroundThemeBrush}"/>
         <Setter Property="VisualStateNarrowMinWidth" Value="0"/>
         <Setter Property="VisualStateNormalMinWidth" Value="521"/>
         <Setter Property="BackButtonVisibility" Value="Visible"/>
@@ -73,7 +63,7 @@
                 <ControlTemplate TargetType="controls:PageHeader">
                     <CommandBar x:Name="PART_COMMANDBAR"
                                 Background="{TemplateBinding HeaderBackgroundBrush}"
-                                Foreground="{TemplateBinding HeaderForegroundBrush}"
+                                Foreground="{TemplateBinding HeaderForegroundBrush}"                                
                                 ClosedDisplayMode="Compact">
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="VisualStateGroup">

@@ -35,10 +35,14 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <controls:PageHeader BackButtonVisibility="Collapsed" Frame="{x:Bind Frame, Mode=OneWay}" Text="Main Page">
-            <controls:PageHeader.PrimaryCommands>
-                <AppBarButton Icon="Play"></AppBarButton>
-                <AppBarButton Icon="Pause"></AppBarButton>
-            </controls:PageHeader.PrimaryCommands>
+            
+                <AppBarButton Icon="Next"></AppBarButton>
+                <AppBarButton Icon="Save"></AppBarButton>
+            
+            <controls:PageHeader.SecondaryCommands>
+                <AppBarButton Icon="Play" Label="Play"></AppBarButton>
+                <AppBarButton Icon="Pause" Label="Pause"></AppBarButton>
+            </controls:PageHeader.SecondaryCommands>
         </controls:PageHeader>
       
         <!--  #region content  -->

@@ -44,7 +44,7 @@
 
         <!-- header -->
 
-        <controls:PageHeaderUC Text="Detail Page" Frame="{x:Bind Frame}" />
+        <controls:PageHeader Text="Detail Page" Frame="{x:Bind Frame}" />
 
         <!--#region content-->
 

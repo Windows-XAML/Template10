@@ -19,7 +19,7 @@
 
         <!--  header  -->
 
-        <controls:PageHeaderUC Frame="{x:Bind Frame}" Text="Detail Page" />
+        <controls:PageHeader Frame="{x:Bind Frame}" Text="Detail Page" />
 
         <!--  #region content  -->
 
