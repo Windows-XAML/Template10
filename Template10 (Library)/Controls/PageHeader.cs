@@ -73,7 +73,6 @@ namespace Template10.Controls
                 }
             }
             _commandBar.Loaded += (s, e) => UpdateEllipse();           
-            //UpdateEllipse();            
         }
 
         public ObservableCollection<ICommandBarElement> PrimaryCommands

@@ -78,7 +78,7 @@
                             <VisualStateGroup x:Name="VisualStateGroup">
                                 <VisualState x:Name="VisualStateNarrow">
                                     <VisualState.StateTriggers>
-                                        <AdaptiveTrigger x:Name="VisualStateNarrowTrigger" MinWindowWidth="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=VisualStateNarrowMinWidth}" />
+                                        <AdaptiveTrigger x:Name="VisualStateNarrowTrigger" MinWindowWidth="{TemplateBinding VisualStateNarrowMinWidth}" />
                                     </VisualState.StateTriggers>
                                     <VisualState.Setters>
                                         <Setter Target="PART_SPACER.Visibility" Value="Visible" />
@@ -86,11 +86,9 @@
                                 </VisualState>
                                 <VisualState x:Name="VisualStateNormal">
                                     <VisualState.StateTriggers>
-                                        <AdaptiveTrigger x:Name="VisualStateNormalTrigger" MinWindowWidth="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=VisualStateNormalMinWidth}"/>
+                                        <AdaptiveTrigger x:Name="VisualStateNormalTrigger" MinWindowWidth="{TemplateBinding VisualStateNormalMinWidth}"/>
                                     </VisualState.StateTriggers>
-                                    <VisualState.Setters>
-                                        <Setter Target="PART_SPACER.Visibility" Value="Collapsed" />
-                                    </VisualState.Setters>
+                                    <VisualState.Setters/>
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
@@ -98,7 +96,7 @@
                             <StackPanel HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Height="{TemplateBinding Height}" Orientation="Horizontal" x:Name="PART_COMMAND_MAIN_STACK">
                                 <Rectangle x:Name="PART_SPACER" Width="48" IsHitTestVisible="False" Visibility="Collapsed"/>
                                 <Grid x:Name="PART_BACK_BTN_GRID" Visibility="{TemplateBinding BackButtonVisibility}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                                    <Button Width="48" Height="48" Style="{StaticResource NavigationBackButtonSmallStyle}">
+                                    <Button Width="48" Height="48" Foreground="{TemplateBinding HeaderForegroundBrush}" Style="{StaticResource NavigationBackButtonSmallStyle}">
                                         <interactivity:Interaction.Behaviors>
                                             <behaviors:NavButtonBehavior Direction="Back" Frame="{TemplateBinding Frame}"/>
                                         </interactivity:Interaction.Behaviors>
