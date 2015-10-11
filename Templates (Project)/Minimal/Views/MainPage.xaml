@@ -9,13 +9,10 @@
       xmlns:local="using:Sample.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:vm="using:Sample.ViewModels" mc:Ignorable="d">
-    
     <Page.DataContext>
         <vm:MainPageViewModel />
     </Page.DataContext>
-    
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
                 <VisualState x:Name="VisualStateNarrow">
@@ -34,19 +31,8 @@
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <controls:PageHeader BackButtonVisibility="Collapsed" Frame="{x:Bind Frame, Mode=OneWay}" Text="Main Page">
-            
-                <AppBarButton Icon="Next"></AppBarButton>
-                <AppBarButton Icon="Save"></AppBarButton>
-            
-            <controls:PageHeader.SecondaryCommands>
-                <AppBarButton Icon="Play" Label="Play"></AppBarButton>
-                <AppBarButton Icon="Pause" Label="Pause"></AppBarButton>
-            </controls:PageHeader.SecondaryCommands>
-        </controls:PageHeader>
-      
+        <controls:PageHeader BackButtonVisibility="Collapsed" Frame="{x:Bind Frame, Mode=OneWay}" Text="Main Page"/>
         <!--  #region content  -->
-        
         <StackPanel Grid.Row="1" VerticalAlignment="Top"
                     Orientation="Horizontal" Padding="12,8,0,0">
             <controls:Resizer>
@@ -65,8 +51,6 @@
             <Button Margin="12,0" VerticalAlignment="Bottom"
                     Click="{x:Bind ViewModel.GotoDetailsPage}" Content="Submit" />
         </StackPanel>
-        
         <!--  #endregion  -->
-        
     </Grid>
 </Page>

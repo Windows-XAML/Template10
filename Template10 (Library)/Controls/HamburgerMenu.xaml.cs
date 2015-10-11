@@ -153,34 +153,34 @@ namespace Template10.Controls
                     var menu = (d as HamburgerMenu);
                     var color = (Color)e.NewValue;
 
-                    //switch (menu.RequestedTheme)
-                    //{
-                    //    case ElementTheme.Light:
-                    //        menu.HamburgerBackground = color.ToSolidColorBrush();
-                    //        menu.HamburgerForeground = Colors.Black.ToSolidColorBrush();
-                    //        menu.NavAreaBackground = Colors.Gainsboro.ToSolidColorBrush();
-                    //        menu.NavButtonBackground = Colors.Transparent.ToSolidColorBrush();
-                    //        menu.NavButtonForeground = Colors.White.ToSolidColorBrush();
-                    //        menu.NavButtonCheckedBackground = color.AccentLighten(ColorUtils.Accents.Plus60).ToSolidColorBrush();
-                    //        menu.NavButtonPressedBackground = Colors.Gainsboro.AccentDarken(ColorUtils.Accents.Plus40).ToSolidColorBrush();
-                    //        menu.NavButtonHoverBackground = Colors.Gainsboro.AccentDarken(ColorUtils.Accents.Plus60).ToSolidColorBrush();
-                    //        menu.NavButtonCheckedForeground = Colors.White.ToSolidColorBrush();
-                    //        menu.SecondarySeparator = Colors.Gainsboro.AccentDarken(ColorUtils.Accents.Plus40).ToSolidColorBrush();
-                    //        break;
-                    //    case ElementTheme.Default:
-                    //    case ElementTheme.Dark:
-                    //        menu.HamburgerBackground = color.ToSolidColorBrush();
-                    //        menu.HamburgerForeground = Colors.White.ToSolidColorBrush();
-                    //        menu.NavAreaBackground = Colors.Gainsboro.AccentDarken(ColorUtils.Accents.Plus80).ToSolidColorBrush();
-                    //        menu.NavButtonBackground = Colors.Transparent.ToSolidColorBrush();
-                    //        menu.NavButtonForeground = Colors.White.ToSolidColorBrush();
-                    //        menu.NavButtonCheckedBackground = color.AccentDarken(ColorUtils.Accents.Plus40).ToSolidColorBrush();
-                    //        menu.NavButtonPressedBackground = Colors.Gainsboro.AccentLighten(ColorUtils.Accents.Plus40).ToSolidColorBrush();
-                    //        menu.NavButtonHoverBackground = Colors.Gainsboro.AccentLighten(ColorUtils.Accents.Plus60).ToSolidColorBrush();
-                    //        menu.NavButtonCheckedForeground = Colors.White.ToSolidColorBrush();
-                    //        menu.SecondarySeparator = Colors.Gainsboro.ToSolidColorBrush();
-                    //        break;
-                    //}
+                    switch (menu.RequestedTheme)
+                    {
+                        case ElementTheme.Light:
+                            menu.HamburgerBackground = color.ToSolidColorBrush();
+                            menu.HamburgerForeground = Colors.Black.ToSolidColorBrush();
+                            menu.NavAreaBackground = Colors.Gainsboro.ToSolidColorBrush();
+                            menu.NavButtonBackground = Colors.Transparent.ToSolidColorBrush();
+                            menu.NavButtonForeground = Colors.White.ToSolidColorBrush();
+                            menu.NavButtonCheckedBackground = color.AccentLighten(ColorUtils.Accents.Plus60).ToSolidColorBrush();
+                            menu.NavButtonPressedBackground = Colors.Gainsboro.AccentDarken(ColorUtils.Accents.Plus40).ToSolidColorBrush();
+                            menu.NavButtonHoverBackground = Colors.Gainsboro.AccentDarken(ColorUtils.Accents.Plus60).ToSolidColorBrush();
+                            menu.NavButtonCheckedForeground = Colors.White.ToSolidColorBrush();
+                            menu.SecondarySeparator = Colors.Gainsboro.AccentDarken(ColorUtils.Accents.Plus40).ToSolidColorBrush();
+                            break;
+                        case ElementTheme.Default:
+                        case ElementTheme.Dark:
+                            menu.HamburgerBackground = color.ToSolidColorBrush();
+                            menu.HamburgerForeground = Colors.White.ToSolidColorBrush();
+                            menu.NavAreaBackground = Colors.Gainsboro.AccentDarken(ColorUtils.Accents.Plus80).ToSolidColorBrush();
+                            menu.NavButtonBackground = Colors.Transparent.ToSolidColorBrush();
+                            menu.NavButtonForeground = Colors.White.ToSolidColorBrush();
+                            menu.NavButtonCheckedBackground = color.AccentDarken(ColorUtils.Accents.Plus40).ToSolidColorBrush();
+                            menu.NavButtonPressedBackground = Colors.Gainsboro.AccentLighten(ColorUtils.Accents.Plus40).ToSolidColorBrush();
+                            menu.NavButtonHoverBackground = Colors.Gainsboro.AccentLighten(ColorUtils.Accents.Plus60).ToSolidColorBrush();
+                            menu.NavButtonCheckedForeground = Colors.White.ToSolidColorBrush();
+                            menu.SecondarySeparator = Colors.Gainsboro.ToSolidColorBrush();
+                            break;
+                    }
                 }));
 
         public SolidColorBrush HamburgerBackground

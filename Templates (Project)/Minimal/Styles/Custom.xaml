@@ -7,18 +7,10 @@
     <SolidColorBrush x:Key="ExtendedSplashBackground" Color="White" />
     <SolidColorBrush x:Key="ExtendedSplashForeground" Color="{StaticResource CustomColor}" />
     <SolidColorBrush x:Key="ModalBackground" Opacity=".5" Color="{StaticResource CustomColor}" />
-    <Style TargetType="controls:HamburgerMenu">
+    <Style x:Key="HamburgerMenuStyle" TargetType="controls:HamburgerMenu">
         <Setter Property="VisualStateNarrowMinWidth" Value="{StaticResource NarrowMinWidth}" />
         <Setter Property="VisualStateNormalMinWidth" Value="{StaticResource NormalMinWidth}" />
         <Setter Property="VisualStateWideMinWidth" Value="{StaticResource WideMinWidth}" />
-        <Setter Property="HamburgerBackground" Value="{ThemeResource CustomHamburgerBackground}" />
-        <Setter Property="HamburgerForeground" Value="{ThemeResource CustomHamburgerForeground}" />
-        <Setter Property="NavAreaBackground" Value="{ThemeResource CustomNavAreaBackground}" />
-        <Setter Property="NavButtonBackground" Value="{ThemeResource CustomNavButtonBackground}" />
-        <Setter Property="NavButtonCheckedBackground" Value="{ThemeResource CustomNavButtonCheckedBackground}" />
-        <Setter Property="NavButtonForeground" Value="{ThemeResource CustomNavButtonForeground}" />
-        <Setter Property="NavButtonHoverBackground" Value="{ThemeResource CustomNavButtonHoverBackground}" />
-        <Setter Property="SecondarySeparator" Value="White" />
     </Style>
     <Style TargetType="controls:PageHeader">
         <Setter Property="VisualStateNarrowMinWidth" Value="{StaticResource NarrowMinWidth}" />
@@ -33,43 +25,35 @@
     <ResourceDictionary.ThemeDictionaries>
         <!--  RequestedTheme=Dark  -->
         <ResourceDictionary x:Key="Dark">
-            <SolidColorBrush x:Key="CustomHeaderBackground" Color="Gainsboro" />
-            <SolidColorBrush x:Key="CustomHeaderForeground" Color="#FF2B2B2B" />
-            <SolidColorBrush x:Key="CustomHamburgerBackground" Color="#FFD13438" />
-            <SolidColorBrush x:Key="CustomHamburgerForeground" Color="White" />
-            <SolidColorBrush x:Key="CustomNavAreaBackground" Color="#FF2B2B2B" />
-            <SolidColorBrush x:Key="CustomNavButtonBackground" Color="Transparent" />
-            <SolidColorBrush x:Key="CustomNavButtonCheckedBackground" Color="#FF7D1F22" />
-            <SolidColorBrush x:Key="CustomNavButtonForeground" Color="White" />
-            <SolidColorBrush x:Key="CustomNavButtonHoverBackground" Color="#FF434343" />
-            <SolidColorBrush x:Key="SecondarySeparator" Color="Gray" />
+            <SolidColorBrush x:Key="CustomHeaderBackground" Color="Black" />
+            <SolidColorBrush x:Key="CustomHeaderForeground" Color="White" />
+            <Style BasedOn="{StaticResource HamburgerMenuStyle}" TargetType="controls:HamburgerMenu">
+                <Setter Property="AccentColor" Value="{StaticResource CustomColor}" />
+            </Style>
         </ResourceDictionary>
         <!--  RequestedTheme=Light  -->
         <ResourceDictionary x:Key="Light">
             <SolidColorBrush x:Key="CustomHeaderBackground" Color="WhiteSmoke" />
             <SolidColorBrush x:Key="CustomHeaderForeground" Color="#FF2B2B2B" />
-            <SolidColorBrush x:Key="CustomHamburgerBackground" Color="Gainsboro" />
-            <SolidColorBrush x:Key="CustomHamburgerForeground" Color="Black" />
-            <SolidColorBrush x:Key="CustomNavAreaBackground" Color="#FFF2F2F2" />
-            <SolidColorBrush x:Key="CustomNavButtonBackground" Color="Transparent" />
-            <SolidColorBrush x:Key="CustomNavButtonCheckedBackground" Color="PowderBlue" />
-            <SolidColorBrush x:Key="CustomNavButtonForeground" Color="Black" />
-            <SolidColorBrush x:Key="CustomNavButtonHoverBackground" Color="#FFCCE3F5" />
-            <SolidColorBrush x:Key="SecondarySeparator" Color="Gray" />
+            <Style BasedOn="{StaticResource HamburgerMenuStyle}" TargetType="controls:HamburgerMenu">
+                <Setter Property="AccentColor" Value="{StaticResource CustomColor}" />
+            </Style>
         </ResourceDictionary>
         <!--  RequestedTheme=HighContrast  -->
         <ResourceDictionary x:Key="HighContrast">
             <SolidColorBrush x:Key="ExtendedSplashBackground" Color="Black" />
             <SolidColorBrush x:Key="ExtendedSplashForeground" Color="White" />
             <SolidColorBrush x:Key="ModalBackground" Color="Black" />
-            <SolidColorBrush x:Key="CustomHamburgerBackground" Color="Black" />
-            <SolidColorBrush x:Key="CustomHamburgerForeground" Color="White" />
-            <SolidColorBrush x:Key="CustomNavAreaBackground" Color="Black" />
-            <SolidColorBrush x:Key="CustomNavButtonBackground" Color="White" />
-            <SolidColorBrush x:Key="CustomNavButtonCheckedBackground" Color="White" />
-            <SolidColorBrush x:Key="CustomNavButtonForeground" Color="Black" />
-            <SolidColorBrush x:Key="CustomNavButtonHoverBackground" Color="White" />
-            <SolidColorBrush x:Key="SecondarySeparator" Color="White" />
+            <Style BasedOn="{StaticResource HamburgerMenuStyle}" TargetType="controls:HamburgerMenu">
+                <Setter Property="HamburgerBackground" Value="Black" />
+                <Setter Property="HamburgerForeground" Value="White" />
+                <Setter Property="NavAreaBackground" Value="Black" />
+                <Setter Property="NavButtonBackground" Value="White" />
+                <Setter Property="NavButtonCheckedBackground" Value="White" />
+                <Setter Property="NavButtonForeground" Value="Black" />
+                <Setter Property="NavButtonHoverBackground" Value="White" />
+                <Setter Property="SecondarySeparator" Value="White" />
+            </Style>
             <SolidColorBrush x:Key="CustomHeaderBackground" Color="Black" />
             <SolidColorBrush x:Key="CustomHeaderForeground" Color="White" />
         </ResourceDictionary>
