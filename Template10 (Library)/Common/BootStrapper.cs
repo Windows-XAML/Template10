@@ -1,15 +1,15 @@
 ﻿using System;
-using Windows.UI.Xaml;
-using System.Threading.Tasks;
-using Windows.ApplicationModel;
-using Windows.UI.Xaml.Controls;
-using Windows.ApplicationModel.Activation;
-using Windows.UI.Core;
-using System.Linq;
-using Windows.Foundation.Metadata;
-using Template10.Services.NavigationService;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
+using Template10.Services.NavigationService;
+using Windows.ApplicationModel;
+using Windows.ApplicationModel.Activation;
+using Windows.Foundation.Metadata;
+using Windows.UI.Core;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace Template10.Common
 {
@@ -208,8 +208,8 @@ namespace Template10.Common
                     handled = !NavigationService.CanGoBack;
                 }
 
-                args.Handled = handled;
                 RaiseBackRequested(ref handled);
+                args.Handled = handled;
             };
 
             // Hook up keyboard and mouse Back handler
