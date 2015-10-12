@@ -22,23 +22,17 @@ namespace Sample.Services.MessageService
             return _messages;
         }
 
-        public ObservableCollection<Models.Message> Search(string value)
-        {
-            return GetMessages()
-                .Where(x => x.Subject.ToLower().Contains(value.ToLower())
-                || x.From.ToLower().Contains(value.ToLower())
-                || x.Body.ToLower().Contains(value.ToLower()))
-                .ToObservableCollection();
-        }
+        public ObservableCollection<Models.Message> Search(string value) => GetMessages()
+    .Where(x => x.Subject.ToLower().Contains(value.ToLower())
+    || x.From.ToLower().Contains(value.ToLower())
+    || x.Body.ToLower().Contains(value.ToLower()))
+    .ToObservableCollection();
 
         public void DeleteMessage(Message selected)
         {
             GetMessages().Remove(selected);
         }
 
-        public Models.Message GetMessage(string id)
-        {
-            return GetMessages().FirstOrDefault(x => x.Id.Equals(id));
-        }
+        public Models.Message GetMessage(string id) => GetMessages().FirstOrDefault(x => x.Id.Equals(id));
     }
 }

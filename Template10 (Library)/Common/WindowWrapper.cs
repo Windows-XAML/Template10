@@ -12,11 +12,11 @@ namespace Template10.Common
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-WindowWrapper
     public class WindowWrapper
     {
-        public static WindowWrapper Default() { return ActiveWrappers.FirstOrDefault(); }
+        public static WindowWrapper Default() => ActiveWrappers.FirstOrDefault();
         public readonly static List<WindowWrapper> ActiveWrappers = new List<WindowWrapper>();
-        public static WindowWrapper Current() { return ActiveWrappers.FirstOrDefault(x => x.Window == Window.Current) ?? Default(); }
-        public static WindowWrapper Current(Window window) { return ActiveWrappers.FirstOrDefault(x => x.Window == window); }
-        public static WindowWrapper Current(NavigationService nav) { return ActiveWrappers.FirstOrDefault(x => x.NavigationServices.Contains(nav)); }
+        public static WindowWrapper Current() => ActiveWrappers.FirstOrDefault(x => x.Window == Window.Current) ?? Default();
+        public static WindowWrapper Current(Window window) => ActiveWrappers.FirstOrDefault(x => x.Window == window);
+        public static WindowWrapper Current(NavigationService nav) => ActiveWrappers.FirstOrDefault(x => x.NavigationServices.Contains(nav));
 
         internal WindowWrapper(Window window)
         {
@@ -29,8 +29,8 @@ namespace Template10.Common
         }
 
         public void Close() { Window.Close(); }
-        public Window Window { get; private set; }
-        public DispatcherWrapper Dispatcher { get; private set; }
+        public Window Window { get; }
+        public DispatcherWrapper Dispatcher { get; }
         public NavigationServiceList NavigationServices { get; } = new NavigationServiceList();
     }
 }

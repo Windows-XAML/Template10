@@ -17,9 +17,9 @@ namespace Template10.Common
     {
         #region dependency injection
 
-        public virtual T Resolve<T>(Type type) { return default(T); }
+        public virtual T Resolve<T>(Type type) => default(T);
 
-        public virtual Services.NavigationService.INavigable ResolveForPage(Type page, NavigationService navigationService) { return null; }
+        public virtual Services.NavigationService.INavigable ResolveForPage(Type page, NavigationService navigationService) => null;
 
         #endregion
 
@@ -61,11 +61,7 @@ namespace Template10.Common
         /// it is only a helper property to provide the NavigatioNService for
         /// the first Frame ultimately aggregated in the static WindowWrapper class.
         /// </summary>
-        public Services.NavigationService.INavigationService NavigationService
-        {
-            // because it is protected, we can safely assume it will ref the first view
-            get { return WindowWrapper.ActiveWrappers.First().NavigationServices.First(); }
-        }
+        public Services.NavigationService.INavigationService NavigationService => WindowWrapper.ActiveWrappers.First().NavigationServices.First();
 
         /// <summary>
         /// The SplashFactory is a Func that returns an instantiated Splash view.

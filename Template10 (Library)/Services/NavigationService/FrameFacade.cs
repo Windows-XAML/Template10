@@ -57,10 +57,7 @@ namespace Template10.Services.NavigationService
 
         #region state
 
-        private string GetFrameStateKey()
-        {
-            return string.Format("{0}-PageState", FrameId);
-        }
+        private string GetFrameStateKey() => string.Format("{0}-PageState", FrameId);
 
         private Windows.Storage.ApplicationDataContainer _frameStateContainer;
         private Windows.Storage.ApplicationDataContainer FrameStateContainer()
@@ -96,10 +93,7 @@ namespace Template10.Services.NavigationService
             pageStateContainers.Clear();
         }
 
-        private string GetPageStateKey(Type type)
-        {
-            return string.Format("{0}", type);
-        }
+        private string GetPageStateKey(Type type) => string.Format("{0}", type);
 
         readonly Dictionary<Type, IPropertySet> pageStateContainers = new Dictionary<Type, IPropertySet>();
         public IPropertySet PageStateContainer(Type type)
@@ -123,19 +117,19 @@ namespace Template10.Services.NavigationService
 
         #region frame facade
 
-        public Frame Frame { get; private set; }
+        public Frame Frame { get; }
 
         public string FrameId { get; set; } = string.Empty;
 
-        public bool Navigate(Type page, object parameter, NavigationTransitionInfo infoOverride) { return Frame.Navigate(page, parameter, infoOverride); }
+        public bool Navigate(Type page, object parameter, NavigationTransitionInfo infoOverride) => Frame.Navigate(page, parameter, infoOverride);
 
         public void SetNavigationState(string state) { Frame.SetNavigationState(state); }
 
-        public string GetNavigationState() { return Frame.GetNavigationState(); }
+        public string GetNavigationState() => Frame.GetNavigationState();
 
-        public int BackStackDepth { get { return Frame.BackStackDepth; } }
+        public int BackStackDepth => Frame.BackStackDepth;
 
-        public bool CanGoBack { get { return Frame.CanGoBack; } }
+        public bool CanGoBack => Frame.CanGoBack;
 
         public void GoBack() { if (CanGoBack) Frame.GoBack(); }
 
@@ -167,17 +161,17 @@ namespace Template10.Services.NavigationService
             }
         }
 
-        public bool CanGoForward { get { return Frame.CanGoForward; } }
+        public bool CanGoForward => Frame.CanGoForward;
 
         public void GoForward() { if (CanGoForward) Frame.GoForward(); }
 
-        public object Content { get { return Frame.Content; } }
+        public object Content => Frame.Content;
 
         public Type CurrentPageType { get; internal set; }
 
         public object CurrentPageParam { get; internal set; }
 
-        public object GetValue(DependencyProperty dp) { return Frame.GetValue(dp); }
+        public object GetValue(DependencyProperty dp) => Frame.GetValue(dp);
 
         public void SetValue(DependencyProperty dp, object value) { Frame.SetValue(dp, value); }
 

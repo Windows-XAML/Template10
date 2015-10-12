@@ -18,12 +18,9 @@ namespace Template10.Services.SettingsService
 			Converters = converters;
 		}
 
-		public bool Exists(string key)
-		{
-			return Values.ContainsKey(key);
-		}
+        public bool Exists(string key) => Values.ContainsKey(key);
 
-		public void Remove(string key)
+        public void Remove(string key)
 		{
 			if (Values.ContainsKey(key))
 				Values.Remove(key);

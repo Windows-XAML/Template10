@@ -11,7 +11,7 @@ namespace Template10.Behaviors
     [TypeConstraint(typeof(TextBox))]
     public class TextBoxEnterKeyBehavior : DependencyObject, IBehavior
     {
-        private TextBox AssociatedTextBox { get { return AssociatedObject as TextBox; } }
+        private TextBox AssociatedTextBox => AssociatedObject as TextBox;
         public DependencyObject AssociatedObject { get; private set; }
 
         public void Attach(DependencyObject associatedObject)

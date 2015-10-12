@@ -24,9 +24,6 @@ namespace Template10.Services.SettingsService
 	{
 		protected IStoreConverter jsonConverter = new JsonConverter();
 
-		public IStoreConverter GetConverter(Type type)
-		{
-			return jsonConverter;
-		}
-	}
+        public IStoreConverter GetConverter(Type type) => jsonConverter;
+    }
 }

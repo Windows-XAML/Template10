@@ -15,10 +15,7 @@ namespace Template10.Common
             this.dispatcher = dispatcher;
         }
 
-        public bool HasThreadAccess()
-        {
-            return dispatcher.HasThreadAccess;
-        }
+        public bool HasThreadAccess() => dispatcher.HasThreadAccess;
 
         private CoreDispatcher dispatcher;
 
