@@ -31,7 +31,7 @@ namespace Template10.Services.NavigationService
         {
             if (BackRequested != null)
             {
-                BackRequested?.Invoke(this, args);
+                BackRequested.Invoke(this, args);
             }
 
             if (!args.Handled && (args.Handled = this.Frame.BackStackDepth > 0))
@@ -43,15 +43,14 @@ namespace Template10.Services.NavigationService
         public event EventHandler<HandledEventArgs> ForwardRequested;
         public void RaiseForwardRequested(HandledEventArgs args)
         {
-            if (ForwardRequested == null)
+            if (ForwardRequested != null)
             {
-                args.Handled = this.Frame.ForwardStack.Count > 0;
-                if (args.Handled)
-                    this.GoForward();
+                ForwardRequested.Invoke(this, args);
             }
-            else
+
+            if (!args.Handled && (args.Handled = this.Frame.ForwardStack.Count > 0))
             {
-                ForwardRequested?.Invoke(this, args);
+                GoForward();
             }
         }
 
