@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Template10.Common;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -30,15 +29,14 @@ namespace Template10.Services.NavigationService
         public event EventHandler<HandledEventArgs> BackRequested;
         public void RaiseBackRequested(HandledEventArgs args)
         {
-            if (BackRequested == null)
-            {
-                args.Handled = this.Frame.BackStackDepth > 0;
-                if (args.Handled)
-                    this.GoBack();
-            }
-            else
+            if (BackRequested != null)
             {
                 BackRequested?.Invoke(this, args);
+            }
+
+            if (!args.Handled && (args.Handled = this.Frame.BackStackDepth > 0))
+            {
+                GoBack();
             }
         }
 
