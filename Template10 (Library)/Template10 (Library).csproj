@@ -145,6 +145,7 @@
     <Compile Include="Controls\Resizer.cs" />
     <Compile Include="Converters\DateTimeOffsetConverter.cs" />
     <Compile Include="Converters\StringFormatConverter.cs" />
+    <Compile Include="Mvvm\AwaitableDelegateCommand.cs" />
     <Compile Include="Services\NavigationService\INavigationService.cs" />
     <Compile Include="Services\NavigationService\NavigationServiceList.cs" />
     <Compile Include="Services\SettingsService\ISettingsHelper.cs" />
