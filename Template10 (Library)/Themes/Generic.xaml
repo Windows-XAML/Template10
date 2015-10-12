@@ -2,7 +2,9 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Template10"
-    xmlns:controls="using:Template10.Controls">
+    xmlns:controls="using:Template10.Controls"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:behaviors="using:Template10.Behaviors">
     <Style TargetType="controls:Resizer">
         <Setter Property="GrabberBrush" Value="{ThemeResource SystemAccentColor}"/>
         <Setter Property="Template">
@@ -42,6 +44,59 @@
                             </Viewbox>
                         </Grid>
                     </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="controls:PageHeader">
+        <Setter Property="Height" Value="48"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HeaderBackgroundBrush" Value="{ThemeResource ButtonBackgroundThemeBrush}"/>
+        <Setter Property="HeaderForegroundBrush" Value="{ThemeResource ButtonForegroundThemeBrush}"/>
+        <Setter Property="VisualStateNarrowMinWidth" Value="0"/>
+        <Setter Property="VisualStateNormalMinWidth" Value="521"/>
+        <Setter Property="BackButtonVisibility" Value="Visible"/>
+        <Setter Property="Text" Value="Page Header"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:PageHeader">
+                    <CommandBar x:Name="PART_COMMANDBAR"
+                                Background="{TemplateBinding HeaderBackgroundBrush}"
+                                Foreground="{TemplateBinding HeaderForegroundBrush}"                                
+                                ClosedDisplayMode="Compact">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="VisualStateGroup">
+                                <VisualState x:Name="VisualStateNarrow">
+                                    <VisualState.StateTriggers>
+                                        <AdaptiveTrigger x:Name="VisualStateNarrowTrigger" MinWindowWidth="{Binding VisualStateNarrowMinWidth, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    </VisualState.StateTriggers>
+                                    <VisualState.Setters>
+                                        <Setter Target="PART_SPACER.Visibility" Value="Visible" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="VisualStateNormal">
+                                    <VisualState.StateTriggers>
+                                        <AdaptiveTrigger x:Name="VisualStateNormalTrigger" MinWindowWidth="{Binding VisualStateNormalMinWidth, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                    </VisualState.StateTriggers>
+                                    <VisualState.Setters/>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <CommandBar.Content>
+                            <StackPanel HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Height="{TemplateBinding Height}" Orientation="Horizontal" x:Name="PART_COMMAND_MAIN_STACK">
+                                <Rectangle x:Name="PART_SPACER" Width="48" IsHitTestVisible="False" Visibility="Collapsed"/>
+                                <Grid x:Name="PART_BACK_BTN_GRID" Visibility="{TemplateBinding BackButtonVisibility}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                    <Button Width="48" Height="48" Foreground="{TemplateBinding HeaderForegroundBrush}" Style="{ThemeResource NavigationBackButtonSmallStyle}">
+                                        <interactivity:Interaction.Behaviors>
+                                            <behaviors:NavButtonBehavior Direction="Back" Frame="{Binding Frame, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                        </interactivity:Interaction.Behaviors>
+                                    </Button>
+                                </Grid>
+                                <TextBlock Margin="16,0,0,0" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" IsHitTestVisible="False" Style="{StaticResource SubtitleTextBlockStyle}" Text="{TemplateBinding Text}"/>
+                            </StackPanel>
+                        </CommandBar.Content>
+                    </CommandBar>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

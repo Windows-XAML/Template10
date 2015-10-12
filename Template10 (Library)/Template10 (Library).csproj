@@ -142,6 +142,7 @@
     <Compile Include="Common\ObservableItemCollection.cs" />
     <Compile Include="Controls\CustomTitleBar.cs" />
     <Compile Include="Controls\HamburgerButtonInfo.cs" />
+    <Compile Include="Controls\PageHeader.cs" />
     <Compile Include="Controls\Resizer.cs" />
     <Compile Include="Converters\DateTimeOffsetConverter.cs" />
     <Compile Include="Converters\StringFormatConverter.cs" />
@@ -156,9 +157,6 @@
     <Compile Include="Utils\XamlUtil.cs" />
     <Compile Include="Controls\HamburgerMenu.xaml.cs">
       <DependentUpon>HamburgerMenu.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\PageHeader.xaml.cs">
-      <DependentUpon>PageHeader.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\ValueWhenConverter.cs" />
     <Compile Include="Mvvm\BindableBase.cs" />
@@ -185,10 +183,6 @@
     <Page Include="Controls\HamburgerMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\PageHeader.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Styles\Mdl2.xaml">
       <Generator>MSBuild:Compile</Generator>

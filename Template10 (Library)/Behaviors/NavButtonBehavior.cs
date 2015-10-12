@@ -57,6 +57,8 @@ namespace Template10.Behaviors
 
         private void Calculate()
         {
+            if (element == null)
+                return;
             switch (Direction)
             {
                 case Directions.Back:
