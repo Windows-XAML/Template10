@@ -199,17 +199,14 @@ namespace Template10.Controls
             DependencyProperty.Register(nameof(VisualStateNormalMinWidth), typeof(double), typeof(PageHeader), new PropertyMetadata(default(double)));
 
 
-
-        public SolidColorBrush HeaderBackgroundBrush
+        public Brush HeaderBackgroundBrush
         {
-            get { return (SolidColorBrush)GetValue(HeaderBackgroundBrushProperty); }
+            get { return (Brush)GetValue(HeaderBackgroundBrushProperty) as Brush; }
             set { SetValue(HeaderBackgroundBrushProperty, value); }
         }
 
         public static readonly DependencyProperty HeaderBackgroundBrushProperty =
-            DependencyProperty.Register(nameof(HeaderBackgroundBrush), typeof(SolidColorBrush), typeof(PageHeader), new PropertyMetadata(default(SolidColorBrush)));
-
-
+            DependencyProperty.Register(nameof(HeaderBackgroundBrush), typeof(Brush), typeof(PageHeader), new PropertyMetadata(default(Brush)));
 
         public SolidColorBrush HeaderForegroundBrush
         {
