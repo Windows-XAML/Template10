@@ -58,16 +58,10 @@ namespace Sample.ViewModels
         }
 
         private DelegateCommand gotoDetailsPageCommand;
-        public DelegateCommand GotoDetailsPageCommand
-        {
-            get
-            {
-                return gotoDetailsPageCommand ?? (gotoDetailsPageCommand = new DelegateCommand(() =>
-                {
-                    NavigationService.Navigate(typeof(Views.DetailPage), Value);
-                },
-                    () => !string.IsNullOrEmpty(_Value)));
-            }
-        }
+        public DelegateCommand GotoDetailsPageCommand => gotoDetailsPageCommand ?? (gotoDetailsPageCommand = new DelegateCommand(() =>
+                                                                       {
+                                                                           NavigationService.Navigate(typeof(Views.DetailPage), Value);
+                                                                       },
+    () => !string.IsNullOrEmpty(_Value)));
     }
 }

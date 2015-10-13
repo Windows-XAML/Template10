@@ -311,16 +311,13 @@
         }
 
         // http://en.wikipedia.org/wiki/Color_scheme#Tetradic_colors
-        public static IEnumerable<RGB> GetTetradics(RGB rgb)
-        {
-            return new RGB[4]
-            {
+        public static IEnumerable<RGB> GetTetradics(RGB rgb) => new RGB[4]
+{
                 new RGB(rgb.Red, rgb.Blue, rgb.Green),
                 new RGB(rgb.Red, rgb.Green, rgb.Blue),
                 new RGB(rgb.Blue, rgb.Red, rgb.Green),
                 new RGB(rgb.Blue, rgb.Green, rgb.Red)
-            };
-        }
+};
 
         // http://en.wikipedia.org/wiki/Weber%E2%80%93Fechner_law#The_case_of_vision
         public static RGB GetContrast(RGB rgb)
@@ -350,8 +347,8 @@
 
         // utils
 
-        private static float FindMin(params float[] values) { return values.Min(); }
-        private static float FindMax(params float[] values) { return values.Max(); }
+        private static float FindMin(params float[] values) => values.Min();
+        private static float FindMax(params float[] values) => values.Max();
     }
 
     // ColorExtensions implements ColorHelper for Windows.UI.Color
@@ -360,22 +357,22 @@
     {
         #region conversions
 
-        public static ColorHelper.RGB ToRGB(this Color color) { return new ColorHelper.RGB(color.R, color.G, color.B); }
-        public static ColorHelper.HSL ToHSL(this Color color) { return ColorHelper.RGB2HSL(color.ToRGB()); }
-        public static ColorHelper.HSV ToHSV(this Color color) { return ColorHelper.RGB2HSV(color.ToRGB()); }
-        public static ColorHelper.CMYK ToCMYK(this Color color) { return ColorHelper.RGB2CMYK(color.ToRGB()); }
-        private static Color ToColor(this ColorHelper.RGB rgb) { return Color.FromArgb(255, (byte)rgb.Red, (byte)rgb.Green, (byte)rgb.Blue); }
+        public static ColorHelper.RGB ToRGB(this Color color) => new ColorHelper.RGB(color.R, color.G, color.B);
+        public static ColorHelper.HSL ToHSL(this Color color) => ColorHelper.RGB2HSL(color.ToRGB());
+        public static ColorHelper.HSV ToHSV(this Color color) => ColorHelper.RGB2HSV(color.ToRGB());
+        public static ColorHelper.CMYK ToCMYK(this Color color) => ColorHelper.RGB2CMYK(color.ToRGB());
+        private static Color ToColor(this ColorHelper.RGB rgb) => Color.FromArgb(255, (byte)rgb.Red, (byte)rgb.Green, (byte)rgb.Blue);
 
         #endregion
 
         #region varietals
 
-        public static Color GetComplimentary(this Color color) { return ColorHelper.GetComplimentary(color.ToRGB()).ToColor(); }
-        public static IEnumerable<Color> GetChromatics(this Color color, int count = 10) { return ColorHelper.GetChromatics(color.ToRGB(), count).Select(x => x.ToColor()); }
-        public static IEnumerable<Color> GetTriads(this Color color) { return ColorHelper.GetTriads(color.ToRGB()).Select(x => x.ToColor()); }
-        public static IEnumerable<Color> GetTetradics(this Color color) { return ColorHelper.GetTetradics(color.ToRGB()).Select(x => x.ToColor()); }
-        public static Color GetContrast(this Color color) { return ColorHelper.GetContrast(color.ToRGB()).ToColor(); }
-        public static IEnumerable<Color> GetShades(this Color color, int count = 10) { return ColorHelper.GetShades(color.ToRGB()).Select(x => x.ToColor()); }
+        public static Color GetComplimentary(this Color color) => ColorHelper.GetComplimentary(color.ToRGB()).ToColor();
+        public static IEnumerable<Color> GetChromatics(this Color color, int count = 10) => ColorHelper.GetChromatics(color.ToRGB(), count).Select(x => x.ToColor());
+        public static IEnumerable<Color> GetTriads(this Color color) => ColorHelper.GetTriads(color.ToRGB()).Select(x => x.ToColor());
+        public static IEnumerable<Color> GetTetradics(this Color color) => ColorHelper.GetTetradics(color.ToRGB()).Select(x => x.ToColor());
+        public static Color GetContrast(this Color color) => ColorHelper.GetContrast(color.ToRGB()).ToColor();
+        public static IEnumerable<Color> GetShades(this Color color, int count = 10) => ColorHelper.GetShades(color.ToRGB()).Select(x => x.ToColor());
 
         #endregion
     }

@@ -18,15 +18,9 @@ namespace Template10.Services.WebApiService
             return http;
         }
 
-        public string Serialize<T>(T item)
-        {
-            return JsonConvert.SerializeObject(item);
-        }
+        public string Serialize<T>(T item) => JsonConvert.SerializeObject(item);
 
-        public T Deserialize<T>(string json)
-        {
-            return JsonConvert.DeserializeObject<T>(json);
-        }
+        public T Deserialize<T>(string json) => JsonConvert.DeserializeObject<T>(json);
 
         public async Task<string> GetAsync(Uri path)
         {

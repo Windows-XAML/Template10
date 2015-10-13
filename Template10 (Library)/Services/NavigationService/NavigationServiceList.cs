@@ -9,9 +9,6 @@ namespace Template10.Services.NavigationService
 {
     public class NavigationServiceList : List<INavigationService>
     {
-        public INavigationService GetByFrameId(string frameId)
-        {
-            return this.FirstOrDefault(x => x.FrameFacade.FrameId == frameId);
-        }
+        public INavigationService GetByFrameId(string frameId) => this.FirstOrDefault(x => x.FrameFacade.FrameId == frameId);
     }
 }

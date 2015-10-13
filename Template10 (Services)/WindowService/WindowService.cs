@@ -8,9 +8,6 @@ namespace Template10.Services.WindowService
     {
         WindowHelper _helper = new WindowHelper();
 
-        public Task ShowAsync<T>(object param = null, ViewSizePreference size = ViewSizePreference.UseHalf)
-        {
-            return _helper.ShowAsync<T>(param, size);
-        }
+        public Task ShowAsync<T>(object param = null, ViewSizePreference size = ViewSizePreference.UseHalf) => _helper.ShowAsync<T>(param, size);
     }
 }

@@ -11,9 +11,6 @@ namespace Template10.Services.NetworkAvailableService
     {
         NetworkAvailableHelper _helper = new NetworkAvailableHelper();
 
-        public async Task<bool> IsInternetAvailable()
-        {
-            return await _helper.IsInternetAvailable();
-        }
+        public async Task<bool> IsInternetAvailable() => await _helper.IsInternetAvailable();
     }
 }

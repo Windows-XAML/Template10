@@ -5,10 +5,7 @@ namespace Template10.Utils
 {
     public static class ColorUtils
     {
-        public static SolidColorBrush ToSolidColorBrush(this Color color)
-        {
-            return new SolidColorBrush(color);
-        }
+        public static SolidColorBrush ToSolidColorBrush(this Color color) => new SolidColorBrush(color);
 
         static Color nearBlack = Colors.Black.AccentLighten(Accents.Plus20);
         static Color nearWhite = Colors.Black.AccentLighten(Accents.Plus80);

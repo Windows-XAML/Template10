@@ -5,10 +5,7 @@ namespace Template10.Services.SettingsService
     // https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SettingsService
     public class SettingsHelper : ISettingsHelper
     {
-        public SettingsService Container(SettingsStrategies strategy)
-        {
-            return (strategy == SettingsStrategies.Local) ? Local : Roaming;
-        }
+        public SettingsService Container(SettingsStrategies strategy) => (strategy == SettingsStrategies.Local) ? Local : Roaming;
 
         public bool Exists(string key, SettingsStrategies strategy = SettingsStrategies.Local)
         {
