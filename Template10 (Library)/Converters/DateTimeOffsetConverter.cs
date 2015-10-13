@@ -10,13 +10,13 @@ namespace Template10.Converters
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             try { return new DateTimeOffset((DateTime)value); }
-            catch (Exception ex) { return default(DateTimeOffset); }
+            catch (Exception) { return default(DateTimeOffset); }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             try { return ((DateTimeOffset)value).DateTime; }
-            catch (Exception ex) { return default(DateTime); }
+            catch (Exception) { return default(DateTime); }
         }
     }
 }

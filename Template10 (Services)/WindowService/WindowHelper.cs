@@ -13,7 +13,7 @@ namespace Template10.Services.WindowService
         private Window Window { get; set; }
         private ApplicationView View { get; set; }
         private CoreApplicationView CoreView { get; set; }
-        public bool IsOpen { get { return CoreView != null; } }
+        public bool IsOpen => CoreView != null;
 
         public async Task ShowAsync<T>(object param = null, ViewSizePreference size = ViewSizePreference.UseHalf) 
         {

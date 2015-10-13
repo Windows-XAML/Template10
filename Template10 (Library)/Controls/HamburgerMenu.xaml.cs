@@ -76,11 +76,11 @@ namespace Template10.Controls
         #region commands
 
         Mvvm.DelegateCommand _hamburgerCommand;
-        internal Mvvm.DelegateCommand HamburgerCommand { get { return _hamburgerCommand ?? (_hamburgerCommand = new Mvvm.DelegateCommand(ExecuteHamburger)); } }
+        internal Mvvm.DelegateCommand HamburgerCommand => _hamburgerCommand ?? (_hamburgerCommand = new Mvvm.DelegateCommand(ExecuteHamburger));
         void ExecuteHamburger() { IsOpen = !IsOpen; }
 
         Mvvm.DelegateCommand<HamburgerButtonInfo> _navCommand;
-        public Mvvm.DelegateCommand<HamburgerButtonInfo> NavCommand { get { return _navCommand ?? (_navCommand = new Mvvm.DelegateCommand<HamburgerButtonInfo>(ExecuteNav)); } }
+        public Mvvm.DelegateCommand<HamburgerButtonInfo> NavCommand => _navCommand ?? (_navCommand = new Mvvm.DelegateCommand<HamburgerButtonInfo>(ExecuteNav));
         void ExecuteNav(HamburgerButtonInfo commandInfo)
         {
             if (commandInfo == null)

@@ -6,7 +6,7 @@ namespace Sample.Services.SettingsServices
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SettingsService
     public partial class SettingsService : ISettingsService
     {
-        public static SettingsService Instance { get; private set; }
+        public static SettingsService Instance { get; }
         static SettingsService()
         {
             // implement singleton pattern

@@ -13,15 +13,9 @@ namespace Template10.Services.FileService
         /// <param name="key">Path of the file in storage</param>
         /// <param name="location">Location storage strategy</param>
         /// <returns>Boolean: true if found, false if not found</returns>
-        public async Task<bool> FileExistsAsync(string key, StorageStrategies location = StorageStrategies.Local)
-        {
-            return (await GetIfFileExistsAsync(key, location)) != null;
-        }
+        public async Task<bool> FileExistsAsync(string key, StorageStrategies location = StorageStrategies.Local) => (await GetIfFileExistsAsync(key, location)) != null;
 
-        public async Task<bool> FileExistsAsync(string key, Windows.Storage.StorageFolder folder)
-        {
-            return (await GetIfFileExistsAsync(key, folder)) != null;
-        }
+        public async Task<bool> FileExistsAsync(string key, Windows.Storage.StorageFolder folder) => (await GetIfFileExistsAsync(key, folder)) != null;
 
         /// <summary>Deletes a file in the specified storage strategy</summary>
         /// <param name="key">Path of the file in storage</param>
@@ -143,19 +137,13 @@ namespace Template10.Services.FileService
             return retval;
         }
 
-        private string Serialize<T>(T item)
-        {
-            return JsonConvert.SerializeObject(item,
-                Formatting.None, new JsonSerializerSettings()
-                {
-                    TypeNameHandling = TypeNameHandling.Objects,
-                    TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple
-                });
-        }
+        private string Serialize<T>(T item) => JsonConvert.SerializeObject(item,
+    Formatting.None, new JsonSerializerSettings()
+    {
+        TypeNameHandling = TypeNameHandling.Objects,
+        TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple
+    });
 
-        private T Deserialize<T>(string json)
-        {
-            return JsonConvert.DeserializeObject<T>(json);
-        }
+        private T Deserialize<T>(string json) => JsonConvert.DeserializeObject<T>(json);
     }
 }

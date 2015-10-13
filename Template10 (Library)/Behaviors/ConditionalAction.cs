@@ -67,10 +67,7 @@ namespace Template10.Behaviors
             DependencyProperty.Register("Actions", typeof(ActionCollection),
                 typeof(TimeoutAction), new PropertyMetadata(null));
 
-        int Compare<T>(T left, T right)
-        {
-            return System.Collections.Generic.Comparer<T>.Default.Compare(left, right);
-        }
+        int Compare<T>(T left, T right) => System.Collections.Generic.Comparer<T>.Default.Compare(left, right);
 
         public object Execute(object sender, object parameter)
         {

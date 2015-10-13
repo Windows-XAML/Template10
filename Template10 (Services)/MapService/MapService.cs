@@ -19,19 +19,10 @@ namespace Template10.Services.MapService
             _helper = new MapHelper(mapKey);
         }
 
-        public async Task<List<MapHelper.Resource>> FindLocationByPointAsync(double latitude, double longitude)
-        {
-            return await _helper.FindLocationByPointAsync(latitude, longitude);
-        }
+        public async Task<List<MapHelper.Resource>> FindLocationByPointAsync(double latitude, double longitude) => await _helper.FindLocationByPointAsync(latitude, longitude);
 
-        public Uri GetMapUrl(IEnumerable<MapHelper.StaticMapPushpin> items, MapHelper.StaticMapPushpin user, MapHelper.StaticMapPushpin center, Windows.Foundation.Size size, int? zoom = null, MapHelper.StaticMapImagerySets imagery = MapHelper.StaticMapImagerySets.Road)
-        {
-            return _helper.GetMapUrl(items, user, center, size, zoom, imagery);
-        }
+        public Uri GetMapUrl(IEnumerable<MapHelper.StaticMapPushpin> items, MapHelper.StaticMapPushpin user, MapHelper.StaticMapPushpin center, Windows.Foundation.Size size, int? zoom = null, MapHelper.StaticMapImagerySets imagery = MapHelper.StaticMapImagerySets.Road) => _helper.GetMapUrl(items, user, center, size, zoom, imagery);
 
-        public Task<List<MapHelper.Resource>> FindLocationByQueryAsync(string query, int maxResults = 5)
-        {
-            return _helper.FindLocationByQueryAsync(query, maxResults);
-        }
+        public Task<List<MapHelper.Resource>> FindLocationByQueryAsync(string query, int maxResults = 5) => _helper.FindLocationByQueryAsync(query, maxResults);
     }
 }

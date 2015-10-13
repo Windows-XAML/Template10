@@ -9,10 +9,7 @@ namespace Template10.Utils
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-XamlHelper
     public static class XamlUtil
     {
-        public static ObservableCollection<T> ToObservableCollection<T>(this IEnumerable<T> list)
-        {
-            return new ObservableCollection<T>(list);
-        }
+        public static ObservableCollection<T> ToObservableCollection<T>(this IEnumerable<T> list) => new ObservableCollection<T>(list);
 
         public static List<T> AllChildren<T>(DependencyObject parent) where T : Control
         {

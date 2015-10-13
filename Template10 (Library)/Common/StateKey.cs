@@ -11,11 +11,16 @@ namespace Template10.Common
             if (key == null) throw new ArgumentNullException(nameof(key));
             Key = key;
         }
-        public Type Type { get; private set; }
-        public String Key { get; private set; }
-        public bool Equals(StateItemKey other)
+        public Type Type { get; }
+        public String Key { get; }
+        public bool Equals(StateItemKey other) => this.Type == other.Type && this.Key == other.Key;
+
+        public override bool Equals(object obj)
         {
-            return this.Type == other.Type && this.Key == other.Key;
+            if (!(obj is StateItemKey))
+                throw new ArgumentException("must be of type StateItemKey");
+
+            return Equals((StateItemKey)obj);
         }
 
         public override int GetHashCode()
@@ -42,15 +47,9 @@ namespace Template10.Common
 
 
         }
-        public static bool operator ==(StateItemKey left, StateItemKey right)
-        {
-            return left.Equals(right);
-        }
+        public static bool operator ==(StateItemKey left, StateItemKey right) => left.Equals(right);
 
-        public static bool operator !=(StateItemKey left, StateItemKey right)
-        {
-            return !left.Equals(right);
-        }
+        public static bool operator !=(StateItemKey left, StateItemKey right) => !left.Equals(right);
     }
 
 }

@@ -42,43 +42,25 @@ namespace Sample.ViewModels
         }
 
         DelegateCommand _DeleteCommand;
-        public DelegateCommand DeleteCommand
-        {
-            get
-            {
-                return _DeleteCommand ?? (_DeleteCommand = new DelegateCommand(() =>
-                {
-                    if (Selected != null)
-                    {
-                        _MessageService.DeleteMessage(Selected);
-                        Selected = null;
-                    }
-                }, () => { return Selected != null; }));
-            }
-        }
+        public DelegateCommand DeleteCommand => _DeleteCommand ?? (_DeleteCommand = new DelegateCommand(() =>
+                                                              {
+                                                                  if (Selected != null)
+                                                                  {
+                                                                      _MessageService.DeleteMessage(Selected);
+                                                                      Selected = null;
+                                                                  }
+                                                              }, () => { return Selected != null; }));
 
         DelegateCommand _SearchCommand;
-        public DelegateCommand SearchCommand
-        {
-            get
-            {
-                return _SearchCommand ?? (_SearchCommand = new DelegateCommand(() =>
-                {
-                    Messages = _MessageService.Search(SearchText);
-                }));
-            }
-        }
+        public DelegateCommand SearchCommand => _SearchCommand ?? (_SearchCommand = new DelegateCommand(() =>
+                                                              {
+                                                                  Messages = _MessageService.Search(SearchText);
+                                                              }));
 
         DelegateCommand _ClearCommand;
-        public DelegateCommand ClearCommand
-        {
-            get
-            {
-                return _ClearCommand ?? (_ClearCommand = new DelegateCommand(() =>
-                {
-                    Messages = _MessageService.Search(SearchText = string.Empty);
-                }));
-            }
-        }
+        public DelegateCommand ClearCommand => _ClearCommand ?? (_ClearCommand = new DelegateCommand(() =>
+                                                             {
+                                                                 Messages = _MessageService.Search(SearchText = string.Empty);
+                                                             }));
     }
 }

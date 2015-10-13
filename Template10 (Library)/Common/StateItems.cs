@@ -56,18 +56,10 @@ namespace Template10.Common
         }
 
 
-        public bool Contains(Type type, string key)
-        {
-            return this.ContainsKey(new StateItemKey(type, key));
-
-        }
+        public bool Contains(Type type, string key) => this.ContainsKey(new StateItemKey(type, key));
 
         //Hope can be changed to    public void  Contains(Func<KVP<StateItemKey,object>,bool> condition>)  
-        public bool Contains(object value)
-        {
-            return this.ContainsValue(value);
-
-        }
+        public bool Contains(object value) => this.ContainsValue(value);
         //public  bool Contains(StateItemKey stateItemKey)
         //{
         //    return this.ContainsKey(stateItemKey);

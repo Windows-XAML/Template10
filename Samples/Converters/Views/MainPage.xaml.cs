@@ -27,9 +27,6 @@ namespace Sample.Views
             this.InitializeComponent();
         }
 
-        ViewModels.MainPageViewModel ViewModel
-        {
-            get { return this.DataContext as ViewModels.MainPageViewModel; }
-        }
+        ViewModels.MainPageViewModel ViewModel => this.DataContext as ViewModels.MainPageViewModel;
     }
 }

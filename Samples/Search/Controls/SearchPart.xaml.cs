@@ -12,7 +12,7 @@ namespace Sample.Controls
             this.InitializeComponent();
         }
 
-        public object NormalVisualState { get; private set; }
+        public object NormalVisualState { get; }
 
         private void SearchSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
