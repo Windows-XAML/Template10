@@ -17,12 +17,12 @@ namespace Template10.Services.NavigationService
     {
         private const string EmptyNavigation = "1,0";
 
-        public FrameFacade FrameFacade { get; private set; }
-        public Frame Frame { get { return FrameFacade.Frame; } }
+        public FrameFacade FrameFacade { get; }
+        public Frame Frame => FrameFacade.Frame;
         object LastNavigationParameter { get; set; }
         string LastNavigationType { get; set; }
 
-        public DispatcherWrapper Dispatcher { get { return WindowWrapper.Current(this).Dispatcher; } }
+        public DispatcherWrapper Dispatcher => WindowWrapper.Current(this).Dispatcher;
 
         internal NavigationService(Frame frame)
         {
@@ -231,13 +231,13 @@ namespace Template10.Services.NavigationService
 
         public void GoBack() { if (FrameFacade.CanGoBack) FrameFacade.GoBack(); }
 
-        public bool CanGoBack { get { return FrameFacade.CanGoBack; } }
+        public bool CanGoBack => FrameFacade.CanGoBack;
 
         public void GoForward() { FrameFacade.GoForward(); }
 
-        public bool CanGoForward { get { return FrameFacade.CanGoForward; } }
+        public bool CanGoForward => FrameFacade.CanGoForward;
 
-		public void ClearCache(bool removeCachedPagesInBackStack = false)
+        public void ClearCache(bool removeCachedPagesInBackStack = false)
 		{
 			int currentSize = FrameFacade.Frame.CacheSize;
 
@@ -278,8 +278,8 @@ namespace Template10.Services.NavigationService
             flyout.Show();
         }
 
-        public Type CurrentPageType { get { return FrameFacade.CurrentPageType; } }
-        public object CurrentPageParam { get { return FrameFacade.CurrentPageParam; } }
+        public Type CurrentPageType => FrameFacade.CurrentPageType;
+        public object CurrentPageParam => FrameFacade.CurrentPageParam;
     }
 }
 

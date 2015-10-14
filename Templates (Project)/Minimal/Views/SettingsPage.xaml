@@ -95,7 +95,7 @@
                 </ScrollViewer>
             </PivotItem>
             <PivotItem Header="About">
-                <Grid>
+                <Grid DataContext="{Binding AboutPartViewModel}">
                     <Border HorizontalAlignment="Right" VerticalAlignment="Top"
                             BorderBrush="DimGray" BorderThickness="1"
                             IsHitTestVisible="False">

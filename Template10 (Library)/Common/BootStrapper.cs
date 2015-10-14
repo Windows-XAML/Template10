@@ -1,15 +1,15 @@
 ﻿using System;
-using Windows.UI.Xaml;
-using System.Threading.Tasks;
-using Windows.ApplicationModel;
-using Windows.UI.Xaml.Controls;
-using Windows.ApplicationModel.Activation;
-using Windows.UI.Core;
-using System.Linq;
-using Windows.Foundation.Metadata;
-using Template10.Services.NavigationService;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
+using Template10.Services.NavigationService;
+using Windows.ApplicationModel;
+using Windows.ApplicationModel.Activation;
+using Windows.Foundation.Metadata;
+using Windows.UI.Core;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace Template10.Common
 {
@@ -17,9 +17,9 @@ namespace Template10.Common
     {
         #region dependency injection
 
-        public virtual T Resolve<T>(Type type) { return default(T); }
+        public virtual T Resolve<T>(Type type) => default(T);
 
-        public virtual Services.NavigationService.INavigable ResolveForPage(Type page, NavigationService navigationService) { return null; }
+        public virtual Services.NavigationService.INavigable ResolveForPage(Type page, NavigationService navigationService) => null;
 
         #endregion
 
@@ -61,11 +61,7 @@ namespace Template10.Common
         /// it is only a helper property to provide the NavigatioNService for
         /// the first Frame ultimately aggregated in the static WindowWrapper class.
         /// </summary>
-        public Services.NavigationService.INavigationService NavigationService
-        {
-            // because it is protected, we can safely assume it will ref the first view
-            get { return WindowWrapper.ActiveWrappers.First().NavigationServices.First(); }
-        }
+        public Services.NavigationService.INavigationService NavigationService => WindowWrapper.ActiveWrappers.First().NavigationServices.First();
 
         /// <summary>
         /// The SplashFactory is a Func that returns an instantiated Splash view.
@@ -208,8 +204,8 @@ namespace Template10.Common
                     handled = !NavigationService.CanGoBack;
                 }
 
-                args.Handled = handled;
                 RaiseBackRequested(ref handled);
+                args.Handled = handled;
             };
 
             // Hook up keyboard and mouse Back handler

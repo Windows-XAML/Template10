@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Template10.Common;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -16,7 +15,8 @@ namespace Template10.Services.NavigationService
         internal FrameFacade(Frame frame)
         {
             Frame = frame;
-            _navigatedEventHandlers = new List<EventHandler<NavigatedEventArgs>>();
+            frame.Navigated += (s, e) => FacadeNavigatedEventHandler(s, e);
+            frame.Navigating += (s, e) => FacadeNavigatingCancelEventHandler(s, e);
 
             // setup animations
             var c = new TransitionCollection { };
@@ -30,39 +30,31 @@ namespace Template10.Services.NavigationService
         public event EventHandler<HandledEventArgs> BackRequested;
         public void RaiseBackRequested(HandledEventArgs args)
         {
-            if (BackRequested == null)
+            if (BackRequested != null)
             {
-                args.Handled = this.Frame.BackStackDepth > 0;
-                if (args.Handled)
-                    this.GoBack();
+                BackRequested.Invoke(this, args);
             }
-            else
+
+            if (!args.Handled && (args.Handled = this.Frame.BackStackDepth > 0))
             {
-                BackRequested?.Invoke(this, args);
+                GoBack();
             }
         }
 
         public event EventHandler<HandledEventArgs> ForwardRequested;
         public void RaiseForwardRequested(HandledEventArgs args)
         {
-            if (ForwardRequested == null)
-            {
-                args.Handled = this.Frame.ForwardStack.Count > 0;
-                if (args.Handled)
-                    this.GoForward();
-            }
-            else
-            {
                 ForwardRequested?.Invoke(this, args);
+
+            if (!args.Handled && this.Frame.ForwardStack.Count > 0)
+            {
+                GoForward();
             }
         }
 
         #region state
 
-        private string GetFrameStateKey()
-        {
-            return string.Format("{0}-PageState", FrameId);
-        }
+        private string GetFrameStateKey() => string.Format("{0}-PageState", FrameId);
 
         private Windows.Storage.ApplicationDataContainer _frameStateContainer;
         private Windows.Storage.ApplicationDataContainer FrameStateContainer()
@@ -98,10 +90,7 @@ namespace Template10.Services.NavigationService
             pageStateContainers.Clear();
         }
 
-        private string GetPageStateKey(Type type)
-        {
-            return string.Format("{0}", type);
-        }
+        private string GetPageStateKey(Type type) => string.Format("{0}", type);
 
         readonly Dictionary<Type, IPropertySet> pageStateContainers = new Dictionary<Type, IPropertySet>();
         public IPropertySet PageStateContainer(Type type)
@@ -125,19 +114,19 @@ namespace Template10.Services.NavigationService
 
         #region frame facade
 
-        public Frame Frame { get; private set; }
+        public Frame Frame { get; }
 
         public string FrameId { get; set; } = string.Empty;
 
-        public bool Navigate(Type page, object parameter, NavigationTransitionInfo infoOverride) { return Frame.Navigate(page, parameter, infoOverride); }
+        public bool Navigate(Type page, object parameter, NavigationTransitionInfo infoOverride) => Frame.Navigate(page, parameter, infoOverride);
 
         public void SetNavigationState(string state) { Frame.SetNavigationState(state); }
 
-        public string GetNavigationState() { return Frame.GetNavigationState(); }
+        public string GetNavigationState() => Frame.GetNavigationState();
 
-        public int BackStackDepth { get { return Frame.BackStackDepth; } }
+        public int BackStackDepth => Frame.BackStackDepth;
 
-        public bool CanGoBack { get { return Frame.CanGoBack; } }
+        public bool CanGoBack => Frame.CanGoBack;
 
         public void GoBack() { if (CanGoBack) Frame.GoBack(); }
 
@@ -169,17 +158,17 @@ namespace Template10.Services.NavigationService
             }
         }
 
-        public bool CanGoForward { get { return Frame.CanGoForward; } }
+        public bool CanGoForward => Frame.CanGoForward;
 
         public void GoForward() { if (CanGoForward) Frame.GoForward(); }
 
-        public object Content { get { return Frame.Content; } }
+        public object Content => Frame.Content;
 
         public Type CurrentPageType { get; internal set; }
 
         public object CurrentPageParam { get; internal set; }
 
-        public object GetValue(DependencyProperty dp) { return Frame.GetValue(dp); }
+        public object GetValue(DependencyProperty dp) => Frame.GetValue(dp);
 
         public void SetValue(DependencyProperty dp, object value) { Frame.SetValue(dp, value); }
 
@@ -187,58 +176,29 @@ namespace Template10.Services.NavigationService
 
         #endregion
 
-        readonly List<EventHandler<NavigatedEventArgs>> _navigatedEventHandlers;
+        readonly List<EventHandler<NavigatedEventArgs>> _navigatedEventHandlers = new List<EventHandler<NavigatedEventArgs>>();
         public event EventHandler<NavigatedEventArgs> Navigated
         {
-            add
-            {
-                if (_navigatedEventHandlers.Contains(value))
-                    return;
-                _navigatedEventHandlers.Add(value);
-                if (_navigatedEventHandlers.Count == 1)
-                    Frame.Navigated += FacadeNavigatedEventHandler;
+            add { if (!_navigatedEventHandlers.Contains(value)) _navigatedEventHandlers.Add(value); }
+            remove { if (_navigatedEventHandlers.Contains(value)) _navigatedEventHandlers.Remove(value); }
             }
-
-            remove
-            {
-                if (!_navigatedEventHandlers.Contains(value))
-                    return;
-                _navigatedEventHandlers.Remove(value);
-                if (_navigatedEventHandlers.Count == 0)
-                    Frame.Navigated -= FacadeNavigatedEventHandler;
-            }
-        }
 
         void FacadeNavigatedEventHandler(object sender, Windows.UI.Xaml.Navigation.NavigationEventArgs e)
         {
+            CurrentPageType = e.SourcePageType;
+            CurrentPageParam = e.Parameter;
             var args = new NavigatedEventArgs(e);
             foreach (var handler in _navigatedEventHandlers)
             {
                 handler(this, args);
             }
-            CurrentPageType = e.SourcePageType;
-            CurrentPageParam = e.Parameter;
         }
 
         readonly List<EventHandler<NavigatingEventArgs>> _navigatingEventHandlers = new List<EventHandler<NavigatingEventArgs>>();
         public event EventHandler<NavigatingEventArgs> Navigating
         {
-            add
-            {
-                if (_navigatingEventHandlers.Contains(value))
-                    return;
-                _navigatingEventHandlers.Add(value);
-                if (_navigatingEventHandlers.Count == 1)
-                    Frame.Navigating += FacadeNavigatingCancelEventHandler;
-            }
-            remove
-            {
-                if (!_navigatingEventHandlers.Contains(value))
-                    return;
-                _navigatingEventHandlers.Remove(value);
-                if (_navigatingEventHandlers.Count == 0)
-                    Frame.Navigating -= FacadeNavigatingCancelEventHandler;
-            }
+            add { if (!_navigatingEventHandlers.Contains(value)) _navigatingEventHandlers.Add(value); }
+            remove { if (_navigatingEventHandlers.Contains(value)) _navigatingEventHandlers.Remove(value); }
         }
 
         private void FacadeNavigatingCancelEventHandler(object sender, NavigatingCancelEventArgs e)

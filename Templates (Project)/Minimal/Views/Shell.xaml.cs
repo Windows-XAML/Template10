@@ -11,6 +11,8 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Sample.Services.SettingsServices;
+using System.Collections.Generic;
+using Windows.UI.Xaml.Media;
 
 namespace Sample.Views
 {
@@ -18,6 +20,7 @@ namespace Sample.Views
     public sealed partial class Shell : Page
     {
         public static Shell Instance { get; set; }
+        public static HamburgerMenu HamburgerMenu { get { return Instance.MyHamburgerMenu; } }
 
         public Shell(NavigationService navigationService)
         {

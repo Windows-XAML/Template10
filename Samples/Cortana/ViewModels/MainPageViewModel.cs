@@ -54,16 +54,10 @@ namespace Sample.ViewModels
         }
 
         public DelegateCommand _ListenCommand;
-        public DelegateCommand ListenCommand
-        {
-            get
-            {
-                return _ListenCommand ?? (_ListenCommand = new DelegateCommand(ListenExecute, ListenCanExecute));
-            }
-        }
+        public DelegateCommand ListenCommand => _ListenCommand ?? (_ListenCommand = new DelegateCommand(ListenExecute, ListenCanExecute));
 
         private bool _ListenCanExecute = false;
-        private bool ListenCanExecute() { return _ListenCanExecute; }
+        private bool ListenCanExecute() => _ListenCanExecute;
 
         private async void ListenExecute()
         {

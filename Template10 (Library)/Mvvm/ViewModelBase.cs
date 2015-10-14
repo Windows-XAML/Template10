@@ -17,8 +17,8 @@ namespace Template10.Mvvm
         [JsonIgnore]
         public NavigationService NavigationService { get; set; }
         [JsonIgnore]
-        public DispatcherWrapper Dispatcher { get { return Common.WindowWrapper.Current(NavigationService)?.Dispatcher; } }
+        public DispatcherWrapper Dispatcher => Common.WindowWrapper.Current(NavigationService)?.Dispatcher;
         [JsonIgnore]
-        public Common.StateItems SessionState { get { return BootStrapper.Current.SessionState; } }
+        public Common.StateItems SessionState => BootStrapper.Current.SessionState;
     }
 }
