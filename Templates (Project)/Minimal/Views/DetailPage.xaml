@@ -11,13 +11,12 @@
     xmlns:Behaviors="using:Template10.Behaviors" 
     xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
     mc:Ignorable="d" x:Name="ThisPage">
-
     <Page.DataContext>
         <vm:DetailPageViewModel />
     </Page.DataContext>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        
+
         <!-- adaptive states -->
 
         <VisualStateManager.VisualStateGroups>
@@ -43,8 +42,14 @@
         </Grid.RowDefinitions>
 
         <!-- header -->
-
-        <controls:PageHeader Text="Detail Page" Frame="{x:Bind Frame}" />
+        <controls:PageHeader Frame="{x:Bind Frame}" >
+            <controls:PageHeader.Content>
+                <TextBlock>
+                    <Run Text="Detail Page. You passed:"/>
+                    <Run Text="{Binding Value}"/>
+                </TextBlock>
+            </controls:PageHeader.Content>
+        </controls:PageHeader>
 
         <!--#region content-->
 

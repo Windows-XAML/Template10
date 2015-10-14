@@ -44,7 +44,7 @@
 
         <!-- header -->
 
-        <controls:PageHeader Text="Detail Page" Frame="{x:Bind Frame}">
+        <controls:PageHeader Content="Detail Page" Frame="{x:Bind Frame}">
             <controls:PageHeader.PrimaryCommands>
                 <AppBarButton Icon="Pin" Label="Pin" Click="{x:Bind ViewModel.Pin}"
                           Visibility="{x:Bind ViewModel.PinVisibility, Mode=OneWay}" />
