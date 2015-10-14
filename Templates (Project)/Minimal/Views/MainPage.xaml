@@ -10,7 +10,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:vm="using:Sample.ViewModels" mc:Ignorable="d">
     <Page.DataContext>
-        <vm:MainPageViewModel />
+        <vm:MainPageViewModel/>
     </Page.DataContext>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <VisualStateManager.VisualStateGroups>
@@ -31,7 +31,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <controls:PageHeader BackButtonVisibility="Collapsed" Frame="{x:Bind Frame, Mode=OneWay}" Text="Main Page"/>
+        <controls:PageHeader BackButtonVisibility="Collapsed" Frame="{x:Bind Frame, Mode=OneWay}" Content="Main Page"/>
         <!--  #region content  -->
         <StackPanel Grid.Row="1" VerticalAlignment="Top"
                     Orientation="Horizontal" Padding="12,8,0,0">

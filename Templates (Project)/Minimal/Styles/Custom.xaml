@@ -21,8 +21,8 @@
 	<Style TargetType="controls:PageHeader">
 		<Setter Property="VisualStateNarrowMinWidth" Value="{StaticResource NarrowMinWidth}" />
 		<Setter Property="VisualStateNormalMinWidth" Value="{StaticResource NormalMinWidth}" />
-		<Setter Property="HeaderBackgroundBrush" Value="{ThemeResource CustomHeaderBackground}" />
-		<Setter Property="HeaderForegroundBrush" Value="{ThemeResource CustomHeaderForeground}" />
+		<Setter Property="Background" Value="{ThemeResource CustomHeaderBackground}" />
+		<Setter Property="Foreground" Value="{ThemeResource CustomHeaderForeground}" />
 	</Style>
 	
 	<Style TargetType="controls:Resizer">
