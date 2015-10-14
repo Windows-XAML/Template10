@@ -21,18 +21,7 @@ namespace Sample.Services.SettingsServices
 
         public void ApplyAppTheme(ApplicationTheme value)
         {
-            switch (value)
-            {
-                case ApplicationTheme.Light:
-                    Views.Shell.SetThemeColors(ElementTheme.Light);
-                    break;
-                case ApplicationTheme.Dark:
-                    Views.Shell.SetThemeColors(ElementTheme.Dark);
-                    break;
-                default:
-                    Views.Shell.SetThemeColors(ElementTheme.Default);
-                    break;
-            }
+            Views.Shell.HamburgerMenu.RefreshStyles(value);
         }
 
         private void ApplyCacheMaxDuration(TimeSpan value)

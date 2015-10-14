@@ -7,10 +7,10 @@ namespace Template10.Utils
     {
         public static SolidColorBrush ToSolidColorBrush(this Color color) => new SolidColorBrush(color);
 
-        static Color nearBlack = Colors.Black.AccentLighten(Accents.Plus20);
-        static Color nearWhite = Colors.Black.AccentLighten(Accents.Plus80);
+        static Color nearBlack = Colors.Black.Lighten(Accents.Plus20);
+        static Color nearWhite = Colors.Black.Lighten(Accents.Plus80);
 
-        public enum Accents : long
+        internal enum Accents : long
         {
             Plus90 = 90,
             Plus80 = 80,
@@ -23,28 +23,28 @@ namespace Template10.Utils
             Plus10 = 10,
         }
 
-        public static float Lerp(this float start, float end, float amount)
+        internal static float Lerp(this float start, float end, float amount)
         {
             float difference = end - start;
             float adjusted = difference * amount;
             return start + adjusted;
         }
 
-        public static Color AccentDarken(this Color color, Accents amount)
+        internal static Color Darken(this Color color, Accents amount)
         {
             var value = (float)amount;
             value = value * .01f;
             return Lerp(color, nearBlack, value);
         }
 
-        public static Color AccentLighten(this Color color, Accents amount)
+        internal static Color Lighten(this Color color, Accents amount)
         {
             var value = (float)amount;
             value = value * .01f;
             return Lerp(color, nearWhite, value);
         }
 
-        public static Color Lerp(this Color color, Color target, float amount)
+        internal static Color Lerp(this Color color, Color target, float amount)
         {
             float sr = color.R,
                 sg = color.G,

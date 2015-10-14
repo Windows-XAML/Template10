@@ -33,10 +33,9 @@ namespace Sample.Services.SettingsServices
         {
             get
             {
-                var theme = ApplicationTheme.Light;
+                var theme = ApplicationTheme.Dark;
                 var value = _helper.Read<string>(nameof(AppTheme), theme.ToString());
-                Enum.TryParse<ApplicationTheme>(value, out theme);
-                return theme;
+                return Enum.TryParse<ApplicationTheme>(value, out theme) ? theme : ApplicationTheme.Dark;
             }
             set
             {
