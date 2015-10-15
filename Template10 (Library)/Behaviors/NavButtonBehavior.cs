@@ -123,19 +123,27 @@ namespace Template10.Behaviors
             if (!cangoback)
                 return Visibility.Collapsed;
 
+            // continuum mode
+            var touchmode = UIViewSettings.GetForCurrentView().UserInteractionMode == UserInteractionMode.Touch;
+
             // mobile always has a visible back button
             var mobilefam = ResourceContext.GetForCurrentView().QualifierValues["DeviceFamily"].Equals("Mobile");
-            if (mobilefam)
+            if (mobilefam && touchmode)
+                // this means phone, not continuum, which uses hardware (or steering wheel) back button
                 return Visibility.Collapsed;
 
-            // simply don't know what to do with else
-            var desktopfam = ResourceContext.GetForCurrentView().QualifierValues["DeviceFamily"].Equals("Desktop");
-            if (!desktopfam)
-                return Visibility.Collapsed;
+            // handle iot
+            var iotfam = ResourceContext.GetForCurrentView().QualifierValues["DeviceFamily"].Equals("IoT");
+            if (!iotfam)
+            {
+                // simply don't know what to do with else
+                var desktopfam = ResourceContext.GetForCurrentView().QualifierValues["DeviceFamily"].Equals("Desktop");
+                if (!desktopfam)
+                    return Visibility.Collapsed;
+            }
 
-            // touch always has a visible back button
-            var touchmode = UIViewSettings.GetForCurrentView().UserInteractionMode == UserInteractionMode.Touch;
-            if (touchmode)
+            // touch always has a visible back button (continuum)
+            if (!iotfam && touchmode)
                 return Visibility.Collapsed;
 
             // full screen back button is only visible when mouse reveals title (prefered behavior is on-canvas visible)
