@@ -8,7 +8,7 @@ using Windows.UI.Core;
 namespace Template10.Common
 {
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-DispatcherWrapper
-    public class DispatcherWrapper
+    public class DispatcherWrapper : IDispatcherWrapper
     {
         internal DispatcherWrapper(CoreDispatcher dispatcher)
         {

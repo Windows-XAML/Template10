@@ -13,12 +13,12 @@ namespace Sample.Mvvm
         public virtual void OnNavigatingFrom(Template10.Services.NavigationService.NavigatingEventArgs args) { /* nothing by default */ }
 
         [JsonIgnore]
-        public Template10.Services.NavigationService.NavigationService NavigationService { get; set; }
+        public Template10.Services.NavigationService.INavigationService NavigationService { get; set; }
 
         [JsonIgnore]
-        public Template10.Common.DispatcherWrapper Dispatcher => Template10.Common.WindowWrapper.Current(NavigationService)?.Dispatcher;
+        public Template10.Common.IDispatcherWrapper Dispatcher { get; set; }
 
         [JsonIgnore]
-        public Template10.Common.StateItems SessionState => Template10.Common.BootStrapper.Current.SessionState;
+        public Template10.Common.IStateItems SessionState { get; set; }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Template10.Common
 {
-    public class StateItems : Dictionary<StateItemKey, Object>
+    public class StateItems : Dictionary<StateItemKey, Object>, IStateItems
     {
 
         public KeyValuePair<StateItemKey, Object> Add(Type type, string key, object value)

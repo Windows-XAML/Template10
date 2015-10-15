@@ -110,6 +110,8 @@ namespace Template10.Services.NavigationService
                 {
                     // prepare for state load
                     dataContext.NavigationService = this;
+                    dataContext.Dispatcher = Common.WindowWrapper.Current(this)?.Dispatcher;
+                    dataContext.SessionState = BootStrapper.Current.SessionState;
                     var pageState = FrameFacade.PageStateContainer(page.GetType());
                     dataContext.OnNavigatedTo(parameter, mode, pageState);
                 }
