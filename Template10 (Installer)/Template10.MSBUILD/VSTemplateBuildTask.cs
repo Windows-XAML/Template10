@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -128,12 +128,41 @@ namespace Template10.MSBUILD
             FileHelper.DeleteKey(tempFolder);
             ProcessVSTemplate(tempFolder);
             OperateOnCsProj(tempFolder, CsprojFile);
+            OperateOnManifest(Path.Combine(tempFolder, "Package.appxmanifest"));
             CopyEmbeddedFilesToOutput(tempFolder);
             string jsonProj = Path.Combine(tempFolder, Constants.PROJECTJSON);
             AddTemplate10Nuget(jsonProj);
             SetupHelpFile(Path.Combine(tempFolder, Constants.HELPHTML), HelpUrl);
             ZipFiles(tempFolder, ZipName, TargetDir);
             return true;
+        }
+
+        /// <summary>
+        /// Operates the on manifest.
+        /// </summary>
+        /// <param name="manifestFile">The manifest file.</param>
+        private void OperateOnManifest(string manifestFile)
+        {
+            string manifestText = FileHelper.ReadFile(manifestFile);
+
+            var replacements = new List<FindReplaceItem>();
+
+            replacements.Add(new FindReplaceItem() { Pattern = "<mp:PhoneIdentity(.*?)/>", Replacement = @"<mp:PhoneIdentity PhoneProductId=""$$guid9$$"" PhonePublisherId=""00000000-0000-0000-0000-000000000000""/>" });
+            replacements.Add(new FindReplaceItem() { Pattern = "<DisplayName>(.*?)</DisplayName>", Replacement = @"<DisplayName>$$projectname$$</DisplayName>" });
+            replacements.Add(new FindReplaceItem() { Pattern = "<PublisherDisplayName>(.*?)</PublisherDisplayName>", Replacement = @"<PublisherDisplayName>$$XmlEscapedPublisher$$</PublisherDisplayName>" });
+            replacements.Add(new FindReplaceItem() { Pattern = @"Executable=""(.*?)""", Replacement = @"Executable=""$$targetnametoken$$.exe""" });
+            replacements.Add(new FindReplaceItem() { Pattern = @"EntryPoint=""(.*?)""", Replacement = @"EntryPoint=""$$safeprojectname$$.App""" });
+            replacements.Add(new FindReplaceItem() { Pattern = @"DisplayName=""(.*?)""", Replacement = @"DisplayName=""$$projectname$$.App""" });
+            replacements.Add(new FindReplaceItem() { Pattern = @"EntryPoint=""(.*?)""", Replacement = @"EntryPoint=""$$projectname$$.App""" });
+
+            foreach (var item in replacements)
+            {
+                manifestText = Regex.Replace(manifestText, item.Pattern, item.Replacement);
+            }
+
+            manifestText = ReplaceIdentityNode(manifestText);
+
+            FileHelper.WriteFile(manifestFile, manifestText);
         }
 
         /// <summary>
@@ -270,11 +299,7 @@ namespace Template10.MSBUILD
 
             foreach (var item in replacements)
             {
-                string pattern = item.Pattern;
-                string replacement = item.Replacement;
-                string input = csprojText;
-                string result = Regex.Replace(input, pattern, replacement);
-                csprojText = result;
+                csprojText  = Regex.Replace(csprojText, item.Pattern, item.Replacement);
             }
 
             csprojText = RemoveItemNodeAround(@"csproj", csprojText);
@@ -306,6 +331,38 @@ namespace Template10.MSBUILD
             lastHalf = csprojText.Substring(end + 12);
             return firstHalf + lastHalf;
         }
+
+        /// <summary>
+        /// Replaces the identity node.
+        /// </summary>
+        /// <param name="manifestText">The manifest text.</param>
+        /// <returns></returns>
+        private string ReplaceIdentityNode(string manifestText)
+        {
+            string findText = @"<Identity";
+            if (!manifestText.Contains(findText))
+            {
+                return manifestText;
+            }
+
+            string identityReplacementText = @"<Identity
+    Name=""$guid9$""
+    Publisher = ""$XmlEscapedPublisherDistinguishedName$""
+    Version = ""1.0.0.0"" /> ";
+
+            int findTextIndex, start, end;
+            string firstHalf, lastHalf;
+
+            findTextIndex = manifestText.IndexOf(findText);
+
+            start = findTextIndex;
+            end = manifestText.IndexOf("/>", findTextIndex);
+            firstHalf = manifestText.Substring(0, start);
+            lastHalf = manifestText.Substring(end + 2);
+            return firstHalf + identityReplacementText + lastHalf;
+        }
+
+
         /// <summary>
         /// Gets the project node.
         /// </summary>
@@ -316,7 +373,7 @@ namespace Template10.MSBUILD
         {
             string projectNodeStart = @"<Project TargetFileName=""$projectName"" File=""$projectName"" ReplaceParameters=""true"">";
             projectNodeStart = projectNodeStart.Replace("$projectName", projectFileName);
-            string projectName = GetProjectName(csprojxml);
+            //string projectName = GetProjectName(csprojxml);
             List<string> projectItems = GetProjectItems(csprojxml);
 
             //-- sorting for directories
@@ -353,7 +410,9 @@ namespace Template10.MSBUILD
 
             foreach (var item in topFolder.Items)
             {
-                if (IsKeyProjectItemNode(item))
+                if (IsHelpItem(item))
+                    folderString = folderString + @"<ProjectItem ReplaceParameters=""false"" TargetFileName=""help.htm"" OpenInWebBrowser=""true"">help.htm</ProjectItem>";
+                else if (IsKeyProjectItemNode(item))
                     folderString = folderString + @"<ProjectItem ReplaceParameters=""false"" TargetFileName=""$projectname$_TemporaryKey.pfx"" BlendDoNotCreate=""true"">Application_TemporaryKey.pfx</ProjectItem>";
                 else
                 {
@@ -377,6 +436,16 @@ namespace Template10.MSBUILD
 
             return folderString;
 
+        }
+
+        /// <summary>
+        /// Determines whether [is help item] [the specified item].
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <returns></returns>
+        private bool IsHelpItem(string item)
+        {
+            return item.ToLower().Contains("help.htm");
         }
 
         /// <summary>
@@ -523,15 +592,6 @@ namespace Template10.MSBUILD
 
         }
 
-        /// <summary>
-        /// Gets the name of the project.
-        /// </summary>
-        /// <param name="csprojxml">The csprojxml.</param>
-        /// <returns></returns>
-        private string GetProjectName(string csprojxml)
-        {
-            return "project";
-        }
 
 
 
