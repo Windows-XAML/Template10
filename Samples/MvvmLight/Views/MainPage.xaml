@@ -22,7 +22,7 @@
 
         <!--  header  -->
         <controls:PageHeader BackButtonVisibility="Collapsed" Frame="{x:Bind Frame, Mode=OneWay}"
-                             Text="Main Page" VisualStateNarrowMinWidth="-1" />
+                             Content="Main Page" VisualStateNarrowMinWidth="-1" />
 
         <!--  #region content  -->
 
