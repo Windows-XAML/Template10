@@ -444,9 +444,9 @@ namespace Template10.Controls
                 else
                 {
                     // display content without splitview (splash scenario)
-                    NavigationService.AfterRestoreSavedNavigation += (s, e) => IsFullScreen = false;
-                    NavigationService.FrameFacade.Navigated += (s, e) => IsFullScreen = false;
-                    IsFullScreen = true;
+                    NavigationService.AfterRestoreSavedNavigation += (s, e) => UpdateFullScreen(IsFullScreen);
+                    NavigationService.FrameFacade.Navigated += (s, e) => UpdateFullScreen(IsFullScreen);
+                    UpdateFullScreen(true);
                 }
                 NavigationService.FrameFacade.Navigated += (s, e) => HighlightCorrectButton(e.PageType, e.Parameter);
                 NavigationService.AfterRestoreSavedNavigation += (s, e) => HighlightCorrectButton();
@@ -455,6 +455,7 @@ namespace Template10.Controls
                     // update width
                     PaneWidth = !ShellSplitView.IsPaneOpen ? ShellSplitView.CompactPaneLength : ShellSplitView.OpenPaneLength;
                 });
+                UpdateFullScreen();
             }
         }
 
@@ -465,27 +466,26 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty IsFullScreenProperty =
             DependencyProperty.Register(nameof(IsFullScreen), typeof(bool),
-                typeof(HamburgerMenu), new PropertyMetadata(false, (d, e) =>
-                {
-                    var menu = d as HamburgerMenu;
-                    if ((bool)e.NewValue)
-                    {
-                        if (menu.RootGrid.Children.Contains(menu.NavigationService.Frame))
-                            return;
-                        menu.NavigationService.Frame.SetValue(Grid.ColumnProperty, 0);
-                        menu.NavigationService.Frame.SetValue(Grid.ColumnSpanProperty, int.MaxValue);
-                        menu.NavigationService.Frame.SetValue(Grid.RowProperty, 0);
-                        menu.NavigationService.Frame.SetValue(Grid.RowSpanProperty, int.MaxValue);
-                        menu.RootGrid.Children.Add(menu.NavigationService.Frame);
-                    }
-                    else
-                    {
-                        if (menu.RootGrid.Children.Contains(menu.NavigationService.Frame))
-                            menu.RootGrid.Children.Remove(menu.NavigationService.Frame);
-                        menu.ShellSplitView.Content = menu.NavigationService.Frame;
-                    }
-                }));
-
+                typeof(HamburgerMenu), new PropertyMetadata(false, (d, e) => (d as HamburgerMenu).UpdateFullScreen()));
+        private void UpdateFullScreen(bool? manual = null)
+        {
+            if (manual ?? IsFullScreen)
+            {
+                if (NavigationService == null || RootGrid.Children.Contains(NavigationService.Frame))
+                    return;
+                NavigationService.Frame.SetValue(Grid.ColumnProperty, 0);
+                NavigationService.Frame.SetValue(Grid.ColumnSpanProperty, int.MaxValue);
+                NavigationService.Frame.SetValue(Grid.RowProperty, 0);
+                NavigationService.Frame.SetValue(Grid.RowSpanProperty, int.MaxValue);
+                RootGrid.Children.Add(NavigationService.Frame);
+            }
+            else
+            {
+                if (RootGrid.Children.Contains(NavigationService.Frame))
+                    RootGrid.Children.Remove(NavigationService.Frame);
+                ShellSplitView.Content = NavigationService.Frame;
+            }
+        }
 
         public ObservableCollection<HamburgerButtonInfo> SecondaryButtons
         {

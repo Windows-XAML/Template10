@@ -154,7 +154,7 @@
                                             <Rectangle x:Name="PressedBack" Fill="{Binding NavButtonPressedBackground, ElementName=ThisPage}" IsHitTestVisible="False" Visibility="Collapsed"/>
                                             <Rectangle x:Name="HoverBack" Fill="{Binding NavButtonHoverBackground, ElementName=ThisPage}" IsHitTestVisible="False" Visibility="Collapsed"/>
                                             <Rectangle x:Name="CheckedBack" Fill="{Binding NavButtonCheckedBackground, ElementName=ThisPage}" IsHitTestVisible="False" Visibility="Collapsed"/>
-                                            <ContentControl Content="{TemplateBinding Content}" Foreground="{Binding NavButtonForeground, ElementName=ThisPage, FallbackValue=White}" IsHitTestVisible="False" />
+                                            <ContentControl x:Name="NormalFore" Content="{TemplateBinding Content}" Foreground="{Binding NavButtonForeground, ElementName=ThisPage, FallbackValue=White}" IsHitTestVisible="False" />
                                         </Grid>
                                     </ControlTemplate>
                                 </ToggleButton.Template>
