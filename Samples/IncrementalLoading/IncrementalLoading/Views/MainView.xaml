@@ -42,36 +42,15 @@
     </Page.TopAppBar>
 
     <Grid Background="SteelBlue">
-        <ListView ItemsSource="{Binding Repositories}">
+        <ListView ItemTemplate="{StaticResource MyItemTemplate}" ItemsSource="{Binding Repositories}" SelectionMode="None">
             <ListView.Header>
-                <TextBlock Style="{StaticResource HeaderTextBlockStyle}" TextWrapping="NoWrap" Margin="8,0,0,0">Github Repositories</TextBlock>
+                <TextBlock Margin="8,0,0,0" Style="{StaticResource HeaderTextBlockStyle}" TextWrapping="NoWrap">Github Repositories</TextBlock>
             </ListView.Header>
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Grid BorderBrush="Gray" BorderThickness="0,0,0,1" Padding="5,0,5,20">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" Orientation="Vertical">
-                            <TextBlock FontWeight="Bold" Foreground="SkyBlue" Text="{Binding FullName}" />
-                            <TextBlock Text="{Binding Description}" />
-                            <TextBlock>
-                                <Run Text="Updated on" />
-                                <Run Text="{Binding UpdatedAt}" />
-                            </TextBlock>
-                            <Button Command="{Binding Main.OpenCommand, Source={StaticResource Locator}}" CommandParameter="{Binding HomeUrl}" Content="Open in browser" />
-                        </StackPanel>
-                        <StackPanel Grid.Column="1" Orientation="Vertical">
-                            <TextBlock Text="{Binding Language}" />
-                            <TextBlock>
-                                <Run Text="Star" />
-                                <Run Text="{Binding Star}" />
-                            </TextBlock>
-                        </StackPanel>
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
+            <ListView.ItemContainerTransitions>
+                <TransitionCollection>
+                    <AddDeleteThemeTransition />
+                </TransitionCollection>
+            </ListView.ItemContainerTransitions>
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
