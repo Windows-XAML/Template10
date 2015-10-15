@@ -1,5 +1,4 @@
-﻿using Sample.Design.Services;
-using Sample.Services;
+﻿using Sample.Services.GithubService;
 using System;
 using Windows.ApplicationModel;
 
@@ -14,12 +13,12 @@ namespace Sample.ViewModels
             if (DesignMode.DesignModeEnabled)
             {
                 // in design mode, use fake data.
-                _main = new Lazy<MainViewModel>(() => new MainViewModel(new FakeGithubService()));
+                _main = new Lazy<MainViewModel>(() => new MainViewModel(new GithubService4DesignTime()));
             }
             else
             {
                 // in real running, use the real service to load real data.
-                _main = new Lazy<MainViewModel>(() => new MainViewModel(new GithubService()));
+                _main = new Lazy<MainViewModel>(() => new MainViewModel(new GithubService4RunTime()));
             }
         }
 

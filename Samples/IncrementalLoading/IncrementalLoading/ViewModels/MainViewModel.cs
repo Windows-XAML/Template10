@@ -1,7 +1,7 @@
 ﻿using Sample.DataModels;
 using Sample.Extensions;
-using Sample.Models;
-using Sample.Services;
+using Sample.Services.GithubService;
+using Sample.Shared;
 using Sample.Utils;
 using System;
 using Template10.Mvvm;
@@ -15,7 +15,7 @@ namespace Sample.ViewModels
 
         private DelegateCommand<string> _openCommand;
 
-        private string _query;
+        private string _query = "Template 10";
 
         private DelegateCommand _queryCommand;
 

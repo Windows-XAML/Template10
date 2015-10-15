@@ -1,5 +1,6 @@
 ﻿using Sample.Models;
-using Sample.Services;
+using Sample.Services.GithubService;
+using Sample.Shared;
 using Sample.Utils;
 using System;
 using System.Collections.Generic;

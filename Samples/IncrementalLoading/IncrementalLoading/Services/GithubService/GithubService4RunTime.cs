@@ -1,14 +1,15 @@
 ﻿using Newtonsoft.Json;
 using Sample.Extensions;
 using Sample.Models;
+using Sample.Shared;
 using System;
 using System.Net;
 using System.Threading.Tasks;
 using Windows.Web.Http;
 
-namespace Sample.Services
+namespace Sample.Services.GithubService
 {
-    public class GithubService : IGithubService
+    public class GithubService4RunTime : IGithubService
     {
         public const int PAGE_SIZE = 10;
 

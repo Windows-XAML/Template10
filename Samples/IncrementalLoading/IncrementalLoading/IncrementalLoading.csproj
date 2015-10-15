@@ -97,15 +97,15 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="DataModels\RepositorySource.cs" />
-    <Compile Include="Design\Services\FakeGithubService.cs" />
+    <Compile Include="Services\GithubService\GithubService4DesignTime.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Models\GithubQueryResult.cs" />
-    <Compile Include="Models\Repository.cs" />
+    <Compile Include="Shared\Repository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\GithubService.cs" />
-    <Compile Include="Services\IGithubService.cs" />
-    <Compile Include="Utils\IncrementalItemSourceBase.cs" />
-    <Compile Include="Utils\IncrementalLoadingCollection.cs" />
+    <Compile Include="Services\GithubService\GithubService4RunTime.cs" />
+    <Compile Include="Services\GithubService\IGithubService.cs" />
+    <Compile Include="Shared\IncrementalItemSourceBase.cs" />
+    <Compile Include="Shared\IncrementalLoadingCollection.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Views\MainView.xaml.cs">
@@ -144,7 +144,11 @@
       <Name>Template10 %28Library%29</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <SDKReference Include="BehaviorsXamlSDKManaged, Version=12.0">
+      <Name>Behaviors SDK %28XAML%29</Name>
+    </SDKReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

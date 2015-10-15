@@ -1,7 +1,8 @@
 ﻿using Sample.Models;
+using Sample.Shared;
 using System.Threading.Tasks;
 
-namespace Sample.Services
+namespace Sample.Services.GithubService
 {
     public interface IGithubService
     {

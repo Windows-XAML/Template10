@@ -1,12 +1,13 @@
 ﻿using Sample.Models;
 using Sample.Services;
+using Sample.Shared;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Sample.Design.Services
+namespace Sample.Services.GithubService
 {
-    public class FakeGithubService : IGithubService
+    public class GithubService4DesignTime : IGithubService
     {
         private static string[] _fakeAuthorNames = new string[] { "jerry", "andy", "bill_gates" };
 
