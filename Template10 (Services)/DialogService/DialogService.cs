@@ -7,18 +7,18 @@ using Windows.UI.Popups;
 
 namespace Template10.Services.DialogService
 {
-    public class DialogService
+    public class DialogService : IDialogService
     {
-        DialogHelper _Helper = new DialogHelper();
+        DialogHelper _helper = new DialogHelper();
 
         public async Task ShowAsync(string content, string title = default(string))
         {
-            await this._Helper.ShowAsync(content, title);
+            await this._helper.ShowAsync(content, title);
         }
 
         public async Task ShowAsync(string content, string title, params UICommand[] commands)
         {
-            await this._Helper.ShowAsync(content, title, commands);
+            await this._helper.ShowAsync(content, title, commands);
         }
     }
 }

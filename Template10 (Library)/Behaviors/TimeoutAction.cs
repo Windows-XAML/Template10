@@ -25,7 +25,7 @@ namespace Template10.Behaviors
         }
         public static readonly DependencyProperty ActionsProperty =
             DependencyProperty.Register("Actions", typeof(ActionCollection),
-                typeof(TimerTriggerBehavior), new PropertyMetadata(null));
+                typeof(TimeoutAction), new PropertyMetadata(null));
 
         public int Milliseconds
         {

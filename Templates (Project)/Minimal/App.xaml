@@ -1,16 +1,7 @@
-﻿<common:BootStrapper 
-    x:Class="Sample.App" 
-    xmlns:common="using:Template10.Common" 
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-    xmlns:local="using:Sample">
+﻿<common:BootStrapper x:Class="Sample.App" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:common="using:Template10.Common">
 
-    <common:BootStrapper.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles\Custom.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </common:BootStrapper.Resources>
+    <Application.Resources>
+        <ResourceDictionary Source="Styles\Custom.xaml" />
+    </Application.Resources>
 
 </common:BootStrapper>

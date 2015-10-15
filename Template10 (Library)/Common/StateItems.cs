@@ -6,82 +6,82 @@ using System.Threading.Tasks;
 
 namespace Template10.Common
 {
-    public class StateItems : List<StateItem>
+    public class StateItems : Dictionary<StateItemKey, Object>
     {
-        public StateItem Add(Type type, string key, object value)
+
+        public KeyValuePair<StateItemKey, Object> Add(Type type, string key, object value)
         {
             if (Contains(type, key))
                 throw new ArgumentException("Same type+key exists.");
-            var item = new StateItem
-            {
-                Type = type,
-                Key = key,
-                Value = value
-            };
-            this.Add(item);
+            var stateKey = new StateItemKey(type, key);
+            this.Add(stateKey, value);
+            var item = new KeyValuePair<StateItemKey, object>(stateKey, value);
             return item;
         }
 
-        public void Remove(Type type)
+
+
+        public void Remove(Type type) // <-- would not be called oftenly, okey to linear search
         {
-            this.RemoveAll(x => x.Type.Equals(type));
+            var willRemove = this.Keys.Where(x => x.Type == type).ToList();
+            willRemove.ForEach(x => this.Remove(x));
         }
 
-        public void Remove(Type type, string key)
+        public void Remove(Type type, string key) //
         {
-            this.RemoveAll(x => x.Type.Equals(type) && x.Key.Equals(key));
+            this.Remove(new StateItemKey(type, key));
         }
 
+        //this method is not a good idea in any senioro cos values can always be dupe,
+        //and the eqcomparer is fixed, boxed values might cause unexpected result.
+        //Hope this can be changed to    `public void Remove(Func<KVP<StateItemKey,object>,bool> condition>)`        
         public void Remove(object value)
         {
-            this.RemoveAll(x => x.Value == value);
+            var willRemove = this.Values.Where(x => x == value).ToList();
+            willRemove.ForEach(x => this.Remove(x));
         }
 
+
+        //not a good idea just like `public void Remove(object value)`  cause lack of eqcomparer
+        //Hope can be changed to    `public void  Contains(Type type, string key,Func<object,bool> valueCondition>)`  
         public bool Contains(Type type, string key, object value)
         {
-            return this.Any(x => (x.Type?.Equals(type) ?? false) && (x.Key?.Equals(key) ?? false) && (x.Value == value));
+            object tryGetValue;
+            if (this.TryGetValue(new StateItemKey(type, key), out tryGetValue))
+            {
+                return tryGetValue == value;
+            }
+            return false;
+
         }
 
-        public bool Contains(Type type, string key)
-        {
-            return this.Any(x => (x.Type?.Equals(type) ?? false) && (x.Key?.Equals(key) ?? false));
-        }
 
-        public bool Contains(object value)
-        {
-            return this.Any(x => x.Value == value);
-        }
+        public bool Contains(Type type, string key) => this.ContainsKey(new StateItemKey(type, key));
 
-        public new bool Contains(StateItem item)
-        {
-            return Contains(item.Type, item.Key, item.Value);
-        }
+        //Hope can be changed to    public void  Contains(Func<KVP<StateItemKey,object>,bool> condition>)  
+        public bool Contains(object value) => this.ContainsValue(value);
+        //public  bool Contains(StateItemKey stateItemKey)
+        //{
+        //    return this.ContainsKey(stateItemKey);
+        //}
 
         public T Get<T>(string key)
         {
-            var item = (T)this.First(x => x.Type == typeof(T) && x.Key == key)?.Value;
-            if (item == null)
-                throw new KeyNotFoundException();
-            return item;
+            object tryGetValue;
+            if (this.TryGetValue(new StateItemKey(typeof(T), key), out tryGetValue))
+            {
+                return (T)tryGetValue;
+            }
+            throw new KeyNotFoundException();
+
         }
 
         public bool TryGet<T>(string key, out T value)
         {
-            if (!Contains(typeof(T), key))
-            {
-                value = default(T);
-                return false;
-            }
-            try
-            {
-                value = (T)this.First(x => x.Type == typeof(T) && x.Key == key).Value;
-                return true;
-            }
-            catch
-            {
-                value = default(T);
-                return false;
-            }
+            object tryGetValue;
+            var found = this.TryGetValue(new StateItemKey(typeof(T), key), out tryGetValue);
+            value = (T)tryGetValue;
+            return found;
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Template10.Behaviors
     [Microsoft.Xaml.Interactivity.TypeConstraint(typeof(Button))]
     public class NavButtonBehavior : DependencyObject, IBehavior
     {
-        Button element { get { return AssociatedObject as Button; } }
+        Button element => AssociatedObject as Button;
         public DependencyObject AssociatedObject { get; set; }
 
         public void Attach(DependencyObject associatedObject)
@@ -26,6 +26,7 @@ namespace Template10.Behaviors
             {
                 element.Click += Element_Click;
                 Window.Current.SizeChanged += Current_SizeChanged;
+                Calculate();
             }
         }
 
@@ -56,6 +57,8 @@ namespace Template10.Behaviors
 
         private void Calculate()
         {
+            if (element == null)
+                return;
             switch (Direction)
             {
                 case Directions.Back:

@@ -7,10 +7,7 @@ namespace Template10.Services.AdaptiveTiles.Model
     {
         public Visual Visual { get; set; }
 
-        public XElement ToXElement()
-        {
-            return new XElement("tile",new XAttribute("version","3"), Visual.ToXElement());
-        }
+        public XElement ToXElement() => new XElement("tile", new XAttribute("version", "3"), Visual.ToXElement());
 
         public XmlDocument ToXmlDocument()
         {

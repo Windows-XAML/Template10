@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Template10.Common;
-using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
-using Windows.Foundation.Collections;
-using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -16,16 +13,16 @@ using Windows.UI.Xaml.Navigation;
 namespace Template10.Services.NavigationService
 {
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-NavigationService
-    public class NavigationService
+    public partial class NavigationService : INavigationService
     {
         private const string EmptyNavigation = "1,0";
 
-        public FrameFacade FrameFacade { get; private set; }
-        public Frame Frame { get { return FrameFacade.Frame; } }
+        public FrameFacade FrameFacade { get; }
+        public Frame Frame => FrameFacade.Frame;
         object LastNavigationParameter { get; set; }
         string LastNavigationType { get; set; }
 
-        public DispatcherWrapper Dispatcher { get { return WindowWrapper.Current(this).Dispatcher; } }
+        public DispatcherWrapper Dispatcher => WindowWrapper.Current(this).Dispatcher;
 
         internal NavigationService(Frame frame)
         {
@@ -119,9 +116,11 @@ namespace Template10.Services.NavigationService
             }
         }
 
-        public async Task OpenAsync(Type page, object parameter = null, string title = "New Window", ViewSizePreference size = ViewSizePreference.UseHalf)
+        public async Task OpenAsync(Type page, object parameter = null, string title = null, ViewSizePreference size = ViewSizePreference.UseHalf)
         {
             var currentView = ApplicationView.GetForCurrentView();
+            title = title ?? currentView.Title;
+
             var newView = CoreApplication.CreateNewView();
             var dispatcher = new DispatcherWrapper(newView.Dispatcher);
             await dispatcher.DispatchAsync(async () =>
@@ -135,11 +134,8 @@ namespace Template10.Services.NavigationService
                 newWindow.Content = frame.Frame;
                 newWindow.Activate();
 
-                await ApplicationViewSwitcher.TryShowAsStandaloneAsync(
-                    newAppView.Id,
-                    ViewSizePreference.UseMinimum,
-                    currentView.Id,
-                    ViewSizePreference.UseMinimum);
+                await ApplicationViewSwitcher
+                    .TryShowAsStandaloneAsync(newAppView.Id, ViewSizePreference.Default, currentView.Id, size);
             });
         }
 
@@ -147,6 +143,42 @@ namespace Template10.Services.NavigationService
         {
             if (page == null)
                 throw new ArgumentNullException(nameof(page));
+            if (page.FullName.Equals(LastNavigationType)
+                && parameter == LastNavigationParameter)
+                return false;
+            return FrameFacade.Navigate(page, parameter, infoOverride);
+        }
+
+        /*
+            Navigate<T> allows developers to navigate using a
+            page key instead of the view type. This is accomplished by
+            creating a custom Enum and setting up the PageKeys dict
+            with the Key/Type pairs for your views. The dict is
+            shared by all NavigationServices and is stored in
+            the BootStrapper (or Application) of the app.
+
+            Implementation example:
+
+            // define your Enum
+            public Enum Pages { MainPage, DetailPage }
+
+            // setup the keys dict
+            var keys = BootStrapper.PageKeys<Views>();
+            keys.Add(Pages.MainPage, typeof(Views.MainPage));
+            keys.Add(Pages.DetailPage, typeof(Views.DetailPage));
+
+            // use Navigate<T>()
+            NavigationService.Navigate(Pages.MainPage);
+        */
+
+        // T must be the same custom Enum used with BootStrapper.PageKeys()
+        public bool Navigate<T>(T key, object parameter = null, NavigationTransitionInfo infoOverride = null)
+            where T : struct, IConvertible
+        {
+            var keys = Common.BootStrapper.Current.PageKeys<T>();
+            if (!keys.ContainsKey(key))
+                throw new KeyNotFoundException(key.ToString());
+            var page = keys[key];
             if (page.FullName.Equals(LastNavigationType)
                 && parameter == LastNavigationParameter)
                 return false;
@@ -173,7 +205,7 @@ namespace Template10.Services.NavigationService
             state["NavigateState"] = FrameFacade?.GetNavigationState();
         }
 
-        public event EventHandler AfterRestoreSavedNavigation;
+        public event TypedEventHandler<Type> AfterRestoreSavedNavigation;
         public bool RestoreSavedNavigation()
         {
             try
@@ -189,7 +221,7 @@ namespace Template10.Services.NavigationService
                 FrameFacade.SetNavigationState(state["NavigateState"].ToString());
                 NavigateTo(NavigationMode.Refresh, FrameFacade.CurrentPageParam);
                 while (Frame.Content == null) { /* wait */ }
-                AfterRestoreSavedNavigation?.Invoke(this, EventArgs.Empty);
+                AfterRestoreSavedNavigation?.Invoke(this, FrameFacade.CurrentPageType);
                 return true;
             }
             catch { return false; }
@@ -199,13 +231,32 @@ namespace Template10.Services.NavigationService
 
         public void GoBack() { if (FrameFacade.CanGoBack) FrameFacade.GoBack(); }
 
-        public bool CanGoBack { get { return FrameFacade.CanGoBack; } }
+        public bool CanGoBack => FrameFacade.CanGoBack;
 
         public void GoForward() { FrameFacade.GoForward(); }
 
-        public bool CanGoForward { get { return FrameFacade.CanGoForward; } }
+        public bool CanGoForward => FrameFacade.CanGoForward;
 
-        public void ClearHistory() { FrameFacade.Frame.BackStack.Clear(); }
+        public void ClearCache(bool removeCachedPagesInBackStack = false)
+		{
+			int currentSize = FrameFacade.Frame.CacheSize;
+
+			if (removeCachedPagesInBackStack)
+			{
+				FrameFacade.Frame.CacheSize = 0;
+			}
+			else
+			{
+				if (Frame.BackStackDepth == 0)
+					Frame.CacheSize = 1;
+				else
+					Frame.CacheSize = Frame.BackStackDepth;
+			}
+
+			FrameFacade.Frame.CacheSize = currentSize;
+		}
+
+		public void ClearHistory() { FrameFacade.Frame.BackStack.Clear(); }
 
         public void Resuming() { /* nothing */ }
 
@@ -227,8 +278,8 @@ namespace Template10.Services.NavigationService
             flyout.Show();
         }
 
-        public Type CurrentPageType { get { return FrameFacade.CurrentPageType; } }
-        public object CurrentPageParam { get { return FrameFacade.CurrentPageParam; } }
+        public Type CurrentPageType => FrameFacade.CurrentPageType;
+        public object CurrentPageParam => FrameFacade.CurrentPageParam;
     }
 }
 

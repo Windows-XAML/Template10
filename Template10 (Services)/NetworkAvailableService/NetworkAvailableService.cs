@@ -7,13 +7,10 @@ using Windows.Networking.Connectivity;
 
 namespace Template10.Services.NetworkAvailableService
 {
-    public class NetworkAvailableService
+    public class NetworkAvailableService : INetworkAvailableService
     {
         NetworkAvailableHelper _helper = new NetworkAvailableHelper();
 
-        public async Task<bool> IsInternetAvailable()
-        {
-            return await _helper.IsInternetAvailable();
-        }
+        public async Task<bool> IsInternetAvailable() => await _helper.IsInternetAvailable();
     }
 }

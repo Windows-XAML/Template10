@@ -1,15 +1,15 @@
 ﻿using System;
-using Windows.UI.Xaml;
-using System.Threading.Tasks;
-using Windows.ApplicationModel;
-using Windows.UI.Xaml.Controls;
-using Windows.ApplicationModel.Activation;
-using Windows.UI.Core;
-using System.Linq;
 using System.Collections.Generic;
-using System.Diagnostics;
-using Windows.Foundation.Metadata;
+using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
 using Template10.Services.NavigationService;
+using Windows.ApplicationModel;
+using Windows.ApplicationModel.Activation;
+using Windows.Foundation.Metadata;
+using Windows.UI.Core;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace Template10.Common
 {
@@ -17,9 +17,9 @@ namespace Template10.Common
     {
         #region dependency injection
 
-        public virtual T Resolve<T>(Type type) { return default(T); }
+        public virtual T Resolve<T>(Type type) => default(T);
 
-        public virtual Services.NavigationService.INavigable ResolveForPage(Type page, NavigationService navigationService) { return null; }
+        public virtual Services.NavigationService.INavigable ResolveForPage(Type page, NavigationService navigationService) => null;
 
         #endregion
 
@@ -61,14 +61,10 @@ namespace Template10.Common
         /// it is only a helper property to provide the NavigatioNService for
         /// the first Frame ultimately aggregated in the static WindowWrapper class.
         /// </summary>
-        public Services.NavigationService.NavigationService NavigationService
-        {
-            // because it is protected, we can safely assume it will ref the first view
-            get { return WindowWrapper.ActiveWrappers.First().NavigationServices.First(); }
-        }
+        public Services.NavigationService.INavigationService NavigationService => WindowWrapper.ActiveWrappers.First().NavigationServices.First();
 
         /// <summary>
-        /// The SplashFactory is a Func<> that returns an instantiated Splash view.
+        /// The SplashFactory is a Func that returns an instantiated Splash view.
         /// Template 10 will automatically inject this visual before loading the app.
         /// </summary>
         protected Func<SplashScreen, UserControl> SplashFactory { get; set; }
@@ -154,7 +150,7 @@ namespace Template10.Common
             // okay, now handle launch
             switch (e.PreviousExecutionState)
             {
-                case ApplicationExecutionState.ClosedByUser:
+                //case ApplicationExecutionState.ClosedByUser:
                 case ApplicationExecutionState.Terminated:
                     {
                         /*
@@ -189,16 +185,25 @@ namespace Template10.Common
                     }
             }
 
-
             // ensure active (this will hide any custom splashscreen)
             Window.Current.Activate();
 
             // Hook up the default Back handler
-            global::Windows.UI.Core.SystemNavigationManager.GetForCurrentView().BackRequested += (s, args) =>
+            SystemNavigationManager.GetForCurrentView().BackRequested += (s, args) =>
             {
-                // only handle as long as there is a default backstack
-                //args.Handled = !NavigationService.CanGoBack;
                 var handled = false;
+                if (ApiInformation.IsApiContractPresent("Windows.Phone.PhoneContract", 1, 0))
+                {
+                    if (NavigationService.CanGoBack)
+                    {
+                        handled = true;
+                    }
+                }
+                else
+                {
+                    handled = !NavigationService.CanGoBack;
+                }
+
                 RaiseBackRequested(ref handled);
                 args.Handled = handled;
             };
@@ -206,25 +211,14 @@ namespace Template10.Common
             // Hook up keyboard and mouse Back handler
             var keyboard = new Services.KeyboardService.KeyboardService();
             keyboard.AfterBackGesture = () =>
-                                        {
-                                            //the result is no matter
-                                            var handled = false;
-                                            RaiseBackRequested(ref handled);
-                                        };
+            {
+                //the result is no matter
+                var handled = false;
+                RaiseBackRequested(ref handled);
+            };
 
             // Hook up keyboard and mouse Forward handler
-            keyboard.AfterForwardGesture = () => RaiseForwardRequested();
-
-            // Handle the back button press on Mobile
-            if (ApiInformation.IsApiContractPresent("Windows.Phone.PhoneContract", 1, 0))
-            {  
-                Windows.Phone.UI.Input.HardwareButtons.BackPressed += (s, a) =>
-                {
-                    bool handled = false;
-                    RaiseBackRequested(ref handled);
-                    a.Handled = handled;
-                };
-            }
+            keyboard.AfterForwardGesture = RaiseForwardRequested;
         }
 
         #endregion
@@ -280,7 +274,7 @@ namespace Template10.Common
         /// OnInitializeAsync will be called even if the application is restoring from state.
         /// An app restores from state when the app was suspended and then terminated (PreviousExecutionState terminated).
         /// </summary>
-        public virtual Task OnInitializeAsync(IActivatedEventArgs args) { return Task.FromResult<object>(null); }
+        public virtual async Task OnInitializeAsync(IActivatedEventArgs args) { await Task.Yield(); }
 
         /// <summary>
         /// OnSuspendingAsync will be called when the application is suspending, but this override
@@ -290,7 +284,7 @@ namespace Template10.Common
         /// because the asunc operations are in a single, global deferral created when the suspension
         /// begins and completed automatically when the last viewmodel has been called (including this method).
         /// </summary>
-        public virtual Task OnSuspendingAsync(object s, SuspendingEventArgs e) { return Task.FromResult<object>(null); }
+        public virtual async Task OnSuspendingAsync(object s, SuspendingEventArgs e) { await Task.Yield(); }
         public virtual void OnResuming(object s, object e) { }
 
         #endregion
@@ -312,6 +306,14 @@ namespace Template10.Common
 
             // allow the user to do things, even when restoring
             await OnInitializeAsync(e);
+
+            // setup custom titlebar
+            foreach (var resource in Application.Current.Resources
+                .Where(x => x.Key.Equals(typeof(Controls.CustomTitleBar))))
+            {
+                var control = new Controls.CustomTitleBar();
+                control.Style = resource.Value as Style;
+            }
 
             // create the default frame only if there's nothing already there
             // if it is not null, by the way, then the developer injected something & they win
@@ -399,15 +401,27 @@ namespace Template10.Common
         /// </summary>
         public static AdditionalKinds DetermineStartCause(IActivatedEventArgs args)
         {
+            if (args is ToastNotificationActivatedEventArgs)
+                return AdditionalKinds.Toast;
             var e = args as ILaunchActivatedEventArgs;
             if (e?.TileId == DefaultTileID && string.IsNullOrEmpty(e?.Arguments))
                 return AdditionalKinds.Primary;
-            else if (e?.TileId == DefaultTileID && !string.IsNullOrEmpty(e?.Arguments))
-                return AdditionalKinds.Toast;
             else if (e?.TileId != null && e?.TileId != DefaultTileID)
                 return AdditionalKinds.SecondaryTile;
             else
                 return AdditionalKinds.Other;
+        }
+
+        private object _PageKeys;
+        // T must be a custom Enum
+        public Dictionary<T, Type> PageKeys<T>()
+            where T : struct, IConvertible
+        {
+            if (!typeof(T).GetTypeInfo().IsEnum)
+                throw new ArgumentException("T must be an enumerated type");
+            if (_PageKeys != null && _PageKeys is Dictionary<T, Type>)
+                return _PageKeys as Dictionary<T, Type>;
+            return (_PageKeys = new Dictionary<T, Type>()) as Dictionary<T, Type>;
         }
     }
 }

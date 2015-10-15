@@ -7,7 +7,7 @@ using Windows.UI;
 
 namespace Template10.Services.ColorService
 {
-    public class ColorService
+    public class ColorService : IColorService
     {
         #region Color Stuff
 

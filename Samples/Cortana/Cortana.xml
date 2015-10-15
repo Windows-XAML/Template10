@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<VoiceCommands xmlns="http://schemas.microsoft.com/voicecommands/1.2">
+  <CommandSet xml:lang="en-us" Name="FreeText_en-us">
+    <CommandPrefix> TemplateTen </CommandPrefix>
+    <Example> Handle my text with Template 10. </Example>
+
+    <Command Name="FreeTextCommand">
+      <Example> Add statement Hello World </Example>
+      <ListenFor RequireAppName="BeforeOrAfterPhrase"> [please] add statement {textPhrase} [with] </ListenFor>
+      <Feedback> Adding statement for you now. </Feedback>
+      <Navigate />
+    </Command>
+
+    <PhraseTopic Label="textPhrase" Scenario="Natural Language" />
+
+  </CommandSet>
+</VoiceCommands>

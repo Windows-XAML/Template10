@@ -1,0 +1,131 @@
+﻿<Page x:Class="Sample.Views.Shell"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:Controls="using:Template10.Controls"
+      xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+      xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="using:Sample.Views"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:sample="using:Sample.Controls" xmlns:views="using:Sample.Views"
+      x:Name="ThisPage" mc:Ignorable="d">
+
+    <Grid x:Name="RootGrid">
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
+                <VisualState x:Name="VisualStateNarrow">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource NarrowMinWidth}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SearchButton.Visibility" Value="Collapsed" />
+                        <Setter Target="SearchScreen.(UIElement.Visibility)" Value="Collapsed" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="VisualStateNormal">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource NormalMinWidth}" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="VisualStateWide">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource WideMinWidth}" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+            </VisualStateGroup>
+            <VisualStateGroup x:Name="ShellVisualStateGroup">
+                <VisualState x:Name="NormalVisualState" />
+                <VisualState x:Name="BusyVisualState">
+                    <VisualState.Setters>
+                        <Setter Target="BusyScreen.(UIElement.Visibility)" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="SearchVisualState">
+                    <VisualState.Setters>
+                        <Setter Target="SearchScreen.(UIElement.Visibility)" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="LoginVisualState">
+                    <VisualState.Setters>
+                        <Setter Target="MyHamburgerMenu.(UIElement.Visibility)" Value="Collapsed" />
+                        <Setter Target="LoginScreen.(UIElement.Visibility)" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <Controls:HamburgerMenu x:Name="MyHamburgerMenu" SecondaryButtonOrientation="Horizontal">
+
+            <Controls:HamburgerMenu.PrimaryButtons>
+
+                <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:MainPage">
+                    <StackPanel Orientation="Horizontal">
+                        <SymbolIcon Width="48" Height="48" Symbol="Home" />
+                        <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Home" />
+                    </StackPanel>
+                </Controls:HamburgerButtonInfo>
+
+                <Controls:HamburgerButtonInfo x:Name="SearchButton" Checked="SearchChecked" Unchecked="SearchUnchecked">
+                    <StackPanel Orientation="Horizontal">
+                        <SymbolIcon Width="48" Height="48" Symbol="Find" />
+                        <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Search" />
+                    </StackPanel>
+                </Controls:HamburgerButtonInfo>
+
+            </Controls:HamburgerMenu.PrimaryButtons>
+
+            <Controls:HamburgerMenu.SecondaryButtons>
+
+                <Controls:HamburgerButtonInfo MaxWidth="48" Tapped="LoginTapped">
+                    <StackPanel Orientation="Horizontal">
+                        <SymbolIcon Width="48" Height="48" Symbol="Contact" />
+                    </StackPanel>
+                </Controls:HamburgerButtonInfo>
+
+                <Controls:HamburgerButtonInfo MaxWidth="48" IsEnabled="{x:Bind IsAuthenticated, Mode=OneWay}">
+                    <StackPanel Orientation="Horizontal" ToolTipService.ToolTip="You must login to access.">
+                        <SymbolIcon Width="48" Height="48" Symbol="Setting" />
+                    </StackPanel>
+                </Controls:HamburgerButtonInfo>
+
+            </Controls:HamburgerMenu.SecondaryButtons>
+
+        </Controls:HamburgerMenu>
+
+        <Grid x:Name="BusyScreen" Background="{StaticResource ModalBackground}" Visibility="Collapsed" x:DeferLoadStrategy="Lazy">
+            <Viewbox Height="32">
+                <StackPanel Orientation="Horizontal">
+                    <ProgressRing x:Name="BusyRing" Width="24"
+                                  Height="24" Margin="12,0"
+                                  Foreground="White" IsActive="False" />
+                    <TextBlock x:Name="BusyText" VerticalAlignment="Center" Foreground="White" />
+                </StackPanel>
+            </Viewbox>
+        </Grid>
+
+        <Grid x:Name="SearchScreen" Margin="48,0,0,0"
+              Background="{StaticResource ModalBackground}" Visibility="Collapsed"
+              x:DeferLoadStrategy="Lazy">
+            <sample:SearchPart x:Name="searchPart" HorizontalAlignment="Left" VerticalAlignment="Stretch" RenderTransformOrigin="0.5,0.5">
+                <UserControl.RenderTransform>
+                    <CompositeTransform />
+                </UserControl.RenderTransform>
+            </sample:SearchPart>
+
+        </Grid>
+
+        <Grid x:Name="LoginScreen" Background="{StaticResource ModalBackground}" Visibility="Collapsed" x:DeferLoadStrategy="Lazy">
+            <sample:LoginPart x:Name="loginPart" Margin="48,0,0,0"
+                              HorizontalAlignment="Left" VerticalAlignment="Stretch"
+                              Hide="LoginHide" RenderTransformOrigin="0.5,0.5">
+                <UserControl.RenderTransform>
+                    <CompositeTransform />
+                </UserControl.RenderTransform>
+            </sample:LoginPart>
+
+        </Grid>
+
+    </Grid>
+
+</Page>
