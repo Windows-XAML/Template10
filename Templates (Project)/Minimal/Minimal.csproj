@@ -102,9 +102,13 @@
     <Compile Include="Services\SettingsServices\ISettingsService.cs" />
     <Compile Include="Services\SettingsServices\SettingsService.Apply.cs" />
     <Compile Include="Services\SettingsServices\SettingsService.cs" />
+    <Compile Include="ViewModels\BabPageViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\DetailPageViewModel.cs" />
     <Compile Include="ViewModels\SettingsPageViewModel.cs" />
+    <Compile Include="Views\BabPage.xaml.cs">
+      <DependentUpon>BabPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DetailPage.xaml.cs">
       <DependentUpon>DetailPage.xaml</DependentUpon>
     </Compile>
@@ -147,6 +151,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Views\BabPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\DetailPage.xaml">
       <SubType>Designer</SubType>
