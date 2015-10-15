@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/01/nuspec.xsd">
   <metadata minClientVersion="3.0">
     <id>Template10</id>
-    <version>1.0.4</version>
+    <version>1.0.5</version>
     <title>Template 10 Library for Windows UWP XAML/.NET apps on Windows 10</title>
     <authors>Windows developers</authors>
     <owners>jerrynixon,darenmay</owners>
@@ -12,7 +12,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A rich library of helpers, services, and base classes for new and existing Windows UWP apps to maximize awesomeness and minimize boilerplate garbage.</description>
     <summary>A rich library of helpers, services, and base classes for new and existing Windows UWP apps to maximize awesomeness and minimize boilerplate garbage.</summary>
-    <releaseNotes>Added Controls.Resizer</releaseNotes>
+    <releaseNotes>Significant Hamburger and PageHeader improvements.</releaseNotes>
     <copyright>Jerry Nixon (c) 2015-2016</copyright>
     <language />
     <tags>Windows 10, Windows10, W10, UAP, UWP, WinRT, XAML, Template 10, Template10, T10, Universal App</tags>

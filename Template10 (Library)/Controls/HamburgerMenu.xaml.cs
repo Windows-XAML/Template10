@@ -207,7 +207,7 @@ namespace Template10.Controls
                     case ElementTheme.Light:
                         HamburgerBackground = color?.ToSolidColorBrush();
                         HamburgerForeground = Colors.White.ToSolidColorBrush();
-                        NavAreaBackground = Colors.Gainsboro.ToSolidColorBrush();
+                        NavAreaBackground = Colors.DimGray.ToSolidColorBrush();
                         NavButtonBackground = Colors.Transparent.ToSolidColorBrush();
                         NavButtonForeground = Colors.White.ToSolidColorBrush();
                         NavButtonCheckedForeground = Colors.White.ToSolidColorBrush();

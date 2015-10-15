@@ -2,7 +2,7 @@
 using Sample.Extensions;
 using Sample.Services.GithubService;
 using Sample.Shared;
-using Sample.Utils;
+using Sample.Shared;
 using System;
 using Template10.Mvvm;
 using Windows.System;

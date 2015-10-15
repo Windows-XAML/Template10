@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI.Xaml.Data;
 
-namespace Sample.Utils
+namespace Sample.Shared
 {
     public class IncrementalLoadingCollection<TItem, TItemSource> : ObservableCollection<TItem>, ISupportIncrementalLoading where TItemSource : IncrementalItemSourceBase<TItem>
     {
