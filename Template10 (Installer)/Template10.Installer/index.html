@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+
+    <link rel="stylesheet" type="text/css" href="stylesheet.css" media="screen">
+
+    <title>Getting Started</title>
+  </head>
+
+<body>
+    <div class="container">
+        <div id="header">
+            <h1>Getting Started</h1>
+            <h2>Visual Studio Extensions</h2>
+        </div>
+
+    <div id="main_content">
+        <div id="lpanel">
+            <h1>Creating a Visual Studio Extension</h1>
+
+            <p>This VSIX project enables developers to take advantage of the extensibility APIs in the Visual Studio 2015 IDE Software Development Kit. The solution contains a VSIX project that packages the extension into a VSIX file. This file is used to install an extension for Visual Studio.</p>
+            <p>To add new features to the extension:</p>
+
+            <ol>
+                <li>Right-click the project node in Solution Explorer and select Add&gt;New Item.</li>
+                <li>In the Add New Item dialog box, expand the Extensibility node under Visual C# or Visual Basic.</li>
+                <li>Choose from the available Item templates: Visual Studio Package, Editor Items (Classifier, Margin, Text Adornment, Viewport Adornment), Commands, Tool Window, etc., and then click Add.</li>
+            </ol>
+
+            <p>The files for the template that you selected are added to the project. You can start adding functionality to your item template, press F5 to run the project, or add another Item template.</p>
+
+            <p>To run the project, press F5. Visual Studio will:</p>
+
+            <ul>
+                <li>Build the extension from the VSIX project.</li>
+                <li>Create the VSIX package from the VSIX project.</li>
+                <li>When debugging, start an experimental instance of Visual Studio with the VSIX package installed.</li>
+            </ul>
+
+            <p>In the experimental instance of Visual Studio you can test out the functionality of your extension without affecting your Visual Studio installation.</p>
+
+        </div>
+        <div id="rpanel">
+
+            <h1>Visual Studio Extensibility Resources</h1>
+
+            <p>Check out the <a href="http://aka.ms/extendvs">VS Extensibility Dev Center</a>, the extensibility samples, and the <a href="https://msdn.microsoft.com/en-us/library/bb166030(v=vs.140).aspx">extensibility documentation</a> to learn more about building extensions.  </p>
+
+            <h1>Community Extensions</h1>
+
+            <p>Here you can see other extensions that the Visual Studio Community has developed</p>
+
+            <ul>
+                <li>
+                    <a href="https://github.com/madskristensen/WebEssentials2015">Web Essentials 2015</a>
+                </li>
+                <li>
+                    <a href="https://github.com/ligershark/side-waffle">SideWaffle</a>
+                </li>
+                <li>
+                    <a href="https://github.com/AlaShiban/MultiEdit">MultiEdit</a>
+                </li>
+                <li>
+                    <a href="https://github.com/madskristensen/ExtensibilityTools">Extensibility Tools</a>
+                </li>
+                <li>
+                    <a href="https://github.com/madskristensen/TrailingWhitespace">Remove Trailing Whitespace</a>
+                </li>
+                <li>
+                    <a href="https://github.com/madskristensen/ReactSnippetPack">React Snippet Pack</a>
+                </li>
+                <li>
+                    <a href="https://github.com/madskristensen/AddAnyFile">Add Any File to a Project</a>
+                </li>
+                <li>
+                    <a href="https://github.com/microsoft/vsminecraft">Visual Studio Minecraft</a>
+                </li>
+            </ul>
+            <h1>Give us feedback</h1>
+            <p><a href="http://aka.ms/extend-feedback">UserVoice</a></p>
+        </div>
+    </div>
+    </div>
+</body>
+</html>
