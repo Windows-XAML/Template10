@@ -250,9 +250,11 @@
 
         <Grid x:Name="NarrowContent" Grid.Row="1" Visibility="Collapsed">
 
-            <ListView x:Name="NarrowMaster" ItemTemplate="{StaticResource MessageListItemTemplate}" ItemsSource="{Binding Messages}" SelectedItem="{Binding Selected, Mode=TwoWay}">
+            <ListView x:Name="NarrowMaster" ItemTemplate="{StaticResource MessageListItemTemplate}"
+                      IsItemClickEnabled="True"
+                      ItemsSource="{Binding Messages}" SelectedItem="{Binding Selected, Mode=TwoWay}">
                 <Interactivity:Interaction.Behaviors>
-                    <Core:EventTriggerBehavior EventName="SelectionChanged">
+                    <Core:EventTriggerBehavior EventName="ItemClick">
                         <b:ConditionalAction xmlns:b="using:Template10.Behaviors" LeftValue="{Binding SelectedItem, ElementName=NarrowMaster}" Operator="IsNotNull">
                             <Core:GoToStateAction StateName="NarrowDetailOpen" TargetObject="{Binding ElementName=ThisPage}" />
                         </b:ConditionalAction>
