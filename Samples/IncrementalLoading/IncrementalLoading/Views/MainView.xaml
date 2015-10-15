@@ -1,0 +1,64 @@
+﻿<Page x:Class="Sample.Views.MainView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:Behaviors="using:Template10.Behaviors"
+      xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+      xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="using:Sample.Views"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:vm="using:Sample.ViewModels"
+      DataContext="{Binding Main, Source={StaticResource Locator}}"
+      RequestedTheme="Dark" mc:Ignorable="d">
+
+    <Page.TopAppBar>
+        <CommandBar ClosedDisplayMode="Compact">
+            <CommandBar.Content>
+                <Grid x:Name="SearchArea" MinWidth="320">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="SearchTextBox" Grid.Column="0"
+                             VerticalContentAlignment="Center" BorderThickness="0"
+                             Padding="8,16,0,0" PlaceholderText="Search github"
+                             Text="{Binding Query, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <Interactivity:Interaction.Behaviors>
+                            <Behaviors:TextBoxEnterKeyBehavior>
+                                <Core:InvokeCommandAction Command="{Binding QueryCommand}" />
+                            </Behaviors:TextBoxEnterKeyBehavior>
+                        </Interactivity:Interaction.Behaviors>
+                    </TextBox>
+                    <AppBarButton x:Name="SearchButton" Grid.Column="1" Command="{Binding QueryCommand}">
+                        <SymbolIcon Symbol="Find" />
+                    </AppBarButton>
+                </Grid>
+            </CommandBar.Content>
+            <Interactivity:Interaction.Behaviors>
+                <Behaviors:EllipsisBehavior Visibility="Collapsed" />
+            </Interactivity:Interaction.Behaviors>
+        </CommandBar>
+    </Page.TopAppBar>
+
+    <Grid Background="SteelBlue">
+        <ListView ItemTemplate="{StaticResource MyItemTemplate}" ItemsSource="{Binding Repositories}" SelectionMode="None">
+            <ListView.Header>
+                <TextBlock Margin="8,0,0,0" Style="{StaticResource HeaderTextBlockStyle}" TextWrapping="NoWrap">Github Repositories</TextBlock>
+            </ListView.Header>
+            <ListView.ItemContainerTransitions>
+                <TransitionCollection>
+                    <AddDeleteThemeTransition />
+                </TransitionCollection>
+            </ListView.ItemContainerTransitions>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+        <ProgressRing Width="125" Height="125"
+                      Foreground="White"
+                      IsActive="{Binding Repositories.IsLoading}" />
+    </Grid>
+</Page>

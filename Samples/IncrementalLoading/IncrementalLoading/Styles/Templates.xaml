@@ -1,0 +1,28 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:Sample.Styles">
+
+    <DataTemplate x:Name="MyItemTemplate">
+        <Grid BorderBrush="Gray" BorderThickness="0,0,0,1" Padding="5,0,5,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Orientation="Vertical">
+                <TextBlock FontWeight="Bold" Foreground="SkyBlue" Text="{Binding FullName}" />
+                <TextBlock Text="{Binding Description}" />
+                <TextBlock>
+                    <Run Text="Updated on" />
+                    <Run Text="{Binding UpdatedAt}" />
+                </TextBlock>
+                <Button Command="{Binding Main.OpenCommand, Source={StaticResource Locator}}" CommandParameter="{Binding HomeUrl}" Content="Open in browser" />
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Vertical">
+                <TextBlock Text="{Binding Language}" />
+                <TextBlock>
+                    <Run Text="Star" />
+                    <Run Text="{Binding Star}" />
+                </TextBlock>
+            </StackPanel>
+        </Grid>
+    </DataTemplate>
+
+</ResourceDictionary>

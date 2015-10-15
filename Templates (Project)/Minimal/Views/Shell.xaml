@@ -25,7 +25,7 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <Controls:HamburgerMenu x:Name="MyHamburgerMenu">
+        <Controls:HamburgerMenu x:Name="MyHamburgerMenu" IsFullScreen="False">
 
             <Controls:HamburgerMenu.PrimaryButtons>
                 <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:MainPage">
