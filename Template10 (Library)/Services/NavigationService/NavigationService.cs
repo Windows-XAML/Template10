@@ -224,9 +224,9 @@ namespace Template10.Services.NavigationService
 
                 FrameFacade.CurrentPageType = Type.GetType(state["CurrentPageType"].ToString());
                 FrameFacade.CurrentPageParam = state["CurrentPageParam"];
-                FrameFacade.SetNavigationState(state["NavigateState"].ToString());
+                FrameFacade.SetNavigationState(state["NavigateState"]?.ToString());
                 NavigateTo(NavigationMode.Refresh, FrameFacade.CurrentPageParam);
-                while (Frame.Content == null) { /* wait */ }
+                while (Frame.Content == null) ; // wait
                 AfterRestoreSavedNavigation?.Invoke(this, FrameFacade.CurrentPageType);
                 return true;
             }
