@@ -29,6 +29,7 @@ namespace Template10.MSBUILD
 
         private string tempFolder;
         private ItemFolder topFolder;
+        bool helpFileReferenceExists = false;
 
         #endregion
 
@@ -117,6 +118,7 @@ namespace Template10.MSBUILD
         /// <returns></returns>
         public override bool Execute()
         {
+            helpFileReferenceExists = false;
             tempFolder = Path.Combine(TargetDir, Constants.TEMPFOLDER);
             if (Directory.Exists(tempFolder))
             {
@@ -125,6 +127,7 @@ namespace Template10.MSBUILD
 
             string projectFolder = Path.GetDirectoryName(CsprojFile);
             CopyProjectFilesToTempFolder(projectFolder, tempFolder);
+            ReplaceNamespace(tempFolder);
             FileHelper.DeleteKey(tempFolder);
             ProcessVSTemplate(tempFolder);
             OperateOnCsProj(tempFolder, CsprojFile);
@@ -135,6 +138,25 @@ namespace Template10.MSBUILD
             SetupHelpFile(Path.Combine(tempFolder, Constants.HELPHTML), HelpUrl);
             ZipFiles(tempFolder, ZipName, TargetDir);
             return true;
+        }
+
+        /// <summary>
+        /// Replaces the namespace.
+        /// </summary>
+        /// <param name="tempFolder">The temporary folder.</param>
+        private void ReplaceNamespace(string tempFolder)
+        {
+            string csprojXml = FileHelper.ReadFile(CsprojFile);
+            string rootNamespace = GetExistingRootNamespace(csprojXml);
+            var ext = new List<string> { ".cs", ".xaml"};
+            var files = Directory.GetFiles(tempFolder, "*.*", SearchOption.AllDirectories).Where(s => ext.Any(e => s.EndsWith(e)));
+            foreach (var file in files)
+            {
+                string text = FileHelper.ReadFile(file);
+                //TODO: think about a safer way to do this... what if there is another use of RootNamespace string elsewhere... this will break the generated project.
+                text = text.Replace(rootNamespace, "$safeprojectname$");
+                FileHelper.WriteFile(file, text);
+            }
         }
 
         /// <summary>
@@ -304,7 +326,50 @@ namespace Template10.MSBUILD
 
             csprojText = RemoveItemNodeAround(@"csproj", csprojText);
 
+            csprojText = AddHelpToCSProj(csprojText);
+
             FileHelper.WriteFile(targetPath, csprojText);
+        }
+
+        /// <summary>
+        /// Adds the help to cs proj.
+        /// </summary>
+        /// <param name="csprojText">The csproj text.</param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        private string AddHelpToCSProj(string csprojText)
+        {
+            //<Content Include="Help.htm" />
+            //    <Content Include="Properties\Default.rd.xml" />
+
+            if (csprojText.ToLower().Contains("help.htm"))
+            {
+                return csprojText;
+            }
+
+            string findText = @"<Content Include=""Properties\Default.rd.xml"" />";
+            string helpText = @"<Content Include=""Help.htm"" />";
+
+            csprojText = csprojText.Replace(findText, helpText + findText);
+            return csprojText;
+        }
+
+        /// <summary>
+        /// Gets the existing root namespace.
+        /// </summary>
+        /// <param name="csprojxml">The csprojxml.</param>
+        /// <returns></returns>
+        private string GetExistingRootNamespace(string csprojxml)
+        {
+            XDocument xdoc;
+            using (StringReader sr = new StringReader(csprojxml))
+            {
+                xdoc = XDocument.Load(sr, LoadOptions.None);
+            }
+
+            XNamespace ns = "http://schemas.microsoft.com/developer/msbuild/2003";
+            return xdoc.Descendants(ns + "RootNamespace").FirstOrDefault().Value;
+
         }
 
         /// <summary>
@@ -380,6 +445,10 @@ namespace Template10.MSBUILD
             projectItems = SortProjectItems(projectItems);
             GetItemFolder(projectItems);
             string foldersString = SerializeFolder(topFolder);
+            if (!helpFileReferenceExists)
+            {
+                foldersString = InsertHelp(foldersString);
+            }
 
             using (StringWriter writer = new StringWriter())
             {
@@ -390,6 +459,17 @@ namespace Template10.MSBUILD
                 return writer.ToString();
             }
 
+        }
+
+        /// <summary>
+        /// Inserts the help.
+        /// </summary>
+        /// <param name="foldersString">The folders string.</param>
+        /// <returns></returns>
+        private string InsertHelp(string foldersString)
+        {
+            string helpString = @"<ProjectItem ReplaceParameters=""false"" TargetFileName=""help.htm"" OpenInWebBrowser=""true"">help.htm</ProjectItem>";
+            return helpString + foldersString;
         }
 
         /// <summary>
@@ -411,7 +491,10 @@ namespace Template10.MSBUILD
             foreach (var item in topFolder.Items)
             {
                 if (IsHelpItem(item))
+                { 
                     folderString = folderString + @"<ProjectItem ReplaceParameters=""false"" TargetFileName=""help.htm"" OpenInWebBrowser=""true"">help.htm</ProjectItem>";
+                    helpFileReferenceExists = true;
+                }
                 else if (IsKeyProjectItemNode(item))
                     folderString = folderString + @"<ProjectItem ReplaceParameters=""false"" TargetFileName=""$projectname$_TemporaryKey.pfx"" BlendDoNotCreate=""true"">Application_TemporaryKey.pfx</ProjectItem>";
                 else
