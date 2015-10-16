@@ -15,10 +15,11 @@ namespace Template10.Mvvm
         public virtual void OnNavigatingFrom(Services.NavigationService.NavigatingEventArgs args) { /* nothing by default */ }
 
         [JsonIgnore]
-        public NavigationService NavigationService { get; set; }
+        public INavigationService NavigationService { get; set; }
         [JsonIgnore]
-        public DispatcherWrapper Dispatcher => Common.WindowWrapper.Current(NavigationService)?.Dispatcher;
+        public IDispatcherWrapper Dispatcher { get; set; }
         [JsonIgnore]
-        public Common.StateItems SessionState => BootStrapper.Current.SessionState;
+        public IStateItems SessionState { get; set; }
+        
     }
 }
