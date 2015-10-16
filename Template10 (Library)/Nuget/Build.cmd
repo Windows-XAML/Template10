@@ -31,9 +31,9 @@ if %errorlevel%==0 (
 )
 
 if "%NuGetCachePath%"=="" (  
-	set CACHE="%USERPROFILE%\.nuget\packages\Template10\"  
+	set CACHE=%USERPROFILE%\.nuget\packages\Template10\
 ) else (  
-	set CACHE="%NuGetCachePath%\Template10\"  
+	set CACHE=%NuGetCachePath%\Template10\
 )  
 
 :clear nuget cache

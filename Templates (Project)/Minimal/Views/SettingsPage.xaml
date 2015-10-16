@@ -23,7 +23,7 @@
 
         <!--  header  -->
 
-        <controls:PageHeader Frame="{x:Bind Frame, Mode=OneWay}" Text="Settings Page" />
+        <controls:PageHeader Frame="{x:Bind Frame, Mode=OneWay}" Content="Settings Page" />
 
         <!--  #region content  -->
 
