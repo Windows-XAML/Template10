@@ -10,8 +10,7 @@
       xmlns:views="using:Sample.Views" x:Name="ThisPage"
       mc:Ignorable="d">
 
-    <Grid x:Name="RootGrid">
-
+    <Grid x:Name="RootGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
                 <VisualState x:Name="NormalVisualState" />
@@ -34,6 +33,14 @@
                         <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Home" />
                     </StackPanel>
                 </Controls:HamburgerButtonInfo>
+
+                <Controls:HamburgerButtonInfo PageType="views:BabPage">
+                    <StackPanel Orientation="Horizontal">
+                        <SymbolIcon Width="48" Height="48" Symbol="DockBottom" />
+                        <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Bottom App Bar" />
+                    </StackPanel>
+                </Controls:HamburgerButtonInfo>
+                
             </Controls:HamburgerMenu.PrimaryButtons>
 
             <Controls:HamburgerMenu.SecondaryButtons>

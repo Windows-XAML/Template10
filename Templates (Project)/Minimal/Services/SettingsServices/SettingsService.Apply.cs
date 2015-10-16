@@ -21,7 +21,22 @@ namespace Sample.Services.SettingsServices
 
         public void ApplyAppTheme(ApplicationTheme value)
         {
-            Views.Shell.HamburgerMenu.RefreshStyles(value);
+            Template10.Common.WindowWrapper.Current().Dispatcher.Dispatch(() =>
+            {
+                switch (value)
+                {
+                    case ApplicationTheme.Light:
+                        Views.Shell.Instance.RequestedTheme = ElementTheme.Light;
+                        break;
+                    case ApplicationTheme.Dark:
+                        Views.Shell.Instance.RequestedTheme = ElementTheme.Dark;
+                        break;
+                    default:
+                        Views.Shell.Instance.RequestedTheme = ElementTheme.Default;
+                        break;
+                }
+                Template10.Common.BootStrapper.Current.NavigationService.Refresh();
+            });
         }
 
         private void ApplyCacheMaxDuration(TimeSpan value)

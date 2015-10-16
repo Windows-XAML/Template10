@@ -168,6 +168,10 @@
     </UserControl.Resources>
 
     <Grid x:Name="RootGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
@@ -220,6 +224,37 @@
                 </VisualState>
 
             </VisualStateGroup>
+
+            <VisualStateGroup x:Name="BottomAppBarPushStates">
+                <VisualState
+                x:Name="BottomAppBarExists">
+                    <Storyboard>
+                        <DoubleAnimation EnableDependentAnimation="True"
+                        Storyboard.TargetName="BottomAppBarAdjust"
+                        Storyboard.TargetProperty="Height"
+                        To="20.0"
+                        Duration="0:0:0.2">
+                            <DoubleAnimation.EasingFunction>
+                                <CubicEase EasingMode="EaseOut" />
+                            </DoubleAnimation.EasingFunction>
+                        </DoubleAnimation>
+                    </Storyboard>
+                </VisualState>
+                <VisualState
+                x:Name="BottomAppBarNone">
+                    <Storyboard>
+                        <DoubleAnimation EnableDependentAnimation="True"
+                        Storyboard.TargetName="BottomAppBarAdjust"
+                        Storyboard.TargetProperty="Height"
+                        To="0.0"
+                        Duration="0:0:0.2">
+                            <DoubleAnimation.EasingFunction>
+                                <CubicEase EasingMode="EaseOut" />
+                            </DoubleAnimation.EasingFunction>
+                        </DoubleAnimation>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
         <ContentControl Height="48" Margin="48,0,0,0"
@@ -239,7 +274,7 @@
             </Interactivity:Interaction.Behaviors>
         </ContentControl>
 
-        <SplitView x:Name="ShellSplitView" Grid.Column="0"
+        <SplitView x:Name="ShellSplitView" Grid.Column="0" Grid.Row="0"
                    DisplayMode="Inline" OpenPaneLength="220"
                    PaneBackground="Transparent">
 
@@ -252,6 +287,7 @@
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
@@ -349,6 +385,7 @@
                 <FontIcon FontSize="20" Glyph="&#xE700;" />
             </StackPanel>
         </Button>
+        <Rectangle x:Name="BottomAppBarAdjust" Grid.Row="1" Height="0"></Rectangle>
 
     </Grid>
 </UserControl>
