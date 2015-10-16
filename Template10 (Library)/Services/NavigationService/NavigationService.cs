@@ -199,17 +199,14 @@ namespace Template10.Services.NavigationService
             }
 
             state["CurrentPageType"] = CurrentPageType.ToString();
-            try
-            {
-                state["CurrentPageParam"] = CurrentPageParam;
-            }
+            try { state["CurrentPageParam"] = CurrentPageParam; }
             catch
             {
                 var statefulParam = this.CurrentPageParam as IStatefulNavigationParameter;
                 if (statefulParam != null)
                     state["CurrentPageParam"] = statefulParam.GetState();
-
-                throw new Exception("Failed to serialize page parameter, implement IStatefulNavigationParameter");
+                else
+                    throw new Exception("Failed to serialize page parameter, implement IStatefulNavigationParameter");
             }
             state["NavigateState"] = FrameFacade?.GetNavigationState();
         }
