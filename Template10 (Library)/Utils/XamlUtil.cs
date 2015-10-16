@@ -25,6 +25,16 @@ namespace Template10.Utils
             return list;
         }
 
+        public static Control AllChildren(this Control parent) 
+        {
+            return AllChildren<Control>(parent);
+        }
+
+        public static Control AllChildren<T>(this Control parent) where T : Control
+        {
+            return AllChildren<T>(parent);
+        }
+
         public static ElementTheme ToElementTheme(this ApplicationTheme theme)
         {
             switch (theme)
