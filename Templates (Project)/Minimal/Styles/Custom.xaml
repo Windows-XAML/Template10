@@ -30,8 +30,8 @@
             </Style>
 
             <Style TargetType="controls:PageHeader">
-                <Setter Property="HeaderBackgroundBrush" Value="{ThemeResource CustomColorBrush}" />
-                <Setter Property="HeaderForegroundBrush" Value="{ThemeResource ContrastColorBrush}" />
+                <Setter Property="Background" Value="{ThemeResource CustomColorBrush}" />
+                <Setter Property="Foreground" Value="{ThemeResource ContrastColorBrush}" />
                 <Setter Property="VisualStateNarrowMinWidth" Value="{StaticResource NarrowMinWidth}" />
                 <Setter Property="VisualStateNormalMinWidth" Value="{StaticResource NormalMinWidth}" />
             </Style>
@@ -60,8 +60,8 @@
             </Style>
 
             <Style TargetType="controls:PageHeader">
-                <Setter Property="HeaderBackgroundBrush" Value="{ThemeResource CustomColorBrush}" />
-                <Setter Property="HeaderForegroundBrush" Value="{ThemeResource ContrastColorBrush}" />
+                <Setter Property="Background" Value="{ThemeResource CustomColorBrush}" />
+                <Setter Property="Foreground" Value="{ThemeResource ContrastColorBrush}" />
                 <Setter Property="VisualStateNarrowMinWidth" Value="{StaticResource NarrowMinWidth}" />
                 <Setter Property="VisualStateNormalMinWidth" Value="{StaticResource NormalMinWidth}" />
             </Style>
@@ -97,8 +97,8 @@
             </Style>
 
             <Style TargetType="controls:PageHeader">
-                <Setter Property="HeaderBackgroundBrush" Value="Black" />
-                <Setter Property="HeaderForegroundBrush" Value="White" />
+                <Setter Property="Background" Value="Black" />
+                <Setter Property="Foreground" Value="White" />
                 <Setter Property="VisualStateNarrowMinWidth" Value="{StaticResource NarrowMinWidth}" />
                 <Setter Property="VisualStateNormalMinWidth" Value="{StaticResource NormalMinWidth}" />
             </Style>

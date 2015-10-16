@@ -16,6 +16,7 @@ namespace Template10.Behaviors
         public void Attach(DependencyObject associatedObject)
         {
             AssociatedObject = associatedObject;
+            commandBar.Loaded += (s, e) => Update();
             commandBar.PrimaryCommands.VectorChanged += Commands_VectorChanged;
             commandBar.SecondaryCommands.VectorChanged += Commands_VectorChanged;
             Update();
@@ -23,12 +24,14 @@ namespace Template10.Behaviors
 
         public void Detach()
         {
+            commandBar.Loaded -= (s, e) => Update();
             commandBar.PrimaryCommands.VectorChanged -= Commands_VectorChanged;
             commandBar.SecondaryCommands.VectorChanged -= Commands_VectorChanged;
         }
 
-        private void Commands_VectorChanged(Windows.Foundation.Collections.IObservableVector<ICommandBarElement> sender, 
-            Windows.Foundation.Collections.IVectorChangedEventArgs @event) { Update(); }
+        private void Commands_VectorChanged(Windows.Foundation.Collections.IObservableVector<ICommandBarElement> sender,
+            Windows.Foundation.Collections.IVectorChangedEventArgs @event)
+        { Update(); }
 
         public enum Visibilities { Visible, Collapsed, Auto }
         public Visibilities Visibility
