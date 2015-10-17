@@ -97,11 +97,11 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="DataModels\RepositorySource.cs" />
-    <Compile Include="Repositories\GithubRepository.cs" />
+    <Compile Include="Services\GithubService\GithubIncrementalItemSource.cs" />
     <Compile Include="Services\GithubService\GithubService4DesignTime.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Models\GithubQueryResult.cs" />
-    <Compile Include="Shared\Repository.cs" />
+    <Compile Include="Models\Repository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\GithubService\GithubService4RunTime.cs" />
     <Compile Include="Services\GithubService\IGithubService.cs" />

@@ -23,7 +23,6 @@ namespace Template10.Controls
     [ContentProperty(Name = nameof(PrimaryCommands))]
     public sealed class PageHeader : CommandBar
     {
-
         public PageHeader()
         {
             this.DefaultStyleKey = typeof(PageHeader);
@@ -47,7 +46,6 @@ namespace Template10.Controls
         public static readonly DependencyProperty FrameProperty =
             DependencyProperty.Register(nameof(Frame), typeof(Frame), typeof(PageHeader), new PropertyMetadata(default(Frame)));
 
-
         public double VisualStateNarrowMinWidth
         {
             get { return (double)GetValue(VisualStateNarrowMinWidthProperty); }
@@ -65,6 +63,12 @@ namespace Template10.Controls
 
         public static readonly DependencyProperty VisualStateNormalMinWidthProperty =
             DependencyProperty.Register(nameof(VisualStateNormalMinWidth), typeof(double), typeof(PageHeader), new PropertyMetadata(default(double)));
+
+        public new object Content
+        {
+            get { return base.Content; }
+            set { base.Content = value; }
+        }
 
         public string Text
         {
