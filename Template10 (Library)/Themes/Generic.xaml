@@ -821,7 +821,7 @@
                                         <interactivity:Interaction.Behaviors>
                                             <behaviors:NavButtonBehavior Direction="Back" Frame="{Binding Frame, RelativeSource={RelativeSource TemplatedParent}}"/>
                                         </interactivity:Interaction.Behaviors>
-                                <SymbolIcon x:Name="BackIcon" Symbol="Back" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                                <SymbolIcon x:Name="BackIcon" Symbol="{TemplateBinding BackButtonContent}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
                             </AppBarButton>
                             <Grid Grid.Column="2">
                                 <Grid.ColumnDefinitions>

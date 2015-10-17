@@ -37,6 +37,15 @@ namespace Template10.Controls
         public static readonly DependencyProperty BackButtonVisibilityProperty =
             DependencyProperty.Register(nameof(BackButtonVisibility), typeof(Visibility), typeof(PageHeader), new PropertyMetadata(default(Visibility)));
 
+        private Symbol BackButtonContent
+        {
+            get { return (Symbol)GetValue(BackButtonContentProperty); }
+            set { SetValue(BackButtonContentProperty, value); }
+        }
+        private static readonly DependencyProperty BackButtonContentProperty =
+            DependencyProperty.Register(nameof(BackButtonContent), typeof(Symbol), typeof(PageHeader),
+                new PropertyMetadata(Symbol.Back));
+
         public Frame Frame
         {
             get { return (Frame)GetValue(FrameProperty); }
@@ -44,7 +53,17 @@ namespace Template10.Controls
         }
 
         public static readonly DependencyProperty FrameProperty =
-            DependencyProperty.Register(nameof(Frame), typeof(Frame), typeof(PageHeader), new PropertyMetadata(default(Frame)));
+            DependencyProperty.Register(nameof(Frame), typeof(Frame), typeof(PageHeader), new PropertyMetadata(default(Frame), OnFramePropertyChanged));
+
+        private static void OnFramePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var frame = (Frame)e.NewValue;
+
+            if (frame.FlowDirection == FlowDirection.LeftToRight)
+                d.SetValue(BackButtonContentProperty, Symbol.Back);
+            else
+                d.SetValue(BackButtonContentProperty, Symbol.Forward);
+        }
 
         public double VisualStateNarrowMinWidth
         {
