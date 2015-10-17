@@ -13,14 +13,18 @@ namespace Template10.Behaviors
     {
         public enum Operators
         {
-            Equal = 0,
-            NotEqual = 1,
-            LessThan = 2,
-            LessThanOrEqual = 3,
-            GreaterThan = 4,
-            GreaterThanOrEqual = 5,
+            EqualToRight = 0,
+            NotEqualToRight = 1,
+            LessThanRight = 2,
+            LessThanOrEqualToRight = 3,
+            GreaterThanRight = 4,
+            GreaterThanOrEqualToRight = 5,
             IsNull = 6,
             IsNotNull = 7,
+            IsTrue = 8,
+            IsFalse = 9,
+            IsNullOrEmpty = 10,
+            IsNotNullOrEmpty = 11
         }
 
         public Operators Operator
@@ -30,7 +34,7 @@ namespace Template10.Behaviors
         }
         public static readonly DependencyProperty OperatorProperty =
             DependencyProperty.Register(nameof(Operator), typeof(Operators),
-                typeof(ConditionalAction), new PropertyMetadata(Operators.Equal));
+                typeof(ConditionalAction), new PropertyMetadata(Operators.EqualToRight));
 
         public object LeftValue
         {
@@ -75,28 +79,28 @@ namespace Template10.Behaviors
             var rightValue = (RightValue == null) ? null : Convert.ChangeType(RightValue, leftType);
             switch (Operator)
             {
-                case Operators.Equal:
+                case Operators.EqualToRight:
                 default:
                     if (Compare(LeftValue, rightValue) == 0)
                         Interaction.ExecuteActions(this, this.Actions, null);
                     break;
-                case Operators.NotEqual:
+                case Operators.NotEqualToRight:
                     if (Compare(LeftValue, rightValue) != 0)
                         Interaction.ExecuteActions(this, this.Actions, null);
                     break;
-                case Operators.LessThan:
+                case Operators.LessThanRight:
                     if (Compare(LeftValue, rightValue) > 0)
                         Interaction.ExecuteActions(this, this.Actions, null);
                     break;
-                case Operators.LessThanOrEqual:
+                case Operators.LessThanOrEqualToRight:
                     if (Compare(LeftValue, rightValue) >= 0)
                         Interaction.ExecuteActions(this, this.Actions, null);
                     break;
-                case Operators.GreaterThan:
+                case Operators.GreaterThanRight:
                     if (Compare(LeftValue, rightValue) < 0)
                         Interaction.ExecuteActions(this, this.Actions, null);
                     break;
-                case Operators.GreaterThanOrEqual:
+                case Operators.GreaterThanOrEqualToRight:
                     if (Compare(LeftValue, rightValue) <= 0)
                         Interaction.ExecuteActions(this, this.Actions, null);
                     break;
@@ -106,6 +110,22 @@ namespace Template10.Behaviors
                     break;
                 case Operators.IsNotNull:
                     if (LeftValue != null)
+                        Interaction.ExecuteActions(this, this.Actions, null);
+                    break;
+                case Operators.IsTrue:
+                    if ((bool?)LeftValue ?? false)
+                        Interaction.ExecuteActions(this, this.Actions, null);
+                    break;
+                case Operators.IsFalse:
+                    if (!(bool?)LeftValue ?? false)
+                        Interaction.ExecuteActions(this, this.Actions, null);
+                    break;
+                case Operators.IsNullOrEmpty:
+                    if (string.IsNullOrEmpty(LeftValue as string))
+                        Interaction.ExecuteActions(this, this.Actions, null);
+                    break;
+                case Operators.IsNotNullOrEmpty:
+                    if (!string.IsNullOrEmpty(LeftValue as string))
                         Interaction.ExecuteActions(this, this.Actions, null);
                     break;
             }

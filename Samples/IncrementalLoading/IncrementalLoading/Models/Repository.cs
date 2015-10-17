@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace Sample.Shared
+namespace Sample.Models
 {
     [JsonObject]
     public class Repository

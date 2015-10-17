@@ -31,9 +31,17 @@
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <controls:PageHeader BackButtonVisibility="Collapsed" Frame="{x:Bind Frame, Mode=OneWay}" Text="Main Page" />
+        <controls:PageHeader BackButtonVisibility="Collapsed" Content="Main Page" Frame="{x:Bind Frame, Mode=OneWay}">
+            <Interactivity:Interaction.Behaviors>
+                <Behaviors:EllipsisBehavior Visibility="Collapsed" />
+            </Interactivity:Interaction.Behaviors>
+        </controls:PageHeader>
+
         <!--  #region content  -->
-        <StackPanel Grid.Row="1" VerticalAlignment="Top" Orientation="Horizontal" Padding="12,8,0,0">
+
+        <StackPanel Grid.Row="1" VerticalAlignment="Top"
+                    Orientation="Horizontal" Padding="12,8,0,0">
+
             <controls:Resizer>
                 <TextBox Width="200" MinWidth="200"
                          MinHeight="60" Margin="0"
@@ -47,8 +55,13 @@
                     </Interactivity:Interaction.Behaviors>
                 </TextBox>
             </controls:Resizer>
-            <Button Margin="12,0" VerticalAlignment="Bottom" Click="{x:Bind ViewModel.GotoDetailsPage}" Content="Submit" />
+
+            <Button Margin="12,0" VerticalAlignment="Bottom"
+                    Click="{x:Bind ViewModel.GotoDetailsPage}" Content="Submit" />
+
         </StackPanel>
+
         <!--  #endregion  -->
+
     </Grid>
 </Page>

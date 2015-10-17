@@ -1,7 +1,6 @@
-﻿using Sample.DataModels;
-using Sample.Extensions;
+﻿using Sample.Extensions;
+using Sample.Repositories;
 using Sample.Services.GithubService;
-using Sample.Shared;
 using Sample.Shared;
 using System;
 using Template10.Mvvm;
@@ -11,7 +10,7 @@ namespace Sample.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        public RepositorySource _repositoriesSource;
+        public GithubIncrementalItemSource _repositoriesSource;
 
         private DelegateCommand<string> _openCommand;
 
@@ -21,8 +20,8 @@ namespace Sample.ViewModels
 
         public MainViewModel(IGithubService service)
         {
-            _repositoriesSource = new RepositorySource(service);
-            Repositories = new IncrementalLoadingCollection<Repository, RepositorySource>(_repositoriesSource);
+            _repositoriesSource = new GithubIncrementalItemSource(service);
+            Repositories = new IncrementalLoadingCollection<Repository, GithubIncrementalItemSource>(_repositoriesSource);
         }
 
         public DelegateCommand<string> OpenCommand
@@ -63,7 +62,7 @@ namespace Sample.ViewModels
             }
         }
 
-        public IncrementalLoadingCollection<Repository, RepositorySource> Repositories
+        public IncrementalLoadingCollection<Repository, GithubIncrementalItemSource> Repositories
         {
             get;
             private set;
