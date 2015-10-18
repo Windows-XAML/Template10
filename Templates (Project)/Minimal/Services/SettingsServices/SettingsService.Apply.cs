@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
+using Template10.Common;
 
 namespace Sample.Services.SettingsServices
 {
@@ -11,22 +12,23 @@ namespace Sample.Services.SettingsServices
     {
         public void ApplyUseShellBackButton(bool value)
         {
-            Template10.Common.BootStrapper.Current.NavigationService.Dispatcher.Dispatch(() =>
+            BootStrapper.Current.NavigationService.Dispatcher.Dispatch(() =>
             {
-                Template10.Common.BootStrapper.Current.ShowShellBackButton = value;
-                Template10.Common.BootStrapper.Current.UpdateShellBackButton();
-                Template10.Common.BootStrapper.Current.NavigationService.Refresh();
+                BootStrapper.Current.ShowShellBackButton = value;
+                BootStrapper.Current.UpdateShellBackButton();
+                BootStrapper.Current.NavigationService.Refresh();
             });
         }
 
         public void ApplyAppTheme(ApplicationTheme value)
         {
-            Views.Shell.HamburgerMenu.RefreshStyles(value);
+            BootStrapper.Current.HamburgerMenu.RefreshStyles(value);
+            Views.Shell.SetRequestedTheme(value);
         }
 
         private void ApplyCacheMaxDuration(TimeSpan value)
         {
-            Template10.Common.BootStrapper.Current.CacheMaxDuration = value;
+            BootStrapper.Current.CacheMaxDuration = value;
         }
     }
 }

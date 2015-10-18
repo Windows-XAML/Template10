@@ -115,6 +115,15 @@ namespace Template10.Services.NavigationService
                     var pageState = FrameFacade.PageStateContainer(page.GetType());
                     dataContext.OnNavigatedTo(parameter, mode, pageState);
                 }
+
+                if (page.BottomAppBar?.Visibility == Visibility.Visible)
+                {
+                    BootStrapper.Current.HamburgerMenu.PageHasBottomAppBar = true;
+                }
+                else
+                {
+                    BootStrapper.Current.HamburgerMenu.PageHasBottomAppBar = false;
+                }
             }
         }
 

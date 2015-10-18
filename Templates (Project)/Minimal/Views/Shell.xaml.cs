@@ -20,14 +20,15 @@ namespace Sample.Views
     public sealed partial class Shell : Page
     {
         public static Shell Instance { get; set; }
-        public static HamburgerMenu HamburgerMenu { get { return Instance.MyHamburgerMenu; } }
 
         public Shell(NavigationService navigationService)
         {
             Instance = this;
             InitializeComponent();
+            BootStrapper.Current.HamburgerMenu = Instance.MyHamburgerMenu;
             MyHamburgerMenu.NavigationService = navigationService;
             VisualStateManager.GoToState(Instance, Instance.NormalVisualState.Name, true);
+            SetRequestedTheme(SettingsService.Instance.AppTheme);
         }
 
         public static void SetBusyVisibility(Visibility visible, string text = null)
@@ -52,6 +53,26 @@ namespace Sample.Views
                         }
                         break;
                 }
+            });
+        }
+
+        public static void SetRequestedTheme(ApplicationTheme theme)
+        {
+            WindowWrapper.Current().Dispatcher.Dispatch(() =>
+            {
+                switch (theme)
+                {
+                    case ApplicationTheme.Light:
+                        Instance.RequestedTheme = ElementTheme.Light;
+                        break;
+                    case ApplicationTheme.Dark:
+                        Instance.RequestedTheme = ElementTheme.Dark;
+                        break;
+                    default:
+                        Instance.RequestedTheme = ElementTheme.Default;
+                        break;
+                }
+                BootStrapper.Current.NavigationService.Refresh();
             });
         }
     }
