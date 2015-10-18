@@ -1,8 +1,8 @@
-﻿using Sample.Extensions;
-using Sample.Repositories;
+﻿using System;
+using Sample.Extensions;
+using Sample.Models;
 using Sample.Services.GithubService;
 using Sample.Shared;
-using System;
 using Template10.Mvvm;
 using Windows.System;
 
