@@ -858,7 +858,7 @@
                                 <Popup.RenderTransform>
                                     <TranslateTransform x:Name="OverflowPopupOffsetTransform"/>
                                 </Popup.RenderTransform>
-                                <Grid x:Name="OverflowContentRoot" MaxHeight="{Binding CommandBarTemplateSettings.OverflowContentMaxHeight, RelativeSource={RelativeSource Mode=TemplatedParent}}" MinWidth="{Binding CommandBarTemplateSettings.OverflowContentMinWidth, RelativeSource={RelativeSource Mode=TemplatedParent}}" Visibility="Collapsed">
+                                <Grid x:Name="OverflowContentRoot" MaxHeight="{Binding CommandBarTemplateSettings.OverflowContentMaxHeight, RelativeSource={RelativeSource Mode=TemplatedParent}}" MinWidth="{Binding CommandBarTemplateSettings.OverflowContentMinWidth, RelativeSource={RelativeSource Mode=TemplatedParent}}">
                                     <Grid.Clip>
                                         <RectangleGeometry x:Name="OverflowContentRootClip"/>
                                     </Grid.Clip>
