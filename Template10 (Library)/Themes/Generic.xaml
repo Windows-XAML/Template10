@@ -830,6 +830,7 @@
                                 </Grid.ColumnDefinitions>
                                 <ContentControl x:Name="ContentControl" 
                                                 Grid.Column="0" 
+                                                Margin="16,0,0,0"
                                                 Height="{ThemeResource AppBarThemeCompactHeight}"
                                                 FontFamily="{TemplateBinding FontFamily}"
                                                 FontSize="{TemplateBinding FontSize}"
