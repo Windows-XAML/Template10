@@ -1,5 +1,5 @@
 ﻿using Sample.Extensions;
-using Sample.Repositories;
+using Sample.Models;
 using Sample.Services.GithubService;
 using Sample.Shared;
 using System;
