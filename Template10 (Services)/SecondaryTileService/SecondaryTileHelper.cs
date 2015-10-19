@@ -59,10 +59,7 @@ namespace Template10.Services.SecondaryTileService
             return result;
         }
 
-        public bool Exists(string tileId)
-        {
-            return SecondaryTile.Exists(tileId);
-        }
+        public bool Exists(string tileId) => SecondaryTile.Exists(tileId);
 
         public async Task<bool> UnpinAsync(string tileId, Rect selection, Windows.UI.Popups.Placement placement = Windows.UI.Popups.Placement.Above)
         {

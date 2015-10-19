@@ -9,52 +9,42 @@
       xmlns:local="using:Sample.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:vm="using:Sample.ViewModels" mc:Ignorable="d">
-
     <Page.DataContext>
         <vm:MainPageViewModel />
     </Page.DataContext>
-
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
-        <!--  adaptive states  -->
-
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
                 <VisualState x:Name="VisualStateNarrow">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger x:Name="VisualStateNarrowTrigger" MinWindowWidth="{StaticResource NarrowMinWidth}" />
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource NarrowMinWidth}" />
                     </VisualState.StateTriggers>
-                    <VisualState.Setters />
                 </VisualState>
                 <VisualState x:Name="VisualStateNormal">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger x:Name="VisualStateNormalTrigger" MinWindowWidth="{StaticResource NormalMinWidth}" />
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource NormalMinWidth}" />
                     </VisualState.StateTriggers>
-                    <VisualState.Setters />
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-
-        <!--  header  -->
-        <controls:PageHeader BackButtonVisibility="Collapsed" Frame="{x:Bind Frame, Mode=OneWay}" Text="Main Page">
-            <AppBarButton Icon="Forward" Label="Forward">
-                <Interactivity:Interaction.Behaviors>
-                    <Behaviors:NavButtonBehavior Direction="Forward" Frame="{x:Bind Frame, Mode=OneWay}" />
-                </Interactivity:Interaction.Behaviors>
-            </AppBarButton>
+        <controls:PageHeader BackButtonVisibility="Collapsed" Content="Main Page" Frame="{x:Bind Frame, Mode=OneWay}">
+            <Interactivity:Interaction.Behaviors>
+                <Behaviors:EllipsisBehavior Visibility="Collapsed" />
+            </Interactivity:Interaction.Behaviors>
         </controls:PageHeader>
 
         <!--  #region content  -->
 
         <StackPanel Grid.Row="1" VerticalAlignment="Top"
                     Orientation="Horizontal" Padding="12,8,0,0">
+
             <controls:Resizer>
-                <TextBox Width="200" Margin="0"
+                <TextBox Width="200" MinWidth="200"
+                         MinHeight="60" Margin="0"
                          AcceptsReturn="True" Header="Parameter to pass"
                          Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          TextWrapping="Wrap">
@@ -65,8 +55,10 @@
                     </Interactivity:Interaction.Behaviors>
                 </TextBox>
             </controls:Resizer>
-            <Button Margin="4,0" VerticalAlignment="Bottom"
+
+            <Button Margin="12,0" VerticalAlignment="Bottom"
                     Click="{x:Bind ViewModel.GotoDetailsPage}" Content="Submit" />
+
         </StackPanel>
 
         <!--  #endregion  -->

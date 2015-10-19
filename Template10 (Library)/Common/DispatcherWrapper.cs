@@ -8,17 +8,14 @@ using Windows.UI.Core;
 namespace Template10.Common
 {
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-DispatcherWrapper
-    public class DispatcherWrapper
+    public class DispatcherWrapper : IDispatcherWrapper
     {
         internal DispatcherWrapper(CoreDispatcher dispatcher)
         {
             this.dispatcher = dispatcher;
         }
 
-        public bool HasThreadAccess()
-        {
-            return dispatcher.HasThreadAccess;
-        }
+        public bool HasThreadAccess() => dispatcher.HasThreadAccess;
 
         private CoreDispatcher dispatcher;
 

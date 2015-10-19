@@ -10,9 +10,6 @@ namespace Template10.Services.LocationService
     {
         LocationHelper _helper = new LocationHelper();
 
-        public Geoposition Position
-        {
-            get { return _helper.Position; }
-        }
+        public Geoposition Position => _helper.Position;
     }
 }

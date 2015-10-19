@@ -12,24 +12,12 @@ namespace Template10.Services.SecondaryTileService
     {
         SecondaryTileHelper _helper = new SecondaryTileHelper();
 
-        public Task<bool> PinAsync(TileInfo info, string tileId, string arguments)
-        {
-            return _helper.PinAsync(info, tileId, arguments);
-        }
+        public Task<bool> PinAsync(TileInfo info, string tileId, string arguments) => _helper.PinAsync(info, tileId, arguments);
 
-        public bool Exists(string tileId)
-        {
-            return _helper.Exists(tileId);
-        }
+        public bool Exists(string tileId) => _helper.Exists(tileId);
 
-        public Task<bool> UnpinAsync(string tileId, Rect selection, Placement placement = Placement.Above)
-        {
-            return _helper.UnpinAsync(tileId, selection, placement);
-        }
+        public Task<bool> UnpinAsync(string tileId, Rect selection, Placement placement = Placement.Above) => _helper.UnpinAsync(tileId, selection, placement);
 
-        public Task<bool> UnpinAsync(string tileId)
-        {
-            return _helper.UnpinAsync(tileId);
-        }
+        public Task<bool> UnpinAsync(string tileId) => _helper.UnpinAsync(tileId);
     }
 }

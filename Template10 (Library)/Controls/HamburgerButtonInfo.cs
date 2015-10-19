@@ -47,12 +47,14 @@ namespace Template10.Controls
         /// Sets and gets the Visibility property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        Visibility _visibility = Visibility.Visible;
         public Visibility Visibility
         {
-            get { return _visibility; }
-            set { Set(ref _visibility, value); }
+            get { return (Visibility)GetValue(VisibilityProperty); }
+            set { SetValue(VisibilityProperty, value); }
         }
+        public static readonly DependencyProperty VisibilityProperty =
+            DependencyProperty.Register(nameof(Visibility), typeof(Visibility), 
+                typeof(HamburgerButtonInfo), new PropertyMetadata(Visibility.Visible));
 
         /// <summary>
         /// Sets and gets the IsEnabled property.
@@ -66,10 +68,10 @@ namespace Template10.Controls
         }
 
         bool _isChecked = false;
-        public bool IsChecked
+        public bool? IsChecked
         {
             get { return _isChecked; }
-            set { Set(ref _isChecked, value); }
+            set { Set(ref _isChecked, value ?? false); }
         }
 
         UIElement _content = null;
@@ -86,17 +88,7 @@ namespace Template10.Controls
             set { Set(ref _MaxWidth, value); }
         }
 
-        HorizontalAlignment _HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Left;
-        public HorizontalAlignment HorizontalAlignment
-        {
-            get { return _HorizontalAlignment; }
-            set { Set(ref _HorizontalAlignment, value); }
-        }
-
-        public override string ToString()
-        {
-            return string.Format("{0}({1})", PageType?.ToString() ?? "null", PageParameter?.ToString() ?? "null");
-        }
+        public override string ToString() => string.Format("{0}({1})", PageType?.ToString() ?? "null", PageParameter?.ToString() ?? "null");
 
         public event RoutedEventHandler Selected;
         internal void RaiseSelected()
