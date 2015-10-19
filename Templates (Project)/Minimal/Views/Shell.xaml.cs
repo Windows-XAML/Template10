@@ -20,12 +20,12 @@ namespace Sample.Views
     public sealed partial class Shell : Page
     {
         public static Shell Instance { get; set; }
-        public static HamburgerMenu HamburgerMenu { get { return Instance.MyHamburgerMenu; } }
 
         public Shell(NavigationService navigationService)
         {
             Instance = this;
             InitializeComponent();
+            BootStrapper.Current.HamburgerMenu = Instance.MyHamburgerMenu;
             MyHamburgerMenu.NavigationService = navigationService;
             VisualStateManager.GoToState(Instance, Instance.NormalVisualState.Name, true);
         }

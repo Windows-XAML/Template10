@@ -423,5 +423,7 @@ namespace Template10.Common
                 return _PageKeys as Dictionary<T, Type>;
             return (_PageKeys = new Dictionary<T, Type>()) as Dictionary<T, Type>;
         }
+        public Controls.HamburgerMenu HamburgerMenu { get; set; }
+
     }
 }

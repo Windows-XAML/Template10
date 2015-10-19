@@ -566,5 +566,26 @@ namespace Template10.Controls
         {
             _SecondaryButtonStackPanel = sender as StackPanel;
         }
+
+        public bool PageHasBottomAppBar
+        {
+            get { return (bool)GetValue(PageHasBottomAppBarProperty); }
+            set
+            {
+                SetValue(PageHasBottomAppBarProperty, value);
+
+                if(value)
+                {
+                    VisualStateManager.GoToState(this, this.BottomAppBarExists.Name, true);
+                }else
+                {
+                    VisualStateManager.GoToState(this, this.BottomAppBarNone.Name, true);
+                }
+
+            }
+        }
+        public static readonly DependencyProperty PageHasBottomAppBarProperty =
+            DependencyProperty.Register(nameof(PageHasBottomAppBar), typeof(bool),
+                  typeof(HamburgerMenu), new PropertyMetadata(false));
     }
 }
