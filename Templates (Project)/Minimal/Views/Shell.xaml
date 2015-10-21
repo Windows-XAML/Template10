@@ -10,7 +10,8 @@
       xmlns:views="using:Sample.Views" x:Name="ThisPage"
       mc:Ignorable="d">
 
-    <Grid x:Name="RootGrid">
+    <Grid x:Name="RootGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="VisualStateGroup">
