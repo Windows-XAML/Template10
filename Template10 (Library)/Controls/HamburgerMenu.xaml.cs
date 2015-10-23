@@ -67,11 +67,26 @@ namespace Template10.Controls
 
         public void HighlightCorrectButton(Type pageType = null, object pageParam = null)
         {
+            bool isNavigated = (pageType != null);
+
             pageType = pageType ?? NavigationService.CurrentPageType;
             pageParam = pageParam ?? NavigationService.CurrentPageParam;
             var values = _navButtons.Select(x => x.Value);
             var button = values.FirstOrDefault(x => x.PageType == pageType && x.PageParameter == pageParam);
             Selected = button;
+
+            if (isNavigated)
+            {
+                var page = NavigationService.FrameFacade.Content as Page;
+                if (page?.BottomAppBar?.Visibility == Visibility.Visible)
+                {
+                    VisualStateManager.GoToState(this, this.IsBottomAppBarPresent.Name, true);
+                 }else
+                {
+                    VisualStateManager.GoToState(this, this.IsBottomAppBarAbsent.Name, true);
+                }
+            }
+
         }
 
         #region commands
