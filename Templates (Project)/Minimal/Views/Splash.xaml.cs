@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sample.ViewModels;
+using System;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -33,5 +34,6 @@ namespace Sample.Views
             Window.Current.SizeChanged += (s, e) => resize();
             resize();
         }
+        
     }
 }

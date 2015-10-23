@@ -30,6 +30,7 @@ namespace Sample
             // setup hamburger shell
             var nav = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include);
             Window.Current.Content = new Views.Shell(nav);
+            Views.Shell.SetFullScreen(true);
             return Task.FromResult<object>(null);
         }
 
@@ -38,6 +39,7 @@ namespace Sample
         {
             await Task.Delay(50);
             NavigationService.Navigate(typeof(Views.MainPage));
+            Views.Shell.SetFullScreen(false);
         }
     }
 }
