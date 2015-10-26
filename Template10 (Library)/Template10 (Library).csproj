@@ -127,8 +127,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Behaviors\CloseFlyoutAction.cs" />
     <Compile Include="Behaviors\NavButtonBehavior.cs" />
     <Compile Include="Behaviors\EllipsisBehavior.cs" />
+    <Compile Include="Behaviors\OpenFlyoutAction.cs" />
     <Compile Include="Behaviors\TextBoxEnterKeyBehavior.cs" />
     <Compile Include="Behaviors\ConditionalAction.cs" />
     <Compile Include="Behaviors\TimeoutAction.cs" />

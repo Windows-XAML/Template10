@@ -821,7 +821,7 @@
                                         <interactivity:Interaction.Behaviors>
                                             <behaviors:NavButtonBehavior Direction="Back" Frame="{Binding Frame, RelativeSource={RelativeSource TemplatedParent}}"/>
                                         </interactivity:Interaction.Behaviors>
-                                <SymbolIcon x:Name="BackIcon" Symbol="Back" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                                <SymbolIcon x:Name="BackIcon" Symbol="{TemplateBinding BackButtonContent}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
                             </AppBarButton>
                             <Grid Grid.Column="2">
                                 <Grid.ColumnDefinitions>
@@ -830,6 +830,7 @@
                                 </Grid.ColumnDefinitions>
                                 <ContentControl x:Name="ContentControl" 
                                                 Grid.Column="0" 
+                                                Margin="16,0,0,0"
                                                 Height="{ThemeResource AppBarThemeCompactHeight}"
                                                 FontFamily="{TemplateBinding FontFamily}"
                                                 FontSize="{TemplateBinding FontSize}"
@@ -858,7 +859,7 @@
                                 <Popup.RenderTransform>
                                     <TranslateTransform x:Name="OverflowPopupOffsetTransform"/>
                                 </Popup.RenderTransform>
-                                <Grid x:Name="OverflowContentRoot" MaxHeight="{Binding CommandBarTemplateSettings.OverflowContentMaxHeight, RelativeSource={RelativeSource Mode=TemplatedParent}}" MinWidth="{Binding CommandBarTemplateSettings.OverflowContentMinWidth, RelativeSource={RelativeSource Mode=TemplatedParent}}" Visibility="Collapsed">
+                                <Grid x:Name="OverflowContentRoot" MaxHeight="{Binding CommandBarTemplateSettings.OverflowContentMaxHeight, RelativeSource={RelativeSource Mode=TemplatedParent}}" MinWidth="{Binding CommandBarTemplateSettings.OverflowContentMinWidth, RelativeSource={RelativeSource Mode=TemplatedParent}}">
                                     <Grid.Clip>
                                         <RectangleGeometry x:Name="OverflowContentRootClip"/>
                                     </Grid.Clip>

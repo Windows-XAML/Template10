@@ -474,6 +474,7 @@ namespace Template10.Controls
                 if (NavigationService == null || RootGrid.Children.Contains(NavigationService.Frame))
                     return;
                 NavigationService.Frame.SetValue(Grid.ColumnProperty, 0);
+                ShellSplitView.Content = null;
                 NavigationService.Frame.SetValue(Grid.ColumnSpanProperty, int.MaxValue);
                 NavigationService.Frame.SetValue(Grid.RowProperty, 0);
                 NavigationService.Frame.SetValue(Grid.RowSpanProperty, int.MaxValue);

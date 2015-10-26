@@ -1,21 +1,20 @@
-﻿using Sample.Services.GithubService;
-using Sample.Shared;
+﻿using Sample.Models;
+using Sample.Services.GithubService;
 using Sample.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace Sample.Repositories
+namespace Sample.Services.GithubService
 {
-    public class RepositorySource : IncrementalItemSourceBase<Repository>
+    public class GithubIncrementalItemSource : IncrementalItemSourceBase<Repository>
     {
         private readonly IGithubService _service;
 
         private int _currentPage = 0;
 
-        public RepositorySource(IGithubService service)
+        public GithubIncrementalItemSource(IGithubService service)
         {
             if (service == null)
             {
@@ -67,7 +66,7 @@ namespace Sample.Repositories
                 // you can log the exception here.
             }
         }
-
+         
         protected internal override void OnRefresh(ICollection<Repository> collection)
         {
             // don't remove this code, it is necessary.
