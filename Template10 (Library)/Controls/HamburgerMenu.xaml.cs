@@ -475,6 +475,8 @@ namespace Template10.Controls
                     return;
                 NavigationService.Frame.SetValue(Grid.ColumnProperty, 0);
                 ShellSplitView.Content = null;
+                ShellSplitView.Visibility = Visibility.Collapsed;
+                HamburgerButton.Width = 0;
                 NavigationService.Frame.SetValue(Grid.ColumnSpanProperty, int.MaxValue);
                 NavigationService.Frame.SetValue(Grid.RowProperty, 0);
                 NavigationService.Frame.SetValue(Grid.RowSpanProperty, int.MaxValue);
@@ -484,6 +486,8 @@ namespace Template10.Controls
             {
                 if (RootGrid.Children.Contains(NavigationService.Frame))
                     RootGrid.Children.Remove(NavigationService.Frame);
+                HamburgerButton.Width = 48;
+                ShellSplitView.Visibility = Visibility.Visible;
                 ShellSplitView.Content = NavigationService.Frame;
             }
         }
