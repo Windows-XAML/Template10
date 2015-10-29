@@ -10,7 +10,7 @@ namespace Template10.Converters
         {
             try
             {
-                if (value.Equals(When))
+                if (object.Equals(value, When))
                     return this.Value;
                 return this.Otherwise;
             }
