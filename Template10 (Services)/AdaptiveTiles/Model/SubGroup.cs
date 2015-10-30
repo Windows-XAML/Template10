@@ -44,10 +44,11 @@ namespace Template10.Services.AdaptiveTiles.Model
                 element.Add(new XAttribute("hint-textStacking", HintTextStacking.Value.ToString().FirstLetterToLower()));
             }
 
-            foreach (var child in Children)
-            {
-                element.Add(child.ToXElement());
-            }
+			if( Children != null)
+				foreach (var child in Children)
+				{
+					element.Add(child.ToXElement());
+				}
 
             return element;
         }
