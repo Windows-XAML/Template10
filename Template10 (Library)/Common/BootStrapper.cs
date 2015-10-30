@@ -232,7 +232,7 @@ namespace Template10.Common
         private void RaiseBackRequested(ref bool handled)
         {
             var args = new HandledEventArgs();
-            foreach (var frame in WindowWrapper.Current().NavigationServices.Select(x => x.FrameFacade))
+            foreach (var frame in WindowWrapper.Current().NavigationServices.Select(x => x.FrameFacade).Reverse())
             {
                 frame.RaiseBackRequested(args);
                 handled = args.Handled;
