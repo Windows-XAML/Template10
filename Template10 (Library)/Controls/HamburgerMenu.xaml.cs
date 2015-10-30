@@ -109,7 +109,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty VisualStateNarrowMinWidthProperty =
             DependencyProperty.Register(nameof(VisualStateNarrowMinWidth), typeof(double),
-                typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => { (d as HamburgerMenu).VisualStateNarrowMinWidth = (double)e.NewValue; }));
+                typeof(HamburgerMenu), new PropertyMetadata((double)0, (d, e) => { (d as HamburgerMenu).VisualStateNarrowMinWidth = (double)e.NewValue; }));
 
         public double VisualStateNormalMinWidth
         {
@@ -118,7 +118,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty VisualStateNormalMinWidthProperty =
             DependencyProperty.Register(nameof(VisualStateNormalMinWidth), typeof(double),
-                typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => { (d as HamburgerMenu).VisualStateNormalMinWidth = (double)e.NewValue; }));
+                typeof(HamburgerMenu), new PropertyMetadata((double)521, (d, e) => { (d as HamburgerMenu).VisualStateNormalMinWidth = (double)e.NewValue; }));
 
         public double VisualStateWideMinWidth
         {
@@ -127,7 +127,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty VisualStateWideMinWidthProperty =
             DependencyProperty.Register(nameof(VisualStateWideMinWidth), typeof(double),
-                typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => { (d as HamburgerMenu).VisualStateWideMinWidth = (double)e.NewValue; }));
+                typeof(HamburgerMenu), new PropertyMetadata((double)-1, (d, e) => { (d as HamburgerMenu).VisualStateWideMinWidth = (double)e.NewValue; }));
 
         #endregion
 
@@ -475,6 +475,8 @@ namespace Template10.Controls
                     return;
                 NavigationService.Frame.SetValue(Grid.ColumnProperty, 0);
                 ShellSplitView.Content = null;
+                ShellSplitView.Visibility = Visibility.Collapsed;
+                HamburgerButton.Width = 0;
                 NavigationService.Frame.SetValue(Grid.ColumnSpanProperty, int.MaxValue);
                 NavigationService.Frame.SetValue(Grid.RowProperty, 0);
                 NavigationService.Frame.SetValue(Grid.RowSpanProperty, int.MaxValue);
@@ -484,6 +486,8 @@ namespace Template10.Controls
             {
                 if (RootGrid.Children.Contains(NavigationService.Frame))
                     RootGrid.Children.Remove(NavigationService.Frame);
+                HamburgerButton.Width = 48;
+                ShellSplitView.Visibility = Visibility.Visible;
                 ShellSplitView.Content = NavigationService.Frame;
             }
         }
