@@ -5,6 +5,7 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Microsoft.Xaml.Interactivity;
+using System;
 
 namespace Template10.Behaviors
 {
@@ -15,9 +16,14 @@ namespace Template10.Behaviors
         Button element => AssociatedObject as Button;
         public DependencyObject AssociatedObject { get; set; }
 
+        private DispatcherTimer _calculateTimer = new DispatcherTimer();
+
         public void Attach(DependencyObject associatedObject)
         {
             AssociatedObject = associatedObject;
+            _calculateTimer.Interval = TimeSpan.FromMilliseconds(300);
+            _calculateTimer.Tick += DoCalculate;
+
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
             {
                 element.Visibility = Visibility.Visible;
@@ -35,6 +41,7 @@ namespace Template10.Behaviors
         public void Detach()
         {
             element.Click -= Element_Click;
+            _calculateTimer.Tick -= DoCalculate;
             Window.Current.SizeChanged -= Current_SizeChanged;
             UnregisterPropertyChangedCallback(Frame.CanGoBackProperty, _goBackReg);
             UnregisterPropertyChangedCallback(Frame.CanGoForwardProperty, _goForwardReg);
@@ -53,7 +60,16 @@ namespace Template10.Behaviors
             }
         }
 
-        private void Current_SizeChanged(object sender, WindowSizeChangedEventArgs e) { Calculate(); }
+        private void Current_SizeChanged(object sender, WindowSizeChangedEventArgs e)
+        {
+            _calculateTimer.Stop();
+            _calculateTimer.Start();
+        }
+
+        private void DoCalculate(object sender, object e) {
+            _calculateTimer.Stop();
+            Calculate();        
+        }
 
         private void Calculate()
         {
