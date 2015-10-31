@@ -21,9 +21,7 @@ namespace Template10.Behaviors
         public void Attach(DependencyObject associatedObject)
         {
             AssociatedObject = associatedObject;
-            _calculateTimer.Interval = TimeSpan.FromMilliseconds(300);
-            _calculateTimer.Tick += DoCalculate;
-
+            
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
             {
                 element.Visibility = Visibility.Visible;
@@ -31,6 +29,8 @@ namespace Template10.Behaviors
             else
             {
                 element.Click += Element_Click;
+                _calculateTimer.Interval = TimeSpan.FromMilliseconds(300);
+                _calculateTimer.Tick += DoCalculate;
                 Window.Current.SizeChanged += Current_SizeChanged;
                 Calculate();
             }
