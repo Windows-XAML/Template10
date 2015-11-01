@@ -100,6 +100,7 @@ namespace Template10.MSBUILD
         [Required]
         public string SourceDir { get; set; }
 
+        public string TargetDir2 { get; set; }
 
         /// <summary>
         /// Gets or sets the target dir.
@@ -262,12 +263,16 @@ namespace Template10.MSBUILD
         private void ZipFiles(string tempFolder, string zipName, string targetDir)
         {
             string zipFileName = Path.Combine(targetDir, ZipName);
+            string zipFileName2 = Path.Combine(TargetDir2, ZipName);
 
             if (File.Exists(zipFileName))
             {
                 File.Delete(zipFileName);
             }
             ZipFile.CreateFromDirectory(tempFolder, zipFileName);
+
+            //-- now second one...
+            File.Copy(zipFileName, zipFileName2, true);
 
             //-- clean up the temporary folder
             Directory.Delete(tempFolder, true);
