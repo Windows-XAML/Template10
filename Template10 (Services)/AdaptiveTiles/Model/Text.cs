@@ -25,7 +25,7 @@ namespace Template10.Services.AdaptiveTiles.Model
             }
             if (HintMinLines.HasValue)
             {
-                element.Add(new XAttribute("hint-wrap", HintMinLines.Value));
+                element.Add(new XAttribute("hint-minLines", HintMinLines.Value));
             }
             if (HintAlign.HasValue)
             {

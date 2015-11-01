@@ -20,8 +20,12 @@ namespace Template10.Services.AdaptiveTiles.Model
 
         public XElement ToXElement()
         {
-            var element = new XElement("image", new XAttribute("src", Source));
-            if (Placement.HasValue)
+			var element = new XElement("image");
+
+			if (!string.IsNullOrWhiteSpace(Source))
+				element.Add(new XAttribute("src", Source));
+
+			if (Placement.HasValue)
             {
                 element.Add(new XAttribute("placement", Placement.Value.ToString().FirstLetterToLower()));
             }
