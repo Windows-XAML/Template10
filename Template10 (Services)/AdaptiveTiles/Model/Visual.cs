@@ -19,10 +19,11 @@ namespace Template10.Services.AdaptiveTiles.Model
                 element.Add(new XAttribute("version", Version));
             }
 
-            foreach (var binding in Bindings)
-            {
-                element.Add(binding.ToXElement());
-            }
+			if(Bindings != null)
+				foreach (var binding in Bindings)
+				{
+					element.Add(binding.ToXElement());
+				}
 
             return element;
         }
