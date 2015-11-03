@@ -22,11 +22,22 @@ namespace Template10.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (object.Equals(value, Value))
+                    return this.When;
+                return this.BackOtherwise;
+            }
+            catch
+            {
+                return this.BackOtherwise;
+            }
         }
 
         public object Value { get; set; }
         public object Otherwise { get; set; }
         public object When { get; set; }
+        public object BackOtherwise{ get; set; }
+
     }
 }

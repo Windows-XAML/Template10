@@ -28,5 +28,10 @@ namespace Sample.Views
         }
 
         ViewModels.MainPageViewModel ViewModel => this.DataContext as ViewModels.MainPageViewModel;
+
+        private void DisplayText_Click(object sender, RoutedEventArgs e)
+        {
+            ValueWhenConverterText.Visibility = Visibility.Visible;
+        }
     }
 }
