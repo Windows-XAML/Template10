@@ -35,10 +35,10 @@ namespace Template10.Services.NavigationService
                 BackRequested.Invoke(this, args);
             }
 
-            if (!args.Handled && (args.Handled = this.Frame.BackStackDepth > 0))
-            {
-                GoBack();
-            }
+            //if (!args.Handled && (args.Handled = this.Frame.BackStackDepth > 0))
+            //{
+            //    GoBack();
+            //}
         }
 
         public event EventHandler<HandledEventArgs> ForwardRequested;
