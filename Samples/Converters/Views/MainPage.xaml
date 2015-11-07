@@ -26,9 +26,9 @@
             <converters:ValueWhenConverter.Otherwise>
                 <Visibility>Collapsed</Visibility>
             </converters:ValueWhenConverter.Otherwise>
-            <converters:ValueWhenConverter.BackOtherwise>
+            <converters:ValueWhenConverter.OtherwiseValueBack>
                 <x:Boolean>False</x:Boolean>
-            </converters:ValueWhenConverter.BackOtherwise>
+            </converters:ValueWhenConverter.OtherwiseValueBack>
         </converters:ValueWhenConverter>
         <converters:ValueWhenConverter x:Key="NotTrueConverter">
             <converters:ValueWhenConverter.When>
@@ -40,9 +40,9 @@
             <converters:ValueWhenConverter.Otherwise>
                 <x:Boolean>True</x:Boolean>
             </converters:ValueWhenConverter.Otherwise>
-            <converters:ValueWhenConverter.BackOtherwise>
+            <converters:ValueWhenConverter.OtherwiseValueBack>
                 <x:Boolean>False</x:Boolean>
-            </converters:ValueWhenConverter.BackOtherwise>
+            </converters:ValueWhenConverter.OtherwiseValueBack>
 
         </converters:ValueWhenConverter>
 
