@@ -11,12 +11,22 @@ namespace Template10.Services.AdaptiveTiles
     {
         AdaptiveTileHelper _helper = new AdaptiveTileHelper();
 
-        public void UpdatePrimaryTile(Tile tile)
+		public void SetDefaultPrimaryTile()
+		{
+			_helper.SetDefaultPrimaryTile();
+		}
+		
+		public void UpdatePrimaryTile(Tile tile)
         {
             _helper.UpdatePrimaryTile(tile);
         }
 
-        public void UpdateSecondaryTile(Tile tile, string tileId)
+		public void SetDefaultSecondaryTile(string tileId)
+		{
+			_helper.SetDefaultSecondaryTile(tileId);
+		}
+
+		public void UpdateSecondaryTile(Tile tile, string tileId)
         {
             _helper.UpdateSecondaryTile(tile, tileId);
         }

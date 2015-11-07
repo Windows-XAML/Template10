@@ -149,6 +149,7 @@
     <Compile Include="Controls\HamburgerButtonInfo.cs" />
     <Compile Include="Controls\PageHeader.cs" />
     <Compile Include="Controls\Resizer.cs" />
+    <Compile Include="Converters\ChangeTypeConverter.cs" />
     <Compile Include="Converters\DateTimeOffsetConverter.cs" />
     <Compile Include="Converters\StringFormatConverter.cs" />
     <Compile Include="Mvvm\AwaitableDelegateCommand.cs" />

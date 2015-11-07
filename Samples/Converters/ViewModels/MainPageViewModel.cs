@@ -56,5 +56,52 @@ namespace Sample.ViewModels
             }
             set { Set(ref _BooleanValue, value); }
         }
+
+
+        private byte? _byteValue = null;
+        /// <summary>
+        /// Sets and gets the ByteValue property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public byte? ByteValue
+        {
+            get { return _byteValue; }
+            set { Set(ref _byteValue, value); }
+        }
+
+
+        private int _intValue = 0;
+        /// <summary>
+        /// Sets and gets the IntValue property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public int IntValue
+        {
+            get { return _intValue; }
+            set { Set(ref _intValue, value); }
+        }
+
+        private DateTimeOffset _dateTimeOffsetValue = DateTime.Today;
+        public DateTimeOffset DateTimeOffsetValue
+        {
+            get
+            {
+                return _dateTimeOffsetValue;
+            }
+            set { Set(ref _dateTimeOffsetValue, value); }
+        }
+
+
+        private Decimal _decimalValue=500.25M;
+        /// <summary>
+        /// Sets and gets the MyProperty property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public Decimal DecimalValue
+        {
+            get { return _decimalValue; }
+            set { Set(ref _decimalValue, value); }
+        }
+
     }
 }

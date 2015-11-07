@@ -44,9 +44,9 @@ namespace Template10.Services.SettingsService
             {
                 if (!Values.ContainsKey(key))
                     return fallback;
-                var converter = Converters.GetConverter(typeof(T));
-                var container = converter.FromStore(Values[key].ToString(), typeof(T)) as ApplicationDataCompositeValue;
-                return (T)container["Value"];
+                var container = Values[key] as ApplicationDataCompositeValue;
+                var converter = Converters.GetConverter(typeof(ApplicationDataCompositeValue));
+                return (T)converter.FromStore(container["Value"].ToString(), typeof(T));
             }
             catch
             {

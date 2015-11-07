@@ -102,6 +102,28 @@ namespace Template10.Controls
 
         #region VisualStateValues
 
+        public enum VisualStateSettings { Narrow, Normal, Wide, Auto }
+        public VisualStateSettings VisualStateSetting
+        {
+            get { return (VisualStateSettings)GetValue(VisualStateSettingProperty); }
+            set { SetValue(VisualStateSettingProperty, value); }
+        }
+        public static readonly DependencyProperty VisualStateSettingProperty =
+            DependencyProperty.Register("VisualStateSetting", typeof(VisualStateSettings), 
+                typeof(HamburgerMenu), new PropertyMetadata(VisualStateSettings.Auto, VisualStateSettingChanged));
+        private static void VisualStateSettingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            switch ((VisualStateSettings)e.NewValue)
+            {
+                case VisualStateSettings.Narrow:
+                case VisualStateSettings.Normal:
+                case VisualStateSettings.Wide:
+                    throw new NotImplementedException();
+                case VisualStateSettings.Auto:
+                    break;
+            }
+        }
+
         public double VisualStateNarrowMinWidth
         {
             get { return VisualStateNarrowTrigger.MinWindowWidth; }

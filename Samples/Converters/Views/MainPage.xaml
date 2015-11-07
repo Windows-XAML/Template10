@@ -13,8 +13,39 @@
         <vm:MainPageViewModel />
     </Page.DataContext>
     <Page.Resources>
+        <converters:ChangeTypeConverter x:Key="ChangeTypeConverter" />
         <converters:StringFormatConverter x:Key="StringFormatConverter" />
         <converters:DateTimeOffsetConverter x:Key="DateTimeOffsetConverter" />
+        <converters:ValueWhenConverter x:Key="BooleanToVisibilityConverter">
+            <converters:ValueWhenConverter.When>
+                <x:Boolean>True</x:Boolean>
+            </converters:ValueWhenConverter.When>
+            <converters:ValueWhenConverter.Value>
+                <Visibility>Visible</Visibility>
+            </converters:ValueWhenConverter.Value>
+            <converters:ValueWhenConverter.Otherwise>
+                <Visibility>Collapsed</Visibility>
+            </converters:ValueWhenConverter.Otherwise>
+            <converters:ValueWhenConverter.BackOtherwise>
+                <x:Boolean>False</x:Boolean>
+            </converters:ValueWhenConverter.BackOtherwise>
+        </converters:ValueWhenConverter>
+        <converters:ValueWhenConverter x:Key="NotTrueConverter">
+            <converters:ValueWhenConverter.When>
+                <x:Boolean>True</x:Boolean>
+            </converters:ValueWhenConverter.When>
+            <converters:ValueWhenConverter.Value>
+                <x:Boolean>False</x:Boolean>
+            </converters:ValueWhenConverter.Value>
+            <converters:ValueWhenConverter.Otherwise>
+                <x:Boolean>True</x:Boolean>
+            </converters:ValueWhenConverter.Otherwise>
+            <converters:ValueWhenConverter.BackOtherwise>
+                <x:Boolean>False</x:Boolean>
+            </converters:ValueWhenConverter.BackOtherwise>
+
+        </converters:ValueWhenConverter>
+
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -29,11 +60,11 @@
 
         <!--  #region content  -->
 
-        <StackPanel Grid.Row="1" Padding="12,4,0,0">
+        <ScrollViewer Grid.Row="1" >
+            <StackPanel Padding="12,4,4,12">
+                <DatePicker Header="Date Picker Control" Date="{Binding DateTimeValue, Mode=TwoWay, Converter={StaticResource DateTimeOffsetConverter}}" />
 
-            <DatePicker Header="Date Picker Control" Date="{Binding DateTimeValue, Mode=TwoWay, Converter={StaticResource DateTimeOffsetConverter}}" />
-
-            <TextBlock Margin="0,20">
+                <TextBlock Margin="0,20">
                 <Run Text="Date Conversions:" FontWeight="Bold" FontStyle="Italic" FontSize="20" />
                 <LineBreak />
                 <Run Text="Long date pattern:" FontWeight="Bold" />
@@ -47,11 +78,11 @@
                 <LineBreak />
                 <Run Text="RFC1123 pattern:" FontWeight="Bold" />
                 <Run Text="{Binding DateTimeValue, Mode=OneWay, Converter={StaticResource StringFormatConverter}, ConverterParameter=\{0:r\}}" />
-            </TextBlock>
+                </TextBlock>
 
-            <ComboBox ItemsSource="{Binding NumberValues, Mode=OneWay}" SelectedItem="{Binding NumberValue, Mode=TwoWay}" />
+                <ComboBox ItemsSource="{Binding NumberValues, Mode=OneWay}" SelectedItem="{Binding NumberValue, Mode=TwoWay}" />
 
-            <TextBlock Margin="0,20">
+                <TextBlock Margin="0,20">
                 <Run Text="Number Conversions:" FontWeight="Bold" FontStyle="Italic" FontSize="20" />
                 <LineBreak />
                 <Run Text="Currency:" FontWeight="Bold" />
@@ -65,11 +96,11 @@
                 <LineBreak />
                 <Run Text="Percent:" FontWeight="Bold" />
                 <Run Text="{Binding NumberValue, Mode=OneWay, Converter={StaticResource StringFormatConverter}, ConverterParameter=\{0:p\}}" />
-            </TextBlock>
+                </TextBlock>
 
-            <CheckBox Content="Change the value below by clicking on the CheckBox" IsChecked="{Binding BooleanValue, Mode=TwoWay}" />
-            
-            <TextBlock Margin="0,20">
+                <CheckBox Content="Change the value below by clicking on the CheckBox" IsChecked="{Binding BooleanValue, Mode=TwoWay}" />
+
+                <TextBlock Margin="0,20">
                 <Run Text="Value-When Conversion:" FontWeight="Bold" FontStyle="Italic" FontSize="20" />
                 <LineBreak />
                 <Run Text="Response:" FontWeight="Bold" />
@@ -86,11 +117,22 @@
                         </Binding>
                     </Run.Text>
                 </Run>
-            </TextBlock>
+                </TextBlock>
+                <TextBlock x:Name="textBlock" TextWrapping="Wrap" Text="Change Type Converter" Style="{ThemeResource  TitleTextBlockStyle}"/>
+                <DatePicker Header="Date Picker Control (Change Type Converter)" Date="{x:Bind ViewModel.DateTimeOffsetValue, Mode=TwoWay, Converter={StaticResource ChangeTypeConverter}}" />
+                <CalendarDatePicker Header="Calendar Date Picker Control (Change Type Converter)" Date="{x:Bind ViewModel.DateTimeOffsetValue, Mode=TwoWay, Converter={StaticResource ChangeTypeConverter}}" />
+                <Slider Header="{x:Bind ViewModel.ByteValue,Mode=OneWay,Converter={StaticResource StringFormatConverter},ConverterParameter='Slider binds to Byte - Current value \{0:N0\}'}" Value="{x:Bind ViewModel.ByteValue,Mode=TwoWay,Converter={StaticResource ChangeTypeConverter}}" Maximum="255" Width="500" HorizontalAlignment="Left"/>
+                <Slider Header="{x:Bind ViewModel.DecimalValue,Mode=OneWay,Converter={StaticResource StringFormatConverter},ConverterParameter='Slider binds to Decimal - Current value \{0:N2\}'}" Value="{x:Bind ViewModel.DecimalValue,Mode=TwoWay,Converter={StaticResource ChangeTypeConverter}}" Maximum="1000" Minimum="100" Width="500" HorizontalAlignment="Left" SmallChange="5.25" LargeChange="10.5"/>
 
+                <TextBlock TextWrapping="Wrap" Text="ValueWhenConverter (using it as Visibility and NotTrue converter)" Style="{ThemeResource  TitleTextBlockStyle}"/>
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox x:Name="CheckShowTextBox"  Content="Check to display text" Margin="4,0"/>
+                    <Button x:Name="DisplayText" IsEnabled="{x:Bind CheckShowTextBox.IsChecked,Converter={StaticResource NotTrueConverter},Mode=OneWay}" Content="Press to change visibility" Click="DisplayText_Click"/>
+                    <TextBlock x:Name="ValueWhenConverterText" Text="Visibility is bound to CheckBox's IsChecked property" Visibility="{x:Bind CheckShowTextBox.IsChecked,Converter={StaticResource BooleanToVisibilityConverter},Mode=TwoWay}" VerticalAlignment="Center" Margin="4,0"/>
+                </StackPanel>
 
-        </StackPanel>
-
+            </StackPanel>
+        </ScrollViewer>
         <!--  #endregion  -->
 
     </Grid>

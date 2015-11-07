@@ -143,15 +143,21 @@ namespace Template10.Services.NavigationService
 
         public bool Navigate(Type page, object parameter = null, NavigationTransitionInfo infoOverride = null)
         {
-            if (page == null)
-                throw new ArgumentNullException(nameof(page));
-            if (page.FullName.Equals(LastNavigationType)
-                && parameter == LastNavigationParameter)
-                return false;
-            return FrameFacade.Navigate(page, parameter, infoOverride);
-        }
+			if (page == null)
+				throw new ArgumentNullException(nameof(page));
+			if (page.FullName.Equals(LastNavigationType))
+			{
+				if (parameter == LastNavigationParameter)
+					return false;
 
-        /*
+				if (parameter != null && parameter.Equals(LastNavigationParameter))
+					return false;
+			}
+
+			return FrameFacade.Navigate(page, parameter, infoOverride);
+		}
+
+		/*
             Navigate<T> allows developers to navigate using a
             page key instead of the view type. This is accomplished by
             creating a custom Enum and setting up the PageKeys dict
@@ -173,8 +179,8 @@ namespace Template10.Services.NavigationService
             NavigationService.Navigate(Pages.MainPage);
         */
 
-        // T must be the same custom Enum used with BootStrapper.PageKeys()
-        public bool Navigate<T>(T key, object parameter = null, NavigationTransitionInfo infoOverride = null)
+		// T must be the same custom Enum used with BootStrapper.PageKeys()
+		public bool Navigate<T>(T key, object parameter = null, NavigationTransitionInfo infoOverride = null)
             where T : struct, IConvertible
         {
             var keys = Common.BootStrapper.Current.PageKeys<T>();
@@ -198,7 +204,7 @@ namespace Template10.Services.NavigationService
                 throw new InvalidOperationException("State container is unexpectedly null");
             }
 
-            state["CurrentPageType"] = CurrentPageType.ToString();
+            state["CurrentPageType"] = CurrentPageType.AssemblyQualifiedName;
             try { state["CurrentPageParam"] = CurrentPageParam; }
             catch
             {
