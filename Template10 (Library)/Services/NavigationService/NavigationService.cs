@@ -204,7 +204,7 @@ namespace Template10.Services.NavigationService
                 throw new InvalidOperationException("State container is unexpectedly null");
             }
 
-            state["CurrentPageType"] = CurrentPageType.ToString();
+            state["CurrentPageType"] = CurrentPageType.AssemblyQualifiedName;
             try { state["CurrentPageParam"] = CurrentPageParam; }
             catch
             {

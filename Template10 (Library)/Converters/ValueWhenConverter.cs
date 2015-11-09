@@ -10,7 +10,7 @@ namespace Template10.Converters
         {
             try
             {
-                if (object.Equals(value, When))
+                if (object.Equals(value,parameter ?? When))
                     return this.Value;
                 return this.Otherwise;
             }
@@ -22,11 +22,23 @@ namespace Template10.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            throw new NotImplementedException();
+            if (OtherwiseValueBack == null)
+                throw new InvalidOperationException("Cannot ConvertBack if no OtherwiseValueBack is set!");
+            try
+            {
+                if (object.Equals(value, Value))
+                    return this.When;
+                return this.OtherwiseValueBack;
+            }
+            catch
+            {
+                return this.OtherwiseValueBack;
+            }
         }
 
         public object Value { get; set; }
         public object Otherwise { get; set; }
         public object When { get; set; }
+        public object OtherwiseValueBack{ get; set; }
     }
 }
