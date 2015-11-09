@@ -27,10 +27,9 @@
 
         <Grid Grid.Row="1" Padding="12,4,0,0">
 
-            <StackPanel Margin="0,12,12,12">
+            <StackPanel Width="300" Margin="0,12,12,12" HorizontalAlignment="Left">
                 <TextBox Margin="0,0,0,12" Header="Type value to write to settings" Text="{Binding WriteValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <TextBox Margin="0,0,0,12" Header="This value is read from settings"
-                         IsReadOnly="True" Text="{Binding ReadValue}" />
+                <TextBox Header="This value is read from settings" IsReadOnly="True" Text="{Binding ReadValue}" />
             </StackPanel>
 
         </Grid>
