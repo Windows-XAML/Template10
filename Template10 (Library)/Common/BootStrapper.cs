@@ -343,6 +343,7 @@ namespace Template10.Common
             };
 
             var navigationService = new Services.NavigationService.NavigationService(frame);
+            navigationService.FrameFacade.BackButtonHandling = backButton;
             WindowWrapper.Current().NavigationServices.Add(navigationService);
 
             if (backButton == BackButton.Attach)

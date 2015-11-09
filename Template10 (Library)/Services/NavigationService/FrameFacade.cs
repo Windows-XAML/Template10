@@ -35,10 +35,10 @@ namespace Template10.Services.NavigationService
                 BackRequested.Invoke(this, args);
             }
 
-            //if (!args.Handled && (args.Handled = this.Frame.BackStackDepth > 0))
-            //{
-            //    GoBack();
-            //}
+            if (BackButtonHandling == BootStrapper.BackButton.Attach && !args.Handled && (args.Handled = this.Frame.BackStackDepth > 0))
+            {
+                GoBack();
+            }
         }
 
         public event EventHandler<HandledEventArgs> ForwardRequested;
@@ -115,6 +115,8 @@ namespace Template10.Services.NavigationService
         #region frame facade
 
         public Frame Frame { get; }
+
+        public BootStrapper.BackButton BackButtonHandling { get; internal set; }
 
         public string FrameId { get; set; } = string.Empty;
 
