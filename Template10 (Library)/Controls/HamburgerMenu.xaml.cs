@@ -463,10 +463,20 @@ namespace Template10.Controls
 
                 #region BottomAppBar
 
-                NavigationService.FrameFacade.Navigated += (s, e) => WindowWrapper.Current().Dispatcher.Dispatch(() => { StartAppBar(e.Page); }, 1000); ;
+                var bottomAppBarDelay = 1000;
+                NavigationService.FrameFacade.Navigated += (s, e) =>
+                {
+                    StartAppBar(e.Page);
+                    WindowWrapper.Current().Dispatcher.Dispatch(() => { StartAppBar(e.Page); }, bottomAppBarDelay);
+                };
                 NavigationService.FrameFacade.Navigating += (s, e) => StopAppBar(e.Page);
-                NavigationService.AfterRestoreSavedNavigation += (s, e) => WindowWrapper.Current().Dispatcher.Dispatch(() => { StartAppBar(NavigationService.FrameFacade.Content as Page); }, 1000);
-                WindowWrapper.Current().Dispatcher.Dispatch(() => { StartAppBar(NavigationService.FrameFacade.Content as Page); }, 1000);
+                NavigationService.AfterRestoreSavedNavigation += (s, e) =>
+                {
+                    StartAppBar(NavigationService.FrameFacade.Content as Page);
+                    WindowWrapper.Current().Dispatcher.Dispatch(() => { StartAppBar(NavigationService.FrameFacade.Content as Page); }, bottomAppBarDelay);
+                };
+                StartAppBar(NavigationService.FrameFacade.Content as Page);
+                WindowWrapper.Current().Dispatcher.Dispatch(() => { StartAppBar(NavigationService.FrameFacade.Content as Page); }, bottomAppBarDelay);
 
                 #endregion
 
