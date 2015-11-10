@@ -23,6 +23,9 @@ namespace Template10.Controls
     [ContentProperty(Name = nameof(PrimaryButtons))]
     public sealed partial class HamburgerMenu : UserControl, INotifyPropertyChanged
     {
+        public event EventHandler PaneOpen;
+        public event EventHandler PanelClosed;
+
         public HamburgerMenu()
         {
             InitializeComponent();
@@ -37,10 +40,17 @@ namespace Template10.Controls
                 new KeyboardService().AfterWindowZGesture = () => { HamburgerCommand.Execute(null); };
                 ShellSplitView.RegisterPropertyChangedCallback(SplitView.IsPaneOpenProperty, (d, e) =>
                 {
+                    // secondary layout
                     if (SecondaryButtonOrientation.Equals(Orientation.Horizontal) && ShellSplitView.IsPaneOpen)
                         _SecondaryButtonStackPanel.Orientation = Orientation.Horizontal;
                     else
                         _SecondaryButtonStackPanel.Orientation = Orientation.Vertical;
+
+                    // overall events
+                    if (ShellSplitView.IsPaneOpen)
+                        PaneOpen?.Invoke(ShellSplitView, EventArgs.Empty);
+                    else
+                        PanelClosed?.Invoke(ShellSplitView, EventArgs.Empty);
                 });
                 ShellSplitView.RegisterPropertyChangedCallback(SplitView.DisplayModeProperty, (d, e) =>
                 {
