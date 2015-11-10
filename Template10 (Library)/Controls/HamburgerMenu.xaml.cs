@@ -562,7 +562,7 @@ namespace Template10.Controls
         {
             if (page?.BottomAppBar != null)
             {
-                page.BottomAppBar.Opening += BottomAppBar_Handler;
+                page.BottomAppBar.Opened += BottomAppBar_Handler;
                 page.BottomAppBar.Closing += BottomAppBar_Handler;
                 UpdateAppBar(page.BottomAppBar);
             }
@@ -572,7 +572,7 @@ namespace Template10.Controls
         {
             if (page?.BottomAppBar != null)
             {
-                page.BottomAppBar.Opening -= BottomAppBar_Handler;
+                page.BottomAppBar.Opened -= BottomAppBar_Handler;
                 page.BottomAppBar.Closing -= BottomAppBar_Handler;
                 UpdateAppBar(null);
             }
