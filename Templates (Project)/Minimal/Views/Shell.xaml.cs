@@ -30,6 +30,21 @@ namespace Sample.Views
             VisualStateManager.GoToState(Instance, Instance.NormalVisualState.Name, true);
         }
 
+        public static void SetFullScreen(bool value)
+        {
+            WindowWrapper.Current().Dispatcher.Dispatch(() =>
+            {
+                switch (value)
+                {
+                    case true:
+                        Instance.MyHamburgerMenu.IsFullScreen = true;
+                        break;
+                    default:
+                        Instance.MyHamburgerMenu.IsFullScreen = false;
+                        break;
+                }
+            });
+        }
         public static void SetBusyVisibility(Visibility visible, string text = null)
         {
             WindowWrapper.Current().Dispatcher.Dispatch(() =>
