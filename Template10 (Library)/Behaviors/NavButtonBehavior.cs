@@ -5,6 +5,7 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Microsoft.Xaml.Interactivity;
+using Template10.Utils;
 
 namespace Template10.Behaviors
 {
@@ -12,6 +13,9 @@ namespace Template10.Behaviors
     [Microsoft.Xaml.Interactivity.TypeConstraint(typeof(Button))]
     public class NavButtonBehavior : DependencyObject, IBehavior
     {
+        bool update = false;
+        private long _goBackReg;
+        private long _goForwardReg;
         Button element => AssociatedObject as Button;
         public DependencyObject AssociatedObject { get; set; }
 
@@ -25,20 +29,24 @@ namespace Template10.Behaviors
             else
             {
                 element.Click += Element_Click;
-                Window.Current.SizeChanged += Current_SizeChanged;
                 Calculate();
             }
         }
 
-        private long _goBackReg;
-        private long _goForwardReg;
         public void Detach()
         {
             element.Click -= Element_Click;
-            Window.Current.SizeChanged -= Current_SizeChanged;
+            if (Frame != null)
+            {
+                Frame.SizeChanged -= SizeChanged;
+                Frame.LayoutUpdated -= LayoutUpdated;
+            }
             UnregisterPropertyChangedCallback(Frame.CanGoBackProperty, _goBackReg);
             UnregisterPropertyChangedCallback(Frame.CanGoForwardProperty, _goForwardReg);
         }
+
+        private void SizeChanged(object sender, SizeChangedEventArgs e) { update = true; }
+        private void LayoutUpdated(object sender, object e) { Calculate(); }
 
         private void Element_Click(object sender, RoutedEventArgs e)
         {
@@ -53,10 +61,12 @@ namespace Template10.Behaviors
             }
         }
 
-        private void Current_SizeChanged(object sender, WindowSizeChangedEventArgs e) { Calculate(); }
-
         private void Calculate()
         {
+            if (!update)
+                return;
+            update = false;
+
             if (element == null)
                 return;
             switch (Direction)
@@ -76,9 +86,8 @@ namespace Template10.Behaviors
             get { return (Directions)GetValue(DirectionProperty); }
             set { SetValue(DirectionProperty, value); }
         }
-        public static readonly DependencyProperty DirectionProperty =
-            DependencyProperty.Register("Direction", typeof(Directions),
-                typeof(NavButtonBehavior), new PropertyMetadata(Directions.Back));
+        public static readonly DependencyProperty DirectionProperty = DependencyProperty.Register(nameof(Direction),
+            typeof(Directions), typeof(NavButtonBehavior), new PropertyMetadata(Directions.Back));
 
         public Frame Frame
         {
@@ -89,13 +98,14 @@ namespace Template10.Behaviors
                 {
                     _goBackReg = value.RegisterPropertyChangedCallback(Frame.CanGoBackProperty, (s, e) => Calculate());
                     _goForwardReg = value.RegisterPropertyChangedCallback(Frame.CanGoForwardProperty, (s, e) => Calculate());
+                    value.SizeChanged += SizeChanged;
+                    value.LayoutUpdated += LayoutUpdated;
                 }
                 SetValue(FrameProperty, value);
             }
         }
-        public static readonly DependencyProperty FrameProperty =
-            DependencyProperty.Register("Frame", typeof(Frame),
-                typeof(NavButtonBehavior), new PropertyMetadata(null, (d, e) => { (d as NavButtonBehavior).Calculate(); }));
+        public static readonly DependencyProperty FrameProperty = DependencyProperty.Register(nameof(Frame),
+            typeof(Frame), typeof(NavButtonBehavior), new PropertyMetadata(null, (d, e) => (d as NavButtonBehavior).Calculate()));
 
         public static Visibility CalculateForwardVisibility(Frame frame)
         {
