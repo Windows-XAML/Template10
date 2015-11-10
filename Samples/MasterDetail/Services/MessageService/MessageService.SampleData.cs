@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sample.Services.MessageService
+namespace BottomAppBar.Services.MessageService
 {
     public partial class MessageService
     {

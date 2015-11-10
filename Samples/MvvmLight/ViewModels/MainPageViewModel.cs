@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Windows.UI.Xaml.Navigation;
 
-namespace Sample.ViewModels
+namespace BottomAppBar.ViewModels
 {
     public class MainPageViewModel : Mvvm.ViewModelBase
     {

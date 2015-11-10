@@ -1,8 +1,8 @@
-﻿using Sample.Models;
-using Sample.Shared;
+﻿using BottomAppBar.Models;
+using BottomAppBar.Shared;
 using System.Threading.Tasks;
 
-namespace Sample.Services.GithubService
+namespace BottomAppBar.Services.GithubService
 {
     public interface IGithubService
     {

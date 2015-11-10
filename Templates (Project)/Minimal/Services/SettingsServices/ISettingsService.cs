@@ -1,7 +1,7 @@
 ﻿using System;
 using Windows.UI.Xaml;
 
-namespace Sample.Services.SettingsServices
+namespace BottomAppBar.Services.SettingsServices
 {
     public interface ISettingsService
     {

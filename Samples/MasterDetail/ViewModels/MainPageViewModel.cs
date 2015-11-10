@@ -4,7 +4,7 @@ using System.Linq;
 using Template10.Mvvm;
 using Windows.UI.Xaml.Navigation;
 
-namespace Sample.ViewModels
+namespace BottomAppBar.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {

@@ -1,6 +1,6 @@
 ﻿using Windows.UI.Xaml;
 
-namespace Sample.ViewModels
+namespace BottomAppBar.ViewModels
 {
     public class ViewModelLocator
     {

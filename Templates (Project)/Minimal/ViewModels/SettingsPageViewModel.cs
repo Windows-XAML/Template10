@@ -1,9 +1,9 @@
 ﻿using System;
 using Windows.UI.Xaml;
 
-namespace Sample.ViewModels
+namespace BottomAppBar.ViewModels
 {
-    public class SettingsPageViewModel : Sample.Mvvm.ViewModelBase
+    public class SettingsPageViewModel : BottomAppBar.Mvvm.ViewModelBase
     {
         public SettingsPartViewModel SettingsPartViewModel { get; } = new SettingsPartViewModel();
         public AboutPartViewModel AboutPartViewModel { get; } = new AboutPartViewModel();

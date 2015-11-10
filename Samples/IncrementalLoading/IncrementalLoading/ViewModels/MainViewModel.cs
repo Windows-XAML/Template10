@@ -1,12 +1,12 @@
-﻿using Sample.Extensions;
-using Sample.Models;
-using Sample.Services.GithubService;
-using Sample.Shared;
+﻿using BottomAppBar.Extensions;
+using BottomAppBar.Models;
+using BottomAppBar.Services.GithubService;
+using BottomAppBar.Shared;
 using System;
 using Template10.Mvvm;
 using Windows.System;
 
-namespace Sample.ViewModels
+namespace BottomAppBar.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {

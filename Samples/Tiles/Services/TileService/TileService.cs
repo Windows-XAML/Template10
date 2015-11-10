@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Sample.ViewModels;
+using BottomAppBar.ViewModels;
 using Windows.UI.StartScreen;
 using Windows.UI.Notifications;
 using NotificationsExtensions.Tiles;
 using NotificationsExtensions.Toasts;
 using Windows.ApplicationModel.DataTransfer;
 
-namespace Sample.Services.TileService
+namespace BottomAppBar.Services.TileService
 {
     class TileService
     {

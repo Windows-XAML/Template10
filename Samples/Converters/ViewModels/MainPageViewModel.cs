@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sample.ViewModels
+namespace BottomAppBar.ViewModels
 {
     class MainPageViewModel : Template10.Mvvm.ViewModelBase
     {

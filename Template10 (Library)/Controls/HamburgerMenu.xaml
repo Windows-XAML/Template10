@@ -39,9 +39,13 @@
                                         <VisualState x:Name="Disabled" />
                                     </VisualStateGroup>
                                 </VisualStateManager.VisualStateGroups>
-                                <Rectangle x:Name="PressedOverlay" Fill="White" Opacity=".4" Visibility="Collapsed" />
-                                <Rectangle x:Name="HoverOverlay" Fill="White" Opacity=".2" Visibility="Collapsed" />
-                                <FontIcon x:Name="ContentPresenter" FontSize="20" Foreground="{TemplateBinding Foreground}" Glyph="&#xE700;" />
+                                <Rectangle x:Name="PressedOverlay" Fill="White"
+                                           Opacity=".4" Visibility="Collapsed" />
+                                <Rectangle x:Name="HoverOverlay" Fill="White"
+                                           Opacity=".2" Visibility="Collapsed" />
+                                <FontIcon x:Name="ContentPresenter" FontSize="20"
+                                          Foreground="{TemplateBinding Foreground}"
+                                          Glyph="&#xE700;" />
                             </Grid>
                         </ControlTemplate>
                     </Setter.Value>
@@ -52,13 +56,14 @@
             </Style>
 
             <DataTemplate x:Name="NavButtonTemplate" x:DataType="local:HamburgerButtonInfo">
-                <RadioButton Width="{Binding PaneWidth, ElementName=ThisPage}" MinWidth="48"
-                             MaxWidth="{x:Bind MaxWidth, Mode=TwoWay}"
+                <RadioButton Width="{Binding PaneWidth, ElementName=ThisPage}"
+                             MinWidth="48" MaxWidth="{x:Bind MaxWidth, Mode=TwoWay}"
                              Command="{Binding NavCommand, ElementName=ThisPage}"
                              CommandParameter="{Binding}" GroupName="Nav"
                              IsChecked="{x:Bind IsChecked, Mode=TwoWay}"
-                             IsEnabled="{x:Bind IsEnabled, Mode=TwoWay}" Loaded="NavButton_Loaded"
-                             Tag="{x:Bind Content}" Tapped="NavButton_Tapped"
+                             IsEnabled="{x:Bind IsEnabled, Mode=TwoWay}"
+                             Loaded="NavButton_Loaded" Tag="{x:Bind Content}"
+                             Tapped="NavButton_Tapped"
                              Visibility="{x:Bind Visibility, Mode=TwoWay}">
                     <RadioButton.Template>
                         <ControlTemplate TargetType="RadioButton">
@@ -150,11 +155,21 @@
                                                     <Setter Property="Visibility" Value="Collapsed" />
                                                 </Style>
                                             </Grid.Resources>
-                                            <Rectangle x:Name="NormalBack" Fill="{Binding NavButtonBackground, ElementName=ThisPage}" IsHitTestVisible="False" Visibility="Collapsed"/>
-                                            <Rectangle x:Name="PressedBack" Fill="{Binding NavButtonPressedBackground, ElementName=ThisPage}" IsHitTestVisible="False" Visibility="Collapsed"/>
-                                            <Rectangle x:Name="HoverBack" Fill="{Binding NavButtonHoverBackground, ElementName=ThisPage}" IsHitTestVisible="False" Visibility="Collapsed"/>
-                                            <Rectangle x:Name="CheckedBack" Fill="{Binding NavButtonCheckedBackground, ElementName=ThisPage}" IsHitTestVisible="False" Visibility="Collapsed"/>
-                                            <ContentControl x:Name="NormalFore" Content="{TemplateBinding Content}" Foreground="{Binding NavButtonForeground, ElementName=ThisPage, FallbackValue=White}" IsHitTestVisible="False" />
+                                            <Rectangle x:Name="NormalBack"
+                                                       Fill="{Binding NavButtonBackground, ElementName=ThisPage}"
+                                                       IsHitTestVisible="False" Visibility="Collapsed" />
+                                            <Rectangle x:Name="PressedBack"
+                                                       Fill="{Binding NavButtonPressedBackground, ElementName=ThisPage}"
+                                                       IsHitTestVisible="False" Visibility="Collapsed" />
+                                            <Rectangle x:Name="HoverBack"
+                                                       Fill="{Binding NavButtonHoverBackground, ElementName=ThisPage}"
+                                                       IsHitTestVisible="False" Visibility="Collapsed" />
+                                            <Rectangle x:Name="CheckedBack"
+                                                       Fill="{Binding NavButtonCheckedBackground, ElementName=ThisPage}"
+                                                       IsHitTestVisible="False" Visibility="Collapsed" />
+                                            <ContentControl x:Name="NormalFore" Content="{TemplateBinding Content}"
+                                                            Foreground="{Binding NavButtonForeground, ElementName=ThisPage, FallbackValue=White}"
+                                                            IsHitTestVisible="False" />
                                         </Grid>
                                     </ControlTemplate>
                                 </ToggleButton.Template>
@@ -170,6 +185,7 @@
     <Grid x:Name="RootGrid">
 
         <VisualStateManager.VisualStateGroups>
+
             <VisualStateGroup x:Name="VisualStateGroup">
 
                 <VisualStateGroup.Transitions>

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Navigation;
 
-namespace Sample.Mvvm
+namespace BottomAppBar.Mvvm
 {
     public abstract class ViewModelBase :
          GalaSoft.MvvmLight.ViewModelBase, Template10.Services.NavigationService.INavigable

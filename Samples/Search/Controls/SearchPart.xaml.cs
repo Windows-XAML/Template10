@@ -3,7 +3,7 @@ using Template10.Common;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Sample.Controls
+namespace BottomAppBar.Controls
 {
     public sealed partial class SearchPart : UserControl
     {

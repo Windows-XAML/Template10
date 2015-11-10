@@ -5,9 +5,9 @@ using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
-namespace Sample.ViewModels
+namespace BottomAppBar.ViewModels
 {
-    public class MainPageViewModel : Sample.Mvvm.ViewModelBase
+    public class MainPageViewModel : BottomAppBar.Mvvm.ViewModelBase
     {
         public MainPageViewModel()
         {

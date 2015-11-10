@@ -1,11 +1,11 @@
-﻿using Sample.Models;
-using Sample.Services;
-using Sample.Shared;
+﻿using BottomAppBar.Models;
+using BottomAppBar.Services;
+using BottomAppBar.Shared;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Sample.Services.GithubService
+namespace BottomAppBar.Services.GithubService
 {
     public class GithubService4DesignTime : IGithubService
     {

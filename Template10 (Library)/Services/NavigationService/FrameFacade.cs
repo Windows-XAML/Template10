@@ -44,7 +44,7 @@ namespace Template10.Services.NavigationService
         public event EventHandler<HandledEventArgs> ForwardRequested;
         public void RaiseForwardRequested(HandledEventArgs args)
         {
-                ForwardRequested?.Invoke(this, args);
+            ForwardRequested?.Invoke(this, args);
 
             if (!args.Handled && this.Frame.ForwardStack.Count > 0)
             {
@@ -181,13 +181,12 @@ namespace Template10.Services.NavigationService
         {
             add { if (!_navigatedEventHandlers.Contains(value)) _navigatedEventHandlers.Add(value); }
             remove { if (_navigatedEventHandlers.Contains(value)) _navigatedEventHandlers.Remove(value); }
-            }
-
+        }
         void FacadeNavigatedEventHandler(object sender, Windows.UI.Xaml.Navigation.NavigationEventArgs e)
         {
             CurrentPageType = e.SourcePageType;
             CurrentPageParam = e.Parameter;
-            var args = new NavigatedEventArgs(e);
+            var args = new NavigatedEventArgs(e, Content as Page);
             foreach (var handler in _navigatedEventHandlers)
             {
                 handler(this, args);
@@ -200,10 +199,9 @@ namespace Template10.Services.NavigationService
             add { if (!_navigatingEventHandlers.Contains(value)) _navigatingEventHandlers.Add(value); }
             remove { if (_navigatingEventHandlers.Contains(value)) _navigatingEventHandlers.Remove(value); }
         }
-
         private void FacadeNavigatingCancelEventHandler(object sender, NavigatingCancelEventArgs e)
         {
-            var args = new NavigatingEventArgs(e);
+            var args = new NavigatingEventArgs(e, Content as Page);
             foreach (var handler in _navigatingEventHandlers)
             {
                 handler(this, args);
