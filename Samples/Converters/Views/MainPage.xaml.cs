@@ -33,5 +33,10 @@ namespace Sample.Views
         {
             ValueWhenConverterText.Visibility = Visibility.Visible;
         }
+
+        private void SetFirstComboItem_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.SelectedSimpleModel = ViewModel.SimpleModels.FirstOrDefault();
+        }
     }
 }
