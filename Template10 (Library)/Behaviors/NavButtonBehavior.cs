@@ -6,6 +6,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Microsoft.Xaml.Interactivity;
 using Template10.Utils;
+using System;
 
 namespace Template10.Behaviors
 {
@@ -29,7 +30,7 @@ namespace Template10.Behaviors
             else
             {
                 element.Click += Element_Click;
-                Calculate();
+                Calculate(true);
             }
         }
 
@@ -38,6 +39,7 @@ namespace Template10.Behaviors
             element.Click -= Element_Click;
             if (Frame != null)
             {
+
                 Frame.SizeChanged -= SizeChanged;
                 Frame.LayoutUpdated -= LayoutUpdated;
             }
@@ -46,27 +48,27 @@ namespace Template10.Behaviors
         }
 
         private void SizeChanged(object sender, SizeChangedEventArgs e) { update = true; }
-        private void LayoutUpdated(object sender, object e) { Calculate(); }
+        private void LayoutUpdated(object sender, object e) { Calculate(true); }
 
         private void Element_Click(object sender, RoutedEventArgs e)
         {
             switch (Direction)
             {
                 case Directions.Back:
-                    if (Frame.CanGoBack) Frame.GoBack();
+                    if (Frame?.CanGoBack ?? false) Frame.GoBack();
                     break;
                 case Directions.Forward:
-                    if (Frame.CanGoForward) Frame.GoForward();
+                    if (Frame?.CanGoForward ?? false) Frame.GoForward();
                     break;
             }
         }
 
-        private void Calculate()
+        private void Calculate(bool allow = false)
         {
-            if (!update)
-                return;
+            if (!allow)
+                if (!update)
+                    return;
             update = false;
-
             if (element == null)
                 return;
             switch (Direction)
@@ -92,20 +94,23 @@ namespace Template10.Behaviors
         public Frame Frame
         {
             get { return (Frame)GetValue(FrameProperty); }
-            set
-            {
-                if (Frame == null)
-                {
-                    _goBackReg = value.RegisterPropertyChangedCallback(Frame.CanGoBackProperty, (s, e) => Calculate());
-                    _goForwardReg = value.RegisterPropertyChangedCallback(Frame.CanGoForwardProperty, (s, e) => Calculate());
-                    value.SizeChanged += SizeChanged;
-                    value.LayoutUpdated += LayoutUpdated;
-                }
-                SetValue(FrameProperty, value);
-            }
+            set { SetValue(FrameProperty, value); }
         }
         public static readonly DependencyProperty FrameProperty = DependencyProperty.Register(nameof(Frame),
-            typeof(Frame), typeof(NavButtonBehavior), new PropertyMetadata(null, (d, e) => (d as NavButtonBehavior).Calculate()));
+            typeof(Frame), typeof(NavButtonBehavior), new PropertyMetadata(null, FrameChanged));
+        private static void FrameChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var b = (d as NavButtonBehavior);
+            var f = e.NewValue as Frame;
+            if (f == null)
+            {
+                b._goBackReg = f.RegisterPropertyChangedCallback(Frame.CanGoBackProperty, (s, args) => b.Calculate(true));
+                b._goForwardReg = f.RegisterPropertyChangedCallback(Frame.CanGoForwardProperty, (s, args) => b.Calculate(true));
+                f.SizeChanged += b.SizeChanged;
+                f.LayoutUpdated += b.LayoutUpdated;
+            }
+            b.Calculate(true);
+        }
 
         public static Visibility CalculateForwardVisibility(Frame frame)
         {

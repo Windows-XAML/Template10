@@ -695,7 +695,7 @@
                             <Rectangle x:Name="Spacer" Width="{ThemeResource AppBarExpandButtonThemeWidth}" Visibility="Collapsed"/>
                             <AppBarButton x:Name="BackButton" Grid.Column="1" Foreground="{TemplateBinding Foreground}" MinHeight="{ThemeResource AppBarThemeMinHeight}" Visibility="{TemplateBinding BackButtonVisibility}" Width="{ThemeResource AppBarExpandButtonThemeWidth}">
                                 <interactivity:Interaction.Behaviors>
-                                    <behaviors:NavButtonBehavior Direction="Back" Frame="{Binding Frame, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                    <behaviors:NavButtonBehavior Direction="Back" Frame="{Binding Frame, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                                 </interactivity:Interaction.Behaviors>
                                 <SymbolIcon x:Name="BackIcon" Symbol="{TemplateBinding BackButtonContent}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
                             </AppBarButton>

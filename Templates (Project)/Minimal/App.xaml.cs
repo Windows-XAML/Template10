@@ -36,7 +36,7 @@ namespace BottomAppBar
         // runs only when not restored from state
         public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
-            await Task.Delay(50);
+            await Task.Delay(0);
             NavigationService.Navigate(typeof(Views.MainPage));
         }
     }

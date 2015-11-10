@@ -23,7 +23,7 @@
 
         <!--  header  -->
 
-        <controls:PageHeader Frame="{x:Bind Frame, Mode=OneWay}" Content="Settings Page" />
+        <controls:PageHeader Content="Settings Page" Frame="{x:Bind Frame}" />
 
         <!--  #region content  -->
 
@@ -42,7 +42,8 @@
                                       RelativePanel.Below="UseShellDrawnBackButtonToggleSwtich" />
                         <TextBox x:Name="BusyTextTextBox" Width="200"
                                  Margin="0,12,0,0" HorizontalAlignment="Left"
-                                 Header="Busy text" RelativePanel.Below="UseLightThemeToggleSwitch"
+                                 Header="Busy text"
+                                 RelativePanel.Below="UseLightThemeToggleSwitch"
                                  Text="{Binding BusyText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <Button Margin="0,12,0,0" Content="Show Busy Indicator"
                                 RelativePanel.AlignBottomWith="BusyTextTextBox"
