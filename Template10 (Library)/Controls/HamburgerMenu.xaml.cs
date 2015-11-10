@@ -461,9 +461,14 @@ namespace Template10.Controls
             {
                 _navigationService = value;
 
-                NavigationService.FrameFacade.Navigated += (s, e) => { StartAppBar(e.Page); };
-                NavigationService.FrameFacade.Navigating += (s, e) => { StopAppBar(e.Page); };
+                #region BottomAppBar
+
+                NavigationService.FrameFacade.Navigated += (s, e) => WindowWrapper.Current().Dispatcher.Dispatch(() => { StartAppBar(e.Page); }, 1000); ;
+                NavigationService.FrameFacade.Navigating += (s, e) => StopAppBar(e.Page);
+                NavigationService.AfterRestoreSavedNavigation += (s, e) => WindowWrapper.Current().Dispatcher.Dispatch(() => { StartAppBar(NavigationService.FrameFacade.Content as Page); }, 1000);
                 WindowWrapper.Current().Dispatcher.Dispatch(() => { StartAppBar(NavigationService.FrameFacade.Content as Page); }, 1000);
+
+                #endregion
 
                 if (NavigationService.Frame.BackStackDepth > 0)
                 {
@@ -562,7 +567,9 @@ namespace Template10.Controls
         {
             if (page?.BottomAppBar != null)
             {
+                page.BottomAppBar.Opened -= BottomAppBar_Handler;
                 page.BottomAppBar.Opened += BottomAppBar_Handler;
+                page.BottomAppBar.Closing -= BottomAppBar_Handler;
                 page.BottomAppBar.Closing += BottomAppBar_Handler;
                 UpdateAppBar(page.BottomAppBar);
             }
