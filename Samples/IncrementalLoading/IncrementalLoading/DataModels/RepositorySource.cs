@@ -1,13 +1,13 @@
-﻿using BottomAppBar.Models;
-using BottomAppBar.Services.GithubService;
-using BottomAppBar.Shared;
-using BottomAppBar.Shared;
+﻿using Sample.Models;
+using Sample.Services.GithubService;
+using Sample.Shared;
+using Sample.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BottomAppBar.DataModels
+namespace Sample.DataModels
 {
     
 }

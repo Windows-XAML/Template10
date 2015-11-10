@@ -1,7 +1,7 @@
-using BottomAppBar.ViewModels;
+using Sample.ViewModels;
 using Windows.UI.Xaml.Controls;
 
-namespace BottomAppBar.Views
+namespace Sample.Views
 {
     public sealed partial class MainPage : Page
     {

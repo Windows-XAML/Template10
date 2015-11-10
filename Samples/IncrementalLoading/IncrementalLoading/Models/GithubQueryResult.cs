@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace BottomAppBar.Models
+namespace Sample.Models
 {
     [JsonObject]
     public class GithubQueryResult<T>

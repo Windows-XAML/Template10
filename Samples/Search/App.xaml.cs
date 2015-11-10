@@ -2,7 +2,7 @@
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 
-namespace BottomAppBar
+namespace Sample
 {
     sealed partial class App : Template10.Common.BootStrapper
     {

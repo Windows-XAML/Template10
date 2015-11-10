@@ -1,6 +1,6 @@
 ﻿using Template10.Services.SettingsService;
 
-namespace BottomAppBar.Services
+namespace Sample.Services
 {
     public class SettingsService
     {

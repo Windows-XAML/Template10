@@ -1,12 +1,13 @@
-﻿using BottomAppBar.Extensions;
-using BottomAppBar.Models;
-using BottomAppBar.Services.GithubService;
-using BottomAppBar.Shared;
+﻿using Sample.Extensions;
+using Sample.Models;
+using Sample.Services.GithubService;
+using Sample.Shared;
 using System;
+using System.Collections.ObjectModel;
 using Template10.Mvvm;
 using Windows.System;
 
-namespace BottomAppBar.ViewModels
+namespace Sample.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
@@ -62,10 +63,6 @@ namespace BottomAppBar.ViewModels
             }
         }
 
-        public IncrementalLoadingCollection<Repository, GithubIncrementalItemSource> Repositories
-        {
-            get;
-            private set;
-        }
+        public IncrementalLoadingCollection<Repository, GithubIncrementalItemSource> Repositories { get; private set; }
     }
 }

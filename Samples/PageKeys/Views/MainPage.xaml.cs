@@ -2,7 +2,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace BottomAppBar.Views
+namespace Sample.Views
 {
     public sealed partial class MainPage : Page
     {

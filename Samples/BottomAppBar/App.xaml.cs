@@ -1,10 +1,10 @@
 using System;
 using Windows.UI.Xaml;
 using System.Threading.Tasks;
-using BottomAppBar.Services.SettingsServices;
+using Sample.Services.SettingsServices;
 using Windows.ApplicationModel.Activation;
 
-namespace BottomAppBar
+namespace Sample
 {
     /// Documentation on APIs used in this page:
     /// https://github.com/Windows-XAML/Template10/wiki

@@ -5,7 +5,7 @@ using Windows.Media.SpeechRecognition;
 using Windows.Media.SpeechSynthesis;
 using Windows.UI.Xaml.Controls;
 
-namespace BottomAppBar.Services.SpeechService
+namespace Sample.Services.SpeechService
 {
     class SpeechService : IDisposable
     {

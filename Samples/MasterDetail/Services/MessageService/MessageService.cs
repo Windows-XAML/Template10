@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using BottomAppBar.Models;
+using Sample.Models;
 using Template10.Utils;
 
-namespace BottomAppBar.Services.MessageService
+namespace Sample.Services.MessageService
 {
     public partial class MessageService
     {

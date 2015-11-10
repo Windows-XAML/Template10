@@ -1,7 +1,7 @@
 ﻿using System;
 using Template10.Mvvm;
 
-namespace BottomAppBar.Models
+namespace Sample.Models
 {
    public class Message : BindableBase
     {

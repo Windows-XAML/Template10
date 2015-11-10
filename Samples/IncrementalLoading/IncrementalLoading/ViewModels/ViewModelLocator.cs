@@ -1,8 +1,8 @@
-﻿using BottomAppBar.Services.GithubService;
+﻿using Sample.Services.GithubService;
 using System;
 using Windows.ApplicationModel;
 
-namespace BottomAppBar.ViewModels
+namespace Sample.ViewModels
 {
     public class ViewModelLocator
     {

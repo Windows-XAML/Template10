@@ -1,9 +1,9 @@
-﻿using BottomAppBar.Views;
+﻿using Sample.Views;
 using System.Threading.Tasks;
 using Template10.Common;
 using Windows.ApplicationModel.Activation;
 
-namespace BottomAppBar
+namespace Sample
 {
     sealed partial class App : BootStrapper
     {

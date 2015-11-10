@@ -1,13 +1,13 @@
 ﻿using Newtonsoft.Json;
-using BottomAppBar.Extensions;
-using BottomAppBar.Models;
-using BottomAppBar.Shared;
+using Sample.Extensions;
+using Sample.Models;
+using Sample.Shared;
 using System;
 using System.Net;
 using System.Threading.Tasks;
 using Windows.Web.Http;
 
-namespace BottomAppBar.Services.GithubService
+namespace Sample.Services.GithubService
 {
     public class GithubService4RunTime : IGithubService
     {

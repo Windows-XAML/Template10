@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace BottomAppBar.Models
+namespace Sample.Models
 {
     [JsonObject]
     public class Repository

@@ -1,6 +1,6 @@
 ﻿using Template10.Mvvm;
 
-namespace BottomAppBar.ViewModels
+namespace Sample.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {

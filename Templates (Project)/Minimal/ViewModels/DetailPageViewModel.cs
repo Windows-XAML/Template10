@@ -7,9 +7,9 @@ using Template10.Mvvm;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Navigation;
 
-namespace BottomAppBar.ViewModels
+namespace Sample.ViewModels
 {
-    public class DetailPageViewModel : BottomAppBar.Mvvm.ViewModelBase
+    public class DetailPageViewModel : Sample.Mvvm.ViewModelBase
     {
         public DetailPageViewModel()
         {

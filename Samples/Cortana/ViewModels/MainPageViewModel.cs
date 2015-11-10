@@ -9,7 +9,7 @@ using Windows.Media.SpeechSynthesis;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace BottomAppBar.ViewModels
+namespace Sample.ViewModels
 {
     public class MainPageViewModel : Template10.Mvvm.ViewModelBase
     {
