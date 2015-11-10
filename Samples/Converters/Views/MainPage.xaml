@@ -134,7 +134,7 @@
                 <TextBlock TextWrapping="Wrap" Text="Change Type Converter compiled binding" Style="{ThemeResource  TitleTextBlockStyle}"/>
                 <StackPanel Orientation="Horizontal">
                     <ComboBox ItemsSource="{x:Bind ViewModel.SimpleModels,Mode=OneWay}" 
-                              SelectedItem="{x:Bind ViewModel.SelectedSimpleModel,Mode=TwoWay,Converter={StaticResource ChangeTypeConverter}}" 
+                              SelectedValue="{x:Bind ViewModel.SelectedSimpleModel,Mode=TwoWay,Converter={StaticResource ChangeTypeConverter}}" 
                               Width="320" >
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
@@ -146,6 +146,7 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                     <Button x:Name="SetFirstComboItem" Content="Select first simple model from ViewModel" Margin="8,0" Click="SetFirstComboItem_Click"/>
+                    <Button x:Name="SetNullValueToCombo" Content="Clear Value from ViewModel" Margin="8,0" Click="SetNullValueToCombo_Click"/>
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>

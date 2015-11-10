@@ -38,5 +38,10 @@ namespace Sample.Views
         {
             ViewModel.SelectedSimpleModel = ViewModel.SimpleModels.FirstOrDefault();
         }
+
+        private void SetNullValueToCombo_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.SelectedSimpleModel = null;
+        }
     }
 }
