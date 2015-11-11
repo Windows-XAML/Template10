@@ -131,6 +131,23 @@
                     <TextBlock x:Name="ValueWhenConverterText" Text="Visibility is bound to CheckBox's IsChecked property" Visibility="{x:Bind CheckShowTextBox.IsChecked,Converter={StaticResource BooleanToVisibilityConverter},Mode=TwoWay}" VerticalAlignment="Center" Margin="4,0"/>
                 </StackPanel>
 
+                <TextBlock TextWrapping="Wrap" Text="Change Type Converter compiled binding" Style="{ThemeResource  TitleTextBlockStyle}"/>
+                <StackPanel Orientation="Horizontal">
+                    <ComboBox ItemsSource="{x:Bind ViewModel.SimpleModels,Mode=OneWay}" 
+                              SelectedValue="{x:Bind ViewModel.SelectedSimpleModel,Mode=TwoWay,Converter={StaticResource ChangeTypeConverter}}" 
+                              Width="320" >
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding IntProperty}"/>
+                                    <TextBlock Text="{Binding DateProperty, Converter={StaticResource StringFormatConverter}, ConverterParameter=' on {0:d}'}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <Button x:Name="SetFirstComboItem" Content="Select first simple model from ViewModel" Margin="8,0" Click="SetFirstComboItem_Click"/>
+                    <Button x:Name="SetNullValueToCombo" Content="Clear Value from ViewModel" Margin="8,0" Click="SetNullValueToCombo_Click"/>
+                </StackPanel>
             </StackPanel>
         </ScrollViewer>
         <!--  #endregion  -->
