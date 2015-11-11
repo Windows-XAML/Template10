@@ -2,8 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:behaviors="using:Template10.Behaviors"
                     xmlns:controls="using:Template10.Controls"
-                    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-                    xmlns:local="using:Template10">
+                    xmlns:interactivity="using:Microsoft.Xaml.Interactivity">
 
     <Style TargetType="controls:Resizer">
         <Setter Property="GrabberBrush" Value="{ThemeResource SystemAccentColor}" />
@@ -103,6 +102,7 @@
     </Style>
 
     <Style TargetType="controls:PageHeader">
+        <Setter Property="BackButtonVisibility" Value="Collapsed" />
         <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundChromeMediumBrush}" />
         <Setter Property="ClosedDisplayMode" Value="Compact" />
         <Setter Property="FontSize" Value="{ThemeResource TextStyleLargeFontSize}" />
@@ -110,6 +110,7 @@
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="IsTabStop" Value="False" />
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:PageHeader">
@@ -683,7 +684,9 @@
                                     <VisualState.StateTriggers>
                                         <AdaptiveTrigger x:Name="VisualStateNormalTrigger" MinWindowWidth="{Binding VisualStateNormalMinWidth, RelativeSource={RelativeSource TemplatedParent}}" />
                                     </VisualState.StateTriggers>
-                                    <VisualState.Setters />
+                                    <VisualState.Setters>
+                                        <Setter Target="Spacer.(UIElement.Visibility)" Value="Collapsed" />
+                                    </VisualState.Setters>
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
@@ -701,7 +704,7 @@
                             <Grid.RenderTransform>
                                 <TranslateTransform x:Name="ContentTransform" />
                             </Grid.RenderTransform>
-                            <Rectangle x:Name="Spacer" Width="{ThemeResource AppBarExpandButtonThemeWidth}" Visibility="Collapsed" />
+                            <Rectangle x:Name="Spacer" Width="48" Visibility="Collapsed" />
                             <AppBarButton x:Name="BackButton" Grid.Column="1"
                                           Width="{ThemeResource AppBarExpandButtonThemeWidth}"
                                           MinHeight="{ThemeResource AppBarThemeMinHeight}"

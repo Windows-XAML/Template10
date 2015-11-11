@@ -22,12 +22,10 @@
         </Grid.RowDefinitions>
 
         <!--  header  -->
-        <controls:PageHeader BackButtonVisibility="Collapsed" Frame="{x:Bind Frame, Mode=OneWay}" Content="Main Page">
-            <AppBarButton Icon="Forward" Label="Forward">
-                <Interactivity:Interaction.Behaviors>
-                    <Behaviors:NavButtonBehavior Direction="Forward" Frame="{x:Bind Frame, Mode=OneWay}" />
-                </Interactivity:Interaction.Behaviors>
-            </AppBarButton>
+        <controls:PageHeader BackButtonVisibility="Collapsed" Content="Main Page" Frame="{x:Bind Frame}">
+            <Interactivity:Interaction.Behaviors>
+                <Behaviors:EllipsisBehavior Visibility="Collapsed" />
+            </Interactivity:Interaction.Behaviors>
         </controls:PageHeader>
 
         <!--  #region content  -->
@@ -44,7 +42,8 @@
             </TextBox>
             <Button Margin="4,0"
                     Command="{x:Bind ViewModel.GotoDetailsPageCommand, Mode=OneTime}"
-                    Content="Submit" RelativePanel.AlignBottomWith="ParameterTextBox"
+                    Content="Submit"
+                    RelativePanel.AlignBottomWith="ParameterTextBox"
                     RelativePanel.RightOf="ParameterTextBox" />
         </RelativePanel>
 

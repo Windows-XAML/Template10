@@ -143,7 +143,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty VisualStateNarrowMinWidthProperty =
             DependencyProperty.Register(nameof(VisualStateNarrowMinWidth), typeof(double),
-                typeof(HamburgerMenu), new PropertyMetadata((double)0, (d, e) => { (d as HamburgerMenu).VisualStateNarrowMinWidth = (double)e.NewValue; }));
+                typeof(HamburgerMenu), new PropertyMetadata((double)-1, (d,e)=> { Changed(nameof(VisualStateNarrowMinWidth), e); }));
 
         public double VisualStateNormalMinWidth
         {
@@ -152,7 +152,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty VisualStateNormalMinWidthProperty =
             DependencyProperty.Register(nameof(VisualStateNormalMinWidth), typeof(double),
-                typeof(HamburgerMenu), new PropertyMetadata((double)521, (d, e) => { (d as HamburgerMenu).VisualStateNormalMinWidth = (double)e.NewValue; }));
+                typeof(HamburgerMenu), new PropertyMetadata((double)0, (d, e) => { Changed(nameof(VisualStateNormalMinWidth), e); }));
 
         public double VisualStateWideMinWidth
         {
@@ -161,7 +161,11 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty VisualStateWideMinWidthProperty =
             DependencyProperty.Register(nameof(VisualStateWideMinWidth), typeof(double),
-                typeof(HamburgerMenu), new PropertyMetadata((double)-1, (d, e) => { (d as HamburgerMenu).VisualStateWideMinWidth = (double)e.NewValue; }));
+                typeof(HamburgerMenu), new PropertyMetadata((double)-1, (d, e) => { Changed(nameof(VisualStateWideMinWidth), e); }));
+
+        private static void Changed(string v, DependencyPropertyChangedEventArgs e)
+        {
+        }
 
         #endregion
 
