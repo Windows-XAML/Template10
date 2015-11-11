@@ -164,8 +164,6 @@ namespace Template10.Common
                             This is okay & by design.
                         */
 
-                        SubscribeBackButton();
-
                         if (DetermineStartCause(e) == AdditionalKinds.Primary)
                         {
                             var restored = NavigationService.RestoreSavedNavigation();
@@ -178,14 +176,18 @@ namespace Template10.Common
                         {
                             await OnStartAsync(StartKind.Launch, e);
                         }
+
+                        SubscribeBackButton();
+
                         break;
                     }
                 case ApplicationExecutionState.ClosedByUser:
                 case ApplicationExecutionState.NotRunning:
-                    SubscribeBackButton();
-
                     // launch if not restored
                     await OnStartAsync(StartKind.Launch, e);
+
+                    SubscribeBackButton();
+
                     break;
                 default:
                     {
