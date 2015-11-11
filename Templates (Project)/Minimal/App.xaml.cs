@@ -36,7 +36,10 @@ namespace Sample
         // runs only when not restored from state
         public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
+            // perform long-running load
             await Task.Delay(0);
+
+            // navigate to first page
             NavigationService.Navigate(typeof(Views.MainPage));
         }
     }

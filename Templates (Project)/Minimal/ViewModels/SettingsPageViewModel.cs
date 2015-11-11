@@ -40,12 +40,12 @@ namespace Sample.ViewModels
 
         public void ShowBusy()
         {
-            Views.Shell.SetBusyVisibility(Visibility.Visible, _BusyText);
+            Views.Shell.SetBusy(true, _BusyText);
         }
 
         public void HideBusy()
         {
-            Views.Shell.SetBusyVisibility(Visibility.Collapsed);
+            Views.Shell.SetBusy(false);
         }
     }
 
