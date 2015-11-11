@@ -208,7 +208,11 @@ namespace Template10.Services.NavigationService
             try { state["CurrentPageParam"] = CurrentPageParam; }
             catch
             {
-                throw new Exception("Failed to serialize page parameter, override/implement ToString()");
+                var statefulParam = this.CurrentPageParam as IStatefulNavigationParameter;
+                if (statefulParam != null)
+                    state["CurrentPageParam"] = statefulParam.GetState();
+                else
+                    throw new Exception("Failed to serialize page parameter, implement IStatefulNavigationParameter");
             }
             state["NavigateState"] = FrameFacade?.GetNavigationState();
         }
@@ -226,9 +230,9 @@ namespace Template10.Services.NavigationService
 
                 FrameFacade.CurrentPageType = Type.GetType(state["CurrentPageType"].ToString());
                 FrameFacade.CurrentPageParam = state["CurrentPageParam"];
-                FrameFacade.SetNavigationState(state["NavigateState"].ToString());
+                FrameFacade.SetNavigationState(state["NavigateState"]?.ToString());
                 NavigateTo(NavigationMode.Refresh, FrameFacade.CurrentPageParam);
-                while (Frame.Content == null) { /* wait */ }
+                while (Frame.Content == null) ; // wait
                 AfterRestoreSavedNavigation?.Invoke(this, FrameFacade.CurrentPageType);
                 return true;
             }
@@ -246,25 +250,25 @@ namespace Template10.Services.NavigationService
         public bool CanGoForward => FrameFacade.CanGoForward;
 
         public void ClearCache(bool removeCachedPagesInBackStack = false)
-		{
-			int currentSize = FrameFacade.Frame.CacheSize;
+        {
+            int currentSize = FrameFacade.Frame.CacheSize;
 
-			if (removeCachedPagesInBackStack)
-			{
-				FrameFacade.Frame.CacheSize = 0;
-			}
-			else
-			{
-				if (Frame.BackStackDepth == 0)
-					Frame.CacheSize = 1;
-				else
-					Frame.CacheSize = Frame.BackStackDepth;
-			}
+            if (removeCachedPagesInBackStack)
+            {
+                FrameFacade.Frame.CacheSize = 0;
+            }
+            else
+            {
+                if (Frame.BackStackDepth == 0)
+                    Frame.CacheSize = 1;
+                else
+                    Frame.CacheSize = Frame.BackStackDepth;
+            }
 
-			FrameFacade.Frame.CacheSize = currentSize;
-		}
+            FrameFacade.Frame.CacheSize = currentSize;
+        }
 
-		public void ClearHistory() { FrameFacade.Frame.BackStack.Clear(); }
+        public void ClearHistory() { FrameFacade.Frame.BackStack.Clear(); }
 
         public void Resuming() { /* nothing */ }
 
