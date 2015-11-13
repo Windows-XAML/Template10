@@ -57,10 +57,13 @@
         <!--  page header  -->
 
         <controls:PageHeader BackButtonVisibility="Collapsed" Content="Main Page" Frame="{x:Bind Frame}">
-            <AppBarButton Icon="Save" Label="Save" RequestedTheme="Dark" />
             <Interactivity:Interaction.Behaviors>
                 <Behaviors:EllipsisBehavior Visibility="Auto" />
             </Interactivity:Interaction.Behaviors>
+            <controls:PageHeader.SecondaryCommands>
+                <AppBarButton Click="{x:Bind GotoPrivacy}" Label="Privacy" />
+                <AppBarButton Click="{x:Bind GotoAbout}" Label="About" />
+            </controls:PageHeader.SecondaryCommands>
         </controls:PageHeader>
 
         <!--  page content  -->

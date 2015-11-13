@@ -164,6 +164,7 @@
     <Compile Include="Utils\ColorUtils.cs" />
     <Compile Include="Utils\InkUtils.cs" />
     <Compile Include="Utils\MonitorUtil.cs" />
+    <Compile Include="Utils\TaskUtils.cs" />
     <Compile Include="Utils\XamlUtil.cs" />
     <Compile Include="Controls\HamburgerMenu.xaml.cs">
       <DependentUpon>HamburgerMenu.xaml</DependentUpon>

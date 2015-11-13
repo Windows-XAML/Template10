@@ -27,7 +27,7 @@
 
         <!--  #region content  -->
 
-        <Pivot Grid.Row="1">
+        <Pivot x:Name="MyPivot" Grid.Row="1">
             <PivotItem DataContext="{Binding SettingsPartViewModel}" Header="Settings">
                 <ScrollViewer Margin="0,12,-12,0" HorizontalContentAlignment="Left" VerticalScrollBarVisibility="Auto">
                     <RelativePanel HorizontalAlignment="Left">

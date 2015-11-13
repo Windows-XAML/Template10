@@ -136,6 +136,7 @@ namespace Template10.Services.NavigationService
         {
             try
             {
+                Windows.ApplicationModel.Resources.Core.ResourceContext.GetForCurrentView().Reset();
                 // this only works for apps using serializable types
                 var state = Frame.GetNavigationState();
                 Frame.SetNavigationState(state);
