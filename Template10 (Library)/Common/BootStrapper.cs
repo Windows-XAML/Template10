@@ -163,6 +163,7 @@ namespace Template10.Common
                             from state will fail because of missing values. 
                             This is okay & by design.
                         */
+
                         if (DetermineStartCause(e) == AdditionalKinds.Primary)
                         {
                             var restored = NavigationService.RestoreSavedNavigation();
@@ -175,8 +176,19 @@ namespace Template10.Common
                         {
                             await OnStartAsync(StartKind.Launch, e);
                         }
+
+                        SubscribeBackButton();
+
                         break;
                     }
+                case ApplicationExecutionState.ClosedByUser:
+                case ApplicationExecutionState.NotRunning:
+                    // launch if not restored
+                    await OnStartAsync(StartKind.Launch, e);
+
+                    SubscribeBackButton();
+
+                    break;
                 default:
                     {
                         // launch if not restored
@@ -188,6 +200,21 @@ namespace Template10.Common
             // ensure active (this will hide any custom splashscreen)
             Window.Current.Activate();
 
+            // Hook up keyboard and mouse Back handler
+            var keyboard = new Services.KeyboardService.KeyboardService();
+            keyboard.AfterBackGesture = () =>
+            {
+                //the result is no matter
+                var handled = false;
+                RaiseBackRequested(ref handled);
+            };
+
+            // Hook up keyboard and mouse Forward handler
+            keyboard.AfterForwardGesture = RaiseForwardRequested;
+        }
+
+        private void SubscribeBackButton()
+        {
             // Hook up the default Back handler
             SystemNavigationManager.GetForCurrentView().BackRequested += (s, args) =>
             {
@@ -207,18 +234,6 @@ namespace Template10.Common
                 RaiseBackRequested(ref handled);
                 args.Handled = handled;
             };
-
-            // Hook up keyboard and mouse Back handler
-            var keyboard = new Services.KeyboardService.KeyboardService();
-            keyboard.AfterBackGesture = () =>
-            {
-                //the result is no matter
-                var handled = false;
-                RaiseBackRequested(ref handled);
-            };
-
-            // Hook up keyboard and mouse Forward handler
-            keyboard.AfterForwardGesture = RaiseForwardRequested;
         }
 
         #endregion
