@@ -727,6 +727,7 @@
                                                 Content="{TemplateBinding Content}"
                                                 ContentTemplate="{TemplateBinding ContentTemplate}"
                                                 ContentTransitions="{TemplateBinding ContentTransitions}"
+                                                Visibility="{TemplateBinding PageTitleVisibility}"
                                                 FontFamily="{TemplateBinding FontFamily}"
                                                 FontSize="{TemplateBinding FontSize}"
                                                 FontStretch="{TemplateBinding FontStretch}"
