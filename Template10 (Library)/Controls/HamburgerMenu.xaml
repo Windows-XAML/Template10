@@ -255,10 +255,12 @@
             </Interactivity:Interaction.Behaviors>
         </ContentControl>
 
-        <SplitView x:Name="ShellSplitView" Grid.Column="0"
-                   DisplayMode="Inline" OpenPaneLength="220"
+        <SplitView x:Name="ShellSplitView"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="2"
+                   DisplayMode="Inline"
+                   OpenPaneLength="{x:Bind PaneWidth, Mode=OneWay}"
                    PaneBackground="Transparent">
-
             <SplitView.Pane>
 
                 <Grid x:Name="PaneContent" Margin="0,48,0,0"
