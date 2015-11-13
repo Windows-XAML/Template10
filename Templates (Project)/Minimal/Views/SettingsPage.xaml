@@ -52,7 +52,11 @@
 
         <!--  header  -->
 
-        <controls:PageHeader Content="Settings Page" Frame="{x:Bind Frame}" />
+        <controls:PageHeader Content="Settings Page" Frame="{x:Bind Frame}">
+            <Interactivity:Interaction.Behaviors>
+                <Behaviors:EllipsisBehavior Visibility="Auto" />
+            </Interactivity:Interaction.Behaviors>
+        </controls:PageHeader>
 
         <!--  #region content  -->
 
