@@ -511,7 +511,8 @@ namespace Template10.Controls
                 ShellSplitView.RegisterPropertyChangedCallback(SplitView.IsPaneOpenProperty, (s, e) =>
                 {
                     // update width
-                    PaneWidth = !ShellSplitView.IsPaneOpen ? ShellSplitView.CompactPaneLength : ShellSplitView.OpenPaneLength;
+                    //commented out as PaneWidth can now be set by user and need not be changed internally
+                    //PaneWidth = !ShellSplitView.IsPaneOpen ? ShellSplitView.CompactPaneLength : ShellSplitView.OpenPaneLength;
                 });
                 UpdateFullScreen();
             }
