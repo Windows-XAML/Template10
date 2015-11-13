@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Data;
+using System.Reflection;
 
 namespace Template10.Converters
 {
@@ -21,8 +22,11 @@ namespace Template10.Converters
                 targetType = Nullable.GetUnderlyingType(targetType);
             }
 
-            if (value == null && !targetType.IsByRef)
+            if (value == null && targetType.GetTypeInfo().IsValueType)
                 return Activator.CreateInstance(targetType);
+
+            if (targetType == typeof(object))
+                return (object)value;
 
             return System.Convert.ChangeType(value, targetType);
         }

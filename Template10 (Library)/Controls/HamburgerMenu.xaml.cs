@@ -24,7 +24,7 @@ namespace Template10.Controls
     public sealed partial class HamburgerMenu : UserControl, INotifyPropertyChanged
     {
         public event EventHandler PaneOpen;
-        public event EventHandler PanelClosed;
+        public event EventHandler PaneClosed;
 
         public HamburgerMenu()
         {
@@ -50,7 +50,7 @@ namespace Template10.Controls
                     if (ShellSplitView.IsPaneOpen)
                         PaneOpen?.Invoke(ShellSplitView, EventArgs.Empty);
                     else
-                        PanelClosed?.Invoke(ShellSplitView, EventArgs.Empty);
+                        PaneClosed?.Invoke(ShellSplitView, EventArgs.Empty);
                 });
                 ShellSplitView.RegisterPropertyChangedCallback(SplitView.DisplayModeProperty, (d, e) =>
                 {
