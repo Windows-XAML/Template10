@@ -143,7 +143,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty VisualStateNarrowMinWidthProperty =
             DependencyProperty.Register(nameof(VisualStateNarrowMinWidth), typeof(double),
-                typeof(HamburgerMenu), new PropertyMetadata((double)-1, (d,e)=> { Changed(nameof(VisualStateNarrowMinWidth), e); }));
+                typeof(HamburgerMenu), new PropertyMetadata((double)-1, (d, e) => { Changed(nameof(VisualStateNarrowMinWidth), e); }));
 
         public double VisualStateNormalMinWidth
         {
@@ -373,7 +373,7 @@ namespace Template10.Controls
             set
             {
                 if (value?.Equals(Selected) ?? false)
-                    value.IsChecked = true;
+                    value.IsChecked = (value.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
                 SetValue(SelectedProperty, value);
             }
         }
@@ -405,7 +405,7 @@ namespace Template10.Controls
             }
             else
             {
-                value.IsChecked = true;
+                value.IsChecked = (value.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
                 if (previous != value)
                 {
                     value.RaiseSelected();
@@ -636,20 +636,9 @@ namespace Template10.Controls
         void NavButton_Loaded(object sender, RoutedEventArgs e)
         {
             // add this radio to the list
-            var radio = sender as RadioButton;
-            var info = radio.DataContext as HamburgerButtonInfo;
-            _navButtons.Add(radio, info);
-
-            // map clicked
-            radio.Checked += (s, args) =>
-            {
-                info.RaiseChecked(args);
-                Selected = radio.DataContext as HamburgerButtonInfo;
-            };
-            radio.Unchecked += (s, args) => HighlightCorrectButton();
-            radio.Unchecked += (s, args) => info.RaiseUnchecked(args);
-
-            // udpate UI
+            var r = sender as RadioButton;
+            var i = r.DataContext as HamburgerButtonInfo;
+            _navButtons.Add(r, i);
             HighlightCorrectButton();
         }
 
@@ -693,6 +682,23 @@ namespace Template10.Controls
         private void SecondaryButtonStackPanel_Loaded(object sender, RoutedEventArgs e)
         {
             _SecondaryButtonStackPanel = sender as StackPanel;
+        }
+
+        private void NavButtonChecked(object sender, RoutedEventArgs e)
+        {
+            var t = sender as ToggleButton;
+            var i = t.DataContext as HamburgerButtonInfo;
+            t.IsChecked = (i.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
+            i.RaiseChecked(e);
+            HighlightCorrectButton();
+        }
+
+        private void NavButtonUnchecked(object sender, RoutedEventArgs e)
+        {
+            var t = sender as ToggleButton;
+            var i = t.DataContext as HamburgerButtonInfo;
+            i.RaiseUnchecked(e);
+            HighlightCorrectButton();
         }
     }
 }

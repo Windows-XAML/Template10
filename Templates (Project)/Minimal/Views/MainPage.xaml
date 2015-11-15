@@ -61,8 +61,8 @@
                 <Behaviors:EllipsisBehavior Visibility="Auto" />
             </Interactivity:Interaction.Behaviors>
             <controls:PageHeader.SecondaryCommands>
-                <AppBarButton Click="{x:Bind GotoPrivacy}" Label="Privacy" />
-                <AppBarButton Click="{x:Bind GotoAbout}" Label="About" />
+                <AppBarButton Click="{x:Bind ViewModel.GotoPrivacy}" Label="Privacy" />
+                <AppBarButton Click="{x:Bind ViewModel.GotoAbout}" Label="About" />
             </controls:PageHeader.SecondaryCommands>
         </controls:PageHeader>
 
@@ -81,6 +81,9 @@
                         <Behaviors:TextBoxEnterKeyBehavior>
                             <Core:CallMethodAction MethodName="GotoDetailsPage" TargetObject="{Binding}" />
                         </Behaviors:TextBoxEnterKeyBehavior>
+                        <Core:EventTriggerBehavior>
+                            <Behaviors:FocusAction/>
+                        </Core:EventTriggerBehavior>
                     </Interactivity:Interaction.Behaviors>
                 </TextBox>
             </controls:Resizer>

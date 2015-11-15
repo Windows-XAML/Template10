@@ -13,6 +13,9 @@ namespace Template10.Controls
     [ContentProperty(Name = nameof(Content))]
     public class HamburgerButtonInfo : DependencyBindableBase
     {
+        public enum ButtonTypes { Toggle, Command }
+        public ButtonTypes ButtonType { get; set; } = ButtonTypes.Toggle;
+
         /// <summary>
         /// Sets and gets the PageType property.
         /// </summary>
@@ -54,7 +57,7 @@ namespace Template10.Controls
             set { SetValue(VisibilityProperty, value); }
         }
         public static readonly DependencyProperty VisibilityProperty =
-            DependencyProperty.Register(nameof(Visibility), typeof(Visibility), 
+            DependencyProperty.Register(nameof(Visibility), typeof(Visibility),
                 typeof(HamburgerButtonInfo), new PropertyMetadata(Visibility.Visible));
 
         /// <summary>
@@ -106,13 +109,15 @@ namespace Template10.Controls
         public event RoutedEventHandler Checked;
         internal void RaiseChecked(RoutedEventArgs args)
         {
-            Checked?.Invoke(this, args);
+            if (ButtonType == ButtonTypes.Toggle)
+                Checked?.Invoke(this, args);
         }
 
         public event RoutedEventHandler Unchecked;
         internal void RaiseUnchecked(RoutedEventArgs args)
         {
-            Unchecked?.Invoke(this, args);
+            if (ButtonType == ButtonTypes.Toggle)
+                Unchecked?.Invoke(this, args);
         }
 
         public event RoutedEventHandler Tapped;
