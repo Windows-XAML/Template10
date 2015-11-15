@@ -299,7 +299,15 @@ namespace Template10.Common
         /// because the asunc operations are in a single, global deferral created when the suspension
         /// begins and completed automatically when the last viewmodel has been called (including this method).
         /// </summary>
-        public virtual async Task OnSuspendingAsync(object s, SuspendingEventArgs e) { await Task.Yield(); }
+        public virtual async Task OnSuspendingAsync(object s, SuspendingEventArgs e)
+        {
+            if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily.Equals("Windows.Mobile"))
+            {
+                WindowWrapper.ClearNavigationServices(Window.Current);
+            }
+            await Task.Yield();
+        }
+
         public virtual void OnResuming(object s, object e) { }
 
         #endregion
