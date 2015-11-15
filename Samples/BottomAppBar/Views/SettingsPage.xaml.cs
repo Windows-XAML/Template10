@@ -1,4 +1,4 @@
-using Sample.ViewModels;
+﻿using Sample.ViewModels;
 using Windows.UI.Xaml.Controls;
 
 namespace Sample.Views

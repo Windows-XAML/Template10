@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Xml.Linq;
 
 namespace Template10.Services.AdaptiveTiles.Model
