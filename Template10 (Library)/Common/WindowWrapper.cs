@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Template10.Services.NavigationService;
-using Windows.UI;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 
 namespace Template10.Common
 {
@@ -26,6 +23,15 @@ namespace Template10.Common
             ActiveWrappers.Add(this);
             Dispatcher = new DispatcherWrapper(window.Dispatcher);
             window.Closed += (s, e) => { ActiveWrappers.Remove(this); };
+        }
+
+        public static void ClearNavigationServices(Window window)
+        {
+            var wrapperToRemove = ActiveWrappers.FirstOrDefault(wrapper => object.ReferenceEquals(wrapper.Window, window));
+            if (wrapperToRemove != null)
+            {
+                wrapperToRemove.NavigationServices.Clear();
+            }
         }
 
         public void Close() { Window.Close(); }

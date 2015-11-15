@@ -511,7 +511,8 @@ namespace Template10.Controls
                 ShellSplitView.RegisterPropertyChangedCallback(SplitView.IsPaneOpenProperty, (s, e) =>
                 {
                     // update width
-                    PaneWidth = !ShellSplitView.IsPaneOpen ? ShellSplitView.CompactPaneLength : ShellSplitView.OpenPaneLength;
+                    //commented out as PaneWidth can now be set by user and need not be changed internally
+                    //PaneWidth = !ShellSplitView.IsPaneOpen ? ShellSplitView.CompactPaneLength : ShellSplitView.OpenPaneLength;
                 });
                 UpdateFullScreen();
             }
@@ -665,6 +666,24 @@ namespace Template10.Controls
 
             // why is it handled?
             // so we don't re-select
+            e.Handled = true;
+        }
+
+        private void NavButton_RightTapped(object sender, Windows.UI.Xaml.Input.RightTappedRoutedEventArgs e)
+        {
+            var radio = sender as RadioButton;
+            var info = radio.DataContext as HamburgerButtonInfo;
+            info.RaiseRightTapped(e);
+
+            e.Handled = true;
+        }
+
+        private void NavButton_Holding(object sender, Windows.UI.Xaml.Input.HoldingRoutedEventArgs e)
+        {
+            var radio = sender as RadioButton;
+            var info = radio.DataContext as HamburgerButtonInfo;
+            info.RaiseHolding(e);
+
             e.Handled = true;
         }
 
