@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Template10.Mvvm;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Markup;
 
 namespace Template10.Controls
@@ -118,6 +119,18 @@ namespace Template10.Controls
         internal void RaiseTapped(RoutedEventArgs args)
         {
             Tapped?.Invoke(this, args);
+        }
+
+        public event RightTappedEventHandler RightTapped;
+        internal void RaiseRightTapped(Windows.UI.Xaml.Input.RightTappedRoutedEventArgs args)
+        {
+            RightTapped?.Invoke(this, args);
+        }
+
+        public event HoldingEventHandler Holding;
+        internal void RaiseHolding(HoldingRoutedEventArgs args)
+        {
+            Holding?.Invoke(this, args);
         }
     }
 }
