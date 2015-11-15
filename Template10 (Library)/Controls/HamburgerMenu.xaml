@@ -64,6 +64,8 @@
                              IsEnabled="{x:Bind IsEnabled, Mode=TwoWay}"
                              Loaded="NavButton_Loaded" Tag="{x:Bind Content}"
                              Tapped="NavButton_Tapped"
+                             RightTapped="NavButton_RightTapped"
+                             Holding="NavButton_Holding"
                              Visibility="{x:Bind Visibility, Mode=TwoWay}">
                     <RadioButton.Template>
                         <ControlTemplate TargetType="RadioButton">
