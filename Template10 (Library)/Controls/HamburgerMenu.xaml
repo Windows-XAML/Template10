@@ -60,12 +60,12 @@
                              MinWidth="48" MaxWidth="{x:Bind MaxWidth, Mode=TwoWay}"
                              Command="{Binding NavCommand, ElementName=ThisPage}"
                              CommandParameter="{Binding}" GroupName="Nav"
+                             Holding="NavButton_Holding"
                              IsChecked="{x:Bind IsChecked, Mode=TwoWay}"
                              IsEnabled="{x:Bind IsEnabled, Mode=TwoWay}"
-                             Loaded="NavButton_Loaded" Tag="{x:Bind Content}"
+                             Loaded="NavButton_Loaded"
+                             RightTapped="NavButton_RightTapped" Tag="{x:Bind Content}"
                              Tapped="NavButton_Tapped"
-                             RightTapped="NavButton_RightTapped"
-                             Holding="NavButton_Holding"
                              Visibility="{x:Bind Visibility, Mode=TwoWay}">
                     <RadioButton.Template>
                         <ControlTemplate TargetType="RadioButton">
@@ -76,6 +76,7 @@
                                           CommandParameter="{Binding CommandParameter, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                           Content="{Binding Tag, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                           IsChecked="{Binding IsChecked, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                          Checked="NavButtonChecked" Unchecked="NavButtonUnchecked"
                                           UseSystemFocusVisuals="True"
                                           Visibility="{Binding Visibility, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}">
                                 <ToggleButton.Template>
@@ -258,7 +259,8 @@
         </ContentControl>
 
         <SplitView x:Name="ShellSplitView" Grid.Column="0"
-                   DisplayMode="Inline" OpenPaneLength="{x:Bind PaneWidth, Mode=OneWay}"
+                   DisplayMode="Inline"
+                   OpenPaneLength="{x:Bind PaneWidth, Mode=OneWay}"
                    PaneBackground="Transparent">
 
             <SplitView.Pane>
