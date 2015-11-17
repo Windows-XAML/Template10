@@ -1,4 +1,4 @@
-<Page x:Class="Sample.Views.Shell"
+﻿<Page x:Class="Sample.Views.Shell"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:Controls="using:Template10.Controls"

@@ -1,4 +1,4 @@
-# Cortana (and Speech)
+﻿# Cortana (and Speech)
 
 This project demonstrates how to use Cortana's speech functionality and Template10's audio utilities in your application.
 
