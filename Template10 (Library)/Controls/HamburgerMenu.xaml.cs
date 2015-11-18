@@ -25,6 +25,7 @@ namespace Template10.Controls
     {
         public event EventHandler PaneOpen;
         public event EventHandler PaneClosed;
+        public event EventHandler CheckedChanged;
 
         public HamburgerMenu()
         {
@@ -376,6 +377,7 @@ namespace Template10.Controls
                 if (value?.Equals(Selected) ?? false)
                     value.IsChecked = (value.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
                 SetValue(SelectedProperty, value);
+                this.CheckedChanged?.Invoke(this, EventArgs.Empty);
             }
         }
         public static readonly DependencyProperty SelectedProperty =
