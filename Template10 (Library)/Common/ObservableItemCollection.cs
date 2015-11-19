@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -10,8 +11,13 @@ using Template10.Common;
 
 namespace Template10.Controls
 {
-    public class ObservableItemCollection<T> : ObservableCollection<T>
+    public class ObservableItemCollection<T> : ObservableCollection<T> where T : INotifyPropertyChanged,
+                                               IDisposable
     {
+        private bool _enableCollectionChanged = true;
+        public override event NotifyCollectionChangedEventHandler CollectionChanged;
+        public event EventHandler<ItemPropertyChangedEventArgs> ItemPropertyChanged;
+
         public ObservableItemCollection()
         {
             base.CollectionChanged += (s, e) =>
@@ -21,30 +27,32 @@ namespace Template10.Controls
             };
         }
 
+        public ObservableItemCollection(IEnumerable<T> collection) : base(collection)
+        {
+            base.CollectionChanged += (s, e) =>
+            {
+                if (_enableCollectionChanged)
+                {
+                    CollectionChanged?.Invoke(this, e);
+                }
+            };
+        }
+
         protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    foreach (INotifyPropertyChanged item in e.NewItems)
-                    {
-                        item.PropertyChanged += itemPropertyChanged;
-                    }
+                    RegisterPropertyChanged(e.NewItems);
                     break;
                 case NotifyCollectionChangedAction.Move:
                     break;
                 case NotifyCollectionChangedAction.Remove:
                 case NotifyCollectionChangedAction.Replace:
-                    foreach (INotifyPropertyChanged item in e.OldItems)
-                    {
-                        item.PropertyChanged -= itemPropertyChanged;
-                    }
+                    UnRegisterPropertyChanged(e.OldItems);
                     if (e.NewItems != null)
                     {
-                        foreach (INotifyPropertyChanged item in e.NewItems)
-                        {
-                            item.PropertyChanged += itemPropertyChanged;
-                        }
+                        RegisterPropertyChanged(e.NewItems);
                     }
 
                     break;
@@ -54,11 +62,33 @@ namespace Template10.Controls
             base.OnCollectionChanged(e);
         }
 
-        private void itemPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void RegisterPropertyChanged(IList items)
         {
-            ItemPropertyChanged?.Invoke(sender, e);
+            foreach (INotifyPropertyChanged item in items)
+            {
+                if (item != null)
+                {
+                    item.PropertyChanged += new PropertyChangedEventHandler(item_PropertyChanged);
+                }
+            }
         }
-        public event EventHandler<PropertyChangedEventArgs> ItemPropertyChanged;
+
+        private void UnRegisterPropertyChanged(IList items)
+        {
+            foreach (INotifyPropertyChanged item in items)
+            {
+                if (item != null)
+                {
+                    item.PropertyChanged -= new PropertyChangedEventHandler(item_PropertyChanged);
+                }
+            }
+        }
+
+        private void item_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            ItemPropertyChanged?.Invoke(this, new ItemPropertyChangedEventArgs(sender, e));
+        }
+
 
         public void AddRange(IEnumerable<T> items)
         {
@@ -82,8 +112,16 @@ namespace Template10.Controls
             CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, items));
         }
 
-        private bool _enableCollectionChanged = true;
-        public override event NotifyCollectionChangedEventHandler CollectionChanged;
+        protected override void ClearItems()
+        {
+            UnRegisterPropertyChanged(this);
+            base.ClearItems();
+        }
+
+        public void Dispose()
+        {
+            ClearItems();
+        }
     }
 
 }

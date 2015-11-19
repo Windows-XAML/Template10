@@ -11,7 +11,7 @@ using Windows.UI.Xaml.Markup;
 namespace Template10.Controls
 {
     [ContentProperty(Name = nameof(Content))]
-    public class HamburgerButtonInfo : DependencyBindableBase
+    public class HamburgerButtonInfo : DependencyBindableBase, IDisposable
     {
         public enum ButtonTypes { Toggle, Command }
         public ButtonTypes ButtonType { get; set; } = ButtonTypes.Toggle;
@@ -136,6 +136,11 @@ namespace Template10.Controls
         internal void RaiseHolding(HoldingRoutedEventArgs args)
         {
             Holding?.Invoke(this, args);
+        }
+
+        public void Dispose()
+        {
+            
         }
     }
 }
