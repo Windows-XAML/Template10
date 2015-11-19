@@ -1,5 +1,6 @@
 ﻿using Sample.ViewModels;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 namespace Sample.Views
 {
@@ -13,5 +14,12 @@ namespace Sample.Views
 
         // strongly-typed view models enable x:bind
         public SettingsPageViewModel ViewModel => this.DataContext as SettingsPageViewModel;
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            int index;
+            if (int.TryParse(e.Parameter?.ToString(), out index))
+                MyPivot.SelectedIndex = index;
+        }
     }
 }

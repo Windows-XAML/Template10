@@ -16,6 +16,35 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
+                <VisualState x:Name="VisualStateNarrow">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource NarrowMinWidth}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <!--  TODO  -->
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="VisualStateNormal">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource NormalMinWidth}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <!--  TODO  -->
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="VisualStateWide">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource WideMinWidth}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <!--  TODO  -->
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
@@ -23,11 +52,15 @@
 
         <!--  header  -->
 
-        <controls:PageHeader Frame="{x:Bind Frame, Mode=OneWay}" Content="Settings Page" />
+        <controls:PageHeader Content="Settings Page" Frame="{x:Bind Frame}">
+            <Interactivity:Interaction.Behaviors>
+                <Behaviors:EllipsisBehavior Visibility="Auto" />
+            </Interactivity:Interaction.Behaviors>
+        </controls:PageHeader>
 
         <!--  #region content  -->
 
-        <Pivot Grid.Row="1">
+        <Pivot x:Name="MyPivot" Grid.Row="1">
             <PivotItem DataContext="{Binding SettingsPartViewModel}" Header="Settings">
                 <ScrollViewer Margin="0,12,-12,0" HorizontalContentAlignment="Left" VerticalScrollBarVisibility="Auto">
                     <RelativePanel HorizontalAlignment="Left">
@@ -42,9 +75,10 @@
                                       RelativePanel.Below="UseShellDrawnBackButtonToggleSwtich" />
                         <TextBox x:Name="BusyTextTextBox" Width="200"
                                  Margin="0,12,0,0" HorizontalAlignment="Left"
-                                 Header="Busy text" RelativePanel.Below="UseLightThemeToggleSwitch"
+                                 Header="Busy text"
+                                 RelativePanel.Below="UseLightThemeToggleSwitch"
                                  Text="{Binding BusyText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        <Button Margin="0,12,0,0" Content="Show Busy Indicator"
+                        <Button Margin="12,0,0,0" Content="Show Busy Indicator"
                                 RelativePanel.AlignBottomWith="BusyTextTextBox"
                                 RelativePanel.RightOf="BusyTextTextBox">
                             <Interactivity:Interaction.Behaviors>

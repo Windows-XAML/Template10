@@ -7,8 +7,9 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:Sample.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:sample="using:Sample.Controls" xmlns:views="using:Sample.Views"
-      x:Name="ThisPage" mc:Ignorable="d">
+      xmlns:sample="using:Sample.Controls"
+      xmlns:views="using:Sample.Views" x:Name="ThisPage"
+      mc:Ignorable="d">
 
     <Grid x:Name="RootGrid">
 
@@ -55,7 +56,10 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <Controls:HamburgerMenu x:Name="MyHamburgerMenu" SecondaryButtonOrientation="Horizontal">
+        <Controls:HamburgerMenu x:Name="MyHamburgerMenu"
+                                SecondaryButtonOrientation="Horizontal"
+                                VisualStateNarrowMinWidth="0"
+                                VisualStateNormalMinWidth="500">
 
             <Controls:HamburgerMenu.PrimaryButtons>
 
@@ -93,7 +97,9 @@
 
         </Controls:HamburgerMenu>
 
-        <Grid x:Name="BusyScreen" Background="{StaticResource ModalBackground}" Visibility="Collapsed" x:DeferLoadStrategy="Lazy">
+        <Grid x:Name="BusyScreen"
+              Background="{StaticResource ModalBackground}"
+              Visibility="Collapsed" x:DeferLoadStrategy="Lazy">
             <Viewbox Height="32">
                 <StackPanel Orientation="Horizontal">
                     <ProgressRing x:Name="BusyRing" Width="24"
@@ -105,9 +111,10 @@
         </Grid>
 
         <Grid x:Name="SearchScreen" Margin="48,0,0,0"
-              Background="{StaticResource ModalBackground}" Visibility="Collapsed"
-              x:DeferLoadStrategy="Lazy">
-            <sample:SearchPart x:Name="searchPart" HorizontalAlignment="Left" VerticalAlignment="Stretch" RenderTransformOrigin="0.5,0.5">
+              Background="{StaticResource ModalBackground}"
+              Visibility="Collapsed" x:DeferLoadStrategy="Lazy">
+            <sample:SearchPart x:Name="searchPart" HorizontalAlignment="Left"
+                               VerticalAlignment="Stretch" RenderTransformOrigin="0.5,0.5">
                 <UserControl.RenderTransform>
                     <CompositeTransform />
                 </UserControl.RenderTransform>
@@ -115,7 +122,9 @@
 
         </Grid>
 
-        <Grid x:Name="LoginScreen" Background="{StaticResource ModalBackground}" Visibility="Collapsed" x:DeferLoadStrategy="Lazy">
+        <Grid x:Name="LoginScreen"
+              Background="{StaticResource ModalBackground}"
+              Visibility="Collapsed" x:DeferLoadStrategy="Lazy">
             <sample:LoginPart x:Name="loginPart" Margin="48,0,0,0"
                               HorizontalAlignment="Left" VerticalAlignment="Stretch"
                               Hide="LoginHide" RenderTransformOrigin="0.5,0.5">

@@ -9,35 +9,64 @@
       xmlns:local="using:Sample.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:vm="using:Sample.ViewModels" mc:Ignorable="d">
+
     <Page.DataContext>
         <vm:MainPageViewModel />
     </Page.DataContext>
+
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <!--  #region default visual states  -->
+
         <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="VisualStateGroup">
+            <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
                 <VisualState x:Name="VisualStateNarrow">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="{StaticResource NarrowMinWidth}" />
                     </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <!--  TODO  -->
+                    </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="VisualStateNormal">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="{StaticResource NormalMinWidth}" />
                     </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <!--  TODO  -->
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="VisualStateWide">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource WideMinWidth}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <!--  TODO  -->
+                    </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
+
+        <!--  #endregion  -->
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <controls:PageHeader BackButtonVisibility="Collapsed" Content="Main Page" Frame="{x:Bind Frame, Mode=OneWay}">
+
+        <!--  page header  -->
+
+        <controls:PageHeader BackButtonVisibility="Collapsed" Content="Main Page" Frame="{x:Bind Frame}">
             <Interactivity:Interaction.Behaviors>
-                <Behaviors:EllipsisBehavior Visibility="Collapsed" />
+                <Behaviors:EllipsisBehavior Visibility="Auto" />
             </Interactivity:Interaction.Behaviors>
+            <controls:PageHeader.SecondaryCommands>
+                <AppBarButton Click="{x:Bind ViewModel.GotoPrivacy}" Label="Privacy" />
+                <AppBarButton Click="{x:Bind ViewModel.GotoAbout}" Label="About" />
+            </controls:PageHeader.SecondaryCommands>
         </controls:PageHeader>
 
-        <!--  #region content  -->
+        <!--  page content  -->
 
         <StackPanel Grid.Row="1" VerticalAlignment="Top"
                     Orientation="Horizontal" Padding="12,8,0,0">
@@ -45,13 +74,16 @@
             <controls:Resizer>
                 <TextBox Width="200" MinWidth="200"
                          MinHeight="60" Margin="0"
-                         AcceptsReturn="True" Header="Parameter to pass"
+                         Header="Parameter to pass"
                          Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          TextWrapping="Wrap">
                     <Interactivity:Interaction.Behaviors>
                         <Behaviors:TextBoxEnterKeyBehavior>
                             <Core:CallMethodAction MethodName="GotoDetailsPage" TargetObject="{Binding}" />
                         </Behaviors:TextBoxEnterKeyBehavior>
+                        <Core:EventTriggerBehavior>
+                            <Behaviors:FocusAction/>
+                        </Core:EventTriggerBehavior>
                     </Interactivity:Interaction.Behaviors>
                 </TextBox>
             </controls:Resizer>
@@ -60,8 +92,6 @@
                     Click="{x:Bind ViewModel.GotoDetailsPage}" Content="Submit" />
 
         </StackPanel>
-
-        <!--  #endregion  -->
 
     </Grid>
 </Page>

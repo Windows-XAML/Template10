@@ -19,18 +19,30 @@
         <!--  adaptive states  -->
 
         <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="VisualStateGroup">
+            <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
                 <VisualState x:Name="VisualStateNarrow">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger x:Name="VisualStateNarrowTrigger" MinWindowWidth="{StaticResource NarrowMinWidth}" />
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource NarrowMinWidth}" />
                     </VisualState.StateTriggers>
-                    <VisualState.Setters />
+                    <VisualState.Setters>
+                        <!--  TODO  -->
+                    </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="VisualStateNormal">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger x:Name="VisualStateNormalTrigger" MinWindowWidth="{StaticResource NormalMinWidth}" />
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource NormalMinWidth}" />
                     </VisualState.StateTriggers>
-                    <VisualState.Setters />
+                    <VisualState.Setters>
+                        <!--  TODO  -->
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="VisualStateWide">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource WideMinWidth}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <!--  TODO  -->
+                    </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
@@ -41,7 +53,11 @@
         </Grid.RowDefinitions>
 
         <!--  header  -->
-        <controls:PageHeader Frame="{x:Bind Frame}" Text="Detail Page" />
+        <controls:PageHeader Frame="{x:Bind Frame}" Text="Detail Page">
+            <Interactivity:Interaction.Behaviors>
+                <Behaviors:EllipsisBehavior Visibility="Auto" />
+            </Interactivity:Interaction.Behaviors>
+        </controls:PageHeader>
 
         <!--  #region content  -->
 

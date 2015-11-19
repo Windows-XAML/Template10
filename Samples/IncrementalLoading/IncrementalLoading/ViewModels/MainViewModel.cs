@@ -3,6 +3,7 @@ using Sample.Models;
 using Sample.Services.GithubService;
 using Sample.Shared;
 using System;
+using System.Collections.ObjectModel;
 using Template10.Mvvm;
 using Windows.System;
 
@@ -62,10 +63,6 @@ namespace Sample.ViewModels
             }
         }
 
-        public IncrementalLoadingCollection<Repository, GithubIncrementalItemSource> Repositories
-        {
-            get;
-            private set;
-        }
+        public IncrementalLoadingCollection<Repository, GithubIncrementalItemSource> Repositories { get; private set; }
     }
 }

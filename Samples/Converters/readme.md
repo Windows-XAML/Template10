@@ -1,4 +1,4 @@
-# Converters
+﻿# Converters
 
 This sample demonstrates the use of various Converters included in the Template10 library. There is a single **View** (MainPage.xaml) and a single **ViewModel** (MainPageViewModel.cs).
 

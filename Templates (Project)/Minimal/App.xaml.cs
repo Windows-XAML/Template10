@@ -18,25 +18,32 @@ namespace Sample
             InitializeComponent();
             SplashFactory = (e) => new Views.Splash(e);
 
+            #region App settings
+
             _settings = SettingsService.Instance;
             RequestedTheme = _settings.AppTheme;
             CacheMaxDuration = _settings.CacheMaxDuration;
             ShowShellBackButton = _settings.UseShellBackButton;
+
+            #endregion
         }
 
         // runs even if restored from state
-        public override Task OnInitializeAsync(IActivatedEventArgs args)
+        public override async Task OnInitializeAsync(IActivatedEventArgs args)
         {
             // setup hamburger shell
             var nav = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include);
             Window.Current.Content = new Views.Shell(nav);
-            return Task.FromResult<object>(null);
+            await Task.Yield();
         }
 
         // runs only when not restored from state
         public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
-            await Task.Delay(50);
+            // perform long-running load
+            await Task.Delay(0);
+
+            // navigate to first page
             NavigationService.Navigate(typeof(Views.MainPage));
         }
     }

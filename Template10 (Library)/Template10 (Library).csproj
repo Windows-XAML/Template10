@@ -128,6 +128,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Behaviors\CloseFlyoutAction.cs" />
+    <Compile Include="Behaviors\FocusAction.cs" />
     <Compile Include="Behaviors\NavButtonBehavior.cs" />
     <Compile Include="Behaviors\EllipsisBehavior.cs" />
     <Compile Include="Behaviors\OpenFlyoutAction.cs" />
@@ -145,9 +146,11 @@
     <Compile Include="Common\TypedEventHandler.cs" />
     <Compile Include="Common\WindowWrapper.cs" />
     <Compile Include="Common\ObservableItemCollection.cs" />
+    <Compile Include="Controls\ModalDialog.cs" />
     <Compile Include="Controls\CustomTitleBar.cs" />
     <Compile Include="Controls\HamburgerButtonInfo.cs" />
     <Compile Include="Controls\PageHeader.cs" />
+    <Compile Include="Controls\PiePiece.cs" />
     <Compile Include="Controls\Resizer.cs" />
     <Compile Include="Converters\ChangeTypeConverter.cs" />
     <Compile Include="Converters\DateTimeOffsetConverter.cs" />
@@ -156,11 +159,13 @@
     <Compile Include="Services\NavigationService\INavigationService.cs" />
     <Compile Include="Services\NavigationService\NavigationServiceList.cs" />
     <Compile Include="Services\SettingsService\ISettingsHelper.cs" />
+    <Compile Include="Services\SettingsService\SettingsService.cs" />
     <Compile Include="Services\SettingsService\SettingsStrategy.cs" />
     <Compile Include="Utils\AudioUtils.cs" />
     <Compile Include="Utils\ColorUtils.cs" />
     <Compile Include="Utils\InkUtils.cs" />
     <Compile Include="Utils\MonitorUtil.cs" />
+    <Compile Include="Utils\TaskUtils.cs" />
     <Compile Include="Utils\XamlUtil.cs" />
     <Compile Include="Controls\HamburgerMenu.xaml.cs">
       <DependentUpon>HamburgerMenu.xaml</DependentUpon>
@@ -179,9 +184,6 @@
     <Compile Include="Services\NavigationService\NavigatedEventArgs.cs" />
     <Compile Include="Services\NavigationService\NavigatingEventArgs.cs" />
     <Compile Include="Services\NavigationService\NavigationService.cs" />
-    <Compile Include="Services\SettingsService\PropertyMapping.cs" />
-    <Compile Include="Services\SettingsService\PropertyStore.cs" />
-    <Compile Include="Services\SettingsService\Settings.cs" />
     <Compile Include="Services\SettingsService\SettingsHelper.cs" />
     <Compile Include="Utils\TypeUtil.cs" />
     <Content Include="Properties\Template10Library.rd.xml" />
@@ -192,6 +194,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\Mdl2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Converters\Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

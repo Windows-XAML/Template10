@@ -1,0 +1,61 @@
+﻿<Page x:Class="Sample.Views.DetailPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:Behaviors="using:Template10.Behaviors"
+      xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+      xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+      xmlns:controls="using:Template10.Controls"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="using:Sample.Views"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:vm="using:Sample.ViewModels" x:Name="ThisPage"
+      mc:Ignorable="d">
+    <Page.DataContext>
+        <vm:DetailPageViewModel />
+    </Page.DataContext>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <!--  adaptive states  -->
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <VisualState x:Name="VisualStateNarrow">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger x:Name="VisualStateNarrowTrigger" MinWindowWidth="{StaticResource NarrowMinWidth}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters />
+                </VisualState>
+                <VisualState x:Name="VisualStateNormal">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger x:Name="VisualStateNormalTrigger" MinWindowWidth="{StaticResource NormalMinWidth}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters />
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <!--  header  -->
+        <controls:PageHeader Frame="{x:Bind Frame}" Text="Detail Page" />
+
+        <!--  #region content  -->
+
+        <Grid Grid.Row="1">
+            <ScrollViewer Padding="12,8,0,0" VerticalScrollBarVisibility="Auto">
+                <TextBlock Style="{StaticResource TitleTextBlockStyle}">
+                    <Run Text="You passed: " />
+                    <Run Text="{Binding Value}" />
+                </TextBlock>
+            </ScrollViewer>
+        </Grid>
+
+        <!--  #endregion  -->
+
+    </Grid>
+</Page>
+

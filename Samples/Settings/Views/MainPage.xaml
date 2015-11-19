@@ -1,0 +1,41 @@
+﻿<Page x:Class="Sample.Views.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+      xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+      xmlns:controls="using:Template10.Controls"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="using:Sample.Views"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:vm="using:Sample.ViewModels" mc:Ignorable="d">
+
+    <Page.DataContext>
+        <vm:MainPageViewModel />
+    </Page.DataContext>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <!--  header  -->
+        <controls:PageHeader BackButtonVisibility="Collapsed" Content="Settings sample" VisualStateNarrowMinWidth="-1" />
+
+        <!--  #region content  -->
+
+        <Grid Grid.Row="1" Padding="12,4,0,0">
+
+            <StackPanel Width="300" Margin="0,12,12,12" HorizontalAlignment="Left">
+                <TextBox Margin="0,0,0,12" Header="Type value to write to settings" Text="{Binding WriteValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Header="This value is read from settings" IsReadOnly="True" Text="{Binding ReadValue}" />
+            </StackPanel>
+
+        </Grid>
+
+        <!--  #endregion  -->
+
+    </Grid>
+</Page>
+

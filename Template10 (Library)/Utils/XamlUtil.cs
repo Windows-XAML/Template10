@@ -11,7 +11,18 @@ namespace Template10.Utils
     {
         public static ObservableCollection<T> ToObservableCollection<T>(this IEnumerable<T> list) => new ObservableCollection<T>(list);
 
-        public static List<T> AllChildren<T>(DependencyObject parent) where T : Control
+        public static T Ancestor<T>(this Control control) where T : Control
+        {
+            var parent = control.Parent as Control;
+            while (parent != null)
+            {
+                if (parent is T) return (T)parent;
+                parent = parent.Parent as Control;
+            }
+            return null;
+        }
+
+        public static List<T> AllChildren<T>(DependencyObject parent) where T : UIElement
         {
             var list = new List<T>();
             var count = VisualTreeHelper.GetChildrenCount(parent);
