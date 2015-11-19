@@ -1,4 +1,4 @@
-// http://metronuggets.com/2015/05/18/introducing-mdl2-helpers/
+﻿// http://metronuggets.com/2015/05/18/introducing-mdl2-helpers/
 namespace Template10.Common
 {
     public class Mdl2

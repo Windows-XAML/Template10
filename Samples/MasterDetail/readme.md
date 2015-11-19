@@ -1,3 +1,3 @@
-# MasterDetails (Mail App)
+﻿# MasterDetails (Mail App)
 
 Lorem ipsum...

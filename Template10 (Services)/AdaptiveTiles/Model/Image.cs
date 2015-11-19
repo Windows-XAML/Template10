@@ -1,4 +1,4 @@
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 
 namespace Template10.Services.AdaptiveTiles.Model
 {

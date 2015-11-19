@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Windows.UI.Xaml;
 using System.Threading.Tasks;
 using Sample.Services.SettingsServices;

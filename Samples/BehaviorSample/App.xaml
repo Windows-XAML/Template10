@@ -1,4 +1,4 @@
-<common:BootStrapper 
+﻿<common:BootStrapper 
     x:Class="Sample.App" 
     xmlns:common="using:Template10.Common" 
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 

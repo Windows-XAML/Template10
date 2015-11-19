@@ -20,7 +20,7 @@
         public void ShowToastText02(string title, string content, string arg = null)
         {
             // show toast
-            var toast = BuildToastText02(content, title, arg);
+            var toast = BuildToastText02(title, content, arg);
             var notifier = ToastNotificationManager.CreateToastNotifier();
             notifier.Show(toast);
         }
@@ -28,7 +28,7 @@
         public void ShowToastText03(string title, string content, string arg = null)
         {
             // show toast
-            var toast = BuildToastText03(content, title, arg);
+            var toast = BuildToastText03(title, content, arg);
             var notifier = ToastNotificationManager.CreateToastNotifier();
             notifier.Show(toast);
         }
@@ -36,7 +36,7 @@
         public void ShowToastText04(string title, string content, string content2, string arg = null)
         {
             // show toast
-            var toast = BuildToastText04(content, title, arg);
+            var toast = BuildToastText04(title, content, arg);
             var notifier = ToastNotificationManager.CreateToastNotifier();
             notifier.Show(toast);
         }
@@ -52,7 +52,7 @@
         public void ShowToastImageAndText02(string image, string title, string content, string arg = null)
         {
             // show toast
-            var toast = BuildToastImageAndText02(image, content, title, arg);
+            var toast = BuildToastImageAndText02(image, title, content, arg);
             var notifier = ToastNotificationManager.CreateToastNotifier();
             notifier.Show(toast);
         }
@@ -60,7 +60,7 @@
         public void ShowToastImageAndText03(string image, string title, string content, string arg = null)
         {
             // show toast
-            var toast = BuildToastImageAndText03(image, content, title, arg);
+            var toast = BuildToastImageAndText03(image, title, content, arg);
             var notifier = ToastNotificationManager.CreateToastNotifier();
             notifier.Show(toast);
         }
@@ -68,7 +68,7 @@
         public void ShowToastImageAndText04(string image, string title, string content, string content2, string arg = null)
         {
             // show toast
-            var toast = BuildToastImageAndText04(image, content, title, arg);
+            var toast = BuildToastImageAndText04(image, title, content, arg);
             var notifier = ToastNotificationManager.CreateToastNotifier();
             notifier.Show(toast);
         }

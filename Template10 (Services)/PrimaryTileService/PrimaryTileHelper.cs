@@ -1,4 +1,4 @@
-using Windows.Data.Xml.Dom;
+﻿using Windows.Data.Xml.Dom;
 using Windows.UI.Notifications;
 
 namespace Template10.Services.PrimaryTileService
