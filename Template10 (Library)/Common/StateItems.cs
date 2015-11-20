@@ -24,12 +24,12 @@ namespace Template10.Common
         public void Remove(Type type) // <-- would not be called oftenly, okey to linear search
         {
             var willRemove = this.Keys.Where(x => x.Type == type).ToList();
-            willRemove.ForEach(x => this.Remove(x));
+            willRemove.ForEach(x => base.Remove(x));
         }
 
         public void Remove(Type type, string key) //
         {
-            this.Remove(new StateItemKey(type, key));
+            base.Remove(new StateItemKey(type, key));
         }
 
         //this method is not a good idea in any senioro cos values can always be dupe,
@@ -37,9 +37,9 @@ namespace Template10.Common
         //Hope this can be changed to    `public void Remove(Func<KVP<StateItemKey,object>,bool> condition>)`        
         public void Remove(object value)
         {
-            var willRemove = this.Values.Where(x => x == value).ToList();
-            willRemove.ForEach(x => this.Remove(x));
-        }
+            var willRemove = this.Where(x => Object.Equals(x.Value, value)).ToList();
+            willRemove.ForEach(x => base.Remove(x.Key));
+		}
 
 
         //not a good idea just like `public void Remove(object value)`  cause lack of eqcomparer
