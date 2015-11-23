@@ -11,7 +11,7 @@ using Windows.UI.Xaml.Markup;
 namespace Template10.Controls
 {
     [ContentProperty(Name = nameof(Content))]
-    public class HamburgerButtonInfo : DependencyBindableBase, IDisposable
+    public class HamburgerButtonInfo : DependencyBindableBase
     {
         public enum ButtonTypes { Toggle, Command }
         public ButtonTypes ButtonType { get; set; } = ButtonTypes.Toggle;

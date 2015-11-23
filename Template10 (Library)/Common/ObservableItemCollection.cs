@@ -11,8 +11,7 @@ using Template10.Common;
 
 namespace Template10.Controls
 {
-    public class ObservableItemCollection<T> : ObservableCollection<T> where T : INotifyPropertyChanged,
-                                               IDisposable
+    public class ObservableItemCollection<T> : ObservableCollection<T>, IDisposable where T : INotifyPropertyChanged
     {
         private bool _enableCollectionChanged = true;
         public override event NotifyCollectionChangedEventHandler CollectionChanged;
@@ -40,6 +39,7 @@ namespace Template10.Controls
 
         protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
+            CheckDisposed();
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
@@ -64,6 +64,7 @@ namespace Template10.Controls
 
         private void RegisterPropertyChanged(IList items)
         {
+            CheckDisposed();
             foreach (INotifyPropertyChanged item in items)
             {
                 if (item != null)
@@ -75,6 +76,7 @@ namespace Template10.Controls
 
         private void UnRegisterPropertyChanged(IList items)
         {
+            CheckDisposed();
             foreach (INotifyPropertyChanged item in items)
             {
                 if (item != null)
@@ -86,12 +88,14 @@ namespace Template10.Controls
 
         private void item_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+            CheckDisposed();
             ItemPropertyChanged?.Invoke(this, new ItemPropertyChangedEventArgs(sender, e));
         }
 
 
         public void AddRange(IEnumerable<T> items)
         {
+            CheckDisposed();
             _enableCollectionChanged = false;
             foreach (var item in items)
             {
@@ -103,6 +107,7 @@ namespace Template10.Controls
 
         public void RemoveRange(IEnumerable<T> items)
         {
+            CheckDisposed();
             _enableCollectionChanged = false;
             foreach (var item in items)
             {
@@ -118,9 +123,23 @@ namespace Template10.Controls
             base.ClearItems();
         }
 
+        bool disposed = false;
+
         public void Dispose()
         {
-            ClearItems();
+            if (!disposed)
+            {
+                ClearItems();
+                disposed = true;
+            }
+        }
+
+        public void CheckDisposed()
+        {
+            if (disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
         }
     }
 
