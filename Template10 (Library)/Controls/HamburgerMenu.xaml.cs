@@ -82,7 +82,8 @@ namespace Template10.Controls
             pageType = pageType ?? NavigationService.CurrentPageType;
             pageParam = pageParam ?? NavigationService.CurrentPageParam;
             var values = _navButtons.Select(x => x.Value);
-            var button = values.FirstOrDefault(x => x.PageType == pageType && x.PageParameter == pageParam);
+            var button = values.FirstOrDefault(x => x.PageType == pageType && 
+                                                (x.PageParameter == null || x.PageParameter.Equals(pageParam)));
             Selected = button;
         }
 
