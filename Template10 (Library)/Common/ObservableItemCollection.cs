@@ -89,7 +89,7 @@ namespace Template10.Controls
         private void item_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             CheckDisposed();
-            ItemPropertyChanged?.Invoke(this, new ItemPropertyChangedEventArgs(sender, e));
+            ItemPropertyChanged?.Invoke(this, new ItemPropertyChangedEventArgs(sender, this.IndexOf((T)sender), e));
         }
 
 
