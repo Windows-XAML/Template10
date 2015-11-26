@@ -19,7 +19,7 @@ namespace Template10.Mvvm
             {
                 if (DesignMode.DesignModeEnabled)
                     return;
-                BootStrapper.Current.NavigationService.Dispatcher.Dispatch(() =>
+                BootStrapper.Current.Dispatcher.Dispatch(() =>
                 {
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
                 });
@@ -102,7 +102,7 @@ namespace Template10.Mvvm
             {
                 if (DesignMode.DesignModeEnabled)
                     return;
-                BootStrapper.Current.NavigationService.Dispatcher.Dispatch(() =>
+                BootStrapper.Current.Dispatcher.Dispatch(() =>
                 {
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
                 });
