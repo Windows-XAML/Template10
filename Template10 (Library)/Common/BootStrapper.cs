@@ -61,7 +61,13 @@ namespace Template10.Common
         /// it is only a helper property to provide the NavigatioNService for
         /// the first Frame ultimately aggregated in the static WindowWrapper class.
         /// </summary>
-        public Services.NavigationService.INavigationService NavigationService => WindowWrapper.ActiveWrappers.First().NavigationServices.First();
+        public Services.NavigationService.INavigationService NavigationService => WindowWrapper.Default.NavigationServices.First();
+
+        /// <summary>
+        /// This is the DispatcherWrapper of the current WindowWrapper. This is used to get
+        /// the DispatcherWrapper of the "current" UI thread.
+        /// </summary>
+        public IDispatcherWrapper Dispatcher => WindowWrapper.Current().Dispatcher;
 
         /// <summary>
         /// The SplashFactory is a Func that returns an instantiated Splash view.
