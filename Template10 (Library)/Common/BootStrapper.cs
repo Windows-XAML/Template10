@@ -417,7 +417,7 @@ namespace Template10.Common
                     : AppViewBackButtonVisibility.Collapsed;
         }
 
-        public enum AdditionalKinds { Primary, Toast, SecondaryTile, Other }
+        public enum AdditionalKinds { Primary, Toast, SecondaryTile, Other, JumpListItem }
 
         /// <summary>
         /// This determines the simplest case for starting. This should handle 80% of common scenarios. 
@@ -430,6 +430,8 @@ namespace Template10.Common
             var e = args as ILaunchActivatedEventArgs;
             if (e?.TileId == DefaultTileID && string.IsNullOrEmpty(e?.Arguments))
                 return AdditionalKinds.Primary;
+            else if (e?.TileId == DefaultTileID && !string.IsNullOrEmpty(e?.Arguments))
+                return AdditionalKinds.JumpListItem;
             else if (e?.TileId != null && e?.TileId != DefaultTileID)
                 return AdditionalKinds.SecondaryTile;
             else
