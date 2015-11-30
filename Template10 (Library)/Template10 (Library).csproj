@@ -140,6 +140,7 @@
     <Compile Include="Common\HandledEventArgs.cs" />
     <Compile Include="Common\IDispatcherWrapper.cs" />
     <Compile Include="Common\IStateItems.cs" />
+    <Compile Include="Common\ItemPropertyChangedEventArgs.cs" />
     <Compile Include="Common\Mdl2.cs" />
     <Compile Include="Common\StateItems.cs" />
     <Compile Include="Common\StateKey.cs" />
