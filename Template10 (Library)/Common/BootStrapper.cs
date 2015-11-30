@@ -343,15 +343,21 @@ namespace Template10.Common
             if (Window.Current.Content == null || Window.Current.Content == splash)
             {
                 // build the default frame
-                Window.Current.Content = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include).Frame;
+                var frame = CreateRootFrame(e);
+                Window.Current.Content = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include, frame).Frame;
             }
+        }
+
+        protected virtual Frame CreateRootFrame(IActivatedEventArgs e)
+        {
+            return new Frame();
         }
 
         public enum BackButton { Attach, Ignore }
         public enum ExistingContent { Include, Exclude }
 
         /// <summary>
-        /// Craetes a new FamFrame and adds the resulting NavigationService to the 
+        /// Creates a new Frame and adds the resulting NavigationService to the 
         /// WindowWrapper collection. In addition, it optionally will setup the 
         /// shell back button to react to the nav of the Frame.
         /// A developer should call this when creating a new/secondary frame.
@@ -359,11 +365,20 @@ namespace Template10.Common
         /// </summary>
         public Services.NavigationService.NavigationService NavigationServiceFactory(BackButton backButton, ExistingContent existingContent)
         {
-            var frame = new Frame
-            {
-                Language = Windows.Globalization.ApplicationLanguages.Languages[0],
-                Content = (existingContent == ExistingContent.Include) ? Window.Current.Content : null,
-            };
+            return NavigationServiceFactory(backButton, existingContent, new Frame());
+        }
+
+        /// <summary>
+        /// Creates a new NavigationService from the gived Frame to the 
+        /// WindowWrapper collection. In addition, it optionally will setup the 
+        /// shell back button to react to the nav of the Frame.
+        /// A developer should call this when creating a new/secondary frame.
+        /// The shell back button should only be setup one time.
+        /// </summary>
+        public Services.NavigationService.NavigationService NavigationServiceFactory(BackButton backButton, ExistingContent existingContent, Frame frame)
+        {
+            frame.Language = Windows.Globalization.ApplicationLanguages.Languages[0];
+            frame.Content = (existingContent == ExistingContent.Include) ? Window.Current.Content : null;
 
             var navigationService = new Services.NavigationService.NavigationService(frame);
             navigationService.FrameFacade.BackButtonHandling = backButton;
@@ -417,7 +432,7 @@ namespace Template10.Common
                     : AppViewBackButtonVisibility.Collapsed;
         }
 
-        public enum AdditionalKinds { Primary, Toast, SecondaryTile, Other }
+        public enum AdditionalKinds { Primary, Toast, SecondaryTile, Other, JumpListItem }
 
         /// <summary>
         /// This determines the simplest case for starting. This should handle 80% of common scenarios. 
@@ -430,6 +445,8 @@ namespace Template10.Common
             var e = args as ILaunchActivatedEventArgs;
             if (e?.TileId == DefaultTileID && string.IsNullOrEmpty(e?.Arguments))
                 return AdditionalKinds.Primary;
+            else if (e?.TileId == DefaultTileID && !string.IsNullOrEmpty(e?.Arguments))
+                return AdditionalKinds.JumpListItem;
             else if (e?.TileId != null && e?.TileId != DefaultTileID)
                 return AdditionalKinds.SecondaryTile;
             else
