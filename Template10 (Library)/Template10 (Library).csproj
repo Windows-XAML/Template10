@@ -158,7 +158,9 @@
     <Compile Include="Converters\StringFormatConverter.cs" />
     <Compile Include="Mvvm\AwaitableDelegateCommand.cs" />
     <Compile Include="Common\WeakReference.cs" />
+    <Compile Include="Services\NavigationService\AlternativeNavigationEventArgs.cs" />
     <Compile Include="Services\NavigationService\INavigationService.cs" />
+    <Compile Include="Services\NavigationService\JournalEntry.cs" />
     <Compile Include="Services\NavigationService\NavigationServiceList.cs" />
     <Compile Include="Services\SettingsService\ISettingsHelper.cs" />
     <Compile Include="Services\SettingsService\SettingsService.cs" />

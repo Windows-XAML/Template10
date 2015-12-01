@@ -143,21 +143,21 @@ namespace Template10.Services.NavigationService
 
         public bool Navigate(Type page, object parameter = null, NavigationTransitionInfo infoOverride = null)
         {
-			if (page == null)
-				throw new ArgumentNullException(nameof(page));
-			if (page.FullName.Equals(LastNavigationType))
-			{
-				if (parameter == LastNavigationParameter)
-					return false;
+            if (page == null)
+                throw new ArgumentNullException(nameof(page));
+            if (page.FullName.Equals(LastNavigationType))
+            {
+                if (parameter == LastNavigationParameter)
+                    return false;
 
-				if (parameter != null && parameter.Equals(LastNavigationParameter))
-					return false;
-			}
+                if (parameter != null && parameter.Equals(LastNavigationParameter))
+                    return false;
+            }
 
-			return FrameFacade.Navigate(page, parameter, infoOverride);
-		}
+            return FrameFacade.Navigate(page, parameter, infoOverride);
+        }
 
-		/*
+        /*
             Navigate<T> allows developers to navigate using a
             page key instead of the view type. This is accomplished by
             creating a custom Enum and setting up the PageKeys dict
@@ -179,8 +179,8 @@ namespace Template10.Services.NavigationService
             NavigationService.Navigate(Pages.MainPage);
         */
 
-		// T must be the same custom Enum used with BootStrapper.PageKeys()
-		public bool Navigate<T>(T key, object parameter = null, NavigationTransitionInfo infoOverride = null)
+        // T must be the same custom Enum used with BootStrapper.PageKeys()
+        public bool Navigate<T>(T key, object parameter = null, NavigationTransitionInfo infoOverride = null)
             where T : struct, IConvertible
         {
             var keys = Common.BootStrapper.Current.PageKeys<T>();
@@ -246,25 +246,25 @@ namespace Template10.Services.NavigationService
         public bool CanGoForward => FrameFacade.CanGoForward;
 
         public void ClearCache(bool removeCachedPagesInBackStack = false)
-		{
-			int currentSize = FrameFacade.Frame.CacheSize;
+        {
+            int currentSize = FrameFacade.Frame.CacheSize;
 
-			if (removeCachedPagesInBackStack)
-			{
-				FrameFacade.Frame.CacheSize = 0;
-			}
-			else
-			{
-				if (Frame.BackStackDepth == 0)
-					Frame.CacheSize = 1;
-				else
-					Frame.CacheSize = Frame.BackStackDepth;
-			}
+            if (removeCachedPagesInBackStack)
+            {
+                FrameFacade.Frame.CacheSize = 0;
+            }
+            else
+            {
+                if (Frame.BackStackDepth == 0)
+                    Frame.CacheSize = 1;
+                else
+                    Frame.CacheSize = Frame.BackStackDepth;
+            }
 
-			FrameFacade.Frame.CacheSize = currentSize;
-		}
+            FrameFacade.Frame.CacheSize = currentSize;
+        }
 
-		public void ClearHistory() { FrameFacade.Frame.BackStack.Clear(); }
+        public void ClearHistory() { FrameFacade.Frame.BackStack.Clear(); }
 
         public void Resuming() { /* nothing */ }
 

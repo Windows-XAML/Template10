@@ -28,6 +28,7 @@ namespace Sample.Views
         {
             WindowWrapper.Current().Dispatcher.Dispatch(() =>
             {
+                Instance.MyHamburgerMenu.PaneWidth = 500;
                 if (busy)
                     SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
                 else
