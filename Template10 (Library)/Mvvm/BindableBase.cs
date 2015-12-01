@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using Windows.UI.Xaml;
+using Windows.ApplicationModel;
 
 namespace Template10.Mvvm
 {
@@ -16,7 +17,12 @@ namespace Template10.Mvvm
         {
             try
             {
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                if (DesignMode.DesignModeEnabled)
+                    return;
+                BootStrapper.Current.Dispatcher.Dispatch(() =>
+                {
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                });
             }
             catch
             {
@@ -92,11 +98,14 @@ namespace Template10.Mvvm
 
         public void RaisePropertyChanged([CallerMemberName]string propertyName = null)
         {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-                return;
             try
             {
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                if (DesignMode.DesignModeEnabled)
+                    return;
+                BootStrapper.Current.Dispatcher.Dispatch(() =>
+                {
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                });
             }
             catch
             {
