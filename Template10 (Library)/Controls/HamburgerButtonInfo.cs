@@ -137,5 +137,10 @@ namespace Template10.Controls
         {
             Holding?.Invoke(this, args);
         }
+
+        public void Dispose()
+        {
+            
+        }
     }
 }
