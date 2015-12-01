@@ -18,6 +18,7 @@
     <tags>Windows 10, Windows10, W10, UAP, UWP, WinRT, XAML, Template 10, Template10, T10, Universal App</tags>
     <dependencies>
       <dependency id="Newtonsoft.Json" version="7.0.1" />
+      <dependency id="Microsoft.Xaml.Behaviors.Uwp.Managed" version="1.0.2" />
     </dependencies>
   </metadata>
   <files>

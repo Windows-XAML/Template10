@@ -33,7 +33,7 @@ namespace Sample
         {
             // setup hamburger shell
             var nav = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include);
-             Window.Current.Content = new Views.Shell(nav);
+            Window.Current.Content = new Views.Shell(nav);
             await Task.Yield();
         }
 
