@@ -54,14 +54,7 @@ namespace Template10.Common
 
         #region properties
 
-        /// <summary>
-        /// This is the NavigationService of the primary, first, or default Frame. 
-        /// An app can contain many frames and reference to this NavigationService should
-        /// not be confused as the NavigationService to the "current" Frame as
-        /// it is only a helper property to provide the NavigatioNService for
-        /// the first Frame ultimately aggregated in the static WindowWrapper class.
-        /// </summary>
-        public Services.NavigationService.INavigationService NavigationService => WindowWrapper.ActiveWrappers.First().NavigationServices.First();
+        public Services.NavigationService.INavigationService NavigationService => WindowWrapper.Current().NavigationServices.First();
 
         /// <summary>
         /// The SplashFactory is a Func that returns an instantiated Splash view.
@@ -247,31 +240,38 @@ namespace Template10.Common
         private void RaiseBackRequested(ref bool handled)
         {
             var args = new HandledEventArgs();
+            BackRequested?.Invoke(null, args);
+            if (handled = args.Handled)
+                return;
             foreach (var frame in WindowWrapper.Current().NavigationServices.Select(x => x.FrameFacade).Reverse())
             {
                 frame.RaiseBackRequested(args);
-                handled = args.Handled;
-                if (handled)
+                if (handled = args.Handled)
                     return;
             }
-
-            // default to first window
             NavigationService.GoBack();
         }
+
+        // this event precedes the in-frame event by the same name
+        public static event EventHandler<HandledEventArgs> BackRequested;
 
         private void RaiseForwardRequested()
         {
             var args = new HandledEventArgs();
+            ForwardRequested?.Invoke(null, args);
+            if (args.Handled)
+                return;
             foreach (var frame in WindowWrapper.Current().NavigationServices.Select(x => x.FrameFacade))
             {
                 frame.RaiseForwardRequested(args);
                 if (args.Handled)
                     return;
             }
-
-            // default to first window
             NavigationService.GoForward();
         }
+
+        // this event precedes the in-frame event by the same name
+        public static event EventHandler<HandledEventArgs> ForwardRequested;
 
         #region overrides
 
@@ -289,7 +289,10 @@ namespace Template10.Common
         /// OnInitializeAsync will be called even if the application is restoring from state.
         /// An app restores from state when the app was suspended and then terminated (PreviousExecutionState terminated).
         /// </summary>
-        public virtual async Task OnInitializeAsync(IActivatedEventArgs args) { await Task.Yield(); }
+        public virtual async Task OnInitializeAsync(IActivatedEventArgs args)
+        {
+            await Task.CompletedTask;
+        }
 
         /// <summary>
         /// OnSuspendingAsync will be called when the application is suspending, but this override
@@ -305,7 +308,7 @@ namespace Template10.Common
             {
                 WindowWrapper.ClearNavigationServices(Window.Current);
             }
-            await Task.Yield();
+            await Task.CompletedTask;
         }
 
         public virtual void OnResuming(object s, object e) { }

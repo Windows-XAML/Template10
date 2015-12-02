@@ -34,14 +34,14 @@ namespace Sample
             // setup hamburger shell
             var nav = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include);
             Window.Current.Content = new Views.Shell(nav);
-            await Task.Yield();
+            await Task.CompletedTask;
         }
 
         // runs only when not restored from state
         public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
-            await Task.Delay(0);
             NavigationService.Navigate(typeof(Views.MainPage));
+            await Task.CompletedTask;
         }
     }
 }

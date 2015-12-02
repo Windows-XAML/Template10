@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Linq;
 using Template10.Common;
 using Template10.Controls;
 using Template10.Services.NavigationService;
@@ -13,10 +14,21 @@ namespace Sample.Views
         public static Shell Instance { get; set; }
         public static HamburgerMenu HamburgerMenu { get { return Instance.MyHamburgerMenu; } }
 
+        public Shell()
+        {
+            Instance = this;
+            InitializeComponent();
+        }
+
         public Shell(NavigationService navigationService)
         {
             Instance = this;
             InitializeComponent();
+            SetNavigationService(navigationService);
+        }
+
+        public void SetNavigationService(NavigationService navigationService)
+        {
             MyHamburgerMenu.NavigationService = navigationService;
         }
 

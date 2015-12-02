@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using Template10.Common;
 using Windows.UI.Xaml;
 
 namespace Template10.Mvvm
@@ -14,13 +15,16 @@ namespace Template10.Mvvm
 
         public void RaisePropertyChanged([CallerMemberName]string propertyName = null)
         {
+            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
+                return;
             try
             {
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             }
             catch
             {
-                // nothing
+                WindowWrapper.Current().Dispatcher.Dispatch(() =>
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)));
             }
         }
 
@@ -100,7 +104,8 @@ namespace Template10.Mvvm
             }
             catch
             {
-                // nothing
+                WindowWrapper.Current().Dispatcher.Dispatch(() =>
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)));
             }
         }
 

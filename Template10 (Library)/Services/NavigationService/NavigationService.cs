@@ -46,18 +46,19 @@ namespace Template10.Services.NavigationService
             };
         }
 
-        // before navigate (cancellable)
+        // before navigate (cancellable) 
         bool NavigatingFrom(bool suspending)
         {
             var page = FrameFacade.Content as Page;
             if (page != null)
             {
                 // force (x:bind) page bindings to update
-                var bindings = page.GetType().GetRuntimeField("Binding");
+                var fields = page.GetType().GetRuntimeFields();
+                var bindings = fields.FirstOrDefault(x => x.Name.Equals("Bindings"));
                 if (bindings != null)
                 {
-                    var update = bindings.GetType().GetRuntimeMethod("Update", null);
-                    update?.Invoke(page, null);
+                    var update = bindings.GetType().GetTypeInfo().GetDeclaredMethod("Update");
+                    update?.Invoke(bindings, null);
                 }
 
                 // call navagable override (navigating)
