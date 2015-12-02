@@ -1,4 +1,6 @@
 ﻿using System;
+using Template10.Common;
+using Template10.Utils;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -11,6 +13,26 @@ namespace Template10.Controls
         public ModalDialog()
         {
             DefaultStyleKey = typeof(ModalDialog);
+            Loaded += ModalDialog_Loaded;
+            Unloaded += ModalDialog_Unloaded;
+        }
+
+        private void ModalDialog_Loaded(object sender, RoutedEventArgs e)
+        {
+            BootStrapper.BackRequested += BootStrapper_BackRequested;
+        }
+
+        private void ModalDialog_Unloaded(object sender, RoutedEventArgs e)
+        {
+            BootStrapper.BackRequested -= BootStrapper_BackRequested;
+        }
+
+        private void BootStrapper_BackRequested(object sender, HandledEventArgs e)
+        {
+            if (!CanBackButtonDismiss)
+                return;
+            e.Handled = IsModal;
+            IsModal = false;
         }
 
         #region parts
@@ -44,11 +66,19 @@ namespace Template10.Controls
         #region props
 
         public bool IsModal
-        {
+        { 
             get { return (bool)GetValue(IsModalProperty); }
             set { SetValue(IsModalProperty, value); }
         }
         public static readonly DependencyProperty IsModalProperty = DependencyProperty.Register(nameof(IsModal),
+            typeof(bool), typeof(ModalDialog), new PropertyMetadata(false, (d, e) => (d as ModalDialog).Update()));
+
+        public bool CanBackButtonDismiss
+        {
+            get { return (bool)GetValue(CanBackButtonDismissProperty); }
+            set { SetValue(CanBackButtonDismissProperty, value); }
+        }
+        public static readonly DependencyProperty CanBackButtonDismissProperty = DependencyProperty.Register(nameof(CanBackButtonDismiss),
             typeof(bool), typeof(ModalDialog), new PropertyMetadata(false, (d, e) => (d as ModalDialog).Update()));
 
         public Brush ModalBackground
