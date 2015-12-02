@@ -25,7 +25,7 @@ namespace Template10.Controls
     {
         public event EventHandler PaneOpen;
         public event EventHandler PaneClosed;
-        public event EventHandler CheckedChanged;
+        public event EventHandler<ValueChangedEventArgs<HamburgerButtonInfo>> CheckedChanged;
 
         public HamburgerMenu()
         {
@@ -374,10 +374,11 @@ namespace Template10.Controls
             get { return GetValue(SelectedProperty) as HamburgerButtonInfo; }
             set
             {
-                if (value?.Equals(Selected) ?? false)
+                HamburgerButtonInfo oldValue = Selected;
+                if (value?.Equals(oldValue) ?? false)
                     value.IsChecked = (value.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
                 SetValue(SelectedProperty, value);
-                this.CheckedChanged?.Invoke(this, EventArgs.Empty);
+                this.CheckedChanged?.Invoke(this, new ValueChangedEventArgs<HamburgerButtonInfo>(oldValue, value));
             }
         }
         public static readonly DependencyProperty SelectedProperty =
