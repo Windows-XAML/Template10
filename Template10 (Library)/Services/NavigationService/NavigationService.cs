@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Template10.Common;
 using Windows.ApplicationModel.Core;
@@ -51,11 +52,21 @@ namespace Template10.Services.NavigationService
             var page = FrameFacade.Content as Page;
             if (page != null)
             {
+                // force (x:bind) page bindings to update
+                var bindings = page.GetType().GetRuntimeField("Binding");
+                if (bindings != null)
+                {
+                    var update = bindings.GetType().GetRuntimeMethod("Update", null);
+                    update?.Invoke(page, null);
+                }
+
+                // call navagable override (navigating)
                 var dataContext = page.DataContext as INavigable;
                 if (dataContext != null)
                 {
                     var args = new NavigatingEventArgs
                     {
+                        NavigationMode = FrameFacade.NavigationModeHint,
                         PageType = FrameFacade.CurrentPageType,
                         Parameter = FrameFacade.CurrentPageParam,
                         Suspending = suspending,
