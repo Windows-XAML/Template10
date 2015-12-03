@@ -29,6 +29,8 @@ namespace Template10.Controls
 
         private void BootStrapper_BackRequested(object sender, HandledEventArgs e)
         {
+            if (!IsModal)
+                return;
             if (CanBackButtonDismiss && DisableBackButtonWhenModal)
             {
                 e.Handled = true;
@@ -41,11 +43,11 @@ namespace Template10.Controls
             }
             else if (!CanBackButtonDismiss && DisableBackButtonWhenModal)
             {
-                e.Handled = false;
+                e.Handled = true;
             }
             else if (!CanBackButtonDismiss && !DisableBackButtonWhenModal)
             {
-                e.Handled = true;
+                e.Handled = false;
             }
         }
 

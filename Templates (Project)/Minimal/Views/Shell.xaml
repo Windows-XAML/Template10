@@ -9,7 +9,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:views="using:Sample.Views" mc:Ignorable="d">
 
-    <Controls:ModalDialog IsModal="{x:Bind IsBusy, Mode=OneWay}">
+    <Controls:ModalDialog CanBackButtonDismiss="False" DisableBackButtonWhenModal="True" IsModal="{x:Bind IsBusy, Mode=OneWay}">
         <Controls:ModalDialog.Content>
             <Controls:HamburgerMenu x:Name="MyHamburgerMenu" IsFullScreen="False">
 
