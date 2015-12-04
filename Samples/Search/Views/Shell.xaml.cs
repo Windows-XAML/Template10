@@ -13,7 +13,7 @@ namespace Sample.Views
     {
         public static Shell Instance { get; set; }
         private static WindowWrapper Window { get; set; }
-        public Shell(NavigationService navigationService)
+        public Shell(INavigationService navigationService)
         {
             Instance = this;
             this.InitializeComponent();
