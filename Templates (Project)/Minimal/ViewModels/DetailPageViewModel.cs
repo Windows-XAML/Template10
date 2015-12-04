@@ -37,7 +37,7 @@ namespace Sample.ViewModels
         {
             if (suspending)
                 state[nameof(Value)] = Value;
-            await Task.Yield();
+            await Task.CompletedTask;
         }
 
         public override void OnNavigatingFrom(NavigatingEventArgs args)

@@ -140,6 +140,7 @@
     <Compile Include="Common\HandledEventArgs.cs" />
     <Compile Include="Common\IDispatcherWrapper.cs" />
     <Compile Include="Common\IStateItems.cs" />
+    <Compile Include="Common\ItemPropertyChangedEventArgs.cs" />
     <Compile Include="Common\Mdl2.cs" />
     <Compile Include="Common\StateItems.cs" />
     <Compile Include="Common\StateKey.cs" />
@@ -156,15 +157,19 @@
     <Compile Include="Converters\DateTimeOffsetConverter.cs" />
     <Compile Include="Converters\StringFormatConverter.cs" />
     <Compile Include="Mvvm\AwaitableDelegateCommand.cs" />
+    <Compile Include="Common\WeakReference.cs" />
+    <Compile Include="Services\NavigationService\AlternativeNavigationEventArgs.cs" />
     <Compile Include="Services\NavigationService\INavigationService.cs" />
+    <Compile Include="Services\NavigationService\JournalEntry.cs" />
     <Compile Include="Services\NavigationService\NavigationServiceList.cs" />
     <Compile Include="Services\SettingsService\ISettingsHelper.cs" />
     <Compile Include="Services\SettingsService\SettingsService.cs" />
     <Compile Include="Services\SettingsService\SettingsStrategy.cs" />
     <Compile Include="Utils\AudioUtils.cs" />
     <Compile Include="Utils\ColorUtils.cs" />
+    <Compile Include="Utils\DeviceUtils.cs" />
     <Compile Include="Utils\InkUtils.cs" />
-    <Compile Include="Utils\MonitorUtil.cs" />
+    <Compile Include="Utils\MonitorUtils.cs" />
     <Compile Include="Utils\TaskUtils.cs" />
     <Compile Include="Utils\XamlUtil.cs" />
     <Compile Include="Controls\HamburgerMenu.xaml.cs">
@@ -207,9 +212,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <SDKReference Include="BehaviorsXamlSDKManaged, Version=12.0">
-      <Name>Behaviors SDK %28XAML%29</Name>
-    </SDKReference>
     <SDKReference Include="WindowsMobile, Version=10.0.10240.0">
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>

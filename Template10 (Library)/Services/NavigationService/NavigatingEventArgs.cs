@@ -16,6 +16,5 @@ namespace Template10.Services.NavigationService
         }
         public bool Cancel { get; set; } = false;
         public bool Suspending { get; set; } = false;
-        public Page Page { get; set; }
     }
 }

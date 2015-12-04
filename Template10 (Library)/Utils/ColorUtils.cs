@@ -8,6 +8,7 @@ namespace Template10.Utils
         public static SolidColorBrush ToSolidColorBrush(this Color color) => new SolidColorBrush(color);
 
         static Color nearBlack = Colors.Black.Lighten(Accents.Plus20);
+
         static Color nearWhite = Colors.Black.Lighten(Accents.Plus80);
 
         internal enum Accents : long

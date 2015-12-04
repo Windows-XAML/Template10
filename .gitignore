@@ -6,6 +6,7 @@
 *.user
 *.sln.docstates
 *.lock.json
+*.nuget.targets
 
 # Build results
 [Dd]ebug/

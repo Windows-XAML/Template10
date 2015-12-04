@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Template10.Common;
 using Windows.ApplicationModel.Core;
@@ -45,17 +46,28 @@ namespace Template10.Services.NavigationService
             };
         }
 
-        // before navigate (cancellable)
+        // before navigate (cancellable) 
         bool NavigatingFrom(bool suspending)
         {
             var page = FrameFacade.Content as Page;
             if (page != null)
             {
+                // force (x:bind) page bindings to update
+                var fields = page.GetType().GetRuntimeFields();
+                var bindings = fields.FirstOrDefault(x => x.Name.Equals("Bindings"));
+                if (bindings != null)
+                {
+                    var update = bindings.GetType().GetTypeInfo().GetDeclaredMethod("Update");
+                    update?.Invoke(bindings, null);
+                }
+
+                // call navagable override (navigating)
                 var dataContext = page.DataContext as INavigable;
                 if (dataContext != null)
                 {
                     var args = new NavigatingEventArgs
                     {
+                        NavigationMode = FrameFacade.NavigationModeHint,
                         PageType = FrameFacade.CurrentPageType,
                         Parameter = FrameFacade.CurrentPageParam,
                         Suspending = suspending,
@@ -143,21 +155,21 @@ namespace Template10.Services.NavigationService
 
         public bool Navigate(Type page, object parameter = null, NavigationTransitionInfo infoOverride = null)
         {
-			if (page == null)
-				throw new ArgumentNullException(nameof(page));
-			if (page.FullName.Equals(LastNavigationType))
-			{
-				if (parameter == LastNavigationParameter)
-					return false;
+            if (page == null)
+                throw new ArgumentNullException(nameof(page));
+            if (page.FullName.Equals(LastNavigationType))
+            {
+                if (parameter == LastNavigationParameter)
+                    return false;
 
-				if (parameter != null && parameter.Equals(LastNavigationParameter))
-					return false;
-			}
+                if (parameter != null && parameter.Equals(LastNavigationParameter))
+                    return false;
+            }
 
-			return FrameFacade.Navigate(page, parameter, infoOverride);
-		}
+            return FrameFacade.Navigate(page, parameter, infoOverride);
+        }
 
-		/*
+        /*
             Navigate<T> allows developers to navigate using a
             page key instead of the view type. This is accomplished by
             creating a custom Enum and setting up the PageKeys dict
@@ -179,8 +191,8 @@ namespace Template10.Services.NavigationService
             NavigationService.Navigate(Pages.MainPage);
         */
 
-		// T must be the same custom Enum used with BootStrapper.PageKeys()
-		public bool Navigate<T>(T key, object parameter = null, NavigationTransitionInfo infoOverride = null)
+        // T must be the same custom Enum used with BootStrapper.PageKeys()
+        public bool Navigate<T>(T key, object parameter = null, NavigationTransitionInfo infoOverride = null)
             where T : struct, IConvertible
         {
             var keys = Common.BootStrapper.Current.PageKeys<T>();
@@ -246,25 +258,25 @@ namespace Template10.Services.NavigationService
         public bool CanGoForward => FrameFacade.CanGoForward;
 
         public void ClearCache(bool removeCachedPagesInBackStack = false)
-		{
-			int currentSize = FrameFacade.Frame.CacheSize;
+        {
+            int currentSize = FrameFacade.Frame.CacheSize;
 
-			if (removeCachedPagesInBackStack)
-			{
-				FrameFacade.Frame.CacheSize = 0;
-			}
-			else
-			{
-				if (Frame.BackStackDepth == 0)
-					Frame.CacheSize = 1;
-				else
-					Frame.CacheSize = Frame.BackStackDepth;
-			}
+            if (removeCachedPagesInBackStack)
+            {
+                FrameFacade.Frame.CacheSize = 0;
+            }
+            else
+            {
+                if (Frame.BackStackDepth == 0)
+                    Frame.CacheSize = 1;
+                else
+                    Frame.CacheSize = Frame.BackStackDepth;
+            }
 
-			FrameFacade.Frame.CacheSize = currentSize;
-		}
+            FrameFacade.Frame.CacheSize = currentSize;
+        }
 
-		public void ClearHistory() { FrameFacade.Frame.BackStack.Clear(); }
+        public void ClearHistory() { FrameFacade.Frame.BackStack.Clear(); }
 
         public void Resuming() { /* nothing */ }
 

@@ -16,19 +16,11 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <!--  header  -->
-        <controls:PageHeader BackButtonVisibility="Collapsed" Frame="{x:Bind Frame, Mode=OneWay}"
-                             Content="Main Page" VisualStateNarrowMinWidth="-1" />
-
-        <!--  #region content  -->
+        <controls:PageHeader Content="Main Page" />
 
         <Grid Grid.Row="1" Padding="12,4,0,0">
-
             <!--  content  -->
-
         </Grid>
-
-        <!--  #endregion  -->
 
     </Grid>
 </Page>

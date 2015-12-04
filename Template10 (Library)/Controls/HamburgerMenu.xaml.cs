@@ -468,8 +468,8 @@ namespace Template10.Controls
             DependencyProperty.Register(nameof(PrimaryButtons), typeof(ObservableCollection<HamburgerButtonInfo>),
                 typeof(HamburgerMenu), new PropertyMetadata(null));
 
-        private NavigationService _navigationService;
-        public NavigationService NavigationService
+        private INavigationService _navigationService;
+        public INavigationService NavigationService
         {
             get { return _navigationService; }
             set
@@ -509,12 +509,6 @@ namespace Template10.Controls
                 }
                 NavigationService.AfterRestoreSavedNavigation += (s, e) => HighlightCorrectButton();
                 NavigationService.FrameFacade.Navigated += (s, e) => HighlightCorrectButton(e.PageType, e.Parameter);
-                ShellSplitView.RegisterPropertyChangedCallback(SplitView.IsPaneOpenProperty, (s, e) =>
-                {
-                    // update width
-                    //commented out as PaneWidth can now be set by user and need not be changed internally
-                    //PaneWidth = !ShellSplitView.IsPaneOpen ? ShellSplitView.CompactPaneLength : ShellSplitView.OpenPaneLength;
-                });
                 UpdateFullScreen();
             }
         }

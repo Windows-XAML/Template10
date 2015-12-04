@@ -22,7 +22,7 @@ namespace Template10.Utils
             return null;
         }
 
-        public static List<T> AllChildren<T>(DependencyObject parent) where T : UIElement
+        public static List<T> AllChildren<T>(DependencyObject parent) where T : DependencyObject
         {
             var list = new List<T>();
             var count = VisualTreeHelper.GetChildrenCount(parent);

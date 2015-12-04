@@ -14,7 +14,7 @@
 
     <Page.Resources>
 
-        <Converters:StringFormatConverter x:Key="DateTimeFormatConverter" />
+        <Converters:StringFormatConverter x:Key="StringFormatConverter" />
         <c:ValueWhenConverter xmlns:c="using:Template10.Converters" x:Name="VisibleWhenFalseConverter">
             <c:ValueWhenConverter.When>
                 <x:Boolean>False</x:Boolean>
@@ -54,7 +54,8 @@
                            Margin="8,0,16,8" HorizontalAlignment="Right"
                            VerticalAlignment="Bottom" FontSize="12"
                            FontWeight="Light" Foreground="DimGray"
-                           Text="{Binding Date, FallbackValue=Date}" />
+                           Text="{Binding Date, Mode=OneWay, Converter={StaticResource StringFormatConverter}, ConverterParameter=\{0:d\}}"
+                           TextAlignment="Right" />
             </Grid>
         </DataTemplate>
 
@@ -79,20 +80,23 @@
                     <TextBlock x:Name="Subject" Margin="0,8,0,0"
                                FontSize="16" FontWeight="Bold"
                                Foreground="Black" MaxLines="1"
-                               RelativePanel.AlignLeftWith="Ellipse" RelativePanel.Below="Ellipse"
+                               RelativePanel.AlignLeftWith="Ellipse"
+                               RelativePanel.Below="Ellipse"
                                Text="{Binding Subject, FallbackValue=Subject}"
                                TextWrapping="WrapWholeWords" />
                     <TextBlock x:Name="Body" Margin="0,16,16,16"
                                FontSize="12" FontWeight="Normal"
                                Foreground="DimGray" RelativePanel.AlignLeftWith="Ellipse"
-                               RelativePanel.Below="To" Style="{StaticResource TitleTextBlockStyle}"
+                               RelativePanel.Below="To"
+                               Style="{StaticResource TitleTextBlockStyle}"
                                Text="{Binding Body, FallbackValue=Body}" />
                     <TextBlock x:Name="Date" Grid.Column="2"
                                HorizontalAlignment="Right" VerticalAlignment="Bottom"
                                FontSize="12" FontWeight="Light"
                                Foreground="DimGray" RelativePanel.Below="From"
                                RelativePanel.RightOf="Ellipse"
-                               Text="{Binding Date, FallbackValue=Date}" />
+                               Text="{Binding Date, Mode=OneWay, Converter={StaticResource StringFormatConverter}, ConverterParameter=\{0:D\}}"
+                               TextAlignment="Right" />
                 </RelativePanel>
             </ScrollViewer>
         </DataTemplate>
@@ -183,7 +187,8 @@
         </Grid.RowDefinitions>
 
         <CommandBar>
-            <AppBarButton x:Name="DeleteButton" Command="{Binding DeleteCommand}" Icon="Delete" Label="Delete">
+            <AppBarButton x:Name="DeleteButton" Command="{Binding DeleteCommand}"
+                          Icon="Delete" Label="Delete">
                 <Interactivity:Interaction.Behaviors>
                     <Core:EventTriggerBehavior EventName="Click">
                         <Core:GoToStateAction StateName="NarrowMasterOpen" TargetObject="{Binding ElementName=ThisPage}" />
@@ -238,21 +243,36 @@
                 <ColumnDefinition x:Name="RightColumn" Width="*" />
             </Grid.ColumnDefinitions>
 
-            <ListView x:Name="NormalMaster" ItemTemplate="{StaticResource MessageListItemTemplate}" ItemsSource="{Binding Messages}" SelectedItem="{Binding Selected, Mode=TwoWay}">
-                <x:String>Sample</x:String>
+            <ListView x:Name="NormalMaster"
+                      ItemTemplate="{StaticResource MessageListItemTemplate}"
+                      ItemsSource="{Binding Messages}"
+                      SelectedItem="{Binding Selected, Mode=TwoWay}">
+                 <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle> <x:String>Sample</x:String>
                 <x:String>Sample</x:String>
                 <x:String>Sample</x:String>
             </ListView>
 
-            <ContentControl x:Name="NormalDetail" Grid.Column="1" Content="{Binding Selected}" ContentTemplate="{StaticResource MessageDetailTemplate}" />
+            <ContentControl x:Name="NormalDetail" Grid.Column="1"
+                            Content="{Binding Selected}"
+                            ContentTemplate="{StaticResource MessageDetailTemplate}" />
 
         </Grid>
 
         <Grid x:Name="NarrowContent" Grid.Row="1" Visibility="Collapsed">
 
-            <ListView x:Name="NarrowMaster" ItemTemplate="{StaticResource MessageListItemTemplate}"
-                      IsItemClickEnabled="True"
-                      ItemsSource="{Binding Messages}" SelectedItem="{Binding Selected, Mode=TwoWay}">
+            <ListView x:Name="NarrowMaster" IsItemClickEnabled="True"
+                      ItemTemplate="{StaticResource MessageListItemTemplate}"
+                      ItemsSource="{Binding Messages}"
+                      SelectedItem="{Binding Selected, Mode=TwoWay}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
                 <Interactivity:Interaction.Behaviors>
                     <Core:EventTriggerBehavior EventName="ItemClick">
                         <b:ConditionalAction xmlns:b="using:Template10.Behaviors" LeftValue="{Binding SelectedItem, ElementName=NarrowMaster}" Operator="IsNotNull">
@@ -265,7 +285,9 @@
                 <x:String>Sample</x:String>
             </ListView>
 
-            <ContentControl x:Name="NarrowDetail" Content="{Binding Selected}" ContentTemplate="{StaticResource MessageDetailTemplate}" Visibility="Collapsed" />
+            <ContentControl x:Name="NarrowDetail" Content="{Binding Selected}"
+                            ContentTemplate="{StaticResource MessageDetailTemplate}"
+                            Visibility="Collapsed" />
 
         </Grid>
 
