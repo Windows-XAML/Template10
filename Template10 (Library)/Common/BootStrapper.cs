@@ -366,9 +366,17 @@ namespace Template10.Common
         /// A developer should call this when creating a new/secondary frame.
         /// The shell back button should only be setup one time.
         /// </summary>
-        public Services.NavigationService.NavigationService NavigationServiceFactory(BackButton backButton, ExistingContent existingContent)
+        public Services.NavigationService.INavigationService NavigationServiceFactory(BackButton backButton, ExistingContent existingContent)
         {
             return NavigationServiceFactory(backButton, existingContent, new Frame());
+        }
+
+        /// <summary>
+        /// Creates the NavigationService instance for given Frame.
+        /// </summary>
+        protected virtual Services.NavigationService.INavigationService CreateNavigationService(Frame frame)
+        {
+            return new Services.NavigationService.NavigationService(frame);
         }
 
         /// <summary>
@@ -378,12 +386,12 @@ namespace Template10.Common
         /// A developer should call this when creating a new/secondary frame.
         /// The shell back button should only be setup one time.
         /// </summary>
-        public Services.NavigationService.NavigationService NavigationServiceFactory(BackButton backButton, ExistingContent existingContent, Frame frame)
+        public Services.NavigationService.INavigationService NavigationServiceFactory(BackButton backButton, ExistingContent existingContent, Frame frame)
         {
             frame.Language = Windows.Globalization.ApplicationLanguages.Languages[0];
             frame.Content = (existingContent == ExistingContent.Include) ? Window.Current.Content : null;
 
-            var navigationService = new Services.NavigationService.NavigationService(frame);
+            var navigationService = CreateNavigationService(frame);
             navigationService.FrameFacade.BackButtonHandling = backButton;
             WindowWrapper.Current().NavigationServices.Add(navigationService);
 
