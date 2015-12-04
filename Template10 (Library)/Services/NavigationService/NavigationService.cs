@@ -236,7 +236,10 @@ namespace Template10.Services.NavigationService
                 FrameFacade.CurrentPageParam = DeserializePageParam(state["CurrentPageParam"]?.ToString());
                 FrameFacade.SetNavigationState(state["NavigateState"]?.ToString());
                 NavigateTo(NavigationMode.Refresh, FrameFacade.CurrentPageParam);
-                while (Frame.Content == null) { /* wait */ }
+                while (Frame.Content == null)
+                {
+                    Task.Yield().GetAwaiter().GetResult();
+                }
                 AfterRestoreSavedNavigation?.Invoke(this, FrameFacade.CurrentPageType);
                 return true;
             }
