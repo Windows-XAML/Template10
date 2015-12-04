@@ -217,10 +217,7 @@ namespace Template10.Services.NavigationService
             }
 
             state["CurrentPageType"] = CurrentPageType.AssemblyQualifiedName;
-            try { state["CurrentPageParam"] = CurrentPageParam; }
-            catch
-            {
-            }
+            state["CurrentPageParam"] = SerializePageParam(CurrentPageParam);
             state["NavigateState"] = FrameFacade?.GetNavigationState();
         }
 
@@ -236,8 +233,8 @@ namespace Template10.Services.NavigationService
                 }
 
                 FrameFacade.CurrentPageType = Type.GetType(state["CurrentPageType"].ToString());
-                FrameFacade.CurrentPageParam = state["CurrentPageParam"];
-                FrameFacade.SetNavigationState(state["NavigateState"].ToString());
+                FrameFacade.CurrentPageParam = DeserializePageParam(state["CurrentPageParam"]?.ToString());
+                FrameFacade.SetNavigationState(state["NavigateState"]?.ToString());
                 NavigateTo(NavigationMode.Refresh, FrameFacade.CurrentPageParam);
                 while (Frame.Content == null) { /* wait */ }
                 AfterRestoreSavedNavigation?.Invoke(this, FrameFacade.CurrentPageType);
@@ -299,6 +296,16 @@ namespace Template10.Services.NavigationService
 
         public Type CurrentPageType => FrameFacade.CurrentPageType;
         public object CurrentPageParam => FrameFacade.CurrentPageParam;
+
+        protected virtual string SerializePageParam(object pageParam)
+        {
+            return pageParam?.ToString();
+        }
+
+        protected virtual object DeserializePageParam(string pageParamString)
+        {
+            return pageParamString;
+        }
     }
 }
 
