@@ -12,7 +12,7 @@ namespace Sample.Views
         public static Shell Instance { get; set; }
         private static Template10.Common.WindowWrapper Window { get; set; }
 
-        public Shell(NavigationService navigationService)
+        public Shell(INavigationService navigationService)
         {
             Instance = this;
             this.InitializeComponent();

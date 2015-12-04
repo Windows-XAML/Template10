@@ -20,14 +20,14 @@ namespace Sample.Views
             InitializeComponent();
         }
 
-        public Shell(NavigationService navigationService)
+        public Shell(INavigationService navigationService)
         {
             Instance = this;
             InitializeComponent();
             SetNavigationService(navigationService);
         }
 
-        public void SetNavigationService(NavigationService navigationService)
+        public void SetNavigationService(INavigationService navigationService)
         {
             MyHamburgerMenu.NavigationService = navigationService;
         }
