@@ -25,7 +25,7 @@ namespace Template10.Services.NavigationService
 
         public DispatcherWrapper Dispatcher => WindowWrapper.Current(this).Dispatcher;
 
-        internal NavigationService(Frame frame)
+        protected internal NavigationService(Frame frame)
         {
             FrameFacade = new FrameFacade(frame);
             FrameFacade.Navigating += async (s, e) =>
