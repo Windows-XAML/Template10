@@ -220,7 +220,6 @@ namespace Template10.Services.NavigationService
             try { state["CurrentPageParam"] = CurrentPageParam; }
             catch
             {
-                throw new Exception("Failed to serialize page parameter, override/implement ToString()");
             }
             state["NavigateState"] = FrameFacade?.GetNavigationState();
         }
