@@ -45,8 +45,8 @@ namespace Sample.Services.SpeechService
                 }
                 else
                 {
-                    throw new Exception(result.Status.ToString());
-                }
+                    throw new Exception("Speech recognition failed. Status: " + result.Status.ToString());
+				}
             }
             catch (TaskCanceledException e) { throw new Exception("Cancelled", e); }
             catch (Exception e) when (e.HResult.Equals(0x80045509)) { throw new Exception("Disabled in settings", e); }
