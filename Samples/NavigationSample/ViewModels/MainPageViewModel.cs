@@ -26,7 +26,7 @@ namespace NavigationSample.ViewModels
 			if (parameter is int)
 				Level = (int)parameter;
 
-			if (state.Any())
+			if (mode == NavigationMode.Back || mode == NavigationMode.Refresh)
 			{
 				// use cache value(s)
 				if (state.ContainsKey(nameof(Value))) Value = state[nameof(Value)]?.ToString();

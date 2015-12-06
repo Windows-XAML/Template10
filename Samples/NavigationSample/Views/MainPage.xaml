@@ -22,13 +22,22 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
 
         <!--  header  -->
         <controls:PageHeader BackButtonVisibility="Collapsed"
                              Frame="{x:Bind Frame, Mode=OneWay}"
-                             Content="Main Page">
+                             >
+            <controls:PageHeader.Content>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="This page is on level " />
+                    <TextBlock Text="{Binding Level}"
+                               Margin="4,0,0,0" />
+                </StackPanel>
+            </controls:PageHeader.Content>
+
             <AppBarButton Icon="Forward"
                           Label="Forward">
                 <Interactivity:Interaction.Behaviors>
@@ -39,29 +48,19 @@
         </controls:PageHeader>
 
         <!--  #region content  -->
-        <StackPanel Grid.Row="1" Margin="8" Orientation="Horizontal">
-            <TextBlock Text="This page is on level " />
-            <TextBlock Text="{Binding Level}" Margin="4,0,0,0" />
-        </StackPanel>
+       
+        <Button Grid.Row="2" Margin="12"
+                Command="{x:Bind ViewModel.GotoNextLevelPageCommand, Mode=OneTime}"
+                Content="Create new level"
+                />
 
-        <RelativePanel Grid.Row="2"
-                       Padding="12,8,0,0">
+        <RelativePanel Grid.Row="3"
+                       Padding="12,16,0,0">
             <TextBox x:Name="ParameterTextBox"
                      Width="200"
                      Margin="0"
-                     Header="Note for this level:"
-                     Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                <!-- <Interactivity:Interaction.Behaviors>
-                    <Behaviors:TextBoxEnterKeyBehavior>
-                        <Core:InvokeCommandAction Command="{x:Bind ViewModel.GotoNextLevelPageCommand, Mode=OneTime}" />
-                    </Behaviors:TextBoxEnterKeyBehavior>
-                </Interactivity:Interaction.Behaviors> -->
-            </TextBox>
-            <Button Margin="4,0"
-                    Command="{x:Bind ViewModel.GotoNextLevelPageCommand, Mode=OneTime}"
-                    Content="Go to next level"
-                    RelativePanel.AlignBottomWith="ParameterTextBox"
-                    RelativePanel.RightOf="ParameterTextBox" />
+                     Header="State for this level:"
+                     Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         </RelativePanel>
 
         <!--  #endregion  -->

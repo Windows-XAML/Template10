@@ -54,7 +54,7 @@ namespace Template10.Services.NavigationService
 
         #region state
 
-        private string GetFrameStateKey() => string.Format("{0}-PageState", FrameId);
+        private string GetFrameStateKey() => string.Format("{0}-FrameState", FrameId);
 
         private Windows.Storage.ApplicationDataContainer _frameStateContainer;
         private Windows.Storage.ApplicationDataContainer FrameStateContainer()
@@ -87,22 +87,10 @@ namespace Template10.Services.NavigationService
             {
                 FrameStateContainer().DeleteContainer(container.Key);
             }
-            pageStateContainers.Clear();
         }
 
-        private string GetPageStateKey(Type type) => string.Format("{0}", type);
-
-        readonly Dictionary<Type, IPropertySet> pageStateContainers = new Dictionary<Type, IPropertySet>();
-        public IPropertySet PageStateContainer(Type type)
-        {
-            if (pageStateContainers.ContainsKey(type))
-                return pageStateContainers[type];
-            var key = GetPageStateKey(type);
-            var container = FrameStateContainer().CreateContainer(key, Windows.Storage.ApplicationDataCreateDisposition.Always);
-            pageStateContainers.Add(type, container.Values);
-            return container.Values;
-        }
-
+		internal IPropertySet GetFrameStateContainerValues() => FrameStateContainer().Values;
+		
 		internal void RemovePageStates(int firstBackStackLevelToBeRemoved=0)
 		{
 			var container = FrameStateContainer();
@@ -122,7 +110,7 @@ namespace Template10.Services.NavigationService
 			}
 		}
 
-		private string GetPageStateKey(int level) => string.Format("pageState{0}", level);
+		private string GetPageStateKey(int level) => string.Format("PageState_{0}", level);
 		
 		public IPropertySet PageStateContainer(int level)
 		{
@@ -133,17 +121,7 @@ namespace Template10.Services.NavigationService
 
 			return container.CreateContainer(key, Windows.Storage.ApplicationDataCreateDisposition.Always).Values;
 		}
-
-
-
-		//TODO: Ta bort
-		public void ClearPageState(Type type)
-        {
-            var key = GetPageStateKey(type);
-            if (FrameStateContainer().Containers.ContainsKey(key))
-                FrameStateContainer().DeleteContainer(key);
-        }
-
+		
         #endregion
 
         #region frame facade

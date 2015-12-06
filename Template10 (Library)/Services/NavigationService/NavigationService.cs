@@ -211,7 +211,7 @@ namespace Template10.Services.NavigationService
             if (CurrentPageType == null)
                 return;
 
-            var state = FrameFacade.PageStateContainer(GetType());
+            var state = FrameFacade.GetFrameStateContainerValues();
             if (state == null)
             {
                 throw new InvalidOperationException("State container is unexpectedly null");
@@ -231,7 +231,7 @@ namespace Template10.Services.NavigationService
         {
             try
             {
-                var state = FrameFacade.PageStateContainer(GetType());
+                var state = FrameFacade.GetFrameStateContainerValues();
                 if (state == null || !state.Any() || !state.ContainsKey("CurrentPageType"))
                 {
                     return false;
