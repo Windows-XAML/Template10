@@ -89,7 +89,7 @@ namespace Template10.Services.NavigationService
                 var dataContext = page.DataContext as INavigable;
                 if (dataContext != null)
                 {
-                    var pageState = FrameFacade.PageStateContainer(page.GetType());
+                    var pageState = FrameFacade.PageStateContainer(Frame.BackStackDepth);
                     await dataContext.OnNavigatedFromAsync(pageState, suspending);
                 }
             }
@@ -102,7 +102,7 @@ namespace Template10.Services.NavigationService
 
             if (mode == NavigationMode.New)
             {
-                FrameFacade.ClearFrameState();
+                FrameFacade.RemovePageStates(Frame.BackStackDepth);
             }
 
             var page = FrameFacade.Content as Page;
@@ -124,8 +124,9 @@ namespace Template10.Services.NavigationService
                     dataContext.NavigationService = this;
                     dataContext.Dispatcher = Common.WindowWrapper.Current(this)?.Dispatcher;
                     dataContext.SessionState = BootStrapper.Current.SessionState;
-                    var pageState = FrameFacade.PageStateContainer(page.GetType());
-                    dataContext.OnNavigatedTo(parameter, mode, pageState);
+					var pageState = FrameFacade.PageStateContainer(Frame.BackStackDepth);
+					
+					dataContext.OnNavigatedTo(parameter, mode, pageState);
                 }
             }
         }

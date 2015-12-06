@@ -103,7 +103,41 @@ namespace Template10.Services.NavigationService
             return container.Values;
         }
 
-        public void ClearPageState(Type type)
+		internal void RemovePageStates(int firstBackStackLevelToBeRemoved=0)
+		{
+			var container = FrameStateContainer();
+
+			while (true)
+			{
+				string key = GetPageStateKey(firstBackStackLevelToBeRemoved);
+
+				if (container.Containers.ContainsKey(key))
+				{
+					container.DeleteContainer(key);
+				}
+				else
+					break;
+
+				firstBackStackLevelToBeRemoved++;
+			}
+		}
+
+		private string GetPageStateKey(int level) => string.Format("pageState{0}", level);
+		
+		public IPropertySet PageStateContainer(int level)
+		{
+			var container = FrameStateContainer();
+			var key = GetPageStateKey(level);
+			if (container.Containers.ContainsKey(key))
+				return container.Containers[key].Values;
+
+			return container.CreateContainer(key, Windows.Storage.ApplicationDataCreateDisposition.Always).Values;
+		}
+
+
+
+		//TODO: Ta bort
+		public void ClearPageState(Type type)
         {
             var key = GetPageStateKey(type);
             if (FrameStateContainer().Containers.ContainsKey(key))
