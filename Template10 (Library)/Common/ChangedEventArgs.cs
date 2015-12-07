@@ -2,12 +2,12 @@
 
 namespace Template10.Common
 {
-    public class ValueChangedEventArgs<TValue> : EventArgs
+    public class ChangedEventArgs<TValue> : EventArgs
     {
         private readonly TValue oldValue;
         private readonly TValue newValue;
 
-        public ValueChangedEventArgs(TValue oldValue, TValue newValue)
+        public ChangedEventArgs(TValue oldValue, TValue newValue)
         {
             this.oldValue = oldValue;
             this.newValue = newValue;
