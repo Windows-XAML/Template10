@@ -241,19 +241,23 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <ContentControl Height="48" Margin="48,0,0,0"
+        <ContentControl x:Name="Header" Height="48" Margin="48,0,0,0"
                         VerticalAlignment="Top" HorizontalContentAlignment="Stretch"
                         Content="{Binding HeaderContent, ElementName=ThisPage}">
             <Interactivity:Interaction.Behaviors>
                 <Core:DataTriggerBehavior Binding="{Binding Visibility, ElementName=HamburgerButton}" Value="Visible">
-                    <Core:ChangePropertyAction PropertyName="Margin" TargetObject="{Binding ElementName=PaneContent}">
+                    <Core:ChangePropertyAction PropertyName="Margin" TargetObject="{Binding ElementName=Header}">
                         <Core:ChangePropertyAction.Value>
                             <Thickness>48,0,0,0</Thickness>
                         </Core:ChangePropertyAction.Value>
                     </Core:ChangePropertyAction>
                 </Core:DataTriggerBehavior>
                 <Core:DataTriggerBehavior Binding="{Binding Visibility, ElementName=HamburgerButton, Mode=OneWay}" Value="Collapsed">
-                    <Core:ChangePropertyAction PropertyName="Margin" TargetObject="{Binding ElementName=PaneContent}" />
+                    <Core:ChangePropertyAction PropertyName="Margin" TargetObject="{Binding ElementName=Header}">
+                        <Core:ChangePropertyAction.Value>
+                            <Thickness>0,0,0,0</Thickness>
+                        </Core:ChangePropertyAction.Value>
+                    </Core:ChangePropertyAction>
                 </Core:DataTriggerBehavior>
             </Interactivity:Interaction.Behaviors>
         </ContentControl>
@@ -284,11 +288,26 @@
                             </Core:ChangePropertyAction>
                         </Core:DataTriggerBehavior>
                         <Core:DataTriggerBehavior Binding="{Binding Visibility, ElementName=HamburgerButton, Mode=OneWay}" Value="Collapsed">
-                            <Core:ChangePropertyAction PropertyName="Margin" TargetObject="{Binding ElementName=PaneContent}">
-                                <Core:ChangePropertyAction.Value>
-                                    <Thickness>0,0,0,0</Thickness>
-                                </Core:ChangePropertyAction.Value>
-                            </Core:ChangePropertyAction>
+                            <b:ConditionalAction xmlns:b="using:Template10.Behaviors"
+                                                  LeftValue="{x:Bind HeaderContent}"
+                                                  Operator="IsNull">
+                                <Core:ChangePropertyAction PropertyName="Margin" TargetObject="{Binding ElementName=PaneContent}">
+                                    <Core:ChangePropertyAction.Value>
+                                        <Thickness>0,0,0,0</Thickness>
+                                    </Core:ChangePropertyAction.Value>
+                                </Core:ChangePropertyAction>
+                            </b:ConditionalAction>
+                        </Core:DataTriggerBehavior>
+                        <Core:DataTriggerBehavior Binding="{Binding Visibility, ElementName=HamburgerButton, Mode=OneWay}" Value="Collapsed">
+                            <b:ConditionalAction xmlns:b="using:Template10.Behaviors"
+                                                  LeftValue="{x:Bind HeaderContent}"
+                                                  Operator="IsNotNull">
+                                <Core:ChangePropertyAction PropertyName="Margin" TargetObject="{Binding ElementName=PaneContent}">
+                                    <Core:ChangePropertyAction.Value>
+                                        <Thickness>0,48,0,0</Thickness>
+                                    </Core:ChangePropertyAction.Value>
+                                </Core:ChangePropertyAction>
+                            </b:ConditionalAction>
                         </Core:DataTriggerBehavior>
                     </Interactivity:Interaction.Behaviors>
 
