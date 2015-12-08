@@ -260,7 +260,7 @@ namespace Template10.Services.NavigationService
 
         public void ClearCache(bool removeCachedPagesInBackStack = false)
         {
-            int currentSize = FrameFacade.Frame.CacheSize;
+			int currentSize = FrameFacade.Frame.CacheSize;
 
             if (removeCachedPagesInBackStack)
             {
@@ -277,7 +277,11 @@ namespace Template10.Services.NavigationService
             FrameFacade.Frame.CacheSize = currentSize;
         }
 
-        public void ClearHistory() { FrameFacade.Frame.BackStack.Clear(); }
+        public void ClearHistory()
+		{
+			FrameFacade.Frame.BackStack.Clear();
+			FrameFacade.RemovePageStates();
+		}
 
         public void Resuming() { /* nothing */ }
 

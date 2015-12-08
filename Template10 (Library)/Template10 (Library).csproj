@@ -159,6 +159,7 @@
     <Compile Include="Mvvm\AwaitableDelegateCommand.cs" />
     <Compile Include="Common\WeakReference.cs" />
     <Compile Include="Services\NavigationService\AlternativeNavigationEventArgs.cs" />
+    <Compile Include="Services\NavigationService\IDictionaryExtension.cs" />
     <Compile Include="Services\NavigationService\INavigationService.cs" />
     <Compile Include="Services\NavigationService\JournalEntry.cs" />
     <Compile Include="Services\NavigationService\NavigationServiceList.cs" />

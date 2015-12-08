@@ -29,7 +29,8 @@ namespace NavigationSample.ViewModels
 			if (mode == NavigationMode.Back || mode == NavigationMode.Refresh)
 			{
 				// use cache value(s)
-				if (state.ContainsKey(nameof(Value))) Value = state[nameof(Value)]?.ToString();
+				Value = state.GetOrDefault(nameof(Value), "");
+
 				// clear any cache
 				state.Clear();
 			}
