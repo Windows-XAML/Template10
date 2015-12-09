@@ -13,6 +13,16 @@
         <Controls:ModalDialog.Content>
             <Controls:HamburgerMenu x:Name="MyHamburgerMenu" IsFullScreen="False">
 
+                <!--
+                  HeaderContent is shown only when SplitView Pane is Displayed Inline and is open. ex: when app is Full Screen
+                  In other modes header will be hidden.
+                -->
+                <Controls:HamburgerMenu.HeaderContent>
+                    <Grid Height="48" Background="{StaticResource CustomColorBrush}">
+                        <TextBlock Text="Minimal Header" FontSize="16" VerticalAlignment="Center" Margin="12,0,0,0" Foreground="White"/>
+                    </Grid>
+                </Controls:HamburgerMenu.HeaderContent>
+
                 <Controls:HamburgerMenu.PrimaryButtons>
                     <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:MainPage">
                         <StackPanel Orientation="Horizontal">
