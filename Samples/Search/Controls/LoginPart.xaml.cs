@@ -11,11 +11,17 @@ namespace Sample.Controls
             this.InitializeComponent();
         }
 
-        public event EventHandler Hide;
+        public event EventHandler HideRequested;
+        public event EventHandler LoggedIn;
 
         private void LoginClicked(object sender, RoutedEventArgs e)
         {
-            Hide?.Invoke(this, EventArgs.Empty);
+            LoggedIn?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void CloseClicked(object sender, RoutedEventArgs e)
+        {
+            HideRequested?.Invoke(this, EventArgs.Empty);
         }
     }
 }
