@@ -11,19 +11,10 @@
 
     <Controls:ModalDialog CanBackButtonDismiss="False" DisableBackButtonWhenModal="True" IsModal="{x:Bind IsBusy, Mode=OneWay}">
         <Controls:ModalDialog.Content>
-            <Controls:HamburgerMenu x:Name="MyHamburgerMenu" IsFullScreen="False">
-
-                <!--
-                  HeaderContent is shown only when SplitView Pane is Displayed Inline and is open. ex: when app is Full Screen
-                  In other modes header will be hidden.
-                -->
-                <Controls:HamburgerMenu.HeaderContent>
-                    <Grid Height="48" Background="{StaticResource CustomColorBrush}">
-                        <TextBlock Text="Minimal Header" FontSize="16" VerticalAlignment="Center" Margin="12,0,0,0" Foreground="White"/>
-                    </Grid>
-                </Controls:HamburgerMenu.HeaderContent>
+            <Controls:HamburgerMenu x:Name="MyHamburgerMenu" IsFullScreen="False" AutoHighlightCorrectButton="False">
 
                 <Controls:HamburgerMenu.PrimaryButtons>
+                    <!-- mainpage button -->
                     <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:MainPage">
                         <StackPanel Orientation="Horizontal">
                             <SymbolIcon Width="48" Height="48" Symbol="Home" />
@@ -33,7 +24,8 @@
                 </Controls:HamburgerMenu.PrimaryButtons>
 
                 <Controls:HamburgerMenu.SecondaryButtons>
-                    <Controls:HamburgerButtonInfo PageType="views:SettingsPage">
+                    <!-- settingspage button -->
+                    <Controls:HamburgerButtonInfo x:Name="SettingsButton" PageType="views:SettingsPage">
                         <StackPanel Orientation="Horizontal">
                             <SymbolIcon Width="48" Height="48" Symbol="Setting" />
                             <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Settings" />
@@ -42,10 +34,9 @@
                 </Controls:HamburgerMenu.SecondaryButtons>
 
             </Controls:HamburgerMenu>
-
         </Controls:ModalDialog.Content>
         <Controls:ModalDialog.ModalContent>
-
+            <!-- busy visual -->
             <Viewbox Height="32">
                 <StackPanel Orientation="Horizontal">
                     <ProgressRing Width="16" Height="16"
@@ -54,7 +45,6 @@
                     <TextBlock VerticalAlignment="Center" Foreground="White" Text="{x:Bind BusyText, Mode=OneWay}" />
                 </StackPanel>
             </Viewbox>
-
         </Controls:ModalDialog.ModalContent>
     </Controls:ModalDialog>
 
