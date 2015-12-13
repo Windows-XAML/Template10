@@ -26,10 +26,10 @@ namespace NavigationSample.ViewModels
 			if (parameter is int)
 				Level = (int)parameter;
 
-			if (mode == NavigationMode.Back || mode == NavigationMode.Refresh)
+			if (mode != NavigationMode.New)
 			{
 				// use cache value(s)
-				Value = state.GetOrDefault(nameof(Value), "");
+				Value = state.GetOrDefault(nameof(Value), "?");
 
 				// clear any cache
 				state.Clear();
