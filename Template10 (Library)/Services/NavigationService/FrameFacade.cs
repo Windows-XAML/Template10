@@ -91,7 +91,7 @@ namespace Template10.Services.NavigationService
 
 		internal IPropertySet GetFrameStateContainerValues() => FrameStateContainer().Values;
 
-		internal void RemovePageStates(int firstBackStackLevelToBeRemoved=0)
+		public void RemovePageStates(int firstBackStackLevelToBeRemoved=0)
         {
 			var container = FrameStateContainer();
 
