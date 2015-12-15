@@ -37,47 +37,6 @@ namespace Sample.ViewModels
                 Set(ref _selected, message);
                 if (message != null)
                     message.IsRead = true;
-                DeleteCommand.RaiseCanExecuteChanged();
-            }
-        }
-
-        DelegateCommand _deleteCommand;
-        public DelegateCommand DeleteCommand
-        {
-            get
-            {
-                return _deleteCommand ?? (_deleteCommand = new DelegateCommand(() =>
-                    {
-                        if (Selected != null)
-                        {
-                            _messageService.DeleteMessage(Selected as Models.Message);
-                            Selected = null;
-                        }
-                    }, () => Selected != null));
-            }
-        }
-
-        DelegateCommand _searchCommand;
-        public DelegateCommand SearchCommand
-        {
-            get
-            {
-                return _searchCommand ?? (_searchCommand = new DelegateCommand(() =>
-                    {
-                        Messages = _messageService.Search(SearchText);
-                    }, () => !string.IsNullOrEmpty(SearchText)));
-            }
-        }
-
-        DelegateCommand _clearCommand;
-        public DelegateCommand ClearCommand
-        {
-            get
-            {
-                return _clearCommand ?? (_clearCommand = new DelegateCommand(() =>
-                    {
-                        Messages = _messageService.Search(SearchText = string.Empty);
-                    }, () => true));
             }
         }
     }
