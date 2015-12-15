@@ -61,8 +61,8 @@
                              Command="{Binding NavCommand, ElementName=ThisPage}"
                              CommandParameter="{Binding}" GroupName="Nav"
                              Holding="NavButton_Holding"
-                             IsChecked="{x:Bind IsChecked, Mode=TwoWay}"
-                             IsEnabled="{x:Bind IsEnabled, Mode=TwoWay}"
+                             IsChecked="{Binding IsChecked, Mode=TwoWay}"
+                             IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
                              Loaded="NavButton_Loaded"
                              RightTapped="NavButton_RightTapped" Tag="{x:Bind Content}"
                              Tapped="NavButton_Tapped"
@@ -271,8 +271,8 @@
 
                 <Grid x:Name="PaneContent" Margin="0,48,0,0"
                       Background="{x:Bind NavAreaBackground, FallbackValue=Blue, Mode=OneWay}"
-                      BorderBrush="{x:Bind SecondarySeparator, FallbackValue=White, Mode=OneWay}"
-                      BorderThickness="0,0,1,0" Tapped="PaneContent_Tapped">
+                      BorderBrush="{x:Bind PaneBorderBrush, FallbackValue=White, Mode=OneWay}"
+                      BorderThickness="{x:Bind PaneBorderThickness, FallbackValue='0,0,1,0'}" Tapped="PaneContent_Tapped">
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />

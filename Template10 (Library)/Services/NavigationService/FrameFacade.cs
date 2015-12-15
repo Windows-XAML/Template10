@@ -90,9 +90,9 @@ namespace Template10.Services.NavigationService
         }
 
 		internal IPropertySet GetFrameStateContainerValues() => FrameStateContainer().Values;
-		
+
 		internal void RemovePageStates(int firstBackStackLevelToBeRemoved=0)
-		{
+        {
 			var container = FrameStateContainer();
 
 			while (true)
@@ -108,20 +108,20 @@ namespace Template10.Services.NavigationService
 
 				firstBackStackLevelToBeRemoved++;
 			}
-		}
+        }
 
 		private string GetPageStateKey(int level) => string.Format("PageState_{0}", level);
 		
 		public IPropertySet PageStateContainer(int level)
-		{
+        {
 			var container = FrameStateContainer();
 			var key = GetPageStateKey(level);
 			if (container.Containers.ContainsKey(key))
 				return container.Containers[key].Values;
 
 			return container.CreateContainer(key, Windows.Storage.ApplicationDataCreateDisposition.Always).Values;
-		}
-		
+        }
+
         #endregion
 
         #region frame facade

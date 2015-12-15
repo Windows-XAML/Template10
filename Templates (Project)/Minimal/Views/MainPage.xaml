@@ -82,7 +82,7 @@
                             <Core:CallMethodAction MethodName="GotoDetailsPage" TargetObject="{Binding}" />
                         </Behaviors:TextBoxEnterKeyBehavior>
                         <Core:EventTriggerBehavior>
-                            <Behaviors:FocusAction/>
+                            <Behaviors:FocusAction />
                         </Core:EventTriggerBehavior>
                     </Interactivity:Interaction.Behaviors>
                 </TextBox>

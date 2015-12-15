@@ -18,6 +18,12 @@ namespace Sample.Views
         {
             Instance = this;
             InitializeComponent();
+            Loaded += Shell_Loaded;
+        }
+
+        private void Shell_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            SettingsButton.IsEnabled = false;
         }
 
         public Shell(NavigationService navigationService)
