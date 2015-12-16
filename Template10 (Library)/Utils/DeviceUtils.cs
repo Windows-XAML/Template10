@@ -21,6 +21,7 @@ namespace Template10.Utils
         private DeviceUtils(Common.WindowWrapper windowWrapper)
         {
             MonitorUtils = Utils.MonitorUtils.Current(windowWrapper);
+            WindowWrapper = windowWrapper ?? Common.WindowWrapper.Current();
 
             var di = windowWrapper.DisplayInformation();
             di.OrientationChanged += new Common.WeakReference<DeviceUtils, DisplayInformation, object>(this)

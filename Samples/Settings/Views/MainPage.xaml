@@ -4,6 +4,7 @@
       xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
       xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
       xmlns:controls="using:Template10.Controls"
+      xmlns:converters="using:Template10.Converters"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:Sample.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -12,6 +13,38 @@
     <Page.DataContext>
         <vm:MainPageViewModel />
     </Page.DataContext>
+
+    <Page.Resources>
+        <converters:ValueWhenConverter x:Key="BooleanToVisibilityConverter">
+            <converters:ValueWhenConverter.When>
+                <x:Boolean>True</x:Boolean>
+            </converters:ValueWhenConverter.When>
+            <converters:ValueWhenConverter.Value>
+                <Visibility>Visible</Visibility>
+            </converters:ValueWhenConverter.Value>
+            <converters:ValueWhenConverter.Otherwise>
+                <Visibility>Collapsed</Visibility>
+            </converters:ValueWhenConverter.Otherwise>
+            <converters:ValueWhenConverter.OtherwiseValueBack>
+                <x:Boolean>False</x:Boolean>
+            </converters:ValueWhenConverter.OtherwiseValueBack>
+        </converters:ValueWhenConverter>
+        
+        <converters:ValueWhenConverter x:Key="NotTrueConverter">
+            <converters:ValueWhenConverter.When>
+                <x:Boolean>True</x:Boolean>
+            </converters:ValueWhenConverter.When>
+            <converters:ValueWhenConverter.Value>
+                <x:Boolean>False</x:Boolean>
+            </converters:ValueWhenConverter.Value>
+            <converters:ValueWhenConverter.Otherwise>
+                <x:Boolean>True</x:Boolean>
+            </converters:ValueWhenConverter.Otherwise>
+            <converters:ValueWhenConverter.OtherwiseValueBack>
+                <x:Boolean>False</x:Boolean>
+            </converters:ValueWhenConverter.OtherwiseValueBack>
+        </converters:ValueWhenConverter>
+    </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -30,6 +63,10 @@
             <StackPanel Width="300" Margin="0,12,12,12" HorizontalAlignment="Left">
                 <TextBox Margin="0,0,0,12" Header="Type value to write to settings" Text="{Binding WriteValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <TextBox Header="This value is read from settings" IsReadOnly="True" Text="{Binding ReadValue}" />
+                <TextBlock Margin="0,12,0,0" 
+                           Text="The following is only visible when running in DeviceDisposition.Desktop" 
+                           TextWrapping="Wrap"
+                           Visibility="{Binding DesktopOnlyVisibility, Converter={StaticResource BooleanToVisibilityConverter},Mode=TwoWay}" />
             </StackPanel>
 
         </Grid>
