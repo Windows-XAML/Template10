@@ -61,8 +61,19 @@ namespace Sample.ViewModels
 
         private async void ListenExecute()
         {
-            Value = await _SpeechService.ListenAsync("Cortana Sample", "Try saying, 'The quick brown fox jumps over the lazy dog.'");
-        }
+			try
+			{
+				Value = await _SpeechService.ListenAsync("Cortana Sample", "Try saying, 'The quick brown fox jumps over the lazy dog.'");
+			}
+			catch(Exception ex)
+			{
+				var messageDialog = new Windows.UI.Popups.MessageDialog
+						("Failed to start speech recognition." + 
+						Environment.NewLine + Environment.NewLine + "Message: " + ex.Message,
+						"Speech recognition failed");
+				await messageDialog.ShowAsync();
+			}
+		}
 
         public async Task Speak()
         {

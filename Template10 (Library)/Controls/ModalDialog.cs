@@ -29,10 +29,26 @@ namespace Template10.Controls
 
         private void BootStrapper_BackRequested(object sender, HandledEventArgs e)
         {
-            if (!CanBackButtonDismiss)
+            if (!IsModal)
                 return;
-            e.Handled = IsModal;
-            IsModal = false;
+            if (CanBackButtonDismiss && DisableBackButtonWhenModal)
+            {
+                e.Handled = true;
+                IsModal = false;
+            }
+            else if (CanBackButtonDismiss && !DisableBackButtonWhenModal)
+            {
+                e.Handled = IsModal;
+                IsModal = false;
+            }
+            else if (!CanBackButtonDismiss && DisableBackButtonWhenModal)
+            {
+                e.Handled = true;
+            }
+            else if (!CanBackButtonDismiss && !DisableBackButtonWhenModal)
+            {
+                e.Handled = false;
+            }
         }
 
         #region parts
@@ -66,7 +82,7 @@ namespace Template10.Controls
         #region props
 
         public bool IsModal
-        { 
+        {
             get { return (bool)GetValue(IsModalProperty); }
             set { SetValue(IsModalProperty, value); }
         }
@@ -79,6 +95,14 @@ namespace Template10.Controls
             set { SetValue(CanBackButtonDismissProperty, value); }
         }
         public static readonly DependencyProperty CanBackButtonDismissProperty = DependencyProperty.Register(nameof(CanBackButtonDismiss),
+            typeof(bool), typeof(ModalDialog), new PropertyMetadata(false, (d, e) => (d as ModalDialog).Update()));
+
+        public bool DisableBackButtonWhenModal
+        {
+            get { return (bool)GetValue(DisableBackButtonWhenModalProperty); }
+            set { SetValue(DisableBackButtonWhenModalProperty, value); }
+        }
+        public static readonly DependencyProperty DisableBackButtonWhenModalProperty = DependencyProperty.Register(nameof(DisableBackButtonWhenModal),
             typeof(bool), typeof(ModalDialog), new PropertyMetadata(false, (d, e) => (d as ModalDialog).Update()));
 
         public Brush ModalBackground

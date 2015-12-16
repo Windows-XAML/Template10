@@ -51,12 +51,19 @@ namespace Template10.Services.SettingsService
         {
             try
             {
-                var type = typeof(T);
-                var converter = Converters.GetConverter(type);
-                var container = Values[key] as ApplicationDataCompositeValue;
-                var value = container["Value"] as string;
-                var converted = (T)converter.FromStore(value, type);
-                return converted;
+                if (Values.ContainsKey(key))
+                {
+                    var type = typeof(T);
+                    var converter = Converters.GetConverter(type);
+                    var container = Values[key] as ApplicationDataCompositeValue;
+                    if (container.ContainsKey("Value"))
+                    {
+                        var value = container["Value"] as string;
+                        var converted = (T)converter.FromStore(value, type);
+                        return converted;
+                    }
+                }
+                return fallback;
             }
             catch
             {
