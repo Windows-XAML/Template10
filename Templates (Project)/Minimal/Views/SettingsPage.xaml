@@ -5,6 +5,7 @@
       xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
       xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
       xmlns:controls="using:Template10.Controls"
+      xmlns:converters="using:Template10.Converters"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:Sample.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -13,6 +14,38 @@
     <Page.DataContext>
         <vm:SettingsPageViewModel />
     </Page.DataContext>
+
+    <Page.Resources>
+        <converters:ValueWhenConverter x:Key="BooleanToVisibilityConverter">
+            <converters:ValueWhenConverter.When>
+                <x:Boolean>True</x:Boolean>
+            </converters:ValueWhenConverter.When>
+            <converters:ValueWhenConverter.Value>
+                <Visibility>Visible</Visibility>
+            </converters:ValueWhenConverter.Value>
+            <converters:ValueWhenConverter.Otherwise>
+                <Visibility>Collapsed</Visibility>
+            </converters:ValueWhenConverter.Otherwise>
+            <converters:ValueWhenConverter.OtherwiseValueBack>
+                <x:Boolean>False</x:Boolean>
+            </converters:ValueWhenConverter.OtherwiseValueBack>
+        </converters:ValueWhenConverter>
+
+        <converters:ValueWhenConverter x:Key="NotTrueConverter">
+            <converters:ValueWhenConverter.When>
+                <x:Boolean>True</x:Boolean>
+            </converters:ValueWhenConverter.When>
+            <converters:ValueWhenConverter.Value>
+                <x:Boolean>False</x:Boolean>
+            </converters:ValueWhenConverter.Value>
+            <converters:ValueWhenConverter.Otherwise>
+                <x:Boolean>True</x:Boolean>
+            </converters:ValueWhenConverter.Otherwise>
+            <converters:ValueWhenConverter.OtherwiseValueBack>
+                <x:Boolean>False</x:Boolean>
+            </converters:ValueWhenConverter.OtherwiseValueBack>
+        </converters:ValueWhenConverter>
+    </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -68,7 +101,8 @@
                                       Header="Use shell-drawn back button"
                                       IsOn="{Binding UseShellBackButton, Mode=TwoWay}"
                                       OffContent="Back button in page header"
-                                      OnContent="Back button in titlebar or taskbar" />
+                                      OnContent="Back button in titlebar or taskbar"
+                                      Visibility="{Binding DesktopOnlyVisibility, Converter={StaticResource BooleanToVisibilityConverter},Mode=TwoWay}" />
                         <ToggleSwitch x:Name="UseLightThemeToggleSwitch" Header="Use Light Theme"
                                       IsOn="{Binding UseLightThemeButton, Mode=TwoWay}"
                                       OffContent="Dark theme" OnContent="Light theme"

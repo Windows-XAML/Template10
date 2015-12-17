@@ -29,5 +29,7 @@ namespace Sample.ViewModels
         string _ReadValue = default(string);
         public string ReadValue { get { return _ReadValue; } set { Set(ref _ReadValue, value); } }
 
+        private bool _DesktopOnlyVisibility = default(bool);
+        public bool DesktopOnlyVisibility { get { return _DesktopOnlyVisibility; } set { Set(ref _DesktopOnlyVisibility, value); } }
     }
 }

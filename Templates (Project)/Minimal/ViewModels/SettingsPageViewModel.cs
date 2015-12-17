@@ -47,6 +47,13 @@ namespace Sample.ViewModels
         {
             Views.Shell.SetBusy(false);
         }
+
+        private bool _DesktopOnlyVisibility = default(bool);
+        public bool DesktopOnlyVisibility
+        {
+            get { return _DesktopOnlyVisibility; }
+            set { Set(ref _DesktopOnlyVisibility, value); }
+        }
     }
 
     public class AboutPartViewModel : Mvvm.ViewModelBase
