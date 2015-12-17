@@ -7,6 +7,9 @@ namespace Template10.Utils
     {
         public static SolidColorBrush ToSolidColorBrush(this Color color) => new SolidColorBrush(color);
 
+        // this has all been moved to private bacause I am unhappy with the API 
+        // and don't want anyone using it (except the HamburgerMenu) until we fix it.
+
         static Color nearBlack = Colors.Black.Lighten(Accents.Plus20);
 
         static Color nearWhite = Colors.Black.Lighten(Accents.Plus80);
