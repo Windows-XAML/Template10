@@ -61,8 +61,8 @@
                              Command="{Binding NavCommand, ElementName=ThisPage}"
                              CommandParameter="{Binding}" GroupName="Nav"
                              Holding="NavButton_Holding"
-                             IsChecked="{x:Bind IsChecked, Mode=TwoWay}"
-                             IsEnabled="{x:Bind IsEnabled, Mode=TwoWay}"
+                             IsChecked="{Binding IsChecked, Mode=TwoWay}"
+                             IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
                              Loaded="NavButton_Loaded"
                              RightTapped="NavButton_RightTapped" Tag="{x:Bind Content}"
                              Tapped="NavButton_Tapped"
@@ -241,19 +241,23 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <ContentControl Height="48" Margin="48,0,0,0"
+        <ContentControl x:Name="Header" Height="48" Margin="48,0,0,0"
                         VerticalAlignment="Top" HorizontalContentAlignment="Stretch"
                         Content="{Binding HeaderContent, ElementName=ThisPage}">
             <Interactivity:Interaction.Behaviors>
                 <Core:DataTriggerBehavior Binding="{Binding Visibility, ElementName=HamburgerButton}" Value="Visible">
-                    <Core:ChangePropertyAction PropertyName="Margin" TargetObject="{Binding ElementName=PaneContent}">
+                    <Core:ChangePropertyAction PropertyName="Margin" TargetObject="{Binding ElementName=Header}">
                         <Core:ChangePropertyAction.Value>
                             <Thickness>48,0,0,0</Thickness>
                         </Core:ChangePropertyAction.Value>
                     </Core:ChangePropertyAction>
                 </Core:DataTriggerBehavior>
                 <Core:DataTriggerBehavior Binding="{Binding Visibility, ElementName=HamburgerButton, Mode=OneWay}" Value="Collapsed">
-                    <Core:ChangePropertyAction PropertyName="Margin" TargetObject="{Binding ElementName=PaneContent}" />
+                    <Core:ChangePropertyAction PropertyName="Margin" TargetObject="{Binding ElementName=Header}">
+                        <Core:ChangePropertyAction.Value>
+                            <Thickness>0,0,0,0</Thickness>
+                        </Core:ChangePropertyAction.Value>
+                    </Core:ChangePropertyAction>
                 </Core:DataTriggerBehavior>
             </Interactivity:Interaction.Behaviors>
         </ContentControl>
@@ -267,8 +271,8 @@
 
                 <Grid x:Name="PaneContent" Margin="0,48,0,0"
                       Background="{x:Bind NavAreaBackground, FallbackValue=Blue, Mode=OneWay}"
-                      BorderBrush="{x:Bind SecondarySeparator, FallbackValue=White, Mode=OneWay}"
-                      BorderThickness="0,0,1,0" Tapped="PaneContent_Tapped">
+                      BorderBrush="{x:Bind PaneBorderBrush, FallbackValue=White, Mode=OneWay}"
+                      BorderThickness="{x:Bind PaneBorderThickness, FallbackValue='0,0,1,0'}" Tapped="PaneContent_Tapped">
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
@@ -284,11 +288,26 @@
                             </Core:ChangePropertyAction>
                         </Core:DataTriggerBehavior>
                         <Core:DataTriggerBehavior Binding="{Binding Visibility, ElementName=HamburgerButton, Mode=OneWay}" Value="Collapsed">
-                            <Core:ChangePropertyAction PropertyName="Margin" TargetObject="{Binding ElementName=PaneContent}">
-                                <Core:ChangePropertyAction.Value>
-                                    <Thickness>0,0,0,0</Thickness>
-                                </Core:ChangePropertyAction.Value>
-                            </Core:ChangePropertyAction>
+                            <b:ConditionalAction xmlns:b="using:Template10.Behaviors"
+                                                  LeftValue="{x:Bind HeaderContent}"
+                                                  Operator="IsNull">
+                                <Core:ChangePropertyAction PropertyName="Margin" TargetObject="{Binding ElementName=PaneContent}">
+                                    <Core:ChangePropertyAction.Value>
+                                        <Thickness>0,0,0,0</Thickness>
+                                    </Core:ChangePropertyAction.Value>
+                                </Core:ChangePropertyAction>
+                            </b:ConditionalAction>
+                        </Core:DataTriggerBehavior>
+                        <Core:DataTriggerBehavior Binding="{Binding Visibility, ElementName=HamburgerButton, Mode=OneWay}" Value="Collapsed">
+                            <b:ConditionalAction xmlns:b="using:Template10.Behaviors"
+                                                  LeftValue="{x:Bind HeaderContent}"
+                                                  Operator="IsNotNull">
+                                <Core:ChangePropertyAction PropertyName="Margin" TargetObject="{Binding ElementName=PaneContent}">
+                                    <Core:ChangePropertyAction.Value>
+                                        <Thickness>0,48,0,0</Thickness>
+                                    </Core:ChangePropertyAction.Value>
+                                </Core:ChangePropertyAction>
+                            </b:ConditionalAction>
                         </Core:DataTriggerBehavior>
                     </Interactivity:Interaction.Behaviors>
 

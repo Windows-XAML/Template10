@@ -9,7 +9,5 @@ namespace Sample.Views
         {
             InitializeComponent();
         }
-
-        public MainPageViewModel ViewModel => this.DataContext as MainPageViewModel;
     }
 }

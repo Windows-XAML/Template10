@@ -25,6 +25,7 @@ namespace Template10.Controls
     {
         public event EventHandler PaneOpen;
         public event EventHandler PaneClosed;
+        public event EventHandler<ChangedEventArgs<HamburgerButtonInfo>> SelectedChanged;
 
         public HamburgerMenu()
         {
@@ -77,13 +78,16 @@ namespace Template10.Controls
             DependencyProperty.Register(nameof(DisplayMode), typeof(SplitViewDisplayMode),
                 typeof(HamburgerMenu), new PropertyMetadata(null));
 
-        public void HighlightCorrectButton(Type pageType = null, object pageParam = null)
+        void HighlightCorrectButton(Type pageType = null, object pageParam = null)
         {
+            if (!AutoHighlightCorrectButton)
+                return;
             pageType = pageType ?? NavigationService.CurrentPageType;
             pageParam = pageParam ?? NavigationService.CurrentPageParam;
             var values = _navButtons.Select(x => x.Value);
-            var button = values.FirstOrDefault(x => x.PageType == pageType && 
-                                                (x.PageParameter == null || x.PageParameter.Equals(pageParam)));
+            var button = values.FirstOrDefault(x => x.PageType == pageType 
+                && (x.PageParameter == null 
+                || x.PageParameter.Equals(pageParam)));
             Selected = button;
         }
 
@@ -213,6 +217,7 @@ namespace Template10.Controls
                 var navButtonHoverBackground = NavButtonHoverBackground;
                 var navButtonCheckedForeground = NavButtonCheckedForeground;
                 var secondarySeparator = SecondarySeparator;
+                var paneBorderBush = PaneBorderBrush;
 
                 HamburgerBackground = null;
                 HamburgerForeground = null;
@@ -224,6 +229,7 @@ namespace Template10.Controls
                 NavButtonHoverBackground = null;
                 NavButtonCheckedForeground = null;
                 SecondarySeparator = null;
+                PaneBorderBrush = null;
 
                 HamburgerBackground = hamburgerBackground;
                 HamburgerForeground = hamburgerForeground;
@@ -235,6 +241,7 @@ namespace Template10.Controls
                 NavButtonHoverBackground = navButtonHoverBackground;
                 NavButtonCheckedForeground = navButtonCheckedForeground;
                 SecondarySeparator = secondarySeparator;
+                PaneBorderBrush = PaneBorderBrush;
             }
             else
             {
@@ -254,7 +261,7 @@ namespace Template10.Controls
                         NavButtonPressedBackground = Colors.Gainsboro.Darken(ColorUtils.Accents.Plus40).ToSolidColorBrush();
                         NavButtonHoverBackground = Colors.Gainsboro.Darken(ColorUtils.Accents.Plus60).ToSolidColorBrush();
                         NavButtonCheckedForeground = Colors.White.ToSolidColorBrush();
-                        SecondarySeparator = Colors.Gainsboro.Darken(ColorUtils.Accents.Plus40).ToSolidColorBrush();
+                        SecondarySeparator = PaneBorderBrush = Colors.Gainsboro.Darken(ColorUtils.Accents.Plus40).ToSolidColorBrush();
                         break;
                     case ElementTheme.Default:
                     case ElementTheme.Dark:
@@ -268,7 +275,7 @@ namespace Template10.Controls
                         NavButtonPressedBackground = Colors.Gainsboro.Lighten(ColorUtils.Accents.Plus40).ToSolidColorBrush();
                         NavButtonHoverBackground = Colors.Gainsboro.Lighten(ColorUtils.Accents.Plus60).ToSolidColorBrush();
                         NavButtonCheckedForeground = Colors.White.ToSolidColorBrush();
-                        SecondarySeparator = Colors.Gainsboro.ToSolidColorBrush();
+                        SecondarySeparator = PaneBorderBrush = Colors.Gainsboro.ToSolidColorBrush();
                         break;
                 }
             }
@@ -328,6 +335,15 @@ namespace Template10.Controls
               DependencyProperty.Register(nameof(SecondarySeparator), typeof(SolidColorBrush),
                   typeof(HamburgerMenu), new PropertyMetadata(null));
 
+         public SolidColorBrush PaneBorderBrush
+        {
+            get { return GetValue(PaneBorderBrushProperty) as SolidColorBrush; }
+            set { SetValue(PaneBorderBrushProperty, value); }
+        }
+        public static readonly DependencyProperty PaneBorderBrushProperty =
+              DependencyProperty.Register(nameof(PaneBorderBrush), typeof(SolidColorBrush),
+                  typeof(HamburgerMenu), new PropertyMetadata(null));
+
         public SolidColorBrush NavButtonCheckedBackground
         {
             get { return GetValue(NavButtonCheckedBackgroundProperty) as SolidColorBrush; }
@@ -373,9 +389,11 @@ namespace Template10.Controls
             get { return GetValue(SelectedProperty) as HamburgerButtonInfo; }
             set
             {
-                if (value?.Equals(Selected) ?? false)
+                HamburgerButtonInfo oldValue = Selected;
+                if (AutoHighlightCorrectButton && (value?.Equals(oldValue) ?? false))
                     value.IsChecked = (value.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
                 SetValue(SelectedProperty, value);
+                this.SelectedChanged?.Invoke(this, new ChangedEventArgs<HamburgerButtonInfo>(oldValue, value));
             }
         }
         public static readonly DependencyProperty SelectedProperty =
@@ -570,6 +588,15 @@ namespace Template10.Controls
             DependencyProperty.Register(nameof(PaneWidth), typeof(double),
                 typeof(HamburgerMenu), new PropertyMetadata(220d));
 
+        public Thickness PaneBorderThickness
+        {
+            get { return (Thickness)GetValue(PaneBorderThicknessProperty); }
+            set { SetValue(PaneBorderThicknessProperty, value); }
+        }
+        public static readonly DependencyProperty PaneBorderThicknessProperty =
+            DependencyProperty.Register(nameof(PaneBorderThickness), typeof(Thickness),
+                typeof(HamburgerMenu), new PropertyMetadata(new Thickness(0,0,1,0)));
+
         public UIElement HeaderContent
         {
             get { return (UIElement)GetValue(HeaderContentProperty); }
@@ -695,5 +722,16 @@ namespace Template10.Controls
             i.RaiseUnchecked(e);
             HighlightCorrectButton();
         }
+
+        public bool AutoHighlightCorrectButton
+        {
+            get { return (bool)GetValue(AutoHighlightCorrectButtonProperty); }
+            set { SetValue(AutoHighlightCorrectButtonProperty, value); }
+        }
+        public static readonly DependencyProperty AutoHighlightCorrectButtonProperty =
+            DependencyProperty.Register(nameof(AutoHighlightCorrectButton), typeof(bool), 
+                typeof(HamburgerMenu), new PropertyMetadata(true));
+
+
     }
 }

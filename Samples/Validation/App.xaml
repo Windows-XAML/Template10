@@ -1,0 +1,77 @@
+﻿<common:BootStrapper x:Class="Sample.App"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:Behaviors="using:Template10.Behaviors"
+                     xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+                     xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+                     xmlns:common="using:Template10.Common"
+                     xmlns:controls="using:Template10.Controls"
+                     xmlns:converters="using:Template10.Converters"
+                     xmlns:validate="using:Template10.Validation">
+
+    <Application.Resources>
+
+        <converters:StringFormatConverter x:Name="StringFormatConverter" />
+
+        <converters:ValueWhenConverter x:Name="ValidConverter">
+            <converters:ValueWhenConverter.When>
+                <x:Boolean>True</x:Boolean>
+            </converters:ValueWhenConverter.When>
+            <converters:ValueWhenConverter.Otherwise>
+                <x:String>Invalid</x:String>
+            </converters:ValueWhenConverter.Otherwise>
+        </converters:ValueWhenConverter>
+
+        <converters:ValueWhenConverter x:Name="AdminConverter">
+            <converters:ValueWhenConverter.When>
+                <x:Boolean>True</x:Boolean>
+            </converters:ValueWhenConverter.When>
+            <converters:ValueWhenConverter.Value>
+                <x:String></x:String>
+            </converters:ValueWhenConverter.Value>
+        </converters:ValueWhenConverter>
+
+        <DataTemplate x:Key="UserListItemTemplate">
+
+            <Grid Margin="0,0,0,4">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Grid Margin="0,0,8,0" HorizontalAlignment="Center"
+                      VerticalAlignment="Center" Background="SteelBlue">
+                    <Grid.Resources>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="FontFamily" Value="Segoe MDL2 Assets" />
+                            <Setter Property="Foreground" Value="White" />
+                            <Setter Property="FontSize" Value="8" />
+                        </Style>
+                    </Grid.Resources>
+                    <TextBlock Margin="8" FontSize="24">
+                        <Run Text="" />
+                    </TextBlock>
+                    <TextBlock Margin="0,4,0,4" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                        <Run Text="{Binding IsAdmin, Converter={StaticResource AdminConverter}}" />
+                    </TextBlock>
+                </Grid>
+
+                <TextBlock Grid.Column="1" VerticalAlignment="Center"
+                           FontSize="10" Foreground="Silver">
+                    <Run FontSize="16" Foreground="Black" Text="{Binding FirstName}" />
+                    <Run FontSize="16" Foreground="Black" Text="{Binding LastName}" />
+                    <Run Foreground="OrangeRed" Text="{Binding IsValid, Converter={StaticResource ValidConverter}}" />
+                    <LineBreak />
+                    <Run Text="{Binding Birth, Converter={StaticResource StringFormatConverter}, ConverterParameter=\{0:D\}}" />
+                    <LineBreak />
+                    <Run Text="{Binding Email}" />
+                </TextBlock>
+
+            </Grid>
+
+        </DataTemplate>
+
+    </Application.Resources>
+
+</common:BootStrapper>

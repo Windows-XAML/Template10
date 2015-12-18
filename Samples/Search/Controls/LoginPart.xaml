@@ -7,11 +7,27 @@
              Width="300" d:DesignHeight="300"
              mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Padding="20">
-        <StackPanel>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <!-- header -->
+        <Rectangle Fill="DarkRed" />
+        <TextBlock Foreground="White" VerticalAlignment="Center" Margin="20,0" FontSize="24">Login</TextBlock>
+        <Button Margin="12" Foreground="White" Click="CloseClicked" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource TextBlockButtonStyle}">
+            <SymbolIcon Symbol="Clear" />
+        </Button>
+
+        <!-- login form -->
+        <StackPanel Grid.Row="1" Margin="20, 16 ">
             <TextBox Header="Username" />
             <TextBox Header="Password" />
-            <Button Click="LoginClicked" Margin="0,12,0,0">Login</Button>
+            <Button Click="LoginClicked" Margin="0,12,0,0" HorizontalAlignment="Right">Login</Button>
         </StackPanel>
+
     </Grid>
 </UserControl>

@@ -263,7 +263,6 @@ namespace Template10.MSBUILD
         private void ZipFiles(string tempFolder, string zipName, string targetDir)
         {
             string zipFileName = Path.Combine(targetDir, ZipName);
-            string zipFileName2 = Path.Combine(TargetDir2, ZipName);
 
             if (File.Exists(zipFileName))
             {
@@ -272,7 +271,11 @@ namespace Template10.MSBUILD
             ZipFile.CreateFromDirectory(tempFolder, zipFileName);
 
             //-- now second one...
-            File.Copy(zipFileName, zipFileName2, true);
+            if (!string.IsNullOrWhiteSpace(TargetDir2))
+            {
+                string zipFileName2 = Path.Combine(TargetDir2, ZipName);
+                File.Copy(zipFileName, zipFileName2, true);
+            }
 
             //-- clean up the temporary folder
             Directory.Delete(tempFolder, true);

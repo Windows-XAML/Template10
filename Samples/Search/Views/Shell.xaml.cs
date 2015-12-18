@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using Template10.Common;
 using Template10.Controls;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml;
@@ -10,67 +12,77 @@ namespace Sample.Views
     public sealed partial class Shell : Page
     {
         public static Shell Instance { get; set; }
-        private static Template10.Common.WindowWrapper Window { get; set; }
-
+        private static WindowWrapper Window { get; set; }
         public Shell(NavigationService navigationService)
         {
             Instance = this;
             this.InitializeComponent();
-            Window = Template10.Common.WindowWrapper.Current();
+
+            // setup for static calls
+            Window = WindowWrapper.Current();
             MyHamburgerMenu.NavigationService = navigationService;
-            navigationService.FrameFacade.Navigated += (s, e) => VisualStateManager.GoToState(Instance, Instance.NormalVisualState.Name, false);
-            VisualStateManager.GoToState(Instance, Instance.NormalVisualState.Name, false);
+
+            // any nav change, reset to normal
+            navigationService.FrameFacade.Navigated += (s, e) =>
+                BusyModal.IsModal = SearchModal.IsModal = LoginModal.IsModal = false;
         }
 
-        public static void SetBusyVisibility(Visibility visible, string text = null)
+        #region Busy
+
+        public static void ShowBusy(bool busy, string text = null)
         {
             Window.Dispatcher.Dispatch(() =>
             {
-                switch (visible)
-                {
-                    case Visibility.Visible:
-                        Instance.FindName(nameof(BusyScreen));
-                        Instance.BusyText.Text = text ?? string.Empty;
-                        VisualStateManager.GoToState(Instance, Instance.BusyVisualState.Name, true);
-                        break;
-                    default:
-                        VisualStateManager.GoToState(Instance, Instance.NormalVisualState.Name, true);
-                        break;
-                }
+                Instance.BusyText.Text = text ?? string.Empty;
+                Instance.BusyModal.IsModal = busy;
             });
         }
 
+        #endregion
+
+        #region Login
+
         private void LoginTapped(object sender, RoutedEventArgs e)
         {
-            (sender as HamburgerButtonInfo).IsChecked = false;
-            VisualStateManager.GoToState(this, LoginVisualState.Name, true);
+            LoginModal.IsModal = true;
         }
 
         private void LoginHide(object sender, System.EventArgs e)
         {
-            VisualStateManager.GoToState(this, NormalVisualState.Name, true);
-            // only for demonstration purposes
-            // the user would need to really login in the real world
-            IsAuthenticated = true;
+            LoginButton.IsEnabled = true;
+            LoginModal.IsModal = false;
         }
 
-        private void SearchChecked(object sender, RoutedEventArgs e)
+        private void LoginLoggedIn(object sender, EventArgs e)
         {
-            VisualStateManager.GoToState(this, SearchVisualState.Name, true);
+            LoginButton.IsEnabled = false;
+            LoginModal.IsModal = false;
         }
 
-        private void SearchUnchecked(object sender, RoutedEventArgs e)
+        #endregion
+
+        #region Search
+
+        private void SearchTapped(object sender, RoutedEventArgs e)
         {
-            VisualStateManager.GoToState(this, NormalVisualState.Name, true);
+            SearchModal.IsModal = true;
         }
 
-        public bool IsAuthenticated
+        // request to hide search (from inside search)
+        private void SearchHide(object sender, EventArgs e)
         {
-            get { return (bool)GetValue(IsAuthenticatedProperty); }
-            set { SetValue(IsAuthenticatedProperty, value); }
+            SearchModal.IsModal = false;
         }
-        public static readonly DependencyProperty IsAuthenticatedProperty =
-            DependencyProperty.Register(nameof(IsAuthenticated), typeof(bool),
-                typeof(Shell), new PropertyMetadata(false));
+
+        // request to goto detail
+        private void SearchNav(object sender, string item)
+        {
+            SearchModal.IsModal = false;
+            MyHamburgerMenu.NavigationService.Navigate(typeof(Views.DetailPage), item);
+        }
+
+        #endregion
+
+
     }
 }

@@ -100,6 +100,7 @@
     <Prefer32Bit>true</Prefer32Bit>
     <DocumentationFile>
     </DocumentationFile>
+    <GenerateLibraryLayout>true</GenerateLibraryLayout>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <PlatformTarget>x86</PlatformTarget>
@@ -127,8 +128,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Behaviors\BackButtonBehavior.cs" />
     <Compile Include="Behaviors\CloseFlyoutAction.cs" />
     <Compile Include="Behaviors\FocusAction.cs" />
+    <Compile Include="Behaviors\MessageDialogAction.cs" />
     <Compile Include="Behaviors\NavButtonBehavior.cs" />
     <Compile Include="Behaviors\EllipsisBehavior.cs" />
     <Compile Include="Behaviors\OpenFlyoutAction.cs" />
@@ -142,9 +145,11 @@
     <Compile Include="Common\IStateItems.cs" />
     <Compile Include="Common\ItemPropertyChangedEventArgs.cs" />
     <Compile Include="Common\Mdl2.cs" />
+    <Compile Include="Common\ObservableDictionary.cs" />
     <Compile Include="Common\StateItems.cs" />
     <Compile Include="Common\StateKey.cs" />
     <Compile Include="Common\TypedEventHandler.cs" />
+    <Compile Include="Common\ChangedEventArgs.cs" />
     <Compile Include="Common\WindowWrapper.cs" />
     <Compile Include="Common\ObservableItemCollection.cs" />
     <Compile Include="Controls\ModalDialog.cs" />
@@ -169,6 +174,7 @@
     <Compile Include="Utils\ColorUtils.cs" />
     <Compile Include="Utils\DeviceUtils.cs" />
     <Compile Include="Utils\InkUtils.cs" />
+    <Compile Include="Utils\LinqUtils.cs" />
     <Compile Include="Utils\MonitorUtils.cs" />
     <Compile Include="Utils\TaskUtils.cs" />
     <Compile Include="Utils\XamlUtil.cs" />

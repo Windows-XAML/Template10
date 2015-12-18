@@ -14,13 +14,37 @@ namespace Template10.Utils
 
         public Common.WindowWrapper WindowWrapper { get; private set; }
 
-        public enum DeviceDispositions { Unknown, IoT, Xbox, Team, Desktop, Mobile, Phone, Continuum }
+        [Flags]
+        public enum DeviceDispositions
+        {
+            Unknown = 0,
+            IoT = 1 << 0,
+            Xbox = 1 << 1,
+            Team = 1 << 2,
+            HoloLens = 1 << 3,
+            Desktop = 1 << 4,
+            Mobile = 1 << 5,
+            Phone = (1 << 6) | Mobile,
+            Continuum = (1 << 7) | Phone,
+            Virtual = 1 << 8
+        }
 
-        public enum DeviceFamilies { Unknown, Desktop, Mobile, Team, IoT, Xbox }
+        [Flags]
+        public enum DeviceFamilies
+        {
+            Unknown = 0,
+            IoT = 1 << 0,
+            Xbox = 1 << 1,
+            Team = 1 << 2,
+            HoloLens = 1 << 3,
+            Desktop = 1 << 4,
+            Mobile = 1 << 5
+        }
 
         private DeviceUtils(Common.WindowWrapper windowWrapper)
         {
-            MonitorUtils = Utils.MonitorUtils.Current(windowWrapper);
+            MonitorUtils = MonitorUtils.Current(windowWrapper);
+            WindowWrapper = windowWrapper ?? Common.WindowWrapper.Current();
 
             var di = windowWrapper.DisplayInformation();
             di.OrientationChanged += new Common.WeakReference<DeviceUtils, DisplayInformation, object>(this)
@@ -68,30 +92,31 @@ namespace Template10.Utils
                 case "Windows.Team": return DeviceFamilies.Team;
                 case "Windows.IoT": return DeviceFamilies.IoT;
                 case "Windows.Xbox": return DeviceFamilies.Xbox;
+                case "Windows.HoloLens": return DeviceFamilies.HoloLens;
                 default: return DeviceFamilies.Unknown;
             }
         }
 
         public DeviceDispositions DeviceDisposition()
         {
+            var x = new Windows.Security.ExchangeActiveSyncProvisioning.EasClientDeviceInformation();
+            if (x.SystemProductName.Equals("Virtual"))
+                return DeviceDispositions.Virtual;
             switch (DeviceFamily())
             {
                 case DeviceFamilies.Desktop: return DeviceDispositions.Desktop;
                 case DeviceFamilies.Team: return DeviceDispositions.Team;
                 case DeviceFamilies.IoT: return DeviceDispositions.IoT;
                 case DeviceFamilies.Xbox: return DeviceDispositions.Xbox;
+                case DeviceFamilies.HoloLens: return DeviceDispositions.HoloLens;
                 case DeviceFamilies.Mobile:
                     {
-                        if (!IsTouch())
-                        {
+                        if (IsContinuum())
                             return DeviceDispositions.Continuum;
-                        }
-                        else
-                        {
-                            if (MonitorUtils.Inches.Diagonal > 6)
-                                return DeviceDispositions.Mobile;
+                        else if (IsPhone())
                             return DeviceDispositions.Phone;
-                        }
+                        else
+                            return DeviceDispositions.Mobile;
                     }
                 case DeviceFamilies.Unknown:
                 default: return DeviceDispositions.Unknown;
@@ -103,15 +128,20 @@ namespace Template10.Utils
             return WindowWrapper.UIViewSettings().UserInteractionMode == UserInteractionMode.Touch;
         }
 
+        public bool IsPhone()
+        {
+            if (DeviceFamily() != DeviceFamilies.Mobile) return false;
+            var inches = 7; // WindowWrapper.DisplayInformation().DiagonalSizeInInches;
+            return (inches <= 7);
+        }
+
         public bool IsContinuum()
         {
-            if (DeviceFamily() != DeviceFamilies.Mobile)
-                return false;
-            // This will be supported in 10.0.10563.0
+            if (DeviceFamily() != DeviceFamilies.Mobile) return false;
+            if (IsTouch()) return false;
             var inches = 7; // WindowWrapper.DisplayInformation().DiagonalSizeInInches;
-            if (inches > 6)
-                return true;
-            return false;
+            return (inches > 7);
         }
     }
 }
+
