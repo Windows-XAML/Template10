@@ -80,16 +80,19 @@ namespace Template10.Controls
 
         void HighlightCorrectButton(Type pageType = null, object pageParam = null)
         {
-            if (!AutoHighlightCorrectButton)
-                return;
-            pageType = pageType ?? NavigationService.CurrentPageType;
-            pageParam = pageParam ?? NavigationService.CurrentPageParam;
-            var values = _navButtons.Select(x => x.Value);
-            var button = values.FirstOrDefault(x => x.PageType == pageType 
-                && (x.PageParameter == null 
-                || x.PageParameter.Equals(pageParam)));
-            Selected = button;
-        }
+			if (!AutoHighlightCorrectButton)
+				return;
+			pageType = pageType ?? NavigationService.CurrentPageType;
+			var navGroup = pageType.GetTypeInfo().GetCustomAttribute<NavigationGroupAttribute>();
+			pageParam = pageParam ?? NavigationService.CurrentPageParam;
+			var values = _navButtons.Select(x => x.Value);
+			var button = values.FirstOrDefault(x => x.PageType == pageType
+				&& (x.PageParameter == null
+				|| x.PageParameter.Equals(pageParam)));
+			if (button == null && navGroup != null)
+				button = values.FirstOrDefault(x => navGroup.GroupName.Equals(x.NavigationGroup));
+			Selected = button;
+		}
 
         #region commands
 

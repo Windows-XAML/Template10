@@ -92,7 +92,14 @@ namespace Template10.Controls
             set { Set(ref _MaxWidth, value); }
         }
 
-        public override string ToString() => string.Format("{0}({1})", PageType?.ToString() ?? "null", PageParameter?.ToString() ?? "null");
+		string _navigationGroup;
+		public string NavigationGroup
+		{
+			get { return _navigationGroup; }
+			set { Set(ref _navigationGroup, value); }
+		}
+
+		public override string ToString() => string.Format("{0}({1})", PageType?.ToString() ?? "null", PageParameter?.ToString() ?? "null");
 
         public event RoutedEventHandler Selected;
         internal void RaiseSelected()
