@@ -97,6 +97,8 @@ namespace Template10.Services.NavigationService
 
         void NavigateTo(NavigationMode mode, object parameter)
         {
+            parameter = DeserializePageParam(parameter);
+
             LastNavigationParameter = parameter;
             LastNavigationType = FrameFacade.Content.GetType().FullName;
 
@@ -166,6 +168,7 @@ namespace Template10.Services.NavigationService
                     return false;
             }
 
+            parameter = SerializePageParam(parameter);
             return FrameFacade.Navigate(page, parameter, infoOverride);
         }
 
@@ -300,14 +303,14 @@ namespace Template10.Services.NavigationService
         public Type CurrentPageType => FrameFacade.CurrentPageType;
         public object CurrentPageParam => FrameFacade.CurrentPageParam;
 
-        protected virtual string SerializePageParam(object pageParam)
+        protected virtual object SerializePageParam(object pageParam)
         {
-            return pageParam?.ToString();
+            return pageParam;
         }
 
-        protected virtual object DeserializePageParam(string pageParamString)
+        protected virtual object DeserializePageParam(object pageParam)
         {
-            return pageParamString;
+            return pageParam;
         }
     }
 }
