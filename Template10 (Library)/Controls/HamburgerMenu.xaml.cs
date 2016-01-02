@@ -27,6 +27,8 @@ namespace Template10.Controls
         public event EventHandler PaneClosed;
         public event EventHandler<ChangedEventArgs<HamburgerButtonInfo>> SelectedChanged;
 
+        private bool _navButtonsLoaded;
+
         public HamburgerMenu()
         {
             InitializeComponent();
@@ -669,8 +671,6 @@ namespace Template10.Controls
             HighlightCorrectButton();
             _navButtonsLoaded = true;
         }
-
-        private bool _navButtonsLoaded;
 
         private void PaneContent_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
