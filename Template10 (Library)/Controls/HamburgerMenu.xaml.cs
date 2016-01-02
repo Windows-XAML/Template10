@@ -402,7 +402,12 @@ namespace Template10.Controls
                 { (d as HamburgerMenu).SetSelected((HamburgerButtonInfo)e.OldValue, (HamburgerButtonInfo)e.NewValue); }));
         private void SetSelected(HamburgerButtonInfo previous, HamburgerButtonInfo value)
         {
-            IsOpen = false;
+            // This was added to fix an issue where the HamburgerMenu would open and close immediately
+            // if the Hamburger button was clicked after starting the app in the narrowest VisualState.
+            if (_navButtonsLoaded)
+            {
+                IsOpen = false;
+            }
 
             // undo previous
             if (previous != null && previous != value)
@@ -662,7 +667,10 @@ namespace Template10.Controls
             var i = r.DataContext as HamburgerButtonInfo;
             _navButtons.Add(r, i);
             HighlightCorrectButton();
+            _navButtonsLoaded = true;
         }
+
+        private bool _navButtonsLoaded;
 
         private void PaneContent_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
