@@ -108,7 +108,7 @@ namespace Template10.Services.NavigationService
             var key = GetPageStateKey(type);
             if (FrameStateContainer().Containers.ContainsKey(key))
                 FrameStateContainer().DeleteContainer(key);
-			pageStateContainers.Remove(type);
+            pageStateContainers.Remove(type);
         }
 
         #endregion
