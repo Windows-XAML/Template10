@@ -13,9 +13,9 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Services.NavigationService
 {
-	using Windows.UI.Xaml.Data;
+    using Windows.UI.Xaml.Data;
 
-	// DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-NavigationService
+    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-NavigationService
     public partial class NavigationService : INavigationService
     {
         private const string EmptyNavigation = "1,0";
