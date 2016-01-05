@@ -426,11 +426,13 @@ namespace Template10.Common
         }
 
         public const string DefaultTileID = "App";
+
+        public bool ForceShowShellBackButton { get; set; } = false;
         public void UpdateShellBackButton()
         {
             // show the shell back only if there is anywhere to go in the default frame
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
-                (ShowShellBackButton && NavigationService.Frame.CanGoBack)
+                (ShowShellBackButton && (NavigationService.Frame.CanGoBack || ForceShowShellBackButton))
                     ? AppViewBackButtonVisibility.Visible
                     : AppViewBackButtonVisibility.Collapsed;
         }
