@@ -37,7 +37,8 @@ namespace Template10.Utils
 
         #region singleton
 
-        static Dictionary<Common.WindowWrapper, MonitorUtils> Cache = new Dictionary<Common.WindowWrapper, MonitorUtils>();
+        private static Dictionary<Common.WindowWrapper, MonitorUtils> Cache = new Dictionary<Common.WindowWrapper, MonitorUtils>();
+
         public static MonitorUtils Current(Common.WindowWrapper windowWrapper = null)
         {
             windowWrapper = windowWrapper ?? Common.WindowWrapper.Current();
@@ -54,14 +55,15 @@ namespace Template10.Utils
             return Cache[windowWrapper];
         }
 
-        #endregion
+        #endregion singleton
 
         public class InchesInfo
         {
-            Common.WindowWrapper WindowWrapper;
+            private Common.WindowWrapper WindowWrapper;
+
             public InchesInfo(Common.WindowWrapper windowWrapper)
             {
-                windowWrapper = WindowWrapper;
+                WindowWrapper = windowWrapper;
             }
 
             public double Height
@@ -93,10 +95,11 @@ namespace Template10.Utils
 
         public class PixelsInfo
         {
-            Common.WindowWrapper WindowWrapper;
+            private Common.WindowWrapper WindowWrapper;
+
             public PixelsInfo(Common.WindowWrapper windowWrapper)
             {
-                windowWrapper = WindowWrapper;
+                WindowWrapper = windowWrapper;
             }
 
             public int Height
