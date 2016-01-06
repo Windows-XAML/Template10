@@ -29,19 +29,19 @@ namespace Sample
         }
 
         // runs even if restored from state
-        public override async Task OnInitializeAsync(IActivatedEventArgs args)
+        public override Task OnInitializeAsync(IActivatedEventArgs args)
         {
             // setup hamburger shell
             var nav = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include);
             Window.Current.Content = new Views.Shell(nav);
-            await Task.CompletedTask;
+            return Task.CompletedTask;
         }
 
         // runs only when not restored from state
-        public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
+        public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
             NavigationService.Navigate(typeof(Views.MainPage));
-            await Task.CompletedTask;
-        }
+			return Task.CompletedTask;
+		}
     }
 }
