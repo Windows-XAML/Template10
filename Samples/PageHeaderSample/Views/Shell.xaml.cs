@@ -13,7 +13,7 @@ namespace PageHeaderSample.Views
 		public static Shell Instance { get; set; }
 		public static HamburgerMenu HamburgerMenu { get { return Instance.MyHamburgerMenu; } }
 
-		public Shell(NavigationService navigationService)
+		public Shell(INavigationService navigationService)
 		{
 			Instance = this;
 			InitializeComponent();
