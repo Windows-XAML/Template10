@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Template10.Mvvm;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Markup;
 
 namespace Template10.Controls
@@ -12,6 +13,9 @@ namespace Template10.Controls
     [ContentProperty(Name = nameof(Content))]
     public class HamburgerButtonInfo : DependencyBindableBase
     {
+        public enum ButtonTypes { Toggle, Command }
+        public ButtonTypes ButtonType { get; set; } = ButtonTypes.Toggle;
+
         /// <summary>
         /// Sets and gets the PageType property.
         /// </summary>
@@ -53,7 +57,7 @@ namespace Template10.Controls
             set { SetValue(VisibilityProperty, value); }
         }
         public static readonly DependencyProperty VisibilityProperty =
-            DependencyProperty.Register(nameof(Visibility), typeof(Visibility), 
+            DependencyProperty.Register(nameof(Visibility), typeof(Visibility),
                 typeof(HamburgerButtonInfo), new PropertyMetadata(Visibility.Visible));
 
         /// <summary>
@@ -105,19 +109,38 @@ namespace Template10.Controls
         public event RoutedEventHandler Checked;
         internal void RaiseChecked(RoutedEventArgs args)
         {
-            Checked?.Invoke(this, args);
+            if (ButtonType == ButtonTypes.Toggle)
+                Checked?.Invoke(this, args);
         }
 
         public event RoutedEventHandler Unchecked;
         internal void RaiseUnchecked(RoutedEventArgs args)
         {
-            Unchecked?.Invoke(this, args);
+            if (ButtonType == ButtonTypes.Toggle)
+                Unchecked?.Invoke(this, args);
         }
 
         public event RoutedEventHandler Tapped;
         internal void RaiseTapped(RoutedEventArgs args)
         {
             Tapped?.Invoke(this, args);
+        }
+
+        public event RightTappedEventHandler RightTapped;
+        internal void RaiseRightTapped(Windows.UI.Xaml.Input.RightTappedRoutedEventArgs args)
+        {
+            RightTapped?.Invoke(this, args);
+        }
+
+        public event HoldingEventHandler Holding;
+        internal void RaiseHolding(HoldingRoutedEventArgs args)
+        {
+            Holding?.Invoke(this, args);
+        }
+
+        public void Dispose()
+        {
+            
         }
     }
 }

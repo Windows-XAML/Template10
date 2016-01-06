@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 
@@ -46,6 +46,12 @@ namespace Template10.Services.AdaptiveTiles.Model
         public XElement ToXElement()
         {
             var element = new XElement("binding", GetXAttributes());
+
+			if(string.IsNullOrEmpty(Template))
+			{
+				throw new Exception($"{nameof(Template)} is not defined. Use TileSmall, TileMedium, TileWide or TileLarge for an adaptive tile.");
+			}
+
             element.Add(new XAttribute("template", Template));
             if (HintTextStacking.HasValue)
             {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -10,8 +11,12 @@ using Template10.Common;
 
 namespace Template10.Controls
 {
-    public class ObservableItemCollection<T> : ObservableCollection<T>
+    public class ObservableItemCollection<T> : ObservableCollection<T>, IDisposable where T : INotifyPropertyChanged
     {
+        private bool _enableCollectionChanged = true;
+        public override event NotifyCollectionChangedEventHandler CollectionChanged;
+        public event EventHandler<ItemPropertyChangedEventArgs> ItemPropertyChanged;
+
         public ObservableItemCollection()
         {
             base.CollectionChanged += (s, e) =>
@@ -21,30 +26,33 @@ namespace Template10.Controls
             };
         }
 
+        public ObservableItemCollection(IEnumerable<T> collection) : base(collection)
+        {
+            base.CollectionChanged += (s, e) =>
+            {
+                if (_enableCollectionChanged)
+                {
+                    CollectionChanged?.Invoke(this, e);
+                }
+            };
+        }
+
         protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
+            CheckDisposed();
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    foreach (INotifyPropertyChanged item in e.NewItems)
-                    {
-                        item.PropertyChanged += itemPropertyChanged;
-                    }
+                    RegisterPropertyChanged(e.NewItems);
                     break;
                 case NotifyCollectionChangedAction.Move:
                     break;
                 case NotifyCollectionChangedAction.Remove:
                 case NotifyCollectionChangedAction.Replace:
-                    foreach (INotifyPropertyChanged item in e.OldItems)
-                    {
-                        item.PropertyChanged -= itemPropertyChanged;
-                    }
+                    UnRegisterPropertyChanged(e.OldItems);
                     if (e.NewItems != null)
                     {
-                        foreach (INotifyPropertyChanged item in e.NewItems)
-                        {
-                            item.PropertyChanged += itemPropertyChanged;
-                        }
+                        RegisterPropertyChanged(e.NewItems);
                     }
 
                     break;
@@ -54,14 +62,40 @@ namespace Template10.Controls
             base.OnCollectionChanged(e);
         }
 
-        private void itemPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void RegisterPropertyChanged(IList items)
         {
-            ItemPropertyChanged?.Invoke(sender, e);
+            CheckDisposed();
+            foreach (INotifyPropertyChanged item in items)
+            {
+                if (item != null)
+                {
+                    item.PropertyChanged += new PropertyChangedEventHandler(item_PropertyChanged);
+                }
+            }
         }
-        public event EventHandler<PropertyChangedEventArgs> ItemPropertyChanged;
+
+        private void UnRegisterPropertyChanged(IList items)
+        {
+            CheckDisposed();
+            foreach (INotifyPropertyChanged item in items)
+            {
+                if (item != null)
+                {
+                    item.PropertyChanged -= new PropertyChangedEventHandler(item_PropertyChanged);
+                }
+            }
+        }
+
+        private void item_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            CheckDisposed();
+            ItemPropertyChanged?.Invoke(this, new ItemPropertyChangedEventArgs(sender, this.IndexOf((T)sender), e));
+        }
+
 
         public void AddRange(IEnumerable<T> items)
         {
+            CheckDisposed();
             _enableCollectionChanged = false;
             foreach (var item in items)
             {
@@ -73,6 +107,7 @@ namespace Template10.Controls
 
         public void RemoveRange(IEnumerable<T> items)
         {
+            CheckDisposed();
             _enableCollectionChanged = false;
             foreach (var item in items)
             {
@@ -82,8 +117,30 @@ namespace Template10.Controls
             CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, items));
         }
 
-        private bool _enableCollectionChanged = true;
-        public override event NotifyCollectionChangedEventHandler CollectionChanged;
+        protected override void ClearItems()
+        {
+            UnRegisterPropertyChanged(this);
+            base.ClearItems();
+        }
+
+        bool disposed = false;
+
+        public void Dispose()
+        {
+            if (!disposed)
+            {
+                ClearItems();
+                disposed = true;
+            }
+        }
+
+        public void CheckDisposed()
+        {
+            if (disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
+        }
     }
 
 }

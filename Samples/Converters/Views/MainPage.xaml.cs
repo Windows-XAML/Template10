@@ -28,5 +28,20 @@ namespace Sample.Views
         }
 
         ViewModels.MainPageViewModel ViewModel => this.DataContext as ViewModels.MainPageViewModel;
+
+        private void DisplayText_Click(object sender, RoutedEventArgs e)
+        {
+            ValueWhenConverterText.Visibility = Visibility.Visible;
+        }
+
+        private void SetFirstComboItem_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.SelectedSimpleModel = ViewModel.SimpleModels.FirstOrDefault();
+        }
+
+        private void SetNullValueToCombo_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.SelectedSimpleModel = null;
+        }
     }
 }

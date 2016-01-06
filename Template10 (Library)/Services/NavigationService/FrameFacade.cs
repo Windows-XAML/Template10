@@ -35,7 +35,7 @@ namespace Template10.Services.NavigationService
                 BackRequested.Invoke(this, args);
             }
 
-            if (!args.Handled && (args.Handled = this.Frame.BackStackDepth > 0))
+            if (BackButtonHandling == BootStrapper.BackButton.Attach && !args.Handled && (args.Handled = this.Frame.BackStackDepth > 0))
             {
                 GoBack();
             }
@@ -44,7 +44,7 @@ namespace Template10.Services.NavigationService
         public event EventHandler<HandledEventArgs> ForwardRequested;
         public void RaiseForwardRequested(HandledEventArgs args)
         {
-                ForwardRequested?.Invoke(this, args);
+            ForwardRequested?.Invoke(this, args);
 
             if (!args.Handled && this.Frame.ForwardStack.Count > 0)
             {
@@ -108,6 +108,7 @@ namespace Template10.Services.NavigationService
             var key = GetPageStateKey(type);
             if (FrameStateContainer().Containers.ContainsKey(key))
                 FrameStateContainer().DeleteContainer(key);
+            pageStateContainers.Remove(type);
         }
 
         #endregion
@@ -115,6 +116,8 @@ namespace Template10.Services.NavigationService
         #region frame facade
 
         public Frame Frame { get; }
+
+        public BootStrapper.BackButton BackButtonHandling { get; internal set; }
 
         public string FrameId { get; set; } = string.Empty;
 
@@ -128,12 +131,21 @@ namespace Template10.Services.NavigationService
 
         public bool CanGoBack => Frame.CanGoBack;
 
-        public void GoBack() { if (CanGoBack) Frame.GoBack(); }
+        public NavigationMode NavigationModeHint = NavigationMode.New;
+
+        public void GoBack()
+        {
+            NavigationModeHint = NavigationMode.Back;
+            if (CanGoBack) Frame.GoBack();
+        }
 
         public void Refresh()
         {
+            NavigationModeHint = NavigationMode.Refresh;
+
             try
             {
+                Windows.ApplicationModel.Resources.Core.ResourceContext.GetForCurrentView().Reset();
                 // this only works for apps using serializable types
                 var state = Frame.GetNavigationState();
                 Frame.SetNavigationState(state);
@@ -160,7 +172,11 @@ namespace Template10.Services.NavigationService
 
         public bool CanGoForward => Frame.CanGoForward;
 
-        public void GoForward() { if (CanGoForward) Frame.GoForward(); }
+        public void GoForward()
+        {
+            NavigationModeHint = NavigationMode.Forward;
+            if (CanGoForward) Frame.GoForward();
+        }
 
         public object Content => Frame.Content;
 
@@ -181,13 +197,15 @@ namespace Template10.Services.NavigationService
         {
             add { if (!_navigatedEventHandlers.Contains(value)) _navigatedEventHandlers.Add(value); }
             remove { if (_navigatedEventHandlers.Contains(value)) _navigatedEventHandlers.Remove(value); }
-            }
-
+        }
         void FacadeNavigatedEventHandler(object sender, Windows.UI.Xaml.Navigation.NavigationEventArgs e)
         {
             CurrentPageType = e.SourcePageType;
             CurrentPageParam = e.Parameter;
-            var args = new NavigatedEventArgs(e);
+            var args = new NavigatedEventArgs(e, Content as Page);
+            if (NavigationModeHint != NavigationMode.New)
+                args.NavigationMode = NavigationModeHint;
+            NavigationModeHint = NavigationMode.New;
             foreach (var handler in _navigatedEventHandlers)
             {
                 handler(this, args);
@@ -200,10 +218,12 @@ namespace Template10.Services.NavigationService
             add { if (!_navigatingEventHandlers.Contains(value)) _navigatingEventHandlers.Add(value); }
             remove { if (_navigatingEventHandlers.Contains(value)) _navigatingEventHandlers.Remove(value); }
         }
-
         private void FacadeNavigatingCancelEventHandler(object sender, NavigatingCancelEventArgs e)
         {
-            var args = new NavigatingEventArgs(e);
+            var args = new NavigatingEventArgs(e, Content as Page);
+            if (NavigationModeHint != NavigationMode.New)
+                args.NavigationMode = NavigationModeHint;
+            NavigationModeHint = NavigationMode.New;
             foreach (var handler in _navigatingEventHandlers)
             {
                 handler(this, args);

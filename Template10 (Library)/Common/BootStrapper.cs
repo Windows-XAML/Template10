@@ -54,14 +54,7 @@ namespace Template10.Common
 
         #region properties
 
-        /// <summary>
-        /// This is the NavigationService of the primary, first, or default Frame. 
-        /// An app can contain many frames and reference to this NavigationService should
-        /// not be confused as the NavigationService to the "current" Frame as
-        /// it is only a helper property to provide the NavigatioNService for
-        /// the first Frame ultimately aggregated in the static WindowWrapper class.
-        /// </summary>
-        public Services.NavigationService.INavigationService NavigationService => WindowWrapper.ActiveWrappers.First().NavigationServices.First();
+        public Services.NavigationService.INavigationService NavigationService => WindowWrapper.Current().NavigationServices.First();
 
         /// <summary>
         /// The SplashFactory is a Func that returns an instantiated Splash view.
@@ -163,6 +156,7 @@ namespace Template10.Common
                             from state will fail because of missing values. 
                             This is okay & by design.
                         */
+
                         if (DetermineStartCause(e) == AdditionalKinds.Primary)
                         {
                             var restored = NavigationService.RestoreSavedNavigation();
@@ -175,8 +169,19 @@ namespace Template10.Common
                         {
                             await OnStartAsync(StartKind.Launch, e);
                         }
+
+                        SubscribeBackButton();
+
                         break;
                     }
+                case ApplicationExecutionState.ClosedByUser:
+                case ApplicationExecutionState.NotRunning:
+                    // launch if not restored
+                    await OnStartAsync(StartKind.Launch, e);
+
+                    SubscribeBackButton();
+
+                    break;
                 default:
                     {
                         // launch if not restored
@@ -188,6 +193,21 @@ namespace Template10.Common
             // ensure active (this will hide any custom splashscreen)
             Window.Current.Activate();
 
+            // Hook up keyboard and mouse Back handler
+            var keyboard = new Services.KeyboardService.KeyboardService();
+            keyboard.AfterBackGesture = () =>
+            {
+                //the result is no matter
+                var handled = false;
+                RaiseBackRequested(ref handled);
+            };
+
+            // Hook up keyboard and mouse Forward handler
+            keyboard.AfterForwardGesture = RaiseForwardRequested;
+        }
+
+        private void SubscribeBackButton()
+        {
             // Hook up the default Back handler
             SystemNavigationManager.GetForCurrentView().BackRequested += (s, args) =>
             {
@@ -207,18 +227,6 @@ namespace Template10.Common
                 RaiseBackRequested(ref handled);
                 args.Handled = handled;
             };
-
-            // Hook up keyboard and mouse Back handler
-            var keyboard = new Services.KeyboardService.KeyboardService();
-            keyboard.AfterBackGesture = () =>
-            {
-                //the result is no matter
-                var handled = false;
-                RaiseBackRequested(ref handled);
-            };
-
-            // Hook up keyboard and mouse Forward handler
-            keyboard.AfterForwardGesture = RaiseForwardRequested;
         }
 
         #endregion
@@ -232,31 +240,38 @@ namespace Template10.Common
         private void RaiseBackRequested(ref bool handled)
         {
             var args = new HandledEventArgs();
+            BackRequested?.Invoke(null, args);
+            if (handled = args.Handled)
+                return;
             foreach (var frame in WindowWrapper.Current().NavigationServices.Select(x => x.FrameFacade).Reverse())
             {
                 frame.RaiseBackRequested(args);
-                handled = args.Handled;
-                if (handled)
+                if (handled = args.Handled)
                     return;
             }
-
-            // default to first window
             NavigationService.GoBack();
         }
+
+        // this event precedes the in-frame event by the same name
+        public static event EventHandler<HandledEventArgs> BackRequested;
 
         private void RaiseForwardRequested()
         {
             var args = new HandledEventArgs();
+            ForwardRequested?.Invoke(null, args);
+            if (args.Handled)
+                return;
             foreach (var frame in WindowWrapper.Current().NavigationServices.Select(x => x.FrameFacade))
             {
                 frame.RaiseForwardRequested(args);
                 if (args.Handled)
                     return;
             }
-
-            // default to first window
             NavigationService.GoForward();
         }
+
+        // this event precedes the in-frame event by the same name
+        public static event EventHandler<HandledEventArgs> ForwardRequested;
 
         #region overrides
 
@@ -274,7 +289,10 @@ namespace Template10.Common
         /// OnInitializeAsync will be called even if the application is restoring from state.
         /// An app restores from state when the app was suspended and then terminated (PreviousExecutionState terminated).
         /// </summary>
-        public virtual async Task OnInitializeAsync(IActivatedEventArgs args) { await Task.Yield(); }
+        public virtual async Task OnInitializeAsync(IActivatedEventArgs args)
+        {
+            await Task.CompletedTask;
+        }
 
         /// <summary>
         /// OnSuspendingAsync will be called when the application is suspending, but this override
@@ -284,7 +302,15 @@ namespace Template10.Common
         /// because the asunc operations are in a single, global deferral created when the suspension
         /// begins and completed automatically when the last viewmodel has been called (including this method).
         /// </summary>
-        public virtual async Task OnSuspendingAsync(object s, SuspendingEventArgs e) { await Task.Yield(); }
+        public virtual async Task OnSuspendingAsync(object s, SuspendingEventArgs e)
+        {
+            if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily.Equals("Windows.Mobile"))
+            {
+                WindowWrapper.ClearNavigationServices(Window.Current);
+            }
+            await Task.CompletedTask;
+        }
+
         public virtual void OnResuming(object s, object e) { }
 
         #endregion
@@ -320,29 +346,53 @@ namespace Template10.Common
             if (Window.Current.Content == null || Window.Current.Content == splash)
             {
                 // build the default frame
-                Window.Current.Content = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include).Frame;
+                var frame = CreateRootFrame(e);
+                Window.Current.Content = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include, frame).Frame;
             }
+        }
+
+        protected virtual Frame CreateRootFrame(IActivatedEventArgs e)
+        {
+            return new Frame();
         }
 
         public enum BackButton { Attach, Ignore }
         public enum ExistingContent { Include, Exclude }
 
         /// <summary>
-        /// Craetes a new FamFrame and adds the resulting NavigationService to the 
+        /// Creates a new Frame and adds the resulting NavigationService to the 
         /// WindowWrapper collection. In addition, it optionally will setup the 
         /// shell back button to react to the nav of the Frame.
         /// A developer should call this when creating a new/secondary frame.
         /// The shell back button should only be setup one time.
         /// </summary>
-        public Services.NavigationService.NavigationService NavigationServiceFactory(BackButton backButton, ExistingContent existingContent)
+        public Services.NavigationService.INavigationService NavigationServiceFactory(BackButton backButton, ExistingContent existingContent)
         {
-            var frame = new Frame
-            {
-                Language = Windows.Globalization.ApplicationLanguages.Languages[0],
-                Content = (existingContent == ExistingContent.Include) ? Window.Current.Content : null,
-            };
+            return NavigationServiceFactory(backButton, existingContent, new Frame());
+        }
 
-            var navigationService = new Services.NavigationService.NavigationService(frame);
+        /// <summary>
+        /// Creates the NavigationService instance for given Frame.
+        /// </summary>
+        protected virtual Services.NavigationService.INavigationService CreateNavigationService(Frame frame)
+        {
+            return new Services.NavigationService.NavigationService(frame);
+        }
+
+        /// <summary>
+        /// Creates a new NavigationService from the gived Frame to the 
+        /// WindowWrapper collection. In addition, it optionally will setup the 
+        /// shell back button to react to the nav of the Frame.
+        /// A developer should call this when creating a new/secondary frame.
+        /// The shell back button should only be setup one time.
+        /// </summary>
+        public Services.NavigationService.INavigationService NavigationServiceFactory(BackButton backButton, ExistingContent existingContent, Frame frame)
+        {
+            frame.Language = Windows.Globalization.ApplicationLanguages.Languages[0];
+            frame.Content = (existingContent == ExistingContent.Include) ? Window.Current.Content : null;
+
+            var navigationService = CreateNavigationService(frame);
+            navigationService.FrameFacade.BackButtonHandling = backButton;
             WindowWrapper.Current().NavigationServices.Add(navigationService);
 
             if (backButton == BackButton.Attach)
@@ -384,16 +434,18 @@ namespace Template10.Common
         }
 
         public const string DefaultTileID = "App";
+
+        public bool ForceShowShellBackButton { get; set; } = false;
         public void UpdateShellBackButton()
         {
             // show the shell back only if there is anywhere to go in the default frame
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
-                (ShowShellBackButton && NavigationService.Frame.CanGoBack)
+                (ShowShellBackButton && (NavigationService.Frame.CanGoBack || ForceShowShellBackButton))
                     ? AppViewBackButtonVisibility.Visible
                     : AppViewBackButtonVisibility.Collapsed;
         }
 
-        public enum AdditionalKinds { Primary, Toast, SecondaryTile, Other }
+        public enum AdditionalKinds { Primary, Toast, SecondaryTile, Other, JumpListItem }
 
         /// <summary>
         /// This determines the simplest case for starting. This should handle 80% of common scenarios. 
@@ -406,6 +458,8 @@ namespace Template10.Common
             var e = args as ILaunchActivatedEventArgs;
             if (e?.TileId == DefaultTileID && string.IsNullOrEmpty(e?.Arguments))
                 return AdditionalKinds.Primary;
+            else if (e?.TileId == DefaultTileID && !string.IsNullOrEmpty(e?.Arguments))
+                return AdditionalKinds.JumpListItem;
             else if (e?.TileId != null && e?.TileId != DefaultTileID)
                 return AdditionalKinds.SecondaryTile;
             else

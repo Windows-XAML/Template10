@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Template10.Common;
 using Windows.ApplicationModel.Core;
@@ -24,7 +25,7 @@ namespace Template10.Services.NavigationService
 
         public DispatcherWrapper Dispatcher => WindowWrapper.Current(this).Dispatcher;
 
-        internal NavigationService(Frame frame)
+        protected internal NavigationService(Frame frame)
         {
             FrameFacade = new FrameFacade(frame);
             FrameFacade.Navigating += async (s, e) =>
@@ -45,17 +46,28 @@ namespace Template10.Services.NavigationService
             };
         }
 
-        // before navigate (cancellable)
+        // before navigate (cancellable) 
         bool NavigatingFrom(bool suspending)
         {
             var page = FrameFacade.Content as Page;
             if (page != null)
             {
+                // force (x:bind) page bindings to update
+                var fields = page.GetType().GetRuntimeFields();
+                var bindings = fields.FirstOrDefault(x => x.Name.Equals("Bindings"));
+                if (bindings != null)
+                {
+                    var update = bindings.GetType().GetTypeInfo().GetDeclaredMethod("Update");
+                    update?.Invoke(bindings, null);
+                }
+
+                // call navagable override (navigating)
                 var dataContext = page.DataContext as INavigable;
                 if (dataContext != null)
                 {
                     var args = new NavigatingEventArgs
                     {
+                        NavigationMode = FrameFacade.NavigationModeHint,
                         PageType = FrameFacade.CurrentPageType,
                         Parameter = FrameFacade.CurrentPageParam,
                         Suspending = suspending,
@@ -85,6 +97,8 @@ namespace Template10.Services.NavigationService
 
         void NavigateTo(NavigationMode mode, object parameter)
         {
+            parameter = DeserializePageParam(parameter);
+
             LastNavigationParameter = parameter;
             LastNavigationType = FrameFacade.Content.GetType().FullName;
 
@@ -145,9 +159,16 @@ namespace Template10.Services.NavigationService
         {
             if (page == null)
                 throw new ArgumentNullException(nameof(page));
-            if (page.FullName.Equals(LastNavigationType)
-                && parameter == LastNavigationParameter)
-                return false;
+            if (page.FullName.Equals(LastNavigationType))
+            {
+                if (parameter == LastNavigationParameter)
+                    return false;
+
+                if (parameter != null && parameter.Equals(LastNavigationParameter))
+                    return false;
+            }
+
+            parameter = SerializePageParam(parameter);
             return FrameFacade.Navigate(page, parameter, infoOverride);
         }
 
@@ -198,12 +219,8 @@ namespace Template10.Services.NavigationService
                 throw new InvalidOperationException("State container is unexpectedly null");
             }
 
-            state["CurrentPageType"] = CurrentPageType.ToString();
-            try { state["CurrentPageParam"] = CurrentPageParam; }
-            catch
-            {
-                throw new Exception("Failed to serialize page parameter, override/implement ToString()");
-            }
+            state["CurrentPageType"] = CurrentPageType.AssemblyQualifiedName;
+            state["CurrentPageParam"] = SerializePageParam(CurrentPageParam);
             state["NavigateState"] = FrameFacade?.GetNavigationState();
         }
 
@@ -219,10 +236,13 @@ namespace Template10.Services.NavigationService
                 }
 
                 FrameFacade.CurrentPageType = Type.GetType(state["CurrentPageType"].ToString());
-                FrameFacade.CurrentPageParam = state["CurrentPageParam"];
-                FrameFacade.SetNavigationState(state["NavigateState"].ToString());
+                FrameFacade.CurrentPageParam = DeserializePageParam(state["CurrentPageParam"]?.ToString());
+                FrameFacade.SetNavigationState(state["NavigateState"]?.ToString());
                 NavigateTo(NavigationMode.Refresh, FrameFacade.CurrentPageParam);
-                while (Frame.Content == null) { /* wait */ }
+                while (Frame.Content == null)
+                {
+                    Task.Yield().GetAwaiter().GetResult();
+                }
                 AfterRestoreSavedNavigation?.Invoke(this, FrameFacade.CurrentPageType);
                 return true;
             }
@@ -240,25 +260,25 @@ namespace Template10.Services.NavigationService
         public bool CanGoForward => FrameFacade.CanGoForward;
 
         public void ClearCache(bool removeCachedPagesInBackStack = false)
-		{
-			int currentSize = FrameFacade.Frame.CacheSize;
+        {
+            int currentSize = FrameFacade.Frame.CacheSize;
 
-			if (removeCachedPagesInBackStack)
-			{
-				FrameFacade.Frame.CacheSize = 0;
-			}
-			else
-			{
-				if (Frame.BackStackDepth == 0)
-					Frame.CacheSize = 1;
-				else
-					Frame.CacheSize = Frame.BackStackDepth;
-			}
+            if (removeCachedPagesInBackStack)
+            {
+                FrameFacade.Frame.CacheSize = 0;
+            }
+            else
+            {
+                if (Frame.BackStackDepth == 0)
+                    Frame.CacheSize = 1;
+                else
+                    Frame.CacheSize = Frame.BackStackDepth;
+            }
 
-			FrameFacade.Frame.CacheSize = currentSize;
-		}
+            FrameFacade.Frame.CacheSize = currentSize;
+        }
 
-		public void ClearHistory() { FrameFacade.Frame.BackStack.Clear(); }
+        public void ClearHistory() { FrameFacade.Frame.BackStack.Clear(); }
 
         public void Resuming() { /* nothing */ }
 
@@ -282,6 +302,16 @@ namespace Template10.Services.NavigationService
 
         public Type CurrentPageType => FrameFacade.CurrentPageType;
         public object CurrentPageParam => FrameFacade.CurrentPageParam;
+
+        protected virtual object SerializePageParam(object pageParam)
+        {
+            return pageParam;
+        }
+
+        protected virtual object DeserializePageParam(object pageParam)
+        {
+            return pageParam;
+        }
     }
 }
 

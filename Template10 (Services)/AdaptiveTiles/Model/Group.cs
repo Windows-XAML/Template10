@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Xml.Linq;
 
 namespace Template10.Services.AdaptiveTiles.Model
@@ -12,10 +12,11 @@ namespace Template10.Services.AdaptiveTiles.Model
         public XElement ToXElement()
         {
             var element = new XElement("group");
-            foreach (var subgroup in SubGroups)
-            {
-                element.Add(subgroup.ToXElement());
-            }
+			if(SubGroups != null)
+				foreach (var subgroup in SubGroups)
+				{
+					element.Add(subgroup.ToXElement());
+				}
 
             return element;
         }

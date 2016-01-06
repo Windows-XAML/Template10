@@ -35,7 +35,7 @@ namespace Template10.Controls
         }
 
         public static readonly DependencyProperty BackButtonVisibilityProperty =
-            DependencyProperty.Register(nameof(BackButtonVisibility), typeof(Visibility), typeof(PageHeader), new PropertyMetadata(default(Visibility)));
+            DependencyProperty.Register(nameof(BackButtonVisibility), typeof(Visibility), typeof(PageHeader), new PropertyMetadata(Visibility.Collapsed));
 
         private Symbol BackButtonContent
         {
@@ -70,18 +70,16 @@ namespace Template10.Controls
             get { return (double)GetValue(VisualStateNarrowMinWidthProperty); }
             set { SetValue(VisualStateNarrowMinWidthProperty, value); }
         }
-
         public static readonly DependencyProperty VisualStateNarrowMinWidthProperty =
-            DependencyProperty.Register(nameof(VisualStateNarrowMinWidth), typeof(double), typeof(PageHeader), new PropertyMetadata(default(double)));
+            DependencyProperty.Register(nameof(VisualStateNarrowMinWidth), typeof(double), typeof(PageHeader), new PropertyMetadata(-1));
 
         public double VisualStateNormalMinWidth
         {
             get { return (double)GetValue(VisualStateNormalMinWidthProperty); }
             set { SetValue(VisualStateNormalMinWidthProperty, value); }
         }
-
         public static readonly DependencyProperty VisualStateNormalMinWidthProperty =
-            DependencyProperty.Register(nameof(VisualStateNormalMinWidth), typeof(double), typeof(PageHeader), new PropertyMetadata(default(double)));
+            DependencyProperty.Register(nameof(VisualStateNormalMinWidth), typeof(double), typeof(PageHeader), new PropertyMetadata(0));
 
         public new object Content
         {

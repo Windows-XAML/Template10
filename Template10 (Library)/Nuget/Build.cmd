@@ -1,4 +1,4 @@
-ECHO ON
+@ECHO OFF
 @echo -- NuGet Process Start --
 
 set TARGETDIR=%~1

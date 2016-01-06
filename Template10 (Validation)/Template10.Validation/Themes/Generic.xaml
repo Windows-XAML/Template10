@@ -1,0 +1,50 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:c="using:Template10.Converters"
+                    xmlns:v="using:Template10.Validation">
+
+    <c:ValueWhenConverter x:Name="VisibilityConverter">
+        <c:ValueWhenConverter.When>
+            <x:Boolean>False</x:Boolean>
+        </c:ValueWhenConverter.When>
+        <c:ValueWhenConverter.Value>
+            <Visibility>Visible</Visibility>
+        </c:ValueWhenConverter.Value>
+        <c:ValueWhenConverter.Otherwise>
+            <Visibility>Collapsed</Visibility>
+        </c:ValueWhenConverter.Otherwise>
+    </c:ValueWhenConverter>
+
+    <Style TargetType="v:ControlWrapper">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="v:ControlWrapper">
+                    <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <Rectangle x:Name="Indicator" Width="8"
+                                   Height="32" HorizontalAlignment="Left"
+                                   VerticalAlignment="Bottom"
+                                   DataContext="{TemplateBinding Property}" Fill="OrangeRed">
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip Placement="Mouse">
+                                    <ItemsControl ItemsSource="{Binding Errors, Source={TemplateBinding Property}}" />
+                                </ToolTip>
+                            </ToolTipService.ToolTip>
+
+                            <Rectangle.RenderTransform>
+                                <TranslateTransform X="-12" />
+                            </Rectangle.RenderTransform>
+
+                            <Rectangle.Visibility>
+                                <Binding Converter="{StaticResource VisibilityConverter}" Path="IsValid" />
+                            </Rectangle.Visibility>
+
+                        </Rectangle>
+                        <ContentPresenter Content="{TemplateBinding Content}" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

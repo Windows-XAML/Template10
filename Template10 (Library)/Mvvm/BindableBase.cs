@@ -1,6 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Runtime.CompilerServices;
+using Template10.Common;
 using Windows.UI.Xaml;
 
 namespace Template10.Mvvm
@@ -12,13 +15,16 @@ namespace Template10.Mvvm
 
         public void RaisePropertyChanged([CallerMemberName]string propertyName = null)
         {
+            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
+                return;
             try
             {
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             }
             catch
             {
-                // nothing
+                WindowWrapper.Current().Dispatcher.Dispatch(() =>
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)));
             }
         }
 
@@ -29,6 +35,58 @@ namespace Template10.Mvvm
             storage = value;
             RaisePropertyChanged(propertyName);
             return true;
+        }
+
+        public bool Set<T>(Expression<Func<T>> propertyExpression, ref T field, T newValue)
+        {
+            //if is equal 
+            if (object.Equals(field, newValue))
+            {
+                return false;
+            }
+
+            field = newValue;
+            RaisePropertyChanged(propertyExpression);
+            return true;
+        }
+
+        public void RaisePropertyChanged<T>(Expression<Func<T>> propertyExpression)
+        {
+            var handler = PropertyChanged;
+            //if is not null
+            if (!object.Equals(handler, null))
+            {
+                var propertyName = GetPropertyName(propertyExpression);
+
+                if (!object.Equals(propertyName, null))
+                {
+                    handler(this, new PropertyChangedEventArgs(propertyName));
+                }
+            }
+        }
+
+        protected static string GetPropertyName<T>(Expression<Func<T>> propertyExpression)
+        {
+            if (object.Equals(propertyExpression, null))
+            {
+                throw new ArgumentNullException("propertyExpression");
+            }
+
+            var body = propertyExpression.Body as MemberExpression;
+
+            if (object.Equals(body, null))
+            {
+                throw new ArgumentException("Invalid argument", "propertyExpression");
+            }
+
+            var property = body.Member as PropertyInfo;
+
+            if (object.Equals(property, null))
+            {
+                throw new ArgumentException("Argument is not a property", "propertyExpression");
+            }
+
+            return property.Name;
         }
     }
 
@@ -46,7 +104,8 @@ namespace Template10.Mvvm
             }
             catch
             {
-                // nothing
+                WindowWrapper.Current().Dispatcher.Dispatch(() =>
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)));
             }
         }
 
@@ -57,6 +116,58 @@ namespace Template10.Mvvm
             storage = value;
             RaisePropertyChanged(propertyName);
             return true;
+        }
+
+        public bool Set<T>(Expression<Func<T>> propertyExpression, ref T field, T newValue)
+        {
+            //if is equal 
+            if (object.Equals(field, newValue))
+            {
+                return false;
+            }
+
+            field = newValue;
+            RaisePropertyChanged(propertyExpression);
+            return true;
+        }
+
+        public void RaisePropertyChanged<T>(Expression<Func<T>> propertyExpression)
+        {
+            var handler = PropertyChanged;
+            //if is not null
+            if (!object.Equals(handler, null))
+            {
+                var propertyName = GetPropertyName(propertyExpression);
+
+                if (!object.Equals(propertyName, null))
+                {
+                    handler(this, new PropertyChangedEventArgs(propertyName));
+                }
+            }
+        }
+
+        protected static string GetPropertyName<T>(Expression<Func<T>> propertyExpression)
+        {
+            if (object.Equals(propertyExpression, null))
+            {
+                throw new ArgumentNullException("propertyExpression");
+            }
+
+            var body = propertyExpression.Body as MemberExpression;
+
+            if (object.Equals(body, null))
+            {
+                throw new ArgumentException("Invalid argument", "propertyExpression");
+            }
+
+            var property = body.Member as PropertyInfo;
+
+            if (object.Equals(property, null))
+            {
+                throw new ArgumentException("Argument is not a property", "propertyExpression");
+            }
+
+            return property.Name;
         }
     }
 }

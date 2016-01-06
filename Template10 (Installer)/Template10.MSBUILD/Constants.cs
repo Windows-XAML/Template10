@@ -51,6 +51,7 @@ namespace Template10.MSBUILD
     <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
     <Icon>__TemplateIcon.png</Icon>
     <PreviewImage>$previewImageFile</PreviewImage>
+    <NumberOfParentCategoriesToRollUp>2</NumberOfParentCategoriesToRollUp>
   </TemplateData>
   <TemplateContent PreferedSolutionConfiguration=""Debug|x86"">
 $projectNode

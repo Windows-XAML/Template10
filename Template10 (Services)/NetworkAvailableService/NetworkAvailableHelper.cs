@@ -26,7 +26,7 @@ namespace Template10.Services.NetworkAvailableService
 
         public async Task<bool> IsInternetAvailable()
         {
-            await Task.Delay(0);
+            await Task.CompletedTask;
             var _Profile = Windows.Networking.Connectivity.NetworkInformation.GetInternetConnectionProfile();
             if (_Profile == null)
                 return false;

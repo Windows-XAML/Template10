@@ -19,8 +19,9 @@ namespace Template10.Common
 
         private CoreDispatcher dispatcher;
 
-        public async Task DispatchAsync(Action action)
+        public async Task DispatchAsync(Action action, int delayms = 0)
         {
+            await Task.Delay(delayms);
             if (dispatcher.HasThreadAccess) { action(); }
             else
             {
@@ -34,8 +35,9 @@ namespace Template10.Common
             }
         }
 
-        public async Task DispatchAsync(Func<Task> func)
+        public async Task DispatchAsync(Func<Task> func, int delayms = 0)
         {
+            await Task.Delay(delayms);
             if (dispatcher.HasThreadAccess) { await func?.Invoke(); }
             else
             {
@@ -49,8 +51,9 @@ namespace Template10.Common
             }
         }
 
-        public async Task<T> DispatchAsync<T>(Func<T> func)
+        public async Task<T> DispatchAsync<T>(Func<T> func, int delayms = 0)
         {
+            await Task.Delay(delayms);
             if (dispatcher.HasThreadAccess) { return func(); }
             else
             {
@@ -65,12 +68,25 @@ namespace Template10.Common
             }
         }
 
-        public void Dispatch(Action action)
+        public async void Dispatch(Action action, int delayms = 0)
         {
+            await Task.Delay(delayms);
             if (dispatcher.HasThreadAccess) { action(); }
             else
             {
                 dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => action()).AsTask().Wait();
+            }
+        }
+
+        public T Dispatch<T>(Func<T> action, int delayms = 0) where T : class
+        {
+            Task.Delay(delayms);
+            if (dispatcher.HasThreadAccess) { return action(); }
+            else
+            {
+                T result = null;
+                dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => result = action()).AsTask().Wait();
+                return result;
             }
         }
     }

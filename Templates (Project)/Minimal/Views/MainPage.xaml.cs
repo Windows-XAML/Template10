@@ -12,6 +12,6 @@ namespace Sample.Views
         }
 
         // strongly-typed view models enable x:bind
-        public MainPageViewModel ViewModel => this.DataContext as MainPageViewModel; 
+        public MainPageViewModel ViewModel => this.DataContext as MainPageViewModel;
     }
 }
