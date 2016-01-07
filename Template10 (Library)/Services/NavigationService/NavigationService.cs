@@ -13,6 +13,9 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Services.NavigationService
 {
+    using System.Text;
+    using Windows.Foundation.Collections;
+    using Windows.Storage;
     using Windows.UI.Xaml.Data;
 
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-NavigationService
@@ -219,9 +222,13 @@ namespace Template10.Services.NavigationService
                 throw new InvalidOperationException("State container is unexpectedly null");
             }
 
-            state["CurrentPageType"] = CurrentPageType.AssemblyQualifiedName;
-            state["CurrentPageParam"] = ParameterSerializationService.Instance.SerializeParameter(CurrentPageParam);
-            state["NavigateState"] = FrameFacade?.GetNavigationState();
+            string pageTypeValue = this.CurrentPageType.AssemblyQualifiedName;
+            object pageParamValue = ParameterSerializationService.Instance.SerializeParameter(this.CurrentPageParam);
+            string navigationStateValue = this.FrameFacade?.GetNavigationState();
+
+            state["CurrentPageType"] = pageTypeValue;
+            SaveLongStateValue(state, "CurrentPageParam", pageParamValue);
+            SaveLongStateValue(state, "NavigateState", navigationStateValue);
         }
 
         public event TypedEventHandler<Type> AfterRestoreSavedNavigation;
@@ -235,9 +242,13 @@ namespace Template10.Services.NavigationService
                     return false;
                 }
 
-                FrameFacade.CurrentPageType = Type.GetType(state["CurrentPageType"].ToString());
-                FrameFacade.CurrentPageParam = ParameterSerializationService.Instance.DeserializeParameter(state["CurrentPageParam"]?.ToString());
-                FrameFacade.SetNavigationState(state["NavigateState"]?.ToString());
+                string pageTypeValue = state["CurrentPageType"].ToString();
+                object pageParamValue = RestoreLongStateValue(state, "CurrentPageParam");
+                string navigationStateValue = RestoreLongStateValue(state, "NavigateState")?.ToString();
+
+                FrameFacade.CurrentPageType = Type.GetType(pageTypeValue);
+                FrameFacade.CurrentPageParam = ParameterSerializationService.Instance.DeserializeParameter(pageParamValue);
+                FrameFacade.SetNavigationState(navigationStateValue);
                 NavigateTo(NavigationMode.Refresh, FrameFacade.CurrentPageParam);
                 while (Frame.Content == null)
                 {
@@ -247,6 +258,61 @@ namespace Template10.Services.NavigationService
                 return true;
             }
             catch { return false; }
+        }
+
+        private const int MaxValueSize = 8000;
+        private const int MaxCompositeSize = 64000;
+
+        private static void SaveLongStateValue(IPropertySet state, string key, object value)
+        {
+            var stringValue = value?.ToString();
+            if (string.IsNullOrEmpty(stringValue) || (stringValue.Length <= MaxValueSize))
+            {
+                state[key] = value;
+            }
+            else
+            {
+                int remainingLength = stringValue.Length;
+                if (remainingLength > MaxCompositeSize)
+                {
+                    throw new Exception("Value too large.");
+                }
+                int statePartCount = (remainingLength - 1) / MaxValueSize + 1;
+
+                // Create composite value
+                var compositeValue = new ApplicationDataCompositeValue();
+                compositeValue["Count"] = statePartCount.ToString();
+                state[key] = compositeValue;
+
+                // Split string into parts
+                for (int statePart = 0; statePart < statePartCount; statePart++)
+                {
+                    string statePartValue = stringValue.Substring(statePart * MaxValueSize, Math.Min(MaxValueSize, remainingLength));
+                    compositeValue["Part" + statePart] = statePartValue;
+                    remainingLength = remainingLength - MaxValueSize;
+                }
+            }
+        }
+
+        private static object RestoreLongStateValue(IPropertySet state, string key)
+        {
+            object value = state[key];
+            var compositeValue = value as ApplicationDataCompositeValue;
+            if (compositeValue != null)
+            {
+                string statePartCountValue = compositeValue["Count"]?.ToString();
+                int statePartCount;
+                if (!string.IsNullOrEmpty(statePartCountValue) && int.TryParse(statePartCountValue, out statePartCount))
+                {
+                    var sb = new StringBuilder(statePartCount * MaxValueSize);
+                    for (int statePart = 0; statePart < statePartCount; statePart++)
+                    {
+                        sb.Append(compositeValue["Part" + statePart]);
+                    }
+                    value = sb.ToString();
+                }
+            }
+            return value;
         }
 
         public void Refresh() { FrameFacade.Refresh(); }
