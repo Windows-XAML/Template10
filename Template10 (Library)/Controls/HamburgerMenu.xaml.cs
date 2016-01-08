@@ -46,9 +46,9 @@ namespace Template10.Controls
                         _SecondaryButtonStackPanel.Orientation = Orientation.Horizontal;
                     else
                         _SecondaryButtonStackPanel.Orientation = Orientation.Vertical;
-
+                    
                     // overall events
-                    if (ShellSplitView.IsPaneOpen)
+                    if ((d as SplitView).IsPaneOpen)
                         PaneOpen?.Invoke(ShellSplitView, EventArgs.Empty);
                     else
                         PaneClosed?.Invoke(ShellSplitView, EventArgs.Empty);
@@ -85,8 +85,8 @@ namespace Template10.Controls
             pageType = pageType ?? NavigationService.CurrentPageType;
             pageParam = pageParam ?? NavigationService.CurrentPageParam;
             var values = _navButtons.Select(x => x.Value);
-            var button = values.FirstOrDefault(x => x.PageType == pageType 
-                && (x.PageParameter == null 
+            var button = values.FirstOrDefault(x => x.PageType == pageType
+                && (x.PageParameter == null
                 || x.PageParameter.Equals(pageParam)));
             Selected = button;
         }
@@ -335,7 +335,7 @@ namespace Template10.Controls
               DependencyProperty.Register(nameof(SecondarySeparator), typeof(SolidColorBrush),
                   typeof(HamburgerMenu), new PropertyMetadata(null));
 
-         public SolidColorBrush PaneBorderBrush
+        public SolidColorBrush PaneBorderBrush
         {
             get { return GetValue(PaneBorderBrushProperty) as SolidColorBrush; }
             set { SetValue(PaneBorderBrushProperty, value); }
@@ -451,6 +451,7 @@ namespace Template10.Controls
                 var open = ShellSplitView.IsPaneOpen;
                 if (open == value)
                     return;
+                SetValue(IsOpenProperty, value);
                 if (value)
                 {
                     ShellSplitView.IsPaneOpen = true;
@@ -463,7 +464,6 @@ namespace Template10.Controls
                     else if (ShellSplitView.DisplayMode == SplitViewDisplayMode.CompactOverlay && ShellSplitView.IsPaneOpen)
                         ShellSplitView.IsPaneOpen = false;
                 }
-                SetValue(IsOpenProperty, value);
             }
         }
         public static readonly DependencyProperty IsOpenProperty =
@@ -494,25 +494,6 @@ namespace Template10.Controls
             {
                 _navigationService = value;
 
-                #region BottomAppBar
-
-                var bottomAppBarDelay = 1000;
-                NavigationService.FrameFacade.Navigated += (s, e) =>
-                {
-                    StartAppBar(e.Page);
-                    WindowWrapper.Current().Dispatcher.Dispatch(() => { StartAppBar(e.Page); }, bottomAppBarDelay);
-                };
-                NavigationService.FrameFacade.Navigating += (s, e) => StopAppBar(e.Page);
-                NavigationService.AfterRestoreSavedNavigation += (s, e) =>
-                {
-                    StartAppBar(NavigationService.FrameFacade.Content as Page);
-                    WindowWrapper.Current().Dispatcher.Dispatch(() => { StartAppBar(NavigationService.FrameFacade.Content as Page); }, bottomAppBarDelay);
-                };
-                StartAppBar(NavigationService.FrameFacade.Content as Page);
-                WindowWrapper.Current().Dispatcher.Dispatch(() => { StartAppBar(NavigationService.FrameFacade.Content as Page); }, bottomAppBarDelay);
-
-                #endregion
-
                 if (NavigationService.Frame.BackStackDepth > 0)
                 {
                     // display content inside the splitview
@@ -531,6 +512,16 @@ namespace Template10.Controls
             }
         }
 
+        /// <summary>
+        /// When IsFullScreen is true, the content is displayed on top of the SplitView and the SplitView is
+        /// not visible. Even as the user navigates (if possible) the SplitView remains hidden until 
+        /// IsFullScreen is set to false. 
+        /// </summary>
+        /// <remarks>
+        /// The original intent for this property was to allow the splash screen to be visible while the
+        /// remaining content loaded duing app start. Internally, this is still used for this purpose,
+        /// but many developers also leverage this property to view media full screen and similar use cases. 
+        /// </remarks>
         public bool IsFullScreen
         {
             get { return (bool)GetValue(IsFullScreenProperty); }
@@ -595,7 +586,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty PaneBorderThicknessProperty =
             DependencyProperty.Register(nameof(PaneBorderThickness), typeof(Thickness),
-                typeof(HamburgerMenu), new PropertyMetadata(new Thickness(0,0,1,0)));
+                typeof(HamburgerMenu), new PropertyMetadata(new Thickness(0, 0, 1, 0)));
 
         public UIElement HeaderContent
         {
@@ -605,52 +596,6 @@ namespace Template10.Controls
         public static readonly DependencyProperty HeaderContentProperty =
             DependencyProperty.Register(nameof(HeaderContent), typeof(UIElement),
                 typeof(HamburgerMenu), null);
-
-        #endregion
-
-        #region BottomAppBar
-
-        private void StartAppBar(Page page)
-        {
-            if (page?.BottomAppBar != null)
-            {
-                page.BottomAppBar.Opened -= BottomAppBar_Handler;
-                page.BottomAppBar.Opened += BottomAppBar_Handler;
-                page.BottomAppBar.Closing -= BottomAppBar_Handler;
-                page.BottomAppBar.Closing += BottomAppBar_Handler;
-                UpdateAppBar(page.BottomAppBar);
-            }
-        }
-
-        private void StopAppBar(Page page)
-        {
-            if (page?.BottomAppBar != null)
-            {
-                page.BottomAppBar.Opened -= BottomAppBar_Handler;
-                page.BottomAppBar.Closing -= BottomAppBar_Handler;
-                UpdateAppBar(null);
-            }
-        }
-
-        private void BottomAppBar_Handler(object sender, object e)
-        {
-            UpdateAppBar(sender as AppBar);
-        }
-
-        private void UpdateAppBar(AppBar appbar)
-        {
-            var height = 0d;
-            if (appbar == null)
-                height = 0d;
-            else if (appbar.Visibility == Visibility.Collapsed)
-                height = 0d;
-            else if (appbar.IsOpen)
-                height = ((appbar.Content as FrameworkElement)?.ActualHeight ?? appbar.ActualHeight);
-            else
-                height = appbar.ActualHeight;
-            PaneContent.Margin = new Thickness(PaneContent.Margin.Left, PaneContent.Margin.Top, PaneContent.Margin.Right, height);
-            PaneContent.InvalidateMeasure();
-        }
 
         #endregion
 
@@ -729,7 +674,7 @@ namespace Template10.Controls
             set { SetValue(AutoHighlightCorrectButtonProperty, value); }
         }
         public static readonly DependencyProperty AutoHighlightCorrectButtonProperty =
-            DependencyProperty.Register(nameof(AutoHighlightCorrectButton), typeof(bool), 
+            DependencyProperty.Register(nameof(AutoHighlightCorrectButton), typeof(bool),
                 typeof(HamburgerMenu), new PropertyMetadata(true));
 
 
