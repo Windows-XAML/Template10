@@ -689,7 +689,7 @@ namespace Template10.Controls
 
         public bool AutoHighlightCorrectButton
         {
-            get { return (bool)GetValue(AutoHighlightCorrectButtonProperty); }
+            get { return true; /*(bool)GetValue(AutoHighlightCorrectButtonProperty);*/ }
             set { SetValue(AutoHighlightCorrectButtonProperty, value); }
         }
         public static readonly DependencyProperty AutoHighlightCorrectButtonProperty =
