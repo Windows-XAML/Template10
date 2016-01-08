@@ -555,6 +555,9 @@ namespace Template10.Controls
             }
         }
 
+        /// <summary>
+        /// SecondaryButtons are the button at the bottom of the HamburgerMenu
+        /// </summary>
         public ObservableCollection<HamburgerButtonInfo> SecondaryButtons
         {
             get
@@ -570,6 +573,14 @@ namespace Template10.Controls
             DependencyProperty.Register(nameof(SecondaryButtons), typeof(ObservableCollection<HamburgerButtonInfo>),
                 typeof(HamburgerMenu), new PropertyMetadata(null));
 
+        /// <summary>
+        /// PaneWidth indicates the width of the Pane when it is open. The width of the Pane
+        /// when it is closed is hard-coded to 48 pixels. 
+        /// </summary>
+        /// <remarks>
+        /// The reason the closed width of the pane is hard-coded to 48 pixels is because this
+        /// matches the closed width of the MSN News app, after which we modeled this control.
+        /// </remarks>
         public double PaneWidth
         {
             get { return (double)GetValue(PaneWidthProperty); }
@@ -579,6 +590,11 @@ namespace Template10.Controls
             DependencyProperty.Register(nameof(PaneWidth), typeof(double),
                 typeof(HamburgerMenu), new PropertyMetadata(220d));
 
+        /// <summary>
+        /// The Panel border thickness is intended to be the border between between the open
+        /// pane and the page content. This is particularly valuable if your menu background
+        /// and page background colors are similar in color. You can always set this to 0.
+        /// </summary>
         public Thickness PaneBorderThickness
         {
             get { return (Thickness)GetValue(PaneBorderThicknessProperty); }
@@ -588,6 +604,9 @@ namespace Template10.Controls
             DependencyProperty.Register(nameof(PaneBorderThickness), typeof(Thickness),
                 typeof(HamburgerMenu), new PropertyMetadata(new Thickness(0, 0, 1, 0)));
 
+        /// <summary>
+        /// TODO:
+        /// </summary>
         public UIElement HeaderContent
         {
             get { return (UIElement)GetValue(HeaderContentProperty); }
