@@ -87,19 +87,14 @@ namespace Template10.Services.NavigationService
             {
                 FrameStateContainer().DeleteContainer(container.Key);
             }
-            pageStateContainers.Clear();
         }
 
         private string GetPageStateKey(Type type) => string.Format("{0}", type);
 
-        readonly Dictionary<Type, IPropertySet> pageStateContainers = new Dictionary<Type, IPropertySet>();
         public IPropertySet PageStateContainer(Type type)
         {
-            if (pageStateContainers.ContainsKey(type))
-                return pageStateContainers[type];
             var key = GetPageStateKey(type);
             var container = FrameStateContainer().CreateContainer(key, Windows.Storage.ApplicationDataCreateDisposition.Always);
-            pageStateContainers.Add(type, container.Values);
             return container.Values;
         }
 
@@ -108,7 +103,6 @@ namespace Template10.Services.NavigationService
             var key = GetPageStateKey(type);
             if (FrameStateContainer().Containers.ContainsKey(key))
                 FrameStateContainer().DeleteContainer(key);
-            pageStateContainers.Remove(type);
         }
 
         #endregion
