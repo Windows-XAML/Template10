@@ -9,11 +9,7 @@ namespace Sample.Views
         public SettingsPage()
         {
             this.InitializeComponent();
-            NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Disabled;
         }
-
-        // strongly-typed view models enable x:bind
-        public SettingsPageViewModel ViewModel => this.DataContext as SettingsPageViewModel;
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {

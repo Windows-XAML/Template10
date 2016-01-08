@@ -10,55 +10,53 @@
       xmlns:views="using:Sample.Views" x:Name="ThisPage"
       mc:Ignorable="d">
 
-    <Grid x:Name="RootGrid">
+    <Controls:ModalDialog CanBackButtonDismiss="False" 
+                          DisableBackButtonWhenModal="True" 
+                          IsModal="{x:Bind IsBusy, Mode=OneWay}">
 
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="VisualStateGroup">
-                <VisualState x:Name="NormalVisualState" />
-                <VisualState x:Name="BusyVisualState">
-                    <VisualState.Setters>
-                        <Setter Target="BusyRing.(ProgressRing.IsActive)" Value="True" />
-                        <Setter Target="BusyScreen.(UIElement.Visibility)" Value="Visible" />
-                        <Setter Target="MyHamburgerMenu.(UIElement.IsEnabled)" Value="True" />
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
+        <Controls:ModalDialog.Content>
+            <Controls:HamburgerMenu x:Name="MyHamburgerMenu" IsFullScreen="False" AutoHighlightCorrectButton="False">
 
-        <Controls:HamburgerMenu x:Name="MyHamburgerMenu" IsFullScreen="False">
+                <Controls:HamburgerMenu.PrimaryButtons>
 
-            <Controls:HamburgerMenu.PrimaryButtons>
-                <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:MainPage">
-                    <StackPanel Orientation="Horizontal">
-                        <SymbolIcon Width="48" Height="48" Symbol="Home" />
-                        <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Home" />
-                    </StackPanel>
-                </Controls:HamburgerButtonInfo>
-            </Controls:HamburgerMenu.PrimaryButtons>
+                    <!-- mainpage button -->
+                    <Controls:HamburgerButtonInfo>
+                        <StackPanel Orientation="Horizontal">
+                            <SymbolIcon Width="48" Height="48" Symbol="Home" />
+                            <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Home" />
+                        </StackPanel>
+                    </Controls:HamburgerButtonInfo>
 
-            <Controls:HamburgerMenu.SecondaryButtons>
-                <Controls:HamburgerButtonInfo PageType="views:SettingsPage">
-                    <StackPanel Orientation="Horizontal">
-                        <SymbolIcon Width="48" Height="48" Symbol="Setting" />
-                        <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Settings" />
-                    </StackPanel>
-                </Controls:HamburgerButtonInfo>
-            </Controls:HamburgerMenu.SecondaryButtons>
+                </Controls:HamburgerMenu.PrimaryButtons>
 
-        </Controls:HamburgerMenu>
+                <Controls:HamburgerMenu.SecondaryButtons>
 
-        <Grid x:Name="BusyScreen" Background="{StaticResource ModalBackground}" Visibility="Collapsed" x:DeferLoadStrategy="Lazy">
+                    <!-- settingspage button -->
+                    <Controls:HamburgerButtonInfo>
+                        <StackPanel Orientation="Horizontal">
+                            <SymbolIcon Width="48" Height="48" Symbol="Setting" />
+                            <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Settings" />
+                        </StackPanel>
+                    </Controls:HamburgerButtonInfo>
+
+                </Controls:HamburgerMenu.SecondaryButtons>
+
+            </Controls:HamburgerMenu>
+        </Controls:ModalDialog.Content>
+        <Controls:ModalDialog.ModalContent>
+
+            <!-- busy visual -->
             <Viewbox Height="32">
                 <StackPanel Orientation="Horizontal">
-                    <ProgressRing x:Name="BusyRing" Width="24"
-                                  Height="24" Margin="12,0"
-                                  Foreground="White" IsActive="False" />
-                    <TextBlock x:Name="BusyText" VerticalAlignment="Center" Foreground="White" />
+                    <ProgressRing Width="16" Height="16"
+                                  Margin="12,0" Foreground="White"
+                                  IsActive="{x:Bind IsBusy, Mode=OneWay}" />
+                    <TextBlock VerticalAlignment="Center" Foreground="White" Text="{x:Bind BusyText, Mode=OneWay}" />
                 </StackPanel>
             </Viewbox>
-        </Grid>
 
-    </Grid>
+        </Controls:ModalDialog.ModalContent>
+    </Controls:ModalDialog>
 
 </Page>
 

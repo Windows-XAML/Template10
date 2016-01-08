@@ -9,10 +9,6 @@ namespace Sample.Views
         public DetailPage()
         {
             InitializeComponent();
-            NavigationCacheMode = NavigationCacheMode.Disabled;
         }
-
-        // strongly-typed view models enable x:bind
-        public DetailPageViewModel ViewModel => DataContext as DetailPageViewModel;
     }
 }

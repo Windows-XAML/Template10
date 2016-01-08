@@ -10,8 +10,9 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:vm="using:Sample.ViewModels" x:Name="ThisPage"
       mc:Ignorable="d">
+    
     <Page.DataContext>
-        <vm:DetailPageViewModel />
+        <vm:DetailPageViewModel x:Name="ViewModel" />
     </Page.DataContext>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">

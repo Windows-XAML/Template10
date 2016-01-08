@@ -13,6 +13,8 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Services.NavigationService
 {
+    using Windows.UI.Xaml.Data;
+
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-NavigationService
     public partial class NavigationService : INavigationService
     {
@@ -42,7 +44,7 @@ namespace Template10.Services.NavigationService
             };
             FrameFacade.Navigated += (s, e) =>
             {
-                NavigateTo(e.NavigationMode, e.Parameter);
+                NavigateTo(e.NavigationMode, ParameterSerializationService.Instance.DeserializeParameter(e.Parameter));
             };
         }
 
@@ -97,8 +99,6 @@ namespace Template10.Services.NavigationService
 
         void NavigateTo(NavigationMode mode, object parameter)
         {
-            parameter = DeserializePageParam(parameter);
-
             LastNavigationParameter = parameter;
             LastNavigationType = FrameFacade.Content.GetType().FullName;
 
@@ -168,7 +168,7 @@ namespace Template10.Services.NavigationService
                     return false;
             }
 
-            parameter = SerializePageParam(parameter);
+            parameter = ParameterSerializationService.Instance.SerializeParameter(parameter);
             return FrameFacade.Navigate(page, parameter, infoOverride);
         }
 
@@ -220,7 +220,7 @@ namespace Template10.Services.NavigationService
             }
 
             state["CurrentPageType"] = CurrentPageType.AssemblyQualifiedName;
-            state["CurrentPageParam"] = SerializePageParam(CurrentPageParam);
+            state["CurrentPageParam"] = ParameterSerializationService.Instance.SerializeParameter(CurrentPageParam);
             state["NavigateState"] = FrameFacade?.GetNavigationState();
         }
 
@@ -236,7 +236,7 @@ namespace Template10.Services.NavigationService
                 }
 
                 FrameFacade.CurrentPageType = Type.GetType(state["CurrentPageType"].ToString());
-                FrameFacade.CurrentPageParam = DeserializePageParam(state["CurrentPageParam"]?.ToString());
+                FrameFacade.CurrentPageParam = ParameterSerializationService.Instance.DeserializeParameter(state["CurrentPageParam"]?.ToString());
                 FrameFacade.SetNavigationState(state["NavigateState"]?.ToString());
                 NavigateTo(NavigationMode.Refresh, FrameFacade.CurrentPageParam);
                 while (Frame.Content == null)
@@ -302,16 +302,6 @@ namespace Template10.Services.NavigationService
 
         public Type CurrentPageType => FrameFacade.CurrentPageType;
         public object CurrentPageParam => FrameFacade.CurrentPageParam;
-
-        protected virtual object SerializePageParam(object pageParam)
-        {
-            return pageParam;
-        }
-
-        protected virtual object DeserializePageParam(object pageParam)
-        {
-            return pageParam;
-        }
     }
 }
 
