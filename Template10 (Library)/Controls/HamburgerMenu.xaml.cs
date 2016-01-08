@@ -410,10 +410,10 @@ namespace Template10.Controls
             DependencyProperty.Register(nameof(Selected), typeof(HamburgerButtonInfo),
                 typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) =>
                 { (d as HamburgerMenu).SetSelected((HamburgerButtonInfo)e.OldValue, (HamburgerButtonInfo)e.NewValue); }));
-private void SetSelected(HamburgerButtonInfo previous, HamburgerButtonInfo value)
-{
-    if (previous != null)
-        IsOpen = false;
+        private void SetSelected(HamburgerButtonInfo previous, HamburgerButtonInfo value)
+        {
+            if (previous != null)
+                IsOpen = false;
 
             // undo previous
             if (previous != null && previous != value)
