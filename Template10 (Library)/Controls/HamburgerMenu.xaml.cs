@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using Template10.Common;
@@ -23,7 +24,9 @@ namespace Template10.Controls
     [ContentProperty(Name = nameof(PrimaryButtons))]
     public sealed partial class HamburgerMenu : UserControl, INotifyPropertyChanged
     {
+        [Obsolete("Fixing naming inconsistency; use HamburgerMenu.PaneOpened", true)]
         public event EventHandler PaneOpen;
+        public event EventHandler PaneOpened;
         public event EventHandler PaneClosed;
         public event EventHandler<ChangedEventArgs<HamburgerButtonInfo>> SelectedChanged;
 
@@ -42,14 +45,18 @@ namespace Template10.Controls
                 ShellSplitView.RegisterPropertyChangedCallback(SplitView.IsPaneOpenProperty, (d, e) =>
                 {
                     // secondary layout
-                    if (SecondaryButtonOrientation.Equals(Orientation.Horizontal) && ShellSplitView.IsPaneOpen)
+                    if (SecondaryButtonOrientation.Equals(Orientation.Horizontal)
+                        && ShellSplitView.IsPaneOpen)
                         _SecondaryButtonStackPanel.Orientation = Orientation.Horizontal;
                     else
                         _SecondaryButtonStackPanel.Orientation = Orientation.Vertical;
-                    
+
                     // overall events
                     if ((d as SplitView).IsPaneOpen)
+                    {
+                        PaneOpened?.Invoke(ShellSplitView, EventArgs.Empty);
                         PaneOpen?.Invoke(ShellSplitView, EventArgs.Empty);
+                    }
                     else
                         PaneClosed?.Invoke(ShellSplitView, EventArgs.Empty);
                 });
@@ -78,7 +85,7 @@ namespace Template10.Controls
             DependencyProperty.Register(nameof(DisplayMode), typeof(SplitViewDisplayMode),
                 typeof(HamburgerMenu), new PropertyMetadata(null));
 
-        void HighlightCorrectButton(Type pageType = null, object pageParam = null)
+        internal void HighlightCorrectButton(Type pageType = null, object pageParam = null)
         {
             if (!AutoHighlightCorrectButton)
                 return;
@@ -95,7 +102,10 @@ namespace Template10.Controls
 
         Mvvm.DelegateCommand _hamburgerCommand;
         internal Mvvm.DelegateCommand HamburgerCommand => _hamburgerCommand ?? (_hamburgerCommand = new Mvvm.DelegateCommand(ExecuteHamburger));
-        void ExecuteHamburger() { IsOpen = !IsOpen; }
+        void ExecuteHamburger()
+        {
+            IsOpen = !IsOpen;
+        }
 
         Mvvm.DelegateCommand<HamburgerButtonInfo> _navCommand;
         public Mvvm.DelegateCommand<HamburgerButtonInfo> NavCommand => _navCommand ?? (_navCommand = new Mvvm.DelegateCommand<HamburgerButtonInfo>(ExecuteNav));
@@ -400,9 +410,10 @@ namespace Template10.Controls
             DependencyProperty.Register(nameof(Selected), typeof(HamburgerButtonInfo),
                 typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) =>
                 { (d as HamburgerMenu).SetSelected((HamburgerButtonInfo)e.OldValue, (HamburgerButtonInfo)e.NewValue); }));
-        private void SetSelected(HamburgerButtonInfo previous, HamburgerButtonInfo value)
-        {
-            IsOpen = false;
+private void SetSelected(HamburgerButtonInfo previous, HamburgerButtonInfo value)
+{
+    if (previous != null)
+        IsOpen = false;
 
             // undo previous
             if (previous != null && previous != value)
@@ -493,22 +504,28 @@ namespace Template10.Controls
             set
             {
                 _navigationService = value;
+                ShellSplitView.Content = NavigationService.Frame;
 
-                if (NavigationService.Frame.BackStackDepth > 0)
+                // Test if there is a splash showing, this is the case if there is no content
+                // and if there is a splash factorydefined in the bootstrapper, if true
+                // then we want to show the content full screen until the frame loads
+                if (_navigationService.FrameFacade.BackStackDepth == 0
+                    && BootStrapper.Current.SplashFactory != null)
                 {
-                    // display content inside the splitview
-                    ShellSplitView.Content = NavigationService.Frame;
+                    var once = false;
+                    IsFullScreen = true;
+                    value.FrameFacade.Navigated += (s, e) =>
+                    {
+                        if (!once)
+                        {
+                            once = true;
+                            IsFullScreen = false;
+                        }
+                    };
                 }
-                else
-                {
-                    // display content without splitview (splash scenario)
-                    NavigationService.AfterRestoreSavedNavigation += (s, e) => UpdateFullScreen(IsFullScreen);
-                    NavigationService.FrameFacade.Navigated += (s, e) => UpdateFullScreen(IsFullScreen);
-                    UpdateFullScreen(true);
-                }
+
                 NavigationService.AfterRestoreSavedNavigation += (s, e) => HighlightCorrectButton();
                 NavigationService.FrameFacade.Navigated += (s, e) => HighlightCorrectButton(e.PageType, e.Parameter);
-                UpdateFullScreen();
             }
         }
 
@@ -519,7 +536,7 @@ namespace Template10.Controls
         /// </summary>
         /// <remarks>
         /// The original intent for this property was to allow the splash screen to be visible while the
-        /// remaining content loaded duing app start. Internally, this is still used for this purpose,
+        /// remaining content loaded duing app start. In Minimal (Shell), this is still used for this purpose,
         /// but many developers also leverage this property to view media full screen and similar use cases. 
         /// </remarks>
         public bool IsFullScreen
@@ -532,26 +549,36 @@ namespace Template10.Controls
                 typeof(HamburgerMenu), new PropertyMetadata(false, (d, e) => (d as HamburgerMenu).UpdateFullScreen()));
         private void UpdateFullScreen(bool? manual = null)
         {
+            var frame = NavigationService?.Frame;
             if (manual ?? IsFullScreen)
             {
-                if (NavigationService == null || RootGrid.Children.Contains(NavigationService.Frame))
+                if (NavigationService == null || RootGrid.Children.Contains(frame))
                     return;
-                NavigationService.Frame.SetValue(Grid.ColumnProperty, 0);
-                ShellSplitView.Content = null;
-                ShellSplitView.Visibility = Visibility.Collapsed;
-                HamburgerButton.Width = 0;
-                NavigationService.Frame.SetValue(Grid.ColumnSpanProperty, int.MaxValue);
-                NavigationService.Frame.SetValue(Grid.RowProperty, 0);
-                NavigationService.Frame.SetValue(Grid.RowSpanProperty, int.MaxValue);
-                RootGrid.Children.Add(NavigationService.Frame);
+                if (!RootGrid.Children.Contains(frame))
+                {
+                    ShellSplitView.Content = null;
+                    RootGrid.Children.Add(frame);
+                }
+                if (RootGrid.Children.Contains(ShellSplitView))
+                    RootGrid.Children.Remove(ShellSplitView);
+                if (RootGrid.Children.Contains(HamburgerButton))
+                    RootGrid.Children.Remove(HamburgerButton);
+                if (RootGrid.Children.Contains(Header))
+                    RootGrid.Children.Remove(Header);
             }
             else
             {
-                if (RootGrid.Children.Contains(NavigationService.Frame))
-                    RootGrid.Children.Remove(NavigationService.Frame);
-                HamburgerButton.Width = 48;
-                ShellSplitView.Visibility = Visibility.Visible;
-                ShellSplitView.Content = NavigationService.Frame;
+                if (RootGrid.Children.Contains(frame))
+                {
+                    RootGrid.Children.Remove(frame);
+                    ShellSplitView.Content = frame;
+                }
+                if (!RootGrid.Children.Contains(ShellSplitView))
+                    RootGrid.Children.Add(ShellSplitView);
+                if (!RootGrid.Children.Contains(HamburgerButton))
+                    RootGrid.Children.Add(HamburgerButton);
+                if (!RootGrid.Children.Contains(Header))
+                    RootGrid.Children.Add(Header);
             }
         }
 

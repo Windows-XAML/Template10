@@ -40,6 +40,7 @@ namespace Sample
         // runs only when not restored from state
         public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
+            await Task.Delay(1000);
             NavigationService.Navigate(typeof(Views.MainPage));
             await Task.CompletedTask;
         }

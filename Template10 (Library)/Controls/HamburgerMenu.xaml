@@ -263,7 +263,7 @@
         </ContentControl>
 
         <SplitView x:Name="ShellSplitView" Grid.Column="0"
-                   DisplayMode="Inline"
+                   DisplayMode="Inline" IsPaneOpen="False"
                    OpenPaneLength="{x:Bind PaneWidth, Mode=OneWay}"
                    PaneBackground="Transparent">
 
@@ -313,7 +313,7 @@
 
                     <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
 
-                        <ItemsControl ItemTemplate="{StaticResource NavButtonTemplate}" ItemsSource="{Binding PrimaryButtons, ElementName=ThisPage}">
+                        <ItemsControl ItemTemplate="{StaticResource NavButtonTemplate}" ItemsSource="{Binding PrimaryButtons, ElementName=ThisPage}" x:Name="PrimaryButtonContainer">
 
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -345,7 +345,7 @@
 
                     </ScrollViewer>
 
-                    <ItemsControl Grid.Row="1" ItemTemplate="{StaticResource NavButtonTemplate}" ItemsSource="{Binding SecondaryButtons, ElementName=ThisPage}">
+                    <ItemsControl Grid.Row="1" ItemTemplate="{StaticResource NavButtonTemplate}" ItemsSource="{Binding SecondaryButtons, ElementName=ThisPage}" x:Name="SecondaryButtonContainer">
 
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>

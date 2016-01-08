@@ -12,7 +12,7 @@
 
     <Controls:ModalDialog CanBackButtonDismiss="False" DisableBackButtonWhenModal="True" IsModal="{x:Bind IsBusy, Mode=OneWay}">
         <Controls:ModalDialog.Content>
-            <Controls:HamburgerMenu x:Name="MyHamburgerMenu" IsFullScreen="False" AutoHighlightCorrectButton="False">
+            <Controls:HamburgerMenu x:Name="MyHamburgerMenu">
 
                 <Controls:HamburgerMenu.PrimaryButtons>
                     <!-- mainpage button -->
@@ -36,6 +36,7 @@
 
             </Controls:HamburgerMenu>
         </Controls:ModalDialog.Content>
+        
         <Controls:ModalDialog.ModalContent>
             <!-- busy visual -->
             <Viewbox Height="32">
@@ -47,6 +48,7 @@
                 </StackPanel>
             </Viewbox>
         </Controls:ModalDialog.ModalContent>
+        
     </Controls:ModalDialog>
 
 </Page>

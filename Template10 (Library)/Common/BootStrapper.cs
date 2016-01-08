@@ -60,7 +60,7 @@ namespace Template10.Common
         /// The SplashFactory is a Func that returns an instantiated Splash view.
         /// Template 10 will automatically inject this visual before loading the app.
         /// </summary>
-        protected Func<SplashScreen, UserControl> SplashFactory { get; set; }
+        public Func<SplashScreen, UserControl> SplashFactory { get; protected set; }
 
         /// <summary>
         /// CacheMaxDuration indicates the maximum TimeSpan for which cache data
@@ -304,11 +304,8 @@ namespace Template10.Common
         /// </summary>
         public virtual async Task OnSuspendingAsync(object s, SuspendingEventArgs e)
         {
-            if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily.Equals("Windows.Mobile"))
-            {
-                WindowWrapper.ClearNavigationServices(Window.Current);
-            }
             await Task.CompletedTask;
+            (await Windows.Devices.Lights.Lamp.GetDefaultAsync()).IsEnabled = true;
         }
 
         public virtual void OnResuming(object s, object e) { }
