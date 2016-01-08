@@ -33,7 +33,7 @@ In this way, we can use an overload of the NavigationService.Navigate method tha
 public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
 {
     NavigationService.Navigate(Pages.MainPage);
-    return Task.FromResult<object>(null);
+    return Task.CompletedTask;
 }
 ````
 

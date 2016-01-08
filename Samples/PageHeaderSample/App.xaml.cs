@@ -6,46 +6,46 @@ using Windows.ApplicationModel.Activation;
 
 namespace PageHeaderSample
 {
-    /// Documentation on APIs used in this page:
-    /// https://github.com/Windows-XAML/Template10/wiki
+	/// Documentation on APIs used in this page:
+	/// https://github.com/Windows-XAML/Template10/wiki
 
-    sealed partial class App : Template10.Common.BootStrapper
-    {
-        ISettingsService _settings;
+	sealed partial class App : Template10.Common.BootStrapper
+	{
+		ISettingsService _settings;
 
-        public App()
-        {
-            InitializeComponent();
-            SplashFactory = (e) => new Views.Splash(e);
+		public App()
+		{
+			InitializeComponent();
+			SplashFactory = (e) => new Views.Splash(e);
 
-            #region App settings
+			#region App settings
 
-            _settings = SettingsService.Instance;
-            RequestedTheme = _settings.AppTheme;
-            CacheMaxDuration = _settings.CacheMaxDuration;
-            ShowShellBackButton = _settings.UseShellBackButton;
+			_settings = SettingsService.Instance;
+			RequestedTheme = _settings.AppTheme;
+			CacheMaxDuration = _settings.CacheMaxDuration;
+			ShowShellBackButton = _settings.UseShellBackButton;
 
-            #endregion
-        }
+			#endregion
+		}
 
-        // runs even if restored from state
-        public override async Task OnInitializeAsync(IActivatedEventArgs args)
-        {
-            // setup hamburger shell
-            var nav = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include);
-            Window.Current.Content = new Views.Shell(nav);
-            await Task.Yield();
-        }
+		// runs even if restored from state
+		public override Task OnInitializeAsync(IActivatedEventArgs args)
+		{
+			// setup hamburger shell
+			var nav = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include);
+			Window.Current.Content = new Views.Shell(nav);
 
-        // runs only when not restored from state
-        public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
-        {
-            // perform long-running load
-            await Task.Delay(0);
+			return Task.CompletedTask;
+		}
 
-            // navigate to first page
-            NavigationService.Navigate(typeof(Views.MainPage));
-        }
-    }
+		// runs only when not restored from state
+		public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
+		{
+			// navigate to first page
+			NavigationService.Navigate(typeof(Views.MainPage));
+
+			return Task.CompletedTask;
+		}
+	}
 }
 

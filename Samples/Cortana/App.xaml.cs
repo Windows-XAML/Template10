@@ -49,7 +49,7 @@ namespace Sample
             {
                 NavigationService.Navigate(typeof(Views.MainPage));
             }
-            return Task.FromResult<object>(null);
-        }
+			return Task.CompletedTask;
+		}
     }
 }
