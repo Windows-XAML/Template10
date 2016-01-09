@@ -12,16 +12,17 @@ namespace Template10.Services.KeyboardService
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-KeyboardService
     public class KeyboardHelper
     {
+        CoreWindow win = Window.Current.CoreWindow;
         public KeyboardHelper()
         {
-            Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated += CoreDispatcher_AcceleratorKeyActivated;
-            Window.Current.CoreWindow.PointerPressed += CoreWindow_PointerPressed;
+           win.Dispatcher.AcceleratorKeyActivated += CoreDispatcher_AcceleratorKeyActivated;
+           win.PointerPressed += CoreWindow_PointerPressed;
         }
 
         public void Cleanup()
         {
-            Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated -= CoreDispatcher_AcceleratorKeyActivated;
-            Window.Current.CoreWindow.PointerPressed -= CoreWindow_PointerPressed;
+            win.Dispatcher.AcceleratorKeyActivated -= CoreDispatcher_AcceleratorKeyActivated;
+            win.PointerPressed -= CoreWindow_PointerPressed;
         }
 
         private void CoreDispatcher_AcceleratorKeyActivated(CoreDispatcher sender, AcceleratorKeyEventArgs e)
@@ -43,11 +44,11 @@ namespace Template10.Services.KeyboardService
 
         private KeyboardEventArgs KeyboardEventArgs(VirtualKey key)
         {
-            var alt = (Window.Current.CoreWindow.GetKeyState(VirtualKey.Menu) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
-            var shift = (Window.Current.CoreWindow.GetKeyState(VirtualKey.Shift) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
-            var control = (Window.Current.CoreWindow.GetKeyState(VirtualKey.Control) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
-            var windows = ((Window.Current.CoreWindow.GetKeyState(VirtualKey.LeftWindows) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down)
-                || ((Window.Current.CoreWindow.GetKeyState(VirtualKey.RightWindows) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down);
+            var alt = (win.GetKeyState(VirtualKey.Menu) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
+            var shift = (win.GetKeyState(VirtualKey.Shift) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
+            var control = (win.GetKeyState(VirtualKey.Control) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
+            var windows = ((win.GetKeyState(VirtualKey.LeftWindows) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down)
+                || ((win.GetKeyState(VirtualKey.RightWindows) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down);
             return new KeyboardEventArgs
             {
                 AltKey = alt,
