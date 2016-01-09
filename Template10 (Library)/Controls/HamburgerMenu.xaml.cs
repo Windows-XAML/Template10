@@ -524,7 +524,7 @@ namespace Template10.Controls
                     };
                 }
 
-                UpdateFullScreen(true);
+                UpdateFullScreen();
 
                 NavigationService.AfterRestoreSavedNavigation += (s, e) => HighlightCorrectButton();
                 NavigationService.FrameFacade.Navigated += (s, e) => HighlightCorrectButton(e.PageType, e.Parameter);
