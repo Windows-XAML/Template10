@@ -303,7 +303,6 @@ namespace Template10.Common
         public virtual async Task OnSuspendingAsync(object s, SuspendingEventArgs e)
         {
             await Task.CompletedTask;
-            (await Windows.Devices.Lights.Lamp.GetDefaultAsync()).IsEnabled = true;
         }
 
         public virtual void OnResuming(object s, object e) { }
