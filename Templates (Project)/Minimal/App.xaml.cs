@@ -31,10 +31,15 @@ namespace Sample
         // runs even if restored from state
         public override async Task OnInitializeAsync(IActivatedEventArgs args)
         {
-            // setup hamburger shell
-            var nav = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include);
-            Window.Current.Content = new Views.Shell(nav);
-            await Task.CompletedTask;
+            // content may already be shell when resuming
+            var shell = Window.Current.Content as Views.Shell;
+            if (shell == null)
+            {
+                // setup hamburger shell
+                var nav = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include);
+                Window.Current.Content = new Views.Shell(nav);
+                await Task.CompletedTask;
+            }
         }
 
         // runs only when not restored from state

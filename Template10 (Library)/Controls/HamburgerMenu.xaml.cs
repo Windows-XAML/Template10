@@ -666,8 +666,7 @@ namespace Template10.Controls
             var info = radio.DataContext as HamburgerButtonInfo;
             info.RaiseTapped(e);
 
-            // why is it handled?
-            // so we don't re-select
+            // do not bubble to SplitView
             e.Handled = true;
         }
 
@@ -677,6 +676,7 @@ namespace Template10.Controls
             var info = radio.DataContext as HamburgerButtonInfo;
             info.RaiseRightTapped(e);
 
+            // do not bubble to SplitView
             e.Handled = true;
         }
 
@@ -710,6 +710,14 @@ namespace Template10.Controls
         {
             var t = sender as ToggleButton;
             var i = t.DataContext as HamburgerButtonInfo;
+
+            if (t.FocusState != FocusState.Unfocused)
+            {
+                // prevent un-select
+                t.IsChecked = true;
+                return;
+            }
+
             i.RaiseUnchecked(e);
             HighlightCorrectButton();
         }
