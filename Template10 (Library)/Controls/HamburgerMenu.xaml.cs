@@ -715,6 +715,7 @@ namespace Template10.Controls
             {
                 // prevent un-select
                 t.IsChecked = true;
+                IsOpen = false;
                 return;
             }
 
