@@ -68,7 +68,7 @@ namespace Template10.Common
 
         #region properties
 
-        public Services.NavigationService.INavigationService NavigationService => WindowWrapper.Current().NavigationServices.First();
+        public Services.NavigationService.INavigationService NavigationService => WindowWrapper.Current().NavigationServices.FirstOrDefault();
 
         /// <summary>
         /// The SplashFactory is a Func that returns an instantiated Splash view.
@@ -227,14 +227,14 @@ namespace Template10.Common
             var handled = false;
             if (ApiInformation.IsApiContractPresent("Windows.Phone.PhoneContract", 1, 0))
             {
-                if (NavigationService.CanGoBack)
+                if (NavigationService?.CanGoBack == true)
                 {
                     handled = true;
                 }
             }
             else
             {
-                handled = !NavigationService.CanGoBack;
+                handled = (NavigationService?.CanGoBack == false);
             }
 
             RaiseBackRequested(ref handled);
