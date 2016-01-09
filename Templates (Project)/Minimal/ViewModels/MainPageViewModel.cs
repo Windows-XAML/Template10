@@ -29,19 +29,19 @@ namespace Sample.ViewModels
             await Task.CompletedTask;
         }
 
-        public void GotoDetailsPage()
+        public async Task GotoDetailsPage()
         {
-            NavigationService.Navigate(typeof(Views.DetailPage), Value);
+            await NavigationService.NavigateAsync(typeof(Views.DetailPage), Value);
         }
 
-        public void GotoPrivacy()
+        public async Task GotoPrivacy()
         {
-            NavigationService.Navigate(typeof(Views.SettingsPage), 1);
+            await NavigationService.NavigateAsync(typeof(Views.SettingsPage), 1);
         }
 
-        public void GotoAbout()
+        public async Task GotoAbout()
         {
-            NavigationService.Navigate(typeof(Views.SettingsPage), 2);
+            await NavigationService.NavigateAsync(typeof(Views.SettingsPage), 2);
         }
 
     }

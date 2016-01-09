@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Template10.Common;
 using Template10.Services.KeyboardService;
 using Template10.Services.NavigationService;
@@ -109,14 +110,17 @@ namespace Template10.Controls
 
         Mvvm.DelegateCommand<HamburgerButtonInfo> _navCommand;
         public Mvvm.DelegateCommand<HamburgerButtonInfo> NavCommand => _navCommand ?? (_navCommand = new Mvvm.DelegateCommand<HamburgerButtonInfo>(ExecuteNav));
-        void ExecuteNav(HamburgerButtonInfo commandInfo)
+        async void ExecuteNav(HamburgerButtonInfo commandInfo)
         {
             if (commandInfo == null)
                 throw new NullReferenceException("CommandParameter is not set");
             try
             {
                 if (commandInfo.PageType != null)
+                { 
                     Selected = commandInfo;
+                    await _setSelectedTask;
+                }
             }
             finally
             {
@@ -406,11 +410,13 @@ namespace Template10.Controls
                 SelectedChanged?.Invoke(this, new ChangedEventArgs<HamburgerButtonInfo>(oldValue, value));
             }
         }
+
+        private Task _setSelectedTask = Task.CompletedTask;
         public static readonly DependencyProperty SelectedProperty =
             DependencyProperty.Register(nameof(Selected), typeof(HamburgerButtonInfo),
                 typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) =>
-                { (d as HamburgerMenu).SetSelected((HamburgerButtonInfo)e.OldValue, (HamburgerButtonInfo)e.NewValue); }));
-        private void SetSelected(HamburgerButtonInfo previous, HamburgerButtonInfo value)
+                { (d as HamburgerMenu).SetSelected((HamburgerButtonInfo)e.OldValue, (HamburgerButtonInfo)e.NewValue).SuppressWarning(); }));
+        private async Task SetSelected(HamburgerButtonInfo previous, HamburgerButtonInfo value)
         {
             if (previous != null)
                 IsOpen = false;
@@ -445,7 +451,8 @@ namespace Template10.Controls
             // navigate only to new pages
             if (value.PageType == null) return;
             if (value.PageType.Equals(NavigationService.CurrentPageType) && (value.PageParameter?.Equals(NavigationService.CurrentPageParam) ?? false)) return;
-            NavigationService.Navigate(value.PageType, value.PageParameter);
+            _setSelectedTask = NavigationService.NavigateAsync(value.PageType, value.PageParameter);
+            await _setSelectedTask;
         }
 
         public bool IsOpen
@@ -526,6 +533,7 @@ namespace Template10.Controls
 
                 NavigationService.AfterRestoreSavedNavigation += (s, e) => HighlightCorrectButton();
                 NavigationService.FrameFacade.Navigated += (s, e) => HighlightCorrectButton(e.PageType, e.Parameter);
+                NavigationService.FrameFacade.NavigationCanceled += (s, e) => HighlightCorrectButton(e.PageType, e.Parameter);
             }
         }
 

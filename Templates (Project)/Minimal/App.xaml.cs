@@ -46,8 +46,7 @@ namespace Sample
         public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
             await Task.Delay(1000);
-            NavigationService.Navigate(typeof(Views.MainPage));
-            await Task.CompletedTask;
+            await NavigationService.NavigateAsync(typeof(Views.MainPage));
         }
     }
 }

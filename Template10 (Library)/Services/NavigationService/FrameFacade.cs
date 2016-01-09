@@ -219,12 +219,31 @@ namespace Template10.Services.NavigationService
             if (NavigationModeHint != NavigationMode.New)
                 args.NavigationMode = NavigationModeHint;
             NavigationModeHint = NavigationMode.New;
+            bool cancel = false;
             foreach (var handler in _navigatingEventHandlers)
             {
                 handler(this, args);
+                cancel |= args.Cancel;
             }
-            e.Cancel = args.Cancel;
+            e.Cancel = cancel;
         }
+
+        readonly List<EventHandler<NavigatedEventArgs>> _navigationCanceldEventHandlers = new List<EventHandler<NavigatedEventArgs>>();
+        public event EventHandler<NavigatedEventArgs> NavigationCanceled
+        {
+            add { if (!_navigationCanceldEventHandlers.Contains(value)) _navigationCanceldEventHandlers.Add(value); }
+            remove { if (_navigationCanceldEventHandlers.Contains(value)) _navigationCanceldEventHandlers.Remove(value); }
+        }
+
+        internal void RaiseNavigationCanceled(object sender, NavigatedEventArgs e)
+        {
+            foreach (var handler in _navigationCanceldEventHandlers)
+            {
+                handler(this, e);
+            }
+
+        }
+
     }
 
 }
