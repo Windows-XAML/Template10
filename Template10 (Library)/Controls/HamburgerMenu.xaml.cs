@@ -554,9 +554,7 @@ namespace Template10.Controls
             var frame = NavigationService?.Frame;
             if (manual ?? IsFullScreen)
             {
-                if (NavigationService == null || RootGrid.Children.Contains(frame))
-                    return;
-                if (!RootGrid.Children.Contains(frame))
+                if (!RootGrid.Children.Contains(frame) && frame != null)
                 {
                     ShellSplitView.Content = null;
                     RootGrid.Children.Add(frame);
@@ -570,11 +568,11 @@ namespace Template10.Controls
             }
             else
             {
-                if (RootGrid.Children.Contains(frame))
+                if (RootGrid.Children.Contains(frame) && frame != null)
                 {
                     RootGrid.Children.Remove(frame);
-                    ShellSplitView.Content = frame;
                 }
+                ShellSplitView.Content = frame;
                 if (!RootGrid.Children.Contains(ShellSplitView))
                     RootGrid.Children.Add(ShellSplitView);
                 if (!RootGrid.Children.Contains(HamburgerButton))
