@@ -1,5 +1,6 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 using Windows.Foundation.Collections;
 using Windows.Storage;
 
@@ -18,10 +19,49 @@ namespace Template10.Services.SettingsService
     public class SettingsService : ISettingsService
     {
         private static ISettingsService _local;
-        public static ISettingsService Local => _local ?? (_local = new SettingsService(ApplicationData.Current.LocalSettings.Values));
+        public static ISettingsService Local => _local ?? (_local = Create(SettingsStrategies.Local));
 
         private static ISettingsService _roaming;
-        public static ISettingsService Roaming => _roaming ?? (_roaming = new SettingsService(ApplicationData.Current.RoamingSettings.Values));
+        public static ISettingsService Roaming => _roaming ?? (_roaming = Create(SettingsStrategies.Roam));
+
+        /// <summary>
+        /// Creates an <c>ISettingsService</c> object targeting the requested (optional) <paramref name="folderName"/>
+        /// in the <paramref name="strategy"/> container.
+        /// </summary>
+        /// <param name="strategy">Roaming or Local</param>
+        /// <param name="folderName">Name of the settings folder to use</param>
+        /// <param name="createFolderIfNotExists"><c>true</c> to create the folder if it isn't already there, false otherwise.</param>
+        /// <returns></returns>
+        public static ISettingsService Create(SettingsStrategies strategy, string folderName = null, bool createFolderIfNotExists = true)
+        {
+            ApplicationDataContainer rootContainer;
+            switch (strategy)
+            {
+                case SettingsStrategies.Local:
+                    rootContainer = ApplicationData.Current.LocalSettings;
+                    break;
+                case SettingsStrategies.Roam:
+                    rootContainer = ApplicationData.Current.RoamingSettings;
+                    break;
+                default:
+                    throw new ArgumentException($"Unsupported Settings Strategy: {strategy}", nameof(strategy));
+            }
+
+            ApplicationDataContainer targetContainer = rootContainer;
+            if (!string.IsNullOrWhiteSpace(folderName))
+            {
+                try
+                {
+                    targetContainer = rootContainer.CreateContainer(folderName, createFolderIfNotExists ? ApplicationDataCreateDisposition.Always : ApplicationDataCreateDisposition.Existing);
+                }
+                catch (Exception)
+                {
+                    throw new KeyNotFoundException($"No folder exists named '{folderName}'");
+                }
+            }
+
+            return new SettingsService(targetContainer.Values);
+        }
 
         protected IPropertySet Values { get; private set; }
 
