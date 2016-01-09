@@ -203,7 +203,7 @@ namespace Template10.Common
             Window.Current.Activate();
 
             // Hook up keyboard and mouse Back handler
-            var keyboard = new Services.KeyboardService.KeyboardService();
+            var keyboard = Services.KeyboardService.KeyboardService.Instance;
             keyboard.AfterBackGesture = () =>
             {
                 //the result is no matter
@@ -317,7 +317,6 @@ namespace Template10.Common
         public virtual async Task OnSuspendingAsync(object s, SuspendingEventArgs e)
         {
             await Task.CompletedTask;
-            (await Windows.Devices.Lights.Lamp.GetDefaultAsync()).IsEnabled = true;
         }
 
         public virtual void OnResuming(object s, object e) { }

@@ -41,7 +41,7 @@ namespace Template10.Controls
             {
                 PrimaryButtons = new ObservableItemCollection<HamburgerButtonInfo>();
                 SecondaryButtons = new ObservableItemCollection<HamburgerButtonInfo>();
-                new KeyboardService().AfterWindowZGesture = () => { HamburgerCommand.Execute(null); };
+                KeyboardService.Instance.AfterWindowZGesture = () => { HamburgerCommand.Execute(null); };
                 ShellSplitView.RegisterPropertyChangedCallback(SplitView.IsPaneOpenProperty, (d, e) =>
                 {
                     // secondary layout
