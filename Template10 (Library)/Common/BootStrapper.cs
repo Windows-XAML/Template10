@@ -208,7 +208,7 @@ namespace Template10.Common
             SystemNavigationManager.GetForCurrentView().BackRequested += BackHandler;
         }
 
-        private void BackHandler(object sender, BackRequestedEventArgs e)
+        private void BackHandler(object sender, BackRequestedEventArgs args)
         {
             var handled = false;
             if (ApiInformation.IsApiContractPresent("Windows.Phone.PhoneContract", 1, 0))
