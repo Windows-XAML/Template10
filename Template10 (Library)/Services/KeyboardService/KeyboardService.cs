@@ -1,21 +1,25 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace Template10.Services.KeyboardService
 {
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-KeyboardService
     public class KeyboardService
     {
         KeyboardHelper _helper;
 
-        public KeyboardService()
+        public static KeyboardService Instance { get; private set; } = new KeyboardService();
+
+        private KeyboardService()
         {
             _helper = new KeyboardHelper();
             _helper.KeyDown = (e) =>
             {
+                // Debug.WriteLine($"{e}");
+
                 e.Handled = true;
 
                 // use this to hide and show the menu
-                if (e.OnlyWindows && e.Character.ToString().ToLower().Equals("z"))
+                if (e.WindowsKey && e.Character.ToString().ToLower().Equals("z"))
                     AfterWindowZGesture?.Invoke();
 
                 // use this to place focus in search box
@@ -43,6 +47,8 @@ namespace Template10.Services.KeyboardService
                     AfterForwardGesture?.Invoke();
                 else if (e.OnlyAlt && e.VirtualKey == Windows.System.VirtualKey.Right)
                     AfterForwardGesture?.Invoke();
+
+                // anything else
                 else
                     e.Handled = false;
             };

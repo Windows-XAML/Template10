@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Template10.Services.NavigationService;
+using Template10.Utils;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation.Metadata;
@@ -17,8 +18,21 @@ namespace Template10.Common
     {
         #region dependency injection
 
+        /// <summary>       
+        /// A developer implements this method to return not any type and would need to 
+        /// switch on the type param, returnig the correctly inflated type.
+        /// </summary>
+        /// <remarks>
+        /// There are two popular approaches to view-model dependency injection. The first is this approach, 
+        /// where a Resolve method exists for the developer to implement. The second is a view-model locator
+        /// which puts the injection logic in the form of a property. Both are equally valid.
+        /// </remarks>
         public virtual T Resolve<T>(Type type) => default(T);
 
+        /// <summary>
+        /// If a developer overrides this method, and leaves the DataContext of a page null, then BootStrapper
+        /// will atttempt to fill the DataContext the return value of this method. 
+        /// </summary>
         public virtual Services.NavigationService.INavigable ResolveForPage(Type page, NavigationService navigationService) => null;
 
         #endregion
@@ -37,12 +51,12 @@ namespace Template10.Common
                 var deferral = e.SuspendingOperation.GetDeferral();
                 try
                 {
-                    foreach (var service in WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices))
+                    foreach (var nav in WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices))
                     {
                         // date the cache (which marks the date/time it was suspended)
-                        service.FrameFacade.SetFrameState(CacheDateKey, DateTime.Now.ToString());
+                        nav.FrameFacade.SetFrameState(CacheDateKey, DateTime.Now.ToString());
                         // call view model suspend (OnNavigatedfrom)
-                        await service.SuspendingAsync();
+                        await nav.SuspendingAsync();
                     }
                     // call system-level suspend
                     await OnSuspendingAsync(s, e);
@@ -189,7 +203,7 @@ namespace Template10.Common
             Window.Current.Activate();
 
             // Hook up keyboard and mouse Back handler
-            var keyboard = new Services.KeyboardService.KeyboardService();
+            var keyboard = Services.KeyboardService.KeyboardService.Instance;
             keyboard.AfterBackGesture = () =>
             {
                 //the result is no matter
@@ -303,7 +317,6 @@ namespace Template10.Common
         public virtual async Task OnSuspendingAsync(object s, SuspendingEventArgs e)
         {
             await Task.CompletedTask;
-            (await Windows.Devices.Lights.Lamp.GetDefaultAsync()).IsEnabled = true;
         }
 
         public virtual void OnResuming(object s, object e) { }
