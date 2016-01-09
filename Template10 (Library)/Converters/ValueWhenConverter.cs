@@ -11,12 +11,12 @@ namespace Template10.Converters
             try
             {
                 if (object.Equals(value,parameter ?? When))
-                    return this.Value;
-                return this.Otherwise;
+                    return Value;
+                return Otherwise;
             }
             catch
             {
-                return this.Otherwise;
+                return Otherwise;
             }
         }
 
@@ -27,12 +27,12 @@ namespace Template10.Converters
             try
             {
                 if (object.Equals(value, Value))
-                    return this.When;
-                return this.OtherwiseValueBack;
+                    return When;
+                return OtherwiseValueBack;
             }
             catch
             {
-                return this.OtherwiseValueBack;
+                return OtherwiseValueBack;
             }
         }
 

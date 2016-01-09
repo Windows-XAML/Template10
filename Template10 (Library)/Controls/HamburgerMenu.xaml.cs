@@ -403,7 +403,7 @@ namespace Template10.Controls
                 if (AutoHighlightCorrectButton && (value?.Equals(oldValue) ?? false))
                     value.IsChecked = (value.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
                 SetValue(SelectedProperty, value);
-                this.SelectedChanged?.Invoke(this, new ChangedEventArgs<HamburgerButtonInfo>(oldValue, value));
+                SelectedChanged?.Invoke(this, new ChangedEventArgs<HamburgerButtonInfo>(oldValue, value));
             }
         }
         public static readonly DependencyProperty SelectedProperty =

@@ -92,6 +92,8 @@ namespace Template10.Common
         protected override sealed async void OnSearchActivated(SearchActivatedEventArgs args) { await InternalActivatedAsync(args); }
         protected override sealed async void OnShareTargetActivated(ShareTargetActivatedEventArgs args) { await InternalActivatedAsync(args); }
 
+        IActivatedEventArgs OriginalActivatedArgs;
+
         /// <summary>
         /// This handles all the prelimimary stuff unique to Activated before calling OnStartAsync()
         /// This is private because it is a specialized prelude to OnStartAsync().
@@ -99,6 +101,8 @@ namespace Template10.Common
         /// </summary>
         private async Task InternalActivatedAsync(IActivatedEventArgs e)
         {
+            OriginalActivatedArgs = e;
+
             // sometimes activate requires a frame to be built
             if (Window.Current.Content == null)
             {
@@ -169,26 +173,17 @@ namespace Template10.Common
                         {
                             await OnStartAsync(StartKind.Launch, e);
                         }
-
-                        SubscribeBackButton();
-
                         break;
                     }
                 case ApplicationExecutionState.ClosedByUser:
                 case ApplicationExecutionState.NotRunning:
-                    // launch if not restored
                     await OnStartAsync(StartKind.Launch, e);
-
-                    SubscribeBackButton();
-
                     break;
                 default:
-                    {
-                        // launch if not restored
-                        await OnStartAsync(StartKind.Launch, e);
-                        break;
-                    }
+                    await OnStartAsync(StartKind.Launch, e);
+                    break;
             }
+            SubscribeBackButton();
 
             // ensure active (this will hide any custom splashscreen)
             Window.Current.Activate();
@@ -209,24 +204,27 @@ namespace Template10.Common
         private void SubscribeBackButton()
         {
             // Hook up the default Back handler
-            SystemNavigationManager.GetForCurrentView().BackRequested += (s, args) =>
-            {
-                var handled = false;
-                if (ApiInformation.IsApiContractPresent("Windows.Phone.PhoneContract", 1, 0))
-                {
-                    if (NavigationService.CanGoBack)
-                    {
-                        handled = true;
-                    }
-                }
-                else
-                {
-                    handled = !NavigationService.CanGoBack;
-                }
+            SystemNavigationManager.GetForCurrentView().BackRequested -= BackHandler;
+            SystemNavigationManager.GetForCurrentView().BackRequested += BackHandler;
+        }
 
-                RaiseBackRequested(ref handled);
-                args.Handled = handled;
-            };
+        private void BackHandler(object sender, BackRequestedEventArgs e)
+        {
+            var handled = false;
+            if (ApiInformation.IsApiContractPresent("Windows.Phone.PhoneContract", 1, 0))
+            {
+                if (NavigationService.CanGoBack)
+                {
+                    handled = true;
+                }
+            }
+            else
+            {
+                handled = !NavigationService.CanGoBack;
+            }
+
+            RaiseBackRequested(ref handled);
+            args.Handled = handled;
         }
 
         #endregion
@@ -385,8 +383,12 @@ namespace Template10.Common
         /// </summary>
         public Services.NavigationService.INavigationService NavigationServiceFactory(BackButton backButton, ExistingContent existingContent, Frame frame)
         {
-            frame.Language = Windows.Globalization.ApplicationLanguages.Languages[0];
-            frame.Content = (existingContent == ExistingContent.Include) ? Window.Current.Content : null;
+            // if the service already exists for this frame, use the existing one.
+            foreach (var nav in WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices))
+            {
+                if (nav.Frame.Equals(frame))
+                    return nav;
+            }
 
             var navigationService = CreateNavigationService(frame);
             navigationService.FrameFacade.BackButtonHandling = backButton;
