@@ -153,32 +153,33 @@ namespace Template10.Controls
 
         public double VisualStateNarrowMinWidth
         {
-            get { return VisualStateNarrowTrigger.MinWindowWidth; }
-            set { SetValue(VisualStateNarrowMinWidthProperty, VisualStateNarrowTrigger.MinWindowWidth = value); }
+            get { return (double)GetValue(VisualStateNarrowMinWidthProperty); }
+            set { SetValue(VisualStateNarrowMinWidthProperty, value); }
         }
+
         public static readonly DependencyProperty VisualStateNarrowMinWidthProperty =
             DependencyProperty.Register(nameof(VisualStateNarrowMinWidth), typeof(double),
-                typeof(HamburgerMenu), new PropertyMetadata((double)-1, (d, e) => { Changed(nameof(VisualStateNarrowMinWidth), e); }));
+                typeof(HamburgerMenu), new PropertyMetadata((double)-1, VisualStateMinWidthPropertyChanged));
 
         public double VisualStateNormalMinWidth
         {
-            get { return VisualStateNormalTrigger.MinWindowWidth; }
-            set { SetValue(VisualStateNormalMinWidthProperty, VisualStateNormalTrigger.MinWindowWidth = value); }
+            get { return (double)GetValue(VisualStateNormalMinWidthProperty); }
+            set { SetValue(VisualStateNormalMinWidthProperty, value); }
         }
         public static readonly DependencyProperty VisualStateNormalMinWidthProperty =
             DependencyProperty.Register(nameof(VisualStateNormalMinWidth), typeof(double),
-                typeof(HamburgerMenu), new PropertyMetadata((double)0, (d, e) => { Changed(nameof(VisualStateNormalMinWidth), e); }));
+                typeof(HamburgerMenu), new PropertyMetadata((double)0, VisualStateMinWidthPropertyChanged));
 
         public double VisualStateWideMinWidth
         {
-            get { return VisualStateWideTrigger.MinWindowWidth; }
-            set { SetValue(VisualStateWideMinWidthProperty, VisualStateWideTrigger.MinWindowWidth = value); }
+            get { return (double)GetValue(VisualStateWideMinWidthProperty); }
+            set { SetValue(VisualStateWideMinWidthProperty, value); }
         }
         public static readonly DependencyProperty VisualStateWideMinWidthProperty =
             DependencyProperty.Register(nameof(VisualStateWideMinWidth), typeof(double),
-                typeof(HamburgerMenu), new PropertyMetadata((double)-1, (d, e) => { Changed(nameof(VisualStateWideMinWidth), e); }));
+                typeof(HamburgerMenu), new PropertyMetadata((double)-1, VisualStateMinWidthPropertyChanged));
 
-        private static void Changed(string v, DependencyPropertyChangedEventArgs e)
+        private static void VisualStateMinWidthPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
         }
 
@@ -557,12 +558,9 @@ namespace Template10.Controls
                     ShellSplitView.Content = null;
                     RootGrid.Children.Add(frame);
                 }
-                if (RootGrid.Children.Contains(ShellSplitView))
-                    RootGrid.Children.Remove(ShellSplitView);
-                if (RootGrid.Children.Contains(HamburgerButton))
-                    RootGrid.Children.Remove(HamburgerButton);
-                if (RootGrid.Children.Contains(Header))
-                    RootGrid.Children.Remove(Header);
+                ShellSplitView.Visibility = Visibility.Collapsed;
+                Header.Visibility=Visibility.Collapsed;
+                HamburgerButton.Width = 0;
             }
             else
             {
@@ -571,12 +569,9 @@ namespace Template10.Controls
                     RootGrid.Children.Remove(frame);
                 }
                 ShellSplitView.Content = frame;
-                if (!RootGrid.Children.Contains(ShellSplitView))
-                    RootGrid.Children.Add(ShellSplitView);
-                if (!RootGrid.Children.Contains(HamburgerButton))
-                    RootGrid.Children.Add(HamburgerButton);
-                if (!RootGrid.Children.Contains(Header))
-                    RootGrid.Children.Add(Header);
+                ShellSplitView.Visibility = Visibility.Visible;
+                Header.Visibility = Visibility.Visible;
+                HamburgerButton.Width = 48;
             }
         }
 
