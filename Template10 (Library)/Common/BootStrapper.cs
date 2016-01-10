@@ -238,7 +238,7 @@ namespace Template10.Common
             {
                 handled = (NavigationService?.CanGoBack == false);
             }
-            //this is alwais handled
+            //this is always handled
             await RaiseBackRequested(handled);
             args.Handled = true;
         }
