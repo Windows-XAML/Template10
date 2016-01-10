@@ -48,13 +48,17 @@ namespace Template10.Services.NavigationService
             {
                 NavigateTo(e.NavigationMode, ParameterSerializationService.Instance.DeserializeParameter(e.Parameter));
             };
-            FrameFacade.BackRequested += async (s, e) =>
+
+            FrameFacade.BackRequestedAsync = async (e) =>
             {
                 e.Handled = await DoNavigatingFromAsync();
+                return e;
             };
-            FrameFacade.ForwardRequested += async (s, e) =>
+
+            FrameFacade.ForwardRequestedAsync = async (e) =>
             {
                 e.Handled = await DoNavigatingFromAsync();
+                return e;
             };
         }
 

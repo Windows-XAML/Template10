@@ -204,15 +204,17 @@ namespace Template10.Common
 
             // Hook up keyboard and mouse Back handler
             var keyboard = Services.KeyboardService.KeyboardService.Instance;
-            keyboard.AfterBackGesture = () =>
-            {
+            keyboard.AfterBackGesture = async() =>
+            {//fire and forget
                 //the result is no matter
-                var handled = false;
-                RaiseBackRequested(ref handled);
+                await RaiseBackRequested(false);
             };
 
             // Hook up keyboard and mouse Forward handler
-            keyboard.AfterForwardGesture = RaiseForwardRequested;
+            keyboard.AfterForwardGesture = async () =>
+            {//fire and forget
+               await RaiseForwardRequested();
+            };
         }
 
         private void SubscribeBackButton()
@@ -222,7 +224,7 @@ namespace Template10.Common
             SystemNavigationManager.GetForCurrentView().BackRequested += BackHandler;
         }
 
-        private void BackHandler(object sender, BackRequestedEventArgs args)
+        private async void BackHandler(object sender, BackRequestedEventArgs args)
         {
             var handled = false;
             if (ApiInformation.IsApiContractPresent("Windows.Phone.PhoneContract", 1, 0))
@@ -236,9 +238,9 @@ namespace Template10.Common
             {
                 handled = (NavigationService?.CanGoBack == false);
             }
-
-            RaiseBackRequested(ref handled);
-            args.Handled = handled;
+            //this is alwais handled
+            await RaiseBackRequested(handled);
+            args.Handled = true;
         }
 
         #endregion
@@ -249,15 +251,15 @@ namespace Template10.Common
         /// Views or Viewodels can override this behavior by handling the BackRequested 
         /// event and setting the Handled property of the BackRequestedEventArgs to true.
         /// </summary>
-        private void RaiseBackRequested(ref bool handled)
+        private async Task RaiseBackRequested(bool handled)
         {
             var args = new HandledEventArgs();
             BackRequested?.Invoke(null, args);
             if (handled = args.Handled)
-                return;
+                return; 
             foreach (var frame in WindowWrapper.Current().NavigationServices.Select(x => x.FrameFacade).Reverse())
             {
-                frame.RaiseBackRequested(args);
+                await frame.RaiseBackRequested(args);
                 if (handled = args.Handled)
                     return;
             }
@@ -267,7 +269,7 @@ namespace Template10.Common
         // this event precedes the in-frame event by the same name
         public static event EventHandler<HandledEventArgs> BackRequested;
 
-        private void RaiseForwardRequested()
+        private async Task RaiseForwardRequested()
         {
             var args = new HandledEventArgs();
             ForwardRequested?.Invoke(null, args);
@@ -275,7 +277,7 @@ namespace Template10.Common
                 return;
             foreach (var frame in WindowWrapper.Current().NavigationServices.Select(x => x.FrameFacade))
             {
-                frame.RaiseForwardRequested(args);
+                await frame.RaiseForwardRequested(args);
                 if (args.Handled)
                     return;
             }
