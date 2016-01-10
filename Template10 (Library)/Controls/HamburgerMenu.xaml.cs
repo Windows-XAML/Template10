@@ -114,17 +114,18 @@ namespace Template10.Controls
         {
             if (commandInfo == null)
                 throw new NullReferenceException("CommandParameter is not set");
+            bool navigated = false;
             try
             {
                 if (commandInfo.PageType != null)
                 { 
                     Selected = commandInfo;
-                    await _setSelectedTask;
+                    navigated = await _setSelectedTask;
                 }
             }
             finally
             {
-                if (commandInfo.ClearHistory)
+                if (commandInfo.ClearHistory && navigated)
                     NavigationService.ClearHistory();
             }
         }
@@ -411,7 +412,7 @@ namespace Template10.Controls
             }
         }
 
-        private Task _setSelectedTask = Task.CompletedTask;
+        private Task<bool> _setSelectedTask = Task.FromResult(true);
         public static readonly DependencyProperty SelectedProperty =
             DependencyProperty.Register(nameof(Selected), typeof(HamburgerButtonInfo),
                 typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) =>
