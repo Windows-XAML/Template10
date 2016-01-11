@@ -17,6 +17,7 @@ namespace Template10.Services.NavigationService
         Frame Frame { get; }
         FrameFacade FrameFacade { get; }
 
+        event TypedEventHandler<Type> BeforeSaveNavigation;
         event TypedEventHandler<Type> AfterRestoreSavedNavigation;
 
 		void ClearCache(bool removeCachedPagesInBackStack = false);

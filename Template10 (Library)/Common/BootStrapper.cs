@@ -44,7 +44,13 @@ namespace Template10.Common
         protected BootStrapper()
         {
             Current = this;
-            Resuming += (s, e) => { OnResuming(s, e); };
+            Resuming += async (s, e) =>
+            {
+#pragma warning disable 618
+                OnResuming(s, e);
+#pragma warning restore 618
+                await OnResumingAsync(s, e);
+            };
             Suspending += async (s, e) =>
             {
                 // one, global deferral
@@ -319,7 +325,35 @@ namespace Template10.Common
             await Task.CompletedTask;
         }
 
+        [Obsolete("Use OnResumingAsync")]
         public virtual void OnResuming(object s, object e) { }
+
+        /// <summary>
+        /// OnResumingAsync will be called when the application is resuming.
+        /// </summary>
+        public virtual async Task OnResumingAsync(object s, object e)
+        {
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// OnSaveNavigationAsync will be called immediately before the navigation services
+        /// saves the current navigation state. This normally happens before the application
+        /// is suspend.
+        /// </summary>
+        public virtual async Task OnSaveNavigationAsync(INavigationService navigationService, Type currentPageType)
+        {
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// OnRestoredNavigationAsync will be called after navigation state was restored by
+        /// the navigation service.
+        /// </summary>
+        public virtual async Task OnRestoredNavigationAsync(INavigationService navigationService, Type currentPageType)
+        {
+            await Task.CompletedTask;
+        }
 
         #endregion
 
@@ -404,6 +438,8 @@ namespace Template10.Common
             }
 
             var navigationService = CreateNavigationService(frame);
+            navigationService.BeforeSaveNavigation += async (s, t) => await OnSaveNavigationAsync((INavigationService)s, t);
+            navigationService.AfterRestoreSavedNavigation += async (s, t) => await OnRestoredNavigationAsync((INavigationService)s, t);
             navigationService.FrameFacade.BackButtonHandling = backButton;
             WindowWrapper.Current().NavigationServices.Add(navigationService);
 
