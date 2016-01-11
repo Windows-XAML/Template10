@@ -208,8 +208,11 @@ namespace Template10.Services.NavigationService
             return FrameFacade.Navigate(page, parameter, infoOverride);
         }
 
+        public event TypedEventHandler<Type> BeforeSaveNavigation;
         public void SaveNavigation()
         {
+            BeforeSaveNavigation?.Invoke(this, CurrentPageType);
+
             if (CurrentPageType == null)
                 return;
 
