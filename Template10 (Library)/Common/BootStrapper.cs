@@ -133,7 +133,7 @@ namespace Template10.Common
         protected override sealed async void OnSearchActivated(SearchActivatedEventArgs args) { await InternalActivatedAsync(args); }
         protected override sealed async void OnShareTargetActivated(ShareTargetActivatedEventArgs args) { await InternalActivatedAsync(args); }
 
-        IActivatedEventArgs OriginalActivatedArgs;
+        public IActivatedEventArgs OriginalActivatedArgs { get; private set; }
 
         /// <summary>
         /// This handles all the prelimimary stuff unique to Activated before calling OnStartAsync()
@@ -187,6 +187,8 @@ namespace Template10.Common
         private async void InternalLaunchAsync(ILaunchActivatedEventArgs e)
         {
             DebugWrite($"Previous:{e.PreviousExecutionState.ToString()}");
+
+            OriginalActivatedArgs = e;
 
             if (e.PreviousExecutionState != ApplicationExecutionState.Running)
             {
