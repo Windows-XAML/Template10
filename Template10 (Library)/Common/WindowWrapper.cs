@@ -37,15 +37,6 @@ namespace Template10.Common
             window.Closed += (s, e) => { ActiveWrappers.Remove(this); };
         }
 
-        public static void ClearNavigationServices(Window window)
-        {
-            var wrapperToRemove = ActiveWrappers.FirstOrDefault(wrapper => object.ReferenceEquals(wrapper.Window, window));
-            if (wrapperToRemove != null)
-            {
-                wrapperToRemove.NavigationServices.Clear();
-            }
-        }
-
         public void Close() { Window.Close(); }
         public Window Window { get; }
         public DispatcherWrapper Dispatcher { get; }

@@ -7,15 +7,16 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:Sample.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
       xmlns:views="using:Sample.Views" mc:Ignorable="d">
 
     <Controls:ModalDialog CanBackButtonDismiss="False" DisableBackButtonWhenModal="True" IsModal="{x:Bind IsBusy, Mode=OneWay}">
         <Controls:ModalDialog.Content>
-            <Controls:HamburgerMenu x:Name="MyHamburgerMenu" IsFullScreen="False" AutoHighlightCorrectButton="False">
+            <Controls:HamburgerMenu x:Name="MyHamburgerMenu">
 
                 <Controls:HamburgerMenu.PrimaryButtons>
                     <!-- mainpage button -->
-                    <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:MainPage">
+                    <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:MainPage" >
                         <StackPanel Orientation="Horizontal">
                             <SymbolIcon Width="48" Height="48" Symbol="Home" />
                             <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Home" />
@@ -35,6 +36,7 @@
 
             </Controls:HamburgerMenu>
         </Controls:ModalDialog.Content>
+        
         <Controls:ModalDialog.ModalContent>
             <!-- busy visual -->
             <Viewbox Height="32">
@@ -46,6 +48,7 @@
                 </StackPanel>
             </Viewbox>
         </Controls:ModalDialog.ModalContent>
+        
     </Controls:ModalDialog>
 
 </Page>

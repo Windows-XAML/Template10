@@ -145,6 +145,7 @@
     <Compile Include="Common\IStateItems.cs" />
     <Compile Include="Common\ItemPropertyChangedEventArgs.cs" />
     <Compile Include="Common\Mdl2.cs" />
+    <Compile Include="Common\ObservableDictionary.cs" />
     <Compile Include="Common\StateItems.cs" />
     <Compile Include="Common\StateKey.cs" />
     <Compile Include="Common\TypedEventHandler.cs" />
@@ -167,6 +168,7 @@
     <Compile Include="Services\NavigationService\INavigationService.cs" />
     <Compile Include="Services\NavigationService\JournalEntry.cs" />
     <Compile Include="Services\NavigationService\NavigationServiceList.cs" />
+    <Compile Include="Services\NavigationService\ParameterSerializationService.cs" />
     <Compile Include="Services\SettingsService\ISettingsHelper.cs" />
     <Compile Include="Services\SettingsService\SettingsService.cs" />
     <Compile Include="Services\SettingsService\SettingsStrategy.cs" />
@@ -174,6 +176,7 @@
     <Compile Include="Utils\ColorUtils.cs" />
     <Compile Include="Utils\DeviceUtils.cs" />
     <Compile Include="Utils\InkUtils.cs" />
+    <Compile Include="Utils\LinqUtils.cs" />
     <Compile Include="Utils\MonitorUtils.cs" />
     <Compile Include="Utils\TaskUtils.cs" />
     <Compile Include="Utils\XamlUtil.cs" />

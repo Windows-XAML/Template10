@@ -12,47 +12,53 @@ namespace Template10.Services.KeyboardService
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-KeyboardService
     public class KeyboardHelper
     {
+        CoreWindow win = Window.Current.CoreWindow;
         public KeyboardHelper()
         {
-            Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated += CoreDispatcher_AcceleratorKeyActivated;
-            Window.Current.CoreWindow.PointerPressed += CoreWindow_PointerPressed;
+           win.Dispatcher.AcceleratorKeyActivated += CoreDispatcher_AcceleratorKeyActivated;
+           win.PointerPressed += CoreWindow_PointerPressed;
         }
 
         public void Cleanup()
         {
-            Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated -= CoreDispatcher_AcceleratorKeyActivated;
-            Window.Current.CoreWindow.PointerPressed -= CoreWindow_PointerPressed;
+            win.Dispatcher.AcceleratorKeyActivated -= CoreDispatcher_AcceleratorKeyActivated;
+            win.PointerPressed -= CoreWindow_PointerPressed;
         }
 
-        private void CoreDispatcher_AcceleratorKeyActivated(CoreDispatcher sender, AcceleratorKeyEventArgs args)
+        private void CoreDispatcher_AcceleratorKeyActivated(CoreDispatcher sender, AcceleratorKeyEventArgs e)
         {
-            if (args.EventType.ToString().Contains("Down") && !args.Handled)
+            if (e.EventType.ToString().Contains("Down") && !e.Handled)
             {
-                var alt = (Window.Current.CoreWindow.GetKeyState(VirtualKey.Menu) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
-                var shift = (Window.Current.CoreWindow.GetKeyState(VirtualKey.Shift) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
-                var control = (Window.Current.CoreWindow.GetKeyState(VirtualKey.Shift) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
-                var windows = ((Window.Current.CoreWindow.GetKeyState(VirtualKey.LeftWindows) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down) || ((Window.Current.CoreWindow.GetKeyState(VirtualKey.RightWindows) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down);
-                var character = ToChar(args.VirtualKey, shift);
+                var args = KeyboardEventArgs(e.VirtualKey);
+                args.EventArgs = e;
 
-                var keyDown = new KeyboardEventArgs
-                {
-                    AltKey = alt,
-                    Character = character,
-                    ControlKey = control,
-                    EventArgs = args,
-                    ShiftKey = shift,
-                    VirtualKey = args.VirtualKey
-                };
-
-                try { KeyDown?.Invoke(keyDown); }
+                try { KeyDown?.Invoke(args); }
                 finally
                 {
-                    args.Handled = keyDown.Handled;
+                    e.Handled = e.Handled;
                 }
             }
         }
 
         public Action<KeyboardEventArgs> KeyDown { get; set; }
+
+        private KeyboardEventArgs KeyboardEventArgs(VirtualKey key)
+        {
+            var alt = (win.GetKeyState(VirtualKey.Menu) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
+            var shift = (win.GetKeyState(VirtualKey.Shift) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
+            var control = (win.GetKeyState(VirtualKey.Control) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
+            var windows = ((win.GetKeyState(VirtualKey.LeftWindows) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down)
+                || ((win.GetKeyState(VirtualKey.RightWindows) & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down);
+            return new KeyboardEventArgs
+            {
+                AltKey = alt,
+                ControlKey = control,
+                ShiftKey = shift,
+                WindowsKey = windows,
+                VirtualKey = key,
+                Character = ToChar(key, shift),
+            };
+        }
 
         /// <summary>
         /// Invoked on every mouse click, touch screen tap, or equivalent interaction when this

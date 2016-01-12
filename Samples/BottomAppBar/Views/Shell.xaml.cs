@@ -1,57 +1,43 @@
-﻿using System;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using Template10.Common;
 using Template10.Controls;
 using Template10.Services.NavigationService;
-using Template10.Utils;
-using Windows.UI;
 using Windows.UI.Core;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Sample.Services.SettingsServices;
-using System.Collections.Generic;
-using Windows.UI.Xaml.Media;
 
 namespace Sample.Views
 {
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SplitView
-    public sealed partial class Shell : Page
+    public sealed partial class Shell : Page, INotifyPropertyChanged
     {
         public static Shell Instance { get; set; }
         public static HamburgerMenu HamburgerMenu { get { return Instance.MyHamburgerMenu; } }
 
-        public Shell(NavigationService navigationService)
+        public Shell(INavigationService navigationService)
         {
             Instance = this;
             InitializeComponent();
-            MyHamburgerMenu.NavigationService = navigationService;
-            VisualStateManager.GoToState(Instance, Instance.NormalVisualState.Name, true);
+            HamburgerMenu.NavigationService = navigationService;
         }
 
-        public static void SetBusyVisibility(Visibility visible, string text = null)
+        public bool IsBusy { get; set; } = false;
+        public string BusyText { get; set; } = "Please wait...";
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public static void SetBusy(bool busy, string text = null)
         {
             WindowWrapper.Current().Dispatcher.Dispatch(() =>
             {
-                switch (visible)
-                {
-                    case Visibility.Visible:
-                        Instance.FindName(nameof(BusyScreen));
-                        Instance.BusyText.Text = text ?? string.Empty;
-                        if (VisualStateManager.GoToState(Instance, Instance.BusyVisualState.Name, true))
-                        {
-                            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
-                                AppViewBackButtonVisibility.Collapsed;
-                        }
-                        break;
-                    case Visibility.Collapsed:
-                        if (VisualStateManager.GoToState(Instance, Instance.NormalVisualState.Name, true))
-                        {
-                            BootStrapper.Current.UpdateShellBackButton();
-                        }
-                        break;
-                }
+                if (busy)
+                    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+                else
+                    BootStrapper.Current.UpdateShellBackButton();
+
+                Instance.IsBusy = busy;
+                Instance.BusyText = text;
+
+                Instance.PropertyChanged?.Invoke(Instance, new PropertyChangedEventArgs(nameof(IsBusy)));
+                Instance.PropertyChanged?.Invoke(Instance, new PropertyChangedEventArgs(nameof(BusyText)));
             });
         }
     }

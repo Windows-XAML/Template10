@@ -39,7 +39,7 @@ namespace Template10.Behaviors
 
         public object Execute(object sender, object parameter)
         {
-            var timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(this.Milliseconds) };
+            var timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(Milliseconds) };
             timer.Tick += Timer_Tick;
             timer.Start();
 
@@ -52,7 +52,7 @@ namespace Template10.Behaviors
             timer.Tick -= Timer_Tick;
             timer.Stop();
 
-            Interaction.ExecuteActions(this, this.Actions, null);
+            Interaction.ExecuteActions(this, Actions, null);
         }
     }
 }

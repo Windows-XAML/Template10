@@ -30,7 +30,7 @@ namespace NavigationSample.ViewModels
 			{
 				// use cache value(s)
 				Value = state.GetOrDefault(nameof(Value), "?");
-
+				
 				// clear any cache
 				state.Clear();
 			}

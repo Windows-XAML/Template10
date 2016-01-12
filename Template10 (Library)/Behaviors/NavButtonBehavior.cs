@@ -52,14 +52,30 @@ namespace Template10.Behaviors
 
         private void Element_Click(object sender, RoutedEventArgs e)
         {
-            switch (Direction)
+            var nav = Services.NavigationService.NavigationService.GetForFrame(Frame);
+            if (nav == null)
             {
-                case Directions.Back:
-                    if (Frame?.CanGoBack ?? false) Frame.GoBack();
-                    break;
-                case Directions.Forward:
-                    if (Frame?.CanGoForward ?? false) Frame.GoForward();
-                    break;
+                switch (Direction)
+                {
+                    case Directions.Back:
+                        if (Frame?.CanGoBack ?? false) Frame.GoBack();
+                        break;
+                    case Directions.Forward:
+                        if (Frame?.CanGoForward ?? false) Frame.GoForward();
+                        break;
+                }
+            }
+            else
+            {
+                switch (Direction)
+                {
+                    case Directions.Back:
+                        nav.GoBack();
+                        break;
+                    case Directions.Forward:
+                        nav.GoForward();
+                        break;
+                }
             }
         }
 

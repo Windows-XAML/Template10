@@ -77,7 +77,7 @@
             <TextBlock Grid.Row="1">Standard implementation</TextBlock>
             <TextBlock Grid.Row="1" Grid.Column="1">Custom implementation</TextBlock>
 
-            <controls:ModalDialog Grid.Row="2" IsOpen="{Binding IsOn, ElementName=MyState}">
+            <controls:ModalDialog Grid.Row="2" IsModal="{Binding IsOn, ElementName=MyState}">
 
                 <controls:ModalDialog.ModalContent>
                     <ContentControl Template="{StaticResource WaitContent}" />
@@ -89,7 +89,7 @@
 
             </controls:ModalDialog>
 
-            <controls:ModalDialog Grid.Row="2" Grid.Column="1" IsOpen="{Binding IsOn, ElementName=MyState}">
+            <controls:ModalDialog Grid.Row="2" Grid.Column="1" IsModal="{Binding IsOn, ElementName=MyState}">
 
                 <controls:ModalDialog.ModalBackground>
                     <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
