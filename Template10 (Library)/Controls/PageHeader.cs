@@ -25,7 +25,7 @@ namespace Template10.Controls
     {
         public PageHeader()
         {
-            this.DefaultStyleKey = typeof(PageHeader);
+            DefaultStyleKey = typeof(PageHeader);
         }
 
         public Visibility BackButtonVisibility

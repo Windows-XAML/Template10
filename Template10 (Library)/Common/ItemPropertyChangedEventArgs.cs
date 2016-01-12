@@ -6,9 +6,9 @@ namespace Template10.Common
     {
         public ItemPropertyChangedEventArgs(object item, int changedIndex, PropertyChangedEventArgs e)
         {
-            this.ChangedItem = item;
-            this.ChangedItemIndex = changedIndex;
-            this.PropertyChangedArgs = e;
+            ChangedItem = item;
+            ChangedItemIndex = changedIndex;
+            PropertyChangedArgs = e;
         }
         public object ChangedItem { get; set; }
 

@@ -11,7 +11,7 @@ namespace Sample.Views
             InitializeComponent();
 
             var ham = Shell.HamburgerMenu;
-            ham.PaneOpen += (s, e) => UpdateMargin(ham);
+            ham.PaneOpened += (s, e) => UpdateMargin(ham);
             ham.PaneClosed += (s, e) => UpdateMargin(ham);
             UpdateMargin(ham);
         }

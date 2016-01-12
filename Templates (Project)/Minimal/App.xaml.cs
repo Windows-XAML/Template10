@@ -3,6 +3,8 @@ using Windows.UI.Xaml;
 using System.Threading.Tasks;
 using Sample.Services.SettingsServices;
 using Windows.ApplicationModel.Activation;
+using Template10.Common;
+using System.Linq;
 
 namespace Sample
 {
@@ -11,8 +13,6 @@ namespace Sample
 
     sealed partial class App : Template10.Common.BootStrapper
     {
-        ISettingsService _settings;
-
         public App()
         {
             InitializeComponent();
@@ -20,7 +20,7 @@ namespace Sample
 
             #region App settings
 
-            _settings = SettingsService.Instance;
+            var _settings = SettingsService.Instance;
             RequestedTheme = _settings.AppTheme;
             CacheMaxDuration = _settings.CacheMaxDuration;
             ShowShellBackButton = _settings.UseShellBackButton;
@@ -31,9 +31,13 @@ namespace Sample
         // runs even if restored from state
         public override Task OnInitializeAsync(IActivatedEventArgs args)
         {
-            // setup hamburger shell
-            var nav = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include);
-            Window.Current.Content = new Views.Shell(nav);
+            // content may already be shell when resuming
+            if ((Window.Current.Content as Views.Shell) == null)
+            {
+                // setup hamburger shell
+                var nav = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include);
+                Window.Current.Content = new Views.Shell(nav);
+            }
             return Task.CompletedTask;
         }
 
@@ -41,7 +45,7 @@ namespace Sample
         public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
             NavigationService.Navigate(typeof(Views.MainPage));
-			return Task.CompletedTask;
-		}
+            return Task.CompletedTask;
+        }
     }
 }

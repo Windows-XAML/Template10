@@ -9,10 +9,10 @@ namespace Template10.Services.NavigationService
         public NavigatingEventArgs() { }
         public NavigatingEventArgs(NavigatingCancelEventArgs e, Page page, object parameter)
         {
-            this.NavigationMode = e.NavigationMode;
-            this.PageType = e.SourcePageType;
-            this.Page = page;
-            this.Parameter = parameter;
+            NavigationMode = e.NavigationMode;
+            PageType = e.SourcePageType;
+            Page = page;
+            Parameter = parameter;
         }
         public bool Cancel { get; set; } = false;
         public bool Suspending { get; set; } = false;

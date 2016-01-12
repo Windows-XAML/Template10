@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Template10.Mvvm;
 using Windows.UI.Xaml.Navigation;
 using Template10.Common;
 

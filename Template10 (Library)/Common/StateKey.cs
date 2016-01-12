@@ -13,7 +13,7 @@ namespace Template10.Common
         }
         public Type Type { get; }
         public String Key { get; }
-        public bool Equals(StateItemKey other) => this.Type == other.Type && this.Key == other.Key;
+        public bool Equals(StateItemKey other) => Type == other.Type && Key == other.Key;
 
         public override bool Equals(object obj)
         {

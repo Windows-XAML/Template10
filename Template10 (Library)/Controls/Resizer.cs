@@ -34,7 +34,7 @@ namespace Template10.Controls
         private Size _originalSize;
         public Resizer()
         {
-            this.DefaultStyleKey = typeof(Resizer);
+            DefaultStyleKey = typeof(Resizer);
         }
 
         protected override void OnApplyTemplate()

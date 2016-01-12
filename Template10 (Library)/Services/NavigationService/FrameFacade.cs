@@ -35,7 +35,7 @@ namespace Template10.Services.NavigationService
                 BackRequested.Invoke(this, args);
             }
 
-            if (BackButtonHandling == BootStrapper.BackButton.Attach && !args.Handled && (args.Handled = this.Frame.BackStackDepth > 0))
+            if (BackButtonHandling == BootStrapper.BackButton.Attach && !args.Handled && (args.Handled = Frame.BackStackDepth > 0))
             {
                 GoBack();
             }
@@ -46,7 +46,7 @@ namespace Template10.Services.NavigationService
         {
             ForwardRequested?.Invoke(this, args);
 
-            if (!args.Handled && this.Frame.ForwardStack.Count > 0)
+            if (!args.Handled && Frame.ForwardStack.Count > 0)
             {
                 GoForward();
             }

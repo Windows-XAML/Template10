@@ -75,7 +75,7 @@ namespace Template10.Controls
         public bool? IsChecked
         {
             get { return _isChecked; }
-            set { Set(ref _isChecked, value ?? false); }
+            internal set { Set(ref _isChecked, value ?? false); }
         }
 
         UIElement _content = null;
@@ -140,7 +140,7 @@ namespace Template10.Controls
 
         public void Dispose()
         {
-            
+
         }
     }
 }
