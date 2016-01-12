@@ -55,8 +55,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10 (Validation)", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PageHeaderSample", "Samples\PageHeaderSample\PageHeaderSample.csproj", "{BF45794D-044C-416E-B4C2-116F3B5F114C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{8816F5E5-66C9-4CEA-B154-067F2AB4D161}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NavigationSample", "Samples\NavigationSample\NavigationSample.csproj", "{82FCDFA0-5EA9-4179-BB5F-6990C5138E63}"
 EndProject
 Global
