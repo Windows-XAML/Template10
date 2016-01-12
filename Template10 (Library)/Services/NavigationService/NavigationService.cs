@@ -25,6 +25,11 @@ namespace Template10.Services.NavigationService
         object LastNavigationParameter { get; set; }
         string LastNavigationType { get; set; }
 
+public static INavigationService GetForFrame(Frame frame)
+{
+    return WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices).FirstOrDefault(x => x.Frame.Equals(frame));
+}
+
         public DispatcherWrapper Dispatcher => WindowWrapper.Current(this).Dispatcher;
 
         protected internal NavigationService(Frame frame)

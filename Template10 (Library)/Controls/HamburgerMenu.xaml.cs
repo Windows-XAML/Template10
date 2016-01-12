@@ -518,7 +518,8 @@ namespace Template10.Controls
                 // and if there is a splash factorydefined in the bootstrapper, if true
                 // then we want to show the content full screen until the frame loads
                 if (_navigationService.FrameFacade.BackStackDepth == 0
-                    && BootStrapper.Current.SplashFactory != null)
+                    && BootStrapper.Current.SplashFactory != null
+                    && BootStrapper.Current.OriginalActivatedArgs.PreviousExecutionState != Windows.ApplicationModel.Activation.ApplicationExecutionState.Terminated)
                 {
                     var once = false;
                     IsFullScreen = true;
@@ -531,6 +532,8 @@ namespace Template10.Controls
                         }
                     };
                 }
+
+                UpdateFullScreen();
 
                 NavigationService.AfterRestoreSavedNavigation += (s, e) => HighlightCorrectButton();
                 NavigationService.FrameFacade.Navigated += (s, e) => HighlightCorrectButton(e.PageType, e.Parameter);
@@ -561,31 +564,17 @@ namespace Template10.Controls
             var frame = NavigationService?.Frame;
             if (manual ?? IsFullScreen)
             {
+                ShellSplitView.IsHitTestVisible = ShellSplitView.IsEnabled = false;
+                ShellSplitView.Content = null;
                 if (!RootGrid.Children.Contains(frame) && frame != null)
-                {
-                    ShellSplitView.Content = null;
                     RootGrid.Children.Add(frame);
-                }
-                if (RootGrid.Children.Contains(ShellSplitView))
-                    RootGrid.Children.Remove(ShellSplitView);
-                if (RootGrid.Children.Contains(HamburgerButton))
-                    RootGrid.Children.Remove(HamburgerButton);
-                if (RootGrid.Children.Contains(Header))
-                    RootGrid.Children.Remove(Header);
             }
             else
             {
+                ShellSplitView.IsHitTestVisible = ShellSplitView.IsEnabled = true;
                 if (RootGrid.Children.Contains(frame) && frame != null)
-                {
                     RootGrid.Children.Remove(frame);
-                }
                 ShellSplitView.Content = frame;
-                if (!RootGrid.Children.Contains(ShellSplitView))
-                    RootGrid.Children.Add(ShellSplitView);
-                if (!RootGrid.Children.Contains(HamburgerButton))
-                    RootGrid.Children.Add(HamburgerButton);
-                if (!RootGrid.Children.Contains(Header))
-                    RootGrid.Children.Add(Header);
             }
         }
 
