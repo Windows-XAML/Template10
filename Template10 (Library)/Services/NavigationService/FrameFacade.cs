@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Template10.Common;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -27,27 +28,46 @@ namespace Template10.Services.NavigationService
             Frame.ContentTransitions = c;
         }
 
+        internal delegate Task<HandledEventArgs> HandledEventArgsDelegateAsync(HandledEventArgs e);
+
+        internal HandledEventArgsDelegateAsync BackRequestedAsync;
         public event EventHandler<HandledEventArgs> BackRequested;
-        public void RaiseBackRequested(HandledEventArgs args)
+        public async Task RaiseBackRequested(HandledEventArgs args)
         {
-            if (BackRequested != null)
+            BackRequested?.Invoke(this, args);
+            if (args.Handled) return;
+
+            var tmp = BackRequestedAsync;
+            if (tmp != null)
             {
-                BackRequested.Invoke(this, args);
+                args = await tmp(args);
+                if (args.Handled) return;
             }
 
-            if (BackButtonHandling == BootStrapper.BackButton.Attach && !args.Handled && (args.Handled = Frame.BackStackDepth > 0))
+            if (BackButtonHandling == BootStrapper.BackButton.Attach && !args.Handled && Frame.BackStackDepth > 0)
             {
+                args.Handled = true;
                 GoBack();
             }
         }
 
+        internal HandledEventArgsDelegateAsync ForwardRequestedAsync;
         public event EventHandler<HandledEventArgs> ForwardRequested;
-        public void RaiseForwardRequested(HandledEventArgs args)
+        public async Task RaiseForwardRequested(HandledEventArgs args)
         {
             ForwardRequested?.Invoke(this, args);
+            if (args.Handled) return;
+
+            var tmp = ForwardRequestedAsync;
+            if (tmp != null)
+            {
+                args = await tmp(args);
+                if (args.Handled) return;
+            }
 
             if (!args.Handled && Frame.ForwardStack.Count > 0)
             {
+                args.Handled = true;
                 GoForward();
             }
         }
@@ -219,12 +239,31 @@ namespace Template10.Services.NavigationService
             if (NavigationModeHint != NavigationMode.New)
                 args.NavigationMode = NavigationModeHint;
             NavigationModeHint = NavigationMode.New;
+            bool cancel = false;
             foreach (var handler in _navigatingEventHandlers)
             {
                 handler(this, args);
+                cancel |= args.Cancel;
             }
-            e.Cancel = args.Cancel;
+            e.Cancel = cancel;
         }
+
+        readonly List<EventHandler<NavigatedEventArgs>> _navigationCanceldEventHandlers = new List<EventHandler<NavigatedEventArgs>>();
+        public event EventHandler<NavigatedEventArgs> NavigationCanceled
+        {
+            add { if (!_navigationCanceldEventHandlers.Contains(value)) _navigationCanceldEventHandlers.Add(value); }
+            remove { if (_navigationCanceldEventHandlers.Contains(value)) _navigationCanceldEventHandlers.Remove(value); }
+        }
+
+        internal void RaiseNavigationCanceled(object sender, NavigatedEventArgs e)
+        {
+            foreach (var handler in _navigationCanceldEventHandlers)
+            {
+                handler(this, e);
+            }
+
+        }
+
     }
 
 }
