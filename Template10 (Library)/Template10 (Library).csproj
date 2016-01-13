@@ -150,6 +150,8 @@
     <Compile Include="Common\StateKey.cs" />
     <Compile Include="Common\TypedEventHandler.cs" />
     <Compile Include="Common\ChangedEventArgs.cs" />
+    <Compile Include="Common\ValueCancelEventArgs.cs" />
+    <Compile Include="Common\ValueEventArgs.cs" />
     <Compile Include="Common\WindowWrapper.cs" />
     <Compile Include="Common\ObservableItemCollection.cs" />
     <Compile Include="Controls\ModalDialog.cs" />
