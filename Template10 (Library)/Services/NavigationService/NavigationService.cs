@@ -18,8 +18,6 @@ namespace Template10.Services.NavigationService
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-NavigationService
     public partial class NavigationService : INavigationService
     {
-        private const string EmptyNavigation = "1,0";
-
         public FrameFacade FrameFacade { get; }
         public Frame Frame => FrameFacade.Frame;
         object LastNavigationParameter { get; set; }
@@ -214,9 +212,14 @@ public static INavigationService GetForFrame(Frame frame)
             return FrameFacade.Navigate(page, parameter, infoOverride);
         }
 
+        public event EventHandler<CancelEventArgs<Type>> BeforeSavingNavigation;
         public void SaveNavigation()
         {
             if (CurrentPageType == null)
+                return;
+            var args = new CancelEventArgs<Type>(FrameFacade.CurrentPageType);
+            BeforeSavingNavigation?.Invoke(this, args);
+            if (args.Cancel)
                 return;
 
             var state = FrameFacade.GetFrameStateContainerValues();
