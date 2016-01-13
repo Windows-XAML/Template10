@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Text;
 using Windows.Foundation.Collections;
 using Windows.Storage;
 
 namespace Template10.Services.SettingsService
 {
-    using System.Linq;
-    using System.Reflection;
-    using System.Text;
-
     // https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SettingsService
     public class SettingsService : ISettingsService
     {
