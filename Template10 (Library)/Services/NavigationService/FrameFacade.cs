@@ -179,7 +179,7 @@ namespace Template10.Services.NavigationService
         void FacadeNavigatedEventHandler(object sender, Windows.UI.Xaml.Navigation.NavigationEventArgs e)
         {
             CurrentPageType = e.SourcePageType;
-            CurrentPageParam = ParameterSerializationService.Instance.DeserializeParameter(e.Parameter);
+            CurrentPageParam = e.Parameter;
             var args = new NavigatedEventArgs(e, Content as Page);
             if (NavigationModeHint != NavigationMode.New)
                 args.NavigationMode = NavigationModeHint;
@@ -198,8 +198,7 @@ namespace Template10.Services.NavigationService
         }
         private void FacadeNavigatingCancelEventHandler(object sender, NavigatingCancelEventArgs e)
         {
-            var parameter = ParameterSerializationService.Instance.DeserializeParameter(e.Parameter);
-            var args = new NavigatingEventArgs(e, Content as Page, parameter);
+            var args = new NavigatingEventArgs(e, Content as Page);
             if (NavigationModeHint != NavigationMode.New)
                 args.NavigationMode = NavigationModeHint;
             NavigationModeHint = NavigationMode.New;
