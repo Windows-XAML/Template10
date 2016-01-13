@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 using Windows.Foundation.Collections;
 using Windows.Storage;
 
@@ -9,18 +8,6 @@ namespace Template10.Services.SettingsService
     using System.Linq;
     using System.Reflection;
     using System.Text;
-
-    public interface ISettingsService
-    {
-        IPropertyMapping Converters { get; set; }
-        IPropertySet Values { get; }
-        bool Exists(string key);
-        T Read<T>(string key, T fallback = default(T));
-        void Remove(string key);
-        void Write<T>(string key, T value);
-        ISettingsService Open(string folderName, bool createFolderIsNotExists = true);
-        void Clear(bool deleteSubContainers = true);
-    }
 
     // https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SettingsService
     public class SettingsService : ISettingsService
@@ -194,28 +181,5 @@ namespace Template10.Services.SettingsService
                 return fallback;
             }
         }
-    }
-
-    public interface IStoreConverter
-    {
-        string ToStore(object value, Type type);
-        object FromStore(string value, Type type);
-    }
-
-    public interface IPropertyMapping
-    {
-        IStoreConverter GetConverter(Type type);
-    }
-
-    public class JsonMapping : IPropertyMapping
-    {
-        protected IStoreConverter jsonConverter = new JsonConverter();
-        public IStoreConverter GetConverter(Type type) => jsonConverter;
-    }
-
-    public class JsonConverter : IStoreConverter
-    {
-        public object FromStore(string value, Type type) => JsonConvert.DeserializeObject(value, type);
-        public string ToStore(object value, Type type) => JsonConvert.SerializeObject(value);
     }
 }
