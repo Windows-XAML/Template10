@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using Windows.Foundation.Metadata;
 using Windows.Graphics.Display;
 using Windows.UI.ViewManagement;
 
 namespace Template10.Utils
 {
+    using Windows.Foundation.Metadata;
+
     public class DeviceUtils
     {
         public event EventHandler Changed;
@@ -159,6 +160,15 @@ namespace Template10.Utils
                 return 7;
             }
         }
-    }
+
+        #region Static hardware information
+
+        static readonly bool isHardwareButtonsApiPresent = Windows.Foundation.Metadata.ApiInformation.IsTypePresent(@"Windows.Phone.UI.Input.HardwareButtons");
+
+        public static bool IsHardwareButtonsApiPresent => isHardwareButtonsApiPresent;
+
+        #endregion
+     }
+}
 }
 
