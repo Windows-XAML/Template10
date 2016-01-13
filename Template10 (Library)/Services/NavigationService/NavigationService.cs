@@ -211,10 +211,12 @@ public static INavigationService GetForFrame(Frame frame)
             return FrameFacade.Navigate(page, parameter, infoOverride);
         }
 
+        public event TypedEventHandler<Type> BeforeSaveNavigation;
         public void SaveNavigation()
         {
             if (CurrentPageType == null)
                 return;
+            BeforeSaveNavigation?.Invoke(this, FrameFacade.CurrentPageType);
 
             var state = FrameFacade.PageStateContainer(GetType());
             if (state == null)
