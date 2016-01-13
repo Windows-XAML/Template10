@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Template10.Common;
 using Template10.Services.SettingsService;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
@@ -59,7 +58,7 @@ namespace Template10.Services.NavigationService
 
         private ISettingsService FrameStateSettingsService()
         {
-            return SettingsService.Create(SettingsStrategies.Local, GetFrameStateKey(), true);
+            return SettingsService.SettingsService.Create(SettingsStrategies.Local, GetFrameStateKey(), true);
         }
 
         public void SetFrameState(string key, string value)
