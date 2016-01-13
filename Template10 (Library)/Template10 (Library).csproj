@@ -168,7 +168,12 @@
     <Compile Include="Services\NavigationService\JournalEntry.cs" />
     <Compile Include="Services\NavigationService\NavigationServiceList.cs" />
     <Compile Include="Services\NavigationService\ParameterSerializationService.cs" />
+    <Compile Include="Services\SettingsService\IPropertyMapping.cs" />
     <Compile Include="Services\SettingsService\ISettingsHelper.cs" />
+    <Compile Include="Services\SettingsService\ISettingsService.cs" />
+    <Compile Include="Services\SettingsService\IStoreConverter.cs" />
+    <Compile Include="Services\SettingsService\JsonConverter.cs" />
+    <Compile Include="Services\SettingsService\JsonMapping.cs" />
     <Compile Include="Services\SettingsService\SettingsService.cs" />
     <Compile Include="Services\SettingsService\SettingsStrategy.cs" />
     <Compile Include="Utils\AudioUtils.cs" />
