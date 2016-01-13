@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using Windows.Foundation.Metadata;
 using Windows.Graphics.Display;
 using Windows.UI.ViewManagement;
 
 namespace Template10.Utils
 {
-    using Windows.Foundation.Metadata;
-
     public class DeviceUtils
     {
         public event EventHandler Changed;
