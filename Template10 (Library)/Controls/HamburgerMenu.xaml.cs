@@ -638,7 +638,7 @@ namespace Template10.Controls
             // add this radio to the list
             var r = sender as RadioButton;
             var i = r.DataContext as HamburgerButtonInfo;
-            _navButtons.Add(r, i);
+            _navButtons[r] = i;
             HighlightCorrectButton();
         }
 
