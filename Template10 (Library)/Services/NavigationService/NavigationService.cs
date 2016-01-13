@@ -211,9 +211,14 @@ public static INavigationService GetForFrame(Frame frame)
             return FrameFacade.Navigate(page, parameter, infoOverride);
         }
 
+        public event EventHandler<CancelEventArgs<Type>> BeforeSavingNavigation;
         public void SaveNavigation()
         {
             if (CurrentPageType == null)
+                return;
+            var args = new CancelEventArgs<Type>(FrameFacade.CurrentPageType);
+            BeforeSavingNavigation?.Invoke(this, args);
+            if (args.Cancel)
                 return;
 
             var state = FrameFacade.PageStateContainer(GetType());
