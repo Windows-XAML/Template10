@@ -460,6 +460,8 @@ namespace Template10.Common
         {
             DebugWrite($"BackButton:{backButton} ExistingContent:{existingContent} Frame:{frame}");
 
+            frame.Content = (existingContent == ExistingContent.Include) ? Window.Current.Content : null;
+
             // if the service already exists for this frame, use the existing one.
             foreach (var nav in WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices))
             {
