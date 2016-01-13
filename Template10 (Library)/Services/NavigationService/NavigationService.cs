@@ -47,7 +47,7 @@ public static INavigationService GetForFrame(Frame frame)
             };
             FrameFacade.Navigated += (s, e) =>
             {
-                NavigateTo(e.NavigationMode, ParameterSerializationService.Instance.DeserializeParameter(e.Parameter));
+                NavigateTo(e.NavigationMode, e.Parameter);
             };
         }
 
@@ -171,7 +171,6 @@ public static INavigationService GetForFrame(Frame frame)
                     return false;
             }
 
-            parameter = ParameterSerializationService.Instance.SerializeParameter(parameter);
             return FrameFacade.Navigate(page, parameter, infoOverride);
         }
 
