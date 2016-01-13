@@ -167,7 +167,6 @@ namespace Template10.Utils
         public static bool IsHardwareButtonsApiPresent => isHardwareButtonsApiPresent;
 
         #endregion
-     }
-}
+    }
 }
 
