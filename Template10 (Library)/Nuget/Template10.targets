@@ -16,10 +16,10 @@
     <Error Text="[SOURCE] $(SourcePath)\Template10Library does not exist." Condition="!Exists('$(SourcePath)\Template10Library')" />
 
     <!-- alert -->
-    <Message Importance="high" Text='xcopy "$(SourcePath)" "$(ObjPath)" /e/s/y >>null' />
+    <Message Importance="high" Text='xcopy "$(SourcePath)" "$(ObjPath)" /e/s/y/q' />
 
     <!-- exec -->
-    <Exec Command='xcopy "$(SourcePath)" "$(ObjPath)" /e/s/y >>null' />
+    <Exec Command='xcopy "$(SourcePath)" "$(ObjPath)" /e/s/y/q' />
 
     <!-- test -->
     <Error Text="[TARGET] $(ObjPath)Template10Library does not exist." Condition="!Exists('$(ObjPath)Template10Library')" />
