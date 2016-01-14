@@ -1,3 +1,8 @@
+Instead of changing the margin of BottomAppBar, I removed Page.BottomAppBar, and added a <Grid><CommandBar/></Grid> inside the root Grid, since this will behave like any other control on the page, the SplitView.Pane will not be occluded. 
+
+Old Method below
+
+
 ﻿It turns out that the BottomAppBar property of Page, when set, occludes the SpltView.Pane. This is because it is drawn over the content, even though the page is nested inside the SplitView. The SplitView is a good choice for developers who want a bottom app bar and want their bottom app bar to move when the soft keyboard is displayed. I personally think this is a 1% case, but it is real. 
 
 What to do?
