@@ -149,7 +149,7 @@ namespace Template10.Utils
 
         public enum Units { Inches, Centimeters }
 
-        public double DiagonalSize(Units units)
+        public double DiagonalSize(Units units = Units.Inches)
         {
             var di = DisplayInformation.GetForCurrentView();
             var inches = 7;
@@ -158,7 +158,7 @@ namespace Template10.Utils
             switch (units)
             {
                 case Units.Centimeters:
-                    break;
+                    return inches * 2.54d;
                 case Units.Inches:
                 default:
                     return inches;

@@ -2,9 +2,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
              xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" xmlns:Media="using:Microsoft.Xaml.Interactions.Media"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="using:Sample.Views"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d">
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" 
+             Background="{StaticResource ExtendedSplashBackground}">
 
-    <Grid Background="{StaticResource ExtendedSplashBackground}">
+    <Grid Background="Red">
 
         <Canvas x:Name="MyCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Canvas.Background>
