@@ -13,7 +13,7 @@ namespace Template10.Common
     {
         #region Debug
 
-        static void DebugWrite(string text = null, Services.LoggingService.Severities severity = Services.LoggingService.Severities.Info, [CallerMemberName]string caller = null) =>
+        static void DebugWrite(string text = null, Services.LoggingService.Severities severity = Services.LoggingService.Severities.Trace, [CallerMemberName]string caller = null) =>
             Services.LoggingService.LoggingService.WriteLine(text, severity, caller: $"DispatcherWrapper.{caller}");
 
         #endregion
