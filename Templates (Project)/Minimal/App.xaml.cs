@@ -3,6 +3,8 @@ using Windows.UI.Xaml;
 using System.Threading.Tasks;
 using Sample.Services.SettingsServices;
 using Windows.ApplicationModel.Activation;
+using Template10.Common;
+using System.Linq;
 
 namespace Sample
 {
@@ -40,10 +42,9 @@ namespace Sample
         }
 
         // runs only when not restored from state
-        public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
+        public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
-            NavigationService.Navigate(typeof(Views.MainPage));
-            return Task.CompletedTask;
+            await NavigationService.NavigateAsync(typeof(Views.MainPage));
         }
     }
 }

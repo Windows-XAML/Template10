@@ -1,7 +1,7 @@
-﻿using Sample.Mvvm;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Sample.Mvvm;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Navigation;
 
@@ -17,7 +17,7 @@ namespace Sample.ViewModels
             }
         }
 
-        string _Value = string.Empty;
+        private string _Value = string.Empty;
         public string Value { get { return _Value; } set { Set(ref _Value, value); } }
 
         public override void OnNavigatedTo(object parameter, NavigationMode mode, IDictionary<string, object> state)
@@ -38,17 +38,19 @@ namespace Sample.ViewModels
             return Task.CompletedTask;
         }
 
-        public override void OnNavigatingFrom(NavigatingEventArgs args) =>
+        public override Task OnNavigatingFromAsync(NavigatingEventArgs args)
+        {
             args.Cancel = false;
+            return Task.CompletedTask;
+        }
 
-        public void GotoDetailsPage() =>
-            NavigationService.Navigate(typeof(Views.DetailPage), Value);
+        public async Task GotoDetailsPage() =>
+            await NavigationService.NavigateAsync(typeof(Views.DetailPage), Value);
 
-        public void GotoPrivacy() =>
-            NavigationService.Navigate(typeof(Views.SettingsPage), 1);
+        public async Task GotoPrivacy() =>
+            await NavigationService.NavigateAsync(typeof(Views.SettingsPage), 1);
 
-        public void GotoAbout() =>
-            NavigationService.Navigate(typeof(Views.SettingsPage), 2);
-
+        public async Task GotoAbout() =>
+            await NavigationService.NavigateAsync(typeof(Views.SettingsPage), 2);
     }
 }

@@ -45,14 +45,28 @@ namespace Template10.Services.NavigationService
 
                 // allow the viewmodel to cancel navigation
                 e.Cancel = !NavigatingFrom(false);
-                if (!e.Cancel)
+                if (e.Cancel)
                 {
-                    await NavigateFromAsync(false);
+                    FrameFacade.RaiseNavigationCanceled(this, e);
+                    return;
                 }
+                await NavigateFromAsync(false);
             };
             FrameFacade.Navigated += (s, e) =>
             {
                 NavigateTo(e.NavigationMode, e.Parameter);
+            };
+
+            FrameFacade.BackRequestedAsync = async (e) =>
+            {
+                e.Handled = await DoNavigatingFromAsync();
+                return e;
+            };
+
+            FrameFacade.ForwardRequestedAsync = async (e) =>
+            {
+                e.Handled = await DoNavigatingFromAsync();
+                return e;
             };
         }
 
@@ -162,7 +176,7 @@ namespace Template10.Services.NavigationService
                 newAppView.Title = title;
 
                 var frame = BootStrapper.Current.NavigationServiceFactory(BootStrapper.BackButton.Ignore, BootStrapper.ExistingContent.Exclude);
-                frame.Navigate(page, parameter);
+                await frame.NavigateAsync(page, parameter);
                 newWindow.Content = frame.Frame;
                 newWindow.Activate();
 
@@ -171,12 +185,32 @@ namespace Template10.Services.NavigationService
             });
         }
 
-        public bool Navigate(Type page, object parameter = null, NavigationTransitionInfo infoOverride = null)
+        private async Task<bool> DoNavigatingFromAsync()
         {
-            DebugWrite($"Page: {page}, Parameter: {parameter}, NavigationTransitionInfo: {infoOverride}");
+            var currentPage = FrameFacade.Content as Page;
+            var dataContext = currentPage?.DataContext as INavigable;
+            if (dataContext != null)
+            {
+                var args = new NavigatingEventArgs
+                {
+                    NavigationMode = FrameFacade.NavigationModeHint,
+                    PageType = FrameFacade.CurrentPageType,
+                    Parameter = FrameFacade.CurrentPageParam,
+                    Suspending = false,
+                };
+                await dataContext.OnNavigatingFromAsync(args);
+                if (args.Cancel)
+                {
+                    FrameFacade.RaiseNavigationCanceled(this, args);
+                    return true;
+                }
+            }
+            return false;
+        }
 
-            if (page == null)
-                throw new ArgumentNullException(nameof(page));
+        private bool CanNavigateToPage(Type page, object parameter)
+        {
+
             if (page.FullName.Equals(LastNavigationType))
             {
                 if (parameter == LastNavigationParameter)
@@ -185,6 +219,28 @@ namespace Template10.Services.NavigationService
                 if (parameter != null && parameter.Equals(LastNavigationParameter))
                     return false;
             }
+            return true;
+        }
+
+        public bool Navigate(Type page, object parameter = null, NavigationTransitionInfo infoOverride = null)
+        {
+            if (page == null)
+                throw new ArgumentNullException(nameof(page));
+
+            if (!CanNavigateToPage(page, parameter)) return false;
+
+            return FrameFacade.Navigate(page, parameter, infoOverride);
+        }
+
+        public async Task<bool> NavigateAsync(Type page, object parameter = null, NavigationTransitionInfo infoOverride = null)
+        {
+            if (page == null)
+                throw new ArgumentNullException(nameof(page));
+
+            if (!CanNavigateToPage(page, parameter)) return false;
+
+            var canceled = await DoNavigatingFromAsync();
+            if (canceled) return false;
 
             return FrameFacade.Navigate(page, parameter, infoOverride);
         }
@@ -221,9 +277,25 @@ namespace Template10.Services.NavigationService
             if (!keys.ContainsKey(key))
                 throw new KeyNotFoundException(key.ToString());
             var page = keys[key];
-            if (page.FullName.Equals(LastNavigationType)
-                && parameter == LastNavigationParameter)
-                return false;
+
+            if (!CanNavigateToPage(page, parameter)) return false;
+
+            return FrameFacade.Navigate(page, parameter, infoOverride);
+        }
+
+        public async Task<bool> NavigateAsync<T>(T key, object parameter = null, NavigationTransitionInfo infoOverride = null)
+            where T : struct, IConvertible
+        {
+            var keys = Common.BootStrapper.Current.PageKeys<T>();
+            if (!keys.ContainsKey(key))
+                throw new KeyNotFoundException(key.ToString());
+            var page = keys[key];
+
+            if (!CanNavigateToPage(page, parameter)) return false;
+
+            var canceled = await DoNavigatingFromAsync();
+            if (canceled) return false;
+
             return FrameFacade.Navigate(page, parameter, infoOverride);
         }
 
