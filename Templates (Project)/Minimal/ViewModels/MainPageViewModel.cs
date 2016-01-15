@@ -25,8 +25,8 @@ namespace Sample.ViewModels
             if (state.Any())
             {
                 Value = state[nameof(Value)]?.ToString();
+                state.Clear();
             }
-            state.Clear();
         }
 
         public override Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending)
