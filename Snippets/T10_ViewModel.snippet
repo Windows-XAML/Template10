@@ -32,8 +32,14 @@
         <Import>
           <Namespace>System.Threading.Tasks</Namespace>
         </Import>
+        <Import>
+          <Namespace>Windows.UI.Xaml.Navigation</Namespace>
+        </Import>
+        <Import>
+          <Namespace>Template10.Services.NavigationService</Namespace>
+        </Import>
       </Imports>
-
+      
       <Declarations>
         <Literal Editable="true">
           <ID>name</ID>
@@ -56,7 +62,7 @@
           }
           
           // sample data
-          public IEnumerable<object> Colors =>
+          public IEnumerable<object> Items =>
               typeof(Windows.UI.Colors).GetRuntimeProperties()
                   .Select(x => new { Name = x.Name, Color = (Color)x.GetValue(null) });
          
@@ -82,10 +88,8 @@
               return Task.CompletedTask;
           }
 
-          public override void OnNavigatingFrom(NavigatingEventArgs args)
-          {
+          public override void OnNavigatingFrom(NavigatingEventArgs args) =>
               args.Cancel = false;
-          }
         }]]>
       </Code>
     </Snippet>
