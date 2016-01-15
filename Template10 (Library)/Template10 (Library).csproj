@@ -184,8 +184,11 @@
     <Compile Include="Utils\InkUtils.cs" />
     <Compile Include="Utils\LinqUtils.cs" />
     <Compile Include="Utils\MonitorUtils.cs" />
+    <Compile Include="Utils\ObservableCollectionUtils.cs" />
+    <Compile Include="Utils\ResourceUtils.cs" />
     <Compile Include="Utils\TaskUtils.cs" />
     <Compile Include="Utils\Template10Utils.cs" />
+    <Compile Include="Utils\ThemeUtils.cs" />
     <Compile Include="Utils\XamlUtil.cs" />
     <Compile Include="Controls\HamburgerMenu.xaml.cs">
       <DependentUpon>HamburgerMenu.xaml</DependentUpon>
