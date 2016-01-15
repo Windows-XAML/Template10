@@ -14,7 +14,7 @@ namespace Template10.Mvvm
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void RaisePropertyChanged([CallerMemberName]string propertyName = null)
+        public virtual void RaisePropertyChanged([CallerMemberName]string propertyName = null)
         {
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
                 return;
@@ -29,7 +29,7 @@ namespace Template10.Mvvm
             }
         }
 
-        public bool Set<T>(ref T storage, T value, [CallerMemberName]string propertyName = null)
+        public virtual bool Set<T>(ref T storage, T value, [CallerMemberName]string propertyName = null)
         {
             if (object.Equals(storage, value))
                 return false;
@@ -38,7 +38,7 @@ namespace Template10.Mvvm
             return true;
         }
 
-        public bool Set<T>(Expression<Func<T>> propertyExpression, ref T field, T newValue)
+        public virtual bool Set<T>(Expression<Func<T>> propertyExpression, ref T field, T newValue)
         {
             //if is equal 
             if (object.Equals(field, newValue))
@@ -51,7 +51,7 @@ namespace Template10.Mvvm
             return true;
         }
 
-        public void RaisePropertyChanged<T>(Expression<Func<T>> propertyExpression)
+        public virtual void RaisePropertyChanged<T>(Expression<Func<T>> propertyExpression)
         {
             var handler = PropertyChanged;
             //if is not null
@@ -86,7 +86,7 @@ namespace Template10.Mvvm
             }
         }
 
-        public bool Set<T>(ref T storage, T value, [CallerMemberName]string propertyName = null)
+        public virtual bool Set<T>(ref T storage, T value, [CallerMemberName]string propertyName = null)
         {
             if (object.Equals(storage, value))
                 return false;
@@ -95,7 +95,7 @@ namespace Template10.Mvvm
             return true;
         }
 
-        public bool Set<T>(Expression<Func<T>> propertyExpression, ref T field, T newValue)
+        public virtual bool Set<T>(Expression<Func<T>> propertyExpression, ref T field, T newValue)
         {
             //if is equal 
             if (object.Equals(field, newValue))
@@ -108,7 +108,7 @@ namespace Template10.Mvvm
             return true;
         }
 
-        public void RaisePropertyChanged<T>(Expression<Func<T>> propertyExpression)
+        public virtual void RaisePropertyChanged<T>(Expression<Func<T>> propertyExpression)
         {
             var handler = PropertyChanged;
             //if is not null
