@@ -33,11 +33,13 @@ namespace Sample.ViewModels
             }
         }
 
-        public override async Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending)
+        public override Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending)
         {
             if (suspending)
+            {
                 state[nameof(Value)] = Value;
-            await Task.CompletedTask;
+            }
+            return Task.CompletedTask;
         }
 
         public override void OnNavigatingFrom(NavigatingEventArgs args)

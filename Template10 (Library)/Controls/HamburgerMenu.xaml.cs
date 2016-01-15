@@ -22,8 +22,8 @@ namespace Template10.Controls
 {
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-HamburgerMenu
     [ContentProperty(Name = nameof(PrimaryButtons))]
-    public sealed partial class HamburgerMenu : UserControl, INotifyPropertyChanged
-    {
+    public sealed partial class HamburgerMenu : UserControl, INotifyPropertyChanged 
+    {                   
         [Obsolete("Fixing naming inconsistency; use HamburgerMenu.PaneOpened", true)]
         public event EventHandler PaneOpen;
         public event EventHandler PaneOpened;
