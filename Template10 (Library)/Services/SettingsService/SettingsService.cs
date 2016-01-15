@@ -1,20 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
+using System.Linq;
+using System.Reflection;
+using System.Text;
 using Windows.Foundation.Collections;
 using Windows.Storage;
 
 namespace Template10.Services.SettingsService
 {
-    public interface ISettingsService
-    {
-        IPropertyMapping Converters { get; set; }
-        bool Exists(string key);
-        T Read<T>(string key, T fallback);
-        void Remove(string key);
-        void Write<T>(string key, T value);
-    }
-
     // https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SettingsService
     public class SettingsService : ISettingsService
     {
@@ -60,14 +53,36 @@ namespace Template10.Services.SettingsService
                 }
             }
 
-            return new SettingsService(targetContainer.Values);
+            return new SettingsService(targetContainer);
         }
 
-        protected IPropertySet Values { get; private set; }
+        protected ApplicationDataContainer Container { get; private set; }
+        public IPropertySet Values { get; private set; }
 
         public IPropertyMapping Converters { get; set; } = new JsonMapping();
 
-        private SettingsService(IPropertySet values) { Values = values; }
+        private SettingsService(ApplicationDataContainer container)
+        {
+            Container = container;
+            Values = container.Values;
+        }
+
+        public ISettingsService Open(string folderName, bool createFolderIfNotExists = true)
+        {
+            ApplicationDataContainer targetContainer;
+            try
+            {
+                targetContainer = Container.CreateContainer(folderName, createFolderIfNotExists ? ApplicationDataCreateDisposition.Always : ApplicationDataCreateDisposition.Existing);
+            }
+            catch (Exception)
+            {
+                throw new KeyNotFoundException($"No folder exists named '{folderName}'");
+            }
+
+            var service = new SettingsService(targetContainer);
+            service.Converters = Converters;
+            return service;
+        }
 
         public bool Exists(string key) => Values.ContainsKey(key);
 
@@ -75,33 +90,88 @@ namespace Template10.Services.SettingsService
         {
             if (Values.ContainsKey(key))
                 Values.Remove(key);
+            if (Container.Containers.ContainsKey(key))
+                Container.DeleteContainer(key);
         }
+
+        public void Clear(bool deleteSubContainers = true)
+        {
+            Values.Clear();
+            if (deleteSubContainers)
+            {
+                foreach (var container in Container.Containers.ToArray())
+                {
+                    Container.DeleteContainer(container.Key);
+                }
+            }
+        }
+
+        const int MaxValueSize = 8000;
 
         public void Write<T>(string key, T value)
         {
             var type = typeof(T);
+            if (value != null)
+            {
+                type = value.GetType();
+            }
             var converter = Converters.GetConverter(type);
             var container = new ApplicationDataCompositeValue();
             var converted = converter.ToStore(value, type);
-            container["Value"] = converted;
+            if (converted != null)
+            {
+                var valueLength = converted.Length;
+                if (valueLength > MaxValueSize)
+                {
+                    int count = (valueLength - 1) / MaxValueSize + 1;
+                    container["Count"] = count;
+                    for (int part = 0; part < count; part++)
+                    {
+                        string partValue = converted.Substring(part * MaxValueSize, Math.Min(MaxValueSize, valueLength));
+                        container["Part" + part] = partValue;
+                        valueLength = valueLength - MaxValueSize;
+                    }
+                }
+                else
+                    container["Value"] = converted;
+            }
+            if ((type != typeof(string) && !type.GetTypeInfo().IsValueType) || (type != typeof(T)))
+            {
+                container["Type"] = type.AssemblyQualifiedName;
+            }
             Values[key] = container;
         }
 
-        public T Read<T>(string key, T fallback)
+        public T Read<T>(string key, T fallback = default(T))
         {
             try
             {
                 if (Values.ContainsKey(key))
                 {
-                    var type = typeof(T);
-                    var converter = Converters.GetConverter(type);
                     var container = Values[key] as ApplicationDataCompositeValue;
+                    var type = typeof(T);
+                    if (container.ContainsKey("Type"))
+                    {
+                        type = Type.GetType((string)container["Type"]);
+                    }
+                    string value = null;
                     if (container.ContainsKey("Value"))
                     {
-                        var value = container["Value"] as string;
-                        var converted = (T)converter.FromStore(value, type);
-                        return converted;
+                        value = container["Value"] as string;
                     }
+                    else if (container.ContainsKey("Count"))
+                    {
+                        int count = (int)container["Count"];
+                        var sb = new StringBuilder(count * MaxValueSize);
+                        for (int statePart = 0; statePart < count; statePart++)
+                        {
+                            sb.Append(container["Part" + statePart]);
+                        }
+                        value = sb.ToString();
+                    }
+                    var converter = Converters.GetConverter(type);
+                    var converted = (T)converter.FromStore(value, type);
+                    return converted;
                 }
                 return fallback;
             }
@@ -110,28 +180,5 @@ namespace Template10.Services.SettingsService
                 return fallback;
             }
         }
-    }
-
-    public interface IStoreConverter
-    {
-        string ToStore(object value, Type type);
-        object FromStore(string value, Type type);
-    }
-
-    public interface IPropertyMapping
-    {
-        IStoreConverter GetConverter(Type type);
-    }
-
-    public class JsonMapping : IPropertyMapping
-    {
-        protected IStoreConverter jsonConverter = new JsonConverter();
-        public IStoreConverter GetConverter(Type type) => jsonConverter;
-    }
-
-    public class JsonConverter : IStoreConverter
-    {
-        public object FromStore(string value, Type type) => JsonConvert.DeserializeObject(value, type);
-        public string ToStore(object value, Type type) => JsonConvert.SerializeObject(value);
     }
 }
