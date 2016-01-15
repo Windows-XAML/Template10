@@ -94,7 +94,7 @@ public static INavigationService GetForFrame(Frame frame)
                 var dataContext = page.DataContext as INavigable;
                 if (dataContext != null)
                 {
-                    var pageState = FrameFacade.PageStateContainer(page.GetType());
+                    var pageState = FrameFacade.PageStateContainer(Frame.BackStackDepth);
                     await dataContext.OnNavigatedFromAsync(pageState, suspending);
                 }
             }
@@ -107,7 +107,7 @@ public static INavigationService GetForFrame(Frame frame)
 
             if (mode == NavigationMode.New)
             {
-                FrameFacade.ClearFrameState();
+                FrameFacade.RemovePageStates(Frame.BackStackDepth);
             }
 
             var page = FrameFacade.Content as Page;
@@ -129,8 +129,9 @@ public static INavigationService GetForFrame(Frame frame)
                     dataContext.NavigationService = this;
                     dataContext.Dispatcher = Common.WindowWrapper.Current(this)?.Dispatcher;
                     dataContext.SessionState = BootStrapper.Current.SessionState;
-                    var pageState = FrameFacade.PageStateContainer(page.GetType());
-                    dataContext.OnNavigatedTo(parameter, mode, pageState);
+					var pageState = FrameFacade.PageStateContainer(Frame.BackStackDepth);
+					
+					dataContext.OnNavigatedTo(parameter, mode, pageState);
                 }
             }
         }
@@ -221,7 +222,7 @@ public static INavigationService GetForFrame(Frame frame)
             if (args.Cancel)
                 return;
 
-            var state = FrameFacade.PageStateContainer(GetType());
+            var state = FrameFacade.GetFrameStateContainerValues();
             if (state == null)
             {
                 throw new InvalidOperationException("State container is unexpectedly null");
@@ -237,7 +238,7 @@ public static INavigationService GetForFrame(Frame frame)
         {
             try
             {
-                var state = FrameFacade.PageStateContainer(GetType());
+                var state = FrameFacade.GetFrameStateContainerValues();
                 if (state == null || !state.Any() || !state.ContainsKey("CurrentPageType"))
                 {
                     return false;
@@ -269,7 +270,7 @@ public static INavigationService GetForFrame(Frame frame)
 
         public void ClearCache(bool removeCachedPagesInBackStack = false)
         {
-            int currentSize = FrameFacade.Frame.CacheSize;
+			int currentSize = FrameFacade.Frame.CacheSize;
 
             if (removeCachedPagesInBackStack)
             {
@@ -286,7 +287,11 @@ public static INavigationService GetForFrame(Frame frame)
             FrameFacade.Frame.CacheSize = currentSize;
         }
 
-        public void ClearHistory() { FrameFacade.Frame.BackStack.Clear(); }
+        public void ClearHistory()
+		{
+			FrameFacade.Frame.BackStack.Clear();
+			FrameFacade.RemovePageStates();
+		}
 
         public void Resuming() { /* nothing */ }
 

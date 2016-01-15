@@ -54,7 +54,7 @@ namespace Template10.Services.NavigationService
 
         #region state
 
-        private string GetFrameStateKey() => string.Format("{0}-PageState", FrameId);
+        private string GetFrameStateKey() => string.Format("{0}-FrameState", FrameId);
 
         private Windows.Storage.ApplicationDataContainer _frameStateContainer;
         private Windows.Storage.ApplicationDataContainer FrameStateContainer()
@@ -89,20 +89,37 @@ namespace Template10.Services.NavigationService
             }
         }
 
-        private string GetPageStateKey(Type type) => string.Format("{0}", type);
+		internal IPropertySet GetFrameStateContainerValues() => FrameStateContainer().Values;
 
-        public IPropertySet PageStateContainer(Type type)
+		public void RemovePageStates(int firstBackStackLevelToBeRemoved=0)
         {
-            var key = GetPageStateKey(type);
-            var container = FrameStateContainer().CreateContainer(key, Windows.Storage.ApplicationDataCreateDisposition.Always);
-            return container.Values;
+			var container = FrameStateContainer();
+
+			while (true)
+			{
+				string key = GetPageStateKey(firstBackStackLevelToBeRemoved);
+
+				if (container.Containers.ContainsKey(key))
+				{
+					container.DeleteContainer(key);
+				}
+				else
+					break;
+
+				firstBackStackLevelToBeRemoved++;
+			}
         }
 
-        public void ClearPageState(Type type)
+		private string GetPageStateKey(int level) => string.Format("PageState_{0}", level);
+		
+		public IPropertySet PageStateContainer(int level)
         {
-            var key = GetPageStateKey(type);
-            if (FrameStateContainer().Containers.ContainsKey(key))
-                FrameStateContainer().DeleteContainer(key);
+			var container = FrameStateContainer();
+			var key = GetPageStateKey(level);
+			if (container.Containers.ContainsKey(key))
+				return container.Containers[key].Values;
+
+			return container.CreateContainer(key, Windows.Storage.ApplicationDataCreateDisposition.Always).Values;
         }
 
         #endregion
@@ -192,39 +209,39 @@ namespace Template10.Services.NavigationService
             add { if (!_navigatedEventHandlers.Contains(value)) _navigatedEventHandlers.Add(value); }
             remove { if (_navigatedEventHandlers.Contains(value)) _navigatedEventHandlers.Remove(value); }
         }
-        void FacadeNavigatedEventHandler(object sender, Windows.UI.Xaml.Navigation.NavigationEventArgs e)
-        {
-            CurrentPageType = e.SourcePageType;
-            CurrentPageParam = ParameterSerializationService.Instance.DeserializeParameter(e.Parameter);
-            var args = new NavigatedEventArgs(e, Content as Page);
-            if (NavigationModeHint != NavigationMode.New)
-                args.NavigationMode = NavigationModeHint;
-            NavigationModeHint = NavigationMode.New;
-            foreach (var handler in _navigatedEventHandlers)
-            {
-                handler(this, args);
-            }
-        }
+		void FacadeNavigatedEventHandler(object sender, Windows.UI.Xaml.Navigation.NavigationEventArgs e)
+		{
+			CurrentPageType = e.SourcePageType;
+			CurrentPageParam = ParameterSerializationService.Instance.DeserializeParameter(e.Parameter);
+			var args = new NavigatedEventArgs(e, Content as Page);
+			if (NavigationModeHint != NavigationMode.New)
+				args.NavigationMode = NavigationModeHint;
+			NavigationModeHint = NavigationMode.New;
+			foreach (var handler in _navigatedEventHandlers)
+			{
+				handler(this, args);
+			}
+		}
 
-        readonly List<EventHandler<NavigatingEventArgs>> _navigatingEventHandlers = new List<EventHandler<NavigatingEventArgs>>();
+		readonly List<EventHandler<NavigatingEventArgs>> _navigatingEventHandlers = new List<EventHandler<NavigatingEventArgs>>();
         public event EventHandler<NavigatingEventArgs> Navigating
         {
             add { if (!_navigatingEventHandlers.Contains(value)) _navigatingEventHandlers.Add(value); }
             remove { if (_navigatingEventHandlers.Contains(value)) _navigatingEventHandlers.Remove(value); }
         }
-        private void FacadeNavigatingCancelEventHandler(object sender, NavigatingCancelEventArgs e)
-        {
-            var parameter = ParameterSerializationService.Instance.DeserializeParameter(e.Parameter);
-            var args = new NavigatingEventArgs(e, Content as Page, parameter);
-            if (NavigationModeHint != NavigationMode.New)
-                args.NavigationMode = NavigationModeHint;
-            NavigationModeHint = NavigationMode.New;
-            foreach (var handler in _navigatingEventHandlers)
-            {
-                handler(this, args);
-            }
-            e.Cancel = args.Cancel;
-        }
-    }
+		private void FacadeNavigatingCancelEventHandler(object sender, NavigatingCancelEventArgs e)
+		{
+			var parameter = ParameterSerializationService.Instance.DeserializeParameter(e.Parameter);
+			var args = new NavigatingEventArgs(e, Content as Page, parameter);
+			if (NavigationModeHint != NavigationMode.New)
+				args.NavigationMode = NavigationModeHint;
+			NavigationModeHint = NavigationMode.New;
+			foreach (var handler in _navigatingEventHandlers)
+			{
+				handler(this, args);
+			}
+			e.Cancel = args.Cancel;
+		}
+	}
 
 }
