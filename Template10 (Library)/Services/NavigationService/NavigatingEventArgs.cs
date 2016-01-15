@@ -7,12 +7,12 @@ namespace Template10.Services.NavigationService
     public class NavigatingEventArgs: NavigatedEventArgs
     {
         public NavigatingEventArgs() { }
-        public NavigatingEventArgs(NavigatingCancelEventArgs e, Page page, object parameter)
+        public NavigatingEventArgs(NavigatingCancelEventArgs e, Page page)
         {
             NavigationMode = e.NavigationMode;
             PageType = e.SourcePageType;
+            Parameter = e.Parameter;
             Page = page;
-            Parameter = parameter;
         }
         public bool Cancel { get; set; } = false;
         public bool Suspending { get; set; } = false;
