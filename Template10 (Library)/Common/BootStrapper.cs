@@ -49,7 +49,7 @@ namespace Template10.Common
 
         #region Debug
 
-        protected bool WriteDebug { get; set; } = false;
+        protected bool WriteDebug { get; set; } = true;
         protected virtual void DebugWrite(string text = null, [CallerMemberName]string caller = null) =>
             System.Diagnostics.Debug.WriteLineIf(WriteDebug, $"{DateTime.Now.TimeOfDay.ToString()} BootStrapper.{caller} {text}");
 
@@ -199,7 +199,7 @@ namespace Template10.Common
             bool restored = false;
             switch (e.PreviousExecutionState)
             {
-                //case ApplicationExecutionState.ClosedByUser:
+                case ApplicationExecutionState.Suspended:
                 case ApplicationExecutionState.Terminated:
                     {
                         OnResuming(this, null, ApplicationExecutionState.Terminated);
@@ -388,7 +388,7 @@ namespace Template10.Common
 
             // first show the splash 
             FrameworkElement splash = null;
-            if (SplashFactory != null)
+            if (SplashFactory != null && e.PreviousExecutionState != ApplicationExecutionState.Suspended)
             {
                 Window.Current.Content = splash = SplashFactory(e.SplashScreen);
                 Window.Current.Activate();
