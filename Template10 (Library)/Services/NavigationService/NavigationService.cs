@@ -8,18 +8,15 @@ using Windows.ApplicationModel.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Services.NavigationService
 {
-    using Windows.UI.Xaml.Data;
-
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-NavigationService
     public partial class NavigationService : INavigationService
     {
-        private const string EmptyNavigation = "1,0";
-
         public FrameFacade FrameFacade { get; }
         public Frame Frame => FrameFacade.Frame;
         object LastNavigationParameter { get; set; }
@@ -51,7 +48,7 @@ public static INavigationService GetForFrame(Frame frame)
             };
             FrameFacade.Navigated += (s, e) =>
             {
-                NavigateTo(e.NavigationMode, ParameterSerializationService.Instance.DeserializeParameter(e.Parameter));
+                NavigateTo(e.NavigationMode, e.Parameter);
             };
 
             FrameFacade.BackRequestedAsync = async (e) =>
@@ -110,7 +107,7 @@ public static INavigationService GetForFrame(Frame frame)
                 var dataContext = page.DataContext as INavigable;
                 if (dataContext != null)
                 {
-                    var pageState = FrameFacade.PageStateContainer(page.GetType());
+                    var pageState = FrameFacade.PageStateSettingsService(page.GetType()).Values;
                     await dataContext.OnNavigatedFromAsync(pageState, suspending);
                 }
             }
@@ -145,7 +142,7 @@ public static INavigationService GetForFrame(Frame frame)
                     dataContext.NavigationService = this;
                     dataContext.Dispatcher = Common.WindowWrapper.Current(this)?.Dispatcher;
                     dataContext.SessionState = BootStrapper.Current.SessionState;
-                    var pageState = FrameFacade.PageStateContainer(page.GetType());
+                    var pageState = FrameFacade.PageStateSettingsService(page.GetType()).Values;
                     dataContext.OnNavigatedTo(parameter, mode, pageState);
                 }
             }
@@ -218,7 +215,6 @@ public static INavigationService GetForFrame(Frame frame)
 
             if (!CanNavigateToPage(page, parameter)) return false;
 
-            parameter = ParameterSerializationService.Instance.SerializeParameter(parameter);
             return FrameFacade.Navigate(page, parameter, infoOverride);
         }
 
@@ -232,7 +228,6 @@ public static INavigationService GetForFrame(Frame frame)
             var canceled = await DoNavigatingFromAsync();
             if (canceled) return false;
 
-            parameter = ParameterSerializationService.Instance.SerializeParameter(parameter);
             return FrameFacade.Navigate(page, parameter, infoOverride);
         }
 
@@ -288,20 +283,25 @@ public static INavigationService GetForFrame(Frame frame)
             return FrameFacade.Navigate(page, parameter, infoOverride);
         }
 
+        public event EventHandler<CancelEventArgs<Type>> BeforeSavingNavigation;
         public void SaveNavigation()
         {
             if (CurrentPageType == null)
                 return;
+            var args = new CancelEventArgs<Type>(FrameFacade.CurrentPageType);
+            BeforeSavingNavigation?.Invoke(this, args);
+            if (args.Cancel)
+                return;
 
-            var state = FrameFacade.PageStateContainer(GetType());
+            var state = FrameFacade.PageStateSettingsService(GetType());
             if (state == null)
             {
                 throw new InvalidOperationException("State container is unexpectedly null");
             }
 
-            state["CurrentPageType"] = CurrentPageType.AssemblyQualifiedName;
-            state["CurrentPageParam"] = ParameterSerializationService.Instance.SerializeParameter(CurrentPageParam);
-            state["NavigateState"] = FrameFacade?.GetNavigationState();
+            state.Write<string>("CurrentPageType", CurrentPageType.AssemblyQualifiedName);
+            state.Write<object>("CurrentPageParam", CurrentPageParam);
+            state.Write<string>("NavigateState", FrameFacade?.GetNavigationState());
         }
 
         public event TypedEventHandler<Type> AfterRestoreSavedNavigation;
@@ -309,15 +309,15 @@ public static INavigationService GetForFrame(Frame frame)
         {
             try
             {
-                var state = FrameFacade.PageStateContainer(GetType());
-                if (state == null || !state.Any() || !state.ContainsKey("CurrentPageType"))
+                var state = FrameFacade.PageStateSettingsService(GetType());
+                if (state == null || !state.Exists("CurrentPageType"))
                 {
                     return false;
                 }
 
-                FrameFacade.CurrentPageType = Type.GetType(state["CurrentPageType"].ToString());
-                FrameFacade.CurrentPageParam = ParameterSerializationService.Instance.DeserializeParameter(state["CurrentPageParam"]?.ToString());
-                FrameFacade.SetNavigationState(state["NavigateState"]?.ToString());
+                FrameFacade.CurrentPageType = Type.GetType(state.Read<string>("CurrentPageType"));
+                FrameFacade.CurrentPageParam = state.Read<object>("CurrentPageParam");
+                FrameFacade.SetNavigationState(state.Read<string>("NavigateState"));
                 NavigateTo(NavigationMode.Refresh, FrameFacade.CurrentPageParam);
                 while (Frame.Content == null)
                 {

@@ -75,7 +75,7 @@ namespace Template10.Controls
         public bool? IsChecked
         {
             get { return _isChecked; }
-            internal set { Set(ref _isChecked, value ?? false); }
+            set { Set(ref _isChecked, value ?? false); }
         }
 
         UIElement _content = null;

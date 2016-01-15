@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>Property with Settings backend</Title>
+      <Author>jerry@nixoncorp.com</Author>
+      <Shortcut>T10_PropertySetting</Shortcut>
+    </Header>
+    <Snippet>
+      <Imports>
+        <Import>
+          <Namespace>Template10.Services.SettingsService</Namespace>
+        </Import>
+      </Imports>
+      <Declarations>
+        <Literal Editable="true">
+          <ID>name</ID>
+          <Default>MyProperty</Default>
+        </Literal>
+        <Literal Editable="true">
+          <ID>type</ID>
+          <Default>string</Default>
+        </Literal>
+        <Literal Editable="true">
+          <ID>otherwise</ID>
+          <Default>default($type$)</Default>
+        </Literal>
+        <Object Editable="true">
+          <ID>helper</ID>
+          <Type>Template10.Services.SettingsService.SettingsHelper</Type>
+          <ToolTip>Template10.Services.SettingsService.SettingsHelper</ToolTip>
+          <Default>(new SettingsHelper())</Default>
+        </Object>
+      </Declarations>
+      <Code Language="csharp">
+        <![CDATA[public $type$ $name$
+        {
+            get { return $helper$.Read<$type$>(nameof($name$), default()); }
+            set { $helper$.Write(nameof($name$), value); }
+        }]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

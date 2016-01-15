@@ -130,17 +130,39 @@ namespace Template10.Utils
 
         public bool IsPhone()
         {
-            if (DeviceFamily() != DeviceFamilies.Mobile) return false;
-            var inches = 7; // WindowWrapper.DisplayInformation().DiagonalSizeInInches;
-            return (inches <= 7);
+            if (DeviceFamily() != DeviceFamilies.Mobile)
+                return false;
+            else
+                return DiagonalSize() <= 7;
+
         }
 
         public bool IsContinuum()
         {
-            if (DeviceFamily() != DeviceFamilies.Mobile) return false;
-            if (IsTouch()) return false;
-            var inches = 7; // WindowWrapper.DisplayInformation().DiagonalSizeInInches;
-            return (inches > 7);
+            if (DeviceFamily() != DeviceFamilies.Mobile)
+                return false;
+            if (IsTouch())
+                return false;
+            else
+                return DiagonalSize() > 7;
+        }
+
+        public enum Units { Inches, Centimeters }
+
+        public double DiagonalSize(Units units = Units.Inches)
+        {
+            var di = DisplayInformation.GetForCurrentView();
+            var inches = 7;
+            if (ApiInformation.IsPropertyPresent(typeof(DisplayInformation).ToString(), nameof(di.DiagonalSizeInInches)))
+                return di.DiagonalSizeInInches.Value;
+            switch (units)
+            {
+                case Units.Centimeters:
+                    return inches * 2.54d;
+                case Units.Inches:
+                default:
+                    return inches;
+            }
         }
     }
 }
