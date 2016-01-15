@@ -49,8 +49,10 @@ namespace Template10.Common
 
         #region Debug
 
-        protected bool WriteDebug { get; set; } = false;
-        protected virtual void DebugWrite(string text = null, [CallerMemberName]string caller = null) =>
+        protected static bool WriteDebug { get; set; } = false;
+        public delegate void DebugWriteDelegate(string text = null, [CallerMemberName]string caller = null);
+        public static DebugWriteDelegate DebugWrite { get; set; } = new DebugWriteDelegate(DebugWriteIntneral);
+        static void DebugWriteIntneral(string text = null, [CallerMemberName]string caller = null) =>
             System.Diagnostics.Debug.WriteLineIf(WriteDebug, $"{DateTime.Now.TimeOfDay.ToString()} BootStrapper.{caller} {text}");
 
         #endregion
@@ -533,7 +535,7 @@ namespace Template10.Common
         /// </summary>
         public static AdditionalKinds DetermineStartCause(IActivatedEventArgs args)
         {
-            Current.DebugWrite($"IActivatedEventArgs:{args}");
+            DebugWrite($"IActivatedEventArgs:{args}");
 
             if (args is ToastNotificationActivatedEventArgs)
                 return AdditionalKinds.Toast;
