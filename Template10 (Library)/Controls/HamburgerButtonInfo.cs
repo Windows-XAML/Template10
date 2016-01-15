@@ -92,7 +92,8 @@ namespace Template10.Controls
             set { Set(ref _MaxWidth, value); }
         }
 
-        public override string ToString() => string.Format("{0}({1})", PageType?.ToString() ?? "null", PageParameter?.ToString() ?? "null");
+        public override string ToString() => 
+            string.Format($"IsChecked: {IsChecked} PageType: {PageType}, Parameter: {PageParameter}");
 
         public event RoutedEventHandler Selected;
         internal void RaiseSelected()
