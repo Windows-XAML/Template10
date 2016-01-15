@@ -52,7 +52,7 @@ namespace Template10.Services.NavigationService
             };
             FrameFacade.Navigated += (s, e) =>
             {
-                NavigateTo(e.NavigationMode, e.Parameter);
+               Dispatcher.Dispatch(() => { NavigateTo(e.NavigationMode, e.Parameter); }, 1);
             };
         }
 
