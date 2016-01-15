@@ -11,6 +11,7 @@ namespace Sample.Mvvm
         public virtual void OnNavigatedTo(object parameter, NavigationMode mode, IDictionary<string, object> state) { /* nothing by default */ }
         public virtual Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending) => Task.FromResult<object>(null);
         public virtual void OnNavigatingFrom(Template10.Services.NavigationService.NavigatingEventArgs args) { /* nothing by default */ }
+        public virtual async Task OnNavigatingFromAsync(Template10.Services.NavigationService.NavigatingEventArgs args) => await Task.CompletedTask;
 
         [JsonIgnore]
         public Template10.Services.NavigationService.INavigationService NavigationService { get; set; }
