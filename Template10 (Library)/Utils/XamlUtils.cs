@@ -5,7 +5,7 @@ using Windows.UI.Xaml.Media;
 
 namespace Template10.Utils
 {
-    public static class XamlUtil
+    public static class XamlUtils
     {
         public static T Ancestor<T>(this Control control) where T : Control
         {
