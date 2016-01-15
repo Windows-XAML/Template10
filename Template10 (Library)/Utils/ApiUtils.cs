@@ -5,8 +5,7 @@ namespace Template10.Utils
 {
     public static class ApiUtils
     {
-        static readonly bool isHardwareButtonsApiPresent = ApiInformation.IsTypePresent(@"Windows.Phone.UI.Input.HardwareButtons");
-
-        public static bool IsHardwareButtonsApiPresent => isHardwareButtonsApiPresent;
+        static bool? isHardwareButtonsApiPresent;
+        public static bool IsHardwareButtonsApiPresent => isHardwareButtonsApiPresent ?? (isHardwareButtonsApiPresent = ApiInformation.IsTypePresent(@"Windows.Phone.UI.Input.HardwareButtons")).Value;
     }
 }
