@@ -701,7 +701,7 @@ namespace Template10.Controls
             if (t.FocusState != FocusState.Unfocused)
             {
                 // prevent un-select
-                t.IsChecked = true;
+                t.IsChecked = (i.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
                 IsOpen = false;
                 return;
             }
