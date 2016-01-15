@@ -11,6 +11,18 @@ namespace Template10.Common
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-WindowWrapper
     public class WindowWrapper
     {
+        #region Debug
+
+        static void DebugWrite(string text = null, Services.LoggingService.Severities severity = Services.LoggingService.Severities.Info, [CallerMemberName]string caller = null) =>
+            Services.LoggingService.LoggingService.WriteLine(text, severity, caller: $"WindowWrapper.{caller}");
+
+        #endregion
+
+        public WindowWrapper()
+        {
+            DebugWrite(caller: "Constructor");
+        }
+
         public static WindowWrapper Default() => ActiveWrappers.FirstOrDefault();
 
         public readonly static List<WindowWrapper> ActiveWrappers = new List<WindowWrapper>();

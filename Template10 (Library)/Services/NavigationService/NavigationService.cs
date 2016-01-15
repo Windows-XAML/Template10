@@ -22,10 +22,15 @@ namespace Template10.Services.NavigationService
         object LastNavigationParameter { get; set; }
         string LastNavigationType { get; set; }
 
-public static INavigationService GetForFrame(Frame frame)
-{
-    return WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices).FirstOrDefault(x => x.Frame.Equals(frame));
-}
+        #region Debug
+
+        static void DebugWrite(string text = null, Services.LoggingService.Severities severity = Services.LoggingService.Severities.Info, [CallerMemberName]string caller = null) =>
+            Services.LoggingService.LoggingService.WriteLine(text, severity, caller: $"NavigationService.{caller}");
+
+        #endregion
+
+        public static INavigationService GetForFrame(Frame frame) =>
+            WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices).FirstOrDefault(x => x.Frame.Equals(frame));
 
         public DispatcherWrapper Dispatcher => WindowWrapper.Current(this).Dispatcher;
 
@@ -53,6 +58,8 @@ public static INavigationService GetForFrame(Frame frame)
         // before navigate (cancellable) 
         bool NavigatingFrom(bool suspending)
         {
+            DebugWrite($"Suspending: {suspending}");
+
             var page = FrameFacade.Content as Page;
             if (page != null)
             {
@@ -86,6 +93,8 @@ public static INavigationService GetForFrame(Frame frame)
         // after navigate
         async Task NavigateFromAsync(bool suspending)
         {
+            DebugWrite($"Suspending: {suspending}");
+
             var page = FrameFacade.Content as Page;
             if (page != null)
             {
@@ -101,6 +110,8 @@ public static INavigationService GetForFrame(Frame frame)
 
         void NavigateTo(NavigationMode mode, object parameter)
         {
+            DebugWrite($"Mode: {mode}, Parameter: {parameter}");
+
             LastNavigationParameter = parameter;
             LastNavigationType = FrameFacade.Content.GetType().FullName;
 
@@ -136,6 +147,8 @@ public static INavigationService GetForFrame(Frame frame)
 
         public async Task OpenAsync(Type page, object parameter = null, string title = null, ViewSizePreference size = ViewSizePreference.UseHalf)
         {
+            DebugWrite($"Page: {page}, Parameter: {parameter}, Title: {title}, Size: {size}");
+
             var currentView = ApplicationView.GetForCurrentView();
             title = title ?? currentView.Title;
 
@@ -159,6 +172,8 @@ public static INavigationService GetForFrame(Frame frame)
 
         public bool Navigate(Type page, object parameter = null, NavigationTransitionInfo infoOverride = null)
         {
+            DebugWrite($"Page: {page}, Parameter: {parameter}, NavigationTransitionInfo: {infoOverride}");
+
             if (page == null)
                 throw new ArgumentNullException(nameof(page));
             if (page.FullName.Equals(LastNavigationType))
@@ -199,6 +214,8 @@ public static INavigationService GetForFrame(Frame frame)
         public bool Navigate<T>(T key, object parameter = null, NavigationTransitionInfo infoOverride = null)
             where T : struct, IConvertible
         {
+            DebugWrite($"Key: {key}, Parameter: {parameter}, NavigationTransitionInfo: {infoOverride}");
+
             var keys = Common.BootStrapper.Current.PageKeys<T>();
             if (!keys.ContainsKey(key))
                 throw new KeyNotFoundException(key.ToString());
@@ -212,6 +229,8 @@ public static INavigationService GetForFrame(Frame frame)
         public event EventHandler<CancelEventArgs<Type>> BeforeSavingNavigation;
         public void SaveNavigation()
         {
+            DebugWrite($"Frame: {FrameFacade.FrameId}");
+           
             if (CurrentPageType == null)
                 return;
             var args = new CancelEventArgs<Type>(FrameFacade.CurrentPageType);
@@ -233,6 +252,8 @@ public static INavigationService GetForFrame(Frame frame)
         public event TypedEventHandler<Type> AfterRestoreSavedNavigation;
         public bool RestoreSavedNavigation()
         {
+            DebugWrite($"Frame: {FrameFacade.FrameId}");
+          
             try
             {
                 var state = FrameFacade.PageStateSettingsService(GetType());
@@ -267,6 +288,8 @@ public static INavigationService GetForFrame(Frame frame)
 
         public void ClearCache(bool removeCachedPagesInBackStack = false)
         {
+            DebugWrite($"Frame: {FrameFacade.FrameId}");
+         
             int currentSize = FrameFacade.Frame.CacheSize;
 
             if (removeCachedPagesInBackStack)
@@ -290,12 +313,16 @@ public static INavigationService GetForFrame(Frame frame)
 
         public async Task SuspendingAsync()
         {
+            DebugWrite($"Frame: {FrameFacade.FrameId}");
+
             SaveNavigation();
             await NavigateFromAsync(true);
         }
 
         public void Show(SettingsFlyout flyout, string parameter = null)
         {
+            DebugWrite();
+
             if (flyout == null)
                 throw new ArgumentNullException(nameof(flyout));
             var dataContext = flyout.DataContext as INavigable;
