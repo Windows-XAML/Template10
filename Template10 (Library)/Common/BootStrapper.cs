@@ -49,7 +49,7 @@ namespace Template10.Common
 
         #region Debug
 
-        protected bool WriteDebug { get; set; } = true;
+        protected bool WriteDebug { get; set; } = false;
         protected virtual void DebugWrite(string text = null, [CallerMemberName]string caller = null) =>
             System.Diagnostics.Debug.WriteLineIf(WriteDebug, $"{DateTime.Now.TimeOfDay.ToString()} BootStrapper.{caller} {text}");
 
