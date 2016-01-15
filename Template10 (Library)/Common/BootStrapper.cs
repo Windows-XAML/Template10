@@ -396,6 +396,9 @@ namespace Template10.Common
             // allow the user to do things, even when restoring
             await OnInitializeAsync(e);
 
+            // this "unused" bit is very important because of a quirk in ResourceThemes
+            var unused = Application.Current.Resources["ExtendedSplashBackground"];
+            
             // setup custom titlebar
             foreach (var resource in Application.Current.Resources
                 .Where(x => x.Key.Equals(typeof(Controls.CustomTitleBar))))
