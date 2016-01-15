@@ -44,9 +44,8 @@ namespace Sample.ViewModels
 
         public override async Task OnNavigatingFromAsync(NavigatingEventArgs args)
         {
-           await Task.Delay(1000);
-            args.Cancel = true;
-            //await Task.CompletedTask;
+            args.Cancel = false;
+            await Task.CompletedTask;
         }
     }
 }

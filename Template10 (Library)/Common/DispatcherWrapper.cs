@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Core;
@@ -10,8 +11,16 @@ namespace Template10.Common
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-DispatcherWrapper
     public class DispatcherWrapper : IDispatcherWrapper
     {
+        #region Debug
+
+        static void DebugWrite(string text = null, Services.LoggingService.Severities severity = Services.LoggingService.Severities.Trace, [CallerMemberName]string caller = null) =>
+            Services.LoggingService.LoggingService.WriteLine(text, severity, caller: $"DispatcherWrapper.{caller}");
+
+        #endregion
+
         internal DispatcherWrapper(CoreDispatcher dispatcher)
         {
+            DebugWrite(caller: "Constructor");
             this.dispatcher = dispatcher;
         }
 
