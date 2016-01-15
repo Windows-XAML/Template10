@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using Template10.Common;
 using Template10.Services.KeyboardService;
 using Template10.Services.NavigationService;
@@ -22,13 +23,20 @@ namespace Template10.Controls
 {
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-HamburgerMenu
     [ContentProperty(Name = nameof(PrimaryButtons))]
-    public sealed partial class HamburgerMenu : UserControl, INotifyPropertyChanged 
-    {                   
+    public sealed partial class HamburgerMenu : UserControl, INotifyPropertyChanged
+    {
         [Obsolete("Fixing naming inconsistency; use HamburgerMenu.PaneOpened", true)]
         public event EventHandler PaneOpen;
         public event EventHandler PaneOpened;
         public event EventHandler PaneClosed;
         public event EventHandler<ChangedEventArgs<HamburgerButtonInfo>> SelectedChanged;
+
+        #region Debug
+
+        static void DebugWrite(string text = null, Services.LoggingService.Severities severity = Services.LoggingService.Severities.Info, [CallerMemberName]string caller = null) =>
+            Services.LoggingService.LoggingService.WriteLine(text, severity, caller: $"HamburgerMenu.{caller}");
+
+        #endregion
 
         public HamburgerMenu()
         {
@@ -87,6 +95,8 @@ namespace Template10.Controls
 
         internal void HighlightCorrectButton(Type pageType = null, object pageParam = null)
         {
+            DebugWrite($"PageType: {pageType} PageParam: {pageParam}");
+
             if (!AutoHighlightCorrectButton)
                 return;
             pageType = pageType ?? NavigationService.CurrentPageType;
@@ -104,6 +114,8 @@ namespace Template10.Controls
         internal Mvvm.DelegateCommand HamburgerCommand => _hamburgerCommand ?? (_hamburgerCommand = new Mvvm.DelegateCommand(ExecuteHamburger));
         void ExecuteHamburger()
         {
+            DebugWrite();
+
             IsOpen = !IsOpen;
         }
 
@@ -111,6 +123,8 @@ namespace Template10.Controls
         public Mvvm.DelegateCommand<HamburgerButtonInfo> NavCommand => _navCommand ?? (_navCommand = new Mvvm.DelegateCommand<HamburgerButtonInfo>(ExecuteNav));
         void ExecuteNav(HamburgerButtonInfo commandInfo)
         {
+            DebugWrite($"HamburgerButtonInfo: {commandInfo}");
+
             if (commandInfo == null)
                 throw new NullReferenceException("CommandParameter is not set");
             try
@@ -129,27 +143,27 @@ namespace Template10.Controls
 
         #region VisualStateValues
 
-        public enum VisualStateSettings { Narrow, Normal, Wide, Auto }
-        public VisualStateSettings VisualStateSetting
-        {
-            get { return (VisualStateSettings)GetValue(VisualStateSettingProperty); }
-            set { SetValue(VisualStateSettingProperty, value); }
-        }
-        public static readonly DependencyProperty VisualStateSettingProperty =
-            DependencyProperty.Register("VisualStateSetting", typeof(VisualStateSettings),
-                typeof(HamburgerMenu), new PropertyMetadata(VisualStateSettings.Auto, VisualStateSettingChanged));
-        private static void VisualStateSettingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            switch ((VisualStateSettings)e.NewValue)
-            {
-                case VisualStateSettings.Narrow:
-                case VisualStateSettings.Normal:
-                case VisualStateSettings.Wide:
-                    throw new NotImplementedException();
-                case VisualStateSettings.Auto:
-                    break;
-            }
-        }
+        //public enum VisualStateSettings { Narrow, Normal, Wide, Auto }
+        //public VisualStateSettings VisualStateSetting
+        //{
+        //    get { return (VisualStateSettings)GetValue(VisualStateSettingProperty); }
+        //    set { SetValue(VisualStateSettingProperty, value); }
+        //}
+        //public static readonly DependencyProperty VisualStateSettingProperty =
+        //    DependencyProperty.Register(nameof(VisualStateSetting), typeof(VisualStateSettings),
+        //        typeof(HamburgerMenu), new PropertyMetadata(VisualStateSettings.Auto, VisualStateSettingChanged));
+        //private static void VisualStateSettingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        //{
+        //    switch ((VisualStateSettings)e.NewValue)
+        //    {
+        //        case VisualStateSettings.Narrow:
+        //        case VisualStateSettings.Normal:
+        //        case VisualStateSettings.Wide:
+        //            throw new NotImplementedException();
+        //        case VisualStateSettings.Auto:
+        //            break;
+        //    }
+        //}
 
         public double VisualStateNarrowMinWidth
         {
@@ -180,6 +194,7 @@ namespace Template10.Controls
 
         private static void Changed(string v, DependencyPropertyChangedEventArgs e)
         {
+            DebugWrite($"OldValue: {e.OldValue} NewValue: {e.NewValue}", caller: v);
         }
 
         #endregion
@@ -206,12 +221,16 @@ namespace Template10.Controls
 
         public void RefreshStyles(ApplicationTheme? theme = null)
         {
+            DebugWrite($"Theme: {theme}");
+
             RequestedTheme = theme?.ToElementTheme() ?? RequestedTheme;
             RefreshStyles(AccentColor);
         }
 
         public void RefreshStyles(Color? color = null)
         {
+            DebugWrite($"Color: {color}");
+
             if (color == null)
             {
                 // manually setting the brushes is a way of ignoring the themes
@@ -412,6 +431,8 @@ namespace Template10.Controls
                 { (d as HamburgerMenu).SetSelected((HamburgerButtonInfo)e.OldValue, (HamburgerButtonInfo)e.NewValue); }));
         private void SetSelected(HamburgerButtonInfo previous, HamburgerButtonInfo value)
         {
+            DebugWrite($"OldValue: {previous}, NewValue: {value}");
+
             if (previous != null)
                 IsOpen = false;
 
@@ -459,6 +480,8 @@ namespace Template10.Controls
             }
             set
             {
+                DebugWrite($"Value: {value}");
+
                 var open = ShellSplitView.IsPaneOpen;
                 if (open == value)
                     return;
@@ -503,6 +526,8 @@ namespace Template10.Controls
             get { return _navigationService; }
             set
             {
+                DebugWrite($"Value: {value}");
+
                 _navigationService = value;
                 ShellSplitView.Content = NavigationService.Frame;
 
@@ -552,6 +577,8 @@ namespace Template10.Controls
                 typeof(HamburgerMenu), new PropertyMetadata(false, (d, e) => (d as HamburgerMenu).UpdateFullScreen()));
         private void UpdateFullScreen(bool? manual = null)
         {
+            DebugWrite($"Mavnual: {manual}, IsFullScreen: {IsFullScreen}");
+
             var frame = NavigationService?.Frame;
             if (manual ?? IsFullScreen)
             {
@@ -635,6 +662,8 @@ namespace Template10.Controls
         Dictionary<RadioButton, HamburgerButtonInfo> _navButtons = new Dictionary<RadioButton, HamburgerButtonInfo>();
         void NavButton_Loaded(object sender, RoutedEventArgs e)
         {
+            DebugWrite($"Info: {(sender as FrameworkElement).DataContext}");
+          
             // add this radio to the list
             var r = sender as RadioButton;
             var i = r.DataContext as HamburgerButtonInfo;
@@ -644,11 +673,15 @@ namespace Template10.Controls
 
         private void PaneContent_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
+            DebugWrite();
+
             HamburgerCommand.Execute(null);
         }
 
         private void NavButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
+            DebugWrite($"Info: {(sender as FrameworkElement).DataContext}");
+
             var radio = sender as RadioButton;
             var info = radio.DataContext as HamburgerButtonInfo;
             info.RaiseTapped(e);
@@ -659,6 +692,8 @@ namespace Template10.Controls
 
         private void NavButton_RightTapped(object sender, Windows.UI.Xaml.Input.RightTappedRoutedEventArgs e)
         {
+            DebugWrite($"Info: {(sender as FrameworkElement).DataContext}");
+
             var radio = sender as RadioButton;
             var info = radio.DataContext as HamburgerButtonInfo;
             info.RaiseRightTapped(e);
@@ -669,14 +704,14 @@ namespace Template10.Controls
 
         private void NavButton_Holding(object sender, Windows.UI.Xaml.Input.HoldingRoutedEventArgs e)
         {
+            DebugWrite($"Info: {(sender as FrameworkElement).DataContext}");
+
             var radio = sender as RadioButton;
             var info = radio.DataContext as HamburgerButtonInfo;
             info.RaiseHolding(e);
 
             e.Handled = true;
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         StackPanel _SecondaryButtonStackPanel;
         private void SecondaryButtonStackPanel_Loaded(object sender, RoutedEventArgs e)
@@ -686,6 +721,8 @@ namespace Template10.Controls
 
         private void NavButtonChecked(object sender, RoutedEventArgs e)
         {
+            DebugWrite($"Info: {(sender as FrameworkElement).DataContext}");
+
             var t = sender as ToggleButton;
             var i = t.DataContext as HamburgerButtonInfo;
             t.IsChecked = (i.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
@@ -695,6 +732,8 @@ namespace Template10.Controls
 
         private void NavButtonUnchecked(object sender, RoutedEventArgs e)
         {
+            DebugWrite($"Info: {(sender as FrameworkElement).DataContext}");
+
             var t = sender as ToggleButton;
             var i = t.DataContext as HamburgerButtonInfo;
 

@@ -49,11 +49,8 @@ namespace Template10.Common
 
         #region Debug
 
-        protected static bool WriteDebug { get; set; } = false;
-        public delegate void DebugWriteDelegate(string text = null, [CallerMemberName]string caller = null);
-        public static DebugWriteDelegate DebugWrite { get; set; } = new DebugWriteDelegate(DebugWriteIntneral);
-        static void DebugWriteIntneral(string text = null, [CallerMemberName]string caller = null) =>
-            System.Diagnostics.Debug.WriteLineIf(WriteDebug, $"{DateTime.Now.TimeOfDay.ToString()} BootStrapper.{caller} {text}");
+        static void DebugWrite(string text = null, Services.LoggingService.Severities severity = Services.LoggingService.Severities.Info, [CallerMemberName]string caller = null) =>
+            Services.LoggingService.LoggingService.WriteLine(text, severity, caller: $"BootStrapper.{caller}");
 
         #endregion
 
@@ -83,11 +80,11 @@ namespace Template10.Common
                         // date the cache (which marks the date/time it was suspended)
                         nav.FrameFacade.SetFrameState(CacheDateKey, DateTime.Now.ToString());
                         // call view model suspend (OnNavigatedfrom)
-                        DebugWrite($"Nav:{nav}", "Nav.SuspendingAsync");
+                        DebugWrite($"Nav:{nav}", caller: "Nav.SuspendingAsync");
                         await nav.SuspendingAsync();
                     }
                     // call system-level suspend
-                    DebugWrite("Calling", "OnSuspendingAsync");
+                    DebugWrite("Calling", caller: "OnSuspendingAsync");
                     await OnSuspendingAsync(s, e);
                 }
                 catch { }
@@ -151,12 +148,12 @@ namespace Template10.Common
             // sometimes activate requires a frame to be built
             if (Window.Current.Content == null)
             {
-                DebugWrite("Calling", "InitializeFrameAsync");
+                DebugWrite("Calling", caller: "InitializeFrameAsync");
                 await InitializeFrameAsync(e);
             }
 
             // onstart is shared with activate and launch
-            DebugWrite("Calling", "OnStartAsync");
+            DebugWrite("Calling", caller: "OnStartAsync");
             await OnStartAsync(StartKind.Activate, e);
 
             // ensure active (this will hide any custom splashscreen)
@@ -220,7 +217,7 @@ namespace Template10.Common
                         if (DetermineStartCause(e) == AdditionalKinds.Primary)
                         {
                             restored = NavigationService.RestoreSavedNavigation();
-                            DebugWrite($"Restored:{restored}", "Nav.Restored");
+                            DebugWrite($"Restored:{restored}", caller: "Nav.Restored");
                         }
                         break;
                     }
@@ -232,7 +229,7 @@ namespace Template10.Common
 
             if (!restored)
             {
-                DebugWrite("Calling", "OnStartAsync");
+                DebugWrite("Calling", caller: "OnStartAsync");
                 await OnStartAsync(StartKind.Launch, e);
             }
 
