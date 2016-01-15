@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>Untyped delegate command</Title>
+      <Author>jerry@nixoncorp.com</Author>
+      <Shortcut>T10_Command</Shortcut>
+    </Header>
+    <Snippet>
+      <Imports>
+        <Import>
+          <Namespace>Template10.Mvvm</Namespace>
+        </Import>
+      </Imports>
+      <Declarations>
+        <Literal Editable="true">
+          <ID>name</ID>
+          <Default>MyCommand</Default>
+        </Literal>
+      </Declarations>
+      <Code Language="csharp">
+        <![CDATA[DelegateCommand _$name$;
+        public DelegateCommand $name$
+           => _$name$ ?? new DelegateCommand($name$Execute, $name$CanExecute);
+        bool $name$CanExecute() => true;
+        void $name$Execute()
+        {
+            throw new NotImplementedException();
+        }]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>
