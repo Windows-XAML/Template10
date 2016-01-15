@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Template10.Services.NavigationService;
 using Windows.Graphics.Display;
 using Windows.UI.ViewManagement;
