@@ -99,13 +99,17 @@ namespace Template10.Controls
 
             if (!AutoHighlightCorrectButton)
                 return;
+
             pageType = pageType ?? NavigationService.CurrentPageType;
+            var buttons = _navButtons
+                .Where(x => Equals(x.Value.PageType, pageType));
+
             pageParam = pageParam ?? NavigationService.CurrentPageParam;
-            var values = _navButtons.Select(x => x.Value);
-            var button = values.FirstOrDefault(x => x.PageType == pageType
-                && (x.PageParameter == null
-                || x.PageParameter.Equals(pageParam)));
-            Selected = button;
+            buttons = buttons
+                .Where(x => Equals(x.Value.PageParameter, null) || Equals(x.Value.PageParameter, pageParam));
+
+            Selected = buttons
+                .Select(x => x.Value).FirstOrDefault();
         }
 
         #region commands
@@ -127,16 +131,9 @@ namespace Template10.Controls
 
             if (commandInfo == null)
                 throw new NullReferenceException("CommandParameter is not set");
-            try
-            {
-                if (commandInfo.PageType != null)
-                    Selected = commandInfo;
-            }
-            finally
-            {
-                if (commandInfo.ClearHistory)
-                    NavigationService.ClearHistory();
-            }
+
+            if (commandInfo.PageType != null)
+                Selected = commandInfo;
         }
 
         #endregion
@@ -436,17 +433,32 @@ namespace Template10.Controls
             if (previous != null)
                 IsOpen = false;
 
-            // undo previous
-            if (previous != null && previous != value)
+            // reset all, except selected
+            _navButtons
+                .Where(x => x.Value != value)
+                .ForEach(x =>
+                {
+                    x.Value.IsChecked = false;
+                });
+
+            // navigate
+            if (value?.PageType != null)
             {
-                previous.RaiseUnselected();
+                if (NavigationService.Navigate(value.PageType, value?.PageParameter))
+                {
+                    if (value.ClearHistory)
+                        NavigationService.ClearHistory();
+                }
+                else
+                {
+                    return;
+                }
             }
 
-            // reset all
-            var values = _navButtons.Select(x => x.Value);
-            foreach (var item in values.Where(x => x != value))
+            // undo previous
+            if (previous?.IsChecked ?? true && previous != value)
             {
-                item.IsChecked = false;
+                previous?.RaiseUnselected();
             }
 
             // that's it if null
@@ -462,11 +474,6 @@ namespace Template10.Controls
                     value.RaiseSelected();
                 }
             }
-
-            // navigate only to new pages
-            if (value.PageType == null) return;
-            if (value.PageType.Equals(NavigationService.CurrentPageType) && (value.PageParameter?.Equals(NavigationService.CurrentPageParam) ?? false)) return;
-            NavigationService.Navigate(value.PageType, value.PageParameter);
         }
 
         public bool IsOpen
@@ -663,7 +670,7 @@ namespace Template10.Controls
         void NavButton_Loaded(object sender, RoutedEventArgs e)
         {
             DebugWrite($"Info: {(sender as FrameworkElement).DataContext}");
-          
+
             // add this radio to the list
             var r = sender as RadioButton;
             var i = r.DataContext as HamburgerButtonInfo;
@@ -719,34 +726,64 @@ namespace Template10.Controls
             _SecondaryButtonStackPanel = sender as StackPanel;
         }
 
+        bool _insideOperation = false;
+
         private void NavButtonChecked(object sender, RoutedEventArgs e)
         {
             DebugWrite($"Info: {(sender as FrameworkElement).DataContext}");
 
-            var t = sender as ToggleButton;
-            var i = t.DataContext as HamburgerButtonInfo;
-            t.IsChecked = (i.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
-            i.RaiseChecked(e);
-            HighlightCorrectButton();
+            if (_insideOperation)
+                return;
+            else
+                _insideOperation = true;
+
+            try
+            {
+                var t = sender as ToggleButton;
+                var i = t.DataContext as HamburgerButtonInfo;
+                t.IsChecked = (i.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
+
+                if (t.IsChecked ?? true)
+                    HighlightCorrectButton();
+                t.IsChecked = Equals(i, Selected);
+                if (t.IsChecked ?? true)
+                    i.RaiseChecked(e);
+            }
+            finally
+            {
+                _insideOperation = false;
+            }
         }
 
         private void NavButtonUnchecked(object sender, RoutedEventArgs e)
         {
             DebugWrite($"Info: {(sender as FrameworkElement).DataContext}");
 
-            var t = sender as ToggleButton;
-            var i = t.DataContext as HamburgerButtonInfo;
-
-            if (t.FocusState != FocusState.Unfocused)
-            {
-                // prevent un-select
-                t.IsChecked = (i.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
-                IsOpen = false;
+            if (_insideOperation)
                 return;
-            }
+            else
+                _insideOperation = true;
 
-            i.RaiseUnchecked(e);
-            HighlightCorrectButton();
+            try
+            {
+                var t = sender as ToggleButton;
+                var i = t.DataContext as HamburgerButtonInfo;
+
+                if (t.FocusState != FocusState.Unfocused)
+                {
+                    // prevent un-select
+                    t.IsChecked = (i.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
+                    IsOpen = false;
+                    return;
+                }
+
+                i.RaiseUnchecked(e);
+                HighlightCorrectButton();
+            }
+            finally
+            {
+                _insideOperation = false;
+            }
         }
 
         public bool AutoHighlightCorrectButton

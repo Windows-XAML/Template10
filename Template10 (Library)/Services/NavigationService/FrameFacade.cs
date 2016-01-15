@@ -99,7 +99,17 @@ namespace Template10.Services.NavigationService
 
         public string FrameId { get; set; } = string.Empty;
 
-        public bool Navigate(Type page, object parameter, NavigationTransitionInfo infoOverride) => Frame.Navigate(page, parameter, infoOverride);
+        public bool Navigate(Type page, object parameter, NavigationTransitionInfo infoOverride)
+        {
+            if (Frame.Navigate(page, parameter, infoOverride))
+            {
+                return page.Equals(Frame.Content?.GetType());
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         public void SetNavigationState(string state) { Frame.SetNavigationState(state); }
 
