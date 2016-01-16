@@ -276,6 +276,7 @@ namespace Template10.Controls
 
                 switch (RequestedTheme)
                 {
+                    case ElementTheme.Default:
                     case ElementTheme.Light:
                         HamburgerBackground = color?.ToSolidColorBrush();
                         HamburgerForeground = Colors.White.ToSolidColorBrush();
@@ -289,7 +290,6 @@ namespace Template10.Controls
                         NavButtonCheckedForeground = Colors.White.ToSolidColorBrush();
                         SecondarySeparator = PaneBorderBrush = Colors.Gainsboro.Darken(ColorUtils.Accents.Plus40).ToSolidColorBrush();
                         break;
-                    case ElementTheme.Default:
                     case ElementTheme.Dark:
                         HamburgerBackground = color?.ToSolidColorBrush();
                         HamburgerForeground = Colors.White.ToSolidColorBrush();
