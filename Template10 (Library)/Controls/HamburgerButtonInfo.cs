@@ -75,7 +75,7 @@ namespace Template10.Controls
         public bool? IsChecked
         {
             get { return _isChecked; }
-            internal set { Set(ref _isChecked, value ?? false); }
+            set { Set(ref _isChecked, value ?? false); }
         }
 
         UIElement _content = null;
@@ -92,7 +92,8 @@ namespace Template10.Controls
             set { Set(ref _MaxWidth, value); }
         }
 
-        public override string ToString() => string.Format("{0}({1})", PageType?.ToString() ?? "null", PageParameter?.ToString() ?? "null");
+        public override string ToString() => 
+            string.Format($"IsChecked: {IsChecked} PageType: {PageType}, Parameter: {PageParameter}");
 
         public event RoutedEventHandler Selected;
         internal void RaiseSelected()

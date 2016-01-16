@@ -22,8 +22,6 @@ namespace Sample.ViewModels
 
         public override void OnNavigatedTo(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
-            Views.Shell.HamburgerMenu.IsFullScreen = true;
-
             if (state.ContainsKey(nameof(Value)))
             {
                 Value = state[nameof(Value)]?.ToString();
@@ -37,12 +35,12 @@ namespace Sample.ViewModels
 
         public override Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending)
         {
-            Views.Shell.HamburgerMenu.IsFullScreen = false;
-
             if (suspending)
+            {
                 state[nameof(Value)] = Value;
-			return Task.CompletedTask;
-		}
+            }
+            return Task.CompletedTask;
+        }
 
         public override void OnNavigatingFrom(NavigatingEventArgs args)
         {

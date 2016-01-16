@@ -133,7 +133,7 @@ namespace Template10.Utils
             if (DeviceFamily() != DeviceFamilies.Mobile)
                 return false;
             else
-                return DiagonalSizeInInches() <= 7;
+                return DiagonalSize() <= 7;
 
         }
 
@@ -144,19 +144,24 @@ namespace Template10.Utils
             if (IsTouch())
                 return false;
             else
-                return DiagonalSizeInInches() > 7;
+                return DiagonalSize() > 7;
         }
 
-        public double DiagonalSizeInInches()
+        public enum Units { Inches, Centimeters }
+
+        public double DiagonalSize(Units units = Units.Inches)
         {
             var di = DisplayInformation.GetForCurrentView();
+            var inches = 7;
             if (ApiInformation.IsPropertyPresent(typeof(DisplayInformation).ToString(), nameof(di.DiagonalSizeInInches)))
-            {
                 return di.DiagonalSizeInInches.Value;
-            }
-            else
+            switch (units)
             {
-                return 7;
+                case Units.Centimeters:
+                    return inches * 2.54d;
+                case Units.Inches:
+                default:
+                    return inches;
             }
         }
     }
