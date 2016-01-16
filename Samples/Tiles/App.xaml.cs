@@ -27,7 +27,7 @@ namespace Sample
                     NavigationService.Navigate(typeof(Views.MainPage));
                     break;
             }
-            return Task.FromResult<object>(null);
-        }
+			return Task.CompletedTask;
+		}
     }
 }
