@@ -50,9 +50,9 @@ namespace Template10.Services.NavigationService
                     await NavigateFromAsync(false);
                 }
             };
-            FrameFacade.Navigated += (s, e) =>
+            FrameFacade.Navigated += async (s, e) =>
             {
-               Dispatcher.Dispatch(() => { NavigateTo(e.NavigationMode, e.Parameter); }, 1);
+                await WindowWrapper.Current().Dispatcher.DispatchAsync(() => { NavigateTo(e.NavigationMode, e.Parameter); }, 1);
             };
         }
 
@@ -231,7 +231,7 @@ namespace Template10.Services.NavigationService
         public void SaveNavigation()
         {
             DebugWrite($"Frame: {FrameFacade.FrameId}");
-           
+
             if (CurrentPageType == null)
                 return;
             var args = new CancelEventArgs<Type>(FrameFacade.CurrentPageType);
@@ -254,7 +254,7 @@ namespace Template10.Services.NavigationService
         public bool RestoreSavedNavigation()
         {
             DebugWrite($"Frame: {FrameFacade.FrameId}");
-          
+
             try
             {
                 var state = FrameFacade.PageStateSettingsService(GetType());
@@ -290,7 +290,7 @@ namespace Template10.Services.NavigationService
         public void ClearCache(bool removeCachedPagesInBackStack = false)
         {
             DebugWrite($"Frame: {FrameFacade.FrameId}");
-         
+
             int currentSize = FrameFacade.Frame.CacheSize;
 
             if (removeCachedPagesInBackStack)
