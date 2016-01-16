@@ -393,8 +393,7 @@ namespace Template10.Controls
         {
             DebugWrite($"OldValue: {previous}, NewValue: {value}");
 
-            if (previous != null)
-                IsOpen = false;
+            IsOpen = false;
 
             // reset all, except selected
             _navButtons
