@@ -9,7 +9,6 @@ using Windows.ApplicationModel.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
@@ -52,7 +51,8 @@ namespace Template10.Services.NavigationService
             };
             FrameFacade.Navigated += async (s, e) =>
             {
-                await WindowWrapper.Current().Dispatcher.DispatchAsync(() => { NavigateTo(e.NavigationMode, e.Parameter, Frame.Content); }, 1);
+                var parameter = SerializationService.SerializationService.Deserialize(e.Parameter);
+                await WindowWrapper.Current().Dispatcher.DispatchAsync(() => { NavigateTo(e.NavigationMode, parameter, Frame.Content); }, 1);
             };
         }
 
@@ -188,6 +188,7 @@ namespace Template10.Services.NavigationService
                     return false;
             }
 
+            parameter = SerializationService.SerializationService.Serialize(parameter);
             return FrameFacade.Navigate(page, parameter, infoOverride);
         }
 
