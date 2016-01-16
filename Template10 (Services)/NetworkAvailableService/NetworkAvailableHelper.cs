@@ -24,14 +24,13 @@ namespace Template10.Services.NetworkAvailableService
 
         public Action<bool> AvailabilityChanged { get; set; }
 
-        public async Task<bool> IsInternetAvailable()
+        public Task<bool> IsInternetAvailable()
         {
-            await Task.CompletedTask;
             var _Profile = Windows.Networking.Connectivity.NetworkInformation.GetInternetConnectionProfile();
             if (_Profile == null)
-                return false;
+                return Task.FromResult<bool>(false);
             var net = Windows.Networking.Connectivity.NetworkConnectivityLevel.InternetAccess;
-            return _Profile.GetNetworkConnectivityLevel().Equals(net);
+            return Task.FromResult<bool>(_Profile.GetNetworkConnectivityLevel().Equals(net));
         }
     }
 }

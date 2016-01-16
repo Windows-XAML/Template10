@@ -11,10 +11,10 @@ namespace Template10.Mvvm
     public abstract class ViewModelBase : BindableBase, INavigable
     {
         public virtual void OnNavigatedTo(object parameter, NavigationMode mode, IDictionary<string, object> state) { /* nothing by default */ }
-        public virtual async Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending)
+        public virtual Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending)
         {
-            await Task.CompletedTask;
-        }
+			return Task.CompletedTask;
+		}
         public virtual void OnNavigatingFrom(Services.NavigationService.NavigatingEventArgs args) { /* nothing by default */ }
 
         [JsonIgnore]

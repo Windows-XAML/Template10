@@ -13,10 +13,10 @@ namespace Sample
             InitializeComponent();
         }
 
-        public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
+        public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
             NavigationService.Navigate(typeof(Views.MainPage));
-            await Task.CompletedTask;
-        }
+			return Task.CompletedTask;
+		}
     }
 }
