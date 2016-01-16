@@ -52,7 +52,7 @@ namespace Template10.Services.NavigationService
             };
             FrameFacade.Navigated += async (s, e) =>
             {
-                await WindowWrapper.Current().Dispatcher.DispatchAsync(() => { NavigateTo(e.NavigationMode, e.Parameter); }, 1);
+                await WindowWrapper.Current().Dispatcher.DispatchAsync(() => { NavigateTo(e.NavigationMode, e.Parameter, Frame.Content); }, 1);
             };
         }
 
@@ -109,19 +109,21 @@ namespace Template10.Services.NavigationService
             }
         }
 
-        void NavigateTo(NavigationMode mode, object parameter)
+        void NavigateTo(NavigationMode mode, object parameter, object frameContent = null)
         {
-            DebugWrite($"Mode: {mode}, Parameter: {parameter}");
+            DebugWrite($"Mode: {mode}, Parameter: {parameter} FrameContent: {frameContent}");
+
+            frameContent = frameContent ?? Frame.Content;
 
             LastNavigationParameter = parameter;
-            LastNavigationType = FrameFacade.Content.GetType().FullName;
+            LastNavigationType = frameContent.GetType().FullName;
 
             if (mode == NavigationMode.New)
             {
                 FrameFacade.ClearFrameState();
             }
 
-            var page = FrameFacade.Content as Page;
+            var page = frameContent as Page;
             if (page != null)
             {
                 if (page.DataContext == null)
