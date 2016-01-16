@@ -751,51 +751,64 @@ namespace Template10.Controls
             DependencyProperty.Register(nameof(AutoHighlightCorrectButton), typeof(bool),
                 typeof(HamburgerMenu), new PropertyMetadata(true));
 
-        #region  TapToOpen
+        #region  OpenClose
 
-        public bool TapToOpenCloseEnabled
+        [Flags]
+        public enum OpenCloseModes { None = 1, Auto = 2, Tap = 4, Swipe = 5 }
+
+        public OpenCloseModes OpenCloseMode
         {
-            get { return (bool)GetValue(TapToOpenCloseEnabledProperty); }
-            set { SetValue(TapToOpenCloseEnabledProperty, value); }
+            get { return (OpenCloseModes)GetValue(OpenCloseModeProperty); }
+            set { SetValue(OpenCloseModeProperty, value); }
         }
-        public static readonly DependencyProperty TapToOpenCloseEnabledProperty =
-            DependencyProperty.Register(nameof(TapToOpenCloseEnabled), typeof(bool), typeof(HamburgerMenu), new PropertyMetadata(false));
+        public static readonly DependencyProperty OpenCloseModeProperty =
+            DependencyProperty.Register(nameof(OpenCloseMode), typeof(OpenCloseModes),
+                typeof(HamburgerMenu), new PropertyMetadata(OpenCloseModes.Auto));
 
         private void PaneContent_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            DebugWrite($"TapToOpenCloseEnabled {TapToOpenCloseEnabled}");
+            DebugWrite($"OpenCloseMode {OpenCloseMode}");
 
-            if (TapToOpenCloseEnabled)
+            if (OpenCloseMode.HasFlag(OpenCloseModes.None))
+                return;
+            else if (OpenCloseMode.HasFlag(OpenCloseModes.Auto))
             {
-                HamburgerCommand.Execute(null);
+                switch (e.PointerDeviceType)
+                {
+                    case Windows.Devices.Input.PointerDeviceType.Touch:
+                        return;
+                }
             }
+            else if (OpenCloseMode.HasFlag(OpenCloseModes.Tap))
+                return;
+
+            HamburgerCommand.Execute(null);
         }
-
-        #endregion
-        
-        #region SwipeToOpen
-
-        public bool SwipeToOpenCloseEnabled
-        {
-            get { return (bool)GetValue(SwipeToOpenCloseEnabledProperty); }
-            set { SetValue(SwipeToOpenCloseEnabledProperty, value); }
-        } 
-        public static readonly DependencyProperty SwipeToOpenCloseEnabledProperty =
-            DependencyProperty.Register(nameof(SwipeToOpenCloseEnabled), typeof(bool), typeof(HamburgerMenu), new PropertyMetadata(true));
 
         private void PaneContent_ManipulationDelta(object sender, Windows.UI.Xaml.Input.ManipulationDeltaRoutedEventArgs e)
         {
-            DebugWrite($"SwipeToOpenCloseEnabled {SwipeToOpenCloseEnabled}");
+            DebugWrite($"OpenCloseMode {OpenCloseMode}");
 
-            if (SwipeToOpenCloseEnabled)
+            if (OpenCloseMode.HasFlag(OpenCloseModes.None))
+                return;
+            else if (OpenCloseMode.HasFlag(OpenCloseModes.Auto))
             {
-                var threshord = 24;
-                var delta = e.Cumulative.Translation.X;
-                if (delta < -threshord)
-                    IsOpen = false;
-                else if (delta > threshord)
-                    IsOpen = true;
+                switch (e.PointerDeviceType)
+                {
+                    case Windows.Devices.Input.PointerDeviceType.Pen:
+                    case Windows.Devices.Input.PointerDeviceType.Mouse:
+                        return;
+                }
             }
+            else if (!OpenCloseMode.HasFlag(OpenCloseModes.Swipe))
+                return;
+
+            var threhold = 24;
+            var delta = e.Cumulative.Translation.X;
+            if (delta < -threhold)
+                IsOpen = false;
+            else if (delta > threhold)
+                IsOpen = true;
         }
 
         #endregion
