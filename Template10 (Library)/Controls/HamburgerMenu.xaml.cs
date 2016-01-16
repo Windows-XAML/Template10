@@ -406,7 +406,7 @@ namespace Template10.Controls
             // navigate
             if (value?.PageType != null)
             {
-                if (NavigationService.Navigate(value.PageType, value?.PageParameter))
+                if (NavigationService.Navigate(value.PageType, value?.PageParameter, value?.NavigationTransitionInfo))
                 {
                     if (value.ClearHistory)
                         NavigationService.ClearHistory();
