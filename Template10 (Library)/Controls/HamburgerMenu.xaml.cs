@@ -751,7 +751,7 @@ namespace Template10.Controls
             DependencyProperty.Register(nameof(AutoHighlightCorrectButton), typeof(bool),
                 typeof(HamburgerMenu), new PropertyMetadata(true));
 
-        #region  TapOpenCloseEnabled
+        #region  TapToOpen
 
         public bool TapToOpenCloseEnabled
         {
@@ -773,7 +773,7 @@ namespace Template10.Controls
 
         #endregion
         
-        #region Swipe
+        #region SwipeToOpen
 
         public bool SwipeToOpenCloseEnabled
         {
