@@ -14,20 +14,22 @@ namespace Template10.Services.KeyboardService
             _helper = new KeyboardHelper();
             _helper.KeyDown = (e) =>
             {
-                // Debug.WriteLine($"{e}");
+                Debug.WriteLine($"{e}");
 
                 e.Handled = true;
 
                 // use this to hide and show the menu
                 if (e.WindowsKey && e.Character.ToString().ToLower().Equals("z"))
-                    AfterWindowZGesture?.Invoke();
-
+					//AfterWindowZGesture?.Invoke();
+					Debug.WriteLine("WindowsKey + z fired"); 
                 // use this to place focus in search box
                 else if (e.OnlyControl && e.Character.ToString().ToLower().Equals("e"))
                     AfterControlEGesture?.Invoke();
-
-                // use this to nav back
-                else if (e.VirtualKey == Windows.System.VirtualKey.GoBack)
+				// use this to open menu
+				else if (e.OnlyControl && e.Character.ToString().ToLower().Equals("m"))
+					AfterWindowZGesture?.Invoke();
+				// use this to nav back
+				else if (e.VirtualKey == Windows.System.VirtualKey.GoBack)
                     AfterBackGesture?.Invoke();
                 else if (e.VirtualKey == Windows.System.VirtualKey.NavigationLeft)
                     AfterBackGesture?.Invoke();

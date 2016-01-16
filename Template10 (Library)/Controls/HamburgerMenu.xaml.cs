@@ -6,12 +6,15 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using Template10.Automation;
 using Template10.Common;
 using Template10.Services.KeyboardService;
 using Template10.Services.NavigationService;
 using Template10.Utils;
 using Windows.UI;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Automation;
+using Windows.UI.Xaml.Automation.Peers;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
@@ -630,15 +633,39 @@ namespace Template10.Controls
             DependencyProperty.Register(nameof(HeaderContent), typeof(UIElement),
                 typeof(HamburgerMenu), null);
 
-        #endregion
+		#endregion
 
-        Dictionary<RadioButton, HamburgerButtonInfo> _navButtons = new Dictionary<RadioButton, HamburgerButtonInfo>();
-        void NavButton_Loaded(object sender, RoutedEventArgs e)
+		#region "Automation"
+
+		//
+		//protected override AutomationPeer OnCreateAutomationPeer()
+		//{
+		//	return new CustomControlAutomationPeer(this);
+		//}
+
+		#endregion
+
+		Dictionary<RadioButton, HamburgerButtonInfo> _navButtons = new Dictionary<RadioButton, HamburgerButtonInfo>();
+		int counter = 0;
+
+		void NavButton_Loaded(object sender, RoutedEventArgs e)
         {
             // add this radio to the list
             var r = sender as RadioButton;
             var i = r.DataContext as HamburgerButtonInfo;
-            _navButtons.Add(r, i);
+
+			counter++;
+			// Need to set a name property somehow so narrator says the Control text instead of the 
+			// button type, but this all depends on the controls
+			AutomationProperties.SetAutomationId(r, "RadioButton" + counter);
+			AutomationProperties.SetName(r, i.ButtonType.ToString());
+			AutomationProperties.SetHelpText(r, "Click to select the page");
+
+			Debug.WriteLine("AutomationId : " + AutomationProperties.GetAutomationId(r));
+			Debug.WriteLine("Name : " + AutomationProperties.GetName(r));
+			Debug.WriteLine("HelpText : " + AutomationProperties.GetHelpText(r));
+
+			_navButtons.Add(r, i);
             HighlightCorrectButton();
         }
 
