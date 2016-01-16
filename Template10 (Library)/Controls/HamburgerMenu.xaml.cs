@@ -11,6 +11,7 @@ using Template10.Common;
 using Template10.Services.KeyboardService;
 using Template10.Services.NavigationService;
 using Template10.Utils;
+using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -640,13 +641,6 @@ namespace Template10.Controls
             HighlightCorrectButton();
         }
 
-        private void PaneContent_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
-        {
-            DebugWrite();
-
-            HamburgerCommand.Execute(null);
-        }
-
         private void NavButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
             DebugWrite($"Info: {(sender as FrameworkElement).DataContext}");
@@ -757,6 +751,53 @@ namespace Template10.Controls
             DependencyProperty.Register(nameof(AutoHighlightCorrectButton), typeof(bool),
                 typeof(HamburgerMenu), new PropertyMetadata(true));
 
+        #region  TapOpenCloseEnabled
 
+        public bool TapToOpenCloseEnabled
+        {
+            get { return (bool)GetValue(TapToOpenCloseEnabledProperty); }
+            set { SetValue(TapToOpenCloseEnabledProperty, value); }
+        }
+        public static readonly DependencyProperty TapToOpenCloseEnabledProperty =
+            DependencyProperty.Register(nameof(TapToOpenCloseEnabled), typeof(bool), typeof(HamburgerMenu), new PropertyMetadata(false));
+
+        private void PaneContent_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            DebugWrite($"TapToOpenCloseEnabled {TapToOpenCloseEnabled}");
+
+            if (TapToOpenCloseEnabled)
+            {
+                HamburgerCommand.Execute(null);
+            }
+        }
+
+        #endregion
+        
+        #region Swipe
+
+        public bool SwipeToOpenCloseEnabled
+        {
+            get { return (bool)GetValue(SwipeToOpenCloseEnabledProperty); }
+            set { SetValue(SwipeToOpenCloseEnabledProperty, value); }
+        } 
+        public static readonly DependencyProperty SwipeToOpenCloseEnabledProperty =
+            DependencyProperty.Register(nameof(SwipeToOpenCloseEnabled), typeof(bool), typeof(HamburgerMenu), new PropertyMetadata(true));
+
+        private void PaneContent_ManipulationDelta(object sender, Windows.UI.Xaml.Input.ManipulationDeltaRoutedEventArgs e)
+        {
+            DebugWrite($"SwipeToOpenCloseEnabled {SwipeToOpenCloseEnabled}");
+
+            if (SwipeToOpenCloseEnabled)
+            {
+                var threshord = 24;
+                var delta = e.Cumulative.Translation.X;
+                if (delta < -threshord)
+                    IsOpen = false;
+                else if (delta > threshord)
+                    IsOpen = true;
+            }
+        }
+
+        #endregion
     }
 }

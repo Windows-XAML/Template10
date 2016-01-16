@@ -270,6 +270,7 @@
             <SplitView.Pane>
 
                 <Grid x:Name="PaneContent" Margin="0,48,0,0"
+                      ManipulationMode="TranslateX" ManipulationDelta="PaneContent_ManipulationDelta" 
                       Background="{x:Bind NavAreaBackground, FallbackValue=Blue, Mode=OneWay}"
                       BorderBrush="{x:Bind PaneBorderBrush, FallbackValue=White, Mode=OneWay}"
                       BorderThickness="{x:Bind PaneBorderThickness, FallbackValue='0,0,1,0'}" Tapped="PaneContent_Tapped">
