@@ -1,6 +1,6 @@
 namespace Template10.Services.SerializationService
 {
-    public sealed class ToStringSerializationService : ISerializationService
+    internal sealed class ToStringSerializationService : ISerializationService
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ToStringSerializationService"/> class.
