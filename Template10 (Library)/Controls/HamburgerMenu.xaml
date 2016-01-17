@@ -56,7 +56,7 @@
             </Style>
 
             <DataTemplate x:Name="NavButtonTemplate" x:DataType="local:HamburgerButtonInfo">
-                <RadioButton Width="{Binding PaneWidth, ElementName=ThisPage}"
+				<RadioButton Width="{Binding PaneWidth, ElementName=ThisPage}"
                              MinWidth="48" MaxWidth="{x:Bind MaxWidth, Mode=TwoWay}"
                              Command="{Binding NavCommand, ElementName=ThisPage}"
                              CommandParameter="{Binding}" GroupName="Nav"
@@ -67,9 +67,9 @@
                              RightTapped="NavButton_RightTapped" Tag="{x:Bind Content}"
                              Tapped="NavButton_Tapped"
                              Visibility="{Binding Visibility, Mode=TwoWay}">
-                    <RadioButton.Template>
+					<RadioButton.Template>
                         <ControlTemplate TargetType="RadioButton">
-                            <ToggleButton Height="48" MinWidth="48"
+							<ToggleButton Height="48" MinWidth="48"
                                           MaxWidth="{TemplateBinding MaxWidth}"
                                           HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                                           Command="{TemplateBinding Command}"
@@ -78,8 +78,9 @@
                                           IsChecked="{Binding IsChecked, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                           Checked="NavButtonChecked" Unchecked="NavButtonUnchecked"
                                           UseSystemFocusVisuals="True"
-                                          Visibility="{TemplateBinding Visibility}">
-                                <ToggleButton.Template>
+                                          Visibility="{TemplateBinding Visibility}"
+										  AutomationProperties.AccessibilityView="Raw">
+								<ToggleButton.Template>
                                     <ControlTemplate TargetType="ToggleButton">
                                         <Grid x:Name="RootGrid" Width="{Binding PaneWidth, ElementName=ThisPage}" Background="Transparent">
                                             <VisualStateManager.VisualStateGroups>

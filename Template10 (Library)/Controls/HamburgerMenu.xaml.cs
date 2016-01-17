@@ -15,13 +15,13 @@ using Template10.Utils;
 using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Automation.Peers;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Automation;
 
 namespace Template10.Controls
 {
@@ -630,11 +630,10 @@ namespace Template10.Controls
             DependencyProperty.Register(nameof(HeaderContent), typeof(UIElement),
                 typeof(HamburgerMenu), null);
 
-        #endregion
+		#endregion
 
 		#region "Automation"
 
-		//
 		//protected override AutomationPeer OnCreateAutomationPeer()
 		//{
 		//	return new CustomControlAutomationPeer(this);
@@ -642,9 +641,7 @@ namespace Template10.Controls
 
 		#endregion
 
-        Dictionary<RadioButton, HamburgerButtonInfo> _navButtons = new Dictionary<RadioButton, HamburgerButtonInfo>();
-		int counter = 0;
-
+		Dictionary<RadioButton, HamburgerButtonInfo> _navButtons = new Dictionary<RadioButton, HamburgerButtonInfo>();
         void NavButton_Loaded(object sender, RoutedEventArgs e)
         {
             DebugWrite($"Info: {(sender as FrameworkElement).DataContext}");
@@ -652,19 +649,28 @@ namespace Template10.Controls
             // add this radio to the list
             var r = sender as RadioButton;
             var i = r.DataContext as HamburgerButtonInfo;
+			var sp = i.Content as StackPanel;
 
-			counter++;
-			// Need to set a name property somehow so narrator says the Control text instead of the 
-			// button type, but this all depends on the controls
-			AutomationProperties.SetAutomationId(r, "RadioButton" + counter);
-			AutomationProperties.SetName(r, i.ButtonType.ToString());
-			AutomationProperties.SetHelpText(r, "Click to select the page");
+			// Get the text of the button
+			var buttonText = string.Empty;
+			foreach (var child in sp.Children)
+			{
+				if (child.ToString() == "Windows.UI.Xaml.Controls.TextBlock")
+				{
+					buttonText = (child as TextBlock).Text.ToString();
+				}
+			}
+			
+			// Set the automation properties for each button
+			AutomationProperties.SetAutomationId(r, buttonText + "Button");
+			AutomationProperties.SetName(r, buttonText);
+			AutomationProperties.SetHelpText(r, "Click to go to " + buttonText + " page");
 
 			Debug.WriteLine("AutomationId : " + AutomationProperties.GetAutomationId(r));
 			Debug.WriteLine("Name : " + AutomationProperties.GetName(r));
 			Debug.WriteLine("HelpText : " + AutomationProperties.GetHelpText(r));
 
-            _navButtons.Add(r, i);
+			_navButtons.Add(r, i);
             HighlightCorrectButton();
         }
 
