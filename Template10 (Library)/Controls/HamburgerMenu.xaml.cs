@@ -632,15 +632,6 @@ namespace Template10.Controls
 
 		#endregion
 
-		#region "Automation"
-
-		//protected override AutomationPeer OnCreateAutomationPeer()
-		//{
-		//	return new CustomControlAutomationPeer(this);
-		//}
-
-		#endregion
-
 		Dictionary<RadioButton, HamburgerButtonInfo> _navButtons = new Dictionary<RadioButton, HamburgerButtonInfo>();
         void NavButton_Loaded(object sender, RoutedEventArgs e)
         {
@@ -666,9 +657,9 @@ namespace Template10.Controls
 			AutomationProperties.SetName(r, buttonText);
 			AutomationProperties.SetHelpText(r, "Click to go to " + buttonText + " page");
 
-			Debug.WriteLine("AutomationId : " + AutomationProperties.GetAutomationId(r));
-			Debug.WriteLine("Name : " + AutomationProperties.GetName(r));
-			Debug.WriteLine("HelpText : " + AutomationProperties.GetHelpText(r));
+			//Debug.WriteLine("AutomationId : " + AutomationProperties.GetAutomationId(r));
+			//Debug.WriteLine("Name : " + AutomationProperties.GetName(r));
+			//Debug.WriteLine("HelpText : " + AutomationProperties.GetHelpText(r));
 
 			_navButtons.Add(r, i);
             HighlightCorrectButton();

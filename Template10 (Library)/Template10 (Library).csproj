@@ -128,7 +128,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Automation\CustomControlAutomationPeer.cs" />
     <Compile Include="Behaviors\BackButtonBehavior.cs" />
     <Compile Include="Behaviors\CloseFlyoutAction.cs" />
     <Compile Include="Behaviors\FocusAction.cs" />
