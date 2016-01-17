@@ -40,8 +40,8 @@ namespace Sample.ViewModels
         public override Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending)
         {
             _SpeechService.Dispose();
-            return Task.FromResult<object>(null);
-        }
+			return Task.CompletedTask;
+		}
 
         private string _Value;
         public string Value

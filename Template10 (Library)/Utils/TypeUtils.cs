@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Template10.Utils
 {
-	public static class TypeUtil
+	public static class TypeUtils
 	{
 		readonly static Type[] Primitives;
 
@@ -12,7 +12,7 @@ namespace Template10.Utils
 
 		readonly static Type[] AllPrimitives;
 
-		static TypeUtil()
+		static TypeUtils()
 		{
 			Primitives = new Type[]
 			{

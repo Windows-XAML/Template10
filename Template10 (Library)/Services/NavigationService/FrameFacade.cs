@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Template10.Common;
+using Template10.Services.SettingsService;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -56,53 +57,36 @@ namespace Template10.Services.NavigationService
 
         private string GetFrameStateKey() => string.Format("{0}-PageState", FrameId);
 
-        private Windows.Storage.ApplicationDataContainer _frameStateContainer;
-        private Windows.Storage.ApplicationDataContainer FrameStateContainer()
+        private ISettingsService FrameStateSettingsService()
         {
-            if (_frameStateContainer != null)
-                return _frameStateContainer;
-            var data = Windows.Storage.ApplicationData.Current;
-            var key = GetFrameStateKey();
-            _frameStateContainer = data.LocalSettings.CreateContainer(key, Windows.Storage.ApplicationDataCreateDisposition.Always);
-            return _frameStateContainer;
+            return SettingsService.SettingsService.Create(SettingsStrategies.Local, GetFrameStateKey(), true);
         }
 
         public void SetFrameState(string key, string value)
         {
-            FrameStateContainer().Values[key] = value ?? string.Empty;
+            FrameStateSettingsService().Write(key, value);
         }
 
         public string GetFrameState(string key, string otherwise)
         {
-            if (!FrameStateContainer().Values.ContainsKey(key))
-                return otherwise;
-            try { return FrameStateContainer().Values[key].ToString(); }
-            catch { return otherwise; }
+            return FrameStateSettingsService().Read(key, otherwise);
         }
 
         public void ClearFrameState()
         {
-            FrameStateContainer().Values.Clear();
-            foreach (var container in FrameStateContainer().Containers)
-            {
-                FrameStateContainer().DeleteContainer(container.Key);
-            }
+            FrameStateSettingsService().Clear();
         }
 
         private string GetPageStateKey(Type type) => string.Format("{0}", type);
 
-        public IPropertySet PageStateContainer(Type type)
+        public ISettingsService PageStateSettingsService(Type type)
         {
-            var key = GetPageStateKey(type);
-            var container = FrameStateContainer().CreateContainer(key, Windows.Storage.ApplicationDataCreateDisposition.Always);
-            return container.Values;
+            return FrameStateSettingsService().Open(GetPageStateKey(type), true);
         }
 
         public void ClearPageState(Type type)
         {
-            var key = GetPageStateKey(type);
-            if (FrameStateContainer().Containers.ContainsKey(key))
-                FrameStateContainer().DeleteContainer(key);
+            this.FrameStateSettingsService().Remove(GetPageStateKey(type));
         }
 
         #endregion
@@ -115,7 +99,17 @@ namespace Template10.Services.NavigationService
 
         public string FrameId { get; set; } = string.Empty;
 
-        public bool Navigate(Type page, object parameter, NavigationTransitionInfo infoOverride) => Frame.Navigate(page, parameter, infoOverride);
+        public bool Navigate(Type page, object parameter, NavigationTransitionInfo infoOverride)
+        {
+            if (Frame.Navigate(page, parameter, infoOverride))
+            {
+                return page.Equals(Frame.Content?.GetType());
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         public void SetNavigationState(string state) { Frame.SetNavigationState(state); }
 
@@ -195,7 +189,7 @@ namespace Template10.Services.NavigationService
         void FacadeNavigatedEventHandler(object sender, Windows.UI.Xaml.Navigation.NavigationEventArgs e)
         {
             CurrentPageType = e.SourcePageType;
-            CurrentPageParam = ParameterSerializationService.Instance.DeserializeParameter(e.Parameter);
+            CurrentPageParam = e.Parameter;
             var args = new NavigatedEventArgs(e, Content as Page);
             if (NavigationModeHint != NavigationMode.New)
                 args.NavigationMode = NavigationModeHint;
@@ -214,8 +208,7 @@ namespace Template10.Services.NavigationService
         }
         private void FacadeNavigatingCancelEventHandler(object sender, NavigatingCancelEventArgs e)
         {
-            var parameter = ParameterSerializationService.Instance.DeserializeParameter(e.Parameter);
-            var args = new NavigatingEventArgs(e, Content as Page, parameter);
+            var args = new NavigatingEventArgs(e, Content as Page);
             if (NavigationModeHint != NavigationMode.New)
                 args.NavigationMode = NavigationModeHint;
             NavigationModeHint = NavigationMode.New;

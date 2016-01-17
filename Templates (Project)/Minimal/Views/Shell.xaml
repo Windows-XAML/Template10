@@ -27,6 +27,9 @@
                 <Controls:HamburgerMenu.SecondaryButtons>
                     <!-- settingspage button -->
                     <Controls:HamburgerButtonInfo x:Name="SettingsButton" PageType="views:SettingsPage">
+                        <Controls:HamburgerButtonInfo.NavigationTransitionInfo>
+                            <SuppressNavigationTransitionInfo />
+                        </Controls:HamburgerButtonInfo.NavigationTransitionInfo>
                         <StackPanel Orientation="Horizontal">
                             <SymbolIcon Width="48" Height="48" Symbol="Setting" />
                             <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Settings" />
@@ -36,7 +39,7 @@
 
             </Controls:HamburgerMenu>
         </Controls:ModalDialog.Content>
-        
+
         <Controls:ModalDialog.ModalContent>
             <!-- busy visual -->
             <Viewbox Height="32">
@@ -48,7 +51,7 @@
                 </StackPanel>
             </Viewbox>
         </Controls:ModalDialog.ModalContent>
-        
+
     </Controls:ModalDialog>
 
 </Page>

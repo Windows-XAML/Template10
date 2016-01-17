@@ -1,15 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using Sample.Mvvm;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Navigation;
 
 namespace Sample.ViewModels
 {
-    public class MainPageViewModel : Mvvm.ViewModelBase
+    public class MainPageViewModel : ViewModelBase
     {
         public MainPageViewModel()
         {
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
+            {
                 Value = "Designtime value";
+            }
         }
 
         string _Value = string.Empty;
@@ -17,32 +22,33 @@ namespace Sample.ViewModels
 
         public override void OnNavigatedTo(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
-            if (state.ContainsKey(nameof(Value)))
+            if (state.Any())
+            {
                 Value = state[nameof(Value)]?.ToString();
-            state.Clear();
+                state.Clear();
+            }
         }
 
-        public override async Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending)
+        public override Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending)
         {
             if (suspending)
+            {
                 state[nameof(Value)] = Value;
-            await Task.CompletedTask;
+            }
+            return Task.CompletedTask;
         }
 
-        public void GotoDetailsPage()
-        {
+        public override void OnNavigatingFrom(NavigatingEventArgs args) =>
+            args.Cancel = false;
+
+        public void GotoDetailsPage() =>
             NavigationService.Navigate(typeof(Views.DetailPage), Value);
-        }
 
-        public void GotoPrivacy()
-        {
+        public void GotoPrivacy() =>
             NavigationService.Navigate(typeof(Views.SettingsPage), 1);
-        }
 
-        public void GotoAbout()
-        {
+        public void GotoAbout() =>
             NavigationService.Navigate(typeof(Views.SettingsPage), 2);
-        }
 
     }
 }

@@ -14,7 +14,6 @@ namespace Template10.Common
         }
 
         public TValue OldValue => oldValue;
-
         public TValue NewValue => newValue;
     }
 }

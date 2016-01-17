@@ -7,6 +7,7 @@ using Template10.Mvvm;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Markup;
+using Windows.UI.Xaml.Media.Animation;
 
 namespace Template10.Controls
 {
@@ -15,6 +16,13 @@ namespace Template10.Controls
     {
         public enum ButtonTypes { Toggle, Command }
         public ButtonTypes ButtonType { get; set; } = ButtonTypes.Toggle;
+
+        private NavigationTransitionInfo _NavigationTransitionInfo;
+        public NavigationTransitionInfo NavigationTransitionInfo
+        {
+            get { return _NavigationTransitionInfo; }
+            set { _NavigationTransitionInfo = value; }
+        }
 
         /// <summary>
         /// Sets and gets the PageType property.
@@ -75,7 +83,7 @@ namespace Template10.Controls
         public bool? IsChecked
         {
             get { return _isChecked; }
-            internal set { Set(ref _isChecked, value ?? false); }
+            set { Set(ref _isChecked, value ?? false); }
         }
 
         UIElement _content = null;
@@ -92,7 +100,8 @@ namespace Template10.Controls
             set { Set(ref _MaxWidth, value); }
         }
 
-        public override string ToString() => string.Format("{0}({1})", PageType?.ToString() ?? "null", PageParameter?.ToString() ?? "null");
+        public override string ToString() =>
+            string.Format($"IsChecked: {IsChecked} PageType: {PageType}, Parameter: {PageParameter}");
 
         public event RoutedEventHandler Selected;
         internal void RaiseSelected()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Template10.Common;
 using Template10.Mvvm;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Navigation;
@@ -22,8 +23,6 @@ namespace Sample.ViewModels
 
         public override void OnNavigatedTo(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
-            Views.Shell.HamburgerMenu.IsFullScreen = true;
-
             if (state.ContainsKey(nameof(Value)))
             {
                 Value = state[nameof(Value)]?.ToString();
@@ -35,13 +34,13 @@ namespace Sample.ViewModels
             }
         }
 
-        public override async Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending)
+        public override Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending)
         {
-            Views.Shell.HamburgerMenu.IsFullScreen = false;
-
             if (suspending)
+            {
                 state[nameof(Value)] = Value;
-            await Task.CompletedTask;
+            }
+            return Task.CompletedTask;
         }
 
         public override void OnNavigatingFrom(NavigatingEventArgs args)

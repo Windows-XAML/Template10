@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using Template10.Common;
+using Template10.Utils;
 using Windows.UI.Xaml;
 
 namespace Template10.Mvvm
@@ -13,7 +14,7 @@ namespace Template10.Mvvm
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void RaisePropertyChanged([CallerMemberName]string propertyName = null)
+        public virtual void RaisePropertyChanged([CallerMemberName]string propertyName = null)
         {
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
                 return;
@@ -28,7 +29,7 @@ namespace Template10.Mvvm
             }
         }
 
-        public bool Set<T>(ref T storage, T value, [CallerMemberName]string propertyName = null)
+        public virtual bool Set<T>(ref T storage, T value, [CallerMemberName]string propertyName = null)
         {
             if (object.Equals(storage, value))
                 return false;
@@ -37,7 +38,7 @@ namespace Template10.Mvvm
             return true;
         }
 
-        public bool Set<T>(Expression<Func<T>> propertyExpression, ref T field, T newValue)
+        public virtual bool Set<T>(Expression<Func<T>> propertyExpression, ref T field, T newValue)
         {
             //if is equal 
             if (object.Equals(field, newValue))
@@ -50,43 +51,19 @@ namespace Template10.Mvvm
             return true;
         }
 
-        public void RaisePropertyChanged<T>(Expression<Func<T>> propertyExpression)
+        public virtual void RaisePropertyChanged<T>(Expression<Func<T>> propertyExpression)
         {
             var handler = PropertyChanged;
             //if is not null
             if (!object.Equals(handler, null))
             {
-                var propertyName = GetPropertyName(propertyExpression);
+                var propertyName = ExpressionUtils.GetPropertyName(propertyExpression);
 
                 if (!object.Equals(propertyName, null))
                 {
                     handler(this, new PropertyChangedEventArgs(propertyName));
                 }
             }
-        }
-
-        protected static string GetPropertyName<T>(Expression<Func<T>> propertyExpression)
-        {
-            if (object.Equals(propertyExpression, null))
-            {
-                throw new ArgumentNullException("propertyExpression");
-            }
-
-            var body = propertyExpression.Body as MemberExpression;
-
-            if (object.Equals(body, null))
-            {
-                throw new ArgumentException("Invalid argument", "propertyExpression");
-            }
-
-            var property = body.Member as PropertyInfo;
-
-            if (object.Equals(property, null))
-            {
-                throw new ArgumentException("Argument is not a property", "propertyExpression");
-            }
-
-            return property.Name;
         }
     }
 
@@ -94,7 +71,7 @@ namespace Template10.Mvvm
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void RaisePropertyChanged([CallerMemberName]string propertyName = null)
+        public virtual void RaisePropertyChanged([CallerMemberName]string propertyName = null)
         {
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
                 return;
@@ -109,7 +86,7 @@ namespace Template10.Mvvm
             }
         }
 
-        public bool Set<T>(ref T storage, T value, [CallerMemberName]string propertyName = null)
+        public virtual bool Set<T>(ref T storage, T value, [CallerMemberName]string propertyName = null)
         {
             if (object.Equals(storage, value))
                 return false;
@@ -118,7 +95,7 @@ namespace Template10.Mvvm
             return true;
         }
 
-        public bool Set<T>(Expression<Func<T>> propertyExpression, ref T field, T newValue)
+        public virtual bool Set<T>(Expression<Func<T>> propertyExpression, ref T field, T newValue)
         {
             //if is equal 
             if (object.Equals(field, newValue))
@@ -131,43 +108,19 @@ namespace Template10.Mvvm
             return true;
         }
 
-        public void RaisePropertyChanged<T>(Expression<Func<T>> propertyExpression)
+        public virtual void RaisePropertyChanged<T>(Expression<Func<T>> propertyExpression)
         {
             var handler = PropertyChanged;
             //if is not null
             if (!object.Equals(handler, null))
             {
-                var propertyName = GetPropertyName(propertyExpression);
+                var propertyName = ExpressionUtils.GetPropertyName(propertyExpression);
 
                 if (!object.Equals(propertyName, null))
                 {
                     handler(this, new PropertyChangedEventArgs(propertyName));
                 }
             }
-        }
-
-        protected static string GetPropertyName<T>(Expression<Func<T>> propertyExpression)
-        {
-            if (object.Equals(propertyExpression, null))
-            {
-                throw new ArgumentNullException("propertyExpression");
-            }
-
-            var body = propertyExpression.Body as MemberExpression;
-
-            if (object.Equals(body, null))
-            {
-                throw new ArgumentException("Invalid argument", "propertyExpression");
-            }
-
-            var property = body.Member as PropertyInfo;
-
-            if (object.Equals(property, null))
-            {
-                throw new ArgumentException("Argument is not a property", "propertyExpression");
-            }
-
-            return property.Name;
         }
     }
 }

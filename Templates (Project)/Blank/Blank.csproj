@@ -7,7 +7,7 @@
     <ProjectGuid>{AF358EF5-8E5F-495D-B9E4-7FF123089AAA}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Blank</RootNamespace>
+    <RootNamespace>Sample</RootNamespace>
     <AssemblyName>Blank</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>

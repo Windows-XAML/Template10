@@ -9,7 +9,7 @@ namespace Sample.Mvvm
          GalaSoft.MvvmLight.ViewModelBase, Template10.Services.NavigationService.INavigable
     {
         public virtual void OnNavigatedTo(object parameter, NavigationMode mode, IDictionary<string, object> state) { /* nothing by default */ }
-        public virtual Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending) => Task.FromResult<object>(null);
+        public virtual Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending) => Task.CompletedTask;
         public virtual void OnNavigatingFrom(Template10.Services.NavigationService.NavigatingEventArgs args) { /* nothing by default */ }
 
         [JsonIgnore]

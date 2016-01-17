@@ -13,7 +13,7 @@ namespace Sample
         public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
             NavigationService.Navigate(typeof(Views.MainPage));
-            return Task.FromResult<object>(null);
-        }
+			return Task.CompletedTask;
+		}
     }
 }
