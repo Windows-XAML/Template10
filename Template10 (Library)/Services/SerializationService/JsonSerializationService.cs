@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using Newtonsoft.Json;
 
 namespace Template10.Services.SerializationService
@@ -15,61 +16,58 @@ namespace Template10.Services.SerializationService
         /// <summary>
         /// Serializes the value.
         /// </summary>
-        public string Serialize(object value)
+        public object Serialize(object value)
         {
             if (value == null)
             {
                 return null;
             }
-            else if (value is string)
+            string valueStr = value as string;
+            if (valueStr == string.Empty)
             {
-                var container = new Container
-                {
-                    Type = value.GetType().AssemblyQualifiedName,
-                    Data = JsonConvert.SerializeObject(value, Formatting.None)
-                };
-                string result = JsonConvert.SerializeObject(container);
-                return result;
+                return valueStr;
             }
-        }
 
-        public object Deserialize(string value)
-        {
-            string valueStr = value?.ToString();
-            if (string.IsNullOrEmpty(valueStr))
+            var container = new Container
             {
-                return null;
-            }
-            else
-            {
-                Container container = JsonConvert.DeserializeObject<Container>(valueStr);
-                Type type = Type.GetType(container.Type);
-                object result = JsonConvert.DeserializeObject(container.Data, type);
-                return result;
-            }
+                Type = value.GetType().AssemblyQualifiedName,
+                Data = JsonConvert.SerializeObject(value, Formatting.None)
+            };
+            return JsonConvert.SerializeObject(container);
         }
 
         /// <summary>
         /// Deserializes the value.
         /// </summary>
-        public T Deserialize<T>(string value)
+        public object Deserialize(object value)
         {
-            string valueStr = value?.ToString();
-            if (string.IsNullOrEmpty(valueStr))
+            if (value == null)
             {
-                return default(T);
+                return null;
             }
-            else
+            string valueStr = value as string;
+            if (valueStr == string.Empty)
             {
-                Container container = JsonConvert.DeserializeObject<Container>(valueStr);
-                Type type = Type.GetType(container.Type);
-                object result = JsonConvert.DeserializeObject(container.Data, type);
-                if (result != null)
-                {
-                    return (T)result;
-                }
-                return default(T);
+                return valueStr;
             }
+
+            Container container = JsonConvert.DeserializeObject<Container>(valueStr);
+            Type type = Type.GetType(container.Type);
+            object result = JsonConvert.DeserializeObject(container.Data, type);
+            return result;
+        }
+
+        /// <summary>
+        /// Deserializes the value.
+        /// </summary>
+        public T Deserialize<T>(object value)
+        {
+            object result = this.Deserialize(value);
+            if (result != null)
+            {
+                return (T)result;
+            }
+            return default(T);
         }
 
         #region Internal Container Class
