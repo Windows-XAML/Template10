@@ -220,12 +220,21 @@ namespace Template10.Services.NavigationService
             DebugWrite($"Key: {key}, Parameter: {parameter}, NavigationTransitionInfo: {infoOverride}");
 
             var keys = Common.BootStrapper.Current.PageKeys<T>();
+
             if (!keys.ContainsKey(key))
                 throw new KeyNotFoundException(key.ToString());
+
             var page = keys[key];
-            if (page.FullName.Equals(LastNavigationType)
-                && parameter == LastNavigationParameter)
-                return false;
+
+            if (page.FullName.Equals(LastNavigationType))
+            {
+                if (parameter == LastNavigationParameter)
+                    return false;
+
+                if (parameter != null && parameter.Equals(LastNavigationParameter))
+                    return false;
+            }
+
             return FrameFacade.Navigate(page, parameter, infoOverride);
         }
 
