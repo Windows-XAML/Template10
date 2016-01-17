@@ -1,26 +1,18 @@
 namespace Template10.Services.SerializationService
 {
-    internal sealed class ToStringSerializationService : ISerializationService
+    internal sealed class DefaultSerializationService : ISerializationService
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ToStringSerializationService"/> class.
+        /// Initializes a new instance of the <see cref="DefaultSerializationService"/> class.
         /// </summary>
-        internal ToStringSerializationService()
+        internal DefaultSerializationService()
         {
         }
 
         /// <summary>
         /// Serializes the parameter.
         /// </summary>
-        public string Serialize(object parameter)
-        {
-            return parameter?.ToString();
-        }
-
-        /// <summary>
-        /// Deserializes the parameter.
-        /// </summary>
-        public object Deserialize(string parameter)
+        public object Serialize(object parameter)
         {
             return parameter;
         }
@@ -28,11 +20,19 @@ namespace Template10.Services.SerializationService
         /// <summary>
         /// Deserializes the parameter.
         /// </summary>
-        public T Deserialize<T>(string value)
+        public object Deserialize(object parameter)
+        {
+            return parameter;
+        }
+
+        /// <summary>
+        /// Deserializes the parameter.
+        /// </summary>
+        public T Deserialize<T>(object value)
         {
             if (value != null)
             {
-                return (T)(object)value;
+                return (T)value;
             }
             return default(T);
         }
