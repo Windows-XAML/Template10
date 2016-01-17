@@ -12,7 +12,7 @@ namespace Template10.Services.SerializationService
         /// <summary>
         /// Serializes the parameter.
         /// </summary>
-        public object Serialize(object parameter)
+        public string Serialize(object parameter)
         {
             return parameter?.ToString();
         }
@@ -20,7 +20,10 @@ namespace Template10.Services.SerializationService
         /// <summary>
         /// Deserializes the parameter.
         /// </summary>
-        public object Deserialize(object parameter)
+        public T Deserialize<T>(string value) =>
+           (T)Deserialize(value);
+
+        public object Deserialize(string parameter)
         {
             return parameter;
         }

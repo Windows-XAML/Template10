@@ -15,7 +15,7 @@ namespace Template10.Services.SerializationService
         /// <summary>
         /// Serializes the value.
         /// </summary>
-        public object Serialize(object value)
+        public string Serialize(object value)
         {
             if (value == null)
             {
@@ -36,7 +36,10 @@ namespace Template10.Services.SerializationService
         /// <summary>
         /// Deserializes the value.
         /// </summary>
-        public object Deserialize(object value)
+        public T Deserialize<T>(string value) =>
+            (T)Deserialize(value);
+
+        public object Deserialize(string value)
         {
             string valueStr = value?.ToString();
             if (string.IsNullOrEmpty(valueStr))

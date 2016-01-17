@@ -51,7 +51,7 @@ namespace Template10.Services.SerializationService
             }
             else
             {
-                var result = instance.Deserialize(value);
+                var result = instance.Deserialize(value?.ToString());
                 lastCache = new Tuple<object, object>(result, value);
                 return result;
             }
