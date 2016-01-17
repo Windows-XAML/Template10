@@ -168,6 +168,10 @@
     <Compile Include="Services\NavigationService\INavigationService.cs" />
     <Compile Include="Services\NavigationService\JournalEntry.cs" />
     <Compile Include="Services\NavigationService\NavigationServiceList.cs" />
+    <Compile Include="Services\SerializationService\ToStringSerializationService.cs" />
+    <Compile Include="Services\SerializationService\ISerializationService.cs" />
+    <Compile Include="Services\SerializationService\JsonSerializationService.cs" />
+    <Compile Include="Services\SerializationService\SerializationService.cs" />
     <Compile Include="Services\SettingsService\IPropertyMapping.cs" />
     <Compile Include="Services\SettingsService\ISettingsHelper.cs" />
     <Compile Include="Services\SettingsService\ISettingsService.cs" />

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Template10.Common;
 using Template10.Services.SettingsService;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
@@ -189,7 +188,7 @@ namespace Template10.Services.NavigationService
         void FacadeNavigatedEventHandler(object sender, Windows.UI.Xaml.Navigation.NavigationEventArgs e)
         {
             CurrentPageType = e.SourcePageType;
-            CurrentPageParam = e.Parameter;
+            CurrentPageParam = SerializationService.SerializationService.Deserialize(e.Parameter);
             var args = new NavigatedEventArgs(e, Content as Page);
             if (NavigationModeHint != NavigationMode.New)
                 args.NavigationMode = NavigationModeHint;
@@ -208,7 +207,8 @@ namespace Template10.Services.NavigationService
         }
         private void FacadeNavigatingCancelEventHandler(object sender, NavigatingCancelEventArgs e)
         {
-            var args = new NavigatingEventArgs(e, Content as Page);
+            var parameter = SerializationService.SerializationService.Deserialize(e.Parameter);
+            var args = new NavigatingEventArgs(e, Content as Page, parameter);
             if (NavigationModeHint != NavigationMode.New)
                 args.NavigationMode = NavigationModeHint;
             NavigationModeHint = NavigationMode.New;
