@@ -14,7 +14,7 @@ namespace Template10.Services.KeyboardService
             _helper = new KeyboardHelper();
             _helper.KeyDown = (e) =>
             {
-                Debug.WriteLine($"{e}");
+                //Debug.WriteLine($"{e}");
 
                 e.Handled = true;
 

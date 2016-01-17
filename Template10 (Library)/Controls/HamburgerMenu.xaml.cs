@@ -655,9 +655,9 @@ namespace Template10.Controls
 			var buttonText = string.Empty;
 			foreach (var child in sp.Children)
 			{
-				if (child.ToString() == "Windows.UI.Xaml.Controls.TextBlock")
+				if (child.GetType() == typeof(TextBlock))
 				{
-					buttonText = (child as TextBlock).Text.ToString();
+					buttonText = (child as TextBlock).Text;
 				}
 			}
 			
