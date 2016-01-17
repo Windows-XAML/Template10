@@ -5,7 +5,7 @@ namespace Template10.Services.SerializationService
     public static class SerializationService
     {
         private static volatile ISerializationService instance = new JsonSerializationService();
-        private static volatile Tuple<object, object> lastCache = new Tuple<object, object>(null, null);
+        private static volatile Tuple<object, string> lastCache = new Tuple<object, string>(null, null);
 
         /// <summary>
         /// Gets or sets the instance that should be used to serialize/deserialize.
@@ -16,15 +16,14 @@ namespace Template10.Services.SerializationService
             set
             {
                 instance = value;
-                lastCache = new Tuple<object, object>(null, null);
+                lastCache = new Tuple<object, string>(null, null);
             }
         }
-
 
         /// <summary>
         /// Serializes the value.
         /// </summary>
-        public static object Serialize(object value)
+        public static string Serialize(object value)
         {
             var lastCacheValue = lastCache;
             if (ReferenceEquals(lastCacheValue.Item1, value))
@@ -34,15 +33,23 @@ namespace Template10.Services.SerializationService
             else
             {
                 var result = instance.Serialize(value);
-                lastCache = new Tuple<object, object>(value, result);
+                lastCache = new Tuple<object, string>(value, result);
                 return result;
             }
         }
 
         /// <summary>
-        /// Deserializes the value.
+        /// Serializes the value.
         /// </summary>
         public static object Deserialize(object value)
+        {
+            return Deserialize(value?.ToString());
+        }
+
+        /// <summary>
+        /// Deserializes the value.
+        /// </summary>
+        public static object Deserialize(string value)
         {
             var lastCacheValue = lastCache;
             if (ReferenceEquals(lastCacheValue.Item2, value))
@@ -51,8 +58,38 @@ namespace Template10.Services.SerializationService
             }
             else
             {
-                var result = instance.Deserialize(value?.ToString());
-                lastCache = new Tuple<object, object>(result, value);
+                var result = instance.Deserialize(value);
+                lastCache = new Tuple<object, string>(result, value);
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Serializes the value.
+        /// </summary>
+        public static T Deserialize<T>(object value)
+        {
+            return Deserialize<T>(value?.ToString());
+        }
+
+        /// <summary>
+        /// Deserializes the value.
+        /// </summary>
+        public static T Deserialize<T>(string value)
+        {
+            var lastCacheValue = lastCache;
+            if (ReferenceEquals(lastCacheValue.Item2, value))
+            {
+                if (lastCacheValue.Item1 != null)
+                {
+                    return (T)lastCacheValue.Item1;
+                }
+                return default(T);
+            }
+            else
+            {
+                var result = instance.Deserialize<T>(value);
+                lastCache = new Tuple<object, string>(result, value);
                 return result;
             }
         }

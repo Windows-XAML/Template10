@@ -21,7 +21,7 @@ namespace Template10.Services.SerializationService
             {
                 return null;
             }
-            else
+            else if (value is string)
             {
                 var container = new Container
                 {
@@ -32,12 +32,6 @@ namespace Template10.Services.SerializationService
                 return result;
             }
         }
-
-        /// <summary>
-        /// Deserializes the value.
-        /// </summary>
-        public T Deserialize<T>(string value) =>
-            (T)Deserialize(value);
 
         public object Deserialize(string value)
         {
@@ -52,6 +46,29 @@ namespace Template10.Services.SerializationService
                 Type type = Type.GetType(container.Type);
                 object result = JsonConvert.DeserializeObject(container.Data, type);
                 return result;
+            }
+        }
+
+        /// <summary>
+        /// Deserializes the value.
+        /// </summary>
+        public T Deserialize<T>(string value)
+        {
+            string valueStr = value?.ToString();
+            if (string.IsNullOrEmpty(valueStr))
+            {
+                return default(T);
+            }
+            else
+            {
+                Container container = JsonConvert.DeserializeObject<Container>(valueStr);
+                Type type = Type.GetType(container.Type);
+                object result = JsonConvert.DeserializeObject(container.Data, type);
+                if (result != null)
+                {
+                    return (T)result;
+                }
+                return default(T);
             }
         }
 
