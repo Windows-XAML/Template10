@@ -20,12 +20,21 @@ namespace Template10.Services.SerializationService
         /// <summary>
         /// Deserializes the parameter.
         /// </summary>
-        public T Deserialize<T>(string value) =>
-           (T)Deserialize(value);
-
         public object Deserialize(string parameter)
         {
             return parameter;
+        }
+
+        /// <summary>
+        /// Deserializes the parameter.
+        /// </summary>
+        public T Deserialize<T>(string value)
+        {
+            if (value != null)
+            {
+                return (T)(object)value;
+            }
+            return default(T);
         }
     }
 }
