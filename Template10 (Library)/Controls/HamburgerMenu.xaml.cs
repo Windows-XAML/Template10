@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using Template10.Automation;
 using System.Runtime.CompilerServices;
 using Template10.Common;
 using Template10.Services.KeyboardService;
@@ -14,11 +15,13 @@ using Template10.Utils;
 using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Automation.Peers;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Automation;
 
 namespace Template10.Controls
 {
@@ -133,9 +136,9 @@ namespace Template10.Controls
             if (commandInfo == null)
                 throw new NullReferenceException("CommandParameter is not set");
 
-            if (commandInfo.PageType != null)
-                Selected = commandInfo;
-        }
+                if (commandInfo.PageType != null)
+                    Selected = commandInfo;
+            }
 
         #endregion
 
@@ -239,32 +242,32 @@ namespace Template10.Controls
                     case ElementTheme.Default:
                     case ElementTheme.Light:
                         {
-                            HamburgerBackground = color?.ToSolidColorBrush();
-                            HamburgerForeground = Colors.White.ToSolidColorBrush();
-                            NavAreaBackground = Colors.DimGray.ToSolidColorBrush();
-                            NavButtonBackground = Colors.Transparent.ToSolidColorBrush();
-                            NavButtonForeground = Colors.White.ToSolidColorBrush();
-                            NavButtonCheckedForeground = Colors.White.ToSolidColorBrush();
-                            NavButtonCheckedBackground = color?.Lighten(ColorUtils.Accents.Plus20).ToSolidColorBrush();
-                            NavButtonPressedBackground = Colors.Gainsboro.Darken(ColorUtils.Accents.Plus40).ToSolidColorBrush();
-                            NavButtonHoverBackground = Colors.Gainsboro.Darken(ColorUtils.Accents.Plus60).ToSolidColorBrush();
-                            NavButtonCheckedForeground = Colors.White.ToSolidColorBrush();
-                            SecondarySeparator = PaneBorderBrush = Colors.Gainsboro.Darken(ColorUtils.Accents.Plus40).ToSolidColorBrush();
+                        HamburgerBackground = color?.ToSolidColorBrush();
+                        HamburgerForeground = Colors.White.ToSolidColorBrush();
+                        NavAreaBackground = Colors.DimGray.ToSolidColorBrush();
+                        NavButtonBackground = Colors.Transparent.ToSolidColorBrush();
+                        NavButtonForeground = Colors.White.ToSolidColorBrush();
+                        NavButtonCheckedForeground = Colors.White.ToSolidColorBrush();
+                        NavButtonCheckedBackground = color?.Lighten(ColorUtils.Accents.Plus20).ToSolidColorBrush();
+                        NavButtonPressedBackground = Colors.Gainsboro.Darken(ColorUtils.Accents.Plus40).ToSolidColorBrush();
+                        NavButtonHoverBackground = Colors.Gainsboro.Darken(ColorUtils.Accents.Plus60).ToSolidColorBrush();
+                        NavButtonCheckedForeground = Colors.White.ToSolidColorBrush();
+                        SecondarySeparator = PaneBorderBrush = Colors.Gainsboro.Darken(ColorUtils.Accents.Plus40).ToSolidColorBrush();
                         }
                         break;
                     case ElementTheme.Dark:
                         {
-                            HamburgerBackground = color?.ToSolidColorBrush();
-                            HamburgerForeground = Colors.White.ToSolidColorBrush();
-                            NavAreaBackground = Colors.Gainsboro.Darken(ColorUtils.Accents.Plus80).ToSolidColorBrush();
-                            NavButtonBackground = Colors.Transparent.ToSolidColorBrush();
-                            NavButtonForeground = Colors.White.ToSolidColorBrush();
-                            NavButtonCheckedForeground = Colors.White.ToSolidColorBrush();
-                            NavButtonCheckedBackground = color?.Darken(ColorUtils.Accents.Plus40).ToSolidColorBrush();
-                            NavButtonPressedBackground = Colors.Gainsboro.Lighten(ColorUtils.Accents.Plus40).ToSolidColorBrush();
-                            NavButtonHoverBackground = Colors.Gainsboro.Lighten(ColorUtils.Accents.Plus60).ToSolidColorBrush();
-                            NavButtonCheckedForeground = Colors.White.ToSolidColorBrush();
-                            SecondarySeparator = PaneBorderBrush = Colors.Gainsboro.ToSolidColorBrush();
+                        HamburgerBackground = color?.ToSolidColorBrush();
+                        HamburgerForeground = Colors.White.ToSolidColorBrush();
+                        NavAreaBackground = Colors.Gainsboro.Darken(ColorUtils.Accents.Plus80).ToSolidColorBrush();
+                        NavButtonBackground = Colors.Transparent.ToSolidColorBrush();
+                        NavButtonForeground = Colors.White.ToSolidColorBrush();
+                        NavButtonCheckedForeground = Colors.White.ToSolidColorBrush();
+                        NavButtonCheckedBackground = color?.Darken(ColorUtils.Accents.Plus40).ToSolidColorBrush();
+                        NavButtonPressedBackground = Colors.Gainsboro.Lighten(ColorUtils.Accents.Plus40).ToSolidColorBrush();
+                        NavButtonHoverBackground = Colors.Gainsboro.Lighten(ColorUtils.Accents.Plus60).ToSolidColorBrush();
+                        NavButtonCheckedForeground = Colors.White.ToSolidColorBrush();
+                        SecondarySeparator = PaneBorderBrush = Colors.Gainsboro.ToSolidColorBrush();
                         }
                         break;
                 }
@@ -394,7 +397,7 @@ namespace Template10.Controls
         {
             DebugWrite($"OldValue: {previous}, NewValue: {value}");
 
-            IsOpen = false;
+                IsOpen = false;
 
             // reset all, except selected
             _navButtons
@@ -411,7 +414,7 @@ namespace Template10.Controls
                 {
                     if (value.ClearHistory)
                         NavigationService.ClearHistory();
-                }
+            }
                 else
                 {
                     return;
@@ -627,9 +630,9 @@ namespace Template10.Controls
             DependencyProperty.Register(nameof(HeaderContent), typeof(UIElement),
                 typeof(HamburgerMenu), null);
 
-        #endregion
+		#endregion
 
-        Dictionary<RadioButton, HamburgerButtonInfo> _navButtons = new Dictionary<RadioButton, HamburgerButtonInfo>();
+		Dictionary<RadioButton, HamburgerButtonInfo> _navButtons = new Dictionary<RadioButton, HamburgerButtonInfo>();
         void NavButton_Loaded(object sender, RoutedEventArgs e)
         {
             DebugWrite($"Info: {(sender as FrameworkElement).DataContext}");
@@ -637,7 +640,28 @@ namespace Template10.Controls
             // add this radio to the list
             var r = sender as RadioButton;
             var i = r.DataContext as HamburgerButtonInfo;
-            _navButtons.Add(r, i);
+			var sp = i.Content as StackPanel;
+
+			// Get the text of the button
+			var buttonText = string.Empty;
+			foreach (var child in sp.Children)
+			{
+				if (child.GetType() == typeof(TextBlock))
+				{
+					buttonText = (child as TextBlock).Text;
+				}
+			}
+			
+			// Set the automation properties for each button
+			AutomationProperties.SetAutomationId(r, buttonText + "Button");
+			AutomationProperties.SetName(r, buttonText);
+			AutomationProperties.SetHelpText(r, "Click to go to " + buttonText + " page");
+
+			//Debug.WriteLine("AutomationId : " + AutomationProperties.GetAutomationId(r));
+			//Debug.WriteLine("Name : " + AutomationProperties.GetName(r));
+			//Debug.WriteLine("HelpText : " + AutomationProperties.GetHelpText(r));
+
+			_navButtons.Add(r, i);
             HighlightCorrectButton();
         }
 
@@ -695,15 +719,15 @@ namespace Template10.Controls
 
             try
             {
-                var t = sender as ToggleButton;
-                var i = t.DataContext as HamburgerButtonInfo;
-                t.IsChecked = (i.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
+            var t = sender as ToggleButton;
+            var i = t.DataContext as HamburgerButtonInfo;
+            t.IsChecked = (i.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
 
                 if (t.IsChecked ?? true)
                     HighlightCorrectButton();
                 t.IsChecked = Equals(i, Selected);
                 if (t.IsChecked ?? true)
-                    i.RaiseChecked(e);
+            i.RaiseChecked(e);
             }
             finally
             {
@@ -722,20 +746,20 @@ namespace Template10.Controls
 
             try
             {
-                var t = sender as ToggleButton;
-                var i = t.DataContext as HamburgerButtonInfo;
+            var t = sender as ToggleButton;
+            var i = t.DataContext as HamburgerButtonInfo;
 
-                if (t.FocusState != FocusState.Unfocused)
-                {
-                    // prevent un-select
-                    t.IsChecked = (i.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
-                    IsOpen = false;
-                    return;
-                }
-
-                i.RaiseUnchecked(e);
-                HighlightCorrectButton();
+            if (t.FocusState != FocusState.Unfocused)
+            {
+                // prevent un-select
+                t.IsChecked = (i.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
+                IsOpen = false;
+                return;
             }
+
+            i.RaiseUnchecked(e);
+            HighlightCorrectButton();
+        }
             finally
             {
                 _insideOperation = false;
