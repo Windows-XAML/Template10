@@ -4,7 +4,7 @@ namespace Template10.Services.SerializationService
 {
     public static class SerializationService
     {
-        private static volatile ISerializationService instance = new JsonSerializationService();
+        private static volatile ISerializationService instance = new ToStringSerializationService();
         private static volatile Tuple<object, string> lastCache = new Tuple<object, string>(null, null);
 
         /// <summary>
