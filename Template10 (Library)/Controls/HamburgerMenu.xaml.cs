@@ -241,7 +241,11 @@ namespace Template10.Controls
                         {
                             HamburgerBackground = color?.ToSolidColorBrush();
                             HamburgerForeground = Colors.White.ToSolidColorBrush();
-                            NavAreaBackground = Colors.DimGray.ToSolidColorBrush();
+                            
+                            if (NavAreaBackground == null)
+                            {
+                                NavAreaBackground = Colors.DimGray.ToSolidColorBrush();
+                            }
                             NavButtonBackground = Colors.Transparent.ToSolidColorBrush();
                             NavButtonForeground = Colors.White.ToSolidColorBrush();
                             NavButtonCheckedForeground = Colors.White.ToSolidColorBrush();
@@ -256,7 +260,11 @@ namespace Template10.Controls
                         {
                             HamburgerBackground = color?.ToSolidColorBrush();
                             HamburgerForeground = Colors.White.ToSolidColorBrush();
-                            NavAreaBackground = Colors.Gainsboro.Darken(ColorUtils.Accents.Plus80).ToSolidColorBrush();
+                            
+                            if (NavAreaBackground == null)
+                            {
+                                NavAreaBackground = Colors.Gainsboro.Darken(ColorUtils.Accents.Plus80).ToSolidColorBrush();
+                            }
                             NavButtonBackground = Colors.Transparent.ToSolidColorBrush();
                             NavButtonForeground = Colors.White.ToSolidColorBrush();
                             NavButtonCheckedForeground = Colors.White.ToSolidColorBrush();
