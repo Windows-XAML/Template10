@@ -69,7 +69,7 @@
                              Visibility="{Binding Visibility, Mode=TwoWay}">
                     <RadioButton.Template>
                         <ControlTemplate TargetType="RadioButton">
-                            <ToggleButton Height="48" MinWidth="48"
+                            <ToggleButton MinHeight="48" MinWidth="48"
                                           MaxWidth="{TemplateBinding MaxWidth}"
                                           HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                                           Command="{TemplateBinding Command}"
