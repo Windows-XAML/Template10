@@ -88,11 +88,19 @@ namespace Template10.Controls
         public SplitViewDisplayMode DisplayMode
         {
             get { return (SplitViewDisplayMode)GetValue(DisplayModeProperty); }
-            private set { SetValue(DisplayModeProperty, value); }
+            set { SetValue(DisplayModeProperty, value); }
         }
         public static readonly DependencyProperty DisplayModeProperty =
             DependencyProperty.Register(nameof(DisplayMode), typeof(SplitViewDisplayMode),
-                typeof(HamburgerMenu), new PropertyMetadata(null));
+                typeof(HamburgerMenu), new PropertyMetadata(null, DisplayModeChanged));
+
+        private static void DisplayModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var h = d as HamburgerMenu;
+            var m = (SplitViewDisplayMode)e.NewValue;
+            if (h.ShellSplitView.DisplayMode != m)
+                h.ShellSplitView.DisplayMode = m;
+        }
 
         internal void HighlightCorrectButton(Type pageType = null, object pageParam = null)
         {
@@ -269,6 +277,19 @@ namespace Template10.Controls
                         break;
                 }
             }
+        }
+
+        public Visibility HamburgerButtonVisibility
+        {
+            get { return (Visibility)GetValue(HamburgerButtonVisibilityProperty); }
+            set { SetValue(HamburgerButtonVisibilityProperty, value); }
+        }
+        public static readonly DependencyProperty HamburgerButtonVisibilityProperty =
+            DependencyProperty.Register(nameof(HamburgerButtonVisibility), typeof(Visibility),
+                typeof(HamburgerMenu), new PropertyMetadata(Visibility.Visible, HamburgerButtonVisibilityChanged));
+        private static void HamburgerButtonVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            (d as HamburgerMenu).HamburgerButton.Visibility = (Visibility)e.NewValue;
         }
 
         public SolidColorBrush HamburgerBackground

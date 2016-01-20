@@ -1,35 +1,41 @@
-﻿<Page x:Class="Sample.Views.MainPage"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:Behaviors="using:Template10.Behaviors"
-      xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
-      xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
-      xmlns:controls="using:Template10.Controls"
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="using:Sample.Views"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+﻿<Page x:Class="Sample.Views.MainPage" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Behaviors="using:Template10.Behaviors"
+      xmlns:Core="using:Microsoft.Xaml.Interactions.Core" xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+      xmlns:controls="using:Template10.Controls" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="using:Sample.Views" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:vm="using:Sample.ViewModels" mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-      <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" /> <!-- Header Row -->
-            <RowDefinition Height="*" /> <!-- Content Row -->
-            <RowDefinition Height="Auto" /> <!-- CommandBar Row -->
-      </Grid.RowDefinitions>
+        <Grid.RowDefinitions>
+            <!--  Header Row  -->
+            <RowDefinition Height="Auto" />
+            <!--  Content Row  -->
+            <RowDefinition Height="*" />
+            <!--  CommandBar Row  -->
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
 
-        <controls:PageHeader Content="Bottom App Bar Sample" Grid.Row="0">
+        <controls:PageHeader Grid.Row="0" Content="Bottom App Bar Sample">
             <Interactivity:Interaction.Behaviors>
                 <Behaviors:EllipsisBehavior Visibility="Collapsed" />
             </Interactivity:Interaction.Behaviors>
         </controls:PageHeader>
-        
-        
-    <Grid x:Name="BottomBar" Grid.Row="2">
-        <CommandBar ClosedDisplayMode="Compact">
-                <AppBarButton Icon="Save" Label="Save" Click="SampleClick" />
-                <AppBarButton Icon="OpenFile" Label="Open" Click="SampleClick" />
-        </CommandBar>
-    </Grid>
+
+        <Grid x:Name="BottomBar" Grid.Row="2">
+            <CommandBar ClosedDisplayMode="Compact">
+                <AppBarButton Icon="List" Label="Mode">
+                    <AppBarButton.Flyout>
+                        <MenuFlyout Placement="Top">
+                            <MenuFlyoutItem Command="{x:Bind SetPaneCommand}" CommandParameter="0" Text="Overlay" />
+                            <MenuFlyoutItem Command="{x:Bind SetPaneCommand}" CommandParameter="1" Text="Inline" />
+                            <MenuFlyoutItem Command="{x:Bind SetPaneCommand}" CommandParameter="2" Text="CompactOverlay" />
+                            <MenuFlyoutItem Command="{x:Bind SetPaneCommand}" CommandParameter="3" Text="CompactInline" />
+                        </MenuFlyout>
+                    </AppBarButton.Flyout>
+                </AppBarButton>
+                <AppBarButton Icon="OpenPane" Label="Open" Command="{x:Bind TogglePaneCommand}" />
+            </CommandBar>
+        </Grid>
     </Grid>
 </Page>
 
