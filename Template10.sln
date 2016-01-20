@@ -57,6 +57,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PageHeaderSample", "Samples
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Snippets", "Snippets", "{82C5A128-EF55-4352-8064-BB068F8FD4DA}"
 	ProjectSection(SolutionItems) = preProject
+		Snippets\InstallSnippets.cmd = Snippets\InstallSnippets.cmd
 		Snippets\T10_Command.snippet = Snippets\T10_Command.snippet
 		Snippets\T10_CommandTyped.snippet = Snippets\T10_CommandTyped.snippet
 		Snippets\T10_Dispatch.snippet = Snippets\T10_Dispatch.snippet
@@ -434,6 +435,7 @@ Global
 		{AAE53064-C591-43FB-A8BE-9FED2104B98F}.Debug|x64.Deploy.0 = Debug|x64
 		{AAE53064-C591-43FB-A8BE-9FED2104B98F}.Debug|x86.ActiveCfg = Debug|x86
 		{AAE53064-C591-43FB-A8BE-9FED2104B98F}.Debug|x86.Build.0 = Debug|x86
+		{AAE53064-C591-43FB-A8BE-9FED2104B98F}.Debug|x86.Deploy.0 = Debug|x86
 		{AAE53064-C591-43FB-A8BE-9FED2104B98F}.Release|Any CPU.ActiveCfg = Release|x86
 		{AAE53064-C591-43FB-A8BE-9FED2104B98F}.Release|ARM.ActiveCfg = Release|ARM
 		{AAE53064-C591-43FB-A8BE-9FED2104B98F}.Release|ARM.Build.0 = Release|ARM
