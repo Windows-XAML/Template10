@@ -9,7 +9,7 @@ namespace Template10.Services.SerializationService
         /// <summary>
         /// Initializes a new instance of the <see cref="JsonSerializationService"/> class.
         /// </summary>
-        internal JsonSerializationService()
+        public JsonSerializationService()
         {
         }
 
