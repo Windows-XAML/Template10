@@ -28,7 +28,7 @@
       <Code Language="csharp">
         <![CDATA[DelegateCommand<$type$> _$name$;
         public DelegateCommand<$type$> $name$
-           => _$name$ ?? new DelegateCommand<$type$>($name$Execute, $name$CanExecute);
+           => _$name$ ??  (_$name$ = new DelegateCommand<$type$>($name$Execute, $name$CanExecute));
         bool $name$CanExecute($type$ param) => true;
         void $name$Execute($type$ param)
         {
