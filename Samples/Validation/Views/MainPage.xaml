@@ -77,32 +77,53 @@
                         </Interactivity:Interaction.Behaviors>
                     </Button>
 
+                    <Button Content="Delete" Command="{Binding DeleteSelectedCommand}" DataContext="{Binding DataContext, ElementName=List}">
+                        <Interactivity:Interaction.Behaviors>
+                            <Core:EventTriggerBehavior EventName="Click">
+                                <Core:ChangePropertyAction PropertyName="IsModal" TargetObject="{Binding ElementName=modalDialog}" Value="False" />
+                            </Core:EventTriggerBehavior>
+                        </Interactivity:Interaction.Behaviors>
+                    </Button>
+
+
                 </StackPanel>
             </StackPanel>
 
         </controls:ModalDialog.ModalContent>
 
-        <ListView x:Name="List"
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <controls:PageHeader Text="Validation sample">
+                <AppBarButton Icon="Add" Label="Create" Command="{Binding CreateAndSelectCommand}" />
+            </controls:PageHeader>
+
+            <ListView x:Name="List" Grid.Row="1"
                   Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
                   ItemsSource="{Binding Users}"
                   ItemTemplate="{StaticResource UserListItemTemplate}"
                   SelectedItem="{Binding Selected, Mode=TwoWay}">
 
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                </Style>
-            </ListView.ItemContainerStyle>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
 
-            <Interactivity:Interaction.Behaviors>
-                <Core:EventTriggerBehavior EventName="SelectionChanged">
-                    <Behaviors:ConditionalAction LeftValue="{Binding SelectedItem, ElementName=List}" Operator="IsNotNull">
-                        <Core:ChangePropertyAction PropertyName="IsModal" TargetObject="{Binding ElementName=modalDialog}" Value="True" />
-                    </Behaviors:ConditionalAction>
-                </Core:EventTriggerBehavior>
-            </Interactivity:Interaction.Behaviors>
+                <Interactivity:Interaction.Behaviors>
+                    <Core:EventTriggerBehavior EventName="SelectionChanged">
+                        <Behaviors:ConditionalAction LeftValue="{Binding SelectedItem, ElementName=List}" Operator="IsNotNull">
+                            <Core:ChangePropertyAction PropertyName="IsModal" TargetObject="{Binding ElementName=modalDialog}" Value="True" />
+                        </Behaviors:ConditionalAction>
+                    </Core:EventTriggerBehavior>
+                </Interactivity:Interaction.Behaviors>
 
-        </ListView>
+            </ListView>
+
+        </Grid>
 
     </controls:ModalDialog>
 

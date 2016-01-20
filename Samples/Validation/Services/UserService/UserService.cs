@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Sample.Models;
 using Template10.Utils;
 using Template10.Validation;
 
@@ -10,19 +11,23 @@ namespace Sample.Services.UserService
 {
     public class UserService
     {
-        public IEnumerable<Models.User> GetUsers()
+        private static List<Models.User> _GetUsers;
+        public List<Models.User> GetUsers()
         {
-            var id = 1;
-            yield return BuildUser(id++, "Jonathan", "Archer");
-            yield return BuildUser(id++, "T'Pol", "Main");
-            yield return BuildUser(id++, "Charles 'Trip'", "Tucker III");
-            yield return BuildUser(id++, "Malcolm", "Reed");
-            yield return BuildUser(id++, "Hoshi", "Sato Main");
-            yield return BuildUser(id++, "Travis", "Mayweather");
-            yield return BuildUser(id++, "Doctor", "Phlox");
-            yield return BuildUser(id++, "Thy'lek", "Shran");
-            yield return BuildUser(id++, "Maxwell", "Forrest");
-            yield return BuildUser(id++, "Matt", "Winston");
+            if (_GetUsers != null)
+                return _GetUsers;
+            return _GetUsers = SampleUsers().ToList();
+        }
+
+        public User CreateUser()
+        {
+            return GetUsers().AddAndReturn(BuildUser(id++, "Red", "Shirt"));
+        }
+
+        public void DeleteUsers(params int[] id)
+        {
+            if (id != null)
+                GetUsers().RemoveAll(x => id.Contains(x.Id));
         }
 
         public void ValidateUser(IModel model)
@@ -56,6 +61,23 @@ namespace Sample.Services.UserService
                 admin.Errors.Add("Administrator cannot be demoted.");
         }
 
+        #region Sample Data
+
+        static int id = 1;
+        public IEnumerable<Models.User> SampleUsers()
+        {
+            yield return BuildUser(id++, "Jonathan", "Archer");
+            yield return BuildUser(id++, "T'Pol", "Main");
+            yield return BuildUser(id++, "Charles 'Trip'", "Tucker III");
+            yield return BuildUser(id++, "Malcolm", "Reed");
+            yield return BuildUser(id++, "Hoshi", "Sato Main");
+            yield return BuildUser(id++, "Travis", "Mayweather");
+            yield return BuildUser(id++, "Doctor", "Phlox");
+            yield return BuildUser(id++, "Thy'lek", "Shran");
+            yield return BuildUser(id++, "Maxwell", "Forrest");
+            yield return BuildUser(id++, "Matt", "Winston");
+        }
+
         Random _random = new Random((int)DateTime.Now.Ticks);
         Models.User BuildUser(int id, string first, string last)
         {
@@ -71,5 +93,7 @@ namespace Sample.Services.UserService
             user.Validate();
             return user;
         }
+
+        #endregion  
     }
 }
