@@ -164,12 +164,13 @@
     <Compile Include="Converters\StringFormatConverter.cs" />
     <Compile Include="Mvvm\AwaitableDelegateCommand.cs" />
     <Compile Include="Common\WeakReference.cs" />
+    <Compile Include="Mvvm\DependencyBindableBase.cs" />
     <Compile Include="Services\LoggingService\LoggingService.cs" />
     <Compile Include="Services\NavigationService\AlternativeNavigationEventArgs.cs" />
     <Compile Include="Services\NavigationService\INavigationService.cs" />
     <Compile Include="Services\NavigationService\JournalEntry.cs" />
     <Compile Include="Services\NavigationService\NavigationServiceList.cs" />
-    <Compile Include="Services\SerializationService\ToStringSerializationService.cs" />
+    <Compile Include="Services\SerializationService\DefaultSerializationService.cs" />
     <Compile Include="Services\SerializationService\ISerializationService.cs" />
     <Compile Include="Services\SerializationService\JsonSerializationService.cs" />
     <Compile Include="Services\SerializationService\SerializationService.cs" />

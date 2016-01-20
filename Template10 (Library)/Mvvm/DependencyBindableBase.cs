@@ -1,15 +1,14 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Linq.Expressions;
-using System.Reflection;
 using System.Runtime.CompilerServices;
+using Windows.UI.Xaml;
 using Template10.Common;
 using Template10.Utils;
 
 namespace Template10.Mvvm
 {
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-MVVM
-    public abstract class BindableBase : IBindable
+    public abstract class DependencyBindableBase : DependencyObject, IBindable
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -18,7 +17,7 @@ namespace Template10.Mvvm
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
                 return;
 
-            var handler = this.PropertyChanged;
+            var handler = PropertyChanged;
             //if is not null
             if (!object.Equals(handler, null))
             {
@@ -39,7 +38,7 @@ namespace Template10.Mvvm
             if (object.Equals(storage, value))
                 return false;
             storage = value;
-            RaisePropertyChanged(propertyName);
+            this.RaisePropertyChanged(propertyName);
             return true;
         }
 
@@ -52,7 +51,7 @@ namespace Template10.Mvvm
             }
 
             field = newValue;
-            RaisePropertyChanged(propertyExpression);
+            this.RaisePropertyChanged(propertyExpression);
             return true;
         }
 
@@ -61,7 +60,7 @@ namespace Template10.Mvvm
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
                 return;
 
-            var handler = PropertyChanged;
+            var handler = this.PropertyChanged;
             //if is not null
             if (!object.Equals(handler, null))
             {
