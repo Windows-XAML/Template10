@@ -17,7 +17,7 @@ namespace Template10.Services.SerializationService
         /// <summary>
         /// Serializes the value.
         /// </summary>
-        public object Serialize(object value)
+        public string Serialize(object value)
         {
             if (value == null)
             {
@@ -52,39 +52,38 @@ namespace Template10.Services.SerializationService
         /// <summary>
         /// Deserializes the value.
         /// </summary>
-        public object Deserialize(object value)
+        public object Deserialize(string value)
         {
             if (value == null)
             {
                 return null;
             }
-            string valueStr = value as string;
-            if (valueStr == string.Empty)
+            if (value == string.Empty)
             {
-                return valueStr;
+                return string.Empty;
             }
 
             // Check cache
             var lastCacheValue = lastCache;
-            if (string.Equals(lastCacheValue.Item2, valueStr))
+            if (string.Equals(lastCacheValue.Item2, value))
             {
                 return lastCacheValue.Item1;
             }
 
             // Deserialize from json
-            Container container = JsonConvert.DeserializeObject<Container>(valueStr);
+            Container container = JsonConvert.DeserializeObject<Container>(value);
             Type type = Type.GetType(container.Type);
             object result = JsonConvert.DeserializeObject(container.Data, type);
 
             // Update the cache
-            lastCache = new Tuple<object, string>(result, valueStr);
+            lastCache = new Tuple<object, string>(result, value);
             return result;
         }
 
         /// <summary>
         /// Deserializes the value.
         /// </summary>
-        public T Deserialize<T>(object value)
+        public T Deserialize<T>(string value)
         {
             object result = this.Deserialize(value);
             if (result != null)

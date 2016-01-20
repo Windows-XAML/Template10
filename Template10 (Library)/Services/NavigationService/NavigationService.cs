@@ -54,7 +54,7 @@ namespace Template10.Services.NavigationService
             };
             FrameFacade.Navigated += async (s, e) =>
             {
-                var parameter = SerializationService.Deserialize(e.Parameter);
+                var parameter = SerializationService.Deserialize(e.Parameter?.ToString());
                 await WindowWrapper.Current().Dispatcher.DispatchAsync(() => { NavigateTo(e.NavigationMode, parameter, Frame.Content); }, 1);
             };
         }
