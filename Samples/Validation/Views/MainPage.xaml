@@ -11,7 +11,7 @@
         <vm:MainPageViewModel x:Name="ViewModel" />
     </Page.DataContext>
 
-    <controls:ModalDialog x:Name="modalDialog">
+    <controls:ModalDialog x:Name="modalDialog" RequestedTheme="Light">
 
         <controls:ModalDialog.ModalBackground>
             <SolidColorBrush Opacity=".90" Color="Black" />
@@ -108,7 +108,8 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
 
-            <controls:PageHeader Text="Validation sample">
+            <controls:PageHeader Text="Validation sample"
+                                 RequestedTheme="Dark">
                 <AppBarButton Command="{Binding CreateAndSelectCommand}" Icon="Add" Label="Create" />
             </controls:PageHeader>
 
