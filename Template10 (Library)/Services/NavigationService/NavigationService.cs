@@ -11,6 +11,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+using Template10.Services.SerializationService;
 
 namespace Template10.Services.NavigationService
 {
@@ -36,7 +37,9 @@ namespace Template10.Services.NavigationService
 
         protected internal NavigationService(Frame frame)
         {
-            FrameFacade = new FrameFacade(frame);
+            SerializationService = global::Template10.Services.SerializationService.SerializationService.Json;
+
+            FrameFacade = new FrameFacade(this, frame);
             FrameFacade.Navigating += async (s, e) =>
             {
                 if (e.Suspending)
@@ -51,7 +54,7 @@ namespace Template10.Services.NavigationService
             };
             FrameFacade.Navigated += async (s, e) =>
             {
-                var parameter = SerializationService.SerializationService.Deserialize(e.Parameter);
+                var parameter = SerializationService.Deserialize(e.Parameter);
                 await WindowWrapper.Current().Dispatcher.DispatchAsync(() => { NavigateTo(e.NavigationMode, parameter, Frame.Content); }, 1);
             };
         }
@@ -188,7 +191,7 @@ namespace Template10.Services.NavigationService
                     return false;
             }
 
-            parameter = SerializationService.SerializationService.Serialize(parameter);
+            parameter = SerializationService.Serialize(parameter);
             return FrameFacade.Navigate(page, parameter, infoOverride);
         }
 
@@ -238,6 +241,8 @@ namespace Template10.Services.NavigationService
 
             return FrameFacade.Navigate(page, parameter, infoOverride);
         }
+
+        public ISerializationService SerializationService { get; set; }
 
         public event EventHandler<CancelEventArgs<Type>> BeforeSavingNavigation;
         public void SaveNavigation()

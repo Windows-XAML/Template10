@@ -1,15 +1,16 @@
 using System;
-using System.Reflection;
 using Newtonsoft.Json;
 
 namespace Template10.Services.SerializationService
 {
     public sealed class JsonSerializationService : ISerializationService
     {
+        private volatile Tuple<object, string> lastCache = new Tuple<object, string>(null, null);
+
         /// <summary>
         /// Initializes a new instance of the <see cref="JsonSerializationService"/> class.
         /// </summary>
-        public JsonSerializationService()
+        internal JsonSerializationService()
         {
         }
 
@@ -28,12 +29,24 @@ namespace Template10.Services.SerializationService
                 return valueStr;
             }
 
+            // Check cache
+            var lastCacheValue = lastCache;
+            if (ReferenceEquals(lastCacheValue.Item1, value))
+            {
+                return lastCacheValue.Item2;
+            }
+
+            // Serialize to json
             var container = new Container
             {
                 Type = value.GetType().AssemblyQualifiedName,
                 Data = JsonConvert.SerializeObject(value, Formatting.None)
             };
-            return JsonConvert.SerializeObject(container);
+            var result = JsonConvert.SerializeObject(container);
+
+            // Update the cache
+            lastCache = new Tuple<object, string>(value, result);
+            return result;
         }
 
         /// <summary>
@@ -51,9 +64,20 @@ namespace Template10.Services.SerializationService
                 return valueStr;
             }
 
+            // Check cache
+            var lastCacheValue = lastCache;
+            if (string.Equals(lastCacheValue.Item2, valueStr))
+            {
+                return lastCacheValue.Item1;
+            }
+
+            // Deserialize from json
             Container container = JsonConvert.DeserializeObject<Container>(valueStr);
             Type type = Type.GetType(container.Type);
             object result = JsonConvert.DeserializeObject(container.Data, type);
+
+            // Update the cache
+            lastCache = new Tuple<object, string>(result, valueStr);
             return result;
         }
 
