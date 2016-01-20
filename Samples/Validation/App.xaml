@@ -8,8 +8,6 @@
 
         <converters:StringFormatConverter x:Name="StringFormatConverter" />
 
-        <FontFamily x:Key="OkudaFont">/Fonts/Okuda.otf#Okuda</FontFamily>
-
         <converters:ValueWhenConverter x:Name="ValidConverter">
             <converters:ValueWhenConverter.When>
                 <x:Boolean>True</x:Boolean>

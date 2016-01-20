@@ -17,6 +17,12 @@
             <SolidColorBrush Opacity=".90" Color="Black" />
         </controls:ModalDialog.ModalBackground>
 
+        <controls:ModalDialog.ModalTransitions>
+            <TransitionCollection>
+                <ContentThemeTransition VerticalOffset="-200" />
+            </TransitionCollection>
+        </controls:ModalDialog.ModalTransitions>
+
         <controls:ModalDialog.ModalContent>
 
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Background="White" BorderBrush="Purple" BorderThickness="35"
@@ -31,10 +37,6 @@
                     <x:Double x:Key="FieldWidth">350</x:Double>
 
                 </StackPanel.Resources>
-
-                <TextBlock FontFamily="{StaticResource OkudaFont}" FontSize="42">
-                    <Run Text="{Binding LastName}" />
-                </TextBlock>
 
                 <validate:ControlWrapper PropertyName="FirstName">
                     <TextBox Width="{StaticResource FieldWidth}" Header="First Name"
@@ -110,7 +112,7 @@
                 <AppBarButton Command="{Binding CreateAndSelectCommand}" Icon="Add" Label="Create" />
             </controls:PageHeader>
 
-            <Viewbox Grid.Row="1">
+            <Viewbox Grid.Row="1" HorizontalAlignment="Center">
                 <Grid>
 
                     <Controls:Lcars />
