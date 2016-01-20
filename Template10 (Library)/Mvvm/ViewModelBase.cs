@@ -13,8 +13,8 @@ namespace Template10.Mvvm
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-MVVM
     public abstract class ViewModelBase : BindableBase, INavigable
     {
-        private volatile bool isNavigatedTo;
-        private volatile bool isNavigatedFrom;
+        private bool isNavigatedTo;
+        private bool isNavigatedFrom;
 
         [JsonIgnore]
         public bool IsNavigatedTo => isNavigatedTo;
