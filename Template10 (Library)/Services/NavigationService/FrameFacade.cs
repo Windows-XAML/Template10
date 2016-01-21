@@ -7,12 +7,20 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using Template10.Services.SerializationService;
+using System.Runtime.CompilerServices;
 
 namespace Template10.Services.NavigationService
 {
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-NavigationService
     public class FrameFacade
     {
+        #region Debug
+
+        static void DebugWrite(string text = null, Services.LoggingService.Severities severity = LoggingService.Severities.Trace, [CallerMemberName]string caller = null) =>
+            LoggingService.LoggingService.WriteLine(text, severity, caller: $"{nameof(FrameFacade)}.{caller}");
+
+        #endregion
+
         internal FrameFacade(NavigationService navigationService, Frame frame)
         {
             NavigationService = navigationService;
@@ -21,12 +29,12 @@ namespace Template10.Services.NavigationService
             frame.Navigating += (s, e) => FacadeNavigatingCancelEventHandler(s, e);
 
             // setup animations
-            var c = new TransitionCollection { };
-            var t = new NavigationThemeTransition { };
-            var i = new EntranceNavigationTransitionInfo();
-            t.DefaultNavigationTransitionInfo = i;
-            c.Add(t);
-            Frame.ContentTransitions = c;
+            var t = new NavigationThemeTransition
+            {
+                DefaultNavigationTransitionInfo = new EntranceNavigationTransitionInfo()
+            };
+            Frame.ContentTransitions = new TransitionCollection { };
+            Frame.ContentTransitions.Add(t);
         }
 
         public event EventHandler<HandledEventArgs> BackRequested;
@@ -36,7 +44,6 @@ namespace Template10.Services.NavigationService
             {
                 BackRequested.Invoke(this, args);
             }
-
             if (BackButtonHandling == BootStrapper.BackButton.Attach && !args.Handled && (args.Handled = Frame.BackStackDepth > 0))
             {
                 GoBack();
@@ -104,6 +111,8 @@ namespace Template10.Services.NavigationService
 
         public bool Navigate(Type page, object parameter, NavigationTransitionInfo infoOverride)
         {
+            DebugWrite();
+
             if (Frame.Navigate(page, parameter, infoOverride))
             {
                 return page.Equals(Frame.Content?.GetType());
@@ -116,9 +125,19 @@ namespace Template10.Services.NavigationService
 
         internal ISerializationService SerializationService => NavigationService.SerializationService;
 
-        public void SetNavigationState(string state) { Frame.SetNavigationState(state); }
+        public void SetNavigationState(string state)
+        {
+            DebugWrite($"State {state}");
 
-        public string GetNavigationState() => Frame.GetNavigationState();
+            Frame.SetNavigationState(state);
+        }
+
+        public string GetNavigationState()
+        {
+            DebugWrite();
+
+            return Frame.GetNavigationState();
+        }
 
         public int BackStackDepth => Frame.BackStackDepth;
 
@@ -128,12 +147,16 @@ namespace Template10.Services.NavigationService
 
         public void GoBack()
         {
+            DebugWrite($"CanGoBack {CanGoBack}");
+
             NavigationModeHint = NavigationMode.Back;
             if (CanGoBack) Frame.GoBack();
         }
 
         public void Refresh()
         {
+            DebugWrite();
+
             NavigationModeHint = NavigationMode.Refresh;
 
             try
@@ -167,6 +190,8 @@ namespace Template10.Services.NavigationService
 
         public void GoForward()
         {
+            DebugWrite($"CanGoForward {CanGoForward}");
+
             NavigationModeHint = NavigationMode.Forward;
             if (CanGoForward) Frame.GoForward();
         }
@@ -193,6 +218,8 @@ namespace Template10.Services.NavigationService
         }
         void FacadeNavigatedEventHandler(object sender, Windows.UI.Xaml.Navigation.NavigationEventArgs e)
         {
+            DebugWrite();
+
             CurrentPageType = e.SourcePageType;
             CurrentPageParam = SerializationService.Deserialize(e.Parameter?.ToString());
             var args = new NavigatedEventArgs(e, Content as Page);
@@ -213,6 +240,8 @@ namespace Template10.Services.NavigationService
         }
         private void FacadeNavigatingCancelEventHandler(object sender, NavigatingCancelEventArgs e)
         {
+            DebugWrite();
+
             var parameter = SerializationService.Deserialize(e.Parameter?.ToString());
             var args = new NavigatingEventArgs(e, Content as Page, parameter);
             if (NavigationModeHint != NavigationMode.New)
