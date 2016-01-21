@@ -4,6 +4,10 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="using:Sample.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d">
 
+    <Page.DataContext>
+        <local:MainPageViewModel x:Name="ViewModel" />
+    </Page.DataContext>
+
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
         <Grid.RowDefinitions>
@@ -12,8 +16,7 @@
         </Grid.RowDefinitions>
 
         <!--  header  -->
-        <controls:PageHeader BackButtonVisibility="Collapsed" Frame="{x:Bind Frame, Mode=OneWay}"
-                             Content="Main Page" VisualStateNarrowMinWidth="-1" />
+        <controls:PageHeader BackButtonVisibility="Collapsed" Content="Main Page" Frame="{x:Bind Frame, Mode=OneWay}" VisualStateNarrowMinWidth="-1" />
 
         <!--  #region content  -->
 
