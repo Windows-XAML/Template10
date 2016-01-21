@@ -239,6 +239,7 @@ namespace Template10.Services.NavigationService
                     return false;
             }
 
+            parameter = SerializationService.Serialize(parameter);
             return FrameFacade.Navigate(page, parameter, infoOverride);
         }
 
