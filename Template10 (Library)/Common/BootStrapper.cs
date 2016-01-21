@@ -64,7 +64,10 @@ namespace Template10.Common
             {
                 DebugWrite(caller: "Resuming");
 
-                OnResuming(s, e, ApplicationExecutionState.Suspended);
+                if ((OriginalActivatedArgs as LaunchActivatedEventArgs).PrelaunchActivated)
+                    OnResuming(s, e, AppExecutionState.Prelaunch);
+                else
+                    OnResuming(s, e, AppExecutionState.Suspended);
             };
 
             Suspending += async (s, e) =>
@@ -84,8 +87,8 @@ namespace Template10.Common
                         await nav.SuspendingAsync();
                     }
                     // call system-level suspend
-                    DebugWrite("Calling", caller: "OnSuspendingAsync");
-                    await OnSuspendingAsync(s, e);
+                    DebugWrite($"Calling. Prelaunch {(OriginalActivatedArgs as LaunchActivatedEventArgs).PrelaunchActivated}", caller: "OnSuspendingAsync");
+                    await OnSuspendingAsync(s, e, (OriginalActivatedArgs as LaunchActivatedEventArgs).PrelaunchActivated);
                 }
                 catch { }
                 finally { deferral.Complete(); }
@@ -187,6 +190,15 @@ namespace Template10.Common
         {
             DebugWrite($"Previous:{e.PreviousExecutionState.ToString()}");
 
+            // handle pre-launch
+            if ((e as LaunchActivatedEventArgs).PrelaunchActivated)
+            {
+                var continueStartup = false;
+                OnPrelaunch(e, out continueStartup);
+                if (!continueStartup)
+                    return;
+            }
+
             OriginalActivatedArgs = e;
 
             if (e.PreviousExecutionState != ApplicationExecutionState.Running)
@@ -201,7 +213,7 @@ namespace Template10.Common
                 case ApplicationExecutionState.Suspended:
                 case ApplicationExecutionState.Terminated:
                     {
-                        OnResuming(this, null, ApplicationExecutionState.Terminated);
+                        OnResuming(this, null, AppExecutionState.Terminated);
 
                         /*
                             Restore state if you need to/can do.
@@ -336,6 +348,24 @@ namespace Template10.Common
         public enum StartKind { Launch, Activate }
 
         /// <summary>
+        /// Prelaunch may never occur. However, it's possible that it will. It is a Windows mechanism
+        /// to launch apps in the background and quickly suspend them. Because of this, developers need to
+        /// handle Prelaunch scenarios if their typical launch is expensive or requires user interaction.
+        /// </summary>
+        /// <param name="args">IActivatedEventArgs from startup</param>
+        /// <param name="continueStartup">A developer can force the typical startup pipeline. Default should be false.</param>
+        /// <remarks>
+        /// For Prelaunch Template 10 does not continue the typical startup pipeline by default. 
+        /// OnActivated will occur if the application has been prelaunched.
+        /// </remarks>
+        public virtual void OnPrelaunch(IActivatedEventArgs args, out bool continueStartup)
+        {
+            DebugWrite("Virtual");
+
+            continueStartup = false;
+        }
+
+        /// <summary>
         /// OnStartAsync is the one-stop-show override to handle when your app starts
         /// Template 10 will not call OnStartAsync if the app is restored from state.
         /// An app restores from state when the app was suspended and then terminated (PreviousExecutionState terminated).
@@ -362,14 +392,26 @@ namespace Template10.Common
         /// because the asunc operations are in a single, global deferral created when the suspension
         /// begins and completed automatically when the last viewmodel has been called (including this method).
         /// </summary>
-        public virtual Task OnSuspendingAsync(object s, SuspendingEventArgs e)
+        public virtual Task OnSuspendingAsync(object s, SuspendingEventArgs e, bool prelaunch)
         {
             DebugWrite("Virtual");
 
             return Task.CompletedTask;
         }
 
-        public virtual void OnResuming(object s, object e, ApplicationExecutionState previousExecutionState)
+        public enum AppExecutionState { Suspended, Terminated, Prelaunch }
+
+        /// <summary>
+        /// The application is returning from a suspend state of some kind.
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="e"></param>
+        /// <param name="previousExecutionState"></param>
+        /// <remarks>
+        /// previousExecutionState can be Terminated, which typically does not raise OnResume.
+        /// This is important because the resume model changes a little in Mobile.
+        /// </remarks>
+        public virtual void OnResuming(object s, object e, AppExecutionState previousExecutionState)
         {
             DebugWrite($"Virtual, PreviousExecutionState:{previousExecutionState}");
         }
@@ -383,7 +425,7 @@ namespace Template10.Common
         /// </summary>
         private async Task InitializeFrameAsync(IActivatedEventArgs e)
         {
-            DebugWrite($"IActivatedEventArgs:{e}");
+            DebugWrite($"IActivatedEventArgs.Kind:{e.Kind}");
 
             // first show the splash 
             FrameworkElement splash = null;
@@ -536,7 +578,7 @@ namespace Template10.Common
         /// </summary>
         public static AdditionalKinds DetermineStartCause(IActivatedEventArgs args)
         {
-            DebugWrite($"IActivatedEventArgs:{args}");
+            DebugWrite($"IActivatedEventArgs.Kind:{args.Kind}");
 
             if (args is ToastNotificationActivatedEventArgs)
                 return AdditionalKinds.Toast;
