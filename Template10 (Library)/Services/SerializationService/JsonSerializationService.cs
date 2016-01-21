@@ -1,11 +1,17 @@
 using System;
 using Newtonsoft.Json;
+using System.Runtime.CompilerServices;
 
 namespace Template10.Services.SerializationService
 {
     public sealed class JsonSerializationService : ISerializationService
     {
-        private volatile Tuple<object, string> lastCache = new Tuple<object, string>(null, null);
+        #region Debug
+
+        static void DebugWrite(string text = null, Services.LoggingService.Severities severity = LoggingService.Severities.Trace, [CallerMemberName]string caller = null) =>
+            LoggingService.LoggingService.WriteLine(text, severity, caller: $"{nameof(JsonSerializationService)}.{caller}");
+
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="JsonSerializationService"/> class.
@@ -19,22 +25,13 @@ namespace Template10.Services.SerializationService
         /// </summary>
         public string Serialize(object value)
         {
-            if (value == null)
-            {
-                return null;
-            }
-            string valueStr = value as string;
-            if (valueStr == string.Empty)
-            {
-                return valueStr;
-            }
+            DebugWrite($"Value {value}");
 
-            // Check cache
-            var lastCacheValue = lastCache;
-            if (ReferenceEquals(lastCacheValue.Item1, value))
-            {
-                return lastCacheValue.Item2;
-            }
+            if (value == null)
+                return null;
+
+            if (value as string == string.Empty)
+                return string.Empty;
 
             // Serialize to json
             var container = new Container
@@ -42,11 +39,7 @@ namespace Template10.Services.SerializationService
                 Type = value.GetType().AssemblyQualifiedName,
                 Data = JsonConvert.SerializeObject(value, Formatting.None)
             };
-            var result = JsonConvert.SerializeObject(container);
-
-            // Update the cache
-            lastCache = new Tuple<object, string>(value, result);
-            return result;
+            return JsonConvert.SerializeObject(container);
         }
 
         /// <summary>
@@ -54,30 +47,18 @@ namespace Template10.Services.SerializationService
         /// </summary>
         public object Deserialize(string value)
         {
-            if (value == null)
-            {
-                return null;
-            }
-            if (value == string.Empty)
-            {
-                return string.Empty;
-            }
+            DebugWrite($"Value {value}");
 
-            // Check cache
-            var lastCacheValue = lastCache;
-            if (string.Equals(lastCacheValue.Item2, value))
-            {
-                return lastCacheValue.Item1;
-            }
+            if (value == null)
+                return null;
+
+            if (value == string.Empty)
+                return string.Empty;
 
             // Deserialize from json
-            Container container = JsonConvert.DeserializeObject<Container>(value);
-            Type type = Type.GetType(container.Type);
-            object result = JsonConvert.DeserializeObject(container.Data, type);
-
-            // Update the cache
-            lastCache = new Tuple<object, string>(result, value);
-            return result;
+            var container = JsonConvert.DeserializeObject<Container>(value);
+            var type = Type.GetType(container.Type);
+            return JsonConvert.DeserializeObject(container.Data, type);
         }
 
         /// <summary>
