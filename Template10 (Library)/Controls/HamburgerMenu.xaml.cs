@@ -410,20 +410,36 @@ namespace Template10.Controls
         public static readonly DependencyProperty SelectedProperty =
             DependencyProperty.Register(nameof(Selected), typeof(HamburgerButtonInfo),
                 typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) =>
-                { (d as HamburgerMenu).SetSelected((HamburgerButtonInfo)e.OldValue, (HamburgerButtonInfo)e.NewValue); }));
+                {
+                    (d as HamburgerMenu)._insideOperation = true;
+                    try
+                    {
+                        (d as HamburgerMenu).SetSelected((HamburgerButtonInfo)e.OldValue, (HamburgerButtonInfo)e.NewValue);
+                    }
+                    catch (Exception ex)
+                    {
+                        DebugWrite($"Catch Ex.Message: {ex.Message}", caller: "SelectedPropertyChanged");
+                    }
+                    finally
+                    {
+                        (d as HamburgerMenu)._insideOperation = false;
+                    }
+                }));
         private void SetSelected(HamburgerButtonInfo previous, HamburgerButtonInfo value)
         {
             DebugWrite($"OldValue: {previous}, NewValue: {value}");
 
             IsOpen = false;
 
+            // undo previous
+            if (previous?.IsChecked ?? true && previous != value)
+            {
+                previous?.RaiseUnselected();
+            }
+
             // reset all, except selected
-            _navButtons
-                .Where(x => x.Value != value)
-                .ForEach(x =>
-                {
-                    x.Value.IsChecked = false;
-                });
+            _navButtons.Where(x => x.Value != value)
+                .ForEach(x => { x.Value.IsChecked = false; });
 
             // navigate
             if (value?.PageType != null)
@@ -433,16 +449,16 @@ namespace Template10.Controls
                     if (value.ClearHistory)
                         NavigationService.ClearHistory();
                 }
+                else if (NavigationService.FrameFacade.CurrentPageType == value.PageType
+                     && (NavigationService.FrameFacade.CurrentPageParam ?? string.Empty) == (value.PageParameter ?? string.Empty))
+                {
+                    if (value.ClearHistory)
+                        NavigationService.ClearHistory();
+                }
                 else
                 {
                     return;
                 }
-            }
-
-            // undo previous
-            if (previous?.IsChecked ?? true && previous != value)
-            {
-                previous?.RaiseUnselected();
             }
 
             // that's it if null
