@@ -94,10 +94,10 @@ namespace Template10.Services.KeyboardService
             catch { }
         }
 
-        public Action GoPointerBackGestured { get; set; }
+        public Action PointerGoBackGestured { get; set; }
         protected void RaisePointerGoBackGestured()
         {
-            try { GoPointerBackGestured?.Invoke(); }
+            try { PointerGoBackGestured?.Invoke(); }
             catch { }
         }
 
