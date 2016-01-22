@@ -80,6 +80,9 @@ namespace Template10.Services.NavigationService
                 var dataContext = page.DataContext as INavigable;
                 if (dataContext != null)
                 {
+                    dataContext.NavigationService = this;
+                    dataContext.Dispatcher = WindowWrapper.Current(this)?.Dispatcher;
+                    dataContext.SessionState = BootStrapper.Current.SessionState;
                     var args = new NavigatingEventArgs
                     {
                         NavigationMode = FrameFacade.NavigationModeHint,
@@ -106,6 +109,9 @@ namespace Template10.Services.NavigationService
                 var dataContext = page.DataContext as INavigable;
                 if (dataContext != null)
                 {
+                    dataContext.NavigationService = this;
+                    dataContext.Dispatcher = WindowWrapper.Current(this)?.Dispatcher;
+                    dataContext.SessionState = BootStrapper.Current.SessionState;
                     var pageState = FrameFacade.PageStateSettingsService(page.GetType()).Values;
                     await dataContext.OnNavigatedFromAsync(pageState, suspending);
                 }
@@ -143,7 +149,7 @@ namespace Template10.Services.NavigationService
                 {
                     // prepare for state load
                     dataContext.NavigationService = this;
-                    dataContext.Dispatcher = Common.WindowWrapper.Current(this)?.Dispatcher;
+                    dataContext.Dispatcher = WindowWrapper.Current(this)?.Dispatcher;
                     dataContext.SessionState = BootStrapper.Current.SessionState;
                     var pageState = FrameFacade.PageStateSettingsService(page.GetType()).Values;
                     dataContext.OnNavigatedTo(parameter, mode, pageState);

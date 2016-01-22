@@ -18,6 +18,8 @@ namespace Template10.Common
 
         #endregion
 
+        public static IDispatcherWrapper Current() => WindowWrapper.Current().Dispatcher;
+
         internal DispatcherWrapper(CoreDispatcher dispatcher)
         {
             DebugWrite(caller: "Constructor");
