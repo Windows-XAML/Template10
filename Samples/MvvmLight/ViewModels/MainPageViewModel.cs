@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Template10.Mvvm;
 using Windows.UI.Xaml.Navigation;
 
 namespace Sample.ViewModels
@@ -21,6 +22,16 @@ namespace Sample.ViewModels
         {
             get { return _Value; }
             set { Set(ref _Value, value); }
+        }
+
+
+        DelegateCommand _GotoDetailsCommand;
+        public DelegateCommand GotoDetailsCommand
+           => _GotoDetailsCommand ?? (_GotoDetailsCommand = new DelegateCommand(GotoDetailsCommandExecute, GotoDetailsCommandCanExecute));
+        bool GotoDetailsCommandCanExecute() => true;
+        void GotoDetailsCommandExecute()
+        {
+            NavigationService.Navigate(typeof(Views.DetailPage));
         }
     }
 }

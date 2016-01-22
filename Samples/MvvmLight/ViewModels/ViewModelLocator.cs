@@ -4,15 +4,12 @@ namespace Sample.ViewModels
 {
     public class ViewModelLocator
     {
-        private ViewModels.MainPageViewModel _MainPageViewModel;
-        public ViewModels.MainPageViewModel MainPageViewModel
-        {
-            get
-            {
-                if (_MainPageViewModel != null)
-                    return _MainPageViewModel;
-                return _MainPageViewModel = new MainPageViewModel();
-            }
-        }
+        private MainPageViewModel _MainPageViewModel;
+        public MainPageViewModel MainPageViewModel =>
+                _MainPageViewModel ?? (_MainPageViewModel = new MainPageViewModel());
+
+        private DetailPageViewModel _DetailPageViewModel;
+        public DetailPageViewModel DetailPageViewModel =>
+                _DetailPageViewModel ?? (_DetailPageViewModel = new DetailPageViewModel());
     }
 }

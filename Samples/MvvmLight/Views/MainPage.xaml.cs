@@ -8,8 +8,9 @@ namespace Sample.Views
         public MainPage()
         {
             InitializeComponent();
+            NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
         }
 
-        public MainPageViewModel ViewModel => this.DataContext as MainPageViewModel;
+        public MainPageViewModel ViewModel => (DataContext as MainPageViewModel);
     }
 }
