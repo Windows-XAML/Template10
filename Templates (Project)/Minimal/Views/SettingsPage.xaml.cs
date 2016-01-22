@@ -1,5 +1,4 @@
-﻿using Sample.ViewModels;
-using Windows.UI.Xaml.Controls;
+﻿using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
 namespace Sample.Views
@@ -13,9 +12,9 @@ namespace Sample.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            int index;
-            if (int.TryParse(e.Parameter?.ToString(), out index))
-                MyPivot.SelectedIndex = index;
+            var index = Template10.Services.SerializationService.SerializationService
+                .Json.Deserialize<int>(e.Parameter?.ToString());
+            MyPivot.SelectedIndex = index;
         }
     }
 }
