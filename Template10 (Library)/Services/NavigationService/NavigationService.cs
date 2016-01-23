@@ -68,13 +68,10 @@ namespace Template10.Services.NavigationService
             if (page != null)
             {
                 // force (x:bind) page bindings to update
-                var fields = page.GetType().GetRuntimeFields();
-                var bindings = fields.FirstOrDefault(x => x.Name.Equals("Bindings"));
-                if (bindings != null)
-                {
-                    var update = bindings.GetType().GetTypeInfo().GetDeclaredMethod("Update");
-                    update?.Invoke(bindings, null);
-                }
+                var field = page.GetType().GetTypeInfo().GetDeclaredField("Bindings");
+                var bindings = field?.GetValue(page);
+                var update = bindings?.GetType().GetRuntimeMethod("Update", new Type[] { });
+                update?.Invoke(bindings, null);
 
                 // call navagable override (navigating)
                 var dataContext = page.DataContext as INavigable;
