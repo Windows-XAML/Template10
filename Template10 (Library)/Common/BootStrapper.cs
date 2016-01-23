@@ -194,7 +194,7 @@ namespace Template10.Common
             if ((e as LaunchActivatedEventArgs).PrelaunchActivated)
             {
                 var continueStartup = false;
-                OnPrelaunch(e, out continueStartup);
+                await OnPrelaunchAsync(e, out continueStartup);
                 if (!continueStartup)
                     return;
             }
@@ -358,11 +358,12 @@ namespace Template10.Common
         /// For Prelaunch Template 10 does not continue the typical startup pipeline by default. 
         /// OnActivated will occur if the application has been prelaunched.
         /// </remarks>
-        public virtual void OnPrelaunch(IActivatedEventArgs args, out bool continueStartup)
+        public virtual Task OnPrelaunchAsync(IActivatedEventArgs args, out bool continueStartup)
         {
             DebugWrite("Virtual");
 
             continueStartup = false;
+            return Task.CompletedTask;
         }
 
         /// <summary>
