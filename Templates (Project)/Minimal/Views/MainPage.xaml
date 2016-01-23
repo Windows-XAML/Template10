@@ -66,9 +66,8 @@
             <controls:Resizer>
                 <TextBox Width="200" MinWidth="200" MinHeight="60"
                          Margin="0" Header="Parameter to pass"
-                         Text="{x:Bind ViewModel.Value, Mode=TwoWay}" TextWrapping="Wrap">
+                         Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap">
                     <Interactivity:Interaction.Behaviors>
-                        <Behaviors:UpdateSourceTriggerBehavior />
                         <Behaviors:TextBoxEnterKeyBehavior>
                             <Core:CallMethodAction MethodName="GotoDetailsPage" TargetObject="{Binding}" />
                         </Behaviors:TextBoxEnterKeyBehavior>
