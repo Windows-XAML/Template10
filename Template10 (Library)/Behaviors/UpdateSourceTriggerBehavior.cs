@@ -11,6 +11,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Template10.Behaviors
 {
+    [TypeConstraint(typeof(TextBox))]
     public class UpdateSourceTriggerBehavior : DependencyObject, IBehavior
     {
         TextBox _textBox;
