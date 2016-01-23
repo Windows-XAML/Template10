@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Template10.Utils;
+using static Template10.Utils.XamlUtils;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -22,7 +23,7 @@ namespace Template10.Behaviors
         {
             AssociatedObject = associatedObject;
             _textBox = associatedObject as TextBox;
-            _page = XamlUtils.Ancestor<Page>(_textBox);
+            _page = _textBox.Ancestor<Page>();
             _textBox.TextChanged += _textBox_TextChanged;
         }
 
