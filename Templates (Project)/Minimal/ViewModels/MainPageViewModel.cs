@@ -20,13 +20,14 @@ namespace Sample.ViewModels
         string _Value = string.Empty;
         public string Value { get { return _Value; } set { Set(ref _Value, value); } }
 
-        public override void OnNavigatedTo(object parameter, NavigationMode mode, IDictionary<string, object> state)
+        public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
             if (state.Any())
             {
                 Value = state[nameof(Value)]?.ToString();
                 state.Clear();
             }
+            return Task.CompletedTask;
         }
 
         public override Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending)
@@ -38,11 +39,17 @@ namespace Sample.ViewModels
             return Task.CompletedTask;
         }
 
-        public override void OnNavigatingFrom(NavigatingEventArgs args) =>
+        public override Task OnNavigatingFromAsync(NavigatingEventArgs args)
+        {
             args.Cancel = false;
+            return Task.CompletedTask;
+        }
 
         public void GotoDetailsPage() =>
             NavigationService.Navigate(typeof(Views.DetailPage), Value);
+
+        public void GotoSettings() =>
+            NavigationService.Navigate(typeof(Views.SettingsPage), 0);
 
         public void GotoPrivacy() =>
             NavigationService.Navigate(typeof(Views.SettingsPage), 1);

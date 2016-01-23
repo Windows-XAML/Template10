@@ -9,6 +9,7 @@ namespace Sample.Views
         public DetailPage()
         {
             InitializeComponent();
+            NavigationCacheMode = NavigationCacheMode.Disabled;
         }
     }
 }

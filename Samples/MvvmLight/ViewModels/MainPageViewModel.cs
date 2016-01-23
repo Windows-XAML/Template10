@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Template10.Mvvm;
 using Windows.UI.Xaml.Navigation;
 
@@ -12,9 +13,10 @@ namespace Sample.ViewModels
                 Value = "Designtime value";
         }
 
-        public override void OnNavigatedTo(object parameter, NavigationMode mode, IDictionary<string, object> state)
+        public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
             Value = parameter?.ToString();
+            return Task.CompletedTask;
         }
 
         private string _Value;

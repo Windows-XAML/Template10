@@ -10,19 +10,29 @@ namespace Template10.Mvvm
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-MVVM
     public abstract class ViewModelBase : BindableBase, INavigable
     {
-        public virtual void OnNavigatedTo(object parameter, NavigationMode mode, IDictionary<string, object> state) { /* nothing by default */ }
+        public virtual Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
+        {
+            return Task.CompletedTask;
+        }
+
         public virtual Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending)
         {
-			return Task.CompletedTask;
-		}
-        public virtual void OnNavigatingFrom(Services.NavigationService.NavigatingEventArgs args) { /* nothing by default */ }
+            return Task.CompletedTask;
+        }
+
+        public virtual Task OnNavigatingFromAsync(NavigatingEventArgs args)
+        {
+            return Task.CompletedTask;
+        }
 
         [JsonIgnore]
         public INavigationService NavigationService { get; set; }
+
         [JsonIgnore]
         public IDispatcherWrapper Dispatcher { get; set; }
+
         [JsonIgnore]
         public IStateItems SessionState { get; set; }
-        
+
     }
 }

@@ -32,7 +32,7 @@ namespace Template10.Behaviors
             var field = _page.GetType().GetTypeInfo().GetDeclaredField("Bindings");
             var bindings = field?.GetValue(_page);
             var update = bindings?.GetType().GetRuntimeMethod("Update", new Type[] { });
-            update?.Invoke(bindings, null);
+            //update?.Invoke(bindings, null);
         }
 
         public void Detach()

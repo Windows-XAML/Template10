@@ -19,7 +19,7 @@
         <controls:PageHeader Content="Main Page" />
 
         <Grid Grid.Row="1" Padding="12,4,0,0">
-            <!--  content  -->
+            <TextBlock>Hello world</TextBlock>
         </Grid>
 
     </Grid>

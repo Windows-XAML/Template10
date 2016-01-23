@@ -228,7 +228,7 @@ namespace Template10.Common
 
                         if (DetermineStartCause(e) == AdditionalKinds.Primary)
                         {
-                            restored = NavigationService.RestoreSavedNavigation();
+                            restored = await NavigationService.RestoreSavedNavigationAsync();
                             DebugWrite($"Restored:{restored}", caller: "Nav.Restored");
                         }
                         break;

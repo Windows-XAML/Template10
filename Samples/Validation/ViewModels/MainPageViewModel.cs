@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Template10.Mvvm;
 using Template10.Utils;
 using Windows.UI.Popups;
@@ -19,7 +20,7 @@ namespace Sample.ViewModels
                 _userService = new Services.UserService.UserService();
         }
 
-        public override void OnNavigatedTo(object parameter, NavigationMode mode, IDictionary<string, object> state)
+        public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
             Users.AddRange(_userService.GetUsers());
 
@@ -30,6 +31,7 @@ namespace Sample.ViewModels
             });
             PropertyChanged += (s, e) => refresh();
             Users.CollectionChanged += (s, e) => refresh();
+            return Task.CompletedTask;
         }
 
         public ObservableCollection<Models.User> Users { get; } = new ObservableCollection<Models.User>();

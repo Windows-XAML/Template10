@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -7,13 +9,37 @@ namespace Template10.Utils
 {
     public static class XamlUtils
     {
-        public static T Ancestor<T>(this Control control) where T : Control
+        public static void UpdateBindings(Page page)
         {
-            var parent = control.Parent as Control;
+            var field = page.GetType().GetTypeInfo().GetDeclaredField("Bindings");
+            var bindings = field?.GetValue(page);
+            var update = bindings?.GetType().GetRuntimeMethod("Update", new Type[] { });
+            update?.Invoke(bindings, null);
+        }
+
+        public static void InitializeBindings(Page page)
+        {
+            var field = page.GetType().GetTypeInfo().GetDeclaredField("Bindings");
+            var bindings = field?.GetValue(page);
+            var update = bindings?.GetType().GetRuntimeMethod("Initialize", new Type[] { });
+            update?.Invoke(bindings, null);
+        }
+
+        public static void StopTrackingBindings(Page page)
+        {
+            var field = page.GetType().GetTypeInfo().GetDeclaredField("Bindings");
+            var bindings = field?.GetValue(page);
+            var update = bindings?.GetType().GetRuntimeMethod("StopTracking", new Type[] { });
+            update?.Invoke(bindings, null);
+        }
+
+        public static T Ancestor<T>(this DependencyObject control) where T : DependencyObject
+        {
+            var parent = VisualTreeHelper.GetParent(control) as DependencyObject;
             while (parent != null)
             {
                 if (parent is T) return (T)parent;
-                parent = parent.Parent as Control;
+                parent = VisualTreeHelper.GetParent(parent) as DependencyObject;
             }
             return null;
         }

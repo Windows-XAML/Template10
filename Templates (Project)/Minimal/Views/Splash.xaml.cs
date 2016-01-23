@@ -10,7 +10,7 @@ namespace Sample.Views
     {
         public Splash(SplashScreen splashScreen)
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             Action resize = () =>
             {
