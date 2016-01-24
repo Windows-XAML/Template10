@@ -11,6 +11,12 @@ namespace Template10.Converters
             var format = (parameter as string) ?? Format;
             if (format == null)
                 return value;
+            
+            if(string.IsNullOrWhiteSpace(language))
+            {
+                return string.Format(format, value);
+            }    
+                
             try
             {
                 var culture = new CultureInfo(language);
