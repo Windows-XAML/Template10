@@ -76,8 +76,48 @@
         </DataTemplate>
 
         <DataTemplate x:Name="MessageDetailTemplate">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <RelativePanel Padding="16">
+            <UserControl>
+                <RelativePanel Padding="16" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup x:Name="NarrowVisualStateGroup">
+                            <VisualState x:Name="DetailVisualState">
+                                <VisualState.Setters>
+
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="ListVisualState">
+                                <VisualState.Setters>
+
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                        <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
+                            <VisualState x:Name="VisualStateNarrow">
+                                <VisualState.StateTriggers>
+                                    <AdaptiveTrigger MinWindowWidth="{StaticResource NarrowMinWidth}" />
+                                </VisualState.StateTriggers>
+                                <VisualState.Setters>
+                                    <!--  TODO: change properties for narrow view  -->
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="VisualStateNormal">
+                                <VisualState.StateTriggers>
+                                    <AdaptiveTrigger MinWindowWidth="{StaticResource NormalMinWidth}" />
+                                </VisualState.StateTriggers>
+                                <VisualState.Setters>
+                                    <!--  TODO: change properties for normal view  -->
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="VisualStateWide">
+                                <VisualState.StateTriggers>
+                                    <AdaptiveTrigger MinWindowWidth="900" />
+                                </VisualState.StateTriggers>
+                                <VisualState.Setters>
+                                    <!--  TODO: change properties for wide view  -->
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
                     <Ellipse x:Name="Ellipse" Width="50"
                              Height="50" Margin="0,0,16,0"
                              Fill="Gainsboro" />
@@ -107,9 +147,9 @@
                                Style="{StaticResource TitleTextBlockStyle}"
                                Text="{Binding Body, FallbackValue=Body}">
                         <TextBlock.Transitions>
-                                <TransitionCollection>
-                                    <ContentThemeTransition />
-                                </TransitionCollection>
+                            <TransitionCollection>
+                                <ContentThemeTransition />
+                            </TransitionCollection>
                         </TextBlock.Transitions>
                     </TextBlock>
                     <TextBlock x:Name="Date" Grid.Column="2"
@@ -120,7 +160,7 @@
                                Text="{Binding Date, Mode=OneWay, Converter={StaticResource StringFormatConverter}, ConverterParameter=\{0:D\}}"
                                TextAlignment="Right" />
                 </RelativePanel>
-            </ScrollViewer>
+            </UserControl>
         </DataTemplate>
 
         <Style x:Name="MessageListViewStyle" TargetType="ListView">
