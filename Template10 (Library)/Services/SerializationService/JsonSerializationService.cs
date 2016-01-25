@@ -4,8 +4,13 @@ using System.Runtime.CompilerServices;
 
 namespace Template10.Services.SerializationService
 {
+    using System.Diagnostics;
+    using System.Runtime.Serialization.Formatters;
+
     public sealed class JsonSerializationService : ISerializationService
     {
+        private readonly JsonSerializerSettings settings;
+
         #region Debug
 
         static void DebugWrite(string text = null, Services.LoggingService.Severities severity = LoggingService.Severities.Trace, [CallerMemberName]string caller = null) =>
@@ -18,7 +23,20 @@ namespace Template10.Services.SerializationService
         /// </summary>
         internal JsonSerializationService()
         {
+            settings = new JsonSerializerSettings()
+            {
+                Formatting = Formatting.None,
+                TypeNameHandling = TypeNameHandling.Auto,
+                TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple,
+                PreserveReferencesHandling = PreserveReferencesHandling.All,
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            };
         }
+
+        /// <summary>
+        /// JSON serializer settings.
+        /// </summary>
+        public JsonSerializerSettings Settings => settings;
 
         /// <summary>
         /// Serializes the value.
@@ -37,7 +55,7 @@ namespace Template10.Services.SerializationService
             var container = new Container
             {
                 Type = value.GetType().AssemblyQualifiedName,
-                Data = JsonConvert.SerializeObject(value, Formatting.None)
+                Data = JsonConvert.SerializeObject(value, Formatting.None, settings)
             };
             return JsonConvert.SerializeObject(container);
         }
@@ -58,7 +76,7 @@ namespace Template10.Services.SerializationService
             // Deserialize from json
             var container = JsonConvert.DeserializeObject<Container>(value);
             var type = Type.GetType(container.Type);
-            return JsonConvert.DeserializeObject(container.Data, type);
+            return JsonConvert.DeserializeObject(container.Data, type, settings);
         }
 
         /// <summary>
