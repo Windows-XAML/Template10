@@ -429,7 +429,10 @@ namespace Template10.Controls
         {
             DebugWrite($"OldValue: {previous}, NewValue: {value}");
 
-            IsOpen = false;
+            // do not remove this if statement
+            // this is the fix for #410 (click twice)
+            if (previous != null)
+                IsOpen = false;
 
             // undo previous
             if (previous?.IsChecked ?? true && previous != value)
