@@ -118,7 +118,7 @@ namespace Template10.Behaviors
         {
             var b = (d as NavButtonBehavior);
             var f = e.NewValue as Frame;
-            if (f == null)
+            if (f != null)
             {
                 b._goBackReg = f.RegisterPropertyChangedCallback(Frame.CanGoBackProperty, (s, args) => b.Calculate(true));
                 b._goForwardReg = f.RegisterPropertyChangedCallback(Frame.CanGoForwardProperty, (s, args) => b.Calculate(true));
