@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{9A82F6E0-3AC8-440C-AA37-714920D8FB85}</ProjectGuid>
+    <ProjectGuid>{6E068955-A693-4E4E-8852-C270447B4053}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Sample</RootNamespace>
@@ -90,7 +90,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <None Include="Minimal_TemporaryKey.pfx" />
+    <None Include="Hamburger_TemporaryKey.pfx" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
@@ -113,6 +113,9 @@
     </Compile>
     <Compile Include="Views\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shell.xaml.cs">
+      <DependentUpon>Shell.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Splash.xaml.cs">
       <DependentUpon>Splash.xaml</DependentUpon>
@@ -154,6 +157,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\SettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Shell.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

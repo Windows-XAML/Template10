@@ -1,38 +1,46 @@
-﻿using Messaging.Mvvm;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using Template10.Common;
+using Template10.Mvvm;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Navigation;
 
 namespace Messaging.ViewModels
 {
-    public class MainPageViewModel : ViewModelBase
+    public class DetailPageViewModel : Messaging.Mvvm.ViewModelBase
     {
-        public MainPageViewModel()
+        public DetailPageViewModel()
         {
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-            {
                 Value = "Designtime value";
-            }
         }
 
-        string _Value = string.Empty;
+        private string _Value = "Default";
         public string Value { get { return _Value; } set { Set(ref _Value, value); } }
 
         public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
-            if (state.Any())
+            if (state.ContainsKey(nameof(Value)))
             {
                 Value = state[nameof(Value)]?.ToString();
                 state.Clear();
+            }
+            else
+            {
+                Value = parameter?.ToString();
             }
             return Task.CompletedTask;
         }
 
         public override Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending)
         {
-            state[nameof(Value)] = Value;
+            if (suspending)
+            {
+                state[nameof(Value)] = Value;
+            }
             return Task.CompletedTask;
         }
 
@@ -41,18 +49,5 @@ namespace Messaging.ViewModels
             args.Cancel = false;
             return Task.CompletedTask;
         }
-
-        public void GotoDetailsPage() =>
-            NavigationService.Navigate(typeof(Views.DetailPage), Value);
-
-        public void GotoSettings() =>
-            NavigationService.Navigate(typeof(Views.SettingsPage), 0);
-
-        public void GotoPrivacy() =>
-            NavigationService.Navigate(typeof(Views.SettingsPage), 1);
-
-        public void GotoAbout() =>
-            NavigationService.Navigate(typeof(Views.SettingsPage), 2);
-
     }
 }

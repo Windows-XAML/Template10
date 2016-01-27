@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Template10.Common;
-using Template10.Services.NavigationService;
 using Windows.UI.Xaml;
 
 namespace Messaging.Services.SettingsServices
@@ -13,22 +11,22 @@ namespace Messaging.Services.SettingsServices
     {
         public void ApplyUseShellBackButton(bool value)
         {
-            BootStrapper.Current.NavigationService.Dispatcher.Dispatch(() =>
+            Template10.Common.BootStrapper.Current.NavigationService.Dispatcher.Dispatch(() =>
             {
-                BootStrapper.Current.ShowShellBackButton = value;
-                BootStrapper.Current.UpdateShellBackButton();
-                BootStrapper.Current.NavigationService.Refresh();
+                Template10.Common.BootStrapper.Current.ShowShellBackButton = value;
+                Template10.Common.BootStrapper.Current.UpdateShellBackButton();
+                Template10.Common.BootStrapper.Current.NavigationService.Refresh();
             });
         }
 
         public void ApplyAppTheme(ApplicationTheme value)
         {
-            BootStrapper.Current.NavigationService.Refresh();
+            Views.Shell.HamburgerMenu.RefreshStyles(value);
         }
 
         private void ApplyCacheMaxDuration(TimeSpan value)
         {
-            BootStrapper.Current.CacheMaxDuration = value;
+            Template10.Common.BootStrapper.Current.CacheMaxDuration = value;
         }
     }
 }

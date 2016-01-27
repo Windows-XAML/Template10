@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Template10.Utils;
 
 namespace Messaging.Views
 {
@@ -10,13 +9,6 @@ namespace Messaging.Views
         public SettingsPage()
         {
             InitializeComponent();
-
-            #region App settings
-
-            var _settings = Services.SettingsServices.SettingsService.Instance;
-            RequestedTheme = _settings.AppTheme.ToElementTheme();
-
-            #endregion
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

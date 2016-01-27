@@ -1,0 +1,88 @@
+﻿<Page x:Class="Messaging.Views.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:Behaviors="using:Template10.Behaviors"
+      xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+      xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+      xmlns:controls="using:Template10.Controls"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="using:Messaging.Views"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:vm="using:Messaging.ViewModels" mc:Ignorable="d">
+
+    <Page.DataContext>
+        <vm:MainPageViewModel x:Name="ViewModel" />
+    </Page.DataContext>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
+                <VisualState x:Name="VisualStateNarrow">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource NarrowMinWidth}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <!--  TODO: change properties for narrow view  -->
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="VisualStateNormal">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource NormalMinWidth}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <!--  TODO: change properties for normal view  -->
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="VisualStateWide">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource WideMinWidth}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <!--  TODO: change properties for wide view  -->
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <!--  page header  -->
+        <controls:PageHeader Content="Main Page">
+            <controls:PageHeader.SecondaryCommands>
+                <AppBarButton Click="{x:Bind ViewModel.GotoSettings}" Label="Settings" />
+                <AppBarButton Click="{x:Bind ViewModel.GotoPrivacy}" Label="Privacy" />
+                <AppBarButton Click="{x:Bind ViewModel.GotoAbout}" Label="About" />
+            </controls:PageHeader.SecondaryCommands>
+        </controls:PageHeader>
+
+        <!--  page content  -->
+        <StackPanel Grid.Row="1" VerticalAlignment="Top" Orientation="Horizontal"
+                    Padding="12,8,0,0">
+
+            <controls:Resizer>
+                <TextBox Width="200" MinWidth="200" MinHeight="60"
+                         Margin="0" Header="Parameter to pass"
+                         Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         TextWrapping="Wrap">
+                    <Interactivity:Interaction.Behaviors>
+                        <Behaviors:TextBoxEnterKeyBehavior>
+                            <Core:CallMethodAction MethodName="GotoDetailsPage" TargetObject="{Binding}" />
+                        </Behaviors:TextBoxEnterKeyBehavior>
+                        <Core:EventTriggerBehavior>
+                            <Behaviors:FocusAction />
+                        </Core:EventTriggerBehavior>
+                    </Interactivity:Interaction.Behaviors>
+                </TextBox>
+            </controls:Resizer>
+
+            <Button Margin="12,0" VerticalAlignment="Bottom"
+                    Click="{x:Bind ViewModel.GotoDetailsPage}" Content="Submit" />
+
+        </StackPanel>
+
+    </Grid>
+</Page>

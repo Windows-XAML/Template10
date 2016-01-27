@@ -1,5 +1,4 @@
 ﻿using System;
-using Template10.Utils;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -12,13 +11,6 @@ namespace Messaging.Views
         public Splash(SplashScreen splashScreen)
         {
             InitializeComponent();
-
-            #region App settings
-
-            var _settings = Services.SettingsServices.SettingsService.Instance;
-            RequestedTheme = _settings.AppTheme.ToElementTheme();
-
-            #endregion
 
             Action resize = () =>
             {

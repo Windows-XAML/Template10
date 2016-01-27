@@ -37,6 +37,16 @@ namespace Messaging.ViewModels
             get { return _BusyText; }
             set { Set(ref _BusyText, value); }
         }
+
+        public void ShowBusy()
+        {
+            Views.Shell.SetBusy(true, _BusyText);
+        }
+
+        public void HideBusy()
+        {
+            Views.Shell.SetBusy(false);
+        }
     }
 
     public class AboutPartViewModel : Mvvm.ViewModelBase

@@ -32,7 +32,10 @@ namespace Messaging.ViewModels
 
         public override Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending)
         {
-            state[nameof(Value)] = Value;
+            if (suspending)
+            {
+                state[nameof(Value)] = Value;
+            }
             return Task.CompletedTask;
         }
 

@@ -26,6 +26,19 @@ namespace Messaging
             #endregion
         }
 
+        // runs even if restored from state
+        public override Task OnInitializeAsync(IActivatedEventArgs args)
+        {
+            // content may already be shell when resuming
+            if ((Window.Current.Content as Views.Shell) == null)
+            {
+                // setup hamburger shell
+                var nav = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include);
+                Window.Current.Content = new Views.Shell(nav);
+            }
+            return Task.CompletedTask;
+        }
+
         // runs only when not restored from state
         public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
