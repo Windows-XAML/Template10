@@ -1,10 +1,10 @@
 ﻿using System;
 using Windows.UI.Xaml;
 using System.Threading.Tasks;
-using Sample.Services.SettingsServices;
+using Messaging.Services.SettingsServices;
 using Windows.ApplicationModel.Activation;
 
-namespace Sample
+namespace Messaging
 {
     /// Documentation on APIs used in this page:
     /// https://github.com/Windows-XAML/Template10/wiki
