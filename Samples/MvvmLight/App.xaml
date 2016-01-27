@@ -1,9 +1,9 @@
-﻿<common:BootStrapper x:Class="Sample.App"
+﻿<common:BootStrapper x:Class="Messaging.App"
                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                      xmlns:common="using:Template10.Common"
-                     xmlns:controls="using:Template10.Controls" xmlns:local="using:Sample"
-                     xmlns:vm="using:Sample.ViewModels">
+                     xmlns:controls="using:Template10.Controls" xmlns:local="using:Messaging"
+                     xmlns:vm="using:Messaging.ViewModels">
 
     <Application.Resources>
         <vm:ViewModelLocator x:Key="Locator" />

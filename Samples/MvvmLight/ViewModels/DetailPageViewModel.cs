@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Navigation;
 
-namespace Sample.ViewModels
+namespace Messaging.ViewModels
 {
     public class DetailPageViewModel : Mvvm.ViewModelBase
     {

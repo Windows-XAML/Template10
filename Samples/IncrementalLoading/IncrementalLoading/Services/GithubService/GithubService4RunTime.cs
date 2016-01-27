@@ -1,13 +1,13 @@
 ﻿using Newtonsoft.Json;
-using Sample.Extensions;
-using Sample.Models;
-using Sample.Shared;
+using Messaging.Extensions;
+using Messaging.Models;
+using Messaging.Shared;
 using System;
 using System.Net;
 using System.Threading.Tasks;
 using Windows.Web.Http;
 
-namespace Sample.Services.GithubService
+namespace Messaging.Services.GithubService
 {
     public class GithubService4RunTime : IGithubService
     {

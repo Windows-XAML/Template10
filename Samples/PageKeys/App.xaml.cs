@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 
-namespace Sample
+namespace Messaging
 {
     sealed partial class App : Template10.Common.BootStrapper
     {

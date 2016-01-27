@@ -1,4 +1,4 @@
-﻿<Page x:Class="Sample.Views.MainPage"
+﻿<Page x:Class="Messaging.Views.MainPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:Behaviors="using:Template10.Behaviors"
@@ -7,9 +7,9 @@
       xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
       xmlns:controls="using:Template10.Controls"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="using:Sample.Views"
+      xmlns:local="using:Messaging.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:vm="using:Sample.ViewModels" x:Name="ThisPage"
+      xmlns:vm="using:Messaging.ViewModels" x:Name="ThisPage"
       Background="White" RequestedTheme="Light"
       mc:Ignorable="d">
 
@@ -111,7 +111,7 @@
 
         <Grid x:Name="MailDetail" Grid.Row="1"
               Grid.Column="1" Background="White">
-            <ContentControl xmlns:m="using:Sample.Models" Content="{Binding Selected}" 
+            <ContentControl xmlns:m="using:Messaging.Models" Content="{Binding Selected}" 
                             ContentTemplate="{StaticResource MessageDetailTemplate}" />
         </Grid>
 

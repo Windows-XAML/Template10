@@ -6,7 +6,7 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Sample.Views
+namespace Messaging.Views
 {
     public sealed partial class Shell : Page, INotifyPropertyChanged
     {

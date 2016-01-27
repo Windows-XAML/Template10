@@ -1,11 +1,11 @@
-﻿<Page x:Class="Sample.Views.MainPage" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<Page x:Class="Messaging.Views.MainPage" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Behaviors="using:Template10.Behaviors"
-      xmlns:Controls="using:Sample.Controls" xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+      xmlns:Controls="using:Messaging.Controls" xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
       xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" xmlns:c="using:Template10.Validation"
       xmlns:controls="using:Template10.Controls" xmlns:converters="using:Template10.Converters"
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="using:Sample.Views"
-      xmlns:m="using:Sample.Models" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:validate="using:Template10.Validation" xmlns:vm="using:Sample.ViewModels" mc:Ignorable="d">
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="using:Messaging.Views"
+      xmlns:m="using:Messaging.Models" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:validate="using:Template10.Validation" xmlns:vm="using:Messaging.ViewModels" mc:Ignorable="d">
 
     <Page.DataContext>
         <vm:MainPageViewModel x:Name="ViewModel" />
@@ -144,12 +144,12 @@
                             </Core:EventTriggerBehavior>
                         </Interactivity:Interaction.Behaviors>
 
-                        <m:User xmlns:m="using:Sample.Models" FirstName="Jerry" LastName="Mayweather" />
-                        <m:User xmlns:m="using:Sample.Models" FirstName="Jerry" LastName="Mayweather" />
-                        <m:User xmlns:m="using:Sample.Models" FirstName="Jerry" LastName="Mayweather" />
-                        <m:User xmlns:m="using:Sample.Models" FirstName="Jerry" LastName="Mayweather" />
-                        <m:User xmlns:m="using:Sample.Models" FirstName="Jerry" LastName="Mayweather" />
-                        <m:User xmlns:m="using:Sample.Models" FirstName="Jerry" LastName="Mayweather" />
+                        <m:User xmlns:m="using:Messaging.Models" FirstName="Jerry" LastName="Mayweather" />
+                        <m:User xmlns:m="using:Messaging.Models" FirstName="Jerry" LastName="Mayweather" />
+                        <m:User xmlns:m="using:Messaging.Models" FirstName="Jerry" LastName="Mayweather" />
+                        <m:User xmlns:m="using:Messaging.Models" FirstName="Jerry" LastName="Mayweather" />
+                        <m:User xmlns:m="using:Messaging.Models" FirstName="Jerry" LastName="Mayweather" />
+                        <m:User xmlns:m="using:Messaging.Models" FirstName="Jerry" LastName="Mayweather" />
 
                     </ListView>
 

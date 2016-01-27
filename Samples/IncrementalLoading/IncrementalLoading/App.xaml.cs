@@ -1,9 +1,9 @@
-﻿using Sample.Views;
+﻿using Messaging.Views;
 using System.Threading.Tasks;
 using Template10.Common;
 using Windows.ApplicationModel.Activation;
 
-namespace Sample
+namespace Messaging
 {
     sealed partial class App : BootStrapper
     {

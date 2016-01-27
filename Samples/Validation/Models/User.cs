@@ -1,7 +1,7 @@
 ﻿using Template10.Validation;
 using System;
 
-namespace Sample.Models
+namespace Messaging.Models
 {
     public class User : ModelBase
     {
