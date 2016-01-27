@@ -38,7 +38,7 @@ namespace Template10.Services.NavigationService
 
         protected internal NavigationService(Frame frame)
         {
-            SerializationService = global::Template10.Services.SerializationService.SerializationService.Json;
+            SerializationService = Services.SerializationService.SerializationService.Json;
 
             FrameFacade = new FrameFacade(this, frame);
             FrameFacade.Navigating += async (s, e) =>
