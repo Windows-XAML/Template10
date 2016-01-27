@@ -44,6 +44,7 @@
                         <Setter Target="MailDetail.Visibility" Value="Collapsed" />
                         <Setter Target="MailDetail.(Grid.Column)" Value="0" />
                         <Setter Target="MailList.IsItemClickEnabled" Value="True" />
+                        <Setter Target="MailList.SelectedIndex" Value="-1" />
                         <Setter Target="LeftColumn.Width" Value="*" />
                         <Setter Target="RightColumn.Width" Value="0" />
                     </VisualState.Setters>
@@ -109,9 +110,9 @@
             <x:String>Sample</x:String>
         </ListView>
 
-        <Grid x:Name="MailDetail" Grid.Row="1"
-              Grid.Column="1" Background="White">
-            <ContentControl xmlns:m="using:Messaging.Models" Content="{Binding Selected}" 
+        <Grid x:Name="MailDetail" Grid.Row="1" HorizontalAlignment="Left"
+              Grid.Column="1" Background="White" MaxWidth="600">
+            <ContentControl xmlns:m="using:Messaging.Models" x:Name="contentControl" Content="{Binding Selected}" 
                             ContentTemplate="{StaticResource MessageDetailTemplate}" />
         </Grid>
 

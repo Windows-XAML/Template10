@@ -20,6 +20,7 @@ namespace Messaging.ViewModels
         public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
             Messages = _messageService.GetMessages();
+            Selected = Messages?.FirstOrDefault();
             return Task.CompletedTask;
         }
 
