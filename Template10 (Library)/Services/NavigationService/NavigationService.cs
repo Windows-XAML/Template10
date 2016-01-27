@@ -125,14 +125,15 @@ namespace Template10.Services.NavigationService
             LastNavigationParameter = parameter;
             LastNavigationType = frameContent.GetType().FullName;
 
-            if (mode == NavigationMode.New)
-            {
-                FrameFacade.ClearFrameState();
-            }
-
             var page = frameContent as Page;
             if (page != null)
             {
+                if (mode == NavigationMode.New)
+                {
+                    var pageState = FrameFacade.PageStateSettingsService(page.GetType()).Values;
+                    pageState?.Clear();
+                }
+
                 if (page.DataContext == null)
                 {
                     // to support dependency injection, but keeping it optional.
