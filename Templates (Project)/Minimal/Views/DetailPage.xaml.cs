@@ -1,9 +1,9 @@
-﻿using Messaging.ViewModels;
+﻿using Sample.ViewModels;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Controls;
 using Template10.Utils;
 
-namespace Messaging.Views
+namespace Sample.Views
 {
     public sealed partial class DetailPage : Page
     {
@@ -11,13 +11,6 @@ namespace Messaging.Views
         {
             InitializeComponent();
             NavigationCacheMode = NavigationCacheMode.Disabled;
-
-            #region App settings
-
-            var _settings = Services.SettingsServices.SettingsService.Instance;
-            RequestedTheme = _settings.AppTheme.ToElementTheme();
-
-            #endregion
         }
     }
 }

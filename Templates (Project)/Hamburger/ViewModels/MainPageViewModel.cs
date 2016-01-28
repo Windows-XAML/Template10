@@ -1,11 +1,11 @@
-﻿using Messaging.Mvvm;
+﻿using Sample.Mvvm;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Navigation;
 
-namespace Messaging.ViewModels
+namespace Sample.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {

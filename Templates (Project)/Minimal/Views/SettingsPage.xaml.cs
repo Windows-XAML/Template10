@@ -3,20 +3,13 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Template10.Utils;
 
-namespace Messaging.Views
+namespace Sample.Views
 {
     public sealed partial class SettingsPage : Page
     {
         public SettingsPage()
         {
             InitializeComponent();
-
-            #region App settings
-
-            var _settings = Services.SettingsServices.SettingsService.Instance;
-            RequestedTheme = _settings.AppTheme.ToElementTheme();
-
-            #endregion
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

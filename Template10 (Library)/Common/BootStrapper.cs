@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -15,8 +16,26 @@ using Windows.UI.Xaml.Controls;
 
 namespace Template10.Common
 {
-    public abstract class BootStrapper : Application
+    public abstract class BootStrapper : Application, INotifyPropertyChanged
     {
+        #region INotifyPropertyChanged
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void Set<T>(ref T storage, T value, [CallerMemberName] String propertyName = null)
+        {
+            if (!object.Equals(storage, value))
+            {
+                storage = value;
+                RaisePropertyChanged(propertyName);
+            }
+        }
+
+        protected void RaisePropertyChanged([CallerMemberName] String propertyName = null) =>
+           PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+        #endregion
+
         #region dependency injection
 
         /// <summary>       
@@ -457,9 +476,18 @@ namespace Template10.Common
             {
                 // build the default frame
                 var frame = CreateRootFrame(e);
-                Window.Current.Content = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include, frame).Frame;
+                var modal = new Controls.ModalDialog
+                {
+                    Content = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include, frame).Frame
+                };
+                Window.Current.Content = modal;
             }
         }
+
+        // The default frame is automatically wrapped in a modal dialog.
+        // this is how you access it to set ModalContent or the IsModal property. 
+        public Controls.ModalDialog ModalDialog { get { return (Window.Current.Content as Controls.ModalDialog); } }
+        public UIElement ModalContent { get { return ModalDialog?.ModalContent; } set { if (ModalDialog != null) ModalDialog.ModalContent = value; } }
 
         protected virtual Frame CreateRootFrame(IActivatedEventArgs e)
         {

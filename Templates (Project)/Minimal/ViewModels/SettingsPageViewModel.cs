@@ -1,9 +1,9 @@
 ﻿using System;
 using Windows.UI.Xaml;
 
-namespace Messaging.ViewModels
+namespace Sample.ViewModels
 {
-    public class SettingsPageViewModel : Messaging.Mvvm.ViewModelBase
+    public class SettingsPageViewModel : Sample.Mvvm.ViewModelBase
     {
         public SettingsPartViewModel SettingsPartViewModel { get; } = new SettingsPartViewModel();
         public AboutPartViewModel AboutPartViewModel { get; } = new AboutPartViewModel();
@@ -36,6 +36,16 @@ namespace Messaging.ViewModels
         {
             get { return _BusyText; }
             set { Set(ref _BusyText, value); }
+        }
+
+        public void ShowBusy()
+        {
+            App.SetBusy(true, _BusyText);
+        }
+
+        public void HideBusy()
+        {
+            App.SetBusy(false);
         }
     }
 

@@ -4,7 +4,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Messaging.Views
+namespace Sample.Views
 {
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SplashScreen
     public sealed partial class Splash : UserControl
@@ -12,13 +12,6 @@ namespace Messaging.Views
         public Splash(SplashScreen splashScreen)
         {
             InitializeComponent();
-
-            #region App settings
-
-            var _settings = Services.SettingsServices.SettingsService.Instance;
-            RequestedTheme = _settings.AppTheme.ToElementTheme();
-
-            #endregion
 
             Action resize = () =>
             {

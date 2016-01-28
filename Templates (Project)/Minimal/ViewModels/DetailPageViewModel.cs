@@ -8,9 +8,9 @@ using Template10.Mvvm;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Navigation;
 
-namespace Messaging.ViewModels
+namespace Sample.ViewModels
 {
-    public class DetailPageViewModel : Messaging.Mvvm.ViewModelBase
+    public class DetailPageViewModel : Sample.Mvvm.ViewModelBase
     {
         public DetailPageViewModel()
         {

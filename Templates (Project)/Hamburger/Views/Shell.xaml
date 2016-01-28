@@ -1,13 +1,13 @@
-﻿<Page x:Class="Messaging.Views.Shell"
+﻿<Page x:Class="Sample.Views.Shell"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:Controls="using:Template10.Controls"
       xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
       xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="using:Messaging.Views"
+      xmlns:local="using:Sample.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:views="using:Messaging.Views"
+      xmlns:views="using:Sample.Views"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
       mc:Ignorable="d">
 
@@ -44,14 +44,7 @@
 
         <Controls:ModalDialog.ModalContent>
             <!--  busy visual  -->
-            <Viewbox Height="32">
-                <StackPanel Orientation="Horizontal">
-                    <ProgressRing Width="16" Height="16" Margin="12,0"
-                                  Foreground="White" IsActive="{x:Bind IsBusy, Mode=OneWay}" />
-                    <TextBlock VerticalAlignment="Center" Foreground="White"
-                               Text="{x:Bind BusyText, Mode=OneWay}" />
-                </StackPanel>
-            </Viewbox>
+            <views:Busy BusyText="{x:Bind BusyText, Mode=OneWay}" IsBusy="{x:Bind IsBusy, Mode=OneWay}" />
         </Controls:ModalDialog.ModalContent>
 
     </Controls:ModalDialog>
