@@ -27,10 +27,9 @@ namespace Template10.Services.NavigationService
         bool Navigate<T>(T key, object parameter = null, NavigationTransitionInfo infoOverride = null) where T : struct, IConvertible;
         Task OpenAsync(Type page, object parameter = null, string title = null, ViewSizePreference size = ViewSizePreference.UseHalf);
         void Refresh();
-        bool RestoreSavedNavigation();
+        Task<bool> RestoreSavedNavigationAsync();
         void Resuming();
-        void SaveNavigation();
-        void Show(SettingsFlyout flyout, string parameter = null);
+        Task SaveNavigationAsync();
         Task SuspendingAsync();
     }
 }

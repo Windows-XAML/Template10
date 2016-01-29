@@ -25,7 +25,12 @@ namespace Template10.Controls
     {
         public PageHeader()
         {
-            this.DefaultStyleKey = typeof(PageHeader);
+            DefaultStyleKey = typeof(PageHeader);
+
+            // behaviors
+            var c = new Microsoft.Xaml.Interactivity.BehaviorCollection();
+            c.Add(new Behaviors.EllipsisBehavior { Visibility = Behaviors.EllipsisBehavior.Visibilities.Auto });
+            SetValue(Microsoft.Xaml.Interactivity.Interaction.BehaviorsProperty, c);
         }
 
         public Visibility BackButtonVisibility

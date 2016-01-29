@@ -1,8 +1,8 @@
-﻿using Sample.ViewModels;
+﻿using Messaging.ViewModels;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Controls;
 
-namespace Sample.Views
+namespace Messaging.Views
 {
     public sealed partial class DetailPage : Page
     {
@@ -11,8 +11,5 @@ namespace Sample.Views
             InitializeComponent();
             NavigationCacheMode = NavigationCacheMode.Disabled;
         }
-
-        // strongly-typed view models enable x:bind
-        public DetailPageViewModel ViewModel => DataContext as DetailPageViewModel;
     }
 }

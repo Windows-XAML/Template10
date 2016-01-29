@@ -9,7 +9,7 @@ using Windows.Media.SpeechSynthesis;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace Sample.ViewModels
+namespace Messaging.ViewModels
 {
     public class MainPageViewModel : Template10.Mvvm.ViewModelBase
     {
@@ -23,7 +23,7 @@ namespace Sample.ViewModels
             Instance = this;
         }
 
-        public override async void OnNavigatedTo(object parameter, NavigationMode mode, IDictionary<string, object> state)
+        public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
             Value = parameter?.ToString() ?? "No value";
             try
@@ -40,8 +40,8 @@ namespace Sample.ViewModels
         public override Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending)
         {
             _SpeechService.Dispose();
-            return Task.FromResult<object>(null);
-        }
+			return Task.CompletedTask;
+		}
 
         private string _Value;
         public string Value

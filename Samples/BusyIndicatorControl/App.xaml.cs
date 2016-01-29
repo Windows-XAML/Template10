@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 
-namespace Sample
+namespace Messaging
 {
     /// Documentation on APIs used in this page:
     /// https://github.com/Windows-XAML/Template10/wiki
@@ -13,10 +13,11 @@ namespace Sample
             InitializeComponent();
         }
 
-        public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
+        public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
             NavigationService.Navigate(typeof(Views.MainPage));
-            await Task.CompletedTask;
+
+			return Task.CompletedTask;
         }
     }
 }

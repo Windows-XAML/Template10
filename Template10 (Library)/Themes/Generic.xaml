@@ -941,7 +941,7 @@
                             <Grid.Background>
                                 <Binding Path="ModalBackground" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
                             </Grid.Background>
-                            <ContentPresenter Content="{TemplateBinding ModalContent}" />
+                            <ContentPresenter Content="{TemplateBinding ModalContent}" ContentTransitions="{TemplateBinding ModalTransitions}" />
                         </Grid>
 
                     </Grid>

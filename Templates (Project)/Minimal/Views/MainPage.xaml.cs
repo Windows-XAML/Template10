@@ -1,17 +1,15 @@
-﻿using Sample.ViewModels;
+﻿using Messaging.ViewModels;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
-namespace Sample.Views
+namespace Messaging.Views
 {
     public sealed partial class MainPage : Page
     {
         public MainPage()
         {
             InitializeComponent();
-            NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Disabled;
+            NavigationCacheMode = NavigationCacheMode.Enabled;
         }
-
-        // strongly-typed view models enable x:bind
-        public MainPageViewModel ViewModel => this.DataContext as MainPageViewModel;
     }
 }

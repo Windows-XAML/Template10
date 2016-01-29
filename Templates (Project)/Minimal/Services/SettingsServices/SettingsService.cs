@@ -1,7 +1,7 @@
 ﻿using System;
 using Windows.UI.Xaml;
 
-namespace Sample.Services.SettingsServices
+namespace Messaging.Services.SettingsServices
 {
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SettingsService
     public partial class SettingsService : ISettingsService
@@ -33,7 +33,7 @@ namespace Sample.Services.SettingsServices
         {
             get
             {
-                var theme = ApplicationTheme.Dark;
+                var theme = ApplicationTheme.Light;
                 var value = _helper.Read<string>(nameof(AppTheme), theme.ToString());
                 return Enum.TryParse<ApplicationTheme>(value, out theme) ? theme : ApplicationTheme.Dark;
             }

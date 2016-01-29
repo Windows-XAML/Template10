@@ -1,25 +1,21 @@
-﻿using Sample.ViewModels;
+﻿using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace Sample.Views
+namespace Messaging.Views
 {
     public sealed partial class SettingsPage : Page
     {
         public SettingsPage()
         {
-            this.InitializeComponent();
-            NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Disabled;
+            InitializeComponent();
         }
-
-        // strongly-typed view models enable x:bind
-        public SettingsPageViewModel ViewModel => this.DataContext as SettingsPageViewModel;
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            int index;
-            if (int.TryParse(e.Parameter?.ToString(), out index))
-                MyPivot.SelectedIndex = index;
+            var index = Template10.Services.SerializationService.SerializationService
+                .Json.Deserialize<int>(e.Parameter?.ToString());
+            MyPivot.SelectedIndex = index;
         }
     }
 }

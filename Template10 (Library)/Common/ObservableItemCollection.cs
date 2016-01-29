@@ -89,7 +89,7 @@ namespace Template10.Controls
         private void item_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             CheckDisposed();
-            ItemPropertyChanged?.Invoke(this, new ItemPropertyChangedEventArgs(sender, this.IndexOf((T)sender), e));
+            ItemPropertyChanged?.Invoke(this, new ItemPropertyChangedEventArgs(sender, IndexOf((T)sender), e));
         }
 
 
@@ -99,7 +99,7 @@ namespace Template10.Controls
             _enableCollectionChanged = false;
             foreach (var item in items)
             {
-                this.Add(item);
+                Add(item);
             }
             _enableCollectionChanged = true;
             CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, items));
@@ -111,7 +111,7 @@ namespace Template10.Controls
             _enableCollectionChanged = false;
             foreach (var item in items)
             {
-                this.Remove(item);
+                Remove(item);
             }
             _enableCollectionChanged = true;
             CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, items));

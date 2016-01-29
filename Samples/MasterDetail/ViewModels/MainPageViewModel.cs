@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Template10.Mvvm;
 using Windows.UI.Xaml.Navigation;
 
-namespace Sample.ViewModels
+namespace Messaging.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
@@ -16,9 +17,11 @@ namespace Sample.ViewModels
                 _messageService = new Services.MessageService.MessageService();
         }
 
-        public override void OnNavigatedTo(object parameter, NavigationMode mode, IDictionary<string, object> state)
+        public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
             Messages = _messageService.GetMessages();
+            Selected = Messages?.FirstOrDefault();
+            return Task.CompletedTask;
         }
 
         ObservableCollection<Models.Message> _messages = default(ObservableCollection<Models.Message>);

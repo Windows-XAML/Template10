@@ -13,8 +13,7 @@ namespace Template10.Common
             this.newValue = newValue;
         }
 
-        public TValue OldValue => this.oldValue;
-
-        public TValue NewValue => this.newValue;
+        public TValue OldValue => oldValue;
+        public TValue NewValue => newValue;
     }
 }

@@ -1,7 +1,7 @@
-﻿using Sample.ViewModels;
+﻿using Messaging.ViewModels;
 using Windows.UI.Xaml.Controls;
 
-namespace Sample.Views
+namespace Messaging.Views
 {
     public sealed partial class MainView : Page
     {

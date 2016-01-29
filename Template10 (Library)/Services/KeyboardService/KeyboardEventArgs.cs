@@ -20,10 +20,15 @@ namespace Template10.Services.KeyboardService
         public char? Character { get; set; }
         public bool WindowsKey { get; internal set; }
 
-        public bool OnlyWindows => this.WindowsKey & !this.AltKey & !this.ControlKey & !this.ShiftKey;
-        public bool OnlyAlt => !this.WindowsKey & this.AltKey & !this.ControlKey & !this.ShiftKey;
-        public bool OnlyControl => !this.WindowsKey & !this.AltKey & this.ControlKey & !this.ShiftKey;
-        public bool OnlyShift => !this.WindowsKey & !this.AltKey & !this.ControlKey & this.ShiftKey;
+        public bool OnlyWindows => WindowsKey & !AltKey & !ControlKey & !ShiftKey;
+        public bool OnlyAlt => !WindowsKey & AltKey & !ControlKey & !ShiftKey;
+        public bool OnlyControl => !WindowsKey & !AltKey & ControlKey & !ShiftKey;
+        public bool OnlyShift => !WindowsKey & !AltKey & !ControlKey & ShiftKey;
+        public bool Combo => new[] { AltKey, ControlKey, ShiftKey }.Any(x => x) & Character.HasValue;
 
+        public override string ToString()
+        {
+            return $"KeyboardEventArgs = Handled {Handled}, AltKey {AltKey}, ControlKey {ControlKey}, ShiftKey {ShiftKey}, VirtualKey {VirtualKey}, Character {Character}, WindowsKey {WindowsKey}, OnlyWindows {OnlyWindows}, OnlyAlt {OnlyAlt}, OnlyControl {OnlyControl}, OnlyShift {OnlyShift}";
+        }
     }
 }

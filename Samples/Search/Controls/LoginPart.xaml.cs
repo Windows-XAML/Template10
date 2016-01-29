@@ -2,7 +2,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Sample.Controls
+namespace Messaging.Controls
 {
     public sealed partial class LoginPart : UserControl
     {

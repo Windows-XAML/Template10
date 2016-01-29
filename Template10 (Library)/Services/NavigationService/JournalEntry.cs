@@ -21,9 +21,9 @@ namespace Template10.Services.NavigationService
             }
 
             bool ret =
-                this.SourcePageType.Equals(je.SourcePageType) &&
-                ((this.Parameter == null && je.Parameter == null) ||
-                 (this.Parameter.Equals(je.Parameter)));
+                SourcePageType.Equals(je.SourcePageType) &&
+                ((Parameter == null && je.Parameter == null) ||
+                 (Parameter.Equals(je.Parameter)));
 
             return ret;
         }
@@ -32,16 +32,16 @@ namespace Template10.Services.NavigationService
         {
             int hash = 17;
 
-            if (this.Parameter != null)
+            if (Parameter != null)
             {
-                hash = hash * 23 + this.Parameter.GetHashCode();
+                hash = hash * 23 + Parameter.GetHashCode();
             }
             else
             {
                 hash = hash * 23;
             }
 
-            hash = hash * 23 + this.SourcePageType.GetHashCode();
+            hash = hash * 23 + SourcePageType.GetHashCode();
 
             return hash;
         }

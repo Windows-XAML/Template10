@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Navigation;
 
-namespace Sample.ViewModels
+namespace Messaging.ViewModels
 {
     public class DetailPageViewModel : Template10.Mvvm.ViewModelBase
     {
@@ -18,7 +18,7 @@ namespace Sample.ViewModels
             }
         }
 
-        public override void OnNavigatedTo(object parameter, NavigationMode mode, IDictionary<string, object> state)
+        public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
             if (state.Any())
             {
@@ -32,6 +32,7 @@ namespace Sample.ViewModels
                 // use navigation parameter
                 Value = parameter?.ToString();
             }
+            return Task.CompletedTask;
         }
 
         public override Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending)
@@ -44,9 +45,10 @@ namespace Sample.ViewModels
             return base.OnNavigatedFromAsync(state, suspending);
         }
 
-        public override void OnNavigatingFrom(NavigatingEventArgs args)
+        public override Task OnNavigatingFromAsync(NavigatingEventArgs args)
         {
             args.Cancel = false;
+            return Task.CompletedTask;
         }
 
         private string _Value = "Default";

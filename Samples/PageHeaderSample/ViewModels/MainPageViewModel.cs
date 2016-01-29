@@ -97,7 +97,6 @@ namespace PageHeaderSample.ViewModels
 
 		#endregion
 
-
 		#region SelectionCount property
 
 		private int _SelectionCount;

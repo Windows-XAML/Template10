@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Template10.Services.NavigationService;
 using Windows.Graphics.Display;
 using Windows.UI.ViewManagement;
@@ -11,6 +12,18 @@ namespace Template10.Common
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-WindowWrapper
     public class WindowWrapper
     {
+        #region Debug
+
+        static void DebugWrite(string text = null, Services.LoggingService.Severities severity = Services.LoggingService.Severities.Trace, [CallerMemberName]string caller = null) =>
+            Services.LoggingService.LoggingService.WriteLine(text, severity, caller: $"WindowWrapper.{caller}");
+
+        #endregion
+
+        public WindowWrapper()
+        {
+            DebugWrite(caller: "Constructor");
+        }
+
         public static WindowWrapper Default() => ActiveWrappers.FirstOrDefault();
 
         public readonly static List<WindowWrapper> ActiveWrappers = new List<WindowWrapper>();
@@ -35,15 +48,6 @@ namespace Template10.Common
             ActiveWrappers.Add(this);
             Dispatcher = new DispatcherWrapper(window.Dispatcher);
             window.Closed += (s, e) => { ActiveWrappers.Remove(this); };
-        }
-
-        public static void ClearNavigationServices(Window window)
-        {
-            var wrapperToRemove = ActiveWrappers.FirstOrDefault(wrapper => object.ReferenceEquals(wrapper.Window, window));
-            if (wrapperToRemove != null)
-            {
-                wrapperToRemove.NavigationServices.Clear();
-            }
         }
 
         public void Close() { Window.Close(); }

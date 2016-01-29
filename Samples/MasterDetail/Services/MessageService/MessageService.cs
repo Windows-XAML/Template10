@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Sample.Models;
+using Messaging.Models;
 using Template10.Utils;
 using System.Collections.Generic;
 
-namespace Sample.Services.MessageService
+namespace Messaging.Services.MessageService
 {
     public partial class MessageService
     {

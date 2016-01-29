@@ -13,6 +13,7 @@ namespace Template10.Behaviors
 
         public void Attach(DependencyObject associatedObject)
         {
+            AssociatedObject = associatedObject;
             _dispatcher = WindowWrapper.Current().Dispatcher;
             BootStrapper.BackRequested += BootStrapper_BackRequested;
         }
@@ -25,10 +26,7 @@ namespace Template10.Behaviors
         private void BootStrapper_BackRequested(object sender, HandledEventArgs e)
         {
             e.Handled = Handled;
-            foreach (IAction item in Actions)
-            {
-                _dispatcher.Dispatch(() => item.Execute(sender, null));
-            }
+            Interaction.ExecuteActions(AssociatedObject, Actions, null);
         }
 
         public bool Handled

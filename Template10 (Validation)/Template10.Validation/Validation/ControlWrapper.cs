@@ -10,13 +10,15 @@ namespace Template10.Validation
     {
         public ControlWrapper()
         {
-            this.DefaultStyleKey = typeof(ControlWrapper);
+            DefaultStyleKey = typeof(ControlWrapper);
             DataContextChanged += (s, e) => Property = GetProperty(e.NewValue);
         }
 
         Rectangle Indicator;
         protected override void OnApplyTemplate()
         {
+            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
+                return;
             Indicator = GetTemplateChild(nameof(Indicator)) as Rectangle;
             if (Indicator == null)
                 throw new NullReferenceException(nameof(Indicator));

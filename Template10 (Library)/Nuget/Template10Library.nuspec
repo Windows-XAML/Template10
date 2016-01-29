@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2013/01/nuspec.xsd">
   <metadata minClientVersion="3.0">
+    
     <id>Template10</id>
-    <version>1.0.9</version>
+    <version>1.1.1</version>
     <title>Template 10 Library for Windows UWP XAML/.NET apps on Windows 10</title>
     <authors>Windows developers</authors>
     <owners>jerrynixon,darenmay</owners>
@@ -12,7 +13,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A rich library of helpers, services, and base classes for new and existing Windows UWP apps to maximize awesomeness and minimize boilerplate garbage.</description>
     <summary>A rich library of helpers, services, and base classes for new and existing Windows UWP apps to maximize awesomeness and minimize boilerplate garbage.</summary>
-    <releaseNotes>Added ModalDialog, updated SettingsService.</releaseNotes>
+    <releaseNotes>Now supporting Windows 10 Update 1, UWP 10586.</releaseNotes>
     <copyright>Jerry Nixon (c) 2015-2016</copyright>
     <language />
     <tags>Windows 10, Windows10, W10, UAP, UWP, WinRT, XAML, Template 10, Template10, T10, Universal App</tags>
@@ -20,16 +21,14 @@
       <dependency id="Newtonsoft.Json" version="7.0.1" />
       <dependency id="Microsoft.Xaml.Behaviors.Uwp.Managed" version="1.0.2" />
     </dependencies>
+    
   </metadata>
   <files>
     
     <file src="lib\" target="lib\uap10.0\" />
     <file src="lib\Template10Library\" target="lib\uap10.0\Template10Library\" />
-    <file src="lib\Template10Library\Styles\" target="lib\uap10.0\Template10Library\Styles\" />
+    <!--<file src="lib\Template10Library\Styles\" target="lib\uap10.0\Template10Library\Styles\" />-->
     <file src="lib\Template10Library\Controls\" target="lib\uap10.0\Template10Library\Controls\" />
-    
-    <!--<file src="tools\" target="tools\" />-->
-
     <file src="build\" target="build\uap10.0\" />
     
   </files>

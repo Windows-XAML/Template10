@@ -10,7 +10,7 @@ namespace Template10.MSBUILD
     {
         internal const string HELPURL = "$helpurl";
 
-        internal const string TEMPLATE10PROJECTJSON = @"    ""Template10"": ""1.0.*""";
+        internal const string TEMPLATE10PROJECTJSON = @"    ""Template10"": ""1.1.*""";
 
         internal const string NEWTONSOFT_PROJECTJSON = @"""Newtonsoft.Json"": ""7.0.1""";
 
@@ -51,7 +51,7 @@ namespace Template10.MSBUILD
     <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
     <Icon>__TemplateIcon.png</Icon>
     <PreviewImage>$previewImageFile</PreviewImage>
-    <NumberOfParentCategoriesToRollUp>2</NumberOfParentCategoriesToRollUp>
+    <NumberOfParentCategoriesToRollUp>0</NumberOfParentCategoriesToRollUp>
   </TemplateData>
   <TemplateContent PreferedSolutionConfiguration=""Debug|x86"">
 $projectNode
