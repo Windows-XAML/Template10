@@ -404,8 +404,12 @@ namespace Template10.Controls
             set
             {
                 HamburgerButtonInfo oldValue = Selected;
-                if (AutoHighlightCorrectButton && (value?.Equals(oldValue) ?? false))
+                if (value != null && AutoHighlightCorrectButton)
+                {
+                    if (oldValue != null)
+                        oldValue.IsChecked = false;
                     value.IsChecked = (value.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
+                }
                 SetValue(SelectedProperty, value);
                 SelectedChanged?.Invoke(this, new ChangedEventArgs<HamburgerButtonInfo>(oldValue, value));
             }
