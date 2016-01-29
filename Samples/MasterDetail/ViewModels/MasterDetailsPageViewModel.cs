@@ -3,8 +3,10 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Navigation;
+using Messaging.Models;
 using Template10.Common;
 using Template10.Mvvm;
+using Template10.Utils;
 
 namespace Messaging.ViewModels
 {
@@ -14,14 +16,14 @@ namespace Messaging.ViewModels
 
         public MasterDetailsPageViewModel()
         {
+            Messages = new ObservableCollection<Message>();
             if (!Windows.ApplicationModel.DesignMode.DesignModeEnabled)
                 _messageService = new Services.MessageService.MessageService();
         }
 
         public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
-            Messages = _messageService.GetMessages();
-            Selected = Messages?.FirstOrDefault();
+            RefreshCommand.Execute();
             return Task.CompletedTask;
         }
 
@@ -41,8 +43,21 @@ namespace Messaging.ViewModels
             set { Set(ref _searchText, value); }
         }
 
-        public DelegateCommand SwitchToPageCommand =
+        public readonly DelegateCommand SwitchToPageCommand =
             new DelegateCommand(() => BootStrapper.Current.NavigationService.Navigate(typeof (Views.MainPage)));
+
+        public DelegateCommand RefreshCommand => new DelegateCommand(() =>
+        {
+            IsMasterLoading = true;
+            Messages.Clear();
+            Selected = null;
+            WindowWrapper.Current().Dispatcher.Dispatch(() =>
+            {
+                Messages.AddRange(_messageService.GetMessages());
+                Selected = Messages?.FirstOrDefault();
+                IsMasterLoading = false;
+            }, 2000);
+        });
 
         Models.Message _selected = default(Models.Message);
 
@@ -53,12 +68,48 @@ namespace Messaging.ViewModels
             {
                 var message = value as Models.Message;
                 Set(ref _selected, message);
-                if (message != null)
-                    message.IsRead = true;
+                if (message == null) return;
+                message.IsRead = true;
                 IsDetailsLoading = true;
                 WindowWrapper.Current().Dispatcher.Dispatch(() => { IsDetailsLoading = false; }, 1000);
             }
         }
+
+        public DelegateCommand NextCommand => new DelegateCommand(() =>
+        {
+            if (Selected == null)
+                return;
+            var index = Messages.IndexOf(_selected);
+            if (index == -1)
+                return;
+            var next = index + 1;
+            Selected = Messages[next];
+        }, () =>
+        {
+            if (Selected == null)
+                return false;
+            var index = Messages.IndexOf(_selected);
+            if (index == -1)
+                return false;
+            return index < Messages.Count;
+        });
+
+        public DelegateCommand PreviousCommand => new DelegateCommand(() =>
+        {
+            if (Selected == null)
+                return;
+            var index = Messages.IndexOf(_selected);
+            if (index == -1)
+                return;
+            var previous = index - 1;
+            Selected = Messages[previous];
+        }, () =>
+        {
+            if (Selected == null)
+                return false;
+            var index = Messages.IndexOf(_selected);
+            return index > 0;
+        });
 
         private bool _isDetailsLoading;
 
@@ -66,6 +117,14 @@ namespace Messaging.ViewModels
         {
             get { return _isDetailsLoading; }
             set { Set(ref _isDetailsLoading, value); }
+        }
+
+        private bool _isMasterLoading;
+
+        public bool IsMasterLoading
+        {
+            get { return _isMasterLoading; }
+            set { Set(ref _isMasterLoading, value); }
         }
     }
 }

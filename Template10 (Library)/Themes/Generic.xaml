@@ -1254,6 +1254,13 @@
                                 x:Name="MasterGrid"
                                 Grid.Row="1"
                                 Grid.Column="0">
+                                <ProgressBar
+                                    x:Name="MasterProgressBar"
+                                    Margin="0,2,0,0"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Top"
+                                    IsIndeterminate="True"
+                                    Visibility="Collapsed" />
                                 <ScrollViewer
                                     x:Name="ScrollViewer"
                                     AutomationProperties.AccessibilityView="Raw"

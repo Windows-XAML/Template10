@@ -35,21 +35,31 @@
             x:Name="MailList"
             Grid.Row="1"
             Grid.Column="0"
+            Background="White"
             Details="{x:Bind ViewModel.Selected, Mode=TwoWay}"
             DetailsTemplate="{StaticResource MessageDetailTemplate}"
+            IsDetailsLoading="{x:Bind ViewModel.IsDetailsLoading, Mode=OneWay}"
             IsItemClickEnabled="False"
+            IsMasterLoading="{x:Bind ViewModel.IsMasterLoading, Mode=OneWay}"
             ItemContainerStyle="{StaticResource MailListItemContainerStyle}"
             ItemTemplate="{StaticResource MessageListItemTemplate}"
-            ItemsSource="{x:Bind ViewModel.Messages}"
-            SelectedItem="{x:Bind ViewModel.Selected, Mode=TwoWay}"
-            Background="White"
-            IsDetailsLoading="{x:Bind ViewModel.IsDetailsLoading, Mode=OneWay}">
+            ItemsSource="{x:Bind ViewModel.Messages, Mode=OneWay}"
+            SelectedItem="{x:Bind ViewModel.Selected, Mode=TwoWay}">
             <controls:MasterDetailsView.MasterCommands>
-                <AppBarButton Icon="Sort" Label="Sort" />
+                <AppBarButton
+                    Command="{x:Bind ViewModel.RefreshCommand}"
+                    Icon="Refresh"
+                    Label="Refresh" />
             </controls:MasterDetailsView.MasterCommands>
             <controls:MasterDetailsView.DetailsCommands>
-                <AppBarButton Icon="Previous" Label="Newer" />
-                <AppBarButton Icon="Next" Label="Older" />
+                <AppBarButton
+                    Command="{x:Bind ViewModel.PreviousCommand, Mode=OneWay}"
+                    Icon="Previous"
+                    Label="Newer" />
+                <AppBarButton
+                    Command="{x:Bind ViewModel.NextCommand, Mode=OneWay}"
+                    Icon="Next"
+                    Label="Older" />
                 <AppBarButton Icon="Delete" Label="Delete" />
             </controls:MasterDetailsView.DetailsCommands>
             <x:String>Sample</x:String>

@@ -38,13 +38,24 @@ namespace Template10.Controls
         #region Master
 
         public static readonly DependencyProperty IsMasterLoadingProperty = DependencyProperty.Register(
-            nameof(IsMasterLoading), typeof(bool), typeof(MasterDetailsView), new PropertyMetadata(default(bool)));
+            nameof(IsMasterLoading), typeof(bool), typeof(MasterDetailsView), new PropertyMetadata(default(bool),
+                (sender, args) =>
+                {
+                    var control = sender as MasterDetailsView;
+                    if (control == null) return;
+                    var newValue = (bool)args.NewValue;
+                    var visibility = newValue ? Visibility.Visible : Visibility.Collapsed;
+                    if (control.MasterProgressBarElement != null)
+                        control.MasterProgressBarElement.Visibility = visibility;
+                }));
 
         public bool IsMasterLoading
         {
             get { return (bool)GetValue(IsMasterLoadingProperty); }
             set { SetValue(IsMasterLoadingProperty, value); }
         }
+
+        public ProgressBar MasterProgressBarElement { get; set; }
 
         #region CommandBars
 
@@ -147,6 +158,7 @@ namespace Template10.Controls
         protected override void OnApplyTemplate()
         {
             // Master
+            MasterProgressBarElement = GetTemplateChild("MasterProgressBar") as ProgressBar;
             MasterCommandBarElement = GetTemplateChild("MasterCommandBar") as CommandBar;
             MobileMasterCommandBarElement = GetTemplateChild("MobileMasterCommandBar") as CommandBar;
             if (ActiveMasterCommandBar != null && MasterCommands != null)
