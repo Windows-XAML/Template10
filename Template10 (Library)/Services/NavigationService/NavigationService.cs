@@ -47,7 +47,7 @@ namespace Template10.Services.NavigationService
                     return;
 
                 // allow the viewmodel to cancel navigation
-                e.Cancel = !(await NavigatingFromAsync(false));
+                e.Cancel = !(await NavigatingFromAsync(false, e.NavigationMode));
                 if (!e.Cancel)
                 {
                     await NavigateFromAsync(false);
@@ -63,8 +63,8 @@ namespace Template10.Services.NavigationService
             };
         }
 
-        // before navigate (cancellable) 
-        async Task<bool> NavigatingFromAsync(bool suspending)
+        // before navigate (cancellable)
+        async Task<bool> NavigatingFromAsync(bool suspending, NavigationMode mode)
         {
             DebugWrite($"Suspending: {suspending}");
 
@@ -83,7 +83,7 @@ namespace Template10.Services.NavigationService
                     dataContext.SessionState = BootStrapper.Current.SessionState;
                     var args = new NavigatingEventArgs
                     {
-                        NavigationMode = FrameFacade.NavigationModeHint,
+                        NavigationMode = mode,
                         PageType = FrameFacade.CurrentPageType,
                         Parameter = FrameFacade.CurrentPageParam,
                         Suspending = suspending,
