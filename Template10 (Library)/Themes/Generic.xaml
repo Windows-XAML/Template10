@@ -1234,6 +1234,12 @@
                                 x:Name="DetailsGrid"
                                 Grid.Row="1"
                                 Grid.Column="1">
+                                <ProgressRing
+                                    x:Name="DetailsProgressRing"
+                                    Width="40"
+                                    Height="40"
+                                    IsActive="True"
+                                    Visibility="Collapsed" />
                                 <ContentControl
                                     x:Name="ContentControl"
                                     HorizontalAlignment="Stretch"

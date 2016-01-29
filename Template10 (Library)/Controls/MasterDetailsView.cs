@@ -19,10 +19,11 @@ namespace Template10.Controls
     /// <summary>
     /// Represents a control that displays data items in a vertical stack, with accompanying selected data item in more detail
     /// </summary>
-    [TemplatePart(Name= nameof(MasterCommandBarElement), Type=typeof(CommandBar))]
+    [TemplatePart(Name = nameof(MasterCommandBarElement), Type = typeof(CommandBar))]
     [TemplatePart(Name = nameof(MobileMasterCommandBarElement), Type = typeof(CommandBar))]
     [TemplatePart(Name = nameof(DetailsCommandBarElement), Type = typeof(CommandBar))]
     [TemplatePart(Name = nameof(MobileDetailsCommandBarElement), Type = typeof(CommandBar))]
+    [TemplatePart(Name = nameof(DetailsProgressRingElement), Type = typeof(ProgressRing))]
     [ContentProperty(Name = nameof(Items))]
     public sealed class MasterDetailsView : ListView
     {
@@ -35,6 +36,15 @@ namespace Template10.Controls
         }
 
         #region Master
+
+        public static readonly DependencyProperty IsMasterLoadingProperty = DependencyProperty.Register(
+            nameof(IsMasterLoading), typeof(bool), typeof(MasterDetailsView), new PropertyMetadata(default(bool)));
+
+        public bool IsMasterLoading
+        {
+            get { return (bool)GetValue(IsMasterLoadingProperty); }
+            set { SetValue(IsMasterLoadingProperty, value); }
+        }
 
         #region CommandBars
 
@@ -66,6 +76,26 @@ namespace Template10.Controls
         #endregion
 
         #region Details
+
+        public static readonly DependencyProperty IsDetailsLoadingProperty = DependencyProperty.Register(
+            nameof(IsDetailsLoading), typeof(bool), typeof(MasterDetailsView), new PropertyMetadata(default(bool),
+                (sender, args) =>
+                {
+                    var control = sender as MasterDetailsView;
+                    if (control == null) return;
+                    var newValue = (bool)args.NewValue;
+                    var visibility = newValue ? Visibility.Visible : Visibility.Collapsed;
+                    if (control.DetailsProgressRingElement != null)
+                        control.DetailsProgressRingElement.Visibility = visibility;
+                }));
+
+        public bool IsDetailsLoading
+        {
+            get { return (bool)GetValue(IsDetailsLoadingProperty); }
+            set { SetValue(IsDetailsLoadingProperty, value); }
+        }
+
+        public ProgressRing DetailsProgressRingElement { get; set; }
 
         public static readonly DependencyProperty DetailsTemplateProperty = DependencyProperty.Register(
             nameof(DetailsTemplate), typeof(DataTemplate), typeof(MasterDetailsView), new PropertyMetadata(default(DataTemplate)));
@@ -102,11 +132,11 @@ namespace Template10.Controls
         }
 
         public static readonly DependencyProperty DetailsCommandsProperty = DependencyProperty.Register(
-            nameof(DetailsCommands), typeof (ObservableCollection<ICommandBarElement>), typeof (MasterDetailsView), new PropertyMetadata(default(ObservableCollection<ICommandBarElement>)));
+            nameof(DetailsCommands), typeof(ObservableCollection<ICommandBarElement>), typeof(MasterDetailsView), new PropertyMetadata(default(ObservableCollection<ICommandBarElement>)));
 
         public ObservableCollection<ICommandBarElement> DetailsCommands
         {
-            get { return (ObservableCollection<ICommandBarElement>) GetValue(DetailsCommandsProperty); }
+            get { return (ObservableCollection<ICommandBarElement>)GetValue(DetailsCommandsProperty); }
             set { SetValue(DetailsCommandsProperty, value); }
         }
 
@@ -116,6 +146,7 @@ namespace Template10.Controls
 
         protected override void OnApplyTemplate()
         {
+            // Master
             MasterCommandBarElement = GetTemplateChild("MasterCommandBar") as CommandBar;
             MobileMasterCommandBarElement = GetTemplateChild("MobileMasterCommandBar") as CommandBar;
             if (ActiveMasterCommandBar != null && MasterCommands != null)
@@ -126,6 +157,9 @@ namespace Template10.Controls
                     ActiveMasterCommandBar.PrimaryCommands.Add(command);
                 }
             }
+
+            // Details
+            DetailsProgressRingElement = GetTemplateChild("DetailsProgressRing") as ProgressRing;
             DetailsCommandBarElement = GetTemplateChild("DetailsCommandBar") as CommandBar;
             MobileDetailsCommandBarElement = GetTemplateChild("MobileDetailsCommandBar") as CommandBar;
             if (ActiveDetailsCommandBar != null && DetailsCommands != null)

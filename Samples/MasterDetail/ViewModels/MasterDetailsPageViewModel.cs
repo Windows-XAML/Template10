@@ -55,7 +55,17 @@ namespace Messaging.ViewModels
                 Set(ref _selected, message);
                 if (message != null)
                     message.IsRead = true;
+                IsDetailsLoading = true;
+                WindowWrapper.Current().Dispatcher.Dispatch(() => { IsDetailsLoading = false; }, 1000);
             }
+        }
+
+        private bool _isDetailsLoading;
+
+        public bool IsDetailsLoading
+        {
+            get { return _isDetailsLoading; }
+            set { Set(ref _isDetailsLoading, value); }
         }
     }
 }
