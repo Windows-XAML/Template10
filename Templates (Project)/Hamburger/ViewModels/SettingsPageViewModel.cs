@@ -10,7 +10,7 @@ namespace Sample.ViewModels
         public AboutPartViewModel AboutPartViewModel { get; } = new AboutPartViewModel();
     }
 
-    public class SettingsPartViewModel : Mvvm.ViewModelBase
+    public class SettingsPartViewModel : ViewModelBase
     {
         Services.SettingsServices.SettingsService _settings;
 
@@ -50,7 +50,7 @@ namespace Sample.ViewModels
         }
     }
 
-    public class AboutPartViewModel : Mvvm.ViewModelBase
+    public class AboutPartViewModel : ViewModelBase
     {
         public Uri Logo => Windows.ApplicationModel.Package.Current.Logo;
 
