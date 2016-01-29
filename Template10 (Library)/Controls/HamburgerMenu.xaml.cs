@@ -113,9 +113,12 @@ namespace Template10.Controls
             var buttons = _navButtons
                 .Where(x => Equals(x.Value.PageType, pageType));
 
+            pageParam = Services.SerializationService.SerializationService.
+                Json.Deserialize(pageParam?.ToString());
+
             pageParam = pageParam ?? NavigationService.CurrentPageParam;
             buttons = buttons
-                .Where(x => Equals(x.Value.PageParameter, null) || Equals(x.Value.PageParameter, pageParam));
+                .Where(x => Equals(x.Value.PageParameter, pageParam));
 
             Selected = buttons
                 .Select(x => x.Value).FirstOrDefault();
