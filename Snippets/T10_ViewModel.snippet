@@ -77,6 +77,7 @@
               {
                   // use parameter
               }
+              return Task.CompletedTask;
           }
 
           public override Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending)
@@ -88,8 +89,11 @@
               return Task.CompletedTask;
           }
 
-          public override Task OnNavigatingFromAsync(NavigatingEventArgs args) =>
+          public override Task OnNavigatingFromAsync(NavigatingEventArgs args)
+          {
               args.Cancel = false;
+              return Task.CompletedTask;
+          }
         }]]>
       </Code>
     </Snippet>
