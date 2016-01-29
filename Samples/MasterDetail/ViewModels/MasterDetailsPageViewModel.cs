@@ -41,7 +41,7 @@ namespace Messaging.ViewModels
             set { Set(ref _searchText, value); }
         }
 
-        public DelegateCommand SwitchToControlCommand =
+        public DelegateCommand SwitchToPageCommand =
             new DelegateCommand(() => BootStrapper.Current.NavigationService.Navigate(typeof (Views.MainPage)));
 
         Models.Message _selected = default(Models.Message);

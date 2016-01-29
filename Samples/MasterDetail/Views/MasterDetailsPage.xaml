@@ -27,7 +27,7 @@
         </Grid.RowDefinitions>
         <CommandBar Background="LightGray">
             <AppBarButton
-                Command="{x:Bind ViewModel.SwitchToControlCommand}"
+                Command="{x:Bind ViewModel.SwitchToPageCommand}"
                 Icon="Sort"
                 Label="Switch" />
         </CommandBar>
@@ -41,12 +41,8 @@
             ItemContainerStyle="{StaticResource MailListItemContainerStyle}"
             ItemTemplate="{StaticResource MessageListItemTemplate}"
             ItemsSource="{x:Bind ViewModel.Messages}"
-            SelectedItem="{x:Bind ViewModel.Selected, Mode=TwoWay}">
-            <Interactivity:Interaction.Behaviors>
-                <Core:EventTriggerBehavior EventName="ItemClick">
-                    <Core:GoToStateAction StateName="DetailVisualState" />
-                </Core:EventTriggerBehavior>
-            </Interactivity:Interaction.Behaviors>
+            SelectedItem="{x:Bind ViewModel.Selected, Mode=TwoWay}"
+            Background="White">
             <x:String>Sample</x:String>
             <x:String>Sample</x:String>
             <x:String>Sample</x:String>

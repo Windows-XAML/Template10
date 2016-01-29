@@ -3,7 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behaviors="using:Template10.Behaviors"
     xmlns:controls="using:Template10.Controls"
-    xmlns:interactivity="using:Microsoft.Xaml.Interactivity">
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:triggers="using:Template10.Triggers">
 
     <Style TargetType="controls:Resizer">
         <Setter Property="GrabberBrush" Value="{ThemeResource SystemAccentColor}" />
@@ -1185,42 +1186,159 @@
                                 <ColumnDefinition x:Name="MasterColumn" Width="320" />
                                 <ColumnDefinition x:Name="DetailsColumn" Width="*" />
                             </Grid.ColumnDefinitions>
-                            <ScrollViewer
-                                x:Name="ScrollViewer"
-                                AutomationProperties.AccessibilityView="Raw"
-                                BringIntoViewOnFocusChange="{TemplateBinding ScrollViewer.BringIntoViewOnFocusChange}"
-                                HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
-                                HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}"
-                                IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
-                                IsHorizontalRailEnabled="{TemplateBinding ScrollViewer.IsHorizontalRailEnabled}"
-                                IsHorizontalScrollChainingEnabled="{TemplateBinding ScrollViewer.IsHorizontalScrollChainingEnabled}"
-                                IsVerticalRailEnabled="{TemplateBinding ScrollViewer.IsVerticalRailEnabled}"
-                                IsVerticalScrollChainingEnabled="{TemplateBinding ScrollViewer.IsVerticalScrollChainingEnabled}"
-                                TabNavigation="{TemplateBinding TabNavigation}"
-                                VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
-                                VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}"
-                                ZoomMode="{TemplateBinding ScrollViewer.ZoomMode}"
-                                Grid.Row="1">
-                                <ItemsPresenter
-                                    Padding="{TemplateBinding Padding}"
-                                    Footer="{TemplateBinding Footer}"
-                                    FooterTemplate="{TemplateBinding FooterTemplate}"
-                                    FooterTransitions="{TemplateBinding FooterTransitions}"
-                                    Header="{TemplateBinding Header}"
-                                    HeaderTemplate="{TemplateBinding HeaderTemplate}"
-                                    HeaderTransitions="{TemplateBinding HeaderTransitions}" />
-                            </ScrollViewer>
-                            <ContentControl x:Name="ContentControl"
-                                            Grid.Row="1"
-                                            Grid.Column="1"
-                                            IsTabStop="False"
-                                            HorizontalAlignment="Stretch"
-                                            VerticalAlignment="Stretch"
-                                            HorizontalContentAlignment="Stretch"
-                                            VerticalContentAlignment="Stretch"
-                                            ContentTemplate="{TemplateBinding DetailsTemplate}"
-                                            Content="{TemplateBinding Details}"/>
+                            <CommandBar x:Name="DetailsCommandBar" Grid.Column="1">
+                                <CommandBar.Content>
+                                    <Grid Height="48">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <AppBarButton
+                                            x:Name="BackButton"
+                                            Margin="48,0,0,0"
+                                            Icon="Back"
+                                            IsEnabled="False"
+                                            Visibility="Collapsed" />
+                                        <ContentControl Grid.Column="1" Content="{TemplateBinding DetailsCommandBarContent}" />
+                                    </Grid>
+                                </CommandBar.Content>
+                                <interactivity:Interaction.Behaviors>
+                                    <behaviors:EllipsisBehavior Visibility="Auto" />
+                                </interactivity:Interaction.Behaviors>
+                            </CommandBar>
+                            <CommandBar x:Name="MasterCommandBar" Grid.Column="0">
+                                <CommandBar.Content>
+                                    <ContentControl Grid.Column="1" Content="{TemplateBinding MasterCommandBarContent}" />
+                                </CommandBar.Content>
+                                <interactivity:Interaction.Behaviors>
+                                    <behaviors:EllipsisBehavior Visibility="Auto" />
+                                </interactivity:Interaction.Behaviors>
+                            </CommandBar>
+                            <CommandBar
+                                x:Name="MobileDetailsCommandBar"
+                                Grid.Row="2"
+                                Grid.Column="1">
+                                <interactivity:Interaction.Behaviors>
+                                    <behaviors:EllipsisBehavior Visibility="Auto" />
+                                </interactivity:Interaction.Behaviors>
+                            </CommandBar>
+                            <CommandBar
+                                x:Name="MobileMasterCommandBar"
+                                Grid.Row="2"
+                                Grid.Column="0">
+                                <interactivity:Interaction.Behaviors>
+                                    <behaviors:EllipsisBehavior Visibility="Auto" />
+                                </interactivity:Interaction.Behaviors>
+                            </CommandBar>
+                            <Grid
+                                x:Name="DetailsGrid"
+                                Grid.Row="1"
+                                Grid.Column="1">
+                                <ContentControl
+                                    x:Name="ContentControl"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    HorizontalContentAlignment="Stretch"
+                                    VerticalContentAlignment="Stretch"
+                                    Content="{TemplateBinding Details}"
+                                    ContentTemplate="{TemplateBinding DetailsTemplate}"
+                                    IsTabStop="False" />
+                            </Grid>
+                            <Grid
+                                x:Name="MasterGrid"
+                                Grid.Row="1"
+                                Grid.Column="0">
+                                <ScrollViewer
+                                    x:Name="ScrollViewer"
+                                    AutomationProperties.AccessibilityView="Raw"
+                                    BringIntoViewOnFocusChange="{TemplateBinding ScrollViewer.BringIntoViewOnFocusChange}"
+                                    HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                    HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}"
+                                    IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
+                                    IsHorizontalRailEnabled="{TemplateBinding ScrollViewer.IsHorizontalRailEnabled}"
+                                    IsHorizontalScrollChainingEnabled="{TemplateBinding ScrollViewer.IsHorizontalScrollChainingEnabled}"
+                                    IsVerticalRailEnabled="{TemplateBinding ScrollViewer.IsVerticalRailEnabled}"
+                                    IsVerticalScrollChainingEnabled="{TemplateBinding ScrollViewer.IsVerticalScrollChainingEnabled}"
+                                    TabNavigation="{TemplateBinding TabNavigation}"
+                                    VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
+                                    VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}"
+                                    ZoomMode="{TemplateBinding ScrollViewer.ZoomMode}">
+                                    <ItemsPresenter
+                                        Padding="{TemplateBinding Padding}"
+                                        Footer="{TemplateBinding Footer}"
+                                        FooterTemplate="{TemplateBinding FooterTemplate}"
+                                        FooterTransitions="{TemplateBinding FooterTransitions}"
+                                        Header="{TemplateBinding Header}"
+                                        HeaderTemplate="{TemplateBinding HeaderTemplate}"
+                                        HeaderTransitions="{TemplateBinding HeaderTransitions}" />
+                                </ScrollViewer>
+                            </Grid>
                         </Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="NarrowVisualStateGroup">
+                                <VisualState x:Name="DetailVisualState">
+                                    <VisualState.Setters>
+                                        <Setter Target="BackButton.Visibility" Value="Visible" />
+                                        <Setter Target="BackButton.IsEnabled" Value="True" />
+                                        <Setter Target="DetailsGrid.Visibility" Value="Visible" />
+                                        <Setter Target="DetailsCommandBar.Visibility" Value="Visible" />
+                                        <Setter Target="MasterGrid.Visibility" Value="Collapsed" />
+                                        <Setter Target="MasterCommandBar.Visibility" Value="Collapsed" />
+                                        <Setter Target="MobileMasterCommandBar.Visibility" Value="Collapsed" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="MasterVisualState" />
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
+                                <VisualState x:Name="VisualStateNarrow">
+                                    <VisualState.StateTriggers>
+                                        <AdaptiveTrigger MinWindowWidth="0" />
+                                    </VisualState.StateTriggers>
+                                    <VisualState.Setters>
+                                        <Setter Target="DetailsGrid.Visibility" Value="Collapsed" />
+                                        <Setter Target="DetailsGrid.(Grid.Column)" Value="0" />
+                                        <Setter Target="DetailsCommandBar.(Grid.Column)" Value="0" />
+                                        <Setter Target="MobileDetailsCommandBar.(Grid.Column)" Value="0" />
+                                        <Setter Target="DetailsCommandBar.Visibility" Value="Collapsed" />
+                                        <Setter Target="MasterColumn.Width" Value="*" />
+                                        <Setter Target="DetailsColumn.Width" Value="0" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="VisualStateNormal">
+                                    <VisualState.StateTriggers>
+                                        <AdaptiveTrigger MinWindowWidth="721" />
+                                    </VisualState.StateTriggers>
+                                    <VisualState.Setters>
+                                        <Setter Target="DetailsGrid.Visibility" Value="Visible" />
+                                        <Setter Target="MasterColumn.Width" Value="320" />
+                                        <Setter Target="DetailsColumn.Width" Value="*" />
+                                        <Setter Target="BackButton.Visibility" Value="Collapsed" />
+                                        <Setter Target="BackButton.IsEnabled" Value="False" />
+                                        <Setter Target="DetailsGrid.Visibility" Value="Visible" />
+                                        <Setter Target="DetailsCommandBar.Visibility" Value="Visible" />
+                                        <Setter Target="MasterGrid.Visibility" Value="Visible" />
+                                        <Setter Target="ListCommandBar.Visibility" Value="Visible" />
+                                        <Setter Target="MobileMasterCommandBar.Visibility" Value="Visible" />
+                                        <Setter Target="MasterGrid.Visibility" Value="Visible" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="DeviceVisualStateGroup">
+                                <VisualState x:Name="DesktopVisualState">
+                                    <VisualState.Setters>
+                                        <Setter Target="MobileMasterCommandBar.Visibility" Value="Visibile" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="MobileVisualState">
+                                    <VisualState.StateTriggers>
+                                        <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile" />
+                                    </VisualState.StateTriggers>
+                                    <VisualState.Setters>
+                                        <Setter Target="MobileCommandBarRow.Height" Value="Auto" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

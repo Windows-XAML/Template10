@@ -42,5 +42,23 @@ namespace Template10.Controls
             get { return (object)GetValue(DetailsProperty); }
             set { SetValue(DetailsProperty, value); }
         }
+
+        public static readonly DependencyProperty DetailsCommandBarContentProperty = DependencyProperty.Register(
+            nameof(DetailsCommandBarContent), typeof (object), typeof (MasterDetailsView), new PropertyMetadata(default(object)));
+
+        public object DetailsCommandBarContent
+        {
+            get { return (object) GetValue(DetailsCommandBarContentProperty); }
+            set { SetValue(DetailsCommandBarContentProperty, value); }
+        }
+
+        public static readonly DependencyProperty MasterCommandBarContentProperty = DependencyProperty.Register(
+            nameof(MasterCommandBarContent), typeof (object), typeof (MasterDetailsView), new PropertyMetadata(default(object)));
+
+        public object MasterCommandBarContent
+        {
+            get { return (object) GetValue(MasterCommandBarContentProperty); }
+            set { SetValue(MasterCommandBarContentProperty, value); }
+        }
     }
 }
