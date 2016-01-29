@@ -71,11 +71,28 @@ namespace Messaging.ViewModels
                 if (message == null) return;
                 message.IsRead = true;
                 IsDetailsLoading = true;
-                WindowWrapper.Current().Dispatcher.Dispatch(() => { IsDetailsLoading = false; }, 1000);
+                WindowWrapper.Current().Dispatcher.Dispatch(() =>
+                {
+                    IsDetailsLoading = false;
+                    NextCommand.RaiseCanExecuteChanged();
+                    PreviousCommand.RaiseCanExecuteChanged();
+                }, 1000);
             }
         }
 
-        public DelegateCommand NextCommand => new DelegateCommand(() =>
+        private DelegateCommand _nextCommand;
+
+        public DelegateCommand NextCommand
+        {
+            get
+            {
+                return _nextCommand ??
+                    (_nextCommand = new DelegateCommand(ExecuteNextCommand, CanExecuteNextCommand));
+            }
+            set { Set(ref _nextCommand, value); }
+        }
+
+        private void ExecuteNextCommand()
         {
             if (Selected == null)
                 return;
@@ -84,7 +101,9 @@ namespace Messaging.ViewModels
                 return;
             var next = index + 1;
             Selected = Messages[next];
-        }, () =>
+        }
+
+        private bool CanExecuteNextCommand()
         {
             if (Selected == null)
                 return false;
@@ -92,9 +111,29 @@ namespace Messaging.ViewModels
             if (index == -1)
                 return false;
             return index < Messages.Count;
-        });
+        }
 
-        public DelegateCommand PreviousCommand => new DelegateCommand(() =>
+        private DelegateCommand _previousCommand;
+
+        public DelegateCommand PreviousCommand
+        {
+            get
+            {
+                return _previousCommand ??
+                       (_previousCommand = new DelegateCommand(ExecutePreviousCommand, CanExecutePreviousCommand));
+            }
+            set { Set(ref _previousCommand, value); }
+        }
+
+        private bool CanExecutePreviousCommand()
+        {
+            if (Selected == null)
+                return false;
+            var index = Messages.IndexOf(_selected);
+            return index > 0;
+        }
+
+        private void ExecutePreviousCommand()
         {
             if (Selected == null)
                 return;
@@ -103,13 +142,7 @@ namespace Messaging.ViewModels
                 return;
             var previous = index - 1;
             Selected = Messages[previous];
-        }, () =>
-        {
-            if (Selected == null)
-                return false;
-            var index = Messages.IndexOf(_selected);
-            return index > 0;
-        });
+        }
 
         private bool _isDetailsLoading;
 
