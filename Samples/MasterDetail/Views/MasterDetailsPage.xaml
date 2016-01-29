@@ -43,6 +43,14 @@
             ItemsSource="{x:Bind ViewModel.Messages}"
             SelectedItem="{x:Bind ViewModel.Selected, Mode=TwoWay}"
             Background="White">
+            <controls:MasterDetailsView.MasterCommands>
+                <AppBarButton Icon="Sort" Label="Sort" />
+            </controls:MasterDetailsView.MasterCommands>
+            <controls:MasterDetailsView.DetailsCommands>
+                <AppBarButton Icon="Previous" Label="Newer" />
+                <AppBarButton Icon="Next" Label="Older" />
+                <AppBarButton Icon="Delete" Label="Delete" />
+            </controls:MasterDetailsView.DetailsCommands>
             <x:String>Sample</x:String>
             <x:String>Sample</x:String>
             <x:String>Sample</x:String>

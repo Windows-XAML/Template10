@@ -53,7 +53,7 @@ namespace Template10.Triggers
 				case "Windows.Xbox":
 					deviceFamilyStateTrigger.SetActive(deviceFamily == DeviceFamily.Xbox);
 					break;
-				case "Windwos.Universal":
+				case "Windows.Universal":
 					deviceFamilyStateTrigger.SetActive(deviceFamily == DeviceFamily.Universal);
 					break;
 				default:
