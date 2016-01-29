@@ -1,35 +1,32 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace Sample.Views
 {
-    public sealed partial class Busy : UserControl, INotifyPropertyChanged
+    public sealed partial class Busy : UserControl
     {
         public Busy()
         {
             InitializeComponent();
         }
 
-        string _BusyText = default(string);
-        public string BusyText { get { return _BusyText; } set { Set(ref _BusyText, value); } }
-
-        bool _IsBusy = default(bool);
-        public bool IsBusy { get { return _IsBusy; } set { Set(ref _IsBusy, value); } }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        void Set<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
+        public string BusyText
         {
-            if (!Equals(storage, value))
-            {
-                storage = value;
-                RaisePropertyChanged(propertyName);
-            }
+            get { return (string)GetValue(BusyTextProperty); }
+            set { SetValue(BusyTextProperty, value); }
         }
+        public static readonly DependencyProperty BusyTextProperty =
+            DependencyProperty.Register("BusyText", typeof(string), typeof(Busy), new PropertyMetadata("Please wait..."));
 
-        void RaisePropertyChanged([CallerMemberName] string propertyName = null) =>
-           PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        public bool IsBusy
+        {
+            get { return (bool)GetValue(IsBusyProperty); }
+            set { SetValue(IsBusyProperty, value); }
+        }
+        public static readonly DependencyProperty IsBusyProperty =
+            DependencyProperty.Register("IsBusy", typeof(bool), typeof(Busy), new PropertyMetadata(false));
     }
 }

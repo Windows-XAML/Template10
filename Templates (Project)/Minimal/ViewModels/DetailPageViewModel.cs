@@ -10,7 +10,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Sample.ViewModels
 {
-    public class DetailPageViewModel : Sample.Mvvm.ViewModelBase
+    public class DetailPageViewModel : ViewModelBase
     {
         public DetailPageViewModel()
         {

@@ -11,8 +11,8 @@
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
       mc:Ignorable="d">
 
-    <Controls:ModalDialog CanBackButtonDismiss="False" DisableBackButtonWhenModal="True"
-                          IsModal="{x:Bind IsBusy, Mode=OneWay}">
+    <Controls:ModalDialog x:Name="ModalContainer" CanBackButtonDismiss="False"
+                          DisableBackButtonWhenModal="True">
         <Controls:ModalDialog.Content>
             <Controls:HamburgerMenu x:Name="MyHamburgerMenu">
 
@@ -43,8 +43,7 @@
         </Controls:ModalDialog.Content>
 
         <Controls:ModalDialog.ModalContent>
-            <!--  busy visual  -->
-            <views:Busy BusyText="{x:Bind BusyText, Mode=OneWay}" IsBusy="{x:Bind IsBusy, Mode=OneWay}" />
+            <views:Busy x:Name="BusyView" />
         </Controls:ModalDialog.ModalContent>
 
     </Controls:ModalDialog>

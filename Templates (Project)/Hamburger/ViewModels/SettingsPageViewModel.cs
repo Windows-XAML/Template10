@@ -1,9 +1,10 @@
 ﻿using System;
+using Template10.Mvvm;
 using Windows.UI.Xaml;
 
 namespace Sample.ViewModels
 {
-    public class SettingsPageViewModel : Sample.Mvvm.ViewModelBase
+    public class SettingsPageViewModel : ViewModelBase
     {
         public SettingsPartViewModel SettingsPartViewModel { get; } = new SettingsPartViewModel();
         public AboutPartViewModel AboutPartViewModel { get; } = new AboutPartViewModel();
@@ -61,8 +62,8 @@ namespace Sample.ViewModels
         {
             get
             {
-                var ver = Windows.ApplicationModel.Package.Current.Id.Version;
-                return ver.Major.ToString() + "." + ver.Minor.ToString() + "." + ver.Build.ToString() + "." + ver.Revision.ToString();
+                var v = Windows.ApplicationModel.Package.Current.Id.Version;
+                return $"{v.Major}.{v.Minor}.{v.Build}.{v.Revision}";
             }
         }
 

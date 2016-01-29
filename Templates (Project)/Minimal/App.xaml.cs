@@ -31,7 +31,6 @@ namespace Sample
         // runs only when not restored from state
         public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
-            ModalContent = new Views.Busy();
             NavigationService.Navigate(typeof(Views.MainPage));
             return Task.CompletedTask;
         }
@@ -41,9 +40,10 @@ namespace Sample
             WindowWrapper.Current().Dispatcher.Dispatch(() =>
             {
                 var instance = Current as App;
-                var control = instance.ModalContent as Views.Busy;
+                var control = (instance.ModalContent = (instance.ModalContent ?? new Views.Busy())) as Views.Busy;
                 instance.ModalDialog.IsModal = busy;
                 control.BusyText = text;
+                control.IsBusy = busy;
             });
         }
     }

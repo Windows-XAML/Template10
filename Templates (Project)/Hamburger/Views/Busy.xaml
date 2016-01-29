@@ -6,15 +6,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              d:DesignHeight="300" d:DesignWidth="400" mc:Ignorable="d">
 
-    <Grid>
-        <Viewbox Height="32" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <StackPanel Orientation="Horizontal">
-                <ProgressRing Width="16" Height="16" Margin="12,0"
-                              Foreground="White" IsActive="{x:Bind IsBusy, Mode=OneWay, FallbackValue=True}" />
-                <TextBlock VerticalAlignment="Center" Foreground="White"
-                           Text="{x:Bind BusyText, Mode=OneWay, FallbackValue='BusyText'}" />
-            </StackPanel>
-        </Viewbox>
-    </Grid>
+    <Viewbox Height="32" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <ProgressRing Width="16" Height="16" Foreground="White"
+                          IsActive="{x:Bind IsBusy, Mode=OneWay}" />
+            <TextBlock Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center"
+                       Foreground="White"
+                       Text="{x:Bind BusyText, Mode=OneWay, FallbackValue='BusyText'}" />
+        </Grid>
+    </Viewbox>
 
 </UserControl>

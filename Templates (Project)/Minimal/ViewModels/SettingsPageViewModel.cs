@@ -1,15 +1,16 @@
 ﻿using System;
+using Template10.Mvvm;
 using Windows.UI.Xaml;
 
 namespace Sample.ViewModels
 {
-    public class SettingsPageViewModel : Sample.Mvvm.ViewModelBase
+    public class SettingsPageViewModel : ViewModelBase
     {
         public SettingsPartViewModel SettingsPartViewModel { get; } = new SettingsPartViewModel();
         public AboutPartViewModel AboutPartViewModel { get; } = new AboutPartViewModel();
     }
 
-    public class SettingsPartViewModel : Mvvm.ViewModelBase
+    public class SettingsPartViewModel : ViewModelBase
     {
         Services.SettingsServices.SettingsService _settings;
 
@@ -49,7 +50,7 @@ namespace Sample.ViewModels
         }
     }
 
-    public class AboutPartViewModel : Mvvm.ViewModelBase
+    public class AboutPartViewModel : ViewModelBase
     {
         public Uri Logo => Windows.ApplicationModel.Package.Current.Logo;
 

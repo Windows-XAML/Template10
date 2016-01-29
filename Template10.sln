@@ -78,6 +78,23 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messaging", "Samples\Messag
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hamburger", "Templates (Project)\Hamburger\Hamburger.csproj", "{6E068955-A693-4E4E-8852-C270447B4053}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{F8B66765-EFAD-45EE-911F-8815B9C9E297}"
+	ProjectSection(SolutionItems) = preProject
+		Assets\Blank.png = Assets\Blank.png
+		Assets\GetStarted.gif = Assets\GetStarted.gif
+		Assets\Minimal.png = Assets\Minimal.png
+		Assets\NuGetLogo.png = Assets\NuGetLogo.png
+		Assets\T10 1024x1024.png = Assets\T10 1024x1024.png
+		Assets\T10 128x128.png = Assets\T10 128x128.png
+		Assets\T10 1366x768.png = Assets\T10 1366x768.png
+		Assets\T10 256x256.png = Assets\T10 256x256.png
+		Assets\T10 512x512.png = Assets\T10 512x512.png
+		Assets\T10 56x56.png = Assets\T10 56x56.png
+		Assets\T10 768x1366.png = Assets\T10 768x1366.png
+		Assets\Template10.ico = Assets\Template10.ico
+		Assets\Template10.png = Assets\Template10.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
