@@ -1217,7 +1217,9 @@
                                             HorizontalAlignment="Stretch"
                                             VerticalAlignment="Stretch"
                                             HorizontalContentAlignment="Stretch"
-                                            VerticalContentAlignment="Stretch" />
+                                            VerticalContentAlignment="Stretch"
+                                            ContentTemplate="{TemplateBinding DetailsTemplate}"
+                                            Content="{TemplateBinding Details}"/>
                         </Grid>
                     </Border>
                 </ControlTemplate>

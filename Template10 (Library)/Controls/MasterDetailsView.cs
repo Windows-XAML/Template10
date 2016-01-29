@@ -24,5 +24,23 @@ namespace Template10.Controls
         {
             this.DefaultStyleKey = typeof(MasterDetailsView);
         }
+
+        public static readonly DependencyProperty DetailsTemplateProperty = DependencyProperty.Register(
+            nameof(DetailsTemplate), typeof(DataTemplate), typeof(MasterDetailsView), new PropertyMetadata(default(DataTemplate)));
+
+        public DataTemplate DetailsTemplate
+        {
+            get { return (DataTemplate)GetValue(DetailsTemplateProperty); }
+            set { SetValue(DetailsTemplateProperty, value); }
+        }
+
+        public static readonly DependencyProperty DetailsProperty = DependencyProperty.Register(
+            nameof(Details), typeof(object), typeof(MasterDetailsView), new PropertyMetadata(default(object)));
+
+        public object Details
+        {
+            get { return (object)GetValue(DetailsProperty); }
+            set { SetValue(DetailsProperty, value); }
+        }
     }
 }
