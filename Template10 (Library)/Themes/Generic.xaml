@@ -1190,7 +1190,7 @@
                                 <RowDefinition x:Name="MobileCommandBarRow" Height="0" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition x:Name="MasterPane" Width="400" />
+                                <ColumnDefinition x:Name="MasterPane" Width="{Binding MasterPaneWidth, RelativeSource={RelativeSource TemplatedParent}}" />
                                 <ColumnDefinition x:Name="DetailsPane" Width="*" />
                             </Grid.ColumnDefinitions>
                             <CommandBar
@@ -1350,7 +1350,7 @@
                                         <AdaptiveTrigger MinWindowWidth="{Binding VisualStateNormalMinWidth, RelativeSource={RelativeSource TemplatedParent}}" />
                                     </VisualState.StateTriggers>
                                     <VisualState.Setters>
-                                        <Setter Target="MasterPane.Width" Value="400" />
+                                        <Setter Target="MasterPane.Width" Value="{Binding MasterPaneWidth, RelativeSource={RelativeSource TemplatedParent}}" />
                                         <Setter Target="DetailsPane.Width" Value="*" />
                                         <Setter Target="BackButton.Visibility" Value="Collapsed" />
                                         <Setter Target="BackButton.IsEnabled" Value="False" />
