@@ -8,17 +8,19 @@ using Windows.UI.Xaml.Markup;
 
 namespace Template10.Controls
 {
+    // From https://msdn.microsoft.com/en-us/library/cc278064(VS.95).aspx
+
     /// <summary>
     ///     Represents a control that displays data items in a vertical stack, with accompanying selected data item in more
     ///     detail. Supports separate commandbars for master and details views, which move to the bottom in the case of
     ///     mobile devices for easier access
     /// </summary>
-    [TemplatePart(Name = nameof(MasterCommandBarElement), Type = typeof (CommandBar))]
-    [TemplatePart(Name = nameof(MobileMasterCommandBarElement), Type = typeof (CommandBar))]
-    [TemplatePart(Name = nameof(MasterProgressBarElement), Type = typeof (ProgressBar))]
-    [TemplatePart(Name = nameof(DetailsCommandBarElement), Type = typeof (CommandBar))]
-    [TemplatePart(Name = nameof(MobileDetailsCommandBarElement), Type = typeof (CommandBar))]
-    [TemplatePart(Name = nameof(DetailsProgressRingElement), Type = typeof (ProgressRing))]
+    [TemplatePart(Name = MasterCommandBarName, Type = typeof (CommandBar))]
+    [TemplatePart(Name = MobileMasterCommandBarName, Type = typeof (CommandBar))]
+    [TemplatePart(Name = MasterProgressBarName, Type = typeof (ProgressBar))]
+    [TemplatePart(Name = DetailsCommandBarName, Type = typeof (CommandBar))]
+    [TemplatePart(Name = MobileDetailsCommandBarName, Type = typeof (CommandBar))]
+    [TemplatePart(Name = DetailsProgressRingName, Type = typeof (ProgressRing))]
     [TemplateVisualState(Name = MasterVisualStateName, GroupName = NarrowVisualStateGroupName)]
     [TemplateVisualState(Name = DetailsVisualStateName, GroupName = NarrowVisualStateGroupName)]
     [TemplateVisualState(Name = NarrowVisualStateName, GroupName = AdaptiveVisualStateGroupName)]
@@ -28,23 +30,6 @@ namespace Template10.Controls
     {
         private static readonly bool IsMobile = AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile";
 
-        #region Visual States
-
-        public const string AdaptiveVisualStateGroupName = "AdaptiveVisualStateGroup";
-        public const string NarrowVisualStateGroupName = "NarrowVisualStateGroup";
-        public const string MasterVisualStateName = "MasterVisualState";
-        public const string DetailsVisualStateName = "DetailsVisualState";
-        public const string NarrowVisualStateName = "VisualStateNarrow";
-        public const string NormalVisualStateName = "VisualStateNormal";
-
-        private VisualStateGroup AdaptiveVisualStateGroupElement { get; set; }
-        private VisualState NarrowVisualStateElement { get; set; }
-        private VisualState NormalVisualStateElement { get; set; }
-        private VisualStateGroup NarrowVisualStateGroupElement { get; set; }
-        private VisualState MasterVisualStateElement { get; set; }
-        private VisualState DetailsVisualStateElement { get; set; }
-
-        #endregion
         public MasterDetailsView()
         {
             DefaultStyleKey = typeof (MasterDetailsView);
@@ -70,9 +55,9 @@ namespace Template10.Controls
             DetailsVisualStateElement = GetTemplateChild(DetailsVisualStateName) as VisualState;
 
             // Master
-            MasterProgressBarElement = GetTemplateChild("MasterProgressBar") as ProgressBar;
-            MasterCommandBarElement = GetTemplateChild("MasterCommandBar") as CommandBar;
-            MobileMasterCommandBarElement = GetTemplateChild("MobileMasterCommandBar") as CommandBar;
+            MasterProgressBar = GetTemplateChild(MasterProgressBarName) as ProgressBar;
+            MasterCommandBar = GetTemplateChild(MasterCommandBarName) as CommandBar;
+            MobileMasterCommandBar = GetTemplateChild(MobileMasterCommandBarName) as CommandBar;
             if (ActiveMasterCommandBar != null && MasterCommands != null)
             {
                 ActiveMasterCommandBar.PrimaryCommands.Clear();
@@ -84,9 +69,9 @@ namespace Template10.Controls
             }
 
             // Details
-            DetailsProgressRingElement = GetTemplateChild("DetailsProgressRing") as ProgressRing;
-            DetailsCommandBarElement = GetTemplateChild("DetailsCommandBar") as CommandBar;
-            MobileDetailsCommandBarElement = GetTemplateChild("MobileDetailsCommandBar") as CommandBar;
+            DetailsProgressRing = GetTemplateChild(DetailsProgressRingName) as ProgressRing;
+            DetailsCommandBar = GetTemplateChild(DetailsCommandBarName) as CommandBar;
+            MobileDetailsCommandBar = GetTemplateChild(MobileDetailsCommandBarName) as CommandBar;
             if (ActiveDetailsCommandBar != null && DetailsCommands != null)
             {
                 ActiveDetailsCommandBar.PrimaryCommands.Clear();
@@ -97,14 +82,54 @@ namespace Template10.Controls
             }
         }
 
-        public static readonly DependencyProperty NormalMinWidthProperty = DependencyProperty.Register(
-            nameof(NormalMinWidth), typeof (double), typeof (MasterDetailsView), new PropertyMetadata(default(double)));
+        #region Control Contract Properties
 
-        public double NormalMinWidth
+        public const string MasterProgressBarName = "MasterProgressBar";
+        public const string MasterCommandBarName = "MasterCommandBar";
+        public const string MobileMasterCommandBarName = "MobileMasterCommandBar";
+        public const string DetailsProgressRingName = "DetailsProgressRing";
+        public const string DetailsCommandBarName = "DetailsCommandBar";
+        public const string MobileDetailsCommandBarName = "MobileDetailsCommandBar";
+
+        public const string AdaptiveVisualStateGroupName = "AdaptiveVisualStateGroup";
+        public const string NarrowVisualStateGroupName = "NarrowVisualStateGroup";
+        public const string MasterVisualStateName = "MasterVisualState";
+        public const string DetailsVisualStateName = "DetailsVisualState";
+        public const string NarrowVisualStateName = "VisualStateNarrow";
+        public const string NormalVisualStateName = "VisualStateNormal";
+
+        #endregion
+
+        #region Visual States
+
+        private VisualStateGroup AdaptiveVisualStateGroupElement { get; set; }
+        private VisualState NarrowVisualStateElement { get; set; }
+        private VisualState NormalVisualStateElement { get; set; }
+        private VisualStateGroup NarrowVisualStateGroupElement { get; set; }
+        private VisualState MasterVisualStateElement { get; set; }
+        private VisualState DetailsVisualStateElement { get; set; }
+
+        public static readonly DependencyProperty VisualStateNarrowMinWidthProperty = DependencyProperty.Register(
+            nameof(VisualStateNarrowMinWidth), typeof (double), typeof (MasterDetailsView),
+            new PropertyMetadata(default(double)));
+
+        public double VisualStateNarrowMinWidth
         {
-            get { return (double) GetValue(NormalMinWidthProperty); }
-            set { SetValue(NormalMinWidthProperty, value); }
+            get { return (double) GetValue(VisualStateNarrowMinWidthProperty); }
+            set { SetValue(VisualStateNarrowMinWidthProperty, value); }
         }
+
+        public static readonly DependencyProperty VisualStateNormalMinWidthProperty = DependencyProperty.Register(
+            nameof(VisualStateNormalMinWidth), typeof (double), typeof (MasterDetailsView),
+            new PropertyMetadata(default(double)));
+
+        public double VisualStateNormalMinWidth
+        {
+            get { return (double) GetValue(VisualStateNormalMinWidthProperty); }
+            set { SetValue(VisualStateNormalMinWidthProperty, value); }
+        }
+
+        #endregion
 
         #region Master
 
@@ -116,8 +141,8 @@ namespace Template10.Controls
                     if (control == null) return;
                     var newValue = (bool) args.NewValue;
                     var visibility = newValue ? Visibility.Visible : Visibility.Collapsed;
-                    if (control.MasterProgressBarElement != null)
-                        control.MasterProgressBarElement.Visibility = visibility;
+                    if (control.MasterProgressBar != null)
+                        control.MasterProgressBar.Visibility = visibility;
                 }));
 
         public bool IsMasterLoading
@@ -126,14 +151,23 @@ namespace Template10.Controls
             set { SetValue(IsMasterLoadingProperty, value); }
         }
 
-        public ProgressBar MasterProgressBarElement { get; set; }
+        public ProgressBar MasterProgressBar { get; set; }
+
+        public static readonly DependencyProperty MasterColumnWidthProperty = DependencyProperty.Register(
+            nameof(MasterColumnWidth), typeof (double), typeof (MasterDetailsView), new PropertyMetadata(default(double)));
+
+        public double MasterColumnWidth
+        {
+            get { return (double) GetValue(MasterColumnWidthProperty); }
+            set { SetValue(MasterColumnWidthProperty, value); }
+        }
 
         #region CommandBars
 
-        public CommandBar MasterCommandBarElement { get; set; }
-        public CommandBar MobileMasterCommandBarElement { get; set; }
+        public CommandBar MasterCommandBar { get; set; }
+        public CommandBar MobileMasterCommandBar { get; set; }
 
-        private CommandBar ActiveMasterCommandBar => IsMobile ? MobileMasterCommandBarElement : MasterCommandBarElement;
+        private CommandBar ActiveMasterCommandBar => IsMobile ? MobileMasterCommandBar : MasterCommandBar;
 
         public static readonly DependencyProperty MasterCommandBarContentProperty = DependencyProperty.Register(
             nameof(MasterCommandBarContent), typeof (object), typeof (MasterDetailsView),
@@ -169,8 +203,8 @@ namespace Template10.Controls
                     if (control == null) return;
                     var newValue = (bool) args.NewValue;
                     var visibility = newValue ? Visibility.Visible : Visibility.Collapsed;
-                    if (control.DetailsProgressRingElement != null)
-                        control.DetailsProgressRingElement.Visibility = visibility;
+                    if (control.DetailsProgressRing != null)
+                        control.DetailsProgressRing.Visibility = visibility;
                 }));
 
         public bool IsDetailsLoading
@@ -203,7 +237,7 @@ namespace Template10.Controls
             set { SetValue(DetailsRequestedProperty, value); }
         }
 
-        public ProgressRing DetailsProgressRingElement { get; set; }
+        public ProgressRing DetailsProgressRing { get; set; }
 
         public static readonly DependencyProperty DetailsTemplateProperty = DependencyProperty.Register(
             nameof(DetailsTemplate), typeof (DataTemplate), typeof (MasterDetailsView),
@@ -226,11 +260,11 @@ namespace Template10.Controls
 
         #region CommandBars
 
-        public CommandBar DetailsCommandBarElement { get; set; }
-        public CommandBar MobileDetailsCommandBarElement { get; set; }
+        public CommandBar DetailsCommandBar { get; set; }
+        public CommandBar MobileDetailsCommandBar { get; set; }
 
         private CommandBar ActiveDetailsCommandBar
-            => IsMobile ? MobileDetailsCommandBarElement : DetailsCommandBarElement;
+            => IsMobile ? MobileDetailsCommandBar : DetailsCommandBar;
 
         public static readonly DependencyProperty DetailsCommandBarContentProperty = DependencyProperty.Register(
             nameof(DetailsCommandBarContent), typeof (object), typeof (MasterDetailsView),
