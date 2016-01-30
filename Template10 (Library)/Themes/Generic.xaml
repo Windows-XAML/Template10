@@ -3,9 +3,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behaviors="using:Template10.Behaviors"
     xmlns:controls="using:Template10.Controls"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:triggers="using:Template10.Triggers"
-    xmlns:core="using:Microsoft.Xaml.Interactions.Core">
+    xmlns:triggers="using:Template10.Triggers">
 
     <Style TargetType="controls:Resizer">
         <Setter Property="GrabberBrush" Value="{ThemeResource SystemAccentColor}" />
@@ -1141,9 +1141,12 @@
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="IsItemClickEnabled" Value="True" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="TabNavigation" Value="Once" />
         <Setter Property="IsSwipeEnabled" Value="True" />
+        <Setter Property="Background" Value="White" />
+        <Setter Property="NormalMinWidth" Value="521" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled" />
@@ -1174,6 +1177,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="controls:MasterDetailsView">
                     <Border
+                        x:Name="ControlRoot"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}">
@@ -1184,7 +1188,7 @@
                                 <RowDefinition x:Name="MobileCommandBarRow" Height="0" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition x:Name="MasterColumn" Width="320" />
+                                <ColumnDefinition x:Name="MasterColumn" Width="400" />
                                 <ColumnDefinition x:Name="DetailsColumn" Width="*" />
                             </Grid.ColumnDefinitions>
                             <CommandBar
@@ -1199,10 +1203,24 @@
                                         </Grid.ColumnDefinitions>
                                         <AppBarButton
                                             x:Name="BackButton"
-                                            Margin="48,0,0,0"
                                             Icon="Back"
                                             IsEnabled="False"
-                                            Visibility="Collapsed" />
+                                            Visibility="Collapsed">
+                                            <interactivity:Interaction.Behaviors>
+                                                <core:EventTriggerBehavior EventName="Click">
+                                                    <core:ChangePropertyAction
+                                                        PropertyName="DetailsRequested"
+                                                        TargetObject="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                                        Value="False" />
+                                                </core:EventTriggerBehavior>
+                                                <behaviors:BackButtonBehavior Handled="{Binding IsEnabled, ElementName=BackButton}">
+                                                    <core:ChangePropertyAction
+                                                        PropertyName="DetailsRequested"
+                                                        TargetObject="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                                        Value="False" />
+                                                </behaviors:BackButtonBehavior>
+                                            </interactivity:Interaction.Behaviors>
+                                        </AppBarButton>
                                         <ContentControl Grid.Column="1" Content="{TemplateBinding DetailsCommandBarContent}" />
                                     </Grid>
                                 </CommandBar.Content>
@@ -1307,7 +1325,14 @@
                                         <Setter Target="MobileMasterCommandBar.Visibility" Value="Collapsed" />
                                     </VisualState.Setters>
                                 </VisualState>
-                                <VisualState x:Name="MasterVisualState" />
+                                <VisualState x:Name="MasterVisualState">
+                                    <VisualState.Setters>
+                                        <Setter Target="BackButton.Visibility" Value="Collapsed" />
+                                        <Setter Target="BackButton.IsEnabled" Value="False" />
+                                        <Setter Target="DetailsGrid.Visibility" Value="Collapsed" />
+                                        <Setter Target="DetailsCommandBar.Visibility" Value="Collapsed" />
+                                    </VisualState.Setters>
+                                </VisualState>
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
                                 <VisualState x:Name="VisualStateNarrow">
@@ -1326,14 +1351,14 @@
                                 </VisualState>
                                 <VisualState x:Name="VisualStateNormal">
                                     <VisualState.StateTriggers>
-                                        <AdaptiveTrigger MinWindowWidth="521" />
+                                        <AdaptiveTrigger MinWindowWidth="{TemplateBinding NormalMinWidth}" />
                                     </VisualState.StateTriggers>
                                     <VisualState.Setters>
                                         <Setter Target="DetailsGrid.Visibility" Value="Visible" />
                                         <Setter Target="DetailsGrid.(Grid.Column)" Value="1" />
                                         <Setter Target="DetailsCommandBar.(Grid.Column)" Value="1" />
                                         <Setter Target="MobileDetailsCommandBar.(Grid.Column)" Value="1" />
-                                        <Setter Target="MasterColumn.Width" Value="320" />
+                                        <Setter Target="MasterColumn.Width" Value="400" />
                                         <Setter Target="DetailsColumn.Width" Value="*" />
                                         <Setter Target="BackButton.Visibility" Value="Collapsed" />
                                         <Setter Target="BackButton.IsEnabled" Value="False" />
@@ -1362,20 +1387,6 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <interactivity:Interaction.Behaviors>
-                            <core:DataTriggerBehavior Binding="{TemplateBinding DetailsRequested}" ComparisonCondition="Equal" Value="True">
-                                <behaviors:ConditionalAction LeftValue="{Binding CurrentState.Name, ElementName=AdaptiveVisualStateGroup}"
-                                             Operator="EqualToRight"
-                                             RightValue="{Binding Name, ElementName=VisualStateNormal}">
-                                    <core:GoToStateAction TargetObject="{Binding RelativeSource={RelativeSource TemplatedParent}}"
-                                          UseTransitions="True"
-                                          StateName="DetailsVisualState" />
-                                </behaviors:ConditionalAction>
-                            </core:DataTriggerBehavior>
-                            <core:DataTriggerBehavior Binding="{TemplateBinding DetailsRequested}" ComparisonCondition="Equal" Value="False">
-                                <core:GoToStateAction StateName="MasterVisualState" />
-                            </core:DataTriggerBehavior>
-                        </interactivity:Interaction.Behaviors>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

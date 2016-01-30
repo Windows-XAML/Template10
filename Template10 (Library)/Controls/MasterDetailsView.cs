@@ -50,7 +50,6 @@ namespace Template10.Controls
             DefaultStyleKey = typeof (MasterDetailsView);
             MasterCommands = new ObservableCollection<ICommandBarElement>();
             DetailsCommands = new ObservableCollection<ICommandBarElement>();
-            IsItemClickEnabled = false;
             ItemClick += OnItemClick;
         }
 
@@ -77,9 +76,10 @@ namespace Template10.Controls
             if (ActiveMasterCommandBar != null && MasterCommands != null)
             {
                 ActiveMasterCommandBar.PrimaryCommands.Clear();
+                var commands = ActiveMasterCommandBar.PrimaryCommands;
                 foreach (var command in MasterCommands)
                 {
-                    ActiveMasterCommandBar.PrimaryCommands.Add(command);
+                    commands.Add(command);
                 }
             }
 
@@ -95,6 +95,15 @@ namespace Template10.Controls
                     ActiveDetailsCommandBar.PrimaryCommands.Add(command);
                 }
             }
+        }
+
+        public static readonly DependencyProperty NormalMinWidthProperty = DependencyProperty.Register(
+            nameof(NormalMinWidth), typeof (double), typeof (MasterDetailsView), new PropertyMetadata(default(double)));
+
+        public double NormalMinWidth
+        {
+            get { return (double) GetValue(NormalMinWidthProperty); }
+            set { SetValue(NormalMinWidthProperty, value); }
         }
 
         #region Master
@@ -171,7 +180,22 @@ namespace Template10.Controls
         }
 
         public static readonly DependencyProperty DetailsRequestedProperty = DependencyProperty.Register(
-            nameof(DetailsRequested), typeof (bool), typeof (MasterDetailsView), new PropertyMetadata(default(bool)));
+            nameof(DetailsRequested), typeof (bool), typeof (MasterDetailsView), new PropertyMetadata(default(bool),
+                (sender, args) =>
+                {
+                    var control = sender as MasterDetailsView;
+                    if (control == null)
+                        return;
+                    if (!control.DetailsRequested)
+                    {
+                        if (control.MasterVisualStateElement != null)
+                            VisualStateManager.GoToState(control, MasterVisualStateName, true);
+                        return;
+                    }
+                    if (control.AdaptiveVisualStateGroupElement?.CurrentState?.Name == NarrowVisualStateName &&
+                        control.DetailsVisualStateElement != null)
+                        VisualStateManager.GoToState(control, DetailsVisualStateName, true);
+                }));
 
         public bool DetailsRequested
         {

@@ -27,7 +27,6 @@
             Details="{x:Bind ViewModel.Selected, Mode=OneWay}"
             DetailsTemplate="{StaticResource MessageDetailTemplate}"
             IsDetailsLoading="{x:Bind ViewModel.IsDetailsLoading, Mode=OneWay}"
-            IsItemClickEnabled="False"
             IsMasterLoading="{x:Bind ViewModel.IsMasterLoading, Mode=OneWay}"
             ItemContainerStyle="{StaticResource MailListItemContainerStyle}"
             ItemTemplate="{StaticResource MessageListItemTemplate}"
