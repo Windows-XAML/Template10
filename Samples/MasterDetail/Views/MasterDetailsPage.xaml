@@ -28,7 +28,7 @@
         <CommandBar Background="LightGray">
             <AppBarButton
                 Command="{x:Bind ViewModel.SwitchToPageCommand}"
-                Icon="Sort"
+                Icon="Switch"
                 Label="Switch" />
         </CommandBar>
         <controls:MasterDetailsView

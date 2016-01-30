@@ -52,7 +52,7 @@
             <CommandBar.PrimaryCommands>
                 <AppBarButton
                     Command="{x:Bind ViewModel.SwitchToControlCommand}"
-                    Icon="Sort"
+                    Icon="Switch"
                     Label="Switch" />
             </CommandBar.PrimaryCommands>
         </CommandBar>
