@@ -59,16 +59,17 @@ namespace Messaging.ViewModels
             }, 2000);
         });
 
-        Models.Message _selected = default(Models.Message);
+        Message _selected = default(Message);
 
-        public Message Selected
+        public object Selected
         {
             get { return _selected; }
             set
             {
-                Set(ref _selected, value);
-                if (Selected == null) return;
-                Selected.IsRead = true;
+                var message = value as Message;
+                Set(ref _selected, message);
+                if (message == null) return;
+                message.IsRead = true;
                 IsDetailsLoading = true;
                 WindowWrapper.Current().Dispatcher.Dispatch(() =>
                 {
@@ -109,7 +110,7 @@ namespace Messaging.ViewModels
             var index = Messages.IndexOf(_selected);
             if (index == -1)
                 return false;
-            return index < Messages.Count;
+            return index < (Messages.Count - 1);
         }
 
         private DelegateCommand _previousCommand;
