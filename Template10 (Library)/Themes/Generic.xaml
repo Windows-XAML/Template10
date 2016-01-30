@@ -1190,8 +1190,8 @@
                                 <RowDefinition x:Name="MobileCommandBarRow" Height="0" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition x:Name="MasterColumn" Width="400" />
-                                <ColumnDefinition x:Name="DetailsColumn" Width="*" />
+                                <ColumnDefinition x:Name="MasterPane" Width="400" />
+                                <ColumnDefinition x:Name="DetailsPane" Width="*" />
                             </Grid.ColumnDefinitions>
                             <CommandBar
                                 x:Name="DetailsCommandBar"
@@ -1318,21 +1318,18 @@
                             <VisualStateGroup x:Name="NarrowVisualStateGroup">
                                 <VisualState x:Name="DetailsVisualState">
                                     <VisualState.Setters>
+                                        <Setter Target="MasterPane.Width" Value="0" />
+                                        <Setter Target="DetailsPane.Width" Value="*" />
                                         <Setter Target="BackButton.Visibility" Value="Visible" />
                                         <Setter Target="BackButton.IsEnabled" Value="True" />
-                                        <Setter Target="DetailsGrid.Visibility" Value="Visible" />
-                                        <Setter Target="DetailsCommandBar.Visibility" Value="Visible" />
-                                        <Setter Target="MasterGrid.Visibility" Value="Collapsed" />
-                                        <Setter Target="MasterCommandBar.Visibility" Value="Collapsed" />
-                                        <Setter Target="MobileMasterCommandBar.Visibility" Value="Collapsed" />
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="MasterVisualState">
                                     <VisualState.Setters>
+                                        <Setter Target="MasterPane.Width" Value="*" />
+                                        <Setter Target="DetailsPane.Width" Value="0" />
                                         <Setter Target="BackButton.Visibility" Value="Collapsed" />
                                         <Setter Target="BackButton.IsEnabled" Value="False" />
-                                        <Setter Target="DetailsGrid.Visibility" Value="Collapsed" />
-                                        <Setter Target="DetailsCommandBar.Visibility" Value="Collapsed" />
                                     </VisualState.Setters>
                                 </VisualState>
                             </VisualStateGroup>
@@ -1342,13 +1339,10 @@
                                         <AdaptiveTrigger MinWindowWidth="0" />
                                     </VisualState.StateTriggers>
                                     <VisualState.Setters>
-                                        <Setter Target="DetailsGrid.Visibility" Value="Collapsed" />
-                                        <Setter Target="DetailsGrid.(Grid.Column)" Value="0" />
-                                        <Setter Target="DetailsCommandBar.(Grid.Column)" Value="0" />
-                                        <Setter Target="MobileDetailsCommandBar.(Grid.Column)" Value="0" />
-                                        <Setter Target="DetailsCommandBar.Visibility" Value="Collapsed" />
-                                        <Setter Target="MasterColumn.Width" Value="*" />
-                                        <Setter Target="DetailsColumn.Width" Value="0" />
+                                        <Setter Target="MasterPane.Width" Value="*" />
+                                        <Setter Target="DetailsPane.Width" Value="0" />
+                                        <Setter Target="BackButton.Visibility" Value="Collapsed" />
+                                        <Setter Target="BackButton.IsEnabled" Value="False" />
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="VisualStateNormal">
@@ -1356,29 +1350,15 @@
                                         <AdaptiveTrigger MinWindowWidth="521" />
                                     </VisualState.StateTriggers>
                                     <VisualState.Setters>
-                                        <Setter Target="DetailsGrid.Visibility" Value="Visible" />
-                                        <Setter Target="DetailsGrid.(Grid.Column)" Value="1" />
-                                        <Setter Target="DetailsCommandBar.(Grid.Column)" Value="1" />
-                                        <Setter Target="MobileDetailsCommandBar.(Grid.Column)" Value="1" />
-                                        <Setter Target="MasterColumn.Width" Value="400" />
-                                        <Setter Target="DetailsColumn.Width" Value="*" />
+                                        <Setter Target="MasterPane.Width" Value="400" />
+                                        <Setter Target="DetailsPane.Width" Value="*" />
                                         <Setter Target="BackButton.Visibility" Value="Collapsed" />
                                         <Setter Target="BackButton.IsEnabled" Value="False" />
-                                        <Setter Target="DetailsGrid.Visibility" Value="Visible" />
-                                        <Setter Target="DetailsCommandBar.Visibility" Value="Visible" />
-                                        <Setter Target="MasterGrid.Visibility" Value="Visible" />
-                                        <Setter Target="MasterCommandBar.Visibility" Value="Visible" />
-                                        <Setter Target="MobileMasterCommandBar.Visibility" Value="Visible" />
-                                        <Setter Target="MasterGrid.Visibility" Value="Visible" />
                                     </VisualState.Setters>
                                 </VisualState>
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="DeviceVisualStateGroup">
-                                <VisualState x:Name="DesktopVisualState">
-                                    <VisualState.Setters>
-                                        <Setter Target="MobileMasterCommandBar.Visibility" Value="Visibile" />
-                                    </VisualState.Setters>
-                                </VisualState>
+                                <VisualState x:Name="DesktopVisualState" />
                                 <VisualState x:Name="MobileVisualState">
                                     <VisualState.StateTriggers>
                                         <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile" />
