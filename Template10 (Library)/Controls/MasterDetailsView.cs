@@ -1,8 +1,16 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
+using Windows.ApplicationModel;
 using Windows.System.Profile;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
+using Template10.Common;
+using Template10.Utils;
+using Template10.Mvvm;
 
 // The Templated Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234235
 
@@ -26,7 +34,7 @@ namespace Template10.Controls
     [TemplateVisualState(Name = NarrowVisualStateName, GroupName = AdaptiveVisualStateGroupName)]
     [TemplateVisualState(Name = NormalVisualStateName, GroupName = AdaptiveVisualStateGroupName)]
     [ContentProperty(Name = nameof(Items))]
-    public sealed class MasterDetailsView : ListView
+    public sealed class MasterDetailsView : ListView, IBindable
     {
         private static readonly bool IsMobile = AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile";
 
@@ -286,6 +294,75 @@ namespace Template10.Controls
         }
 
         #endregion
+
+        #endregion
+
+        #region IBindable
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void RaisePropertyChanged([CallerMemberName]string propertyName = null)
+        {
+            if (DesignMode.DesignModeEnabled)
+                return;
+
+            var handler = PropertyChanged;
+            //if is not null
+            if (Equals(handler, null)) return;
+            var args = new PropertyChangedEventArgs(propertyName);
+            try
+            {
+                handler.Invoke(this, args);
+            }
+            catch
+            {
+                WindowWrapper.Current().Dispatcher.Dispatch(() => handler.Invoke(this, args));
+            }
+        }
+
+        public bool Set<T>(ref T storage, T value, [CallerMemberName]string propertyName = null)
+        {
+            if (Equals(storage, value))
+                return false;
+            storage = value;
+            RaisePropertyChanged(propertyName);
+            return true;
+        }
+
+        public bool Set<T>(Expression<Func<T>> propertyExpression, ref T field, T newValue)
+        {
+            //if is equal 
+            if (Equals(field, newValue))
+            {
+                return false;
+            }
+
+            field = newValue;
+            RaisePropertyChanged(propertyExpression);
+            return true;
+        }
+
+        public void RaisePropertyChanged<T>(Expression<Func<T>> propertyExpression)
+        {
+            if (DesignMode.DesignModeEnabled)
+                return;
+
+            var handler = PropertyChanged;
+            //if is not null
+            if (Equals(handler, null)) return;
+            var propertyName = ExpressionUtils.GetPropertyName(propertyExpression);
+
+            if (Equals(propertyName, null)) return;
+            var args = new PropertyChangedEventArgs(propertyName);
+            try
+            {
+                handler.Invoke(this, args);
+            }
+            catch
+            {
+                WindowWrapper.Current().Dispatcher.Dispatch(() => handler.Invoke(this, args));
+            }
+        }
 
         #endregion
     }

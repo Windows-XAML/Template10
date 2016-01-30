@@ -1336,7 +1336,7 @@
                             <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
                                 <VisualState x:Name="VisualStateNarrow">
                                     <VisualState.StateTriggers>
-                                        <AdaptiveTrigger MinWindowWidth="0" />
+                                        <AdaptiveTrigger MinWindowWidth="{Binding VisualStateNarrowMinWidth, RelativeSource={RelativeSource TemplatedParent}}" />
                                     </VisualState.StateTriggers>
                                     <VisualState.Setters>
                                         <Setter Target="MasterPane.Width" Value="*" />
@@ -1347,7 +1347,7 @@
                                 </VisualState>
                                 <VisualState x:Name="VisualStateNormal">
                                     <VisualState.StateTriggers>
-                                        <AdaptiveTrigger MinWindowWidth="521" />
+                                        <AdaptiveTrigger MinWindowWidth="{Binding VisualStateNormalMinWidth, RelativeSource={RelativeSource TemplatedParent}}" />
                                     </VisualState.StateTriggers>
                                     <VisualState.Setters>
                                         <Setter Target="MasterPane.Width" Value="400" />
