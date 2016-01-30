@@ -24,7 +24,7 @@
         <controls:MasterDetailsView
             x:Name="MailList"
             Background="White"
-            Details="{x:Bind ViewModel.Selected, Mode=TwoWay}"
+            Details="{x:Bind ViewModel.Selected, Mode=OneWay}"
             DetailsTemplate="{StaticResource MessageDetailTemplate}"
             IsDetailsLoading="{x:Bind ViewModel.IsDetailsLoading, Mode=OneWay}"
             IsItemClickEnabled="False"
@@ -34,20 +34,20 @@
             ItemsSource="{x:Bind ViewModel.Messages, Mode=OneWay}"
             SelectedItem="{x:Bind ViewModel.Selected, Mode=TwoWay}">
             <controls:MasterDetailsView.MasterCommandBarContent>
-                <StackPanel Orientation="Horizontal"
-                            Height="48">
-                    <TextBlock Text="INBOX"
-                               Style="{StaticResource TitleTextBlockStyle}"
-                               FontWeight="Black"
-                               FontSize="24"
-                               VerticalAlignment="Center"
-                               Margin="12,0,0,0"
-                               />
-                    <TextBlock Text="Mail"
-                               VerticalAlignment="Center"
-                               Style="{StaticResource SubtitleTextBlockStyle}"
-                               Height="32"
-                               Margin="12,4,0,0" />
+                <StackPanel Height="48" Orientation="Horizontal">
+                    <TextBlock
+                        Margin="12,0,0,0"
+                        VerticalAlignment="Center"
+                        Style="{StaticResource TitleTextBlockStyle}"
+                        FontSize="24"
+                        FontWeight="Black"
+                        Text="INBOX" />
+                    <TextBlock
+                        Height="32"
+                        Margin="12,4,0,0"
+                        VerticalAlignment="Center"
+                        Style="{StaticResource SubtitleTextBlockStyle}"
+                        Text="Mail" />
                 </StackPanel>
             </controls:MasterDetailsView.MasterCommandBarContent>
             <controls:MasterDetailsView.MasterCommands>
@@ -75,7 +75,6 @@
             <x:String>Sample</x:String>
             <x:String>Sample</x:String>
         </controls:MasterDetailsView>
-
     </Grid>
 </Page>
 
