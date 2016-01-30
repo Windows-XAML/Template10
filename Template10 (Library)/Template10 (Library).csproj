@@ -162,8 +162,10 @@
     <Compile Include="Controls\PiePiece.cs" />
     <Compile Include="Controls\Resizer.cs" />
     <Compile Include="Converters\ChangeTypeConverter.cs" />
+    <Compile Include="Converters\CollapsedWhenNullOrEmptyConverter.cs" />
     <Compile Include="Converters\DateTimeOffsetConverter.cs" />
     <Compile Include="Converters\StringFormatConverter.cs" />
+    <Compile Include="Converters\VisibleWhenNullOrEmptyConverter.cs" />
     <Compile Include="Mvvm\AwaitableDelegateCommand.cs" />
     <Compile Include="Common\WeakReference.cs" />
     <Compile Include="Mvvm\DependencyBindableBase.cs" />
