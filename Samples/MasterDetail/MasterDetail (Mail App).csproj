@@ -7,8 +7,8 @@
     <ProjectGuid>{8F535C5F-6963-4C18-9B52-4EF5252CCC49}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sample</RootNamespace>
-    <AssemblyName>Blank</AssemblyName>
+    <RootNamespace>Samples.MasterDetail</RootNamespace>
+    <AssemblyName>MasterDetail %28Mail App%29</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>

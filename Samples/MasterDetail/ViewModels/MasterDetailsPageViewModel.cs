@@ -3,12 +3,13 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Navigation;
-using Messaging.Models;
+using Samples.MasterDetail.Models;
+using Samples.MasterDetail.Views;
 using Template10.Common;
 using Template10.Mvvm;
 using Template10.Utils;
 
-namespace Messaging.ViewModels
+namespace Samples.MasterDetail.ViewModels
 {
     public class MasterDetailsPageViewModel : ViewModelBase
     {
@@ -44,7 +45,7 @@ namespace Messaging.ViewModels
         }
 
         public readonly DelegateCommand SwitchToPageCommand =
-            new DelegateCommand(() => BootStrapper.Current.NavigationService.Navigate(typeof (Views.MainPage)));
+            new DelegateCommand(() => BootStrapper.Current.NavigationService.Navigate(typeof (MainPage)));
 
         public DelegateCommand RefreshCommand => new DelegateCommand(() =>
         {
