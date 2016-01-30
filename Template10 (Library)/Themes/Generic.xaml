@@ -1148,6 +1148,7 @@
         <Setter Property="Background" Value="White" />
         <Setter Property="VisualStateNarrowMinWidth" Value="0" />
         <Setter Property="VisualStateNormalMinWidth" Value="521" />
+        <Setter Property="MasterPaneWidth" Value="400" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled" />
@@ -1189,7 +1190,7 @@
                                 <RowDefinition x:Name="MobileCommandBarRow" Height="0" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition x:Name="MasterColumn" Width="{TemplateBinding MasterColumnWidth}" />
+                                <ColumnDefinition x:Name="MasterColumn" Width="400" />
                                 <ColumnDefinition x:Name="DetailsColumn" Width="*" />
                             </Grid.ColumnDefinitions>
                             <CommandBar
@@ -1338,7 +1339,7 @@
                             <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
                                 <VisualState x:Name="VisualStateNarrow">
                                     <VisualState.StateTriggers>
-                                        <AdaptiveTrigger MinWindowWidth="{TemplateBinding VisualStateNarrowMinWidth}" />
+                                        <AdaptiveTrigger MinWindowWidth="0" />
                                     </VisualState.StateTriggers>
                                     <VisualState.Setters>
                                         <Setter Target="DetailsGrid.Visibility" Value="Collapsed" />
@@ -1352,14 +1353,14 @@
                                 </VisualState>
                                 <VisualState x:Name="VisualStateNormal">
                                     <VisualState.StateTriggers>
-                                        <AdaptiveTrigger MinWindowWidth="{TemplateBinding VisualStateNormalMinWidth}" />
+                                        <AdaptiveTrigger MinWindowWidth="521" />
                                     </VisualState.StateTriggers>
                                     <VisualState.Setters>
                                         <Setter Target="DetailsGrid.Visibility" Value="Visible" />
                                         <Setter Target="DetailsGrid.(Grid.Column)" Value="1" />
                                         <Setter Target="DetailsCommandBar.(Grid.Column)" Value="1" />
                                         <Setter Target="MobileDetailsCommandBar.(Grid.Column)" Value="1" />
-                                        <Setter Target="MasterColumn.Width" Value="{TemplateBinding MasterColumnWidth}" />
+                                        <Setter Target="MasterColumn.Width" Value="400" />
                                         <Setter Target="DetailsColumn.Width" Value="*" />
                                         <Setter Target="BackButton.Visibility" Value="Collapsed" />
                                         <Setter Target="BackButton.IsEnabled" Value="False" />

@@ -68,14 +68,14 @@ namespace Messaging.ViewModels
             {
                 var message = value as Message;
                 Set(ref _selected, message);
+                NextCommand.RaiseCanExecuteChanged();
+                PreviousCommand.RaiseCanExecuteChanged();
                 if (message == null) return;
                 message.IsRead = true;
                 IsDetailsLoading = true;
                 WindowWrapper.Current().Dispatcher.Dispatch(() =>
                 {
                     IsDetailsLoading = false;
-                    NextCommand.RaiseCanExecuteChanged();
-                    PreviousCommand.RaiseCanExecuteChanged();
                 }, 1000);
             }
         }

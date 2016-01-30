@@ -68,7 +68,9 @@
                     Command="{x:Bind ViewModel.NextCommand, Mode=OneWay}"
                     Icon="Next"
                     Label="Older" />
-                <AppBarButton Icon="Delete" Label="Delete" />
+                <AppBarButton
+                    Icon="Delete"
+                    Label="Delete" />
             </controls:MasterDetailsView.DetailsCommands>
             <x:String>Sample</x:String>
             <x:String>Sample</x:String>

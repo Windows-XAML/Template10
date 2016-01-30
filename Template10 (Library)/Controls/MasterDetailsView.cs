@@ -153,13 +153,13 @@ namespace Template10.Controls
 
         public ProgressBar MasterProgressBar { get; set; }
 
-        public static readonly DependencyProperty MasterColumnWidthProperty = DependencyProperty.Register(
-            nameof(MasterColumnWidth), typeof (double), typeof (MasterDetailsView), new PropertyMetadata(default(double)));
+        public static readonly DependencyProperty MasterPaneWidthProperty = DependencyProperty.Register(
+            nameof(MasterPaneWidth), typeof (double), typeof (MasterDetailsView), new PropertyMetadata(default(double)));
 
-        public double MasterColumnWidth
+        public double MasterPaneWidth
         {
-            get { return (double) GetValue(MasterColumnWidthProperty); }
-            set { SetValue(MasterColumnWidthProperty, value); }
+            get { return (double) GetValue(MasterPaneWidthProperty); }
+            set { SetValue(MasterPaneWidthProperty, value); }
         }
 
         #region CommandBars
@@ -218,7 +218,7 @@ namespace Template10.Controls
                 (sender, args) =>
                 {
                     var control = sender as MasterDetailsView;
-                    if (control == null)
+                    if (control == null || control.AdaptiveVisualStateGroupElement?.CurrentState?.Name != NarrowVisualStateName)
                         return;
                     if (!control.DetailsRequested)
                     {
@@ -226,8 +226,7 @@ namespace Template10.Controls
                             VisualStateManager.GoToState(control, MasterVisualStateName, true);
                         return;
                     }
-                    if (control.AdaptiveVisualStateGroupElement?.CurrentState?.Name == NarrowVisualStateName &&
-                        control.DetailsVisualStateElement != null)
+                    if (control.DetailsVisualStateElement != null)
                         VisualStateManager.GoToState(control, DetailsVisualStateName, true);
                 }));
 

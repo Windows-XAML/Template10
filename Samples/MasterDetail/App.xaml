@@ -43,6 +43,18 @@
             </c:ValueWhenConverter.Otherwise>
         </c:ValueWhenConverter>
 
+        <c:ValueWhenConverter xmlns:c="using:Template10.Converters" x:Name="CollapsedWhenFalseConverter">
+            <c:ValueWhenConverter.When>
+                <x:Boolean>False</x:Boolean>
+            </c:ValueWhenConverter.When>
+            <c:ValueWhenConverter.Value>
+                <Visibility>Collapsed</Visibility>
+            </c:ValueWhenConverter.Value>
+            <c:ValueWhenConverter.Otherwise>
+                <Visibility>Visible</Visibility>
+            </c:ValueWhenConverter.Otherwise>
+        </c:ValueWhenConverter>
+
         <DataTemplate x:Name="MessageListItemTemplate">
             <Grid>
                 <Grid.ColumnDefinitions>
