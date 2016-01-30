@@ -21,20 +21,8 @@
     </Page.DataContext>
 
     <Grid x:Name="RootGrid">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <CommandBar Background="LightGray">
-            <AppBarButton
-                Command="{x:Bind ViewModel.SwitchToPageCommand}"
-                Icon="Switch"
-                Label="Switch" />
-        </CommandBar>
         <controls:MasterDetailsView
             x:Name="MailList"
-            Grid.Row="1"
-            Grid.Column="0"
             Background="White"
             Details="{x:Bind ViewModel.Selected, Mode=TwoWay}"
             DetailsTemplate="{StaticResource MessageDetailTemplate}"
@@ -45,11 +33,32 @@
             ItemTemplate="{StaticResource MessageListItemTemplate}"
             ItemsSource="{x:Bind ViewModel.Messages, Mode=OneWay}"
             SelectedItem="{x:Bind ViewModel.Selected, Mode=TwoWay}">
+            <controls:MasterDetailsView.MasterCommandBarContent>
+                <StackPanel Orientation="Horizontal"
+                            Height="48">
+                    <TextBlock Text="INBOX"
+                               Style="{StaticResource TitleTextBlockStyle}"
+                               FontWeight="Black"
+                               FontSize="24"
+                               VerticalAlignment="Center"
+                               Margin="12,0,0,0"
+                               />
+                    <TextBlock Text="Mail"
+                               VerticalAlignment="Center"
+                               Style="{StaticResource SubtitleTextBlockStyle}"
+                               Height="32"
+                               Margin="12,4,0,0" />
+                </StackPanel>
+            </controls:MasterDetailsView.MasterCommandBarContent>
             <controls:MasterDetailsView.MasterCommands>
                 <AppBarButton
                     Command="{x:Bind ViewModel.RefreshCommand}"
                     Icon="Refresh"
                     Label="Refresh" />
+                <AppBarButton
+                    Command="{x:Bind ViewModel.SwitchToPageCommand}"
+                    Icon="Switch"
+                    Label="Switch" />
             </controls:MasterDetailsView.MasterCommands>
             <controls:MasterDetailsView.DetailsCommands>
                 <AppBarButton

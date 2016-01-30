@@ -61,15 +61,14 @@ namespace Messaging.ViewModels
 
         Models.Message _selected = default(Models.Message);
 
-        public object Selected
+        public Message Selected
         {
             get { return _selected; }
             set
             {
-                var message = value as Models.Message;
-                Set(ref _selected, message);
-                if (message == null) return;
-                message.IsRead = true;
+                Set(ref _selected, value);
+                if (Selected == null) return;
+                Selected.IsRead = true;
                 IsDetailsLoading = true;
                 WindowWrapper.Current().Dispatcher.Dispatch(() =>
                 {

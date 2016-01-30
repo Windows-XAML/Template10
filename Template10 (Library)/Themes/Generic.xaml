@@ -4,7 +4,8 @@
     xmlns:behaviors="using:Template10.Behaviors"
     xmlns:controls="using:Template10.Controls"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:triggers="using:Template10.Triggers">
+    xmlns:triggers="using:Template10.Triggers"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core">
 
     <Style TargetType="controls:Resizer">
         <Setter Property="GrabberBrush" Value="{ThemeResource SystemAccentColor}" />
@@ -1186,7 +1187,10 @@
                                 <ColumnDefinition x:Name="MasterColumn" Width="320" />
                                 <ColumnDefinition x:Name="DetailsColumn" Width="*" />
                             </Grid.ColumnDefinitions>
-                            <CommandBar x:Name="DetailsCommandBar" Grid.Column="1">
+                            <CommandBar
+                                x:Name="DetailsCommandBar"
+                                Grid.Row="0"
+                                Grid.Column="1">
                                 <CommandBar.Content>
                                     <Grid Height="48">
                                         <Grid.ColumnDefinitions>
@@ -1206,9 +1210,12 @@
                                     <behaviors:EllipsisBehavior Visibility="Auto" />
                                 </interactivity:Interaction.Behaviors>
                             </CommandBar>
-                            <CommandBar x:Name="MasterCommandBar" Grid.Column="0">
+                            <CommandBar
+                                x:Name="MasterCommandBar"
+                                Grid.Row="0"
+                                Grid.Column="0">
                                 <CommandBar.Content>
-                                    <ContentControl Grid.Column="1" Content="{TemplateBinding MasterCommandBarContent}" />
+                                    <ContentControl Content="{TemplateBinding MasterCommandBarContent}" />
                                 </CommandBar.Content>
                                 <interactivity:Interaction.Behaviors>
                                     <behaviors:EllipsisBehavior Visibility="Auto" />
@@ -1289,7 +1296,7 @@
                         </Grid>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="NarrowVisualStateGroup">
-                                <VisualState x:Name="DetailVisualState">
+                                <VisualState x:Name="DetailsVisualState">
                                     <VisualState.Setters>
                                         <Setter Target="BackButton.Visibility" Value="Visible" />
                                         <Setter Target="BackButton.IsEnabled" Value="True" />
@@ -1319,10 +1326,13 @@
                                 </VisualState>
                                 <VisualState x:Name="VisualStateNormal">
                                     <VisualState.StateTriggers>
-                                        <AdaptiveTrigger MinWindowWidth="721" />
+                                        <AdaptiveTrigger MinWindowWidth="521" />
                                     </VisualState.StateTriggers>
                                     <VisualState.Setters>
                                         <Setter Target="DetailsGrid.Visibility" Value="Visible" />
+                                        <Setter Target="DetailsGrid.(Grid.Column)" Value="1" />
+                                        <Setter Target="DetailsCommandBar.(Grid.Column)" Value="1" />
+                                        <Setter Target="MobileDetailsCommandBar.(Grid.Column)" Value="1" />
                                         <Setter Target="MasterColumn.Width" Value="320" />
                                         <Setter Target="DetailsColumn.Width" Value="*" />
                                         <Setter Target="BackButton.Visibility" Value="Collapsed" />
@@ -1352,6 +1362,20 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
+                        <interactivity:Interaction.Behaviors>
+                            <core:DataTriggerBehavior Binding="{TemplateBinding DetailsRequested}" ComparisonCondition="Equal" Value="True">
+                                <behaviors:ConditionalAction LeftValue="{Binding CurrentState.Name, ElementName=AdaptiveVisualStateGroup}"
+                                             Operator="EqualToRight"
+                                             RightValue="{Binding Name, ElementName=VisualStateNormal}">
+                                    <core:GoToStateAction TargetObject="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                          UseTransitions="True"
+                                          StateName="DetailsVisualState" />
+                                </behaviors:ConditionalAction>
+                            </core:DataTriggerBehavior>
+                            <core:DataTriggerBehavior Binding="{TemplateBinding DetailsRequested}" ComparisonCondition="Equal" Value="False">
+                                <core:GoToStateAction StateName="MasterVisualState" />
+                            </core:DataTriggerBehavior>
+                        </interactivity:Interaction.Behaviors>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
