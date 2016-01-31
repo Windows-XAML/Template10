@@ -2,7 +2,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Messaging.Controls
+namespace Sample.Controls
 {
     public sealed partial class LoginPart : UserControl
     {
@@ -23,5 +23,7 @@ namespace Messaging.Controls
         {
             HideRequested?.Invoke(this, EventArgs.Empty);
         }
+
+        public Models.UserCredentials UserCredentials { get; set; }
     }
 }
