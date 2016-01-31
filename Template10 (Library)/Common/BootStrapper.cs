@@ -83,7 +83,7 @@ namespace Template10.Common
             {
                 DebugWrite(caller: "Resuming");
 
-                if ((OriginalActivatedArgs as LaunchActivatedEventArgs).PrelaunchActivated)
+                if ((OriginalActivatedArgs as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false)
                     OnResuming(s, e, AppExecutionState.Prelaunch);
                 else
                     OnResuming(s, e, AppExecutionState.Suspended);
