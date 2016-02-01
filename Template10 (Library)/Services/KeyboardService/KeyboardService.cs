@@ -90,21 +90,6 @@ namespace Template10.Services.KeyboardService
                     DebugWrite("Alt+Right", caller: nameof(AfterBackGesture));
                     AfterForwardGesture?.Invoke();
                 }
-
-                // about
-                else if (e.AltKey && e.ControlKey && e.ShiftKey && e.VirtualKey == Windows.System.VirtualKey.F12)
-                {
-                    var open = new Action(async () => { await Windows.System.Launcher.LaunchUriAsync(new Uri("http://aka.ms/template10")); });
-                    var about = new Windows.UI.Xaml.Controls.ContentDialog
-                    {
-                        Title = "Template 10",
-                        PrimaryButtonText = "Info",
-                        PrimaryButtonCommand = new Mvvm.DelegateCommand(open),
-                        SecondaryButtonText = "Close"
-                    };
-                    await about.ShowAsync();
-                }
-
                 // anything else
                 else
                     e.Handled = false;
