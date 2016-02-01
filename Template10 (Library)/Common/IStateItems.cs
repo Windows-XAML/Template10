@@ -7,8 +7,10 @@ namespace Template10.Common
     {
         KeyValuePair<StateItemKey, object> Add(Type type, string key, object value);
         bool Contains(object value);
+        bool Contains(StateItemKey key);
         bool Contains(Type type, string key);
         bool Contains(Type type, string key, object value);
+        T Get<T>(StateItemKey key);
         T Get<T>(string key);
         void Remove(Type type);
         void Remove(object value);
