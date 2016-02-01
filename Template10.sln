@@ -95,7 +95,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{F8B667
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10 (Validation)", "Template10 (Validation)\Template10 (Validation).csproj", "{F051BB74-A073-4D35-A185-B089579C52C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileActivation", "FileActivation\FileActivation.csproj", "{8BBE6C48-CEDA-4A9D-9AF7-E9BD2EF33298}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileActivation", "Samples\FileActivation\FileActivation.csproj", "{8BBE6C48-CEDA-4A9D-9AF7-E9BD2EF33298}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
