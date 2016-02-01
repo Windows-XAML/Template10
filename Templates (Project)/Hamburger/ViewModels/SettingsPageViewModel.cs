@@ -1,5 +1,6 @@
 ﻿using System;
 using Template10.Mvvm;
+using Template10.Services.SettingsService;
 using Windows.UI.Xaml;
 
 namespace Sample.ViewModels
@@ -30,6 +31,12 @@ namespace Sample.ViewModels
         {
             get { return _settings.AppTheme.Equals(ApplicationTheme.Light); }
             set { _settings.AppTheme = value ? ApplicationTheme.Light : ApplicationTheme.Dark; base.RaisePropertyChanged(); }
+        }
+
+        public bool IsHamMenuFullScreen
+        {
+            get { return Views.Shell.HamburgerMenu.IsFullScreen; }
+            set { Views.Shell.HamburgerMenu.IsFullScreen = value; }
         }
 
         private string _BusyText = "Please wait...";

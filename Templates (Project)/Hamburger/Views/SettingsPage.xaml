@@ -55,6 +55,7 @@
             <Interactivity:Interaction.Behaviors>
                 <Behaviors:EllipsisBehavior Visibility="Auto" />
             </Interactivity:Interaction.Behaviors>
+            <AppBarToggleButton IsChecked="{Binding SettingsPartViewModel.IsHamMenuFullScreen, Mode=TwoWay}" Icon="FullScreen" Label="Full Screen" />
         </controls:PageHeader>
 
         <!--  content  -->
