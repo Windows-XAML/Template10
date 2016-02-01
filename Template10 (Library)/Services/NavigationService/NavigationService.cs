@@ -65,6 +65,12 @@ namespace Template10.Services.NavigationService
             };
         }
 
+        // can be overriden in case the ViewModel is wrapped
+        protected virtual INavigable UnwrapNavigableFromDataContext(Page page)
+        {
+            return page.DataContext as INavigable;
+        }
+
         // before navigate (cancellable) 
         async Task<bool> NavigatingFromAsync(bool suspending)
         {
@@ -76,8 +82,8 @@ namespace Template10.Services.NavigationService
                 // force (x:bind) page bindings to update
                 XamlUtils.UpdateBindings(page);
 
-                // call navagable override (navigating)
-                var dataContext = page.DataContext as INavigable;
+                // call ViewModel
+                var dataContext = UnwrapNavigableFromDataContext(page);
                 if (dataContext != null)
                 {
                     dataContext.NavigationService = this;
@@ -106,7 +112,7 @@ namespace Template10.Services.NavigationService
             if (page != null)
             {
                 // call viewmodel
-                var dataContext = page.DataContext as INavigable;
+                var dataContext = UnwrapNavigableFromDataContext(page);
                 if (dataContext != null)
                 {
                     dataContext.NavigationService = this;
@@ -145,7 +151,7 @@ namespace Template10.Services.NavigationService
                 }
 
                 // call viewmodel
-                var dataContext = page.DataContext as INavigable;
+                var dataContext = UnwrapNavigableFromDataContext(page);
                 if (dataContext != null)
                 {
                     // prepare for state load
