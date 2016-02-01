@@ -1,8 +1,9 @@
 ﻿using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Template10.Utils;
 
-namespace Messaging.Views
+namespace Sample.Views
 {
     public sealed partial class SettingsPage : Page
     {

@@ -1,10 +1,12 @@
 ﻿using System;
 using Windows.UI.Xaml;
 using System.Threading.Tasks;
-using Messaging.Services.SettingsServices;
+using Sample.Services.SettingsServices;
 using Windows.ApplicationModel.Activation;
+using Template10.Mvvm;
+using Template10.Common;
 
-namespace Messaging
+namespace Sample
 {
     /// Documentation on APIs used in this page:
     /// https://github.com/Windows-XAML/Template10/wiki
@@ -26,24 +28,23 @@ namespace Messaging
             #endregion
         }
 
-        // runs even if restored from state
-        public override Task OnInitializeAsync(IActivatedEventArgs args)
+        // runs only when not restored from state
+        public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
-            // content may already be shell when resuming
-            if ((Window.Current.Content as Views.Shell) == null)
-            {
-                // setup hamburger shell
-                var nav = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include);
-                Window.Current.Content = new Views.Shell(nav);
-            }
+            NavigationService.Navigate(typeof(Views.MainPage));
             return Task.CompletedTask;
         }
 
-        // runs only when not restored from state
-        public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
+        public static void SetBusy(bool busy, string text = null)
         {
-            await Task.Delay(0);
-            NavigationService.Navigate(typeof(Views.MainPage));
+            WindowWrapper.Current().Dispatcher.Dispatch(() =>
+            {
+                var instance = Current as App;
+                var control = (instance.ModalContent = (instance.ModalContent ?? new Views.Busy())) as Views.Busy;
+                instance.ModalDialog.IsModal = busy;
+                control.BusyText = text;
+                control.IsBusy = busy;
+            });
         }
     }
 }

@@ -21,16 +21,16 @@
       <Code Language="csharp">
         <![CDATA[public event PropertyChangedEventHandler PropertyChanged;
         
-        void Set<T>(ref T storage, T value, [CallerMemberName] String propertyName = null)
+        void Set<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
         {
-            if (!object.Equals(storage, value))
+            if (!Equals(storage, value))
             {
                 storage = value;
                 RaisePropertyChanged(propertyName);
             }
         }
         
-        void RaisePropertyChanged([CallerMemberName] String propertyName = null) =>
+        void RaisePropertyChanged([CallerMemberName] string propertyName = null) =>
            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));]]>
       </Code>
     </Snippet>

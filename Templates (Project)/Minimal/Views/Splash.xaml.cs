@@ -1,9 +1,10 @@
 ﻿using System;
+using Template10.Utils;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Messaging.Views
+namespace Sample.Views
 {
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SplashScreen
     public sealed partial class Splash : UserControl

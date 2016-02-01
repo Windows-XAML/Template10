@@ -1,15 +1,16 @@
 ﻿using System;
+using Template10.Mvvm;
 using Windows.UI.Xaml;
 
-namespace Messaging.ViewModels
+namespace Sample.ViewModels
 {
-    public class SettingsPageViewModel : Messaging.Mvvm.ViewModelBase
+    public class SettingsPageViewModel : ViewModelBase
     {
         public SettingsPartViewModel SettingsPartViewModel { get; } = new SettingsPartViewModel();
         public AboutPartViewModel AboutPartViewModel { get; } = new AboutPartViewModel();
     }
 
-    public class SettingsPartViewModel : Mvvm.ViewModelBase
+    public class SettingsPartViewModel : ViewModelBase
     {
         Services.SettingsServices.SettingsService _settings;
 
@@ -40,16 +41,16 @@ namespace Messaging.ViewModels
 
         public void ShowBusy()
         {
-            Views.Shell.SetBusy(true, _BusyText);
+            App.SetBusy(true, _BusyText);
         }
 
         public void HideBusy()
         {
-            Views.Shell.SetBusy(false);
+            App.SetBusy(false);
         }
     }
 
-    public class AboutPartViewModel : Mvvm.ViewModelBase
+    public class AboutPartViewModel : ViewModelBase
     {
         public Uri Logo => Windows.ApplicationModel.Package.Current.Logo;
 
