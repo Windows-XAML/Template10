@@ -53,11 +53,16 @@
   <ItemGroup>
     <EmbeddedResource Include="EmbeddedFiles\Help.htm" />
     <EmbeddedResource Include="EmbeddedFiles\__PreviewImageBlank.png" />
-    <EmbeddedResource Include="EmbeddedFiles\__PreviewImageMinimal.png" />
     <EmbeddedResource Include="EmbeddedFiles\__TemplateIcon.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="EmbeddedFiles\Application_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="EmbeddedFiles\__PreviewImageHamburger.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="EmbeddedFiles\__PreviewImageMinimal.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

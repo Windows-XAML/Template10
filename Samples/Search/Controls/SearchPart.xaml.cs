@@ -5,7 +5,7 @@ using Template10.Common;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Messaging.Controls
+namespace Sample.Controls
 {
     public sealed partial class SearchPart : UserControl
     {
