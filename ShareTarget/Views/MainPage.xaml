@@ -13,6 +13,12 @@
         <vm:MainPageViewModel x:Name="ViewModel" />
     </Page.DataContext>
 
+    <Page.Resources>
+        <Style x:Name="Header" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+    </Page.Resources>
+
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
         <Grid.RowDefinitions>
@@ -36,43 +42,49 @@
 
         <StackPanel Grid.Row="2" Padding="12,4,0,0">
 
-            <TextBlock Text="ShareOperation.Data.Properties.Title" />
+            <TextBlock Style="{StaticResource Header}" Text="Content" />
+            <TextBlock Text="{Binding Content}" />
+
+            <TextBlock Style="{StaticResource Header}" Text="QuickLink" />
+            <TextBlock Text="{Binding QuickLink}" />
+
+            <TextBlock Style="{StaticResource Header}" Text="ShareOperation.Data.Properties.Title" />
             <TextBlock Text="{Binding ShareOperation.Data.Properties.Title}" />
 
-            <TextBlock Text="ShareOperation.Data.Properties.Description" />
+            <TextBlock Style="{StaticResource Header}" Text="ShareOperation.Data.Properties.Description" />
             <TextBlock Text="{Binding ShareOperation.Data.Properties.Description}" />
 
-            <TextBlock Text="ShareOperation.Data.Properties.ApplicationName" />
+            <TextBlock Style="{StaticResource Header}" Text="ShareOperation.Data.Properties.ApplicationName" />
             <TextBlock Text="{Binding ShareOperation.Data.Properties.ApplicationName}" />
 
-            <TextBlock Text="ShareOperation.Data.Properties.ApplicationListingUri" />
+            <TextBlock Style="{StaticResource Header}" Text="ShareOperation.Data.Properties.ApplicationListingUri" />
             <TextBlock Text="{Binding ShareOperation.Data.Properties.ApplicationListingUri}" />
 
-            <TextBlock Text="ShareOperation.Data.Properties.PackageFamilyName" />
+            <TextBlock Style="{StaticResource Header}" Text="ShareOperation.Data.Properties.PackageFamilyName" />
             <TextBlock Text="{Binding ShareOperation.Data.Properties.PackageFamilyName}" />
 
-            <TextBlock Text="ShareOperation.Data.Properties.EnterpriseId" />
+            <TextBlock Style="{StaticResource Header}" Text="ShareOperation.Data.Properties.EnterpriseId" />
             <TextBlock Text="{Binding ShareOperation.Data.Properties.EnterpriseId}" />
 
-            <TextBlock Text="ShareOperation.Data.Properties.ContentSourceWebLink" />
+            <TextBlock Style="{StaticResource Header}" Text="ShareOperation.Data.Properties.ContentSourceWebLink" />
             <TextBlock Text="{Binding ShareOperation.Data.Properties.ContentSourceWebLink}" />
 
-            <TextBlock Text="ShareOperation.Data.Properties.ContentSourceApplicationLink" />
+            <TextBlock Style="{StaticResource Header}" Text="ShareOperation.Data.Properties.ContentSourceApplicationLink" />
             <TextBlock Text="{Binding ShareOperation.Data.Properties.ContentSourceApplicationLink}" />
 
-            <TextBlock Text="ShareOperation.Data.Properties.LogoBackgroundColor" />
+            <TextBlock Style="{StaticResource Header}" Text="ShareOperation.Data.Properties.LogoBackgroundColor" />
             <TextBlock Text="{Binding ShareOperation.Data.Properties.LogoBackgroundColor}" />
 
-            <TextBlock Text="ShareOperation.Data.Properties.Square30x30Logo" />
+            <TextBlock Style="{StaticResource Header}" Text="ShareOperation.Data.Properties.Square30x30Logo" />
             <TextBlock Text="{Binding ShareOperation.Data.Properties.Square30x30Logo}" />
 
-            <TextBlock Text="ShareOperation.Data.Properties.Thumbnail" />
+            <TextBlock Style="{StaticResource Header}" Text="ShareOperation.Data.Properties.Thumbnail" />
             <TextBlock Text="{Binding ShareOperation.Data.Properties.Thumbnail}" />
 
-            <TextBlock Text="ShareOperation.Data.RequestedOperation" />
+            <TextBlock Style="{StaticResource Header}" Text="ShareOperation.Data.RequestedOperation" />
             <TextBlock Text="{Binding ShareOperation.Data.RequestedOperation}" />
 
-            <TextBlock Text="ShareOperation.Data.AvailableFormats" />
+            <TextBlock Style="{StaticResource Header}" Text="ShareOperation.Data.AvailableFormats" />
             <TextBlock Text="{Binding ShareOperation.Data.AvailableFormats}" />
 
         </StackPanel>

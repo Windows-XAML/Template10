@@ -60,7 +60,15 @@ namespace Template10.Services.NavigationService
                     parameter = LastNavigationParameter;
                 await WindowWrapper.Current().Dispatcher.DispatchAsync(async () =>
                 {
-                    await NavigateToAsync(e.NavigationMode, parameter, Frame.Content);
+                    try
+                    {
+                        await NavigateToAsync(e.NavigationMode, parameter, Frame.Content);
+                    }
+                    catch (Exception ex)
+                    {
+                        DebugWrite($"DispatchAsync/NavigateToAsync {ex.Message}");
+                        throw;
+                    }
                 }, 1);
             };
         }

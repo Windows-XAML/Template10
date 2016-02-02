@@ -242,7 +242,15 @@ namespace Template10.Services.NavigationService
         {
             DebugWrite();
 
-            var parameter = SerializationService.Deserialize(e.Parameter?.ToString());
+            object parameter = null;
+            try
+            {
+                parameter = SerializationService.Deserialize(e.Parameter?.ToString());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Your parameter must be serializable. If it isn't, then use SessionState.", ex);
+            }
             var args = new NavigatingEventArgs(e, Content as Page, parameter);
             if (NavigationModeHint != NavigationMode.New)
                 args.NavigationMode = NavigationModeHint;

@@ -9,6 +9,9 @@ using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.DataTransfer.ShareTarget;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Media.Imaging;
+using Windows.ApplicationModel;
+using Windows.Storage.Streams;
+using Windows.ApplicationModel.Activation;
 
 namespace ShareTarget.ViewModels
 {
@@ -19,26 +22,27 @@ namespace ShareTarget.ViewModels
             var key = parameter as StateItemKey;
             if (key != null && SessionState.Contains(key))
             {
-                this.ShareOperation = SessionState.Get<ShareOperation>(key);
+                ShareOperation = SessionState.Get<ShareOperation>(key);
             }
             else
             {
+                Content = "Opened without using share";
                 return;
             }
 
             try
             {
                 if (this.ShareOperation.Data.Contains(StandardDataFormats.Html))
-                    Comment = (await ShareOperation.Data.GetHtmlFormatAsync()).ToString();
+                { Content = (await ShareOperation.Data.GetHtmlFormatAsync()).ToString(); }
                 else if (ShareOperation.Data.Contains(StandardDataFormats.Text))
-                    Comment = (await ShareOperation.Data.GetTextAsync()).ToString();
+                { Content = (await ShareOperation.Data.GetTextAsync()).ToString(); }
                 else if (ShareOperation.Data.Contains(StandardDataFormats.WebLink))
-                    Comment = (await ShareOperation.Data.GetWebLinkAsync()).AbsoluteUri;
+                { Content = (await ShareOperation.Data.GetWebLinkAsync()).AbsoluteUri; }
                 else if (ShareOperation.Data.Contains(StandardDataFormats.ApplicationLink))
-                    Comment = (await ShareOperation.Data.GetApplicationLinkAsync()).AbsoluteUri;
+                { Content = (await ShareOperation.Data.GetApplicationLinkAsync()).AbsoluteUri; }
                 else if (ShareOperation.Data.Contains(StandardDataFormats.Bitmap))
                 {
-                    Comment = nameof(StandardDataFormats.Bitmap);
+                    Content = nameof(StandardDataFormats.Bitmap);
                     var bitmap = await ShareOperation.Data.GetBitmapAsync();
                     using (var stream = await bitmap.OpenReadAsync())
                     {
@@ -48,16 +52,19 @@ namespace ShareTarget.ViewModels
                 }
                 else if (ShareOperation.Data.Contains(StandardDataFormats.StorageItems))
                 {
-                    Comment = nameof(StandardDataFormats.StorageItems);
+                    Content = nameof(StandardDataFormats.StorageItems);
                     foreach (var item in await ShareOperation.Data.GetStorageItemsAsync())
                     {
-                        Comment += item.Path + Environment.NewLine;
+                        Content += item.Path + Environment.NewLine;
                     }
                 }
                 else
                 {
-                    Comment = "Opened without using share";
+                    Content = "Some unsupported share type.";
+                    return;
                 }
+
+                QuickLink = ShareOperation.QuickLinkId ?? "None set";
 
                 if (ShareOperation.Data.Properties.Square30x30Logo != null)
                 {
@@ -77,11 +84,33 @@ namespace ShareTarget.ViewModels
                     }
                 }
             }
-            catch (Exception e) { Comment = e.Message; }
+            catch (Exception e) { Content = e.Message; }
+            finally
+            {
+                var folder = await Package.Current.InstalledLocation.GetFolderAsync("Assets");
+                var file = await folder.GetFileAsync("T10 56x56.png");
+                var reference = RandomAccessStreamReference.CreateFromFile(file);
+                var quick = new QuickLink()
+                {
+                    Id = "Template10 QuickLink",
+                    Title = "Template10 QuickLink",
+                    Thumbnail = reference,
+                };
+                quick.SupportedFileTypes.Clear();
+                quick.SupportedFileTypes.Add(StandardDataFormats.Text);
+                quick.SupportedFileTypes.Add(StandardDataFormats.WebLink);
+                quick.SupportedFileTypes.Add(StandardDataFormats.ApplicationLink);
+                quick.SupportedFileTypes.Add(StandardDataFormats.Bitmap);
+                quick.SupportedFileTypes.Add(StandardDataFormats.Html);
+                ShareOperation.ReportCompleted(quick);
+            }
         }
 
-        string _Comment = default(string);
-        public string Comment { get { return _Comment; } set { Set(ref _Comment, value); } }
+        string _Content = default(string);
+        public string Content { get { return _Content; } set { Set(ref _Content, value); } }
+
+        string _QuickLink = default(string);
+        public string QuickLink { get { return _QuickLink; } set { Set(ref _QuickLink, value); } }
 
         ShareOperation _ShareOperation = default(ShareOperation);
         public ShareOperation ShareOperation { get { return _ShareOperation; } set { Set(ref _ShareOperation, value); } }

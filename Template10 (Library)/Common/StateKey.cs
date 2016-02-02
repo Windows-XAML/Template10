@@ -46,9 +46,9 @@ namespace Template10.Common
             }
         }
 
-        public static bool operator ==(StateItemKey left, StateItemKey right) => left.Equals(right);
+        public static bool operator ==(StateItemKey left, StateItemKey right) => Equals(left, right);
 
-        public static bool operator !=(StateItemKey left, StateItemKey right) => !left.Equals(right);
+        public static bool operator !=(StateItemKey left, StateItemKey right) => !Equals(left, right);
     }
 
 }

@@ -460,7 +460,7 @@ namespace Template10.Common
 
             // this "unused" bit is very important because of a quirk in ResourceThemes
             try { var unused = Application.Current.Resources["ExtendedSplashBackground"]; }
-            catch { }
+            catch { /* this is okay */ }
 
             // setup custom titlebar
             foreach (var resource in Application.Current.Resources
