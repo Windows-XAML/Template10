@@ -130,6 +130,7 @@
   <ItemGroup>
     <Compile Include="Behaviors\BackButtonBehavior.cs" />
     <Compile Include="Behaviors\CloseFlyoutAction.cs" />
+    <Compile Include="Behaviors\DeviceDispositionBehavior.cs" />
     <Compile Include="Behaviors\FocusAction.cs" />
     <Compile Include="Behaviors\MessageDialogAction.cs" />
     <Compile Include="Behaviors\NavButtonBehavior.cs" />

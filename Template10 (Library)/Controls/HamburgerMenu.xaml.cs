@@ -430,9 +430,9 @@ namespace Template10.Controls
             DebugWrite($"OldValue: {previous}, NewValue: {value}");
 
             // do not remove this if statement
-            // this is the fix for #410 (click twice)
-            if (previous != null)
-                IsOpen = false;
+            //// this is the fix for #410 (click twice)
+            //if (previous != null)
+            //    IsOpen = false;
 
             // undo previous
             if (previous?.IsChecked ?? true && previous != value)
@@ -449,6 +449,7 @@ namespace Template10.Controls
             {
                 if (NavigationService.Navigate(value.PageType, value?.PageParameter, value?.NavigationTransitionInfo))
                 {
+                    IsOpen = false;
                     if (value.ClearHistory)
                         NavigationService.ClearHistory();
                 }
@@ -521,7 +522,7 @@ namespace Template10.Controls
             {
                 var PrimaryButtons = (ObservableCollection<HamburgerButtonInfo>)base.GetValue(PrimaryButtonsProperty);
                 if (PrimaryButtons == null)
-                    base.SetValue(PrimaryButtonsProperty, PrimaryButtons = new ObservableCollection<HamburgerButtonInfo>());
+                    SetValue(PrimaryButtonsProperty, PrimaryButtons = new ObservableCollection<HamburgerButtonInfo>());
                 return PrimaryButtons;
             }
             set { SetValue(PrimaryButtonsProperty, value); }
@@ -615,7 +616,7 @@ namespace Template10.Controls
             {
                 var SecondaryButtons = (ObservableCollection<HamburgerButtonInfo>)base.GetValue(SecondaryButtonsProperty);
                 if (SecondaryButtons == null)
-                    base.SetValue(SecondaryButtonsProperty, SecondaryButtons = new ObservableCollection<HamburgerButtonInfo>());
+                    SetValue(SecondaryButtonsProperty, SecondaryButtons = new ObservableCollection<HamburgerButtonInfo>());
                 return SecondaryButtons;
             }
             set { SetValue(SecondaryButtonsProperty, value); }

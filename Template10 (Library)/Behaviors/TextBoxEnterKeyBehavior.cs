@@ -41,13 +41,13 @@ namespace Template10.Behaviors
                 var actions = (ActionCollection)base.GetValue(ActionsProperty);
                 if (actions == null)
                 {
-                    base.SetValue(ActionsProperty, actions = new ActionCollection());
+                    SetValue(ActionsProperty, actions = new ActionCollection());
                 }
                 return actions;
             }
         }
         public static readonly DependencyProperty ActionsProperty = 
-            DependencyProperty.Register("Actions", typeof(ActionCollection), 
+            DependencyProperty.Register(nameof(Actions), typeof(ActionCollection), 
                 typeof(TextBoxEnterKeyBehavior), new PropertyMetadata(null));
     }
 }
