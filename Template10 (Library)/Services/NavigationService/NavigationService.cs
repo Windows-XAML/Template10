@@ -19,7 +19,7 @@ namespace Template10.Services.NavigationService
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-NavigationService
     public partial class NavigationService : INavigationService
     {
-        // Change!!!
+        // Change!!! CHange 2
 
         public FrameFacade FrameFacade { get; }
         public Frame Frame => FrameFacade.Frame;
