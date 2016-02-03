@@ -3,6 +3,7 @@ using Windows.UI.Xaml;
 using System.Threading.Tasks;
 using MPC.Services.SettingsServices;
 using Windows.ApplicationModel.Activation;
+using Template10.Services.NavigationService;
 
 namespace MPC
 {
@@ -33,7 +34,7 @@ namespace MPC
         {
             // setup hamburger shell
             var nav = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include);
-            Window.Current.Content = new Views.Shell(nav);
+            Window.Current.Content = new Views.Shell((NavigationService)nav);
             await Task.Yield();
         }
 

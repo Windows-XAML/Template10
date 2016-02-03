@@ -72,13 +72,16 @@
         <Grid Grid.Row="1" Padding="12,8,0,0">
 
             <StackPanel>
+                <c:VoiceToTextBox Width="300" Text="hello from xaml" ></c:VoiceToTextBox>
                 <TextBlock Margin="20" Width="300" TextWrapping="Wrap" HorizontalAlignment="Center" Text="Try to ink abve each TexBox displayd on this page and check out the effect!"/>
                 <TextBox Text="try inking above this" Width="300" Height="50" />
                 <TextBlock Margin="10,50,10,10" Width="300" TextWrapping="Wrap" HorizontalAlignment="Center" Text="Use keyboard or click on the microphone button and speach to add text to the texbox below"/>
-                <c:VoiceToTextBox Width="300" Height="50" ></c:VoiceToTextBox>
+                <AutoSuggestBox QueryIcon="Microphone" Width="200"   ></AutoSuggestBox>
+                <c:VoiceControl Width="300" Text="hello"/>
+
             </StackPanel>
 
-            <c:InkToTextBox PenColor="Green" PenTip="Circle"/>
+            <!--<c:InkToTextBox PenColor="Green" PenTip="Circle"/>-->
         </Grid>
 
     </Grid>

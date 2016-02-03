@@ -102,6 +102,7 @@
     </Compile>
     <Compile Include="Common\VisualTreeHelperEx.cs" />
     <Compile Include="Controls\InkToTextBox.cs" />
+    <Compile Include="Controls\VoiceControl.cs" />
     <Compile Include="Controls\VoiceToTextBox.cs" />
     <Compile Include="Mvvm\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -179,11 +180,6 @@
   <ItemGroup>
     <Folder Include="Models\" />
     <Folder Include="Strings\" />
-  </ItemGroup>
-  <ItemGroup>
-    <SDKReference Include="BehaviorsXamlSDKManaged, Version=12.0">
-      <Name>BehaviorsXamlSDKManaged</Name>
-    </SDKReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
