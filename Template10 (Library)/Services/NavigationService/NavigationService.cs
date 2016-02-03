@@ -63,10 +63,19 @@ namespace Template10.Services.NavigationService
             };
         }
 
-        // can be overriden in case the ViewModel is wrapped
-        protected virtual INavigable UnwrapNavigableFromDataContext(Page page)
+        private INavigable NavigableDataContext(Page page)
         {
-            return page.DataContext as INavigable;
+            if (!(page.DataContext is INavigable) | page.DataContext == null)
+            {
+                // to support dependency injection, but keeping it optional.
+                var viewModel = BootStrapper.Current.ResolveForPage(page.GetType(), this);
+                if ((viewModel != null))
+                {
+                    return viewModel;
+                }
+                throw new ArgumentNullException();
+            }
+            return (INavigable)page.DataContext;
         }
 
         // before navigate (cancellable) 
@@ -81,7 +90,7 @@ namespace Template10.Services.NavigationService
                 XamlUtils.UpdateBindings(page);
 
                 // call ViewModel
-                var dataContext = UnwrapNavigableFromDataContext(page);
+                var dataContext = NavigableDataContext(page);
                 if (dataContext != null)
                 {
                     dataContext.NavigationService = this;
@@ -110,7 +119,7 @@ namespace Template10.Services.NavigationService
             if (page != null)
             {
                 // call viewmodel
-                var dataContext = UnwrapNavigableFromDataContext(page);
+                var dataContext = NavigableDataContext(page);
                 if (dataContext != null)
                 {
                     dataContext.NavigationService = this;
@@ -121,6 +130,8 @@ namespace Template10.Services.NavigationService
                 }
             }
         }
+
+
 
         async Task NavigateToAsync(NavigationMode mode, object parameter, object frameContent = null)
         {
@@ -140,16 +151,9 @@ namespace Template10.Services.NavigationService
                     pageState?.Clear();
                 }
 
-                if (page.DataContext == null)
-                {
-                    // to support dependency injection, but keeping it optional.
-                    var viewmodel = BootStrapper.Current.ResolveForPage(page.GetType(), this);
-                    if (viewmodel != null)
-                        page.DataContext = viewmodel;
-                }
+                var dataContext = NavigableDataContext(page);
 
                 // call viewmodel
-                var dataContext = UnwrapNavigableFromDataContext(page);
                 if (dataContext != null)
                 {
                     // prepare for state load
