@@ -59,15 +59,6 @@
             <Interactivity:Interaction.Behaviors>
                 <Behaviors:EllipsisBehavior Visibility="Auto" />
             </Interactivity:Interaction.Behaviors>
-            <AppBarToggleButton Icon="FullScreen"
-                                IsChecked="{Binding SettingsPartViewModel.IsHamMenuFullScreen, Mode=TwoWay}"
-                                Visibility="Collapsed">
-                <Interactivity:Interaction.Behaviors>
-                    <Behaviors:DeviceDispositionBehavior Desktop="True">
-                        <Core:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
-                    </Behaviors:DeviceDispositionBehavior>
-                </Interactivity:Interaction.Behaviors>
-            </AppBarToggleButton>
         </controls:PageHeader>
 
         <!--  content  -->
@@ -89,8 +80,9 @@
                                  HorizontalAlignment="Left" Header="Busy text"
                                  RelativePanel.Below="UseLightThemeToggleSwitch"
                                  Text="{Binding BusyText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        <Button Margin="12,0,0,0" Command="{x:Bind ViewModel.SettingsPartViewModel.ShowBusyCommand}" Content="Show Busy"
-                                RelativePanel.AlignBottomWith="BusyTextTextBox"
+                        <Button Margin="12,0,0,0"
+                                Command="{x:Bind ViewModel.SettingsPartViewModel.ShowBusyCommand}"
+                                Content="Show Busy" RelativePanel.AlignBottomWith="BusyTextTextBox"
                                 RelativePanel.RightOf="BusyTextTextBox" />
                     </RelativePanel>
                 </ScrollViewer>
