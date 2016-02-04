@@ -6,15 +6,17 @@ namespace Sample.Views
 {
     public sealed partial class SettingsPage : Page
     {
+        Template10.Services.SerializationService.ISerializationService _SerializationService;
+
         public SettingsPage()
         {
             InitializeComponent();
+            _SerializationService = Template10.Services.SerializationService.SerializationService.Json;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            var index = Template10.Services.SerializationService.SerializationService
-                .Json.Deserialize<int>(e.Parameter?.ToString());
+            var index = _SerializationService.Deserialize<int>(e.Parameter?.ToString());
             MyPivot.SelectedIndex = index;
         }
     }

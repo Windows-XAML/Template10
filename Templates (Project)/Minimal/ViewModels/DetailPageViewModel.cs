@@ -15,7 +15,9 @@ namespace Sample.ViewModels
         public DetailPageViewModel()
         {
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
+            {
                 Value = "Designtime value";
+            }
         }
 
         private string _Value = "Default";

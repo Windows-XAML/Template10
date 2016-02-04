@@ -4,7 +4,7 @@
       xmlns:Behaviors="using:Template10.Behaviors"
       xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
       xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
-      xmlns:controls="using:Template10.Controls"
+      xmlns:c="using:Sample.Converters" xmlns:controls="using:Template10.Controls"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:Sample.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -13,6 +13,10 @@
     <Page.DataContext>
         <vm:SettingsPageViewModel x:Name="ViewModel" />
     </Page.DataContext>
+
+    <Page.Resources>
+        <c:VisibleWhenDesktop x:Name="VisibleWhenDesktop" />
+    </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -55,6 +59,15 @@
             <Interactivity:Interaction.Behaviors>
                 <Behaviors:EllipsisBehavior Visibility="Auto" />
             </Interactivity:Interaction.Behaviors>
+            <AppBarToggleButton Icon="FullScreen"
+                                IsChecked="{Binding SettingsPartViewModel.IsHamMenuFullScreen, Mode=TwoWay}"
+                                Visibility="Collapsed">
+                <Interactivity:Interaction.Behaviors>
+                    <Behaviors:DeviceDispositionBehavior Desktop="True">
+                        <Core:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+                    </Behaviors:DeviceDispositionBehavior>
+                </Interactivity:Interaction.Behaviors>
+            </AppBarToggleButton>
         </controls:PageHeader>
 
         <!--  content  -->
@@ -76,18 +89,9 @@
                                  HorizontalAlignment="Left" Header="Busy text"
                                  RelativePanel.Below="UseLightThemeToggleSwitch"
                                  Text="{Binding BusyText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        <Button Margin="12,0,0,0" Content="Show Busy"
+                        <Button Margin="12,0,0,0" Command="{x:Bind ViewModel.SettingsPartViewModel.ShowBusyCommand}" Content="Show Busy"
                                 RelativePanel.AlignBottomWith="BusyTextTextBox"
-                                RelativePanel.RightOf="BusyTextTextBox">
-                            <Interactivity:Interaction.Behaviors>
-                                <Core:EventTriggerBehavior EventName="Click">
-                                    <Core:CallMethodAction MethodName="ShowBusy" TargetObject="{Binding Mode=OneWay}" />
-                                    <Behaviors:TimeoutAction Milliseconds="5000">
-                                        <Core:CallMethodAction MethodName="HideBusy" TargetObject="{Binding Mode=OneWay}" />
-                                    </Behaviors:TimeoutAction>
-                                </Core:EventTriggerBehavior>
-                            </Interactivity:Interaction.Behaviors>
-                        </Button>
+                                RelativePanel.RightOf="BusyTextTextBox" />
                     </RelativePanel>
                 </ScrollViewer>
             </PivotItem>
