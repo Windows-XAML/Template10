@@ -60,7 +60,11 @@ namespace Template10.Common
         /// </summary>
         public virtual Services.NavigationService.INavigable ResolveForPage(Type page, NavigationService navigationService) => null;
 
-        public virtual Services.NavigationService.INavigable ResolveForPage(Page page, NavigationService navigationService) => null;
+        public virtual Services.NavigationService.INavigable ResolveForPage(Page page,
+            NavigationService navigationService)
+        {
+            return ResolveForPage(page.GetType(), navigationService);
+        }
 
         #endregion
 
