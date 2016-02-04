@@ -154,7 +154,6 @@
     <Compile Include="Common\ChangedEventArgs.cs" />
     <Compile Include="Common\WindowWrapper.cs" />
     <Compile Include="Common\ObservableItemCollection.cs" />
-    <Compile Include="Controls\MasterDetailsView.cs" />
     <Compile Include="Controls\ModalDialog.cs" />
     <Compile Include="Controls\CustomTitleBar.cs" />
     <Compile Include="Controls\HamburgerButtonInfo.cs" />
