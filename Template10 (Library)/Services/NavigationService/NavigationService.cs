@@ -68,7 +68,7 @@ namespace Template10.Services.NavigationService
             if (!(page.DataContext is INavigable) | page.DataContext == null)
             {
                 // to support dependency injection, but keeping it optional.
-                var viewModel = BootStrapper.Current.ResolveForPage(page.GetType(), this);
+                var viewModel = BootStrapper.Current.ResolveForPage(page, this);
                 if ((viewModel != null))
                 {
                     return viewModel;
