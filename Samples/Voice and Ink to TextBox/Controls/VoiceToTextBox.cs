@@ -10,38 +10,19 @@ using Windows.UI.Xaml.Controls;
 
 namespace MPC.Controls
 {
-    [TemplatePart(Name = PART_ROOT_NAME, Type = typeof(StackPanel))]
-    [TemplatePart(Name = PART_TEXT_NAME, Type = typeof(TextBox))]
-    [TemplatePart(Name = PART_BUTTON_NAME, Type = typeof(Button))]
-    public class VoiceToTextBox : Control
+    public class VoiceToTextBox : TextBox
     {
         #region private fields
-        private const string PART_ROOT_NAME = "PART_ROOT";
-        private const string PART_TEXT_NAME = "PART_TEXT";
-        private const string PART_BUTTON_NAME = "PART_BUTTON";  
-        private TextBox textBox;
+        private const string PART_BUTTON_NAME = "VoiceButton";
+        private const string PART_SYMBOL_ICON_NAME = "symbol";
+        private const string VISUAL_STATE_LISTENING = "Listening";
+        private const string VISUAL_STATE_NOT_LISTENING = "NotListening";
+        private const string DICTATION = "dictation";
+        private const string SPEECH_RECOGNITION_FAILED = "Speech Recognition Failed";
+        private const string SPEECH_RECOGNITION_FAILED_STATUS = "Speech Recognition Failed, Status: {0}";
         private Button button;
+        private SymbolIcon symbol;
         private SpeechRecognizer speechRecognizer;
-        private CoreDispatcher dispatcher;
-        #endregion
-
-        #region public fields
-        // Text
-        public static readonly DependencyProperty TextProperty = 
-            DependencyProperty.Register(nameof(Text), typeof(string), typeof(VoiceToTextBox), new PropertyMetadata(DependencyProperty.UnsetValue));
-        public string Text
-        {
-            get { return (string)GetValue(TextProperty); }
-            set { SetValue(TextProperty, value); }
-        }
-
-        public static readonly DependencyProperty PlaceholderTextProperty = 
-            DependencyProperty.Register(nameof(PlaceholderText), typeof(string), typeof(VoiceToTextBox), new PropertyMetadata("Type or Speech"));
-        public string PlaceholderText
-        {
-            get { return (string)GetValue(PlaceholderTextProperty); }
-            set { SetValue(PlaceholderTextProperty, value); }
-        }
         #endregion
 
         #region ctor
@@ -51,91 +32,127 @@ namespace MPC.Controls
         }
         #endregion
 
+        public Task Initialization { get; private set; }
+
+        private async Task InitializeAsync()
+        {
+            // todo add a check if we are running on mobile if yes no need of the button speech
+            // if user haven't give permission to speec then the button has not to be shown
+            if (await Template10.Utils.AudioUtils.RequestMicrophonePermission() == false)
+                button.Visibility = Visibility.Collapsed;
+        }
+
         #region override OnApplyTemplate
         protected override void OnApplyTemplate()
-        { 
-            textBox = GetTemplateChild(PART_TEXT_NAME) as TextBox;
+        {
+            base.OnApplyTemplate();
+
             button = GetTemplateChild(PART_BUTTON_NAME) as Button;
+            symbol = GetTemplateChild(PART_SYMBOL_ICON_NAME) as SymbolIcon;
+            this.PlaceholderText = "Type or Speech";
+
+            Initialization = InitializeAsync();
+
             InitEvents();
-            
         }
         #endregion
 
+        private long readOnlyCalbackToken;
+        private long enabledCalbackToken;
+
         #region private methods
+
         private void InitEvents()
         {
             if (button != null)
                 button.Click += Button_Click;
+
+            // TODO: MUST UNREGISTER
+            //readOnlyCalbackToken = this.RegisterPropertyChangedCallback(TextBox.IsReadOnlyProperty, Callback);
+            //enabledCalbackToken = this.RegisterPropertyChangedCallback(TextBox.IsEnabledProperty, Callback);
+        }
+
+        private void Callback(DependencyObject sender, DependencyProperty dp)
+        {
+            if (dp == TextBox.IsReadOnlyProperty)
+            {
+                // These lines produce the same result.
+                System.Diagnostics.Debug.WriteLine("ReaOnly has been set to " + ((TextBox)sender).IsReadOnly);
+                System.Diagnostics.Debug.WriteLine("ReaOnlyhas been set to " + sender.GetValue(dp));
+
+                if (((TextBox)sender).IsReadOnly && button.IsEnabled == true)
+                    button.Visibility = Visibility.Collapsed;
+            }
+
+            if (dp == TextBox.IsEnabledProperty)
+            {
+                // These lines produce the same result.
+                System.Diagnostics.Debug.WriteLine("IsEnabled been set to " + ((TextBox)sender).IsEnabled);
+                System.Diagnostics.Debug.WriteLine("IsEnabled been set to " + sender.GetValue(dp));
+
+                if (((TextBox)sender).IsReadOnly)
+                    button.Visibility = Visibility.Collapsed;
+            }
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             await InitSpeech();
 
-            VisualStateManager.GoToState(this, "Listening", true);
+            button.IsEnabled = false;
+            symbol.Symbol = Symbol.Forward;
+            this.IsReadOnly = true;
+            this.Text = "Listening..";
 
             try
             {
                 SpeechRecognitionResult speechRecognitionResult = await speechRecognizer.RecognizeAsync();
                 if (speechRecognitionResult.Status == SpeechRecognitionResultStatus.Success)
-                {
                     Text = speechRecognitionResult.Text;
-                }
                 else
-                {
-                    Text = string.Format("Speech Recognition Failed, Status: {0}", speechRecognitionResult.Status.ToString());
-                }
+                    Text = string.Format(SPEECH_RECOGNITION_FAILED_STATUS, speechRecognitionResult.Status.ToString());
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine(ex.ToString());
-                Text = string.Format("Speech Recognition Failed");
+                Text = SPEECH_RECOGNITION_FAILED;
             }
             finally
             {
-                VisualStateManager.GoToState(this, "NotListening", true);
+                this.IsReadOnly = false;
+                button.IsEnabled = true;
+                symbol.Symbol = Symbol.Microphone;
+                
             }
         }
 
         private async Task InitSpeech()
         {
-            dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
+            button.IsEnabled = true;
 
-            bool permissionGained = await Template10.Utils.AudioUtils.RequestMicrophonePermission();
-            if (permissionGained)
+            if (speechRecognizer != null)
             {
-                button.IsEnabled = true;
-
-                if (speechRecognizer != null)
-                {
-                    this.speechRecognizer.Dispose();
-                    this.speechRecognizer = null;
-                }
-
-                speechRecognizer = new SpeechRecognizer();
-
-                var dictationConstraint = new SpeechRecognitionTopicConstraint(SpeechRecognitionScenario.Dictation, "dictation");
-                speechRecognizer.Constraints.Add(dictationConstraint);
-                SpeechRecognitionCompilationResult compilationResult = await speechRecognizer.CompileConstraintsAsync();
-
-                speechRecognizer.HypothesisGenerated += SpeechRecognizer_HypothesisGenerated;
-
-                if (compilationResult.Status != SpeechRecognitionResultStatus.Success)
-                    button.IsEnabled = false;
-
+                this.speechRecognizer.Dispose();
+                this.speechRecognizer = null;
             }
-            else
-            {
-                Text = string.Format("Permission to access mic denied by the user");
+
+            speechRecognizer = new SpeechRecognizer();
+
+            var dictationConstraint = new SpeechRecognitionTopicConstraint(SpeechRecognitionScenario.Dictation, DICTATION);
+            speechRecognizer.Constraints.Add(dictationConstraint);
+            SpeechRecognitionCompilationResult compilationResult = await speechRecognizer.CompileConstraintsAsync();
+
+            speechRecognizer.HypothesisGenerated += SpeechRecognizer_HypothesisGenerated;
+
+            if (compilationResult.Status != SpeechRecognitionResultStatus.Success)
                 button.IsEnabled = false;
-            }
 
             await Task.Yield();
         }
 
         private async void SpeechRecognizer_HypothesisGenerated(SpeechRecognizer sender, SpeechRecognitionHypothesisGeneratedEventArgs args)
         {
-            await textBox.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+            await this.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
             {
                 Text = args.Hypothesis.Text;
             });
