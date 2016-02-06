@@ -7,7 +7,7 @@
                      xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
                      xmlns:core="using:Microsoft.Xaml.Interactions.Core"
                      xmlns:behaviors="using:Template10.Behaviors"
-                     xmlns:triggers="using:Samples.MasterDetail.Triggers">
+                     xmlns:triggers="using:WindowsStateTriggers">
 
     <Application.Resources>
 
