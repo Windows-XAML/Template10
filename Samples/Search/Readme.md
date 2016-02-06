@@ -2,7 +2,7 @@
 
 This project demonstrates how to have an overlay while using the HamburgerMenu control. This is accomplished by handling the HamburgerButtonInfo.Tapped event and showing the correct UI.
 
-In this sample, the correct UI is not the result of navigating to another page, but overlaying the UI over the HamburgerButton. Each of the different views is controlled by Visual States in Shell.xaml. 
+In this sample, the correct UI is not the result of navigating to another page, but overlaying the UI over the HamburgerButton. Each of the different views is controlled by Visual States in Shell.xaml.
 
 ##Search example:
 
@@ -17,19 +17,26 @@ The search example takes advantage of the fact that when HamburgerButtonInfo.Pag
 </Controls:HamburgerButtonInfo>
 ````
 
-The search UI margin is "48,0,0,0". This allows the HamburgerMenu to remain visible. The user can then select any other button in the menu. As a result, we handle both the HamburgerButtonInfo.Checked and HamburgerButtonInfo.Unchecked events with the same logic. Tapping on any other button in the HamburgerMenu will cause it to be Checked, and the SearchButton to be UnChecked. 
+The search UI margin is "48,0,0,0". This allows the HamburgerMenu to remain visible. The user can then select any other button in the menu. As a result, we handle both the HamburgerButtonInfo.Checked and HamburgerButtonInfo.Unchecked events with the same logic. Tapping on any other button in the HamburgerMenu will cause it to be Checked, and the SearchButton to be UnChecked.
 
 ````csharp
-private void SearchChecked(object sender, RoutedEventArgs e)
-{
-    VisualStateManager.GoToState(this, SearchVisualState.Name, true);
-}
+ private void SearchTapped(object sender, RoutedEventArgs e)
+ {
+	SearchModal.IsModal = true;
+ }
 
-private void SearchUnchecked(object sender, RoutedEventArgs e)
-{
-    VisualStateManager.GoToState(this, NormalVisualState.Name, true);
-}
-````
+ // request to hide search (from inside search)
+ private void SearchHide(object sender, EventArgs e)
+ {
+	SearchModal.IsModal = false;
+ }
+
+ // request to goto detail
+ private void SearchNav(object sender, string item)
+ {
+    SearchModal.IsModal = false;
+    MyHamburgerMenu.NavigationService.Navigate(typeof(Views.DetailPage), item);
+ }````
 
 ##Login example:
 
@@ -40,13 +47,12 @@ This scenario is quite a bit simpler as we only need to handle the Tapped event 
 ````csharp
 private void LoginTapped(object sender, RoutedEventArgs e)
 {
-    (sender as HamburgerButtonInfo).IsChecked = false;
-    VisualStateManager.GoToState(this, LoginVisualState.Name, true);
+	LoginModal.IsModal = true;
 }
 
 private void LoginHide(object sender, System.EventArgs e)
 {
-    VisualStateManager.GoToState(this, NormalVisualState.Name, true);
+    LoginModal.IsModal = false;
 }
 ````
 
