@@ -102,7 +102,6 @@
     </Compile>
     <Compile Include="Common\VisualTreeHelperEx.cs" />
     <Compile Include="Controls\InkToTextBox.cs" />
-    <Compile Include="Controls\VoiceControl.cs" />
     <Compile Include="Controls\VoiceToTextBox.cs" />
     <Compile Include="Mvvm\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
