@@ -453,8 +453,8 @@ namespace Template10.Controls
                     if (value.ClearHistory)
                         NavigationService.ClearHistory();
                 }
-                else if (NavigationService.FrameFacade.CurrentPageType == value.PageType
-                     && (NavigationService.FrameFacade.CurrentPageParam ?? string.Empty) == (value.PageParameter ?? string.Empty))
+                else if (NavigationService.CurrentPageType == value.PageType
+                     && (NavigationService.CurrentPageParam ?? string.Empty) == (value.PageParameter ?? string.Empty))
                 {
                     if (value.ClearHistory)
                         NavigationService.ClearHistory();
@@ -540,18 +540,18 @@ namespace Template10.Controls
                 DebugWrite($"Value: {value}");
 
                 _navigationService = value;
-                ShellSplitView.Content = NavigationService.Frame;
+                ShellSplitView.Content = (value as INavigationServiceInternal).FrameFacade.Frame;
 
                 // Test if there is a splash showing, this is the case if there is no content
                 // and if there is a splash factorydefined in the bootstrapper, if true
                 // then we want to show the content full screen until the frame loads
-                if (_navigationService.FrameFacade.BackStackDepth == 0
+                if ((_navigationService as INavigationServiceInternal).FrameFacade.BackStackDepth == 0
                     && BootStrapper.Current.SplashFactory != null
                     && BootStrapper.Current.OriginalActivatedArgs.PreviousExecutionState != Windows.ApplicationModel.Activation.ApplicationExecutionState.Terminated)
                 {
                     var once = false;
                     IsFullScreen = true;
-                    value.FrameFacade.Navigated += (s, e) =>
+                    (value as INavigationServiceInternal).FrameFacade.Navigated += (s, e) =>
                     {
                         if (!once)
                         {
@@ -564,7 +564,7 @@ namespace Template10.Controls
                 UpdateFullScreen();
 
                 NavigationService.AfterRestoreSavedNavigation += (s, e) => HighlightCorrectButton();
-                NavigationService.FrameFacade.Navigated += (s, e) => HighlightCorrectButton(e.PageType, e.Parameter);
+                (NavigationService as INavigationServiceInternal).FrameFacade.Navigated += (s, e) => HighlightCorrectButton(e.PageType, e.Parameter);
             }
         }
 
@@ -590,7 +590,7 @@ namespace Template10.Controls
         {
             DebugWrite($"Mavnual: {manual}, IsFullScreen: {IsFullScreen}");
 
-            var frame = NavigationService?.Frame;
+            var frame = (NavigationService as INavigationServiceInternal)?.FrameFacade?.Frame;
             if (manual ?? IsFullScreen)
             {
                 ShellSplitView.IsHitTestVisible = ShellSplitView.IsEnabled = false;

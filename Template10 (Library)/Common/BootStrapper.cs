@@ -100,7 +100,7 @@ namespace Template10.Common
                     foreach (var nav in WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices))
                     {
                         // date the cache (which marks the date/time it was suspended)
-                        nav.FrameFacade.SetFrameState(CacheDateKey, DateTime.Now.ToString());
+                        (nav as INavigationServiceInternal).FrameFacade.SetFrameState(CacheDateKey, DateTime.Now.ToString());
                         // call view model suspend (OnNavigatedfrom)
                         DebugWrite($"Nav:{nav}", caller: "Nav.SuspendingAsync");
                         await nav.SuspendingAsync();
@@ -330,7 +330,7 @@ namespace Template10.Common
             BackRequested?.Invoke(null, args);
             if (handled = args.Handled)
                 return;
-            foreach (var frame in WindowWrapper.Current().NavigationServices.Select(x => x.FrameFacade).Reverse())
+            foreach (var frame in WindowWrapper.Current().NavigationServices.Select(x => (x as INavigationServiceInternal).FrameFacade).Reverse())
             {
                 frame.RaiseBackRequested(args);
                 if (handled = args.Handled)
@@ -350,7 +350,7 @@ namespace Template10.Common
             ForwardRequested?.Invoke(null, args);
             if (args.Handled)
                 return;
-            foreach (var frame in WindowWrapper.Current().NavigationServices.Select(x => x.FrameFacade))
+            foreach (var frame in WindowWrapper.Current().NavigationServices.Select(x => (x as INavigationServiceInternal).FrameFacade))
             {
                 frame.RaiseForwardRequested(args);
                 if (args.Handled)
@@ -478,7 +478,7 @@ namespace Template10.Common
                 var frame = CreateRootFrame(e);
                 var modal = new Controls.ModalDialog
                 {
-                    Content = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include, frame).Frame
+                    Content = (NavigationServiceFactory(BackButton.Attach, ExistingContent.Include, frame) as INavigationServiceInternal).FrameFacade.Frame
                 };
                 Window.Current.Content = modal;
             }
@@ -537,14 +537,14 @@ namespace Template10.Common
             frame.Content = (existingContent == ExistingContent.Include) ? Window.Current.Content : null;
 
             // if the service already exists for this frame, use the existing one.
-            foreach (var nav in WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices))
+            foreach (INavigationServiceInternal nav in WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices))
             {
-                if (nav.Frame.Equals(frame))
-                    return nav;
+                if (nav.FrameFacade.Frame.Equals(frame))
+                    return nav as INavigationService;
             }
 
             var navigationService = CreateNavigationService(frame);
-            navigationService.FrameFacade.BackButtonHandling = backButton;
+            (navigationService as INavigationServiceInternal).FrameFacade.BackButtonHandling = backButton;
             WindowWrapper.Current().NavigationServices.Add(navigationService);
 
             if (backButton == BackButton.Attach)
@@ -565,15 +565,15 @@ namespace Template10.Common
             DateTime cacheDate;
             // default the cache age to very fresh if not known
             var otherwise = DateTime.MinValue.ToString();
-            if (DateTime.TryParse(navigationService.FrameFacade.GetFrameState(CacheDateKey, otherwise), out cacheDate))
+            if (DateTime.TryParse((navigationService as INavigationServiceInternal).FrameFacade.GetFrameState(CacheDateKey, otherwise), out cacheDate))
             {
                 var cacheAge = DateTime.Now.Subtract(cacheDate);
                 if (cacheAge >= CacheMaxDuration)
                 {
                     // clear state in every nav service in every view
-                    foreach (var service in WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices))
+                    foreach (var nav in WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices))
                     {
-                        service.FrameFacade.ClearFrameState();
+                        (nav as INavigationServiceInternal).FrameFacade.ClearFrameState();
                     }
                 }
             }
@@ -594,7 +594,7 @@ namespace Template10.Common
 
             // show the shell back only if there is anywhere to go in the default frame
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
-                (ShowShellBackButton && (NavigationService.Frame.CanGoBack || ForceShowShellBackButton))
+                (ShowShellBackButton && (NavigationService.CanGoBack || ForceShowShellBackButton))
                     ? AppViewBackButtonVisibility.Visible
                     : AppViewBackButtonVisibility.Collapsed;
         }
