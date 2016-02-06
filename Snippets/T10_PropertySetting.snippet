@@ -38,7 +38,7 @@
       <Code Language="csharp">
         <![CDATA[public $type$ $name$
         {
-            get { return $helper$.Read<$type$>(nameof($name$), default()); }
+            get { return $helper$.Read<$type$>(nameof($name$), default($type$)); }
             set { $helper$.Write(nameof($name$), value); }
         }]]>
       </Code>
