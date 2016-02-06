@@ -4,7 +4,7 @@
       xmlns:Behaviors="using:Template10.Behaviors"
       xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
       xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
-      xmlns:c="using:Sample.Converters" xmlns:controls="using:Template10.Controls"
+      xmlns:controls="using:Template10.Controls"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:Sample.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -13,10 +13,6 @@
     <Page.DataContext>
         <vm:SettingsPageViewModel x:Name="ViewModel" />
     </Page.DataContext>
-
-    <Page.Resources>
-        <c:VisibleWhenDesktop x:Name="VisibleWhenDesktop" />
-    </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 

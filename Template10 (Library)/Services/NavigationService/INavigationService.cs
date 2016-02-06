@@ -34,6 +34,9 @@ namespace Template10.Services.NavigationService
 
         Task SuspendingAsync();
         void Resuming();
+
+        Frame Frame { get; }
+        FrameFacade FrameFacade { get; }
     }
 
     public interface INavigationServiceInternal

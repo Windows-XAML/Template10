@@ -20,7 +20,8 @@ namespace Template10.Services.NavigationService
     public partial class NavigationService : INavigationService, INavigationServiceInternal
     {
         FrameFacade FrameFacadeInternal { get; set; }
-        FrameFacade INavigationServiceInternal.FrameFacade => FrameFacadeInternal;
+        public FrameFacade FrameFacade => FrameFacadeInternal;
+        public Frame Frame => FrameFacade.Frame;
         object LastNavigationParameter { get; set; }
         string LastNavigationType { get; set; }
 

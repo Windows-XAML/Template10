@@ -4,7 +4,7 @@
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0",
     "Microsoft.Xaml.Behaviors.Uwp.Managed": "1.0.3",
     "Newtonsoft.Json": "8.0.2",
-    "NotificationsExtensions.Win10": "10240.0.6"
+    "NotificationsExtensions.Win10": "10586.0.2"
   },
   "frameworks": {
     "uap10.0": {}
