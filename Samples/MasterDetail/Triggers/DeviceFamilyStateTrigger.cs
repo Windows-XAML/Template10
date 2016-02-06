@@ -1,7 +1,7 @@
 ﻿using Windows.System.Profile;
 using Windows.UI.Xaml;
 
-namespace Template10.Triggers
+namespace Samples.MasterDetail.Triggers
 {
 	/// <summary>
 	/// Trigger for detecting various Windows Device Families

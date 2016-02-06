@@ -4,33 +4,33 @@ using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
-namespace Template10.Converters
+namespace Samples.MasterDetail.Converters
 {
     /// <summary>
-    ///     A converter that converts to <seealso cref="Visibility.Collapsed" /> when the value is either null or empty,
-    ///     otherwise <seealso cref="Visibility.Visible" />. Applies to strings and any implementation of IEnumerable
+    ///     A converter that converts to <seealso cref="Visibility.Visible" /> when the value is either null or empty,
+    ///     otherwise <seealso cref="Visibility.Collapsed" />. Applies to strings and any implementation of IEnumerable
     /// </summary>
-    public class CollapsedWhenNullOrEmptyConverter : IValueConverter
+    public class VisibleWhenNullOrEmptyConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             try
             {
                 if (value == null)
-                    return Visibility.Collapsed;
+                    return Visibility.Visible;
                 var s = value as string;
                 if (s != null)
-                    return string.IsNullOrWhiteSpace(s) ? Visibility.Collapsed : Visibility.Visible;
+                    return string.IsNullOrWhiteSpace(s) ? Visibility.Visible : Visibility.Collapsed;
                 var enumerable = value as IEnumerable;
                 if (enumerable != null)
                 {
-                    return enumerable.Cast<object>().Any() ? Visibility.Visible : Visibility.Collapsed;
+                    return enumerable.Cast<object>().Any() ? Visibility.Collapsed : Visibility.Visible;
                 }
-                return Visibility.Visible;
+                return Visibility.Collapsed;
             }
             catch
             {
-                return Visibility.Collapsed;
+                return Visibility.Visible;
             }
         }
 
