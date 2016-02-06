@@ -21,14 +21,14 @@ The search UI margin is "48,0,0,0". This allows the HamburgerMenu to remain visi
 
 ````csharp
  private void SearchTapped(object sender, RoutedEventArgs e)
- {
-	SearchModal.IsModal = true;
+ {	
+    SearchModal.IsModal = true;
  }
 
  // request to hide search (from inside search)
  private void SearchHide(object sender, EventArgs e)
  {
-	SearchModal.IsModal = false;
+     SearchModal.IsModal = false;
  }
 
  // request to goto detail
@@ -36,7 +36,8 @@ The search UI margin is "48,0,0,0". This allows the HamburgerMenu to remain visi
  {
     SearchModal.IsModal = false;
     MyHamburgerMenu.NavigationService.Navigate(typeof(Views.DetailPage), item);
- }````
+ }
+````
 
 ##Login example:
 
@@ -47,7 +48,7 @@ This scenario is quite a bit simpler as we only need to handle the Tapped event 
 ````csharp
 private void LoginTapped(object sender, RoutedEventArgs e)
 {
-	LoginModal.IsModal = true;
+    LoginModal.IsModal = true;
 }
 
 private void LoginHide(object sender, System.EventArgs e)
