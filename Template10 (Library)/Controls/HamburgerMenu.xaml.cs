@@ -68,6 +68,9 @@ namespace Template10.Controls
                     }
                     else
                         PaneClosed?.Invoke(ShellSplitView, EventArgs.Empty);
+
+                    if (!d.GetValue(e).Equals(IsOpen))
+                        IsOpen = !IsOpen;
                 });
                 ShellSplitView.RegisterPropertyChangedCallback(SplitView.DisplayModeProperty, (d, e) =>
                 {
