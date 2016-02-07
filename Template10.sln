@@ -68,6 +68,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Snippets", "Snippets", "{82
 		Snippets\T10_PropertyObservable.snippet = Snippets\T10_PropertyObservable.snippet
 		Snippets\T10_PropertySetting.snippet = Snippets\T10_PropertySetting.snippet
 		Snippets\T10_PropertyValidated.snippet = Snippets\T10_PropertyValidated.snippet
+		Snippets\T10_SampleData.snippet = Snippets\T10_SampleData.snippet
 		Snippets\T10_SingletonClass.snippet = Snippets\T10_SingletonClass.snippet
 		Snippets\T10_ViewModel.snippet = Snippets\T10_ViewModel.snippet
 		Snippets\T10_ViewModelFull.snippet = Snippets\T10_ViewModelFull.snippet
