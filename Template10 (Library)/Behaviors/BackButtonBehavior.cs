@@ -45,7 +45,7 @@ namespace Template10.Behaviors
                 var actions = (ActionCollection)base.GetValue(ActionsProperty);
                 if (actions == null)
                 {
-                    base.SetValue(ActionsProperty, actions = new ActionCollection());
+                    SetValue(ActionsProperty, actions = new ActionCollection());
                 }
                 return actions;
             }

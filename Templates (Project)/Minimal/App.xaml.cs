@@ -28,6 +28,20 @@ namespace Sample
             #endregion
         }
 
+        public override Task OnPrelaunchAsync(IActivatedEventArgs args, out bool continueStartup)
+        {
+            continueStartup = false;
+            return Task.CompletedTask;
+        }
+
+        public override void OnResuming(object s, object e, AppExecutionState previousExecutionState)
+        {
+            if (previousExecutionState == AppExecutionState.Prelaunch)
+            {
+                // TODO
+            }
+        }
+
         // runs only when not restored from state
         public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
@@ -35,6 +49,7 @@ namespace Sample
             return Task.CompletedTask;
         }
 
+        // hide and show busy dialog
         public static void SetBusy(bool busy, string text = null)
         {
             WindowWrapper.Current().Dispatcher.Dispatch(() =>

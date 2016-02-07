@@ -2,8 +2,9 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/01/nuspec.xsd">
   <metadata minClientVersion="3.0">
     
+    <version>1.1.3</version>
+    
     <id>Template10</id>
-    <version>1.1.2</version>
     <title>Template 10 Library for Windows UWP XAML/.NET apps on Windows 10</title>
     <authors>Windows developers</authors>
     <owners>jerrynixon,darenmay</owners>
@@ -11,26 +12,53 @@
     <projectUrl>http://aka.ms/Template10-Nuget</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/Windows-XAML/Template10/master/Assets/NuGetLogo.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>A rich library of helpers, services, and base classes for new and existing Windows UWP apps to maximize awesomeness and minimize boilerplate garbage.</description>
-    <summary>A rich library of helpers, services, and base classes for new and existing Windows UWP apps to maximize awesomeness and minimize boilerplate garbage.</summary>
-    <releaseNotes>Now supporting Windows 10 Update 1, UWP 10586.</releaseNotes>
+    <description>
+      A rich library of helpers, services, and base classes for new and 
+      existing Windows UWP apps to maximize awesomeness and minimize boilerplate garbage.
+      This library has a companion Visual Studio Extension also called "Template 10".
+    </description>
+    <summary>
+      A rich library of helpers, services, and base classes for new and existing
+      Windows UWP apps to maximize awesomeness and minimize boilerplate garbage.
+      This library has a companion Visual Studio Extension also called "Template 10".
+    </summary>
+    <tags>
+      Windows 10, Windows10, W10, UAP, UWP, WinRT, XAML, Template 10, Template10, T10, Universal App
+    </tags>
     <copyright>Jerry Nixon (c) 2015-2016</copyright>
     <language />
-    <tags>Windows 10, Windows10, W10, UAP, UWP, WinRT, XAML, Template 10, Template10, T10, Universal App</tags>
+
+    <releaseNotes>
+      Version 1.1.4
+      Introducing DeviceDispositionBehavior.
+      Version 1.1.2
+      Async updates to INavagable and Bootstrapper.PrelaunchAsync.
+      Version 1.1.1
+      Support for 10586 and DeviceUtils and TaskUtils.
+      Version 1.0.8
+      Introducing StateItems and SessionState.
+      Version 1.0.7
+      Introducing ModalDialog and Controls.PiePiece.
+      Version 1.0.6
+      Introducing WeakReference and Controls.CustomTitleBar.
+      Version 1.0.5
+      Introducing Controls.Resizer.
+      Version 1.0.4
+    </releaseNotes>
+
     <dependencies>
       <dependency id="Newtonsoft.Json" version="8.0.2" />
       <dependency id="Microsoft.Xaml.Behaviors.Uwp.Managed" version="1.0.3" />
+      <dependency id="WindowsStateTriggers" version="1.1.0" />
     </dependencies>
     
   </metadata>
+  
   <files>
-    
     <file src="lib\" target="lib\uap10.0\" />
     <file src="lib\Template10Library\" target="lib\uap10.0\Template10Library\" />
-    <!--<file src="lib\Template10Library\Styles\" target="lib\uap10.0\Template10Library\Styles\" />-->
     <file src="lib\Template10Library\Controls\" target="lib\uap10.0\Template10Library\Controls\" />
     <file src="build\" target="build\uap10.0\" />
-    
   </files>
   
 </package>

@@ -19,8 +19,6 @@ namespace Template10.Common
             return item;
         }
 
-
-
         public void Remove(Type type) // <-- would not be called oftenly, okey to linear search
         {
             var willRemove = Keys.Where(x => x.Type == type).ToList();
@@ -39,7 +37,7 @@ namespace Template10.Common
         {
             var willRemove = this.Where(x => Object.Equals(x.Value, value)).ToList();
             willRemove.ForEach(x => base.Remove(x.Key));
-		}
+        }
 
 
         //not a good idea just like `public void Remove(object value)`  cause lack of eqcomparer
@@ -55,7 +53,7 @@ namespace Template10.Common
 
         }
 
-
+        public bool Contains(StateItemKey key) => ContainsKey(key);
         public bool Contains(Type type, string key) => ContainsKey(new StateItemKey(type, key));
 
         //Hope can be changed to    public void  Contains(Func<KVP<StateItemKey,object>,bool> condition>)  
@@ -74,6 +72,11 @@ namespace Template10.Common
             }
             throw new KeyNotFoundException();
 
+        }
+
+        public T Get<T>(StateItemKey key)
+        {
+            return Get<T>(key.Key);
         }
 
         public bool TryGet<T>(string key, out T value)

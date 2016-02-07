@@ -30,12 +30,10 @@
       <Code Language="csharp">
         <![CDATA[DelegateCommand _$name$;
         public DelegateCommand $name$
-           => _$name$ ?? (_$name$ = new DelegateCommand($name$Execute, $name$CanExecute));
-        bool $name$CanExecute() => true;
-        void $name$Execute()
-        {
-            throw new NotImplementedException();
-        }]]>
+           => _$name$ ?? (_$name$ = new DelegateCommand(() => 
+           {
+             throw new NotImplementedException();
+           }, () => true));]]>
       </Code>
     </Snippet>
   </CodeSnippet>

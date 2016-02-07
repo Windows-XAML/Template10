@@ -2,7 +2,7 @@
 
 namespace Template10.Common
 {
-    public struct StateItemKey : IEquatable<StateItemKey>
+    public class StateItemKey : IEquatable<StateItemKey>
     {
         public StateItemKey(Type type, String key)
         {
@@ -44,12 +44,11 @@ namespace Template10.Common
                 hash = hash * 23 + kh.Value;
                 return hash;
             }
-
-
         }
-        public static bool operator ==(StateItemKey left, StateItemKey right) => left.Equals(right);
 
-        public static bool operator !=(StateItemKey left, StateItemKey right) => !left.Equals(right);
+        public static bool operator ==(StateItemKey left, StateItemKey right) => Equals(left, right);
+
+        public static bool operator !=(StateItemKey left, StateItemKey right) => !Equals(left, right);
     }
 
 }

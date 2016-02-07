@@ -5,7 +5,7 @@ using Windows.UI.Xaml;
 
 namespace Sample.Services.SettingsServices
 {
-    public class SettingsService : ISettingsService
+    public class SettingsService 
     {
         public static SettingsService Instance { get; }
         static SettingsService()
@@ -46,7 +46,7 @@ namespace Sample.Services.SettingsServices
             set
             {
                 _helper.Write(nameof(AppTheme), value.ToString());
-                BootStrapper.Current.NavigationService.Frame.RequestedTheme = value.ToElementTheme();
+                (Window.Current.Content as FrameworkElement).RequestedTheme = value.ToElementTheme();
             }
         }
 
