@@ -17,7 +17,7 @@ using Template10.Utils;
 namespace Template10.Services.NavigationService
 {
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-NavigationService
-    public partial class NavigationService : INavigationService, INavigationServiceInternal
+    public partial class NavigationService : INavigationService
     {
         FrameFacade FrameFacadeInternal { get; set; }
         public FrameFacade FrameFacade => FrameFacadeInternal;
@@ -33,7 +33,7 @@ namespace Template10.Services.NavigationService
         #endregion
 
         public static INavigationService GetForFrame(Frame frame) =>
-            WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices).FirstOrDefault(x => (x as INavigationServiceInternal).FrameFacade.Frame.Equals(frame));
+            WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices).FirstOrDefault(x => x.FrameFacade.Frame.Equals(frame));
 
         public DispatcherWrapper Dispatcher => WindowWrapper.Current(this).Dispatcher;
 
@@ -189,7 +189,7 @@ namespace Template10.Services.NavigationService
 
                 var nav = BootStrapper.Current.NavigationServiceFactory(BootStrapper.BackButton.Ignore, BootStrapper.ExistingContent.Exclude);
                 nav.Navigate(page, parameter);
-                newWindow.Content = (nav as INavigationServiceInternal).FrameFacade.Frame;
+                newWindow.Content = nav.FrameFacade.Frame;
                 newWindow.Activate();
 
                 await ApplicationViewSwitcher

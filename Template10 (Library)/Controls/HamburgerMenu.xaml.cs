@@ -543,18 +543,18 @@ namespace Template10.Controls
                 DebugWrite($"Value: {value}");
 
                 _navigationService = value;
-                ShellSplitView.Content = (value as INavigationServiceInternal).FrameFacade.Frame;
+                ShellSplitView.Content = value.FrameFacade.Frame;
 
                 // Test if there is a splash showing, this is the case if there is no content
                 // and if there is a splash factorydefined in the bootstrapper, if true
                 // then we want to show the content full screen until the frame loads
-                if ((_navigationService as INavigationServiceInternal).FrameFacade.BackStackDepth == 0
+                if (_navigationService.FrameFacade.BackStackDepth == 0
                     && BootStrapper.Current.SplashFactory != null
                     && BootStrapper.Current.OriginalActivatedArgs.PreviousExecutionState != Windows.ApplicationModel.Activation.ApplicationExecutionState.Terminated)
                 {
                     var once = false;
                     IsFullScreen = true;
-                    (value as INavigationServiceInternal).FrameFacade.Navigated += (s, e) =>
+                    value.FrameFacade.Navigated += (s, e) =>
                     {
                         if (!once)
                         {
@@ -567,7 +567,7 @@ namespace Template10.Controls
                 UpdateFullScreen();
 
                 NavigationService.AfterRestoreSavedNavigation += (s, e) => HighlightCorrectButton();
-                (NavigationService as INavigationServiceInternal).FrameFacade.Navigated += (s, e) => HighlightCorrectButton(e.PageType, e.Parameter);
+                NavigationService.FrameFacade.Navigated += (s, e) => HighlightCorrectButton(e.PageType, e.Parameter);
             }
         }
 
@@ -593,7 +593,7 @@ namespace Template10.Controls
         {
             DebugWrite($"Mavnual: {manual}, IsFullScreen: {IsFullScreen}");
 
-            var frame = (NavigationService as INavigationServiceInternal)?.FrameFacade?.Frame;
+            var frame = NavigationService?.FrameFacade?.Frame;
             if (manual ?? IsFullScreen)
             {
                 ShellSplitView.IsHitTestVisible = ShellSplitView.IsEnabled = false;
