@@ -648,7 +648,4 @@ Global
 		{90BA5322-DAF8-4DCF-892F-AB4F26E0243B} = {3F06506F-F7DA-4A64-B12B-5A9592139493}
 		{76572532-29C3-4D8A-9EA7-E92B9782220D} = {3F06506F-F7DA-4A64-B12B-5A9592139493}
 	EndGlobalSection
-	GlobalSection(CodealikeProperties) = postSolution
-		SolutionGuid = f64fcb6f-c962-426f-b1c5-d28191f502ec
-	EndGlobalSection
 EndGlobal
