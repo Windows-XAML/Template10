@@ -84,6 +84,9 @@ namespace Template10.Controls
                     if (!any)
                         // this is the default color if the user supplies none
                         AccentColor = Colors.DarkOrange;
+
+                    if (NavButtonCount == 0)
+                        _areNavButtonsLoaded = true;
                 };
             }
         }
@@ -447,8 +450,8 @@ namespace Template10.Controls
             _navButtons.Where(x => x.Value != value)
                 .ForEach(x => { x.Value.IsChecked = false; });
 
-            // navigate
-            if (value?.PageType != null)
+            // navigate only when all navigation buttons have been loaded
+            if (_areNavButtonsLoaded && value?.PageType != null)
             {
                 if (NavigationService.Navigate(value.PageType, value?.PageParameter, value?.NavigationTransitionInfo))
                 {
@@ -683,6 +686,13 @@ namespace Template10.Controls
             var i = r.DataContext as HamburgerButtonInfo;
             _navButtons.Add(r, i);
             HighlightCorrectButton();
+
+            if (!_areNavButtonsLoaded)
+            {
+                _navButtonsLoadedCounter++;
+                if (_navButtonsLoadedCounter >= NavButtonCount)
+                    _areNavButtonsLoaded = true;
+            }
         }
 
         private void NavButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
@@ -725,6 +735,13 @@ namespace Template10.Controls
         {
             _SecondaryButtonStackPanel = sender as StackPanel;
         }
+
+        private int NavButtonCount
+        {
+            get { return PrimaryButtons.Count + SecondaryButtons.Count; }
+        }
+        private bool _areNavButtonsLoaded = false;
+        private int _navButtonsLoadedCounter = 0;
 
         bool _insideOperation = false;
 
@@ -788,7 +805,7 @@ namespace Template10.Controls
 
         public bool AutoHighlightCorrectButton
         {
-            get { return true; /*(bool)GetValue(AutoHighlightCorrectButtonProperty);*/ }
+            get { return (bool)GetValue(AutoHighlightCorrectButtonProperty); }
             set { SetValue(AutoHighlightCorrectButtonProperty, value); }
         }
         public static readonly DependencyProperty AutoHighlightCorrectButtonProperty =
