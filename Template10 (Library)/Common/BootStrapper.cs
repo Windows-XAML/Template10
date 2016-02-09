@@ -178,6 +178,8 @@ namespace Template10.Common
             DebugWrite("Calling", caller: "OnStartAsync");
             await OnStartAsync(StartKind.Activate, e);
 
+            SubscribeBackButton();
+           
             // ensure active (this will hide any custom splashscreen)
             Window.Current.Activate();
         }
