@@ -5,7 +5,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.VoiceCommands;
 using Windows.Storage;
 
-namespace Messaging
+namespace Sample
 {
     sealed partial class App : Template10.Common.BootStrapper
     {
@@ -23,9 +23,10 @@ namespace Messaging
 
         public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
-            if (args.Kind == ActivationKind.VoiceCommand)
+            var e = args as VoiceCommandActivatedEventArgs;
+            if (e != null)
             {
-                var result = (args as VoiceCommandActivatedEventArgs).Result;
+                var result = e.Result;
                 var properties = result.SemanticInterpretation.Properties
                     .ToDictionary(x => x.Key, x => x.Value);
 
@@ -41,7 +42,10 @@ namespace Messaging
                     else { /* not okay to speak */ }
 
                     // update value
-                    ViewModels.MainPageViewModel.Instance.Value = text;
+                    if (ViewModels.MainPageViewModel.Instance == null)
+                        NavigationService.Navigate(typeof(Views.MainPage), text);
+                    else
+                        ViewModels.MainPageViewModel.Instance.Value = text;
                 }
                 else { /* unexpected command */ }
             }
@@ -49,7 +53,7 @@ namespace Messaging
             {
                 NavigationService.Navigate(typeof(Views.MainPage));
             }
-			return Task.CompletedTask;
-		}
+            return Task.CompletedTask;
+        }
     }
 }

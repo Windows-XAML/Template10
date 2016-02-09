@@ -15,7 +15,7 @@ namespace Template10.Mvvm
             return Task.CompletedTask;
         }
 
-        public virtual Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending)
+        public virtual Task OnNavigatedFromAsync(IDictionary<string, object> pageState, bool suspending)
         {
             return Task.CompletedTask;
         }

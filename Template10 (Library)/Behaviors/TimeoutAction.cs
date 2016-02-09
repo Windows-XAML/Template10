@@ -18,13 +18,13 @@ namespace Template10.Behaviors
                 if (actions == null)
                 {
                     actions = new ActionCollection();
-                    base.SetValue(ActionsProperty, actions);
+                    SetValue(ActionsProperty, actions);
                 }
                 return actions;
             }
         }
         public static readonly DependencyProperty ActionsProperty =
-            DependencyProperty.Register("Actions", typeof(ActionCollection),
+            DependencyProperty.Register(nameof(Actions), typeof(ActionCollection),
                 typeof(TimeoutAction), new PropertyMetadata(null));
 
         public int Milliseconds
@@ -34,7 +34,7 @@ namespace Template10.Behaviors
         }
 
         public static readonly DependencyProperty MillisecondsProperty =
-            DependencyProperty.Register("Milliseconds", typeof(int),
+            DependencyProperty.Register(nameof(Milliseconds), typeof(int),
                 typeof(TimeoutAction), new PropertyMetadata(5000));
 
         public object Execute(object sender, object parameter)

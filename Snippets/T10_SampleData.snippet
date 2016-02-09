@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>Sample data for view-models</Title>
+      <Author>Jerry Nixon</Author>
+      <Shortcut>T10_SampleData</Shortcut>
+    </Header>
+    <Snippet>
+      <Imports>
+        <Import>
+          <Namespace>Template10.Mvvm</Namespace>
+        </Import>
+        <Import>
+          <Namespace>Windows.UI</Namespace>
+        </Import>
+        <Import>
+          <Namespace>System.Reflection</Namespace>
+        </Import>
+        <Import>
+          <Namespace>Template10.Utils</Namespace>
+        </Import>
+        <Import>
+          <Namespace>System.Linq</Namespace>
+        </Import>
+        <Import>
+          <Namespace>System.Collections.Generic</Namespace>
+        </Import>
+        <Import>
+          <Namespace>System.Threading.Tasks</Namespace>
+        </Import>
+        <Import>
+          <Namespace>Windows.UI.Xaml.Navigation</Namespace>
+        </Import>
+        <Import>
+          <Namespace>Template10.Services.NavigationService</Namespace>
+        </Import>
+        <Import>
+          <Namespace>Windows.UI.Xaml.Navigation</Namespace>
+        </Import>
+        <Import>
+          <Namespace>Windows.UI.Xaml.Media</Namespace>
+        </Import>
+      </Imports>
+      <Code Language="csharp">
+        <![CDATA[#region SampleData
+          
+        public class ColorInfo
+        {
+            public Color Color { get; internal set; }
+            public string Name { get; internal set; }
+            public string Hex => Color.ToString();
+            public Brush Brush => new SolidColorBrush(Color);
+        }
+
+        public ObservableCollection<ColorInfo> Colors { get; }
+            = new ObservableCollection<ColorInfo>(typeof(Colors).GetRuntimeProperties()
+                .Select(x => new ColorInfo { Name = x.Name, Color = (Color)x.GetValue(null) }));
+
+        ColorInfo _Color = default(ColorInfo);
+        public ColorInfo Color { get { return _Color; } set { Set(ref _Color, value); } }
+
+        #endregion]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

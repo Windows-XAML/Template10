@@ -1,7 +1,7 @@
-﻿using Messaging.ViewModels;
+﻿using Sample.ViewModels;
 using Windows.UI.Xaml.Controls;
 
-namespace Messaging.Views
+namespace Sample.Views
 {
     public sealed partial class MainPage : Page
     {
@@ -11,5 +11,10 @@ namespace Messaging.Views
         }
 
         public MainPageViewModel ViewModel => this.DataContext as MainPageViewModel;
+
+        private void AppBarButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+        }
     }
 }

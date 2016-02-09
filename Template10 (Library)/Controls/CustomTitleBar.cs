@@ -25,7 +25,7 @@ namespace Template10.Controls
             set { CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = value; }
         }
         public static readonly DependencyProperty ExtendedProperty =
-            DependencyProperty.Register("Extended", typeof(bool), typeof(CustomTitleBar), new PropertyMetadata(false, (d, e) =>
+            DependencyProperty.Register(nameof(Extended), typeof(bool), typeof(CustomTitleBar), new PropertyMetadata(false, (d, e) =>
             { (d as CustomTitleBar).Extended = (bool)e.NewValue; }));
 
         public Color BackgroundColor

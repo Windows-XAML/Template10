@@ -39,7 +39,6 @@
           <Namespace>Template10.Services.NavigationService</Namespace>
         </Import>
       </Imports>
-      
       <Declarations>
         <Literal Editable="true">
           <ID>name</ID>
@@ -47,53 +46,8 @@
         </Literal>
       </Declarations>
       <Code Language="csharp">
-        <![CDATA[public class $name$ViewModel : Mvvm.ViewModelBase
+        <![CDATA[public class $name$ViewModel : ViewModelBase
         {
-          public $name$ViewModel() 
-          {
-              if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-              {
-                  // design-time experience
-              }
-              else
-              {
-                  // runtime experience
-              }
-          }
-          
-          // sample data
-          public IEnumerable<object> Items =>
-              typeof(Windows.UI.Colors).GetRuntimeProperties()
-                  .Select(x => new { Name = x.Name, Color = (Color)x.GetValue(null) });
-         
-          public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
-          {
-              if (state.Any())
-              {
-                  // restore state
-                  state.Clear();
-              }
-              else
-              {
-                  // use parameter
-              }
-              return Task.CompletedTask;
-          }
-
-          public override Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending)
-          {
-              if (suspending)
-              {
-                  // save state
-              }
-              return Task.CompletedTask;
-          }
-
-          public override Task OnNavigatingFromAsync(NavigatingEventArgs args)
-          {
-              args.Cancel = false;
-              return Task.CompletedTask;
-          }
         }]]>
       </Code>
     </Snippet>

@@ -68,6 +68,9 @@ namespace Template10.Controls
                     }
                     else
                         PaneClosed?.Invoke(ShellSplitView, EventArgs.Empty);
+
+                    if (!d.GetValue(e).Equals(IsOpen))
+                        IsOpen = !IsOpen;
                 });
                 ShellSplitView.RegisterPropertyChangedCallback(SplitView.DisplayModeProperty, (d, e) =>
                 {
@@ -81,6 +84,9 @@ namespace Template10.Controls
                     if (!any)
                         // this is the default color if the user supplies none
                         AccentColor = Colors.DarkOrange;
+
+                    if (NavButtonCount == 0)
+                        _areNavButtonsLoaded = true;
                 };
             }
         }
@@ -430,7 +436,7 @@ namespace Template10.Controls
             DebugWrite($"OldValue: {previous}, NewValue: {value}");
 
             // do not remove this if statement
-            // this is the fix for #410 (click twice)
+            //// this is the fix for #410 (click twice)
             if (previous != null)
                 IsOpen = false;
 
@@ -444,16 +450,17 @@ namespace Template10.Controls
             _navButtons.Where(x => x.Value != value)
                 .ForEach(x => { x.Value.IsChecked = false; });
 
-            // navigate
-            if (value?.PageType != null)
+            // navigate only when all navigation buttons have been loaded
+            if (_areNavButtonsLoaded && value?.PageType != null)
             {
                 if (NavigationService.Navigate(value.PageType, value?.PageParameter, value?.NavigationTransitionInfo))
                 {
+                    IsOpen = false;
                     if (value.ClearHistory)
                         NavigationService.ClearHistory();
                 }
-                else if (NavigationService.FrameFacade.CurrentPageType == value.PageType
-                     && (NavigationService.FrameFacade.CurrentPageParam ?? string.Empty) == (value.PageParameter ?? string.Empty))
+                else if (NavigationService.CurrentPageType == value.PageType
+                     && (NavigationService.CurrentPageParam ?? string.Empty) == (value.PageParameter ?? string.Empty))
                 {
                     if (value.ClearHistory)
                         NavigationService.ClearHistory();
@@ -521,7 +528,7 @@ namespace Template10.Controls
             {
                 var PrimaryButtons = (ObservableCollection<HamburgerButtonInfo>)base.GetValue(PrimaryButtonsProperty);
                 if (PrimaryButtons == null)
-                    base.SetValue(PrimaryButtonsProperty, PrimaryButtons = new ObservableCollection<HamburgerButtonInfo>());
+                    SetValue(PrimaryButtonsProperty, PrimaryButtons = new ObservableCollection<HamburgerButtonInfo>());
                 return PrimaryButtons;
             }
             set { SetValue(PrimaryButtonsProperty, value); }
@@ -539,7 +546,7 @@ namespace Template10.Controls
                 DebugWrite($"Value: {value}");
 
                 _navigationService = value;
-                ShellSplitView.Content = NavigationService.Frame;
+                ShellSplitView.Content = value.FrameFacade.Frame;
 
                 // Test if there is a splash showing, this is the case if there is no content
                 // and if there is a splash factorydefined in the bootstrapper, if true
@@ -589,7 +596,7 @@ namespace Template10.Controls
         {
             DebugWrite($"Mavnual: {manual}, IsFullScreen: {IsFullScreen}");
 
-            var frame = NavigationService?.Frame;
+            var frame = NavigationService?.FrameFacade?.Frame;
             if (manual ?? IsFullScreen)
             {
                 ShellSplitView.IsHitTestVisible = ShellSplitView.IsEnabled = false;
@@ -615,7 +622,7 @@ namespace Template10.Controls
             {
                 var SecondaryButtons = (ObservableCollection<HamburgerButtonInfo>)base.GetValue(SecondaryButtonsProperty);
                 if (SecondaryButtons == null)
-                    base.SetValue(SecondaryButtonsProperty, SecondaryButtons = new ObservableCollection<HamburgerButtonInfo>());
+                    SetValue(SecondaryButtonsProperty, SecondaryButtons = new ObservableCollection<HamburgerButtonInfo>());
                 return SecondaryButtons;
             }
             set { SetValue(SecondaryButtonsProperty, value); }
@@ -679,6 +686,13 @@ namespace Template10.Controls
             var i = r.DataContext as HamburgerButtonInfo;
             _navButtons.Add(r, i);
             HighlightCorrectButton();
+
+            if (!_areNavButtonsLoaded)
+            {
+                _navButtonsLoadedCounter++;
+                if (_navButtonsLoadedCounter >= NavButtonCount)
+                    _areNavButtonsLoaded = true;
+            }
         }
 
         private void NavButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
@@ -721,6 +735,13 @@ namespace Template10.Controls
         {
             _SecondaryButtonStackPanel = sender as StackPanel;
         }
+
+        private int NavButtonCount
+        {
+            get { return PrimaryButtons.Count + SecondaryButtons.Count; }
+        }
+        private bool _areNavButtonsLoaded = false;
+        private int _navButtonsLoadedCounter = 0;
 
         bool _insideOperation = false;
 
@@ -784,7 +805,7 @@ namespace Template10.Controls
 
         public bool AutoHighlightCorrectButton
         {
-            get { return true; /*(bool)GetValue(AutoHighlightCorrectButtonProperty);*/ }
+            get { return (bool)GetValue(AutoHighlightCorrectButtonProperty); }
             set { SetValue(AutoHighlightCorrectButtonProperty, value); }
         }
         public static readonly DependencyProperty AutoHighlightCorrectButtonProperty =

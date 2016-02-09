@@ -178,6 +178,8 @@ namespace Template10.Common
             DebugWrite("Calling", caller: "OnStartAsync");
             await OnStartAsync(StartKind.Activate, e);
 
+            SubscribeBackButton();
+           
             // ensure active (this will hide any custom splashscreen)
             Window.Current.Activate();
         }
@@ -460,7 +462,7 @@ namespace Template10.Common
 
             // this "unused" bit is very important because of a quirk in ResourceThemes
             try { var unused = Application.Current.Resources["ExtendedSplashBackground"]; }
-            catch { }
+            catch { /* this is okay */ }
 
             // setup custom titlebar
             foreach (var resource in Application.Current.Resources
@@ -478,7 +480,7 @@ namespace Template10.Common
                 var frame = CreateRootFrame(e);
                 var modal = new Controls.ModalDialog
                 {
-                    Content = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include, frame).Frame
+                    Content = (NavigationServiceFactory(BackButton.Attach, ExistingContent.Include, frame)).FrameFacade.Frame
                 };
                 Window.Current.Content = modal;
             }
@@ -539,8 +541,8 @@ namespace Template10.Common
             // if the service already exists for this frame, use the existing one.
             foreach (var nav in WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices))
             {
-                if (nav.Frame.Equals(frame))
-                    return nav;
+                if (nav.FrameFacade.Frame.Equals(frame))
+                    return nav as INavigationService;
             }
 
             var navigationService = CreateNavigationService(frame);
@@ -571,9 +573,9 @@ namespace Template10.Common
                 if (cacheAge >= CacheMaxDuration)
                 {
                     // clear state in every nav service in every view
-                    foreach (var service in WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices))
+                    foreach (var nav in WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices))
                     {
-                        service.FrameFacade.ClearFrameState();
+                        nav.FrameFacade.ClearFrameState();
                     }
                 }
             }
@@ -594,7 +596,7 @@ namespace Template10.Common
 
             // show the shell back only if there is anywhere to go in the default frame
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
-                (ShowShellBackButton && (NavigationService.Frame.CanGoBack || ForceShowShellBackButton))
+                (ShowShellBackButton && (NavigationService.CanGoBack || ForceShowShellBackButton))
                     ? AppViewBackButtonVisibility.Visible
                     : AppViewBackButtonVisibility.Collapsed;
         }

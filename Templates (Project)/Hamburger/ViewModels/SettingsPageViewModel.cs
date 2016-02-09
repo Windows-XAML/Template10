@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Template10.Mvvm;
 using Template10.Services.SettingsService;
 using Windows.UI.Xaml;
@@ -17,8 +18,14 @@ namespace Sample.ViewModels
 
         public SettingsPartViewModel()
         {
-            if (!Windows.ApplicationModel.DesignMode.DesignModeEnabled)
+            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
+            {
+                // designtime
+            }
+            else
+            {
                 _settings = Services.SettingsServices.SettingsService.Instance;
+            }
         }
 
         public bool UseShellBackButton
@@ -33,28 +40,25 @@ namespace Sample.ViewModels
             set { _settings.AppTheme = value ? ApplicationTheme.Light : ApplicationTheme.Dark; base.RaisePropertyChanged(); }
         }
 
-        public bool IsHamMenuFullScreen
-        {
-            get { return Views.Shell.HamburgerMenu.IsFullScreen; }
-            set { Views.Shell.HamburgerMenu.IsFullScreen = value; }
-        }
-
         private string _BusyText = "Please wait...";
         public string BusyText
         {
             get { return _BusyText; }
-            set { Set(ref _BusyText, value); }
+            set
+            {
+                Set(ref _BusyText, value);
+                _ShowBusyCommand.RaiseCanExecuteChanged();
+            }
         }
 
-        public void ShowBusy()
-        {
-            Views.Shell.SetBusy(true, _BusyText);
-        }
-
-        public void HideBusy()
-        {
-            Views.Shell.SetBusy(false);
-        }
+        DelegateCommand _ShowBusyCommand;
+        public DelegateCommand ShowBusyCommand 
+            => _ShowBusyCommand ?? (_ShowBusyCommand = new DelegateCommand(async () =>
+                {
+                    Views.Shell.SetBusy(true, _BusyText);
+                    await Task.Delay(5000);
+                    Views.Shell.SetBusy(false);
+                }, () => !string.IsNullOrEmpty(BusyText)));
     }
 
     public class AboutPartViewModel : ViewModelBase
