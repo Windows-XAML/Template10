@@ -62,10 +62,9 @@ namespace Template10.Common
         
         /// <summary>
         /// If a developer overrides this method, the developer can resolve DataContext or unwrap DataContext 
-        /// available for the Page object if using a MVVM pattern that relies on a wrapped/porxy around ViewModels
+        /// available for the Page object when using a MVVM pattern that relies on a wrapped/porxy around ViewModels
         /// </summary>
-        public virtual Services.NavigationService.INavigable ResolveForPage(Page page,
-            NavigationService navigationService)
+        public virtual Services.NavigationService.INavigable ResolveForPage(Page page, NavigationService navigationService)
         {
             return ResolveForPage(page.GetType(), navigationService);
         }
