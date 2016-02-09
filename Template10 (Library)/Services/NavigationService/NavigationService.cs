@@ -74,7 +74,7 @@ namespace Template10.Services.NavigationService
             };
         }
         
-        private INavigable NavigableDataContext(Page page)
+        private INavigable ResolveForPage(Page page)
         {
             if (!(page.DataContext is INavigable) | page.DataContext == null)
             {
@@ -101,7 +101,7 @@ namespace Template10.Services.NavigationService
                 XamlUtils.UpdateBindings(page);
 
                 // call navagable override (navigating)
-                var dataContext = NavigableDataContext(page);
+                var dataContext = ResolveForPage(page);
                 if (dataContext != null)
                 {
                     dataContext.NavigationService = this;
@@ -130,7 +130,7 @@ namespace Template10.Services.NavigationService
             if (page != null)
             {
                 // call viewmodel
-                var dataContext = NavigableDataContext(page);
+                var dataContext = ResolveForPage(page);
                 if (dataContext != null)
                 {
                     dataContext.NavigationService = this;
@@ -160,7 +160,7 @@ namespace Template10.Services.NavigationService
                     pageState?.Clear();
                 }
 
-                var dataContext = NavigableDataContext(page);
+                var dataContext = ResolveForPage(page);
                 
                 if (dataContext != null)
                 {
