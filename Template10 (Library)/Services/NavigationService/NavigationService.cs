@@ -84,7 +84,7 @@ namespace Template10.Services.NavigationService
                 {
                     return viewModel;
                 }
-                throw new ArgumentNullException();
+                throw new ArgumentNullException("Unable to Resolve For Page. No ViewModel could be found");
             }
             return (INavigable)page.DataContext;
         }
