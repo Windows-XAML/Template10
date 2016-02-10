@@ -58,6 +58,7 @@ namespace Template10.Common
         /// If a developer overrides this method, and leaves the DataContext of a page null, then BootStrapper
         /// will atttempt to fill the DataContext the return value of this method. 
         /// </summary>
+        [Obsolete("Use ResolveForPage(Page, NavigationService) instead")]
         public virtual Services.NavigationService.INavigable ResolveForPage(Type page, NavigationService navigationService) => null;
         
         /// <summary>
