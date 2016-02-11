@@ -158,17 +158,17 @@ namespace Template10.Behaviors
             var touchmode = UIViewSettings.GetForCurrentView().UserInteractionMode == UserInteractionMode.Touch;
 
             // mobile always has a visible back button
-            var mobilefam = "Windows.Mobile".Equals(Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily, StringComparison.OrdinalIgnoreCase);
+            var mobilefam = ResourceContext.GetForCurrentView().QualifierValues["DeviceFamily"].Equals("Mobile");
             if (mobilefam && touchmode)
                 // this means phone, not continuum, which uses hardware (or steering wheel) back button
                 return Visibility.Collapsed;
 
             // handle iot
-            var iotfam = "Windows.IoT".Equals(Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily, StringComparison.OrdinalIgnoreCase);
+            var iotfam = ResourceContext.GetForCurrentView().QualifierValues["DeviceFamily"].Equals("IoT");
             if (!iotfam)
             {
                 // simply don't know what to do with else
-                var desktopfam = "Windows.Desktop".Equals(Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily, StringComparison.OrdinalIgnoreCase);
+                var desktopfam = ResourceContext.GetForCurrentView().QualifierValues["DeviceFamily"].Equals("Desktop");
                 if (!desktopfam)
                     return Visibility.Collapsed;
             }
@@ -197,3 +197,4 @@ namespace Template10.Behaviors
         }
     }
 }
+
