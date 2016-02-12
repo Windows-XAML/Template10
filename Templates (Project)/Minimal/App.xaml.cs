@@ -16,7 +16,7 @@ namespace Sample
         public App()
         {
             InitializeComponent();
-            SplashFactory = (e) => new Views.Splash(e);
+            // SplashFactory = (e) => new Views.Splash(e);
 
             #region App settings
 
