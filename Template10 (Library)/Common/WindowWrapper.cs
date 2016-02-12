@@ -19,6 +19,11 @@ namespace Template10.Common
 
         #endregion
 
+        static WindowWrapper()
+        {
+            DebugWrite(caller: "Static Constructor");
+        }
+
         public WindowWrapper()
         {
             DebugWrite(caller: "Constructor");
