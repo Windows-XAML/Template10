@@ -60,12 +60,12 @@ namespace Template10.Common
         /// </summary>
         [Obsolete("Use ResolveForPage(Page, NavigationService) instead")]
         public virtual Services.NavigationService.INavigable ResolveForPage(Type page, NavigationService navigationService) => null;
-        
+
         /// <summary>
         /// If a developer overrides this method, the developer can resolve DataContext or unwrap DataContext 
         /// available for the Page object when using a MVVM pattern that relies on a wrapped/porxy around ViewModels
         /// </summary>
-        public virtual Services.NavigationService.INavigable ResolveForPage(Page page, NavigationService navigationService) =>  ResolveForPage(page.GetType(), navigationService);
+        public virtual Services.NavigationService.INavigable ResolveForPage(Page page, NavigationService navigationService) => ResolveForPage(page.GetType(), navigationService);
 
         #endregion
 
@@ -80,30 +80,30 @@ namespace Template10.Common
 
         #endregion
 
-        protected BootStrapper()
+        private void Loaded()
         {
-            DebugWrite(caller: "Constructor");
-
+            DebugWrite();
             Current = this;
 
-            // Hook up the default Back handler
-            SystemNavigationManager.GetForCurrentView().BackRequested += BackHandler;
-
             // Hook up keyboard and mouse Back handler
-            var keyboard = Services.KeyboardService.KeyboardService.Instance;
-            keyboard.AfterBackGesture = () =>
+            var KeyboardService = Services.KeyboardService.KeyboardService.Instance;
+            KeyboardService.AfterBackGesture = () =>
             {
-                DebugWrite(caller: nameof(keyboard.AfterBackGesture));
+                DebugWrite(caller: nameof(KeyboardService.AfterBackGesture));
 
                 var handled = false;
                 RaiseBackRequested(ref handled);
             };
-            keyboard.AfterForwardGesture = () =>
+
+            KeyboardService.AfterForwardGesture = () =>
             {
-                DebugWrite(caller: nameof(keyboard.AfterForwardGesture));
+                DebugWrite(caller: nameof(KeyboardService.AfterForwardGesture));
 
                 RaiseForwardRequested();
             };
+
+            // Hook up the default Back handler
+            SystemNavigationManager.GetForCurrentView().BackRequested += BackHandler;
 
             Resuming += (s, e) =>
             {
@@ -139,6 +139,20 @@ namespace Template10.Common
                 catch { /* do nothing */ }
                 finally { deferral.Complete(); }
             };
+        }
+
+        public event EventHandler<WindowCreatedEventArgs> WindowCreated;
+        protected sealed override void OnWindowCreated(WindowCreatedEventArgs args)
+        {
+            DebugWrite();
+
+            if (!WindowWrapper.ActiveWrappers.Any())
+                Loaded();
+
+            // handle window
+            var window = new WindowWrapper(args.Window);
+            WindowCreated?.Invoke(this, args);
+            base.OnWindowCreated(args);
         }
 
         #region properties
@@ -211,15 +225,6 @@ namespace Template10.Common
 
         #endregion
 
-        public event EventHandler<WindowCreatedEventArgs> WindowCreated;
-        protected sealed override void OnWindowCreated(WindowCreatedEventArgs args)
-        {
-            DebugWrite();
-
-            var window = new WindowWrapper(args.Window);
-            WindowCreated?.Invoke(this, args);
-            base.OnWindowCreated(args);
-        }
 
         #region launch
 
@@ -401,7 +406,7 @@ namespace Template10.Common
         /// </summary>
         public virtual Task OnInitializeAsync(IActivatedEventArgs args)
         {
-            DebugWrite("Virtual");
+            DebugWrite($"Virtual {nameof(IActivatedEventArgs)}:{args.Kind}");
 
             return Task.CompletedTask;
         }
@@ -414,9 +419,9 @@ namespace Template10.Common
         /// because the asunc operations are in a single, global deferral created when the suspension
         /// begins and completed automatically when the last viewmodel has been called (including this method).
         /// </summary>
-        public virtual Task OnSuspendingAsync(object s, SuspendingEventArgs e, bool prelaunch)
+        public virtual Task OnSuspendingAsync(object s, SuspendingEventArgs e, bool prelaunchActivated)
         {
-            DebugWrite("Virtual");
+            DebugWrite($"Virtual {nameof(SuspendingEventArgs)}:{e.SuspendingOperation} {nameof(prelaunchActivated)}:{prelaunchActivated}");
 
             return Task.CompletedTask;
         }
@@ -462,12 +467,12 @@ namespace Template10.Common
 
             // this "unused" bit is very important because of a quirk in ResourceThemes
             try
-			{
-				if(Application.Current.Resources.ContainsKey("ExtendedSplashBackground"))
-				{
-					var unused = Application.Current.Resources["ExtendedSplashBackground"];
-				}
-			}
+            {
+                if (Application.Current.Resources.ContainsKey("ExtendedSplashBackground"))
+                {
+                    var unused = Application.Current.Resources["ExtendedSplashBackground"];
+                }
+            }
             catch { /* this is okay */ }
 
             // setup custom titlebar
