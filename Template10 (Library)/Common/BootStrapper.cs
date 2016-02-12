@@ -461,7 +461,13 @@ namespace Template10.Common
             await OnInitializeAsync(e);
 
             // this "unused" bit is very important because of a quirk in ResourceThemes
-            try { var unused = Application.Current.Resources["ExtendedSplashBackground"]; }
+            try
+			{
+				if(Application.Current.Resources.ContainsKey("ExtendedSplashBackground"))
+				{
+					var unused = Application.Current.Resources["ExtendedSplashBackground"];
+				}
+			}
             catch { /* this is okay */ }
 
             // setup custom titlebar
