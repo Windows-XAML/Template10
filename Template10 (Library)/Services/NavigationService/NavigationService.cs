@@ -73,6 +73,20 @@ namespace Template10.Services.NavigationService
                 }, 1);
             };
         }
+        
+        private INavigable ResolveForPage(Page page)
+        {
+            if (!(page.DataContext is INavigable) | page.DataContext == null)
+            {
+                // to support dependency injection, but keeping it optional.
+                var viewModel = BootStrapper.Current.ResolveForPage(page, this);
+                if ((viewModel != null))
+                {
+                    return viewModel;
+                }
+            }
+            return (INavigable)page.DataContext;
+        }
 
         // before navigate (cancellable)
         async Task<bool> NavigatingFromAsync(bool suspending, NavigationMode mode)
@@ -86,7 +100,7 @@ namespace Template10.Services.NavigationService
                 XamlUtils.UpdateBindings(page);
 
                 // call navagable override (navigating)
-                var dataContext = page.DataContext as INavigable;
+                var dataContext = ResolveForPage(page);
                 if (dataContext != null)
                 {
                     dataContext.NavigationService = this;
@@ -115,7 +129,7 @@ namespace Template10.Services.NavigationService
             if (page != null)
             {
                 // call viewmodel
-                var dataContext = page.DataContext as INavigable;
+                var dataContext = ResolveForPage(page);
                 if (dataContext != null)
                 {
                     dataContext.NavigationService = this;
@@ -145,16 +159,8 @@ namespace Template10.Services.NavigationService
                     pageState?.Clear();
                 }
 
-                if (!(page.DataContext is INavigable) | page.DataContext == null)
-                {
-                    // to support dependency injection, but keeping it optional.
-                    var viewmodel = BootStrapper.Current.ResolveForPage(page.GetType(), this);
-                    if (viewmodel != null)
-                        page.DataContext = viewmodel;
-                }
-
-                // call viewmodel
-                var dataContext = page.DataContext as INavigable;
+                var dataContext = ResolveForPage(page);
+                
                 if (dataContext != null)
                 {
                     // prepare for state load

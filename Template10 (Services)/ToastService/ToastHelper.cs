@@ -133,7 +133,7 @@
         public ToastNotification BuildToastText04(string title, string content, string content2, string arg = null)
         {
             // build toast
-            var template = ToastTemplateType.ToastText02;
+            var template = ToastTemplateType.ToastText04;
             var xml = ToastNotificationManager.GetTemplateContent(template);
             var elements = xml.GetElementsByTagName(textNode);
 
@@ -156,7 +156,7 @@
         public ToastNotification BuildToastImageAndText01(string image, string content, string arg = null)
         {
             // build toast
-            var template = ToastTemplateType.ToastText02;
+            var template = ToastTemplateType.ToastImageAndText01;
             var xml = ToastNotificationManager.GetTemplateContent(template);
             var elements = xml.GetElementsByTagName(textNode);
 
@@ -175,7 +175,7 @@
         public ToastNotification BuildToastImageAndText02(string image, string title, string content, string arg = null)
         {
             // build toast
-            var template = ToastTemplateType.ToastText02;
+            var template = ToastTemplateType.ToastImageAndText02;
             var xml = ToastNotificationManager.GetTemplateContent(template);
             var elements = xml.GetElementsByTagName(textNode);
 
@@ -198,7 +198,7 @@
         public ToastNotification BuildToastImageAndText03(string image, string title, string content, string arg = null)
         {
             // build toast
-            var template = ToastTemplateType.ToastText03;
+            var template = ToastTemplateType.ToastImageAndText03;
             var xml = ToastNotificationManager.GetTemplateContent(template);
             var elements = xml.GetElementsByTagName(textNode);
 
@@ -221,7 +221,7 @@
         public ToastNotification BuildToastImageAndText04(string image, string title, string content, string content2, string arg = null)
         {
             // build toast
-            var template = ToastTemplateType.ToastText02;
+            var template = ToastTemplateType.ToastImageAndText04;
             var xml = ToastNotificationManager.GetTemplateContent(template);
             var elements = xml.GetElementsByTagName(textNode);
 

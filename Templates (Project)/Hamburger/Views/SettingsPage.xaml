@@ -14,9 +14,6 @@
         <vm:SettingsPageViewModel x:Name="ViewModel" />
     </Page.DataContext>
 
-    <Page.Resources>
-        <c:VisibleWhenDesktop x:Name="VisibleWhenDesktop" />
-    </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 

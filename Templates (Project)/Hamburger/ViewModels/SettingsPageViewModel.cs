@@ -52,13 +52,13 @@ namespace Sample.ViewModels
         }
 
         DelegateCommand _ShowBusyCommand;
-        public DelegateCommand ShowBusyCommand 
+        public DelegateCommand ShowBusyCommand
             => _ShowBusyCommand ?? (_ShowBusyCommand = new DelegateCommand(async () =>
-                {
-                    Views.Shell.SetBusy(true, _BusyText);
-                    await Task.Delay(5000);
-                    Views.Shell.SetBusy(false);
-                }, () => !string.IsNullOrEmpty(BusyText)));
+            {
+                App.SetBusy(true, _BusyText);
+                await Task.Delay(5000);
+                App.SetBusy(false);
+            }, () => !string.IsNullOrEmpty(BusyText)));
     }
 
     public class AboutPartViewModel : ViewModelBase
