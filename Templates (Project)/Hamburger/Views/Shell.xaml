@@ -11,41 +11,31 @@
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
       mc:Ignorable="d">
 
-    <Controls:ModalDialog x:Name="ModalContainer" CanBackButtonDismiss="False"
-                          DisableBackButtonWhenModal="True">
-        <Controls:ModalDialog.Content>
-            <Controls:HamburgerMenu x:Name="MyHamburgerMenu">
+    <Controls:HamburgerMenu x:Name="MyHamburgerMenu">
 
-                <Controls:HamburgerMenu.PrimaryButtons>
-                    <!--  mainpage button  -->
-                    <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:MainPage">
-                        <StackPanel Orientation="Horizontal">
-                            <SymbolIcon Width="48" Height="48" Symbol="Home" />
-                            <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Home" />
-                        </StackPanel>
-                    </Controls:HamburgerButtonInfo>
-                </Controls:HamburgerMenu.PrimaryButtons>
+        <Controls:HamburgerMenu.PrimaryButtons>
+            <!--  mainpage button  -->
+            <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:MainPage">
+                <StackPanel Orientation="Horizontal">
+                    <SymbolIcon Width="48" Height="48" Symbol="Home" />
+                    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Home" />
+                </StackPanel>
+            </Controls:HamburgerButtonInfo>
+        </Controls:HamburgerMenu.PrimaryButtons>
 
-                <Controls:HamburgerMenu.SecondaryButtons>
-                    <!--  settingspage button  -->
-                    <Controls:HamburgerButtonInfo x:Name="SettingsButton" PageType="views:SettingsPage">
-                        <Controls:HamburgerButtonInfo.NavigationTransitionInfo>
-                            <SuppressNavigationTransitionInfo />
-                        </Controls:HamburgerButtonInfo.NavigationTransitionInfo>
-                        <StackPanel Orientation="Horizontal">
-                            <SymbolIcon Width="48" Height="48" Symbol="Setting" />
-                            <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Settings" />
-                        </StackPanel>
-                    </Controls:HamburgerButtonInfo>
-                </Controls:HamburgerMenu.SecondaryButtons>
+        <Controls:HamburgerMenu.SecondaryButtons>
+            <!--  settingspage button  -->
+            <Controls:HamburgerButtonInfo x:Name="SettingsButton" PageType="views:SettingsPage">
+                <Controls:HamburgerButtonInfo.NavigationTransitionInfo>
+                    <SuppressNavigationTransitionInfo />
+                </Controls:HamburgerButtonInfo.NavigationTransitionInfo>
+                <StackPanel Orientation="Horizontal">
+                    <SymbolIcon Width="48" Height="48" Symbol="Setting" />
+                    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Settings" />
+                </StackPanel>
+            </Controls:HamburgerButtonInfo>
+        </Controls:HamburgerMenu.SecondaryButtons>
 
-            </Controls:HamburgerMenu>
-        </Controls:ModalDialog.Content>
-
-        <Controls:ModalDialog.ModalContent>
-            <views:Busy x:Name="BusyView" />
-        </Controls:ModalDialog.ModalContent>
-
-    </Controls:ModalDialog>
+    </Controls:HamburgerMenu>
 
 </Page>

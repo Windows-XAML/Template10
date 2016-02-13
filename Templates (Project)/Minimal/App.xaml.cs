@@ -16,7 +16,7 @@ namespace Sample
         public App()
         {
             InitializeComponent();
-            SplashFactory = (e) => new Views.Splash(e);
+            // SplashFactory = (e) => new Views.Splash(e);
 
             #region App settings
 
@@ -30,6 +30,7 @@ namespace Sample
 
         public override Task OnPrelaunchAsync(IActivatedEventArgs args, out bool continueStartup)
         {
+            // TODO (non-ui)
             continueStartup = false;
             return Task.CompletedTask;
         }
@@ -38,7 +39,7 @@ namespace Sample
         {
             if (previousExecutionState == AppExecutionState.Prelaunch)
             {
-                // TODO
+                // TODO (complete ui)
             }
         }
 
@@ -56,9 +57,8 @@ namespace Sample
             {
                 var instance = Current as App;
                 var control = (instance.ModalContent = (instance.ModalContent ?? new Views.Busy())) as Views.Busy;
-                instance.ModalDialog.IsModal = busy;
+                control.IsBusy = instance.ModalDialog.IsModal = busy;
                 control.BusyText = text;
-                control.IsBusy = busy;
             });
         }
     }
