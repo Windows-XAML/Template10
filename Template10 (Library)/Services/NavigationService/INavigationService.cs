@@ -38,9 +38,4 @@ namespace Template10.Services.NavigationService
         Frame Frame { get; }
         FrameFacade FrameFacade { get; }
     }
-
-    public interface INavigationServiceInternal
-    {
-        FrameFacade FrameFacade { get; }
-    }
 }

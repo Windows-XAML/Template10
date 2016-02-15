@@ -84,6 +84,9 @@ namespace Template10.Controls
                     if (!any)
                         // this is the default color if the user supplies none
                         AccentColor = Colors.DarkOrange;
+
+                    if (NavButtonCount == 0)
+                        _areNavButtonsLoaded = true;
                 };
             }
         }
@@ -447,8 +450,8 @@ namespace Template10.Controls
             _navButtons.Where(x => x.Value != value)
                 .ForEach(x => { x.Value.IsChecked = false; });
 
-            // navigate
-            if (value?.PageType != null)
+            // navigate only when all navigation buttons have been loaded
+            if (_areNavButtonsLoaded && value?.PageType != null)
             {
                 if (NavigationService.Navigate(value.PageType, value?.PageParameter, value?.NavigationTransitionInfo))
                 {
@@ -543,18 +546,18 @@ namespace Template10.Controls
                 DebugWrite($"Value: {value}");
 
                 _navigationService = value;
-                ShellSplitView.Content = (value as INavigationServiceInternal).FrameFacade.Frame;
+                ShellSplitView.Content = value.FrameFacade.Frame;
 
                 // Test if there is a splash showing, this is the case if there is no content
                 // and if there is a splash factorydefined in the bootstrapper, if true
                 // then we want to show the content full screen until the frame loads
-                if ((_navigationService as INavigationServiceInternal).FrameFacade.BackStackDepth == 0
+                if (_navigationService.FrameFacade.BackStackDepth == 0
                     && BootStrapper.Current.SplashFactory != null
                     && BootStrapper.Current.OriginalActivatedArgs.PreviousExecutionState != Windows.ApplicationModel.Activation.ApplicationExecutionState.Terminated)
                 {
                     var once = false;
                     IsFullScreen = true;
-                    (value as INavigationServiceInternal).FrameFacade.Navigated += (s, e) =>
+                    value.FrameFacade.Navigated += (s, e) =>
                     {
                         if (!once)
                         {
@@ -567,7 +570,7 @@ namespace Template10.Controls
                 UpdateFullScreen();
 
                 NavigationService.AfterRestoreSavedNavigation += (s, e) => HighlightCorrectButton();
-                (NavigationService as INavigationServiceInternal).FrameFacade.Navigated += (s, e) => HighlightCorrectButton(e.PageType, e.Parameter);
+                NavigationService.FrameFacade.Navigated += (s, e) => HighlightCorrectButton(e.PageType, e.Parameter);
             }
         }
 
@@ -593,7 +596,7 @@ namespace Template10.Controls
         {
             DebugWrite($"Mavnual: {manual}, IsFullScreen: {IsFullScreen}");
 
-            var frame = (NavigationService as INavigationServiceInternal)?.FrameFacade?.Frame;
+            var frame = NavigationService?.FrameFacade?.Frame;
             if (manual ?? IsFullScreen)
             {
                 ShellSplitView.IsHitTestVisible = ShellSplitView.IsEnabled = false;
@@ -683,6 +686,13 @@ namespace Template10.Controls
             var i = r.DataContext as HamburgerButtonInfo;
             _navButtons.Add(r, i);
             HighlightCorrectButton();
+
+            if (!_areNavButtonsLoaded)
+            {
+                _navButtonsLoadedCounter++;
+                if (_navButtonsLoadedCounter >= NavButtonCount)
+                    _areNavButtonsLoaded = true;
+            }
         }
 
         private void NavButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
@@ -725,6 +735,13 @@ namespace Template10.Controls
         {
             _SecondaryButtonStackPanel = sender as StackPanel;
         }
+
+        private int NavButtonCount
+        {
+            get { return PrimaryButtons.Count + SecondaryButtons.Count; }
+        }
+        private bool _areNavButtonsLoaded = false;
+        private int _navButtonsLoadedCounter = 0;
 
         bool _insideOperation = false;
 
@@ -788,7 +805,7 @@ namespace Template10.Controls
 
         public bool AutoHighlightCorrectButton
         {
-            get { return true; /*(bool)GetValue(AutoHighlightCorrectButtonProperty);*/ }
+            get { return (bool)GetValue(AutoHighlightCorrectButtonProperty); }
             set { SetValue(AutoHighlightCorrectButtonProperty, value); }
         }
         public static readonly DependencyProperty AutoHighlightCorrectButtonProperty =

@@ -3,6 +3,7 @@ using Windows.UI.Xaml;
 using System.Threading.Tasks;
 using Sample.Services.SettingsServices;
 using Windows.ApplicationModel.Activation;
+using Template10.Common;
 
 namespace Sample
 {
@@ -15,6 +16,7 @@ namespace Sample
         {
             InitializeComponent();
             SplashFactory = (e) => new Views.Splash(e);
+            Template10.Services.LoggingService.LoggingService.Enabled = true;
 
             #region App settings
 
@@ -44,6 +46,18 @@ namespace Sample
         {
             NavigationService.Navigate(typeof(Views.MainPage));
             return Task.CompletedTask;
+        }
+
+        // hide and show busy dialog
+        public static void SetBusy(bool busy, string text = null)
+        {
+            WindowWrapper.Current().Dispatcher.Dispatch(() =>
+            {
+                var instance = Current as App;
+                var control = (instance.ModalContent = (instance.ModalContent ?? new Views.Busy())) as Views.Busy;
+                control.IsBusy = instance.ModalDialog.IsModal = busy;
+                control.BusyText = text;
+            });
         }
     }
 }

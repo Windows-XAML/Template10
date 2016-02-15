@@ -7,17 +7,14 @@
     <x:Double x:Key="WideMinWidth">1200</x:Double>
 
     <Color x:Key="CustomColor">SteelBlue</Color>
-    <SolidColorBrush x:Key="CustomColorBrush" Color="{StaticResource CustomColor}" />
-
     <Color x:Key="ContrastColor">White</Color>
-    <SolidColorBrush x:Key="ContrastColorBrush" Color="{StaticResource ContrastColor}" />
 
     <ResourceDictionary.ThemeDictionaries>
 
-        <!--  RequestedTheme=Light  -->
-
         <ResourceDictionary x:Key="Light">
 
+            <SolidColorBrush x:Key="CustomColorBrush" Color="{StaticResource CustomColor}" />
+            <SolidColorBrush x:Key="ContrastColorBrush" Color="{StaticResource ContrastColor}" />
             <SolidColorBrush x:Key="ExtendedSplashBackground" Color="{ThemeResource ContrastColor}" />
             <SolidColorBrush x:Key="ExtendedSplashForeground" Color="{ThemeResource CustomColor}" />
 
@@ -34,12 +31,11 @@
             </Style>
 
         </ResourceDictionary>
-
-        <!--  RequestedTheme=Dark  -->
-        <!--  Please note the Template 10 default is Light (the current, Microsoft standard)  -->
 
         <ResourceDictionary x:Key="Default">
 
+            <SolidColorBrush x:Key="CustomColorBrush" Color="{StaticResource CustomColor}" />
+            <SolidColorBrush x:Key="ContrastColorBrush" Color="{StaticResource ContrastColor}" />
             <SolidColorBrush x:Key="ExtendedSplashBackground" Color="{ThemeResource ContrastColor}" />
             <SolidColorBrush x:Key="ExtendedSplashForeground" Color="{ThemeResource CustomColor}" />
 
@@ -57,10 +53,10 @@
 
         </ResourceDictionary>
 
-        <!--  RequestedTheme=HighContrast  -->
-
         <ResourceDictionary x:Key="HighContrast">
 
+            <SolidColorBrush x:Key="CustomColorBrush" Color="Black" />
+            <SolidColorBrush x:Key="ContrastColorBrush" Color="White" />
             <SolidColorBrush x:Key="ExtendedSplashBackground" Color="Black" />
             <SolidColorBrush x:Key="ExtendedSplashForeground" Color="White" />
 

@@ -16,7 +16,7 @@ namespace Template10.Behaviors
     {
         public object Execute(object sender, object parameter)
         {
-            if (string.IsNullOrEmpty(TargetPage))
+            if (null == Page)
                 return false;
 
             if (Frame == null)
@@ -30,9 +30,9 @@ namespace Template10.Behaviors
             if (metadataProvider == null)
                 return false;
 
-            var pagetype = metadataProvider.GetXamlType(TargetPage);
+            var pagetype = metadataProvider.GetXamlType(Page as Type);
             if (pagetype == null)
-                throw new NullReferenceException($"Cannot find TargetPage:{TargetPage}");
+                throw new NullReferenceException($"Cannot find TargetPage:{Page}");
 
             nav.Navigate(pagetype as Type, Parameter, InfoOverride);
             return null;
@@ -47,13 +47,13 @@ namespace Template10.Behaviors
             DependencyProperty.Register(nameof(Frame), typeof(Frame),
                 typeof(NavToPageAction), new PropertyMetadata(null));
 
-        public string TargetPage
+        public object Page
         {
-            get { return (string)GetValue(TargetPageProperty); }
-            set { SetValue(TargetPageProperty, value); }
+            get { return (object)GetValue(PageProperty); }
+            set { SetValue(PageProperty, value); }
         }
-        public static readonly DependencyProperty TargetPageProperty =
-            DependencyProperty.Register(nameof(TargetPage), typeof(string),
+        public static readonly DependencyProperty PageProperty =
+            DependencyProperty.Register(nameof(Page), typeof(object),
                 typeof(NavToPageAction), new PropertyMetadata(null));
 
         public object Parameter

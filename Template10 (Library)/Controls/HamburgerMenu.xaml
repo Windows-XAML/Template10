@@ -62,7 +62,8 @@
                              IsChecked="{Binding IsChecked, Mode=TwoWay}"
                              IsEnabled="{Binding IsEnabled, Mode=TwoWay}" Loaded="NavButton_Loaded"
                              RightTapped="NavButton_RightTapped" Tag="{x:Bind Content}"
-                             Tapped="NavButton_Tapped" Visibility="{Binding Visibility, Mode=TwoWay}">
+                             Tapped="NavButton_Tapped" Visibility="{Binding Visibility, Mode=TwoWay}"
+                             ToolTipService.ToolTip="{Binding Path=(ToolTipService.ToolTip)}">
                     <RadioButton.Template>
                         <ControlTemplate TargetType="RadioButton">
                             <ToggleButton MinWidth="48" MinHeight="48" MaxWidth="{TemplateBinding MaxWidth}"

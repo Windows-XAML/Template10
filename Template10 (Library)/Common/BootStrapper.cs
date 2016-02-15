@@ -58,7 +58,14 @@ namespace Template10.Common
         /// If a developer overrides this method, and leaves the DataContext of a page null, then BootStrapper
         /// will atttempt to fill the DataContext the return value of this method. 
         /// </summary>
+        [Obsolete("Use ResolveForPage(Page, NavigationService) instead")]
         public virtual Services.NavigationService.INavigable ResolveForPage(Type page, NavigationService navigationService) => null;
+
+        /// <summary>
+        /// If a developer overrides this method, the developer can resolve DataContext or unwrap DataContext 
+        /// available for the Page object when using a MVVM pattern that relies on a wrapped/porxy around ViewModels
+        /// </summary>
+        public virtual Services.NavigationService.INavigable ResolveForPage(Page page, NavigationService navigationService) => ResolveForPage(page.GetType(), navigationService);
 
         #endregion
 
@@ -73,15 +80,34 @@ namespace Template10.Common
 
         #endregion
 
-        protected BootStrapper()
+        private void Loaded()
         {
-            DebugWrite(caller: "Constructor");
-
+            DebugWrite();
             Current = this;
+
+            // Hook up keyboard and mouse Back handler
+            var KeyboardService = Services.KeyboardService.KeyboardService.Instance;
+            KeyboardService.AfterBackGesture = () =>
+            {
+                DebugWrite(caller: nameof(KeyboardService.AfterBackGesture));
+
+                var handled = false;
+                RaiseBackRequested(ref handled);
+            };
+
+            KeyboardService.AfterForwardGesture = () =>
+            {
+                DebugWrite(caller: nameof(KeyboardService.AfterForwardGesture));
+
+                RaiseForwardRequested();
+            };
+
+            // Hook up the default Back handler
+            SystemNavigationManager.GetForCurrentView().BackRequested += BackHandler;
 
             Resuming += (s, e) =>
             {
-                DebugWrite(caller: "Resuming");
+                DebugWrite(caller: nameof(Resuming));
 
                 if ((OriginalActivatedArgs as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false)
                     OnResuming(s, e, AppExecutionState.Prelaunch);
@@ -91,7 +117,7 @@ namespace Template10.Common
 
             Suspending += async (s, e) =>
             {
-                DebugWrite(caller: "Suspending");
+                DebugWrite(caller: nameof(Suspending));
 
                 // one, global deferral
                 var deferral = e.SuspendingOperation.GetDeferral();
@@ -100,18 +126,33 @@ namespace Template10.Common
                     foreach (var nav in WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices))
                     {
                         // date the cache (which marks the date/time it was suspended)
-                        (nav as INavigationServiceInternal).FrameFacade.SetFrameState(CacheDateKey, DateTime.Now.ToString());
+                        nav.FrameFacade.SetFrameState(CacheDateKey, DateTime.Now.ToString());
                         // call view model suspend (OnNavigatedfrom)
-                        DebugWrite($"Nav:{nav}", caller: "Nav.SuspendingAsync");
+                        DebugWrite($"Nav:{nav}", caller: nameof(nav.SuspendingAsync));
                         await nav.SuspendingAsync();
                     }
+
                     // call system-level suspend
-                    DebugWrite($"Calling. Prelaunch {(OriginalActivatedArgs as LaunchActivatedEventArgs).PrelaunchActivated}", caller: "OnSuspendingAsync");
+                    DebugWrite($"Calling. Prelaunch {(OriginalActivatedArgs as LaunchActivatedEventArgs).PrelaunchActivated}", caller: nameof(OnSuspendingAsync));
                     await OnSuspendingAsync(s, e, (OriginalActivatedArgs as LaunchActivatedEventArgs).PrelaunchActivated);
                 }
-                catch { }
+                catch { /* do nothing */ }
                 finally { deferral.Complete(); }
             };
+        }
+
+        public event EventHandler<WindowCreatedEventArgs> WindowCreated;
+        protected sealed override void OnWindowCreated(WindowCreatedEventArgs args)
+        {
+            DebugWrite();
+
+            if (!WindowWrapper.ActiveWrappers.Any())
+                Loaded();
+
+            // handle window
+            var window = new WindowWrapper(args.Window);
+            WindowCreated?.Invoke(this, args);
+            base.OnWindowCreated(args);
         }
 
         #region properties
@@ -170,12 +211,12 @@ namespace Template10.Common
             // sometimes activate requires a frame to be built
             if (Window.Current.Content == null)
             {
-                DebugWrite("Calling", caller: "InitializeFrameAsync");
+                DebugWrite("Calling", caller: nameof(InternalActivatedAsync));
                 await InitializeFrameAsync(e);
             }
 
             // onstart is shared with activate and launch
-            DebugWrite("Calling", caller: "OnStartAsync");
+            DebugWrite("Calling", caller: nameof(OnStartAsync));
             await OnStartAsync(StartKind.Activate, e);
 
             // ensure active (this will hide any custom splashscreen)
@@ -184,15 +225,6 @@ namespace Template10.Common
 
         #endregion
 
-        public event EventHandler<WindowCreatedEventArgs> WindowCreated;
-        protected sealed override void OnWindowCreated(WindowCreatedEventArgs args)
-        {
-            DebugWrite();
-
-            var window = new WindowWrapper(args.Window);
-            WindowCreated?.Invoke(this, args);
-            base.OnWindowCreated(args);
-        }
 
         #region launch
 
@@ -209,6 +241,13 @@ namespace Template10.Common
         {
             DebugWrite($"Previous:{e.PreviousExecutionState.ToString()}");
 
+            OriginalActivatedArgs = e;
+
+            if (e.PreviousExecutionState != ApplicationExecutionState.Running)
+            {
+                await InitializeFrameAsync(e);
+            }
+
             // handle pre-launch
             if ((e as LaunchActivatedEventArgs).PrelaunchActivated)
             {
@@ -216,13 +255,6 @@ namespace Template10.Common
                 await OnPrelaunchAsync(e, out continueStartup);
                 if (!continueStartup)
                     return;
-            }
-
-            OriginalActivatedArgs = e;
-
-            if (e.PreviousExecutionState != ApplicationExecutionState.Running)
-            {
-                await InitializeFrameAsync(e);
             }
 
             // okay, now handle launch
@@ -248,7 +280,7 @@ namespace Template10.Common
                         if (DetermineStartCause(e) == AdditionalKinds.Primary)
                         {
                             restored = await NavigationService.RestoreSavedNavigationAsync();
-                            DebugWrite($"Restored:{restored}", caller: "Nav.Restored");
+                            DebugWrite($"{nameof(restored)}:{restored}", caller: nameof(NavigationService.RestoreSavedNavigationAsync));
                         }
                         break;
                     }
@@ -260,37 +292,12 @@ namespace Template10.Common
 
             if (!restored)
             {
-                DebugWrite("Calling", caller: "OnStartAsync");
+                DebugWrite("Calling", caller: nameof(OnStartAsync));
                 await OnStartAsync(StartKind.Launch, e);
             }
 
-            SubscribeBackButton();
-
             // ensure active (this will hide any custom splashscreen)
             Window.Current.Activate();
-
-            // Hook up keyboard and mouse Back handler
-            var keyboard = Services.KeyboardService.KeyboardService.Instance;
-            keyboard.AfterBackGesture = () =>
-            {
-                DebugWrite();
-
-                //the result is no matter
-                var handled = false;
-                RaiseBackRequested(ref handled);
-            };
-
-            // Hook up keyboard and mouse Forward handler
-            keyboard.AfterForwardGesture = RaiseForwardRequested;
-        }
-
-        private void SubscribeBackButton()
-        {
-            DebugWrite();
-
-            // Hook up the default Back handler
-            SystemNavigationManager.GetForCurrentView().BackRequested -= BackHandler;
-            SystemNavigationManager.GetForCurrentView().BackRequested += BackHandler;
         }
 
         private void BackHandler(object sender, BackRequestedEventArgs args)
@@ -298,7 +305,7 @@ namespace Template10.Common
             DebugWrite();
 
             var handled = false;
-            if (ApiInformation.IsApiContractPresent("Windows.Phone.PhoneContract", 1, 0))
+            if (ApiInformation.IsApiContractPresent(nameof(Windows.Phone.PhoneContract), 1, 0))
             {
                 if (NavigationService?.CanGoBack == true)
                 {
@@ -330,7 +337,7 @@ namespace Template10.Common
             BackRequested?.Invoke(null, args);
             if (handled = args.Handled)
                 return;
-            foreach (var frame in WindowWrapper.Current().NavigationServices.Select(x => (x as INavigationServiceInternal).FrameFacade).Reverse())
+            foreach (var frame in WindowWrapper.Current().NavigationServices.Select(x => x.FrameFacade).Reverse())
             {
                 frame.RaiseBackRequested(args);
                 if (handled = args.Handled)
@@ -350,7 +357,7 @@ namespace Template10.Common
             ForwardRequested?.Invoke(null, args);
             if (args.Handled)
                 return;
-            foreach (var frame in WindowWrapper.Current().NavigationServices.Select(x => (x as INavigationServiceInternal).FrameFacade))
+            foreach (var frame in WindowWrapper.Current().NavigationServices.Select(x => x.FrameFacade))
             {
                 frame.RaiseForwardRequested(args);
                 if (args.Handled)
@@ -399,7 +406,7 @@ namespace Template10.Common
         /// </summary>
         public virtual Task OnInitializeAsync(IActivatedEventArgs args)
         {
-            DebugWrite("Virtual");
+            DebugWrite($"Virtual {nameof(IActivatedEventArgs)}:{args.Kind}");
 
             return Task.CompletedTask;
         }
@@ -412,9 +419,9 @@ namespace Template10.Common
         /// because the asunc operations are in a single, global deferral created when the suspension
         /// begins and completed automatically when the last viewmodel has been called (including this method).
         /// </summary>
-        public virtual Task OnSuspendingAsync(object s, SuspendingEventArgs e, bool prelaunch)
+        public virtual Task OnSuspendingAsync(object s, SuspendingEventArgs e, bool prelaunchActivated)
         {
-            DebugWrite("Virtual");
+            DebugWrite($"Virtual {nameof(SuspendingEventArgs)}:{e.SuspendingOperation} {nameof(prelaunchActivated)}:{prelaunchActivated}");
 
             return Task.CompletedTask;
         }
@@ -433,7 +440,7 @@ namespace Template10.Common
         /// </remarks>
         public virtual void OnResuming(object s, object e, AppExecutionState previousExecutionState)
         {
-            DebugWrite($"Virtual, PreviousExecutionState:{previousExecutionState}");
+            DebugWrite($"Virtual, {nameof(previousExecutionState)}:{previousExecutionState}");
         }
 
         #endregion
@@ -445,7 +452,7 @@ namespace Template10.Common
         /// </summary>
         private async Task InitializeFrameAsync(IActivatedEventArgs e)
         {
-            DebugWrite($"IActivatedEventArgs.Kind:{e.Kind}");
+            DebugWrite($"{nameof(IActivatedEventArgs)}:{e.Kind}");
 
             // first show the splash 
             FrameworkElement splash = null;
@@ -459,7 +466,13 @@ namespace Template10.Common
             await OnInitializeAsync(e);
 
             // this "unused" bit is very important because of a quirk in ResourceThemes
-            try { var unused = Application.Current.Resources["ExtendedSplashBackground"]; }
+            try
+            {
+                if (Application.Current.Resources.ContainsKey("ExtendedSplashBackground"))
+                {
+                    var unused = Application.Current.Resources["ExtendedSplashBackground"];
+                }
+            }
             catch { /* this is okay */ }
 
             // setup custom titlebar
@@ -478,7 +491,7 @@ namespace Template10.Common
                 var frame = CreateRootFrame(e);
                 var modal = new Controls.ModalDialog
                 {
-                    Content = (NavigationServiceFactory(BackButton.Attach, ExistingContent.Include, frame) as INavigationServiceInternal).FrameFacade.Frame
+                    Content = (NavigationServiceFactory(BackButton.Attach, ExistingContent.Include, frame)).FrameFacade.Frame
                 };
                 Window.Current.Content = modal;
             }
@@ -491,7 +504,7 @@ namespace Template10.Common
 
         protected virtual Frame CreateRootFrame(IActivatedEventArgs e)
         {
-            DebugWrite($"IActivatedEventArgs:{e}");
+            DebugWrite($"{nameof(IActivatedEventArgs)}:{e}");
 
             return new Frame();
         }
@@ -508,7 +521,7 @@ namespace Template10.Common
         /// </summary>
         public INavigationService NavigationServiceFactory(BackButton backButton, ExistingContent existingContent)
         {
-            DebugWrite($"BackButton:{backButton} ExistingContent:{existingContent}");
+            DebugWrite($"{nameof(backButton)}:{backButton} {nameof(ExistingContent)}:{existingContent}");
 
             return NavigationServiceFactory(backButton, existingContent, new Frame());
         }
@@ -532,19 +545,19 @@ namespace Template10.Common
         /// </summary>
         public INavigationService NavigationServiceFactory(BackButton backButton, ExistingContent existingContent, Frame frame)
         {
-            DebugWrite($"BackButton:{backButton} ExistingContent:{existingContent} Frame:{frame}");
+            DebugWrite($"{nameof(backButton)}:{backButton} {nameof(existingContent)}:{existingContent} {nameof(frame)}:{frame}");
 
             frame.Content = (existingContent == ExistingContent.Include) ? Window.Current.Content : null;
 
             // if the service already exists for this frame, use the existing one.
-            foreach (INavigationServiceInternal nav in WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices))
+            foreach (var nav in WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices))
             {
                 if (nav.FrameFacade.Frame.Equals(frame))
                     return nav as INavigationService;
             }
 
             var navigationService = CreateNavigationService(frame);
-            (navigationService as INavigationServiceInternal).FrameFacade.BackButtonHandling = backButton;
+            navigationService.FrameFacade.BackButtonHandling = backButton;
             WindowWrapper.Current().NavigationServices.Add(navigationService);
 
             if (backButton == BackButton.Attach)
@@ -565,7 +578,7 @@ namespace Template10.Common
             DateTime cacheDate;
             // default the cache age to very fresh if not known
             var otherwise = DateTime.MinValue.ToString();
-            if (DateTime.TryParse((navigationService as INavigationServiceInternal).FrameFacade.GetFrameState(CacheDateKey, otherwise), out cacheDate))
+            if (DateTime.TryParse(navigationService.FrameFacade.GetFrameState(CacheDateKey, otherwise), out cacheDate))
             {
                 var cacheAge = DateTime.Now.Subtract(cacheDate);
                 if (cacheAge >= CacheMaxDuration)
@@ -573,7 +586,7 @@ namespace Template10.Common
                     // clear state in every nav service in every view
                     foreach (var nav in WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices))
                     {
-                        (nav as INavigationServiceInternal).FrameFacade.ClearFrameState();
+                        nav.FrameFacade.ClearFrameState();
                     }
                 }
             }
@@ -607,7 +620,7 @@ namespace Template10.Common
         /// </summary>
         public static AdditionalKinds DetermineStartCause(IActivatedEventArgs args)
         {
-            DebugWrite($"IActivatedEventArgs.Kind:{args.Kind}");
+            DebugWrite($"{nameof(IActivatedEventArgs)}:{args.Kind}");
 
             if (args is ToastNotificationActivatedEventArgs)
                 return AdditionalKinds.Toast;

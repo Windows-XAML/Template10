@@ -9,4 +9,16 @@
         <ResourceDictionary Source="Styles\Custom.xaml" />
     </Application.Resources>
 
+    <!--<Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+
+                <ResourceDictionary x:Key="Default" />
+                <ResourceDictionary x:Key="Light" />
+                <ResourceDictionary x:Key="HighContrast" />
+
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>-->
+
 </common:BootStrapper>

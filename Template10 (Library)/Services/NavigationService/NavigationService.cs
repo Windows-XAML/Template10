@@ -17,7 +17,7 @@ using Template10.Utils;
 namespace Template10.Services.NavigationService
 {
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-NavigationService
-    public partial class NavigationService : INavigationService, INavigationServiceInternal
+    public partial class NavigationService : INavigationService
     {
         FrameFacade FrameFacadeInternal { get; set; }
         public FrameFacade FrameFacade => FrameFacadeInternal;
@@ -33,7 +33,7 @@ namespace Template10.Services.NavigationService
         #endregion
 
         public static INavigationService GetForFrame(Frame frame) =>
-            WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices).FirstOrDefault(x => (x as INavigationServiceInternal).FrameFacade.Frame.Equals(frame));
+            WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices).FirstOrDefault(x => x.FrameFacade.Frame.Equals(frame));
 
         public DispatcherWrapper Dispatcher => WindowWrapper.Current(this).Dispatcher;
 
@@ -73,6 +73,20 @@ namespace Template10.Services.NavigationService
                 }, 1);
             };
         }
+        
+        private INavigable ResolveForPage(Page page)
+        {
+            if (!(page.DataContext is INavigable) | page.DataContext == null)
+            {
+                // to support dependency injection, but keeping it optional.
+                var viewModel = BootStrapper.Current.ResolveForPage(page, this);
+                if ((viewModel != null))
+                {
+                    return viewModel;
+                }
+            }
+            return (INavigable)page.DataContext;
+        }
 
         // before navigate (cancellable)
         async Task<bool> NavigatingFromAsync(bool suspending, NavigationMode mode)
@@ -86,7 +100,7 @@ namespace Template10.Services.NavigationService
                 XamlUtils.UpdateBindings(page);
 
                 // call navagable override (navigating)
-                var dataContext = page.DataContext as INavigable;
+                var dataContext = ResolveForPage(page);
                 if (dataContext != null)
                 {
                     dataContext.NavigationService = this;
@@ -115,7 +129,7 @@ namespace Template10.Services.NavigationService
             if (page != null)
             {
                 // call viewmodel
-                var dataContext = page.DataContext as INavigable;
+                var dataContext = ResolveForPage(page);
                 if (dataContext != null)
                 {
                     dataContext.NavigationService = this;
@@ -145,16 +159,8 @@ namespace Template10.Services.NavigationService
                     pageState?.Clear();
                 }
 
-                if (!(page.DataContext is INavigable) | page.DataContext == null)
-                {
-                    // to support dependency injection, but keeping it optional.
-                    var viewmodel = BootStrapper.Current.ResolveForPage(page.GetType(), this);
-                    if (viewmodel != null)
-                        page.DataContext = viewmodel;
-                }
-
-                // call viewmodel
-                var dataContext = page.DataContext as INavigable;
+                var dataContext = ResolveForPage(page);
+                
                 if (dataContext != null)
                 {
                     // prepare for state load
@@ -189,7 +195,7 @@ namespace Template10.Services.NavigationService
 
                 var nav = BootStrapper.Current.NavigationServiceFactory(BootStrapper.BackButton.Ignore, BootStrapper.ExistingContent.Exclude);
                 nav.Navigate(page, parameter);
-                newWindow.Content = (nav as INavigationServiceInternal).FrameFacade.Frame;
+                newWindow.Content = nav.FrameFacade.Frame;
                 newWindow.Activate();
 
                 await ApplicationViewSwitcher

@@ -9,16 +9,11 @@ using Windows.UI.Xaml.Data;
 
 namespace Sample.Converters
 {
-    class VisibleWhenDesktop : IValueConverter
+    public class VisibleWhenZeroConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, string language)
-        {
-            return (DeviceUtils.Current().DeviceDisposition() == DeviceUtils.DeviceDispositions.Desktop) ? Visibility.Visible : Visibility.Collapsed;
-        }
+        public object Convert(object v, Type t, object p, string l) =>
+            Equals(0d, (double)v) ? Visibility.Visible : Visibility.Collapsed;
 
-        public object ConvertBack(object value, Type targetType, object parameter, string language)
-        {
-            throw new NotImplementedException();
-        }
+        public object ConvertBack(object v, Type t, object p, string l) => null;
     }
 }

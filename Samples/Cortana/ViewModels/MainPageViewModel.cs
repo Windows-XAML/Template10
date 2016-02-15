@@ -9,7 +9,7 @@ using Windows.Media.SpeechSynthesis;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace Messaging.ViewModels
+namespace Sample.ViewModels
 {
     public class MainPageViewModel : Template10.Mvvm.ViewModelBase
     {
@@ -40,8 +40,8 @@ namespace Messaging.ViewModels
         public override Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending)
         {
             _SpeechService.Dispose();
-			return Task.CompletedTask;
-		}
+            return Task.CompletedTask;
+        }
 
         private string _Value;
         public string Value
@@ -61,23 +61,28 @@ namespace Messaging.ViewModels
 
         private async void ListenExecute()
         {
-			try
-			{
-				Value = await _SpeechService.ListenAsync("Cortana Sample", "Try saying, 'The quick brown fox jumps over the lazy dog.'");
-			}
-			catch(Exception ex)
-			{
-				var messageDialog = new Windows.UI.Popups.MessageDialog
-						("Failed to start speech recognition." + 
-						Environment.NewLine + Environment.NewLine + "Message: " + ex.Message,
-						"Speech recognition failed");
-				await messageDialog.ShowAsync();
-			}
-		}
+            try
+            {
+                Value = await _SpeechService.ListenAsync("Cortana Sample", "Try saying, 'The quick brown fox jumps over the lazy dog.'");
+            }
+            catch (Exception ex)
+            {
+                var messageDialog = new Windows.UI.Popups.MessageDialog
+                        ("Failed to start speech recognition." +
+                        Environment.NewLine + Environment.NewLine + "Message: " + ex.Message,
+                        "Speech recognition failed");
+                await messageDialog.ShowAsync();
+            }
+        }
 
         public async Task Speak()
         {
             await _SpeechService.SpeakAsync(Value);
+        }
+
+        public void GotoSettings()
+        {
+            NavigationService.Navigate(typeof(Views.SettingsPage));
         }
     }
 }
