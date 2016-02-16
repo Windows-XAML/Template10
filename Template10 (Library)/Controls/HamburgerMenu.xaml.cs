@@ -53,6 +53,10 @@ namespace Template10.Controls
                 KeyboardService.Instance.AfterWindowZGesture = () => { HamburgerCommand.Execute(null); };
                 ShellSplitView.RegisterPropertyChangedCallback(SplitView.IsPaneOpenProperty, (d, e) =>
                 {
+                    // this can occur if the user resizes before it loads
+                    if (_SecondaryButtonStackPanel == null)
+                        return;
+
                     // secondary layout
                     if (SecondaryButtonOrientation.Equals(Orientation.Horizontal)
                         && ShellSplitView.IsPaneOpen)
@@ -69,22 +73,27 @@ namespace Template10.Controls
                     else
                         PaneClosed?.Invoke(ShellSplitView, EventArgs.Empty);
 
+                    // this will keep the two properties in sync
                     if (!d.GetValue(e).Equals(IsOpen))
                         IsOpen = !IsOpen;
                 });
                 ShellSplitView.RegisterPropertyChangedCallback(SplitView.DisplayModeProperty, (d, e) =>
                 {
+                    // this will keep the two properties in sync
                     DisplayMode = ShellSplitView.DisplayMode;
                 });
                 Loaded += (s, e) =>
                 {
+                    // look to see if any brush property has been set
                     var any = GetType().GetRuntimeProperties()
                         .Where(x => x.PropertyType == typeof(SolidColorBrush))
                         .Any(x => x.GetValue(this) != null);
+
+                    // this is the default color if the user supplies none
                     if (!any)
-                        // this is the default color if the user supplies none
                         AccentColor = Colors.DarkOrange;
 
+                    // in case the developer has defined zero buttons
                     if (NavButtonCount == 0)
                         _areNavButtonsLoaded = true;
                 };
