@@ -491,6 +491,7 @@ namespace Template10.Common
                 var frame = CreateRootFrame(e);
                 var modal = new Controls.ModalDialog
                 {
+                    DisableBackButtonWhenModal = true,
                     Content = (NavigationServiceFactory(BackButton.Attach, ExistingContent.Include, frame)).FrameFacade.Frame
                 };
                 Window.Current.Content = modal;
