@@ -42,12 +42,12 @@ namespace Template10.Controls
         public static readonly DependencyProperty BackButtonVisibilityProperty =
             DependencyProperty.Register(nameof(BackButtonVisibility), typeof(Visibility), typeof(PageHeader), new PropertyMetadata(Visibility.Collapsed));
 
-        private Symbol BackButtonContent
+        public Symbol BackButtonContent
         {
             get { return (Symbol)GetValue(BackButtonContentProperty); }
             set { SetValue(BackButtonContentProperty, value); }
         }
-        private static readonly DependencyProperty BackButtonContentProperty =
+        public static readonly DependencyProperty BackButtonContentProperty =
             DependencyProperty.Register(nameof(BackButtonContent), typeof(Symbol), typeof(PageHeader),
                 new PropertyMetadata(Symbol.Back));
 
