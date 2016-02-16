@@ -20,8 +20,8 @@ namespace Template10.Controls
         private NavigationTransitionInfo _navigationTransitionInfo;
         public NavigationTransitionInfo NavigationTransitionInfo
         {
-            get { return this._navigationTransitionInfo; }
-            set { this._navigationTransitionInfo = value; }
+            get { return _navigationTransitionInfo; }
+            set { _navigationTransitionInfo = value; }
         }
 
         /// <summary>
@@ -53,8 +53,8 @@ namespace Template10.Controls
         bool _clearHistory = false;
         public bool ClearHistory
         {
-            get { return this._clearHistory; }
-            set { Set(ref this._clearHistory, value); }
+            get { return _clearHistory; }
+            set { Set(ref _clearHistory, value); }
         }
 
         /// <summary>
@@ -100,8 +100,8 @@ namespace Template10.Controls
         double _maxWidth = 9999;
         public double MaxWidth
         {
-            get { return this._maxWidth; }
-            set { Set(ref this._maxWidth, value); }
+            get { return _maxWidth; }
+            set { Set(ref _maxWidth, value); }
         }
 
         public override string ToString() =>
