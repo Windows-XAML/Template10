@@ -17,11 +17,11 @@ namespace Template10.Controls
         public enum ButtonTypes { Toggle, Command }
         public ButtonTypes ButtonType { get; set; } = ButtonTypes.Toggle;
 
-        private NavigationTransitionInfo _NavigationTransitionInfo;
+        private NavigationTransitionInfo _navigationTransitionInfo;
         public NavigationTransitionInfo NavigationTransitionInfo
         {
-            get { return _NavigationTransitionInfo; }
-            set { _NavigationTransitionInfo = value; }
+            get { return _navigationTransitionInfo; }
+            set { _navigationTransitionInfo = value; }
         }
 
         /// <summary>
@@ -50,11 +50,11 @@ namespace Template10.Controls
         /// Sets and gets the ClearHistory property.
         /// If true, navigation stack is cleared when navigating to this page
         /// </summary>
-        bool _ClearHistory = false;
+        bool _clearHistory = false;
         public bool ClearHistory
         {
-            get { return _ClearHistory; }
-            set { Set(ref _ClearHistory, value); }
+            get { return _clearHistory; }
+            set { Set(ref _clearHistory, value); }
         }
 
         /// <summary>
@@ -97,11 +97,11 @@ namespace Template10.Controls
             set { Set(ref _content, value); }
         }
 
-        double _MaxWidth = 9999;
+        double _maxWidth = 9999;
         public double MaxWidth
         {
-            get { return _MaxWidth; }
-            set { Set(ref _MaxWidth, value); }
+            get { return _maxWidth; }
+            set { Set(ref _maxWidth, value); }
         }
 
         public override string ToString() =>
@@ -149,11 +149,6 @@ namespace Template10.Controls
         internal void RaiseHolding(HoldingRoutedEventArgs args)
         {
             Holding?.Invoke(this, args);
-        }
-
-        public void Dispose()
-        {
-
         }
     }
 }

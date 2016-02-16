@@ -18,7 +18,7 @@ namespace Template10.Behaviors
         bool update = false;
         private long _goBackReg;
         private long _goForwardReg;
-        private IDispatcherWrapper _Dispatcher;
+        private IDispatcherWrapper _dispatcher;
         Button element => AssociatedObject as Button;
         public DependencyObject AssociatedObject { get; set; }
 
@@ -31,7 +31,7 @@ namespace Template10.Behaviors
             }
             else
             {
-                _Dispatcher = Common.DispatcherWrapper.Current();
+                _dispatcher = Common.DispatcherWrapper.Current();
                 element.Click += Element_Click;
                 Calculate(true);
             }
@@ -91,7 +91,7 @@ namespace Template10.Behaviors
             if (element == null)
                 return;
             // make changes on UI thread
-            _Dispatcher.Dispatch(() =>
+            _dispatcher.Dispatch(() =>
             {
                 switch (Direction)
                 {
