@@ -15,8 +15,15 @@
 
             <SolidColorBrush x:Key="CustomColorBrush" Color="{StaticResource CustomColor}" />
             <SolidColorBrush x:Key="ContrastColorBrush" Color="{StaticResource ContrastColor}" />
-            <SolidColorBrush x:Key="ExtendedSplashBackground" Color="{ThemeResource ContrastColor}" />
-            <SolidColorBrush x:Key="ExtendedSplashForeground" Color="{ThemeResource CustomColor}" />
+            <SolidColorBrush x:Key="ExtendedSplashBackground" Color="{StaticResource ContrastColor}" />
+            <SolidColorBrush x:Key="ExtendedSplashForeground" Color="{StaticResource CustomColor}" />
+
+            <Style TargetType="controls:HamburgerMenu">
+                <Setter Property="AccentColor" Value="{StaticResource CustomColor}" />
+                <Setter Property="VisualStateNarrowMinWidth" Value="{ThemeResource NarrowMinWidth}" />
+                <Setter Property="VisualStateNormalMinWidth" Value="{ThemeResource NormalMinWidth}" />
+                <Setter Property="VisualStateWideMinWidth" Value="{ThemeResource WideMinWidth}" />
+            </Style>
 
             <Style TargetType="controls:PageHeader">
                 <Setter Property="Background" Value="{ThemeResource CustomColorBrush}" />
@@ -36,8 +43,15 @@
 
             <SolidColorBrush x:Key="CustomColorBrush" Color="{StaticResource CustomColor}" />
             <SolidColorBrush x:Key="ContrastColorBrush" Color="{StaticResource ContrastColor}" />
-            <SolidColorBrush x:Key="ExtendedSplashBackground" Color="{ThemeResource ContrastColor}" />
-            <SolidColorBrush x:Key="ExtendedSplashForeground" Color="{ThemeResource CustomColor}" />
+            <SolidColorBrush x:Key="ExtendedSplashBackground" Color="{StaticResource ContrastColor}" />
+            <SolidColorBrush x:Key="ExtendedSplashForeground" Color="{StaticResource CustomColor}" />
+
+            <Style TargetType="controls:HamburgerMenu">
+                <Setter Property="AccentColor" Value="{StaticResource CustomColor}" />
+                <Setter Property="VisualStateNarrowMinWidth" Value="{ThemeResource NarrowMinWidth}" />
+                <Setter Property="VisualStateNormalMinWidth" Value="{ThemeResource NormalMinWidth}" />
+                <Setter Property="VisualStateWideMinWidth" Value="{ThemeResource WideMinWidth}" />
+            </Style>
 
             <Style TargetType="controls:PageHeader">
                 <Setter Property="Background" Value="{ThemeResource CustomColorBrush}" />
