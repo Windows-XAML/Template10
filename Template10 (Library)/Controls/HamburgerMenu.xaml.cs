@@ -37,6 +37,11 @@ namespace Template10.Controls
         static void DebugWrite(string text = null, Services.LoggingService.Severities severity = Services.LoggingService.Severities.Trace, [CallerMemberName]string caller = null) =>
             Services.LoggingService.LoggingService.WriteLine(text, severity, caller: $"HamburgerMenu.{caller}");
 
+        private static void Changed(string v, DependencyPropertyChangedEventArgs e)
+        {
+            DebugWrite($"OldValue: {e.OldValue} NewValue: {e.NewValue}", caller: v);
+        }
+
         #endregion
 
         public HamburgerMenu()
@@ -53,6 +58,8 @@ namespace Template10.Controls
                 KeyboardService.Instance.AfterWindowZGesture = () => { HamburgerCommand.Execute(null); };
                 ShellSplitView.RegisterPropertyChangedCallback(SplitView.IsPaneOpenProperty, (d, e) =>
                 {
+                    DebugWrite($"Current:{(d as SplitView).IsPaneOpen}");
+
                     // this can occur if the user resizes before it loads
                     if (_SecondaryButtonStackPanel == null)
                         return;
@@ -79,6 +86,8 @@ namespace Template10.Controls
                 });
                 ShellSplitView.RegisterPropertyChangedCallback(SplitView.DisplayModeProperty, (d, e) =>
                 {
+                    DebugWrite($"Current:{ShellSplitView.DisplayMode}");
+
                     // this will keep the two properties in sync
                     DisplayMode = ShellSplitView.DisplayMode;
                 });
@@ -108,9 +117,10 @@ namespace Template10.Controls
         public static readonly DependencyProperty DisplayModeProperty =
             DependencyProperty.Register(nameof(DisplayMode), typeof(SplitViewDisplayMode),
                 typeof(HamburgerMenu), new PropertyMetadata(null, DisplayModeChanged));
-
         private static void DisplayModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+            DebugWrite($"Old:{e.OldValue} New:{e.NewValue}");
+
             var h = d as HamburgerMenu;
             var m = (SplitViewDisplayMode)e.NewValue;
             if (h.ShellSplitView.DisplayMode != m)
@@ -188,11 +198,6 @@ namespace Template10.Controls
             DependencyProperty.Register(nameof(VisualStateWideMinWidth), typeof(double),
                 typeof(HamburgerMenu), new PropertyMetadata((double)-1, (d, e) => { Changed(nameof(VisualStateWideMinWidth), e); }));
 
-        private static void Changed(string v, DependencyPropertyChangedEventArgs e)
-        {
-            DebugWrite($"OldValue: {e.OldValue} NewValue: {e.NewValue}", caller: v);
-        }
-
         #endregion
 
         #region Style Properties
@@ -204,7 +209,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty SecondaryButtonOrientationProperty =
             DependencyProperty.Register(nameof(SecondaryButtonOrientation), typeof(Orientation),
-                typeof(HamburgerMenu), new PropertyMetadata(Orientation.Vertical));
+                typeof(HamburgerMenu), new PropertyMetadata(Orientation.Vertical, (d, e) => { Changed(nameof(SecondaryButtonOrientation), e); }));
 
         public Color AccentColor
         {
@@ -213,7 +218,11 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty AccentColorProperty =
             DependencyProperty.Register(nameof(AccentColor), typeof(Color),
-                typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => (d as HamburgerMenu).RefreshStyles((Color)e.NewValue)));
+                typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) =>
+                {
+                    Changed(nameof(AccentColor), e);
+                    (d as HamburgerMenu).RefreshStyles((Color)e.NewValue);
+                }));
 
         public void RefreshStyles(ApplicationTheme? theme = null)
         {
@@ -279,6 +288,7 @@ namespace Template10.Controls
                 typeof(HamburgerMenu), new PropertyMetadata(Visibility.Visible, HamburgerButtonVisibilityChanged));
         private static void HamburgerButtonVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+            Changed(nameof(HamburgerButtonVisibility), e);
             (d as HamburgerMenu).HamburgerButton.Visibility = (Visibility)e.NewValue;
         }
 
@@ -289,7 +299,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty HamburgerBackgroundProperty =
             DependencyProperty.Register(nameof(HamburgerBackground), typeof(SolidColorBrush),
-                typeof(HamburgerMenu), new PropertyMetadata(null));
+                typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(HamburgerBackground), e)));
 
         public SolidColorBrush HamburgerForeground
         {
@@ -298,7 +308,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty HamburgerForegroundProperty =
               DependencyProperty.Register(nameof(HamburgerForeground), typeof(SolidColorBrush),
-                  typeof(HamburgerMenu), new PropertyMetadata(null));
+                  typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(HamburgerForeground), e)));
 
         public SolidColorBrush NavAreaBackground
         {
@@ -307,7 +317,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty NavAreaBackgroundProperty =
               DependencyProperty.Register(nameof(NavAreaBackground), typeof(SolidColorBrush),
-                  typeof(HamburgerMenu), new PropertyMetadata(null));
+                  typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(NavAreaBackground), e)));
 
         public SolidColorBrush NavButtonBackground
         {
@@ -316,7 +326,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty NavButtonBackgroundProperty =
             DependencyProperty.Register(nameof(NavButtonBackground), typeof(SolidColorBrush),
-                typeof(HamburgerMenu), new PropertyMetadata(null));
+                typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(NavButtonBackground), e)));
 
         public SolidColorBrush NavButtonForeground
         {
@@ -325,7 +335,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty NavButtonForegroundProperty =
             DependencyProperty.Register(nameof(NavButtonForeground), typeof(SolidColorBrush),
-                typeof(HamburgerMenu), new PropertyMetadata(null));
+                typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(NavButtonForeground), e)));
 
         public SolidColorBrush SecondarySeparator
         {
@@ -334,7 +344,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty SecondarySeparatorProperty =
               DependencyProperty.Register(nameof(SecondarySeparator), typeof(SolidColorBrush),
-                  typeof(HamburgerMenu), new PropertyMetadata(null));
+                  typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(SecondarySeparator), e)));
 
         public SolidColorBrush PaneBorderBrush
         {
@@ -343,7 +353,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty PaneBorderBrushProperty =
               DependencyProperty.Register(nameof(PaneBorderBrush), typeof(SolidColorBrush),
-                  typeof(HamburgerMenu), new PropertyMetadata(null));
+                  typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(PaneBorderBrush), e)));
 
         public SolidColorBrush NavButtonCheckedBackground
         {
@@ -352,7 +362,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty NavButtonCheckedBackgroundProperty =
               DependencyProperty.Register(nameof(NavButtonCheckedBackground), typeof(SolidColorBrush),
-                  typeof(HamburgerMenu), new PropertyMetadata(null));
+                  typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(NavButtonCheckedBackground), e)));
 
         public SolidColorBrush NavButtonCheckedForeground
         {
@@ -361,7 +371,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty NavButtonCheckedForegroundProperty =
               DependencyProperty.Register(nameof(NavButtonCheckedForeground), typeof(SolidColorBrush),
-                  typeof(HamburgerMenu), new PropertyMetadata(null));
+                  typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(NavButtonCheckedForeground), e)));
 
         public SolidColorBrush NavButtonPressedBackground
         {
@@ -370,7 +380,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty NavButtonPressedBackgroundProperty =
               DependencyProperty.Register(nameof(NavButtonPressedBackground), typeof(SolidColorBrush),
-                  typeof(HamburgerMenu), new PropertyMetadata(null));
+                  typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(NavButtonPressedBackground), e)));
 
         public SolidColorBrush NavButtonHoverBackground
         {
@@ -379,7 +389,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty NavButtonHoverBackgroundProperty =
               DependencyProperty.Register(nameof(NavButtonHoverBackground), typeof(SolidColorBrush),
-                  typeof(HamburgerMenu), new PropertyMetadata(null));
+                  typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(NavButtonHoverBackground), e)));
 
         #endregion
 
@@ -401,6 +411,8 @@ namespace Template10.Controls
             DependencyProperty.Register(nameof(Selected), typeof(HamburgerButtonInfo),
                 typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) =>
                 {
+                    Changed(nameof(Selected), e);
+
                     (d as HamburgerMenu)._insideOperation = true;
                     try
                     {
@@ -504,7 +516,11 @@ namespace Template10.Controls
         public static readonly DependencyProperty IsOpenProperty =
             DependencyProperty.Register(nameof(IsOpen), typeof(bool),
                 typeof(HamburgerMenu), new PropertyMetadata(false,
-                    (d, e) => { (d as HamburgerMenu).IsOpen = (bool)e.NewValue; }));
+                    (d, e) =>
+                    {
+                        Changed(nameof(IsOpen), e);
+                        (d as HamburgerMenu).IsOpen = (bool)e.NewValue;
+                    }));
 
         public ObservableCollection<HamburgerButtonInfo> PrimaryButtons
         {
@@ -519,7 +535,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty PrimaryButtonsProperty =
             DependencyProperty.Register(nameof(PrimaryButtons), typeof(ObservableCollection<HamburgerButtonInfo>),
-                typeof(HamburgerMenu), new PropertyMetadata(null));
+                typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(PrimaryButtons), e)));
 
         private INavigationService _navigationService;
         public INavigationService NavigationService
@@ -575,7 +591,11 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty IsFullScreenProperty =
             DependencyProperty.Register(nameof(IsFullScreen), typeof(bool),
-                typeof(HamburgerMenu), new PropertyMetadata(false, (d, e) => (d as HamburgerMenu).UpdateFullScreen()));
+                typeof(HamburgerMenu), new PropertyMetadata(false, (d, e) =>
+                {
+                    Changed(nameof(IsFullScreen), e);
+                    (d as HamburgerMenu).UpdateFullScreen();
+                }));
         private void UpdateFullScreen(bool? manual = null)
         {
             DebugWrite($"Mavnual: {manual}, IsFullScreen: {IsFullScreen}");
@@ -613,7 +633,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty SecondaryButtonsProperty =
             DependencyProperty.Register(nameof(SecondaryButtons), typeof(ObservableCollection<HamburgerButtonInfo>),
-                typeof(HamburgerMenu), new PropertyMetadata(null));
+                typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(SecondaryButtons), e)));
 
         /// <summary>
         /// PaneWidth indicates the width of the Pane when it is open. The width of the Pane
@@ -630,7 +650,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty PaneWidthProperty =
             DependencyProperty.Register(nameof(PaneWidth), typeof(double),
-                typeof(HamburgerMenu), new PropertyMetadata(220d));
+                typeof(HamburgerMenu), new PropertyMetadata(220d, (d, e) => Changed(nameof(PaneWidth), e)));
 
         /// <summary>
         /// The Panel border thickness is intended to be the border between between the open
@@ -644,7 +664,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty PaneBorderThicknessProperty =
             DependencyProperty.Register(nameof(PaneBorderThickness), typeof(Thickness),
-                typeof(HamburgerMenu), new PropertyMetadata(new Thickness(0, 0, 1, 0)));
+                typeof(HamburgerMenu), new PropertyMetadata(new Thickness(0, 0, 1, 0), (d, e) => Changed(nameof(PaneBorderThickness), e)));
 
         /// <summary>
         /// TODO:
@@ -656,7 +676,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty HeaderContentProperty =
             DependencyProperty.Register(nameof(HeaderContent), typeof(UIElement),
-                typeof(HamburgerMenu), null);
+                typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(HeaderContent), e)));
 
         #endregion
 
@@ -717,6 +737,8 @@ namespace Template10.Controls
         StackPanel _SecondaryButtonStackPanel;
         private void SecondaryButtonStackPanel_Loaded(object sender, RoutedEventArgs e)
         {
+            DebugWrite();
+
             _SecondaryButtonStackPanel = sender as StackPanel;
         }
 
