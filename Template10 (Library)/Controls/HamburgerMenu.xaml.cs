@@ -121,9 +121,6 @@ namespace Template10.Controls
         {
             DebugWrite($"PageType: {pageType} PageParam: {pageParam}");
 
-            if (!AutoHighlightCorrectButton)
-                return;
-
             pageType = pageType ?? NavigationService.CurrentPageType;
             var buttons = _navButtons
                 .Where(x => Equals(x.Value.PageType, pageType));
@@ -163,28 +160,6 @@ namespace Template10.Controls
         #endregion
 
         #region VisualStateValues
-
-        //public enum VisualStateSettings { Narrow, Normal, Wide, Auto }
-        //public VisualStateSettings VisualStateSetting
-        //{
-        //    get { return (VisualStateSettings)GetValue(VisualStateSettingProperty); }
-        //    set { SetValue(VisualStateSettingProperty, value); }
-        //}
-        //public static readonly DependencyProperty VisualStateSettingProperty =
-        //    DependencyProperty.Register(nameof(VisualStateSetting), typeof(VisualStateSettings),
-        //        typeof(HamburgerMenu), new PropertyMetadata(VisualStateSettings.Auto, VisualStateSettingChanged));
-        //private static void VisualStateSettingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        //{
-        //    switch ((VisualStateSettings)e.NewValue)
-        //    {
-        //        case VisualStateSettings.Narrow:
-        //        case VisualStateSettings.Normal:
-        //        case VisualStateSettings.Wide:
-        //            throw new NotImplementedException();
-        //        case VisualStateSettings.Auto:
-        //            break;
-        //    }
-        //}
 
         public double VisualStateNarrowMinWidth
         {
@@ -416,7 +391,7 @@ namespace Template10.Controls
             set
             {
                 HamburgerButtonInfo oldValue = Selected;
-                if (AutoHighlightCorrectButton && (value?.Equals(oldValue) ?? false))
+                if ((value?.Equals(oldValue) ?? false))
                     value.IsChecked = (value.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
                 SetValue(SelectedProperty, value);
                 SelectedChanged?.Invoke(this, new ChangedEventArgs<HamburgerButtonInfo>(oldValue, value));
@@ -811,15 +786,6 @@ namespace Template10.Controls
                 _insideOperation = false;
             }
         }
-
-        public bool AutoHighlightCorrectButton
-        {
-            get { return (bool)GetValue(AutoHighlightCorrectButtonProperty); }
-            set { SetValue(AutoHighlightCorrectButtonProperty, value); }
-        }
-        public static readonly DependencyProperty AutoHighlightCorrectButtonProperty =
-            DependencyProperty.Register(nameof(AutoHighlightCorrectButton), typeof(bool),
-                typeof(HamburgerMenu), new PropertyMetadata(true));
 
         #region  OpenClose
 
