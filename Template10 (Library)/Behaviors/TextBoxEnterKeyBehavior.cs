@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xaml.Interactivity;
 using System;
+using Windows.System;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
@@ -11,18 +13,18 @@ namespace Template10.Behaviors
     [TypeConstraint(typeof(TextBox))]
     public class TextBoxEnterKeyBehavior : DependencyObject, IBehavior
     {
-        private TextBox AssociatedTextBox => AssociatedObject as TextBox;
         public DependencyObject AssociatedObject { get; private set; }
 
+        [Obsolete("Use KeyBehavior instead.")]
         public void Attach(DependencyObject associatedObject)
         {
             AssociatedObject = associatedObject;
-            AssociatedTextBox.KeyUp += AssociatedTextBox_KeyUp;
+            (AssociatedObject as TextBox).KeyUp += AssociatedTextBox_KeyUp;
         }
 
         public void Detach()
         {
-            AssociatedTextBox.KeyUp -= AssociatedTextBox_KeyUp;
+            (AssociatedObject as TextBox).KeyUp -= AssociatedTextBox_KeyUp;
         }
 
         private void AssociatedTextBox_KeyUp(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
@@ -46,8 +48,8 @@ namespace Template10.Behaviors
                 return actions;
             }
         }
-        public static readonly DependencyProperty ActionsProperty = 
-            DependencyProperty.Register(nameof(Actions), typeof(ActionCollection), 
+        public static readonly DependencyProperty ActionsProperty =
+            DependencyProperty.Register(nameof(Actions), typeof(ActionCollection),
                 typeof(TextBoxEnterKeyBehavior), new PropertyMetadata(null));
     }
 }
