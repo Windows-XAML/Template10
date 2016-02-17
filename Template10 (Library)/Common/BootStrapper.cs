@@ -298,6 +298,7 @@ namespace Template10.Common
             if ((e as LaunchActivatedEventArgs).PrelaunchActivated)
             {
                 var runOnStartAsync = false;
+                _HasOnPrelaunchAsync = true;
                 await OnPrelaunchAsync(e, out runOnStartAsync);
                 if (!runOnStartAsync)
                     return;
@@ -410,6 +411,11 @@ namespace Template10.Common
         }
 
         /// <summary>
+        /// This indicates if OnPreLaunch has EVER been called.
+        /// </summary>
+        bool _HasOnPrelaunchAsync = false;
+
+        /// <summary>
         /// OnStartAsync is the one-stop-show override to handle when your app starts
         /// Template 10 will not call OnStartAsync if the app is restored from state.
         /// An app restores from state when the app was suspended and then terminated (PreviousExecutionState terminated).
@@ -432,6 +438,11 @@ namespace Template10.Common
 
             return Task.CompletedTask;
         }
+
+        /// <summary>
+        /// This indicates if OnInitAsync has EVER been called
+        /// </summary>
+        bool _HasOnInitializeAsync = false;
 
         /// <summary>
         /// OnSuspendingAsync will be called when the application is suspending, but this override
@@ -485,6 +496,7 @@ namespace Template10.Common
             }
 
             // allow the user to do things, even when restoring
+            _HasOnInitializeAsync = true;
             await OnInitializeAsync(e);
 
             // this "unused" bit is very important because of a quirk in ResourceThemes
