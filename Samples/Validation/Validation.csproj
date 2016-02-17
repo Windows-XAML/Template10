@@ -145,6 +145,10 @@
       <Project>{ac3e4f10-6615-4e16-bb0f-104760c92b95}</Project>
       <Name>Template10 %28Library%29</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Template10 %28Validation%29\Template10 %28Validation%29.csproj">
+      <Project>{f051bb74-a073-4d35-a185-b089579c52c4}</Project>
+      <Name>Template10 %28Validation%29</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
