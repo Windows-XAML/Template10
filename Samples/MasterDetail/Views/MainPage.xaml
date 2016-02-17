@@ -104,6 +104,9 @@
                 <Core:EventTriggerBehavior EventName="ItemClick">
                     <Core:GoToStateAction StateName="DetailVisualState" />
                 </Core:EventTriggerBehavior>
+                <Core:DataTriggerBehavior Binding="{Binding ElementName=MailList, Path=SelectedIndex}" ComparisonCondition="Equal" Value="-1">
+                    <Core:GoToStateAction StateName="ListVisualState"/>
+                </Core:DataTriggerBehavior>
             </Interactivity:Interaction.Behaviors>
             <x:String>Sample</x:String>
             <x:String>Sample</x:String>
