@@ -100,7 +100,7 @@ namespace Template10.Controls
 
                     // this is the default color if the user supplies none
                     if (!any)
-                        AccentColor = Colors.DarkOrange;
+                        AccentColor = (Color)Resources["SystemAccentColor"];
 
                     // in case the developer has defined zero buttons
                     if (NavButtonCount == 0)

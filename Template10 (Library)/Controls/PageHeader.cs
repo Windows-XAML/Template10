@@ -88,14 +88,18 @@ namespace Template10.Controls
 
         public new object Content
         {
-            get { return base.Content; }
-            set { base.Content = value; }
+            get { return (object)GetValue(ContentProperty); }
+            set { SetValue(ContentProperty, value); }
         }
+        public static readonly new DependencyProperty ContentProperty =
+            DependencyProperty.Register(nameof(Content), typeof(object), typeof(PageHeader), new PropertyMetadata(null));
 
         public string Text
         {
-            get { return Content as string; }
-            set { Content = value; }
+            get { return (string)GetValue(TextProperty); }
+            set { SetValue(TextProperty, value); }
         }
+        public static readonly DependencyProperty TextProperty =
+            DependencyProperty.Register(nameof(Text), typeof(string), typeof(PageHeader), new PropertyMetadata(null));
     }
 }
