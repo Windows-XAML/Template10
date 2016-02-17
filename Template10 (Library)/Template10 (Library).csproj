@@ -138,6 +138,7 @@
     <Compile Include="Behaviors\NavToPageAction.cs" />
     <Compile Include="Behaviors\OpenFlyoutAction.cs" />
     <Compile Include="Behaviors\KeyBehavior.cs" />
+    <Compile Include="Behaviors\TextBoxChangeDelayBehavior.cs" />
     <Compile Include="Behaviors\TextBoxEnterKeyBehavior.cs" />
     <Compile Include="Behaviors\ConditionalAction.cs" />
     <Compile Include="Behaviors\TimeoutAction.cs" />
