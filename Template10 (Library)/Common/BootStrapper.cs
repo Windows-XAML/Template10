@@ -114,7 +114,6 @@ namespace Template10.Common
                     OnResuming(s, e, AppExecutionState.Prelaunch);
                     DebugWrite("From OnResume(PreLaunch)", caller: nameof(OnStartAsync));
                     await OnStartAsync(StartKind.Launch, OriginalActivatedArgs);
-                    // ensure active (this will hide any custom splashscreen)
                     Window.Current.Activate();
                 }
                 else
