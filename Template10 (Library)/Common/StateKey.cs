@@ -4,6 +4,7 @@ namespace Template10.Common
 {
     public class StateItemKey : IEquatable<StateItemKey>
     {
+        [Obsolete("Use string keys for StateItems.")]
         public StateItemKey(Type type, String key)
         {
             if (type == null) throw new ArgumentNullException(nameof(type));
@@ -11,9 +12,17 @@ namespace Template10.Common
             if (key == null) throw new ArgumentNullException(nameof(key));
             Key = key;
         }
+
         public Type Type { get; }
+
         public String Key { get; }
+
         public bool Equals(StateItemKey other) => Type == other.Type && Key == other.Key;
+
+        public override string ToString()
+        {
+            return $"{Type}+{Key}";
+        }
 
         public override bool Equals(object obj)
         {
