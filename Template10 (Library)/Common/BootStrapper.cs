@@ -105,12 +105,16 @@ namespace Template10.Common
             // Hook up the default Back handler
             SystemNavigationManager.GetForCurrentView().BackRequested += BackHandler;
 
-            Resuming += (s, e) =>
+            Resuming += async (s, e) =>
             {
                 DebugWrite(caller: nameof(Resuming));
 
                 if ((OriginalActivatedArgs as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false)
+                {
                     OnResuming(s, e, AppExecutionState.Prelaunch);
+                    DebugWrite("From OnResume(PreLaunch)", caller: nameof(OnStartAsync));
+                    await OnStartAsync(StartKind.Launch, OriginalActivatedArgs);
+                }
                 else
                     OnResuming(s, e, AppExecutionState.Suspended);
             };
@@ -248,15 +252,6 @@ namespace Template10.Common
                 await InitializeFrameAsync(e);
             }
 
-            // handle pre-launch
-            if ((e as LaunchActivatedEventArgs).PrelaunchActivated)
-            {
-                var continueStartup = false;
-                await OnPrelaunchAsync(e, out continueStartup);
-                if (!continueStartup)
-                    return;
-            }
-
             // okay, now handle launch
             bool restored = false;
             switch (e.PreviousExecutionState)
@@ -288,6 +283,15 @@ namespace Template10.Common
                 case ApplicationExecutionState.NotRunning:
                 default:
                     break;
+            }
+
+            // handle pre-launch
+            if ((e as LaunchActivatedEventArgs).PrelaunchActivated)
+            {
+                var continueStartup = false;
+                await OnPrelaunchAsync(e, out continueStartup);
+                if (!continueStartup)
+                    return;
             }
 
             if (!restored)
