@@ -39,7 +39,7 @@ namespace Template10.Common
         #region dependency injection
 
         /// <summary>       
-        /// A developer implements this method to return not any type and would need to 
+        /// A developer implements this method to return any type and would need to 
         /// switch on the type param, returnig the correctly inflated type.
         /// </summary>
         /// <remarks>
@@ -190,6 +190,8 @@ namespace Template10.Common
         /// </summary>
         public bool ShowShellBackButton { get; set; } = true;
 
+        public bool ForceShowShellBackButton { get; set; } = false;
+
         #endregion
 
         #region activated
@@ -237,7 +239,6 @@ namespace Template10.Common
         }
 
         #endregion
-
 
         #region launch
 
@@ -384,6 +385,17 @@ namespace Template10.Common
             NavigationService.GoForward();
         }
 
+        public void UpdateShellBackButton()
+        {
+            DebugWrite();
+
+            // show the shell back only if there is anywhere to go in the default frame
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+                (ShowShellBackButton && (NavigationService.CanGoBack || ForceShowShellBackButton))
+                    ? AppViewBackButtonVisibility.Visible
+                    : AppViewBackButtonVisibility.Collapsed;
+        }
+
         // this event precedes the in-frame event by the same name
         public static event EventHandler<HandledEventArgs> ForwardRequested;
 
@@ -478,74 +490,7 @@ namespace Template10.Common
 
         #endregion
 
-        /// <summary>
-        /// InitializeFrameAsync creates a default Frame preceeded by the optional 
-        /// splash screen, then OnInitialzieAsync, then the new frame (if necessary).
-        /// This is private because there's no reason for the developer to call this.
-        /// </summary>
-        private async Task InitializeFrameAsync(IActivatedEventArgs e)
-        {
-            DebugWrite($"{nameof(IActivatedEventArgs)}:{e.Kind}");
-
-            // first show the splash 
-            FrameworkElement splash = null;
-            if (SplashFactory != null && e.PreviousExecutionState != ApplicationExecutionState.Suspended)
-            {
-                Window.Current.Content = splash = SplashFactory(e.SplashScreen);
-                Window.Current.Activate();
-            }
-
-            // allow the user to do things, even when restoring
-            _HasOnInitializeAsync = true;
-            await OnInitializeAsync(e);
-
-            // this "unused" bit is very important because of a quirk in ResourceThemes
-            try
-            {
-                if (Application.Current.Resources.ContainsKey("ExtendedSplashBackground"))
-                {
-                    var unused = Application.Current.Resources["ExtendedSplashBackground"];
-                }
-            }
-            catch { /* this is okay */ }
-
-            // setup custom titlebar
-            foreach (var resource in Application.Current.Resources
-                .Where(x => x.Key.Equals(typeof(Controls.CustomTitleBar))))
-            {
-                var control = new Controls.CustomTitleBar();
-                control.Style = resource.Value as Style;
-            }
-
-            // create the default frame only if there's nothing already there
-            // if it is not null, by the way, then the developer injected something & they win
-            if (Window.Current.Content == null || Window.Current.Content == splash)
-            {
-                // build the default frame
-                var frame = CreateRootFrame(e);
-                var modal = new Controls.ModalDialog
-                {
-                    DisableBackButtonWhenModal = true,
-                    Content = (NavigationServiceFactory(BackButton.Attach, ExistingContent.Include, frame)).FrameFacade.Frame
-                };
-                Window.Current.Content = modal;
-            }
-        }
-
-        // The default frame is automatically wrapped in a modal dialog.
-        // this is how you access it to set ModalContent or the IsModal property. 
-        public Controls.ModalDialog ModalDialog { get { return (Window.Current.Content as Controls.ModalDialog); } }
-        public UIElement ModalContent { get { return ModalDialog?.ModalContent; } set { if (ModalDialog != null) ModalDialog.ModalContent = value; } }
-
-        protected virtual Frame CreateRootFrame(IActivatedEventArgs e)
-        {
-            DebugWrite($"{nameof(IActivatedEventArgs)}:{e}");
-
-            return new Frame();
-        }
-
-        public enum BackButton { Attach, Ignore }
-        public enum ExistingContent { Include, Exclude }
+        #region pipeline
 
         /// <summary>
         /// Creates a new Frame and adds the resulting NavigationService to the 
@@ -633,19 +578,79 @@ namespace Template10.Common
             return navigationService;
         }
 
-        public const string DefaultTileID = "App";
-
-        public bool ForceShowShellBackButton { get; set; } = false;
-        public void UpdateShellBackButton()
+        /// <summary>
+        /// InitializeFrameAsync creates a default Frame preceeded by the optional 
+        /// splash screen, then OnInitialzieAsync, then the new frame (if necessary).
+        /// This is private because there's no reason for the developer to call this.
+        /// </summary>
+        private async Task InitializeFrameAsync(IActivatedEventArgs e)
         {
-            DebugWrite();
+            DebugWrite($"{nameof(IActivatedEventArgs)}:{e.Kind}");
 
-            // show the shell back only if there is anywhere to go in the default frame
-            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
-                (ShowShellBackButton && (NavigationService.CanGoBack || ForceShowShellBackButton))
-                    ? AppViewBackButtonVisibility.Visible
-                    : AppViewBackButtonVisibility.Collapsed;
+            // first show the splash 
+            FrameworkElement splash = null;
+            if (SplashFactory != null && e.PreviousExecutionState != ApplicationExecutionState.Suspended)
+            {
+                Window.Current.Content = splash = SplashFactory(e.SplashScreen);
+                Window.Current.Activate();
+            }
+
+            // allow the user to do things, even when restoring
+            _HasOnInitializeAsync = true;
+            await OnInitializeAsync(e);
+
+            // this "unused" bit is very important because of a quirk in ResourceThemes
+            try
+            {
+                if (Application.Current.Resources.ContainsKey("ExtendedSplashBackground"))
+                {
+                    var unused = Application.Current.Resources["ExtendedSplashBackground"];
+                }
+            }
+            catch { /* this is okay */ }
+
+            // setup custom titlebar
+            foreach (var resource in Application.Current.Resources
+                .Where(x => x.Key.Equals(typeof(Controls.CustomTitleBar))))
+            {
+                var control = new Controls.CustomTitleBar();
+                control.Style = resource.Value as Style;
+            }
+
+            // create the default frame only if there's nothing already there
+            // if it is not null, by the way, then the developer injected something & they win
+            if (Window.Current.Content == null || Window.Current.Content == splash)
+            {
+                // build the default frame
+                var frame = CreateRootFrame(e);
+                var modal = new Controls.ModalDialog
+                {
+                    DisableBackButtonWhenModal = true,
+                    Content = (NavigationServiceFactory(BackButton.Attach, ExistingContent.Include, frame)).FrameFacade.Frame
+                };
+                Window.Current.Content = modal;
+            }
         }
+
+        protected virtual Frame CreateRootFrame(IActivatedEventArgs e)
+        {
+            DebugWrite($"{nameof(IActivatedEventArgs)}:{e}");
+
+            return new Frame();
+        }
+
+        #endregion  
+
+        // The default frame is automatically wrapped in a modal dialog.
+        // this is how you access it to set ModalContent or the IsModal property. 
+        public Controls.ModalDialog ModalDialog { get { return (Window.Current.Content as Controls.ModalDialog); } }
+        public UIElement ModalContent { get { return ModalDialog?.ModalContent; } set { if (ModalDialog != null) ModalDialog.ModalContent = value; } }
+
+        public enum BackButton { Attach, Ignore }
+
+        public enum ExistingContent { Include, Exclude }
+
+        public const string DefaultTileID = "App";
 
         public enum AdditionalKinds { Primary, Toast, SecondaryTile, Other, JumpListItem }
 
