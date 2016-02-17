@@ -4,7 +4,9 @@ using Template10.Utils;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 
 namespace Template10.Controls
 {
@@ -77,6 +79,14 @@ namespace Template10.Controls
                 return;
             var state = (IsModal) ? "Modal" : "Normal";
             VisualStateManager.GoToState(this, state, true);
+
+            // this switch ensures ModalTransitions plays every time.
+            if (!IsModal)
+            {
+                var content = ModalContent;
+                ModalContent = null;
+                ModalContent = content;
+            }
         }
 
         #region props
@@ -121,6 +131,15 @@ namespace Template10.Controls
         public static readonly DependencyProperty ModalContentProperty = DependencyProperty.Register(nameof(ModalContent),
             typeof(UIElement), typeof(ModalDialog), null);
 
-        #endregion  
+        public TransitionCollection ModalTransitions
+        {
+            get { return (TransitionCollection)GetValue(ModalTransitionsProperty); }
+            set { SetValue(ModalTransitionsProperty, value); }
+        }
+        public static readonly DependencyProperty ModalTransitionsProperty =
+            DependencyProperty.Register(nameof(ModalTransitions), typeof(TransitionCollection),
+                typeof(ModalDialog), new PropertyMetadata(null));
+
+        #endregion
     }
 }

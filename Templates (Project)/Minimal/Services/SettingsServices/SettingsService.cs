@@ -1,10 +1,11 @@
 ﻿using System;
+using Template10.Common;
+using Template10.Utils;
 using Windows.UI.Xaml;
 
 namespace Sample.Services.SettingsServices
 {
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SettingsService
-    public partial class SettingsService : ISettingsService
+    public class SettingsService 
     {
         public static SettingsService Instance { get; }
         static SettingsService()
@@ -25,7 +26,12 @@ namespace Sample.Services.SettingsServices
             set
             {
                 _helper.Write(nameof(UseShellBackButton), value);
-                ApplyUseShellBackButton(value);
+                BootStrapper.Current.NavigationService.Dispatcher.Dispatch(() =>
+                {
+                    BootStrapper.Current.ShowShellBackButton = value;
+                    BootStrapper.Current.UpdateShellBackButton();
+                    BootStrapper.Current.NavigationService.Refresh();
+                });
             }
         }
 
@@ -33,14 +39,14 @@ namespace Sample.Services.SettingsServices
         {
             get
             {
-                var theme = ApplicationTheme.Dark;
+                var theme = ApplicationTheme.Light;
                 var value = _helper.Read<string>(nameof(AppTheme), theme.ToString());
                 return Enum.TryParse<ApplicationTheme>(value, out theme) ? theme : ApplicationTheme.Dark;
             }
             set
             {
                 _helper.Write(nameof(AppTheme), value.ToString());
-                ApplyAppTheme(value);
+                (Window.Current.Content as FrameworkElement).RequestedTheme = value.ToElementTheme();
             }
         }
 
@@ -50,7 +56,7 @@ namespace Sample.Services.SettingsServices
             set
             {
                 _helper.Write(nameof(CacheMaxDuration), value);
-                ApplyCacheMaxDuration(value);
+                BootStrapper.Current.CacheMaxDuration = value;
             }
         }
     }

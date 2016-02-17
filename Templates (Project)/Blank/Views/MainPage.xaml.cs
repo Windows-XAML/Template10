@@ -1,5 +1,4 @@
-﻿using Windows.UI.ViewManagement;
-using Windows.UI.Xaml;
+﻿using System;
 using Windows.UI.Xaml.Controls;
 
 namespace Sample.Views

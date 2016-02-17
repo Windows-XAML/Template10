@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 
-namespace Sample
+namespace Messaging
 {
     sealed partial class App : Template10.Common.BootStrapper
     {
@@ -21,8 +21,8 @@ namespace Sample
 
         public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
-            NavigationService.Navigate(Pages.MainPage);
-            return Task.FromResult<object>(null);
-        }
+            NavigationService.Navigate(Pages.MainPage, 2);
+			return Task.CompletedTask;
+		}
     }
 }

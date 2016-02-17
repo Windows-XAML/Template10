@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Template10.Mvvm;
 using Windows.UI.Xaml.Navigation;
 
-namespace Sample.ViewModels
+namespace Messaging.ViewModels
 {
     public class MainPageViewModel : Mvvm.ViewModelBase
     {
@@ -11,9 +13,10 @@ namespace Sample.ViewModels
                 Value = "Designtime value";
         }
 
-        public override void OnNavigatedTo(object parameter, NavigationMode mode, IDictionary<string, object> state)
+        public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
             Value = parameter?.ToString();
+            return Task.CompletedTask;
         }
 
         private string _Value;
@@ -21,6 +24,16 @@ namespace Sample.ViewModels
         {
             get { return _Value; }
             set { Set(ref _Value, value); }
+        }
+
+
+        DelegateCommand _GotoDetailsCommand;
+        public DelegateCommand GotoDetailsCommand
+           => _GotoDetailsCommand ?? (_GotoDetailsCommand = new DelegateCommand(GotoDetailsCommandExecute, GotoDetailsCommandCanExecute));
+        bool GotoDetailsCommandCanExecute() => true;
+        void GotoDetailsCommandExecute()
+        {
+            NavigationService.Navigate(typeof(Views.DetailPage));
         }
     }
 }

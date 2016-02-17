@@ -39,14 +39,15 @@ namespace Sample.Services.SpeechService
                 _SpeechRecognizer.UIOptions.AudiblePrompt = prompt;
                 _SpeechRecognizer.UIOptions.ExampleText = example;
                 var result = await _SpeechRecognizer.RecognizeWithUIAsync();
-                if (result.Status == SpeechRecognitionResultStatus.Success)
+                switch (result.Status)
                 {
-                    return result.Text;
+                    case SpeechRecognitionResultStatus.Success:
+                        return result.Text;
+                    case SpeechRecognitionResultStatus.UserCanceled:
+                        return string.Empty;
+                    default:
+                        throw new Exception("Speech recognition failed. Status: " + result.Status.ToString());
                 }
-                else
-                {
-                    throw new Exception("Speech recognition failed. Status: " + result.Status.ToString());
-				}
             }
             catch (TaskCanceledException e) { throw new Exception("Cancelled", e); }
             catch (Exception e) when (e.HResult.Equals(0x80045509)) { throw new Exception("Disabled in settings", e); }

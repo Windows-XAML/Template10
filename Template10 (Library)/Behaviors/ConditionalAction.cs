@@ -62,13 +62,13 @@ namespace Template10.Behaviors
                 if (actions == null)
                 {
                     actions = new ActionCollection();
-                    base.SetValue(ActionsProperty, actions);
+                    SetValue(ActionsProperty, actions);
                 }
                 return actions;
             }
         }
         public static readonly DependencyProperty ActionsProperty =
-            DependencyProperty.Register("Actions", typeof(ActionCollection),
+            DependencyProperty.Register(nameof(Actions), typeof(ActionCollection),
                 typeof(TimeoutAction), new PropertyMetadata(null));
 
         int Compare<T>(T left, T right) => System.Collections.Generic.Comparer<T>.Default.Compare(left, right);

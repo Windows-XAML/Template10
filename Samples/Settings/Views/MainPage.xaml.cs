@@ -1,6 +1,6 @@
 ﻿using Windows.UI.Xaml.Controls;
 
-namespace Sample.Views
+namespace Messaging.Views
 {
     public sealed partial class MainPage : Page
     {

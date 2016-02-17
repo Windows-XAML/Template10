@@ -1,0 +1,28 @@
+﻿<Page x:Class="Messaging.Views.DetailPage" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" xmlns:controls="using:Template10.Controls"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="using:Messaging.Views"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" RequestedTheme="Light" mc:Ignorable="d">
+
+    <Page.DataContext>
+        <Binding Path="DetailPageViewModel" Source="{StaticResource Locator}" />
+    </Page.DataContext>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <!--  header  -->
+        <controls:PageHeader BackButtonVisibility="Visible" Content="Detail Page" Frame="{x:Bind Frame, Mode=OneWay}">
+        </controls:PageHeader>
+
+        <!--  content  -->
+        <Grid Grid.Row="1" Padding="12,4,0,0">
+            <TextBlock Style="{StaticResource HeaderTextBlockStyle}" Text="{Binding Value}" />
+        </Grid>
+
+    </Grid>
+</Page>

@@ -1,8 +1,7 @@
-﻿<common:BootStrapper 
-    x:Class="Sample.App" 
-    xmlns:common="using:Template10.Common" 
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-    xmlns:local="using:Sample" RequestedTheme="Light">
+﻿<common:BootStrapper x:Class="Sample.App"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:common="using:Template10.Common" xmlns:local="using:Sample"
+                     RequestedTheme="Light">
 
 </common:BootStrapper>

@@ -7,7 +7,11 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:Sample.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      mc:Ignorable="d">
+      xmlns:vm="using:Sample.ViewModels" mc:Ignorable="d">
+
+    <Page.DataContext>
+        <vm:MainPageViewModel x:Name="ViewModel" />
+    </Page.DataContext>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -19,7 +23,7 @@
         <controls:PageHeader Content="Main Page" />
 
         <Grid Grid.Row="1" Padding="12,4,0,0">
-            <!--  content  -->
+            <TextBlock>Hello world</TextBlock>
         </Grid>
 
     </Grid>

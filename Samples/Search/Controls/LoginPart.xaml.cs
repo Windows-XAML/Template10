@@ -23,5 +23,7 @@ namespace Sample.Controls
         {
             HideRequested?.Invoke(this, EventArgs.Empty);
         }
+
+        public Models.UserCredentials UserCredentials { get; set; }
     }
 }

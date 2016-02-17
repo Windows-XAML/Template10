@@ -10,7 +10,7 @@ namespace Template10.MSBUILD
     {
         internal const string HELPURL = "$helpurl";
 
-        internal const string TEMPLATE10PROJECTJSON = @"    ""Template10"": ""1.0.*""";
+        internal const string TEMPLATE10PROJECTJSON = @"    ""Template10"": ""1.1.*""";
 
         internal const string NEWTONSOFT_PROJECTJSON = @"""Newtonsoft.Json"": ""7.0.1""";
 
@@ -51,7 +51,7 @@ namespace Template10.MSBUILD
     <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
     <Icon>__TemplateIcon.png</Icon>
     <PreviewImage>$previewImageFile</PreviewImage>
-    <NumberOfParentCategoriesToRollUp>2</NumberOfParentCategoriesToRollUp>
+    <NumberOfParentCategoriesToRollUp>0</NumberOfParentCategoriesToRollUp>
   </TemplateData>
   <TemplateContent PreferedSolutionConfiguration=""Debug|x86"">
 $projectNode
@@ -73,10 +73,23 @@ $projectNode
     <FullClassName>Microsoft.VisualStudio.Universal.TemplateWizards.PlatformVersion.Wizard</FullClassName>
   </WizardExtension>
   <WizardData>
-    <packages repository=""registry"" keyName=""NETCoreSDK"" isPreunzipped=""true"">
+    <packages repository=""registry"" keyName=""NETCoreSDK"" isPreunzipped=""true"" forceDesignTimeBuild=""true"">
       <package id=""Microsoft.NETCore.UniversalWindowsPlatform"" version=""5.0.0"" skipAssemblyReferences=""false"" />
     </packages>
   </WizardData>
+
+  <WizardExtension>
+    <Assembly>NuGet.VisualStudio.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</Assembly>
+    <FullClassName>NuGet.VisualStudio.TemplateWizard</FullClassName>
+  </WizardExtension>
+  <WizardData>
+    <packages forceDesignTimeBuild=""true"" forceDesignTimeBuild=""true"">
+      <package id = ""Microsoft.Xaml.Behaviors.Uwp.Managed"" version=""1.0.3"" />
+      <package id = ""Newtonsoft.Json"" version=""8.0.2"" />
+      <package id = ""Template10"" version=""1.1.3"" />
+    </packages>
+  </WizardData>
+
 </VSTemplate>";
 
     }

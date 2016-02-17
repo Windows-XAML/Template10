@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>Untyped event</Title>
+      <Author>Jerry Nixon</Author>
+      <Shortcut>T10_Event</Shortcut>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal Editable="true">
+          <ID>name</ID>
+          <Default>MyEvent</Default>
+        </Literal>
+      </Declarations>
+      <Code Language="csharp">
+        <![CDATA[public event EventHandler $name$;
+        void Raise$name$() => $name$?.Invoke(this, new EventArgs { });]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

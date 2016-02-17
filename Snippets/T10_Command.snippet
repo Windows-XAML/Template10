@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>Untyped delegate command</Title>
+      <Author>Jerry Nixon</Author>
+      <Shortcut>T10_Command</Shortcut>
+      <Description>
+        A delegate command, or relay command, implements ICommand and is used 
+        by the XAML button to bind to a the command's Execute method. Commands
+        also have a CanExecute method which can disable associated controls.
+        This is an un-typed Command, and does not support CommandParameter.
+      </Description>
+    </Header>
+    <Snippet>
+      <Imports>
+        <Import>
+          <Namespace>Template10.Mvvm</Namespace>
+        </Import>
+      </Imports>
+      <Declarations>
+        <Literal Editable="true">
+          <ID>name</ID>
+          <Default>MyCommand</Default>
+        </Literal>
+      </Declarations>
+      <Code Language="csharp">
+        <![CDATA[DelegateCommand _$name$;
+        public DelegateCommand $name$
+           => _$name$ ?? (_$name$ = new DelegateCommand(() => 
+           {
+             throw new NotImplementedException();
+           }, () => true));]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

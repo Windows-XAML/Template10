@@ -11,5 +11,10 @@ namespace Sample.Views
         }
 
         public MainPageViewModel ViewModel => this.DataContext as MainPageViewModel;
+
+        private void AppBarButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+        }
     }
 }

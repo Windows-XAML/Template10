@@ -16,8 +16,6 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-        <!--  #region default visual states  -->
-
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
                 <VisualState x:Name="VisualStateNarrow">
@@ -25,7 +23,7 @@
                         <AdaptiveTrigger MinWindowWidth="{StaticResource NarrowMinWidth}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <!--  TODO  -->
+                        <!--  TODO: change properties for narrow view  -->
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="VisualStateNormal">
@@ -33,7 +31,7 @@
                         <AdaptiveTrigger MinWindowWidth="{StaticResource NormalMinWidth}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <!--  TODO  -->
+                        <!--  TODO: change properties for normal view  -->
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="VisualStateWide">
@@ -41,13 +39,11 @@
                         <AdaptiveTrigger MinWindowWidth="{StaticResource WideMinWidth}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <!--  TODO  -->
+                        <!--  TODO: change properties for wide view  -->
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-
-        <!--  #endregion  -->
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -55,26 +51,21 @@
         </Grid.RowDefinitions>
 
         <!--  page header  -->
-
-        <controls:PageHeader BackButtonVisibility="Collapsed" Content="Main Page" Frame="{x:Bind Frame}">
-            <Interactivity:Interaction.Behaviors>
-                <Behaviors:EllipsisBehavior Visibility="Auto" />
-            </Interactivity:Interaction.Behaviors>
+        <controls:PageHeader Content="Main Page">
             <controls:PageHeader.SecondaryCommands>
+                <AppBarButton Click="{x:Bind ViewModel.GotoSettings}" Label="Settings" />
                 <AppBarButton Click="{x:Bind ViewModel.GotoPrivacy}" Label="Privacy" />
                 <AppBarButton Click="{x:Bind ViewModel.GotoAbout}" Label="About" />
             </controls:PageHeader.SecondaryCommands>
         </controls:PageHeader>
 
         <!--  page content  -->
-
-        <StackPanel Grid.Row="1" VerticalAlignment="Top"
-                    Orientation="Horizontal" Padding="12,8,0,0">
+        <StackPanel Grid.Row="1" VerticalAlignment="Top" Orientation="Horizontal"
+                    Padding="12,8,0,0">
 
             <controls:Resizer>
-                <TextBox Width="200" MinWidth="200"
-                         MinHeight="60" Margin="0"
-                         Header="Parameter to pass"
+                <TextBox Width="200" MinWidth="200" MinHeight="60"
+                         Margin="0" Header="Parameter to pass"
                          Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          TextWrapping="Wrap">
                     <Interactivity:Interaction.Behaviors>

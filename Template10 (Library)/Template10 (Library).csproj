@@ -130,14 +130,17 @@
   <ItemGroup>
     <Compile Include="Behaviors\BackButtonBehavior.cs" />
     <Compile Include="Behaviors\CloseFlyoutAction.cs" />
+    <Compile Include="Behaviors\DeviceDispositionBehavior.cs" />
     <Compile Include="Behaviors\FocusAction.cs" />
     <Compile Include="Behaviors\MessageDialogAction.cs" />
     <Compile Include="Behaviors\NavButtonBehavior.cs" />
     <Compile Include="Behaviors\EllipsisBehavior.cs" />
+    <Compile Include="Behaviors\NavToPageAction.cs" />
     <Compile Include="Behaviors\OpenFlyoutAction.cs" />
     <Compile Include="Behaviors\TextBoxEnterKeyBehavior.cs" />
     <Compile Include="Behaviors\ConditionalAction.cs" />
     <Compile Include="Behaviors\TimeoutAction.cs" />
+    <Compile Include="Behaviors\UpdateSourceTriggerBehavior.cs" />
     <Compile Include="Common\BootStrapper.cs" />
     <Compile Include="Common\DispatcherWrapper.cs" />
     <Compile Include="Common\HandledEventArgs.cs" />
@@ -163,22 +166,36 @@
     <Compile Include="Converters\StringFormatConverter.cs" />
     <Compile Include="Mvvm\AwaitableDelegateCommand.cs" />
     <Compile Include="Common\WeakReference.cs" />
+    <Compile Include="Mvvm\DependencyBindableBase.cs" />
+    <Compile Include="Services\LoggingService\LoggingService.cs" />
     <Compile Include="Services\NavigationService\AlternativeNavigationEventArgs.cs" />
     <Compile Include="Services\NavigationService\INavigationService.cs" />
-    <Compile Include="Services\NavigationService\JournalEntry.cs" />
     <Compile Include="Services\NavigationService\NavigationServiceList.cs" />
-    <Compile Include="Services\NavigationService\ParameterSerializationService.cs" />
+    <Compile Include="Services\SerializationService\ISerializationService.cs" />
+    <Compile Include="Services\SerializationService\JsonSerializationService.cs" />
+    <Compile Include="Services\SerializationService\SerializationService.cs" />
+    <Compile Include="Services\SettingsService\IPropertyMapping.cs" />
     <Compile Include="Services\SettingsService\ISettingsHelper.cs" />
+    <Compile Include="Services\SettingsService\ISettingsService.cs" />
+    <Compile Include="Services\SettingsService\IStoreConverter.cs" />
+    <Compile Include="Services\SettingsService\JsonConverter.cs" />
+    <Compile Include="Services\SettingsService\JsonMapping.cs" />
     <Compile Include="Services\SettingsService\SettingsService.cs" />
     <Compile Include="Services\SettingsService\SettingsStrategy.cs" />
+    <Compile Include="Utils\ApiUtils.cs" />
     <Compile Include="Utils\AudioUtils.cs" />
     <Compile Include="Utils\ColorUtils.cs" />
     <Compile Include="Utils\DeviceUtils.cs" />
+    <Compile Include="Utils\ExpressionUtils.cs" />
     <Compile Include="Utils\InkUtils.cs" />
     <Compile Include="Utils\LinqUtils.cs" />
     <Compile Include="Utils\MonitorUtils.cs" />
+    <Compile Include="Utils\IEnumerableUtils.cs" />
+    <Compile Include="Utils\ResourceUtils.cs" />
     <Compile Include="Utils\TaskUtils.cs" />
-    <Compile Include="Utils\XamlUtil.cs" />
+    <Compile Include="Utils\Template10Utils.cs" />
+    <Compile Include="Utils\ThemeUtils.cs" />
+    <Compile Include="Utils\XamlUtils.cs" />
     <Compile Include="Controls\HamburgerMenu.xaml.cs">
       <DependentUpon>HamburgerMenu.xaml</DependentUpon>
     </Compile>
@@ -197,21 +214,13 @@
     <Compile Include="Services\NavigationService\NavigatingEventArgs.cs" />
     <Compile Include="Services\NavigationService\NavigationService.cs" />
     <Compile Include="Services\SettingsService\SettingsHelper.cs" />
-    <Compile Include="Utils\TypeUtil.cs" />
+    <Compile Include="Utils\TypeUtils.cs" />
     <Content Include="Properties\Template10Library.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\HamburgerMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Styles\Mdl2.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Converters\Themes\Generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -242,7 +251,8 @@
     </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>call "$(ProjectDir)\Nuget\Build.cmd" "$(TargetDir)" "$(TargetName)" "$(ProjectDir)"</PostBuildEvent>
+    <PostBuildEvent>call "$(ProjectDir)\Nuget\Build.cmd" "$(TargetDir)" "$(TargetName)" "$(ProjectDir)"
+call "$(SolutionDir)\Snippets\InstallSnippets.cmd"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

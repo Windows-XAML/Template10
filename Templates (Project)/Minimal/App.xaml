@@ -1,7 +1,24 @@
-﻿<common:BootStrapper x:Class="Sample.App" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:common="using:Template10.Common" RequestedTheme="Light">
+﻿<common:BootStrapper x:Class="Sample.App"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:common="using:Template10.Common"
+                     xmlns:controls="using:Template10.Controls" xmlns:v="using:Sample.Views"
+                     x:Name="ThisApp">
 
     <Application.Resources>
         <ResourceDictionary Source="Styles\Custom.xaml" />
     </Application.Resources>
+
+    <!--<Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+
+                <ResourceDictionary x:Key="Default" />
+                <ResourceDictionary x:Key="Light" />
+                <ResourceDictionary x:Key="HighContrast" />
+
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>-->
 
 </common:BootStrapper>

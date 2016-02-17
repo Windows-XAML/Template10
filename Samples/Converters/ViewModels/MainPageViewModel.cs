@@ -1,4 +1,4 @@
-﻿using Sample.Models;
+﻿using Messaging.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sample.ViewModels
+namespace Messaging.ViewModels
 {
     class MainPageViewModel : Template10.Mvvm.ViewModelBase
     {

@@ -45,7 +45,7 @@ namespace Template10.Behaviors
 
         private void Update()
         {
-            var controls = XamlUtil.AllChildren<Control>(commandBar);
+            var controls = XamlUtils.AllChildren<Control>(commandBar);
             var button = controls.OfType<Button>().FirstOrDefault(x => x.Name.Equals("MoreButton"));
             if (button == null)
                 return;

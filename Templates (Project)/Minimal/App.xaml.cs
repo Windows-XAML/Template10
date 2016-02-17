@@ -3,8 +3,8 @@ using Windows.UI.Xaml;
 using System.Threading.Tasks;
 using Sample.Services.SettingsServices;
 using Windows.ApplicationModel.Activation;
+using Template10.Mvvm;
 using Template10.Common;
-using System.Linq;
 
 namespace Sample
 {
@@ -16,7 +16,7 @@ namespace Sample
         public App()
         {
             InitializeComponent();
-            SplashFactory = (e) => new Views.Splash(e);
+            // SplashFactory = (e) => new Views.Splash(e);
 
             #region App settings
 
@@ -28,24 +28,38 @@ namespace Sample
             #endregion
         }
 
-        // runs even if restored from state
-        public override Task OnInitializeAsync(IActivatedEventArgs args)
+        public override Task OnPrelaunchAsync(IActivatedEventArgs args, out bool continueStartup)
         {
-            // content may already be shell when resuming
-            if ((Window.Current.Content as Views.Shell) == null)
-            {
-                // setup hamburger shell
-                var nav = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include);
-                Window.Current.Content = new Views.Shell(nav);
-            }
+            // TODO (non-ui)
+            continueStartup = false;
             return Task.CompletedTask;
         }
 
-        // runs only when not restored from state
-        public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
+        public override void OnResuming(object s, object e, AppExecutionState previousExecutionState)
         {
-            await Task.Delay(5000);
+            if (previousExecutionState == AppExecutionState.Prelaunch)
+            {
+                // TODO (complete ui)
+            }
+        }
+
+        // runs only when not restored from state
+        public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
+        {
             NavigationService.Navigate(typeof(Views.MainPage));
+            return Task.CompletedTask;
+        }
+
+        // hide and show busy dialog
+        public static void SetBusy(bool busy, string text = null)
+        {
+            WindowWrapper.Current().Dispatcher.Dispatch(() =>
+            {
+                var instance = Current as App;
+                var control = (instance.ModalContent = (instance.ModalContent ?? new Views.Busy())) as Views.Busy;
+                control.IsBusy = instance.ModalDialog.IsModal = busy;
+                control.BusyText = text;
+            });
         }
     }
 }

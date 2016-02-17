@@ -1,5 +1,7 @@
 ﻿using Sample.ViewModels;
+using Template10.Utils;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 namespace Sample.Views
 {
@@ -8,6 +10,7 @@ namespace Sample.Views
         public MainPage()
         {
             InitializeComponent();
+            NavigationCacheMode = NavigationCacheMode.Enabled;
         }
     }
 }

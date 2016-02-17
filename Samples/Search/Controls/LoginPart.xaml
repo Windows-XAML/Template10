@@ -4,7 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="using:Sample.Controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             Width="300" d:DesignHeight="300"
+             Width="300" d:DesignHeight="300" x:Name="ThisPage"
              mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -23,9 +23,9 @@
         </Button>
 
         <!-- login form -->
-        <StackPanel Grid.Row="1" Margin="20, 16 ">
-            <TextBox Header="Username" />
-            <TextBox Header="Password" />
+        <StackPanel Grid.Row="1" Margin="20, 16" DataContext="{Binding ElementName=ThisPage}">
+            <TextBox Header="Username" Text="{Binding UserCredentials.UserName, Mode=TwoWay}" />
+            <TextBox Header="Password" Text="{Binding UserCredentials.Password, Mode=TwoWay}" />
             <Button Click="LoginClicked" Margin="0,12,0,0" HorizontalAlignment="Right">Login</Button>
         </StackPanel>
 

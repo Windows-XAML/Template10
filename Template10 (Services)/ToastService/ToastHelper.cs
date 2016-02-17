@@ -1,248 +1,69 @@
-﻿namespace Template10.Services.ToastService
+﻿using System.Linq;
+using Windows.Data.Xml.Dom;
+
+namespace Template10.Services.ToastService
 {
-    using System.Linq;
     using Windows.UI.Notifications;
 
     public class ToastHelper
     {
-        const string textNode = "text";
-        const string launchAttr = "launch";
-        const string srcAttr = "src";
+        private const string TextNode = "text";
+        private const string ImageNode = "image";
+        private const string LaunchAttr = "launch";
+        private const string SrcAttr = "src";
+        private const string AltAttr = "alt";
 
-        public void ShowToastText01(string content, string arg = null)
+        public void ShowToast(ToastContent toastContent)
         {
-            // show toast
-            var toast = BuildToastText01(content, arg);
+            var toast = BuildToastNotification(toastContent);
             var notifier = ToastNotificationManager.CreateToastNotifier();
             notifier.Show(toast);
         }
 
-        public void ShowToastText02(string title, string content, string arg = null)
+        private static ToastNotification BuildToastNotification(ToastContent toastContent)
         {
-            // show toast
-            var toast = BuildToastText02(title, content, arg);
-            var notifier = ToastNotificationManager.CreateToastNotifier();
-            notifier.Show(toast);
-        }
+            var xml = ToastNotificationManager.GetTemplateContent(toastContent.ToastTemplateType);
 
-        public void ShowToastText03(string title, string content, string arg = null)
-        {
-            // show toast
-            var toast = BuildToastText03(title, content, arg);
-            var notifier = ToastNotificationManager.CreateToastNotifier();
-            notifier.Show(toast);
-        }
+            AppendLaunchArgumentToNotification(toastContent, xml);
+            AppendImageToNotification(toastContent, xml);
+            AppendTextElementsToNotification(toastContent, xml);
 
-        public void ShowToastText04(string title, string content, string content2, string arg = null)
-        {
-            // show toast
-            var toast = BuildToastText04(title, content, arg);
-            var notifier = ToastNotificationManager.CreateToastNotifier();
-            notifier.Show(toast);
-        }
-
-        public void ShowToastImageAndText01(string image, string content, string arg = null)
-        {
-            // show toast
-            var toast = BuildToastImageAndText01(image, content, arg);
-            var notifier = ToastNotificationManager.CreateToastNotifier();
-            notifier.Show(toast);
-        }
-
-        public void ShowToastImageAndText02(string image, string title, string content, string arg = null)
-        {
-            // show toast
-            var toast = BuildToastImageAndText02(image, title, content, arg);
-            var notifier = ToastNotificationManager.CreateToastNotifier();
-            notifier.Show(toast);
-        }
-
-        public void ShowToastImageAndText03(string image, string title, string content, string arg = null)
-        {
-            // show toast
-            var toast = BuildToastImageAndText03(image, title, content, arg);
-            var notifier = ToastNotificationManager.CreateToastNotifier();
-            notifier.Show(toast);
-        }
-
-        public void ShowToastImageAndText04(string image, string title, string content, string content2, string arg = null)
-        {
-            // show toast
-            var toast = BuildToastImageAndText04(image, title, content, arg);
-            var notifier = ToastNotificationManager.CreateToastNotifier();
-            notifier.Show(toast);
-        }
-
-        public ToastNotification BuildToastText01(string content, string arg = null)
-        {
-            // build toast
-            var template = ToastTemplateType.ToastText01;
-            var xml = ToastNotificationManager.GetTemplateContent(template);
-            var elements = xml.GetElementsByTagName(textNode);
-
-            // launch arg
-            if (arg != null)
-                xml.DocumentElement.SetAttribute(launchAttr, arg);
-
-            // content
-            var text = xml.CreateTextNode(content);
-            elements[0].AppendChild(text);
-
-            // toast
             return new ToastNotification(xml);
         }
 
-        public ToastNotification BuildToastText02(string title, string content, string arg = null)
+        private static void AppendLaunchArgumentToNotification(ToastContent toastContent, XmlDocument xml)
         {
-            // build toast
-            var template = ToastTemplateType.ToastText02;
-            var xml = ToastNotificationManager.GetTemplateContent(template);
-            var elements = xml.GetElementsByTagName(textNode);
-
-            // title
-            var text = xml.CreateTextNode(title);
-            elements[0].AppendChild(text);
-
-            // content
-            text = xml.CreateTextNode(content);
-            elements[1].AppendChild(text);
-
-            // sh toast
-            return new ToastNotification(xml);
+            if (!string.IsNullOrWhiteSpace(toastContent.LaunchArguments))
+                xml.DocumentElement.SetAttribute(LaunchAttr, toastContent.LaunchArguments);
         }
 
-        public ToastNotification BuildToastText03(string title, string content, string arg = null)
+        private static void AppendTextElementsToNotification(ToastContent toastContent, XmlDocument xml)
         {
-            // build toast
-            var template = ToastTemplateType.ToastText03;
-            var xml = ToastNotificationManager.GetTemplateContent(template);
-            var elements = xml.GetElementsByTagName(textNode);
+            var elements = xml.GetElementsByTagName(TextNode);
 
-            // title
-            var text = xml.CreateTextNode(title);
-            elements[0].AppendChild(text);
+            var hasTitleOrContentElement = elements.Count == 1;
+            var hasTitleAndContentElement = elements.Count == 2;
+            var hasTitleContentAndSecondContentElement = elements.Count == 3;
 
-            // content
-            text = xml.CreateTextNode(content);
-            elements[1].AppendChild(text);
 
-            // show toast
-            return new ToastNotification(xml);
+            if (hasTitleOrContentElement || hasTitleAndContentElement)
+                elements[0].InnerText = toastContent.Title ?? toastContent.Content ?? string.Empty;
+
+            if (hasTitleAndContentElement)
+                elements[0].InnerText = toastContent.Content ?? string.Empty;
+
+            if (hasTitleContentAndSecondContentElement)
+                elements[0].InnerText = toastContent.SecondContent ?? string.Empty;
         }
 
-        public ToastNotification BuildToastText04(string title, string content, string content2, string arg = null)
+        private static void AppendImageToNotification(ToastContent toastContent, XmlDocument xml)
         {
-            // build toast
-            var template = ToastTemplateType.ToastText02;
-            var xml = ToastNotificationManager.GetTemplateContent(template);
-            var elements = xml.GetElementsByTagName(textNode);
+            var imageElements = xml.GetElementsByTagName(ImageNode);
+            if (!imageElements.Any())
+                return;
 
-            // title
-            var text = xml.CreateTextNode(title);
-            elements[0].AppendChild(text);
-
-            // content
-            text = xml.CreateTextNode(content);
-            elements[1].AppendChild(text);
-
-            // content2
-            text = xml.CreateTextNode(content2);
-            elements[2].AppendChild(text);
-
-            // toast
-            return new ToastNotification(xml);
-        }
-
-        public ToastNotification BuildToastImageAndText01(string image, string content, string arg = null)
-        {
-            // build toast
-            var template = ToastTemplateType.ToastText02;
-            var xml = ToastNotificationManager.GetTemplateContent(template);
-            var elements = xml.GetElementsByTagName(textNode);
-
-            // image
-            elements[0].Attributes
-                .First(x => x.LocalName.Equals(srcAttr)).InnerText = image;
-
-            // content
-            var text = xml.CreateTextNode(content);
-            elements[1].AppendChild(text);
-
-            // show toast
-            return new ToastNotification(xml);
-        }
-
-        public ToastNotification BuildToastImageAndText02(string image, string title, string content, string arg = null)
-        {
-            // build toast
-            var template = ToastTemplateType.ToastText02;
-            var xml = ToastNotificationManager.GetTemplateContent(template);
-            var elements = xml.GetElementsByTagName(textNode);
-
-            // image
-            elements[0].Attributes
-                .First(x => x.LocalName.Equals(srcAttr)).InnerText = image;
-
-            // title
-            var text = xml.CreateTextNode(title);
-            elements[1].AppendChild(text);
-
-            // content
-            text = xml.CreateTextNode(content);
-            elements[2].AppendChild(text);
-
-            // show toast
-            return new ToastNotification(xml);
-        }
-
-        public ToastNotification BuildToastImageAndText03(string image, string title, string content, string arg = null)
-        {
-            // build toast
-            var template = ToastTemplateType.ToastText03;
-            var xml = ToastNotificationManager.GetTemplateContent(template);
-            var elements = xml.GetElementsByTagName(textNode);
-
-            // image
-            elements[0].Attributes
-                .First(x => x.LocalName.Equals(srcAttr)).InnerText = image;
-
-            // title
-            var text = xml.CreateTextNode(title);
-            elements[1].AppendChild(text);
-
-            // content
-            text = xml.CreateTextNode(content);
-            elements[2].AppendChild(text);
-
-            // show toast
-            return new ToastNotification(xml);
-        }
-
-        public ToastNotification BuildToastImageAndText04(string image, string title, string content, string content2, string arg = null)
-        {
-            // build toast
-            var template = ToastTemplateType.ToastText02;
-            var xml = ToastNotificationManager.GetTemplateContent(template);
-            var elements = xml.GetElementsByTagName(textNode);
-
-            // image
-            elements[0].Attributes
-                .First(x => x.LocalName.Equals(srcAttr)).InnerText = image;
-
-            // title
-            var text = xml.CreateTextNode(title);
-            elements[1].AppendChild(text);
-
-            // content
-            text = xml.CreateTextNode(content);
-            elements[2].AppendChild(text);
-
-            // content2
-            text = xml.CreateTextNode(content2);
-            elements[3].AppendChild(text);
-
-            // show toast
-            return new ToastNotification(xml);
+            ((XmlElement)imageElements[0]).SetAttribute(SrcAttr, toastContent.Image ?? string.Empty);
+            ((XmlElement)imageElements[0]).SetAttribute(AltAttr, toastContent.AltText ?? string.Empty);
         }
     }
 }
