@@ -112,8 +112,12 @@ namespace Template10.Common
                 if ((OriginalActivatedArgs as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false)
                 {
                     OnResuming(s, e, AppExecutionState.Prelaunch);
-                    DebugWrite("From OnResume(PreLaunch)", caller: nameof(OnStartAsync));
-                    await OnStartAsync(StartKind.Launch, OriginalActivatedArgs);
+                    if (!_HasOnStartAsync)
+                    {
+                        DebugWrite("From OnResume(PreLaunch)", caller: nameof(OnStartAsync));
+                        _HasOnStartAsync = true;
+                        await OnStartAsync(StartKind.Launch, OriginalActivatedArgs);
+                    }
                     Window.Current.Activate();
                 }
                 else
@@ -222,7 +226,11 @@ namespace Template10.Common
 
             // onstart is shared with activate and launch
             DebugWrite("Calling", caller: nameof(OnStartAsync));
-            await OnStartAsync(StartKind.Activate, e);
+            if (!_HasOnStartAsync)
+            {
+                _HasOnStartAsync = true;
+                await OnStartAsync(StartKind.Activate, e);
+            }
 
             // ensure active (this will hide any custom splashscreen)
             Window.Current.Activate();
@@ -298,7 +306,11 @@ namespace Template10.Common
             if (!restored)
             {
                 DebugWrite("Calling", caller: nameof(OnStartAsync));
-                await OnStartAsync(StartKind.Launch, e);
+                if (!_HasOnStartAsync)
+                {
+                    _HasOnStartAsync = true;
+                    await OnStartAsync(StartKind.Launch, e);
+                }
             }
 
             // ensure active (this will hide any custom splashscreen)
@@ -403,6 +415,11 @@ namespace Template10.Common
         /// An app restores from state when the app was suspended and then terminated (PreviousExecutionState terminated).
         /// </summary>
         public abstract Task OnStartAsync(StartKind startKind, IActivatedEventArgs args);
+
+        /// <summary>
+        /// This indicates if OnStartAsync has EVER been called
+        /// </summary>
+        bool _HasOnStartAsync = false;
 
         /// <summary>
         /// OnInitializeAsync is where your app will do must-have up-front operations
