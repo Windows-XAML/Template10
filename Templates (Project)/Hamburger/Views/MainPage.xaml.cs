@@ -12,6 +12,7 @@ namespace Sample.Views
         public MainPage()
         {
             InitializeComponent();
+            NavigationCacheMode = NavigationCacheMode.Enabled;
         }
     }
 }
