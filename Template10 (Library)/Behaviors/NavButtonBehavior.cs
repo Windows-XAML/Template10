@@ -7,6 +7,7 @@ using Windows.UI.Xaml.Controls;
 using Microsoft.Xaml.Interactivity;
 using Template10.Utils;
 using System;
+using Template10.Common;
 
 namespace Template10.Behaviors
 {
@@ -17,6 +18,7 @@ namespace Template10.Behaviors
         bool update = false;
         private long _goBackReg;
         private long _goForwardReg;
+        private IDispatcherWrapper _dispatcher;
         Button element => AssociatedObject as Button;
         public DependencyObject AssociatedObject { get; set; }
 
@@ -29,6 +31,7 @@ namespace Template10.Behaviors
             }
             else
             {
+                _dispatcher = Common.DispatcherWrapper.Current();
                 element.Click += Element_Click;
                 Calculate(true);
             }
@@ -87,15 +90,19 @@ namespace Template10.Behaviors
             update = false;
             if (element == null)
                 return;
-            switch (Direction)
+            // make changes on UI thread
+            _dispatcher.Dispatch(() =>
             {
-                case Directions.Back:
-                    element.Visibility = CalculateBackVisibility(Frame);
-                    break;
-                case Directions.Forward:
-                    element.Visibility = CalculateForwardVisibility(Frame);
-                    break;
-            }
+                switch (Direction)
+                {
+                    case Directions.Back:
+                        element.Visibility = CalculateBackVisibility(Frame);
+                        break;
+                    case Directions.Forward:
+                        element.Visibility = CalculateForwardVisibility(Frame);
+                        break;
+                }
+            });
         }
 
         public enum Directions { Back, Forward }
@@ -114,6 +121,7 @@ namespace Template10.Behaviors
         }
         public static readonly DependencyProperty FrameProperty = DependencyProperty.Register(nameof(Frame),
             typeof(Frame), typeof(NavButtonBehavior), new PropertyMetadata(null, FrameChanged));
+
         private static void FrameChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var b = (d as NavButtonBehavior);

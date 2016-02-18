@@ -55,9 +55,9 @@ namespace Sample.ViewModels
         public DelegateCommand ShowBusyCommand 
             => _ShowBusyCommand ?? (_ShowBusyCommand = new DelegateCommand(async () =>
                 {
-                    App.SetBusy(true, _BusyText);
+                    Views.Busy.SetBusy(true, _BusyText);
                     await Task.Delay(5000);
-                    App.SetBusy(false);
+                    Views.Busy.SetBusy(false);
                 }, () => !string.IsNullOrEmpty(BusyText)));
     }
 

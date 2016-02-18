@@ -28,38 +28,11 @@ namespace Sample
             #endregion
         }
 
-        public override Task OnPrelaunchAsync(IActivatedEventArgs args, out bool continueStartup)
-        {
-            // TODO (non-ui)
-            continueStartup = false;
-            return Task.CompletedTask;
-        }
-
-        public override void OnResuming(object s, object e, AppExecutionState previousExecutionState)
-        {
-            if (previousExecutionState == AppExecutionState.Prelaunch)
-            {
-                // TODO (complete ui)
-            }
-        }
-
         // runs only when not restored from state
         public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
             NavigationService.Navigate(typeof(Views.MainPage));
             return Task.CompletedTask;
-        }
-
-        // hide and show busy dialog
-        public static void SetBusy(bool busy, string text = null)
-        {
-            WindowWrapper.Current().Dispatcher.Dispatch(() =>
-            {
-                var instance = Current as App;
-                var control = (instance.ModalContent = (instance.ModalContent ?? new Views.Busy())) as Views.Busy;
-                control.IsBusy = instance.ModalDialog.IsModal = busy;
-                control.BusyText = text;
-            });
         }
     }
 }

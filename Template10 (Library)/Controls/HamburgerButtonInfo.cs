@@ -17,11 +17,11 @@ namespace Template10.Controls
         public enum ButtonTypes { Toggle, Command }
         public ButtonTypes ButtonType { get; set; } = ButtonTypes.Toggle;
 
-        private NavigationTransitionInfo _NavigationTransitionInfo;
+        private NavigationTransitionInfo _navigationTransitionInfo;
         public NavigationTransitionInfo NavigationTransitionInfo
         {
-            get { return _NavigationTransitionInfo; }
-            set { _NavigationTransitionInfo = value; }
+            get { return _navigationTransitionInfo; }
+            set { _navigationTransitionInfo = value; }
         }
 
         /// <summary>
@@ -37,22 +37,24 @@ namespace Template10.Controls
         /// <summary>
         /// Sets and gets the PageParameter property.
         /// </summary>
-        object _PageParameter;
         public object PageParameter
         {
-            get { return _PageParameter; }
-            set { Set(ref _PageParameter, value); }
+            get { return GetValue(PageParameterProperty); }
+            set { SetValue(PageParameterProperty, value); }
         }
+        public static readonly DependencyProperty PageParameterProperty =
+            DependencyProperty.Register(nameof(PageParameter), typeof(object),
+                typeof(HamburgerButtonInfo), new PropertyMetadata(null));
 
         /// <summary>
         /// Sets and gets the ClearHistory property.
         /// If true, navigation stack is cleared when navigating to this page
         /// </summary>
-        bool _ClearHistory = false;
+        bool _clearHistory = false;
         public bool ClearHistory
         {
-            get { return _ClearHistory; }
-            set { Set(ref _ClearHistory, value); }
+            get { return _clearHistory; }
+            set { Set(ref _clearHistory, value); }
         }
 
         /// <summary>
@@ -72,12 +74,14 @@ namespace Template10.Controls
         /// Sets and gets the IsEnabled property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        bool _isEnabled = true;
         public bool IsEnabled
         {
-            get { return _isEnabled; }
-            set { Set(ref _isEnabled, value); }
+            get { return (bool)GetValue(IsEnabledProperty); }
+            set { SetValue(IsEnabledProperty, value); }
         }
+        public static readonly DependencyProperty IsEnabledProperty =
+            DependencyProperty.Register(nameof(IsEnabled), typeof(bool),
+                typeof(HamburgerButtonInfo), new PropertyMetadata(true));
 
         bool _isChecked = false;
         public bool? IsChecked
@@ -93,11 +97,11 @@ namespace Template10.Controls
             set { Set(ref _content, value); }
         }
 
-        double _MaxWidth = 9999;
+        double _maxWidth = 9999;
         public double MaxWidth
         {
-            get { return _MaxWidth; }
-            set { Set(ref _MaxWidth, value); }
+            get { return _maxWidth; }
+            set { Set(ref _maxWidth, value); }
         }
 
         public override string ToString() =>
@@ -145,11 +149,6 @@ namespace Template10.Controls
         internal void RaiseHolding(HoldingRoutedEventArgs args)
         {
             Holding?.Invoke(this, args);
-        }
-
-        public void Dispose()
-        {
-
         }
     }
 }

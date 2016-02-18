@@ -14,7 +14,7 @@
         <vm:MainPageViewModel x:Name="ViewModel" />
     </Page.DataContext>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
@@ -24,6 +24,7 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <!--  TODO: change properties for narrow view  -->
+                        <Setter Target="pageHeader.Text" Value="Narrow Visual State" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="VisualStateNormal">
@@ -32,6 +33,7 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <!--  TODO: change properties for normal view  -->
+                        <Setter Target="pageHeader.Text" Value="Normal Visual State" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="VisualStateWide">
@@ -40,18 +42,15 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <!--  TODO: change properties for wide view  -->
+                        <Setter Target="pageHeader.Text" Value="Wide Visual State" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-
-        <!--  page header  -->
-        <controls:PageHeader Content="Main Page">
+        <controls:PageHeader x:Name="pageHeader" Text="Main Page">
+            <RelativePanel.AlignRightWithPanel>True</RelativePanel.AlignRightWithPanel>
+            <RelativePanel.AlignLeftWithPanel>True</RelativePanel.AlignLeftWithPanel>
             <controls:PageHeader.SecondaryCommands>
                 <AppBarButton Click="{x:Bind ViewModel.GotoSettings}" Label="Settings" />
                 <AppBarButton Click="{x:Bind ViewModel.GotoPrivacy}" Label="Privacy" />
@@ -59,23 +58,27 @@
             </controls:PageHeader.SecondaryCommands>
         </controls:PageHeader>
 
-        <!--  page content  -->
-        <StackPanel Grid.Row="1" VerticalAlignment="Top" Orientation="Horizontal" xmlns:cvt="using:Sample.Converters"
-                Padding="12,8,0,0">
+        <controls:Resizer x:Name="parameterResizer" Margin="16,16,16,0">
+            <RelativePanel.Below>pageHeader</RelativePanel.Below>
+            <TextBox MinWidth="250" MinHeight="62" Header="Parameter to pass"
+                     Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <Interactivity:Interaction.Behaviors>
+                    <!--  enable submit on enter key  -->
+                    <Behaviors:KeyBehavior Key="Enter">
+                        <Core:CallMethodAction MethodName="GotoDetailsPage" TargetObject="{Binding}" />
+                    </Behaviors:KeyBehavior>
+                    <!--  focus on textbox when page loads  -->
+                    <Core:EventTriggerBehavior>
+                        <Behaviors:FocusAction />
+                    </Core:EventTriggerBehavior>
+                </Interactivity:Interaction.Behaviors>
+            </TextBox>
+        </controls:Resizer>
 
-        <StackPanel.Resources>
-            <cvt:VisibleWhenZeroConverter x:Name="VisibleWhenZeroConverter" />
-        </StackPanel.Resources>
+        <Button Click="{x:Bind ViewModel.GotoDetailsPage}" Content="Submit">
+            <RelativePanel.RightOf>parameterResizer</RelativePanel.RightOf>
+            <RelativePanel.AlignBottomWith>parameterResizer</RelativePanel.AlignBottomWith>
+        </Button>
 
-        <ListView ItemsSource="{x:Bind Items}" x:Name="MyList">
-            <ListView.Header>
-                <TextBlock Visibility="{Binding Items.Count, ElementName=MyList, Converter={StaticResource VisibleWhenZeroConverter}}">
-                    <Run Text="There are no items." />
-                </TextBlock>
-            </ListView.Header>
-        </ListView>
-
-        </StackPanel>
-
-    </Grid>
+    </RelativePanel>
 </Page>

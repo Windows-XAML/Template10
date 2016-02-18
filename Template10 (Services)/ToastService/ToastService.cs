@@ -13,49 +13,56 @@ namespace Template10.Services.ToastService
     * file:/// - a local image. (Only supported for desktop apps.)
     */
 
-
     public class ToastService : IToastService
     {
         ToastHelper _helper = new ToastHelper();
 
         public void ShowToastText01(string content, string arg = null)
         {
-            _helper.ShowToastText01(content, arg);
+            var toast = ToastContent.CreateToastText01(content, arg);
+            _helper.ShowToast(toast);
         }
 
         public void ShowToastText02(string title, string content, string arg = null)
         {
-            _helper.ShowToastText02(title, content, arg);
+            var toast = ToastContent.CreateToastText02(title, content, arg);
+            _helper.ShowToast(toast);
         }
 
         public void ShowToastText03(string title, string content, string arg = null)
         {
-            _helper.ShowToastText03(title, content, arg);
+            var toast = ToastContent.CreateToastText03(title, content, arg);
+            _helper.ShowToast(toast);
         }
 
         public void ShowToastText04(string title, string content, string content2, string arg = null)
         {
-            _helper.ShowToastText04(title, content, content2, arg);
+            var toast = ToastContent.CreateToastText04(title, content, content2, arg);
+            _helper.ShowToast(toast);
         }
 
-        public void ShowToastImageAndText01(string image, string content, string arg = null)
+        public void ShowToastImageAndText01(string image, string altText, string content, string arg = null)
         {
-            _helper.ShowToastImageAndText01(image, content, arg);
+            var toast = ToastContent.CreateToastImageAndText01(image, altText, content, arg);
+            _helper.ShowToast(toast);
         }
 
-        public void ShowToastImageAndText02(string image, string title, string content, string arg = null)
+        public void ShowToastImageAndText02(string image, string altText, string title, string content, string arg = null)
         {
-            _helper.ShowToastImageAndText02(image, title, content, arg);
+            var toast = ToastContent.CreateToastImageAndText02(image, altText, title, content, arg);
+            _helper.ShowToast(toast);
         }
 
-        public void ShowToastImageAndText03(string image, string title, string content, string arg = null)
+        public void ShowToastImageAndText03(string image, string altText, string title, string content, string arg = null)
         {
-            _helper.ShowToastImageAndText03(image, title, content, arg);
+            var toast = ToastContent.CreateToastImageAndText03(image, altText, title, content, arg);
+            _helper.ShowToast(toast);
         }
 
-        public void ShowToastImageAndText04(string image, string title, string content, string content2, string arg = null)
+        public void ShowToastImageAndText04(string image, string altText, string title, string content, string content2, string arg = null)
         {
-            _helper.ShowToastImageAndText04(image, title, content, content2, arg);
+            var toast = ToastContent.CreateToastImageAndText04(image, altText, title, content, content2, arg);
+            _helper.ShowToast(toast);
         }
     }
 }
