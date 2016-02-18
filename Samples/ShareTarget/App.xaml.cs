@@ -18,8 +18,9 @@ namespace ShareTarget
             var shareArgs = args as ShareTargetActivatedEventArgs;
             if (shareArgs != null)
             {
-                var key = SessionState.Add(typeof(ShareOperation), string.Empty, shareArgs.ShareOperation);
-                NavigationService.Navigate(typeof(Views.MainPage), key.Key);
+                var key = nameof(ShareOperation);
+                SessionState.Add(key, shareArgs.ShareOperation);
+                NavigationService.Navigate(typeof(Views.MainPage), key);
             }
             else
             {
