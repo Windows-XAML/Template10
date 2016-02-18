@@ -1,9 +1,8 @@
-﻿using System;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 using System.Threading.Tasks;
 using Sample.Services.SettingsServices;
 using Windows.ApplicationModel.Activation;
-using Template10.Common;
+using Template10.Controls;
 
 namespace Sample
 {
@@ -32,11 +31,16 @@ namespace Sample
         public override Task OnInitializeAsync(IActivatedEventArgs args)
         {
             // content may already be shell when resuming
-            if ((Window.Current.Content as Views.Shell) == null)
+            if ((Window.Current.Content as ModalDialog) == null)
             {
                 // setup hamburger shell
                 var nav = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include);
-                Window.Current.Content = new Views.Shell(nav);
+                Window.Current.Content = new ModalDialog
+                {
+                    DisableBackButtonWhenModal = true,
+                    Content = new Views.Shell(nav),
+                    ModalContent = new Views.Busy(),
+                };
             }
             return Task.CompletedTask;
         }
@@ -46,18 +50,6 @@ namespace Sample
         {
             NavigationService.Navigate(typeof(Views.MainPage));
             return Task.CompletedTask;
-        }
-
-        // hide and show busy dialog
-        public static void SetBusy(bool busy, string text = null)
-        {
-            WindowWrapper.Current().Dispatcher.Dispatch(() =>
-            {
-                var instance = Current as App;
-                var control = (instance.ModalContent = (instance.ModalContent ?? new Views.Busy())) as Views.Busy;
-                control.IsBusy = instance.ModalDialog.IsModal = busy;
-                control.BusyText = text;
-            });
-        }
+        }       
     }
 }

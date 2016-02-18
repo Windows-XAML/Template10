@@ -62,8 +62,9 @@
                              IsChecked="{Binding IsChecked, Mode=TwoWay}"
                              IsEnabled="{Binding IsEnabled, Mode=TwoWay}" Loaded="NavButton_Loaded"
                              RightTapped="NavButton_RightTapped" Tag="{x:Bind Content}"
-                             Tapped="NavButton_Tapped" Visibility="{Binding Visibility, Mode=TwoWay}"
-                             ToolTipService.ToolTip="{Binding Path=(ToolTipService.ToolTip)}">
+                             Tapped="NavButton_Tapped"
+                             ToolTipService.ToolTip="{Binding Path=(ToolTipService.ToolTip)}"
+                             Visibility="{Binding Visibility, Mode=TwoWay}">
                     <RadioButton.Template>
                         <ControlTemplate TargetType="RadioButton">
                             <ToggleButton MinWidth="48" MinHeight="48" MaxWidth="{TemplateBinding MaxWidth}"
@@ -186,20 +187,6 @@
         <VisualStateManager.VisualStateGroups>
 
             <VisualStateGroup x:Name="VisualStateGroup">
-
-                <VisualStateGroup.Transitions>
-                    <VisualTransition GeneratedDuration="0" To="VisualStateWide">
-                        <Storyboard>
-                            <DoubleAnimation Duration="0:0:0.6" Storyboard.TargetName="HamburgerButton"
-                                             Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)"
-                                             To="-48" d:IsOptimized="True">
-                                <DoubleAnimation.EasingFunction>
-                                    <BackEase EasingMode="EaseIn" />
-                                </DoubleAnimation.EasingFunction>
-                            </DoubleAnimation>
-                        </Storyboard>
-                    </VisualTransition>
-                </VisualStateGroup.Transitions>
 
                 <VisualState x:Name="VisualStateNarrow">
                     <VisualState.StateTriggers>
