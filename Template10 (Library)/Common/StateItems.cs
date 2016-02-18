@@ -8,6 +8,8 @@ namespace Template10.Common
 {
     public class StateItems : Dictionary<string, Object>, IStateItems
     {
+        #region Obsolete 
+
         [Obsolete("Use Add(string, Object) instead.")]
         public KeyValuePair<StateItemKey, Object> Add(Type type, string key, object value)
         {
@@ -60,6 +62,14 @@ namespace Template10.Common
         [Obsolete("Use ContainsValue(object) instead.")]
         public bool Contains(object value) => ContainsValue(value);
 
+        [Obsolete("Use Get<T>(key) instead.")]
+        public T Get<T>(StateItemKey key)
+        {
+            return Get<T>(key.Key);
+        }
+
+        #endregion
+
         public T Get<T>(string key)
         {
             object tryGetValue;
@@ -72,12 +82,6 @@ namespace Template10.Common
                 return (T)tryGetValue;
             }
             throw new KeyNotFoundException();
-        }
-
-        [Obsolete("Use Get<T>(key) instead.")]
-        public T Get<T>(StateItemKey key)
-        {
-            return Get<T>(key.Key);
         }
 
         public bool TryGet<T>(string key, out T value)
