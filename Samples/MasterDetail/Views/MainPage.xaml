@@ -54,6 +54,7 @@
                         <AdaptiveTrigger MinWindowWidth="{StaticResource NormalMinWidth}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <Setter Target="BackButton.IsEnabled" Value="False" />
                         <Setter Target="MailDetail.Visibility" Value="Visible" />
                     </VisualState.Setters>
                 </VisualState>
@@ -62,6 +63,7 @@
                         <AdaptiveTrigger MinWindowWidth="{StaticResource WideMinWidth}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <Setter Target="BackButton.IsEnabled" Value="False" />
                         <Setter Target="MailDetail.Visibility" Value="Visible" />
                     </VisualState.Setters>
                 </VisualState>
