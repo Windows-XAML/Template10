@@ -38,22 +38,6 @@ namespace Template10.Common
 
         #region dependency injection
 
-        /// <summary>       
-        /// A developer implements this method to return any type and would need to 
-        /// switch on the type param, returnig the correctly inflated type.
-        /// </summary>
-        /// <remarks>
-        /// There are two popular approaches to view-model dependency injection. The first is this approach, 
-        /// where a Resolve method exists for the developer to implement. The second is a view-model locator
-        /// which puts the injection logic in the form of a property. Both are equally valid.
-        /// </remarks>
-        public virtual T Resolve<T>(Type type)
-        {
-            DebugWrite("Default");
-
-            return default(T);
-        }
-
         /// <summary>
         /// If a developer overrides this method, and leaves the DataContext of a page null, then BootStrapper
         /// will atttempt to fill the DataContext the return value of this method. 
