@@ -14,10 +14,15 @@ namespace Template10.Behaviors
     {
         public DependencyObject AssociatedObject { get; private set; }
 
+        // The key that triggers the behavior
         public VirtualKey Key { get; set; } = VirtualKey.None;
+        // true if Control must be held also; otherwise false
         public bool AndControl { get; set; } = false;
+        // true if Alt must be held also; otherwise false
         public bool AndAlt { get; set; } = false;
+        // true if Shift must be held also; otherwise false
         public bool AndShift { get; set; } = false;
+        // Detemines if the behavior is triggered on the KeyUp or the KeyDown event
         public Kinds Event { get; set; } = Kinds.KeyUp;
 
         public enum Kinds { KeyUp, KeyDown }
