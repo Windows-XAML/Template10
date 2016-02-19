@@ -23,11 +23,11 @@ namespace Sample.ViewModels
         private string _Value = "Default";
         public string Value { get { return _Value; } set { Set(ref _Value, value); } }
 
-        public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
+        public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> suspensionState)
         {
-            if (state.ContainsKey(nameof(Value)))
+            if (suspensionState.ContainsKey(nameof(Value)))
             {
-                Value = state[nameof(Value)]?.ToString();
+                Value = suspensionState[nameof(Value)]?.ToString();
             }
             else
             {
@@ -36,11 +36,11 @@ namespace Sample.ViewModels
             return Task.CompletedTask;
         }
 
-        public override Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending)
+        public override Task OnNavigatedFromAsync(IDictionary<string, object> suspensionState, bool suspending)
         {
             if (suspending)
             {
-                state[nameof(Value)] = Value;
+                suspensionState[nameof(Value)] = Value;
             }
             return Task.CompletedTask;
         }

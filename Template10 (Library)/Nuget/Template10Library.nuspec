@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/01/nuspec.xsd">
   <metadata minClientVersion="3.0">
     
-    <version>1.1.3</version>
+    <version>1.1.4-pre</version>
     
     <id>Template10</id>
     <title>Template 10 Library for Windows UWP XAML/.NET apps on Windows 10</title>
