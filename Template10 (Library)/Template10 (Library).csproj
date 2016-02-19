@@ -141,7 +141,6 @@
     <Compile Include="Behaviors\TextBoxEnterKeyBehavior.cs" />
     <Compile Include="Behaviors\ConditionalAction.cs" />
     <Compile Include="Behaviors\TimeoutAction.cs" />
-    <Compile Include="Behaviors\UpdateSourceTriggerBehavior.cs" />
     <Compile Include="Common\BootStrapper.cs" />
     <Compile Include="Common\DispatcherWrapper.cs" />
     <Compile Include="Common\HandledEventArgs.cs" />
@@ -189,7 +188,6 @@
     <Compile Include="Utils\DeviceUtils.cs" />
     <Compile Include="Utils\ExpressionUtils.cs" />
     <Compile Include="Utils\InkUtils.cs" />
-    <Compile Include="Utils\LinqUtils.cs" />
     <Compile Include="Utils\MonitorUtils.cs" />
     <Compile Include="Utils\IEnumerableUtils.cs" />
     <Compile Include="Utils\ResourceUtils.cs" />
