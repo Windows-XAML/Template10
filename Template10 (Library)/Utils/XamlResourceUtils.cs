@@ -2,7 +2,7 @@
 
 namespace Template10.Utils
 {
-    public static class ResourceUtils
+    public static class XamlResourceUtils
     {
         public static T GetResource<T>(string resourceName, T otherwise)
         {

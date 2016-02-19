@@ -189,7 +189,7 @@
     <Compile Include="Utils\ExpressionUtils.cs" />
     <Compile Include="Utils\MonitorUtils.cs" />
     <Compile Include="Utils\IEnumerableUtils.cs" />
-    <Compile Include="Utils\ResourceUtils.cs" />
+    <Compile Include="Utils\XamlResourceUtils.cs" />
     <Compile Include="Utils\Template10Utils.cs" />
     <Compile Include="Utils\XamlUtils.cs" />
     <Compile Include="Controls\HamburgerMenu.xaml.cs">
