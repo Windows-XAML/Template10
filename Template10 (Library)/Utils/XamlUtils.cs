@@ -9,6 +9,18 @@ namespace Template10.Utils
 {
     public static class XamlUtils
     {
+        public static T GetResource<T>(string resourceName, T otherwise)
+        {
+            try
+            {
+                return (T)Application.Current.Resources[resourceName];
+            }
+            catch
+            {
+                return otherwise;
+            }
+        }
+
         public static void UpdateBindings(Page page)
         {
             var field = page.GetType().GetTypeInfo().GetDeclaredField("Bindings");
