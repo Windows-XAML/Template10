@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Navigation;
-using System;
 
 namespace Sample.ViewModels
 {
@@ -18,7 +17,7 @@ namespace Sample.ViewModels
             }
         }
 
-        string _Value = string.Empty;
+        string _Value = "Gas";
         public string Value { get { return _Value; } set { Set(ref _Value, value); } }
 
         public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> suspensionState)
