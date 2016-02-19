@@ -28,7 +28,6 @@ namespace Sample.ViewModels
             if (state.ContainsKey(nameof(Value)))
             {
                 Value = state[nameof(Value)]?.ToString();
-                state.Clear();
             }
             else
             {

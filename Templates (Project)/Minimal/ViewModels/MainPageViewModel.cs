@@ -25,7 +25,6 @@ namespace Sample.ViewModels
             if (state.Any())
             {
                 Value = state[nameof(Value)]?.ToString();
-                state.Clear();
             }
             return Task.CompletedTask;
         }
