@@ -25,14 +25,7 @@ namespace Sample.ViewModels
 
         public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> suspensionState)
         {
-            if (suspensionState.ContainsKey(nameof(Value)))
-            {
-                Value = suspensionState[nameof(Value)]?.ToString();
-            }
-            else
-            {
-                Value = parameter?.ToString();
-            }
+            Value = (suspensionState.ContainsKey(nameof(Value))) ? suspensionState[nameof(Value)]?.ToString() : parameter?.ToString();
             return Task.CompletedTask;
         }
 
