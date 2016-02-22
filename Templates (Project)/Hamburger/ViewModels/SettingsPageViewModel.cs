@@ -78,6 +78,6 @@ namespace Sample.ViewModels
             }
         }
 
-        public Uri RateMe => new Uri("http://bing.com");
+        public Uri RateMe => new Uri("http://aka.ms/template10");
     }
 }
