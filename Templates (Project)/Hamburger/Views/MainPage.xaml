@@ -67,7 +67,8 @@
             <RelativePanel.AlignLeftWithPanel>True</RelativePanel.AlignLeftWithPanel>
             <TextBox MinWidth="250" MinHeight="62"
                      Header="Parameter to pass"
-                     Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                     Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     TextWrapping="Wrap">
                 <Interactivity:Interaction.Behaviors>
                     <!--  enable submit on enter key  -->
                     <Behaviors:KeyBehavior Key="Enter">
