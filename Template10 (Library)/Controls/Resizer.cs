@@ -1,57 +1,55 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 
-// The Templated Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234235
-
 namespace Template10.Controls
 {
-    [TemplatePart(Name = PART_ROOT_NAME, Type = typeof(Grid))]
-    [TemplatePart(Name = PART_THUMB_NAME, Type = typeof(Thumb))]
-    [TemplatePart(Name = PART_GRABBER_NAME, Type = typeof(Grid))]
-    [TemplatePart(Name = PART_CONTENT_NAME, Type = typeof(ContentControl))]
+    [TemplatePart(Name = nameof(PART_ROOT), Type = typeof(Grid))]
+    [TemplatePart(Name = nameof(PART_THUMB), Type = typeof(Thumb))]
+    [TemplatePart(Name = nameof(PART_GRABBER), Type = typeof(Grid))]
+    [TemplatePart(Name = nameof(PART_CONTENT), Type = typeof(ContentControl))]
     [ContentProperty(Name = nameof(ElementControl))]
     public sealed class Resizer : ContentControl
     {
-        private const string PART_THUMB_NAME = "PART_THUMB";
-        private const string PART_CONTENT_NAME = "PART_CONTENT";
-        private const string PART_GRABBER_NAME = "PART_GRABBER";
-        private const string PART_ROOT_NAME = "PART_ROOT";
-        private Grid _rootGrid;
-        private Grid _grabberGrid;
-        private ContentControl _contentPresenter;
-        private Thumb _thumb;
+        private Thumb PART_THUMB;
+        private ContentControl PART_CONTENT;
+        private Grid PART_GRABBER;
+        private Grid PART_ROOT;
+
         private Size _originalSize;
         public Resizer()
         {
-            this.DefaultStyleKey = typeof(Resizer);
+            DefaultStyleKey = typeof(Resizer);
         }
 
         protected override void OnApplyTemplate()
         {
-            _rootGrid = GetTemplateChild(PART_ROOT_NAME) as Grid;
-            _grabberGrid = GetTemplateChild(PART_GRABBER_NAME) as Grid;
-            _contentPresenter = GetTemplateChild(PART_CONTENT_NAME) as ContentControl;
-            _thumb = GetTemplateChild(PART_THUMB_NAME) as Thumb;
+            PART_ROOT = GetTemplateChild<Grid>(nameof(PART_ROOT));
+            PART_GRABBER = GetTemplateChild<Grid>(nameof(PART_GRABBER));
+            PART_CONTENT = GetTemplateChild<ContentControl>(nameof(PART_CONTENT));
+            PART_THUMB = GetTemplateChild<Thumb>(nameof(PART_THUMB));
 
             InitEvents();
         }
 
+        private T GetTemplateChild<T>(string name) where T : FrameworkElement
+        {
+            var child = GetTemplateChild(name) as T;
+            if (child == null)
+                throw new NullReferenceException(name);
+            return child;
+        }
+
         private void InitEvents()
         {
-            _thumb.Loaded += thumb_Loaded;
-            _thumb.DragDelta += thumb_DragDelta;
-            _thumb.DoubleTapped += thumb_DoubleTapped;
+            PART_THUMB.Loaded += thumb_Loaded;
+            PART_THUMB.DragDelta += thumb_DragDelta;
+            PART_THUMB.DoubleTapped += thumb_DoubleTapped;
         }
 
         private void thumb_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
@@ -94,14 +92,14 @@ namespace Template10.Controls
 
         public Size GrabberSize
         {
-            get { return _grabberGrid.RenderSize; }
+            get { return PART_GRABBER.RenderSize; }
             set
             {
-                _grabberGrid.Width = value.Width;
-                _grabberGrid.Height = value.Height;
+                PART_GRABBER.Width = value.Width;
+                PART_GRABBER.Height = value.Height;
 
                 // move it
-                var transform = _grabberGrid.RenderTransform as CompositeTransform;
+                var transform = PART_GRABBER.RenderTransform as CompositeTransform;
                 if (transform != null)
                 {
                     transform.TranslateX = value.Width * .3;

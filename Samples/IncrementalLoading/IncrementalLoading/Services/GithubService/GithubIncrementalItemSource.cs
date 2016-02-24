@@ -1,12 +1,12 @@
-﻿using Sample.Models;
-using Sample.Services.GithubService;
-using Sample.Shared;
+﻿using Messaging.Models;
+using Messaging.Services.GithubService;
+using Messaging.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Sample.Services.GithubService
+namespace Messaging.Services.GithubService
 {
     public class GithubIncrementalItemSource : IncrementalItemSourceBase<Repository>
     {

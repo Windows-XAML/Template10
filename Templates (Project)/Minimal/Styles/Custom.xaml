@@ -4,103 +4,61 @@
     <x:Double x:Key="NormalMinWidth">521</x:Double>
     <x:Double x:Key="WideMinWidth">1200</x:Double>
 
-    <Color x:Key="CustomColor">SteelBlue</Color>
-    <SolidColorBrush x:Key="CustomColorBrush" Color="{StaticResource CustomColor}" />
-
+    <Color x:Key="SystemAccentColor">SteelBlue</Color>
     <Color x:Key="ContrastColor">White</Color>
-    <SolidColorBrush x:Key="ContrastColorBrush" Color="{StaticResource ContrastColor}" />
 
     <ResourceDictionary.ThemeDictionaries>
 
-        <!--  RequestedTheme=Dark  -->
-
-        <ResourceDictionary x:Key="Default">
-
-            <SolidColorBrush x:Key="ExtendedSplashBackground" Color="{StaticResource ContrastColor}" />
-            <SolidColorBrush x:Key="ExtendedSplashForeground" Color="{StaticResource CustomColor}" />
-
-            <SolidColorBrush x:Key="ModalBackground" Opacity=".5" Color="{StaticResource CustomColor}" />
-
-            <Style TargetType="controls:HamburgerMenu">
-                <Setter Property="AccentColor" Value="{StaticResource CustomColor}" />
-                <Setter Property="HamburgerBackground" Value="Green" />
-                <Setter Property="VisualStateNarrowMinWidth" Value="{StaticResource NarrowMinWidth}" />
-                <Setter Property="VisualStateNormalMinWidth" Value="{StaticResource NormalMinWidth}" />
-                <Setter Property="VisualStateWideMinWidth" Value="{StaticResource WideMinWidth}" />
-            </Style>
-
-            <Style TargetType="controls:PageHeader">
-                <Setter Property="Background" Value="{ThemeResource CustomColorBrush}" />
-                <Setter Property="Foreground" Value="{ThemeResource ContrastColorBrush}" />
-                <Setter Property="VisualStateNarrowMinWidth" Value="{StaticResource NarrowMinWidth}" />
-                <Setter Property="VisualStateNormalMinWidth" Value="{StaticResource NormalMinWidth}" />
-            </Style>
-
-            <Style TargetType="controls:Resizer">
-                <Setter Property="GrabberBrush" Value="{StaticResource CustomColorBrush}" />
-                <Setter Property="GrabberVisibility" Value="Visible" />
-            </Style>
-
-        </ResourceDictionary>
-
-        <!--  RequestedTheme=Light  -->
 
         <ResourceDictionary x:Key="Light">
 
-            <SolidColorBrush x:Key="ExtendedSplashBackground" Color="{StaticResource ContrastColor}" />
-            <SolidColorBrush x:Key="ExtendedSplashForeground" Color="{StaticResource CustomColor}" />
-
-            <SolidColorBrush x:Key="ModalBackground" Opacity=".5" Color="{StaticResource CustomColor}" />
-
-            <Style TargetType="controls:HamburgerMenu">
-                <Setter Property="AccentColor" Value="{StaticResource CustomColor}" />
-                <Setter Property="VisualStateNarrowMinWidth" Value="{StaticResource NarrowMinWidth}" />
-                <Setter Property="VisualStateNormalMinWidth" Value="{StaticResource NormalMinWidth}" />
-                <Setter Property="VisualStateWideMinWidth" Value="{StaticResource WideMinWidth}" />
-            </Style>
+            <SolidColorBrush x:Key="SystemAccentColorBrush" Color="{ThemeResource SystemAccentColor}" />
+            <SolidColorBrush x:Key="ContrastColorBrush" Color="{ThemeResource ContrastColor}" />
+            <SolidColorBrush x:Key="ExtendedSplashBackground" Color="{ThemeResource SystemAccentColor}" />
+            <SolidColorBrush x:Key="ExtendedSplashForeground" Color="{ThemeResource ContrastColor}" />
 
             <Style TargetType="controls:PageHeader">
-                <Setter Property="Background" Value="{ThemeResource CustomColorBrush}" />
+                <Setter Property="Background" Value="{ThemeResource SystemAccentColorBrush}" />
                 <Setter Property="Foreground" Value="{ThemeResource ContrastColorBrush}" />
-                <Setter Property="VisualStateNarrowMinWidth" Value="{StaticResource NarrowMinWidth}" />
-                <Setter Property="VisualStateNormalMinWidth" Value="{StaticResource NormalMinWidth}" />
             </Style>
 
             <Style TargetType="controls:Resizer">
-                <Setter Property="GrabberBrush" Value="{StaticResource CustomColorBrush}" />
+                <Setter Property="GrabberBrush" Value="{ThemeResource SystemAccentColorBrush}" />
                 <Setter Property="GrabberVisibility" Value="Visible" />
             </Style>
 
         </ResourceDictionary>
 
-        <!--  RequestedTheme=HighContrast  -->
+        <ResourceDictionary x:Key="Default">
+
+
+            <SolidColorBrush x:Key="SystemAccentColorBrush" Color="{ThemeResource SystemAccentColor}" />
+            <SolidColorBrush x:Key="ContrastColorBrush" Color="{ThemeResource ContrastColor}" />
+            <SolidColorBrush x:Key="ExtendedSplashBackground" Color="{ThemeResource SystemAccentColor}" />
+            <SolidColorBrush x:Key="ExtendedSplashForeground" Color="{ThemeResource ContrastColor}" />
+
+            <Style TargetType="controls:PageHeader">
+                <Setter Property="Background" Value="{ThemeResource SystemAccentColorBrush}" />
+                <Setter Property="Foreground" Value="{ThemeResource ContrastColorBrush}" />
+            </Style>
+
+            <Style TargetType="controls:Resizer">
+                <Setter Property="GrabberBrush" Value="{ThemeResource SystemAccentColorBrush}" />
+                <Setter Property="GrabberVisibility" Value="Visible" />
+            </Style>
+
+        </ResourceDictionary>
 
         <ResourceDictionary x:Key="HighContrast">
 
+            <SolidColorBrush x:Key="SystemAccentColorBrush" Color="Black" />
+            <SolidColorBrush x:Key="ContrastColorBrush" Color="White" />
             <SolidColorBrush x:Key="ExtendedSplashBackground" Color="Black" />
             <SolidColorBrush x:Key="ExtendedSplashForeground" Color="White" />
-
-            <SolidColorBrush x:Key="ModalBackground" Color="Black" />
-
-            <Style TargetType="controls:HamburgerMenu">
-                <Setter Property="HamburgerBackground" Value="Black" />
-                <Setter Property="HamburgerForeground" Value="White" />
-                <Setter Property="NavAreaBackground" Value="Black" />
-                <Setter Property="NavButtonBackground" Value="White" />
-                <Setter Property="NavButtonCheckedBackground" Value="White" />
-                <Setter Property="NavButtonForeground" Value="Black" />
-                <Setter Property="NavButtonHoverBackground" Value="White" />
-                <Setter Property="SecondarySeparator" Value="White" />
-                <Setter Property="VisualStateNarrowMinWidth" Value="{StaticResource NarrowMinWidth}" />
-                <Setter Property="VisualStateNormalMinWidth" Value="{StaticResource NormalMinWidth}" />
-                <Setter Property="VisualStateWideMinWidth" Value="{StaticResource WideMinWidth}" />
-            </Style>
 
             <Style TargetType="controls:PageHeader">
                 <Setter Property="Background" Value="Black" />
                 <Setter Property="Foreground" Value="White" />
-                <Setter Property="VisualStateNarrowMinWidth" Value="{StaticResource NarrowMinWidth}" />
-                <Setter Property="VisualStateNormalMinWidth" Value="{StaticResource NormalMinWidth}" />
             </Style>
 
             <Style TargetType="controls:Resizer">
@@ -111,3 +69,4 @@
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>
+

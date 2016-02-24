@@ -27,7 +27,7 @@ namespace Template10.Services.DialogService
         {
             while (_open)
             {
-                await Task.Delay(1000);
+                await Task.Delay(10);
             }
             _open = true;
             var dialog = (title == default(string))? new MessageDialog(content) : new MessageDialog(content, title);

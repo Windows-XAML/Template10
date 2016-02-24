@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>ViewModel class</Title>
+      <Author>Jerry Nixon</Author>
+      <Shortcut>T10_ViewModel</Shortcut>
+    </Header>
+    <Snippet>
+      <Imports>
+        <Import>
+          <Namespace>Template10.Mvvm</Namespace>
+        </Import>
+        <Import>
+          <Namespace>Windows.UI</Namespace>
+        </Import>
+        <Import>
+          <Namespace>System.Reflection</Namespace>
+        </Import>
+        <Import>
+          <Namespace>Template10.Utils</Namespace>
+        </Import>
+        <Import>
+          <Namespace>System.Linq</Namespace>
+        </Import>
+        <Import>
+          <Namespace>System.Collections.Generic</Namespace>
+        </Import>
+        <Import>
+          <Namespace>System.Threading.Tasks</Namespace>
+        </Import>
+        <Import>
+          <Namespace>Windows.UI.Xaml.Navigation</Namespace>
+        </Import>
+        <Import>
+          <Namespace>Template10.Services.NavigationService</Namespace>
+        </Import>
+      </Imports>
+      <Declarations>
+        <Literal Editable="true">
+          <ID>name</ID>
+          <Default>ClassName</Default>
+        </Literal>
+      </Declarations>
+      <Code Language="csharp">
+        <![CDATA[public class $name$ViewModel : ViewModelBase
+        {
+        }]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

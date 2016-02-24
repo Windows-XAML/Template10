@@ -1,5 +1,4 @@
-﻿using Windows.UI.ViewManagement;
-using Windows.UI.Xaml;
+﻿using System;
 using Windows.UI.Xaml.Controls;
 
 namespace Sample.Views
@@ -9,6 +8,7 @@ namespace Sample.Views
         public MainPage()
         {
             InitializeComponent();
+            NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
         }
     }
 }

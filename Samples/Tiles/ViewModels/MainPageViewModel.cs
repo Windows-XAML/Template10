@@ -6,7 +6,7 @@ using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using Template10.Mvvm;
 
-namespace Sample.ViewModels
+namespace Messaging.ViewModels
 {
     public class MainPageViewModel : Template10.Mvvm.ViewModelBase
     {
@@ -20,7 +20,7 @@ namespace Sample.ViewModels
             }
         }
 
-        public override void OnNavigatedTo(object parameter, NavigationMode mode, IDictionary<string, object> state)
+        public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
             if (state.Any())
             {
@@ -29,6 +29,7 @@ namespace Sample.ViewModels
                 // clear any cache
                 state.Clear();
             }
+            return Task.CompletedTask;
         }
 
         public override Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending)
@@ -41,9 +42,9 @@ namespace Sample.ViewModels
             return base.OnNavigatedFromAsync(state, suspending);
         }
 
-        public override void OnNavigatingFrom(NavigatingEventArgs args)
+        public override Task OnNavigatingFromAsync(NavigatingEventArgs args)
         {
-            base.OnNavigatingFrom(args);
+            return Task.CompletedTask;
         }
 
         private string _Value = string.Empty;

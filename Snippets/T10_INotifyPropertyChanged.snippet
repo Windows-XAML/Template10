@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>Implenentation of INotifyPropertyChanged</Title>
+      <Author>Jerry Nixon</Author>
+      <Shortcut>T10_INotifyPropertyChanged</Shortcut>
+    </Header>
+    <Snippet>
+      <Imports>
+        <Import>
+          <Namespace>System.ComponentModel</Namespace>
+        </Import>
+        <Import>
+          <Namespace>System.Runtime.CompilerServices</Namespace>
+        </Import>
+      </Imports>
+      <Code Language="csharp">
+        <![CDATA[#region INotifyPropertyChanged
+        
+        public event PropertyChangedEventHandler PropertyChanged;
+        
+        public void Set<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
+        {
+            if (!Equals(storage, value))
+            {
+                storage = value;
+                RaisePropertyChanged(propertyName);
+            }
+        }
+        
+        public void RaisePropertyChanged([CallerMemberName] string propertyName = null) =>
+           PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+           
+        #endregion]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

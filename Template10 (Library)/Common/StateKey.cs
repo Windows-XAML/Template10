@@ -2,8 +2,9 @@
 
 namespace Template10.Common
 {
-    public struct StateItemKey : IEquatable<StateItemKey>
+    public class StateItemKey : IEquatable<StateItemKey>
     {
+        [Obsolete("Use string keys for StateItems.")]
         public StateItemKey(Type type, String key)
         {
             if (type == null) throw new ArgumentNullException(nameof(type));
@@ -11,9 +12,17 @@ namespace Template10.Common
             if (key == null) throw new ArgumentNullException(nameof(key));
             Key = key;
         }
+
         public Type Type { get; }
+
         public String Key { get; }
-        public bool Equals(StateItemKey other) => this.Type == other.Type && this.Key == other.Key;
+
+        public bool Equals(StateItemKey other) => Type == other.Type && Key == other.Key;
+
+        public override string ToString()
+        {
+            return $"{Type}+{Key}";
+        }
 
         public override bool Equals(object obj)
         {
@@ -44,12 +53,11 @@ namespace Template10.Common
                 hash = hash * 23 + kh.Value;
                 return hash;
             }
-
-
         }
-        public static bool operator ==(StateItemKey left, StateItemKey right) => left.Equals(right);
 
-        public static bool operator !=(StateItemKey left, StateItemKey right) => !left.Equals(right);
+        public static bool operator ==(StateItemKey left, StateItemKey right) => Equals(left, right);
+
+        public static bool operator !=(StateItemKey left, StateItemKey right) => !Equals(left, right);
     }
 
 }

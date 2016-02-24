@@ -10,10 +10,10 @@ namespace Template10.Services.NavigationService
         public NavigatedEventArgs() { }
         public NavigatedEventArgs(NavigationEventArgs e, Page page)
         {
-            this.Page = page;
-            this.PageType = e.SourcePageType;
-            this.Parameter = e.Parameter;
-            this.NavigationMode = e.NavigationMode;
+            Page = page;
+            PageType = e.SourcePageType;
+            Parameter = e.Parameter;
+            NavigationMode = e.NavigationMode;
         }
 
         public NavigationMode NavigationMode { get; set; }

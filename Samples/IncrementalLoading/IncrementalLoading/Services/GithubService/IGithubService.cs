@@ -1,8 +1,8 @@
-﻿using Sample.Models;
-using Sample.Shared;
+﻿using Messaging.Models;
+using Messaging.Shared;
 using System.Threading.Tasks;
 
-namespace Sample.Services.GithubService
+namespace Messaging.Services.GithubService
 {
     public interface IGithubService
     {

@@ -23,9 +23,10 @@ namespace Sample
 
         public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
-            if (args.Kind == ActivationKind.VoiceCommand)
+            var e = args as VoiceCommandActivatedEventArgs;
+            if (e != null)
             {
-                var result = (args as VoiceCommandActivatedEventArgs).Result;
+                var result = e.Result;
                 var properties = result.SemanticInterpretation.Properties
                     .ToDictionary(x => x.Key, x => x.Value);
 
@@ -41,7 +42,10 @@ namespace Sample
                     else { /* not okay to speak */ }
 
                     // update value
-                    ViewModels.MainPageViewModel.Instance.Value = text;
+                    if (ViewModels.MainPageViewModel.Instance == null)
+                        NavigationService.Navigate(typeof(Views.MainPage), text);
+                    else
+                        ViewModels.MainPageViewModel.Instance.Value = text;
                 }
                 else { /* unexpected command */ }
             }
@@ -49,7 +53,7 @@ namespace Sample
             {
                 NavigationService.Navigate(typeof(Views.MainPage));
             }
-            return Task.FromResult<object>(null);
+            return Task.CompletedTask;
         }
     }
 }

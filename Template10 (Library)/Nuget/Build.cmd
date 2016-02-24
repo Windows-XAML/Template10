@@ -1,4 +1,4 @@
-﻿ECHO ON
+@ECHO OFF
 @echo -- NuGet Process Start --
 
 set TARGETDIR=%~1
@@ -71,7 +71,7 @@ echo Copy \%TARGETNAME%.nuspec
 xcopy.exe "%PROJECTDIR%nuget\%TARGETNAME%.nuspec" "%NUPKG%" /y >nul
 
 echo Execute Pack
-"%PROJECTDIR%nuget\NuGet.exe" pack "%NUPKG%\%TARGETNAME%.nuspec" -Verbosity normal -OutputDirectory "%NUPKG%" -NonInteractive -Symbols
+"%PROJECTDIR%nuget\NuGet.exe" pack "%NUPKG%\%TARGETNAME%.nuspec" -Verbosity normal -OutputDirectory "%NUPKG%" -NonInteractive 
 
 echo Copy %NUPKG%\*.nupkg
 xcopy.exe "%NUPKG%\*.nupkg" "c:\nuget-local\" /y >nul

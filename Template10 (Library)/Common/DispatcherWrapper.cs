@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Core;
@@ -10,8 +11,18 @@ namespace Template10.Common
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-DispatcherWrapper
     public class DispatcherWrapper : IDispatcherWrapper
     {
+        #region Debug
+
+        static void DebugWrite(string text = null, Services.LoggingService.Severities severity = Services.LoggingService.Severities.Template10, [CallerMemberName]string caller = null) =>
+            Services.LoggingService.LoggingService.WriteLine(text, severity, caller: $"DispatcherWrapper.{caller}");
+
+        #endregion
+
+        public static IDispatcherWrapper Current() => WindowWrapper.Current().Dispatcher;
+
         internal DispatcherWrapper(CoreDispatcher dispatcher)
         {
+            DebugWrite(caller: "Constructor");
             this.dispatcher = dispatcher;
         }
 
@@ -75,6 +86,18 @@ namespace Template10.Common
             else
             {
                 dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => action()).AsTask().Wait();
+            }
+        }
+
+        public T Dispatch<T>(Func<T> action, int delayms = 0) where T : class
+        {
+            Task.Delay(delayms);
+            if (dispatcher.HasThreadAccess) { return action(); }
+            else
+            {
+                T result = null;
+                dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => result = action()).AsTask().Wait();
+                return result;
             }
         }
     }

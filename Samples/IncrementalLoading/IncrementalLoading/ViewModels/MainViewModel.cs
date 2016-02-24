@@ -1,13 +1,13 @@
-﻿using Sample.Extensions;
-using Sample.Models;
-using Sample.Services.GithubService;
-using Sample.Shared;
+﻿using Messaging.Extensions;
+using Messaging.Models;
+using Messaging.Services.GithubService;
+using Messaging.Shared;
 using System;
 using System.Collections.ObjectModel;
 using Template10.Mvvm;
 using Windows.System;
 
-namespace Sample.ViewModels
+namespace Messaging.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {

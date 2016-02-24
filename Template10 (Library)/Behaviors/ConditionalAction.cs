@@ -62,13 +62,13 @@ namespace Template10.Behaviors
                 if (actions == null)
                 {
                     actions = new ActionCollection();
-                    base.SetValue(ActionsProperty, actions);
+                    SetValue(ActionsProperty, actions);
                 }
                 return actions;
             }
         }
         public static readonly DependencyProperty ActionsProperty =
-            DependencyProperty.Register("Actions", typeof(ActionCollection),
+            DependencyProperty.Register(nameof(Actions), typeof(ActionCollection),
                 typeof(TimeoutAction), new PropertyMetadata(null));
 
         int Compare<T>(T left, T right) => System.Collections.Generic.Comparer<T>.Default.Compare(left, right);
@@ -82,51 +82,51 @@ namespace Template10.Behaviors
                 case Operators.EqualToRight:
                 default:
                     if (Compare(LeftValue, rightValue) == 0)
-                        Interaction.ExecuteActions(this, this.Actions, null);
+                        Interaction.ExecuteActions(this, Actions, parameter);
                     break;
                 case Operators.NotEqualToRight:
                     if (Compare(LeftValue, rightValue) != 0)
-                        Interaction.ExecuteActions(this, this.Actions, null);
+                        Interaction.ExecuteActions(this, Actions, parameter);
                     break;
                 case Operators.LessThanRight:
                     if (Compare(LeftValue, rightValue) > 0)
-                        Interaction.ExecuteActions(this, this.Actions, null);
+                        Interaction.ExecuteActions(this, Actions, parameter);
                     break;
                 case Operators.LessThanOrEqualToRight:
                     if (Compare(LeftValue, rightValue) >= 0)
-                        Interaction.ExecuteActions(this, this.Actions, null);
+                        Interaction.ExecuteActions(this, Actions, parameter);
                     break;
                 case Operators.GreaterThanRight:
                     if (Compare(LeftValue, rightValue) < 0)
-                        Interaction.ExecuteActions(this, this.Actions, null);
+                        Interaction.ExecuteActions(this, Actions, parameter);
                     break;
                 case Operators.GreaterThanOrEqualToRight:
                     if (Compare(LeftValue, rightValue) <= 0)
-                        Interaction.ExecuteActions(this, this.Actions, null);
+                        Interaction.ExecuteActions(this, Actions, parameter);
                     break;
                 case Operators.IsNull:
                     if (LeftValue == null)
-                        Interaction.ExecuteActions(this, this.Actions, null);
+                        Interaction.ExecuteActions(this, Actions, parameter);
                     break;
                 case Operators.IsNotNull:
                     if (LeftValue != null)
-                        Interaction.ExecuteActions(this, this.Actions, null);
+                        Interaction.ExecuteActions(this, Actions, parameter);
                     break;
                 case Operators.IsTrue:
                     if ((bool?)LeftValue ?? false)
-                        Interaction.ExecuteActions(this, this.Actions, null);
+                        Interaction.ExecuteActions(this, Actions, parameter);
                     break;
                 case Operators.IsFalse:
                     if (!(bool?)LeftValue ?? false)
-                        Interaction.ExecuteActions(this, this.Actions, null);
+                        Interaction.ExecuteActions(this, Actions, parameter);
                     break;
                 case Operators.IsNullOrEmpty:
                     if (string.IsNullOrEmpty(LeftValue as string))
-                        Interaction.ExecuteActions(this, this.Actions, null);
+                        Interaction.ExecuteActions(this, Actions, parameter);
                     break;
                 case Operators.IsNotNullOrEmpty:
                     if (!string.IsNullOrEmpty(LeftValue as string))
-                        Interaction.ExecuteActions(this, this.Actions, null);
+                        Interaction.ExecuteActions(this, Actions, parameter);
                     break;
             }
             return null;

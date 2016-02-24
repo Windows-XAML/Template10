@@ -25,7 +25,12 @@ namespace Template10.Controls
     {
         public PageHeader()
         {
-            this.DefaultStyleKey = typeof(PageHeader);
+            DefaultStyleKey = typeof(PageHeader);
+
+            // behaviors
+            var c = new Microsoft.Xaml.Interactivity.BehaviorCollection();
+            c.Add(new Behaviors.EllipsisBehavior { Visibility = Behaviors.EllipsisBehavior.Visibilities.Auto });
+            SetValue(Microsoft.Xaml.Interactivity.Interaction.BehaviorsProperty, c);
         }
 
         public Visibility BackButtonVisibility
@@ -35,14 +40,14 @@ namespace Template10.Controls
         }
 
         public static readonly DependencyProperty BackButtonVisibilityProperty =
-            DependencyProperty.Register(nameof(BackButtonVisibility), typeof(Visibility), typeof(PageHeader), new PropertyMetadata(default(Visibility)));
+            DependencyProperty.Register(nameof(BackButtonVisibility), typeof(Visibility), typeof(PageHeader), new PropertyMetadata(Visibility.Collapsed));
 
-        private Symbol BackButtonContent
+        public Symbol BackButtonContent
         {
             get { return (Symbol)GetValue(BackButtonContentProperty); }
             set { SetValue(BackButtonContentProperty, value); }
         }
-        private static readonly DependencyProperty BackButtonContentProperty =
+        public static readonly DependencyProperty BackButtonContentProperty =
             DependencyProperty.Register(nameof(BackButtonContent), typeof(Symbol), typeof(PageHeader),
                 new PropertyMetadata(Symbol.Back));
 
@@ -81,15 +86,9 @@ namespace Template10.Controls
         public static readonly DependencyProperty VisualStateNormalMinWidthProperty =
             DependencyProperty.Register(nameof(VisualStateNormalMinWidth), typeof(double), typeof(PageHeader), new PropertyMetadata(0));
 
-        public new object Content
-        {
-            get { return base.Content; }
-            set { base.Content = value; }
-        }
-
         public string Text
         {
-            get { return Content as string; }
+            get { return Content?.ToString(); }
             set { Content = value; }
         }
     }
