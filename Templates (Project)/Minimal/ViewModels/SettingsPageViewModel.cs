@@ -52,13 +52,13 @@ namespace Sample.ViewModels
         }
 
         DelegateCommand _ShowBusyCommand;
-        public DelegateCommand ShowBusyCommand 
+        public DelegateCommand ShowBusyCommand
             => _ShowBusyCommand ?? (_ShowBusyCommand = new DelegateCommand(async () =>
-                {
-                    Views.Busy.SetBusy(true, _BusyText);
-                    await Task.Delay(5000);
-                    Views.Busy.SetBusy(false);
-                }, () => !string.IsNullOrEmpty(BusyText)));
+            {
+                Views.Busy.SetBusy(true, _BusyText);
+                await Task.Delay(5000);
+                Views.Busy.SetBusy(false);
+            }, () => !string.IsNullOrEmpty(BusyText)));
     }
 
     public class AboutPartViewModel : ViewModelBase
@@ -78,6 +78,6 @@ namespace Sample.ViewModels
             }
         }
 
-        public Uri RateMe => new Uri("http://bing.com");
+        public Uri RateMe => new Uri("http://aka.ms/template10");
     }
 }

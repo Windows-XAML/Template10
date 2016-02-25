@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Navigation;
-using System;
 
 namespace Sample.ViewModels
 {
@@ -18,24 +17,23 @@ namespace Sample.ViewModels
             }
         }
 
-        string _Value = string.Empty;
+        string _Value = "Gas";
         public string Value { get { return _Value; } set { Set(ref _Value, value); } }
 
-        public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
+        public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> suspensionState)
         {
-            if (state.Any())
+            if (suspensionState.Any())
             {
-                Value = state[nameof(Value)]?.ToString();
-                state.Clear();
+                Value = suspensionState[nameof(Value)]?.ToString();
             }
             return Task.CompletedTask;
         }
 
-        public override Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending)
+        public override Task OnNavigatedFromAsync(IDictionary<string, object> suspensionState, bool suspending)
         {
             if (suspending)
             {
-                state[nameof(Value)] = Value;
+                suspensionState[nameof(Value)] = Value;
             }
             return Task.CompletedTask;
         }
