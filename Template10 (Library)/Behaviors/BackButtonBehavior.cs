@@ -5,6 +5,12 @@ using Template10.Common;
 
 namespace Template10.Behaviors
 {
+    /// <summary>
+    /// Use this behavior to add actions when the user clicks the back button
+    /// Usually the shell back button. And, you are not necessarily wanting to 
+    /// navigate, but do something like close a dialog box.
+    /// </summary>
+
     [ContentProperty(Name = nameof(Actions))]
     public class BackButtonBehavior : DependencyObject, IBehavior
     {

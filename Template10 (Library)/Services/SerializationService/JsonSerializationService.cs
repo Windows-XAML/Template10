@@ -13,7 +13,7 @@ namespace Template10.Services.SerializationService
 
         #region Debug
 
-        static void DebugWrite(string text = null, Services.LoggingService.Severities severity = LoggingService.Severities.Trace, [CallerMemberName]string caller = null) =>
+        static void DebugWrite(string text = null, Services.LoggingService.Severities severity = LoggingService.Severities.Template10, [CallerMemberName]string caller = null) =>
             LoggingService.LoggingService.WriteLine(text, severity, caller: $"{nameof(JsonSerializationService)}.{caller}");
 
         #endregion

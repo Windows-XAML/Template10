@@ -4,11 +4,11 @@ using Template10.Common;
 using Template10.Controls;
 using Template10.Services.NavigationService;
 using Windows.UI.Core;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace Sample.Views
 {
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SplitView
     public sealed partial class Shell : Page
     {
         public static Shell Instance { get; set; }
@@ -18,18 +18,10 @@ namespace Sample.Views
         {
             Instance = this;
             InitializeComponent();
-            Loaded += Shell_Loaded;
         }
 
-        private void Shell_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        public Shell(INavigationService navigationService) : this()
         {
-            SettingsButton.IsEnabled = false;
-        }
-
-        public Shell(INavigationService navigationService)
-        {
-            Instance = this;
-            InitializeComponent();
             SetNavigationService(navigationService);
         }
 

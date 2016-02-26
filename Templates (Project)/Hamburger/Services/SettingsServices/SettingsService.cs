@@ -5,7 +5,7 @@ using Windows.UI.Xaml;
 
 namespace Sample.Services.SettingsServices
 {
-    public class SettingsService 
+    public class SettingsService
     {
         public static SettingsService Instance { get; }
         static SettingsService()
@@ -46,6 +46,7 @@ namespace Sample.Services.SettingsServices
             set
             {
                 _helper.Write(nameof(AppTheme), value.ToString());
+                (Window.Current.Content as FrameworkElement).RequestedTheme = value.ToElementTheme();
                 Views.Shell.HamburgerMenu.RefreshStyles(value);
             }
         }

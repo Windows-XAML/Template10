@@ -19,8 +19,8 @@ namespace ShareTarget.ViewModels
     {
         public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
-            var key = parameter as StateItemKey;
-            if (key != null && SessionState.Contains(key))
+            var key = parameter as string;
+            if (key != null && SessionState.ContainsKey(key))
             {
                 ShareOperation = SessionState.Get<ShareOperation>(key);
             }
@@ -85,25 +85,7 @@ namespace ShareTarget.ViewModels
                 }
             }
             catch (Exception e) { Content = e.Message; }
-            finally
-            {
-                var folder = await Package.Current.InstalledLocation.GetFolderAsync("Assets");
-                var file = await folder.GetFileAsync("T10 56x56.png");
-                var reference = RandomAccessStreamReference.CreateFromFile(file);
-                var quick = new QuickLink()
-                {
-                    Id = "Template10 QuickLink",
-                    Title = "Template10 QuickLink",
-                    Thumbnail = reference,
-                };
-                quick.SupportedFileTypes.Clear();
-                quick.SupportedFileTypes.Add(StandardDataFormats.Text);
-                quick.SupportedFileTypes.Add(StandardDataFormats.WebLink);
-                quick.SupportedFileTypes.Add(StandardDataFormats.ApplicationLink);
-                quick.SupportedFileTypes.Add(StandardDataFormats.Bitmap);
-                quick.SupportedFileTypes.Add(StandardDataFormats.Html);
-                ShareOperation.ReportCompleted(quick);
-            }
+            
         }
 
         string _Content = default(string);

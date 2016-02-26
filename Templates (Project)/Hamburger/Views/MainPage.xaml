@@ -24,7 +24,7 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <!--  TODO: change properties for narrow view  -->
-                        <Setter Target="pageHeader.Text" Value="Narrow Visual State" />
+                        <Setter Target="stateTextBox.Text" Value="Narrow Visual State" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="VisualStateNormal">
@@ -33,7 +33,7 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <!--  TODO: change properties for normal view  -->
-                        <Setter Target="pageHeader.Text" Value="Normal Visual State" />
+                        <Setter Target="stateTextBox.Text" Value="Normal Visual State" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="VisualStateWide">
@@ -42,15 +42,18 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <!--  TODO: change properties for wide view  -->
-                        <Setter Target="pageHeader.Text" Value="Wide Visual State" />
+                        <Setter Target="stateTextBox.Text" Value="Wide Visual State" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
         <controls:PageHeader x:Name="pageHeader" Text="Main Page">
+            <!--  place stretched, across top  -->
+            <RelativePanel.AlignTopWithPanel>True</RelativePanel.AlignTopWithPanel>
             <RelativePanel.AlignRightWithPanel>True</RelativePanel.AlignRightWithPanel>
             <RelativePanel.AlignLeftWithPanel>True</RelativePanel.AlignLeftWithPanel>
+            <!--  secondary commands  -->
             <controls:PageHeader.SecondaryCommands>
                 <AppBarButton Click="{x:Bind ViewModel.GotoSettings}" Label="Settings" />
                 <AppBarButton Click="{x:Bind ViewModel.GotoPrivacy}" Label="Privacy" />
@@ -59,9 +62,13 @@
         </controls:PageHeader>
 
         <controls:Resizer x:Name="parameterResizer" Margin="16,16,16,0">
+            <!--  place below page header  -->
             <RelativePanel.Below>pageHeader</RelativePanel.Below>
-            <TextBox MinWidth="250" MinHeight="62" Header="Parameter to pass"
-                     Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <RelativePanel.AlignLeftWithPanel>True</RelativePanel.AlignLeftWithPanel>
+            <TextBox MinWidth="250" MinHeight="62"
+                     Header="Parameter to pass"
+                     Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     TextWrapping="Wrap">
                 <Interactivity:Interaction.Behaviors>
                     <!--  enable submit on enter key  -->
                     <Behaviors:KeyBehavior Key="Enter">
@@ -75,10 +82,17 @@
             </TextBox>
         </controls:Resizer>
 
-        <Button Click="{x:Bind ViewModel.GotoDetailsPage}" Content="Submit">
+        <Button x:Name="submitButton" Click="{x:Bind ViewModel.GotoDetailsPage}" Content="Submit">
+            <!--  place next to textbox  -->
             <RelativePanel.RightOf>parameterResizer</RelativePanel.RightOf>
             <RelativePanel.AlignBottomWith>parameterResizer</RelativePanel.AlignBottomWith>
         </Button>
+
+        <TextBlock x:Name="stateTextBox" Margin="16,16,0,0" Text="Current Visual State">
+            <!--  place under to textbox  -->
+            <RelativePanel.Below>parameterResizer</RelativePanel.Below>
+            <RelativePanel.AlignLeftWith>parameterResizer</RelativePanel.AlignLeftWith>
+        </TextBlock>
 
     </RelativePanel>
 </Page>

@@ -9,6 +9,18 @@ namespace Template10.Utils
 {
     public static class XamlUtils
     {
+        public static T GetResource<T>(string resourceName, T otherwise)
+        {
+            try
+            {
+                return (T)Application.Current.Resources[resourceName];
+            }
+            catch
+            {
+                return otherwise;
+            }
+        }
+
         public static void UpdateBindings(Page page)
         {
             var field = page.GetType().GetTypeInfo().GetDeclaredField("Bindings");
@@ -56,6 +68,32 @@ namespace Template10.Utils
                 list.AddRange(AllChildren<T>(child));
             }
             return list;
+        }
+
+        public static ElementTheme ToElementTheme(this ApplicationTheme theme)
+        {
+            switch (theme)
+            {
+                case ApplicationTheme.Light:
+                    return ElementTheme.Light;
+                case ApplicationTheme.Dark:
+                default:
+                    return ElementTheme.Dark;
+            }
+        }
+
+        public static ApplicationTheme ToApplicationTheme(this ElementTheme theme)
+        {
+            switch (theme)
+            {
+                case ElementTheme.Default:
+                    return ApplicationTheme.Dark;
+                case ElementTheme.Light:
+                    return ApplicationTheme.Light;
+                case ElementTheme.Dark:
+                default:
+                    return ApplicationTheme.Dark;
+            }
         }
     }
 }
