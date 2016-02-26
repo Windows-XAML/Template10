@@ -13,18 +13,21 @@
         <vm:MainPageViewModel x:Name="ViewModel" />
     </Page.DataContext>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
+        <controls:PageHeader x:Name="pageHeader" Content="Main Page">
+            <!--  place stretched, across top  -->
+            <RelativePanel.AlignTopWithPanel>True</RelativePanel.AlignTopWithPanel>
+            <RelativePanel.AlignRightWithPanel>True</RelativePanel.AlignRightWithPanel>
+            <RelativePanel.AlignLeftWithPanel>True</RelativePanel.AlignLeftWithPanel>
+        </controls:PageHeader>
 
-        <controls:PageHeader Content="Main Page" />
+        <TextBlock x:Name="mainTextBlock" Margin="16,12,0,0" Text="Hello World">
+            <!--  place below page header  -->
+            <RelativePanel.Below>pageHeader</RelativePanel.Below>
+            <RelativePanel.AlignLeftWithPanel>True</RelativePanel.AlignLeftWithPanel>
+        </TextBlock>
 
-        <Grid Grid.Row="1" Padding="12,4,0,0">
-            <TextBlock>Hello world</TextBlock>
-        </Grid>
+    </RelativePanel>
 
-    </Grid>
 </Page>

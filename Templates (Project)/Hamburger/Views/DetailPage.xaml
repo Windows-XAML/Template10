@@ -8,13 +8,14 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:Sample.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:vm="using:Sample.ViewModels" x:Name="ThisPage" mc:Ignorable="d">
+      xmlns:vm="using:Sample.ViewModels" x:Name="ThisPage"
+      mc:Ignorable="d">
 
     <Page.DataContext>
         <vm:DetailPageViewModel x:Name="ViewModel" />
     </Page.DataContext>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
@@ -45,27 +46,29 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-
         <!--  header  -->
-        <controls:PageHeader Frame="{x:Bind Frame}" Text="Detail Page">
+        <controls:PageHeader x:Name="pageHeader" Frame="{x:Bind Frame}" Text="Detail Page">
+            <!--  place stretched, across top  -->
+            <RelativePanel.AlignTopWithPanel>True</RelativePanel.AlignTopWithPanel>
+            <RelativePanel.AlignRightWithPanel>True</RelativePanel.AlignRightWithPanel>
+            <RelativePanel.AlignLeftWithPanel>True</RelativePanel.AlignLeftWithPanel>
             <Interactivity:Interaction.Behaviors>
                 <Behaviors:EllipsisBehavior Visibility="Auto" />
             </Interactivity:Interaction.Behaviors>
         </controls:PageHeader>
 
         <!--  content  -->
-        <Grid Grid.Row="1">
-            <ScrollViewer Padding="12,8,0,0" VerticalScrollBarVisibility="Auto">
-                <StackPanel>
-                    <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="You passed:" />
-                    <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="{x:Bind ViewModel.Value, Mode=OneWay, FallbackValue=DesigntimeValue}" />
-                </StackPanel>
-            </ScrollViewer>
-        </Grid>
+        <ScrollViewer Padding="12,8,0,0" VerticalScrollBarVisibility="Auto">
+            <!--  place below page header  -->
+            <RelativePanel.Below>pageHeader</RelativePanel.Below>
+            <RelativePanel.AlignLeftWithPanel>True</RelativePanel.AlignLeftWithPanel>
+            <RelativePanel.AlignRightWithPanel>True</RelativePanel.AlignRightWithPanel>
+            <RelativePanel.AlignBottomWithPanel>True</RelativePanel.AlignBottomWithPanel>
+            <StackPanel>
+                <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="You passed:" />
+                <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="{x:Bind ViewModel.Value, Mode=OneWay, FallbackValue=DesigntimeValue}" />
+            </StackPanel>
+        </ScrollViewer>
 
-    </Grid>
+    </RelativePanel>
 </Page>

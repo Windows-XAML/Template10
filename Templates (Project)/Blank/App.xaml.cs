@@ -11,6 +11,11 @@ namespace Sample
     {
         public App() { InitializeComponent(); }
 
+        public override Task OnInitializeAsync(IActivatedEventArgs args)
+        {
+            return Task.CompletedTask;
+        }
+
         public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
             NavigationService.Navigate(typeof(Views.MainPage));

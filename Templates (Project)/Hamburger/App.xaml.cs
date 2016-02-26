@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Sample.Services.SettingsServices;
 using Windows.ApplicationModel.Activation;
 using Template10.Controls;
+using Template10.Common;
 
 namespace Sample
 {
@@ -27,7 +28,7 @@ namespace Sample
             #endregion
         }
 
-        // runs even if restored from state
+            // runs even if restored from state
         public override Task OnInitializeAsync(IActivatedEventArgs args)
         {
             // content may already be shell when resuming
