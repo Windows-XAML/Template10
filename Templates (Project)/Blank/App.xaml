@@ -4,4 +4,8 @@
                      xmlns:common="using:Template10.Common" xmlns:local="using:Sample"
                      RequestedTheme="Light">
 
+    <Application.Resources>
+        <ResourceDictionary Source="Styles\Custom.xaml" />
+    </Application.Resources>
+
 </common:BootStrapper>
