@@ -518,6 +518,8 @@ namespace Template10.Controls
                         ShellSplitView.IsPaneOpen = false;
                     else if (ShellSplitView.DisplayMode == SplitViewDisplayMode.CompactOverlay && ShellSplitView.IsPaneOpen)
                         ShellSplitView.IsPaneOpen = false;
+                    else if (ShellSplitView.DisplayMode == SplitViewDisplayMode.CompactInline && ShellSplitView.IsPaneOpen)
+                        ShellSplitView.IsPaneOpen = false;
                 }
             }
         }
