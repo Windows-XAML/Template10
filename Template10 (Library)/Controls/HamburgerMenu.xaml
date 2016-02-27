@@ -12,7 +12,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
 
-            <Style x:Key="HamburgerButtonStyle" TargetType="Button">
+            <Style x:Key="DefaultHamburgerButtonStyle" TargetType="Button">
                 <Setter Property="Height" Value="48" />
                 <Setter Property="HorizontalAlignment" Value="Left" />
                 <Setter Property="Template">
@@ -367,7 +367,7 @@
                     Background="{x:Bind HamburgerBackground, FallbackValue=DarkRed, Mode=OneWay}"
                     Command="{x:Bind HamburgerCommand}"
                     Foreground="{x:Bind HamburgerForeground, FallbackValue=White, Mode=OneWay}"
-                    RenderTransformOrigin="0.5,0.5" Style="{StaticResource HamburgerButtonStyle}">
+                    RenderTransformOrigin="0.5,0.5" Style="{x:Bind HamburgerButtonStyle, Mode=OneWay}">
                 <Button.RenderTransform>
                     <CompositeTransform />
                 </Button.RenderTransform>

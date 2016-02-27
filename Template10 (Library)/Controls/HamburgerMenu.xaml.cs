@@ -105,6 +105,10 @@ namespace Template10.Controls
                     // in case the developer has defined zero buttons
                     if (NavButtonCount == 0)
                         _areNavButtonsLoaded = true;
+
+                    // set component styles to default style resources if developer hasn't defined a custom style
+                    if (HamburgerButtonStyle == null)
+                        HamburgerButtonStyle = (Style)Resources["DefaultHamburgerButtonStyle"];
                 };
             }
         }
@@ -677,6 +681,19 @@ namespace Template10.Controls
         public static readonly DependencyProperty HeaderContentProperty =
             DependencyProperty.Register(nameof(HeaderContent), typeof(UIElement),
                 typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(HeaderContent), e)));
+
+        #endregion
+
+        #region Component Style Properties
+
+        public Style HamburgerButtonStyle
+        {
+            get { return (Style)GetValue(HamburgerButtonStyleProperty); }
+            set { SetValue(HamburgerButtonStyleProperty, value); }
+        }
+        public static readonly DependencyProperty HamburgerButtonStyleProperty =
+            DependencyProperty.Register(nameof(HamburgerButtonStyle), typeof(Style), typeof(HamburgerMenu),
+                new PropertyMetadata(null, (d, e) => Changed(nameof(HamburgerButtonStyle), e)));
 
         #endregion
 
