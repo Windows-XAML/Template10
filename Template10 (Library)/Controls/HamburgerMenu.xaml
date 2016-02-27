@@ -77,13 +77,13 @@
                                           IsChecked="{Binding IsChecked, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                           Unchecked="NavButtonUnchecked" UseSystemFocusVisuals="True"
                                           Visibility="{TemplateBinding Visibility}"
-                                          Template="{StaticResource NavButtonTemplate}"/>
+                                          Template="{Binding NavButtonTemplate, ElementName=ThisPage}"/>
                         </ControlTemplate>
                     </RadioButton.Template>
                 </RadioButton>
             </DataTemplate>
 
-            <ControlTemplate x:Name="NavButtonTemplate" TargetType="ToggleButton">
+            <ControlTemplate x:Name="DefaultNavButtonTemplate" TargetType="ToggleButton">
                 <Grid x:Name="RootGrid"
                       Background="Transparent">
                     <VisualStateManager.VisualStateGroups>

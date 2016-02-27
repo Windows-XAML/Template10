@@ -109,6 +109,8 @@ namespace Template10.Controls
                     // set component styles to default style resources if developer hasn't defined a custom style
                     if (HamburgerButtonStyle == null)
                         HamburgerButtonStyle = (Style)Resources["DefaultHamburgerButtonStyle"];
+                    if (NavButtonTemplate == null)
+                        NavButtonTemplate = (ControlTemplate)Resources["DefaultNavButtonTemplate"];
                 };
             }
         }
@@ -694,6 +696,15 @@ namespace Template10.Controls
         public static readonly DependencyProperty HamburgerButtonStyleProperty =
             DependencyProperty.Register(nameof(HamburgerButtonStyle), typeof(Style), typeof(HamburgerMenu),
                 new PropertyMetadata(null, (d, e) => Changed(nameof(HamburgerButtonStyle), e)));
+        
+        public ControlTemplate NavButtonTemplate
+        {
+            get { return (ControlTemplate)GetValue(NavButtonTemplateProperty); }
+            set { SetValue(NavButtonTemplateProperty, value); }
+        }
+        public static readonly DependencyProperty NavButtonTemplateProperty =
+            DependencyProperty.Register(nameof(NavButtonTemplate), typeof(ControlTemplate), typeof(HamburgerMenu),
+                new PropertyMetadata(null, (d, e) => Changed(nameof(NavButtonTemplate), e)));
 
         #endregion
 
