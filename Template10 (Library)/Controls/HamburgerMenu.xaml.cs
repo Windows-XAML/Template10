@@ -26,8 +26,6 @@ namespace Template10.Controls
     [ContentProperty(Name = nameof(PrimaryButtons))]
     public sealed partial class HamburgerMenu : UserControl
     {
-        [Obsolete("Fixing naming inconsistency; use HamburgerMenu.PaneOpened", true)]
-        public event EventHandler PaneOpen;
         public event EventHandler PaneOpened;
         public event EventHandler PaneClosed;
         public event EventHandler<ChangedEventArgs<HamburgerButtonInfo>> SelectedChanged;
@@ -75,7 +73,6 @@ namespace Template10.Controls
                     if ((d as SplitView).IsPaneOpen)
                     {
                         PaneOpened?.Invoke(ShellSplitView, EventArgs.Empty);
-                        PaneOpen?.Invoke(ShellSplitView, EventArgs.Empty);
                     }
                     else
                         PaneClosed?.Invoke(ShellSplitView, EventArgs.Empty);
