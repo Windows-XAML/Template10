@@ -85,16 +85,16 @@ namespace Template10.Services.NavigationService
             FrameStateSettingsService().Clear();
         }
 
-        private string GetPageStateKey(Type type) => string.Format("{0}", type);
+        private string GetPageStateKey(string frameId, Type type, int backStackDepth) => $"{frameId}-{type}-{backStackDepth}";
 
         public ISettingsService PageStateSettingsService(Type type)
         {
-            return FrameStateSettingsService().Open(GetPageStateKey(type), true);
+            return FrameStateSettingsService().Open(GetPageStateKey(FrameId, type, BackStackDepth), true);
         }
 
         public void ClearPageState(Type type)
         {
-            this.FrameStateSettingsService().Remove(GetPageStateKey(type));
+            this.FrameStateSettingsService().Remove(GetPageStateKey(FrameId, type, BackStackDepth));
         }
 
         #endregion
