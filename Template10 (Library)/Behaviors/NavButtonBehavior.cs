@@ -8,6 +8,7 @@ using Microsoft.Xaml.Interactivity;
 using Template10.Utils;
 using System;
 using Template10.Common;
+using System.Reactive.Linq;
 
 namespace Template10.Behaviors
 {
@@ -25,6 +26,8 @@ namespace Template10.Behaviors
         public void Attach(DependencyObject associatedObject)
         {
             AssociatedObject = associatedObject;
+
+            // process start
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
             {
                 element.Visibility = Visibility.Visible;
@@ -32,26 +35,32 @@ namespace Template10.Behaviors
             else
             {
                 _dispatcher = Common.DispatcherWrapper.Current();
-                element.Click += Element_Click;
-                Calculate(true);
+
+                // throttled calculate event
+                var observable = Observable.FromEventPattern(this, nameof(DoCalculate));
+                var throttled = observable.Throttle(TimeSpan.FromMilliseconds(1000));
+                throttled.Subscribe(x => Calculate());
+
+                // handle click
+                element.Click += new Common.WeakReference<NavButtonBehavior, object, RoutedEventArgs>(this)
+                {
+                    EventAction = (i, s, e) => Element_Click(s, e),
+                    DetachAction = (i, w) => element.Click -= w.Handler,
+                }.Handler;
+                DoCalculate?.Invoke(this, EventArgs.Empty);
             }
         }
 
+        public event EventHandler DoCalculate;
+
         public void Detach()
         {
-            element.Click -= Element_Click;
-            if (Frame != null)
-            {
-
-                Frame.SizeChanged -= SizeChanged;
-                Frame.LayoutUpdated -= LayoutUpdated;
-            }
             UnregisterPropertyChangedCallback(Frame.CanGoBackProperty, _goBackReg);
             UnregisterPropertyChangedCallback(Frame.CanGoForwardProperty, _goForwardReg);
         }
 
         private void SizeChanged(object sender, SizeChangedEventArgs e) { update = true; }
-        private void LayoutUpdated(object sender, object e) { Calculate(true); }
+        private void LayoutUpdated(object sender, object e) { DoCalculate?.Invoke(this, EventArgs.Empty); }
 
         private void Element_Click(object sender, RoutedEventArgs e)
         {
@@ -61,11 +70,15 @@ namespace Template10.Behaviors
                 switch (Direction)
                 {
                     case Directions.Back:
-                        if (Frame?.CanGoBack ?? false) Frame.GoBack();
-                        break;
+                        {
+                            if (Frame?.CanGoBack ?? false) Frame.GoBack();
+                            break;
+                        }
                     case Directions.Forward:
-                        if (Frame?.CanGoForward ?? false) Frame.GoForward();
-                        break;
+                        {
+                            if (Frame?.CanGoForward ?? false) Frame.GoForward();
+                            break;
+                        }
                 }
             }
             else
@@ -73,67 +86,72 @@ namespace Template10.Behaviors
                 switch (Direction)
                 {
                     case Directions.Back:
-                        nav.GoBack();
-                        break;
+                        {
+                            nav.GoBack();
+                            break;
+                        }
                     case Directions.Forward:
-                        nav.GoForward();
-                        break;
+                        {
+                            nav.GoForward();
+                            break;
+                        }
                 }
             }
         }
 
-        private void Calculate(bool allow = false)
+        private void Calculate()
         {
-            if (!allow)
-                if (!update)
-                    return;
-            update = false;
+            // just in case
             if (element == null)
                 return;
+
             // make changes on UI thread
             _dispatcher.Dispatch(() =>
             {
                 switch (Direction)
                 {
                     case Directions.Back:
-                        element.Visibility = CalculateBackVisibility(Frame);
-                        break;
+                        {
+                            element.Visibility = CalculateBackVisibility(Frame);
+                            break;
+                        }
                     case Directions.Forward:
-                        element.Visibility = CalculateForwardVisibility(Frame);
-                        break;
+                        {
+                            element.Visibility = CalculateForwardVisibility(Frame);
+                            break;
+                        }
                 }
             });
         }
 
         public enum Directions { Back, Forward }
-        public Directions Direction
-        {
-            get { return (Directions)GetValue(DirectionProperty); }
-            set { SetValue(DirectionProperty, value); }
-        }
+        public Directions Direction { get { return (Directions)GetValue(DirectionProperty); } set { SetValue(DirectionProperty, value); } }
         public static readonly DependencyProperty DirectionProperty = DependencyProperty.Register(nameof(Direction),
             typeof(Directions), typeof(NavButtonBehavior), new PropertyMetadata(Directions.Back));
 
-        public Frame Frame
-        {
-            get { return (Frame)GetValue(FrameProperty); }
-            set { SetValue(FrameProperty, value); }
-        }
+        public Frame Frame { get { return (Frame)GetValue(FrameProperty); } set { SetValue(FrameProperty, value); } }
         public static readonly DependencyProperty FrameProperty = DependencyProperty.Register(nameof(Frame),
             typeof(Frame), typeof(NavButtonBehavior), new PropertyMetadata(null, FrameChanged));
-
-        private static void FrameChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void FrameChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
         {
-            var b = (d as NavButtonBehavior);
-            var f = e.NewValue as Frame;
-            if (f != null)
+            var behavior = (d as NavButtonBehavior);
+            var frame = args.NewValue as Frame;
+            if (frame != null)
             {
-                b._goBackReg = f.RegisterPropertyChangedCallback(Frame.CanGoBackProperty, (s, args) => b.Calculate(true));
-                b._goForwardReg = f.RegisterPropertyChangedCallback(Frame.CanGoForwardProperty, (s, args) => b.Calculate(true));
-                f.SizeChanged += b.SizeChanged;
-                f.LayoutUpdated += b.LayoutUpdated;
+                behavior._goBackReg = frame.RegisterPropertyChangedCallback(Frame.CanGoBackProperty, (s, e) => behavior.DoCalculate?.Invoke(behavior, EventArgs.Empty));
+                behavior._goForwardReg = frame.RegisterPropertyChangedCallback(Frame.CanGoForwardProperty, (s, e) => behavior.DoCalculate?.Invoke(behavior, EventArgs.Empty));
+                frame.SizeChanged += new Common.WeakReference<NavButtonBehavior, object, SizeChangedEventArgs>(behavior)
+                {
+                    EventAction = (i, s, e) => behavior.SizeChanged(s, e),
+                    DetachAction = (i, w) => frame.SizeChanged -= w.Handler,
+                }.Handler;
+                frame.LayoutUpdated += new Common.WeakReference<NavButtonBehavior, object, object>(behavior)
+                {
+                    EventAction = (i, s, e) => behavior.LayoutUpdated(s, e),
+                    DetachAction = (i, w) => frame.LayoutUpdated -= w.Handler,
+                }.Handler;
             }
-            b.Calculate(true);
+            behavior.DoCalculate?.Invoke(behavior, EventArgs.Empty);
         }
 
         public static Visibility CalculateForwardVisibility(Frame frame)
