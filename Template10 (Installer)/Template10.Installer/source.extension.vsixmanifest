@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="Template10ProjectTemplate" Version="1.11" Language="en-US" Publisher="Jerry Nixon" />
+    <Identity Id="Template10ProjectTemplate" Version="1.14" Language="en-US" Publisher="Jerry Nixon" />
     <DisplayName>Template 10 Template Pack</DisplayName>
     <Description xml:space="preserve">A rich library of helpers, services, and base classes for new and existing Windows UWP apps to maximize awesomeness and minimize boilerplate garbage. </Description>
     <MoreInfo>http://aka.ms/template10</MoreInfo>

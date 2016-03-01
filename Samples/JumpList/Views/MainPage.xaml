@@ -1,0 +1,98 @@
+<Page x:Class="JumpList.Views.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+      xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+      xmlns:controls="using:Template10.Controls"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="using:JumpList.Views"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:vm="using:JumpList.ViewModels" mc:Ignorable="d">
+
+    <Page.DataContext>
+        <vm:MainPageViewModel x:Name="ViewModel" />
+    </Page.DataContext>
+
+    <Grid>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup">
+                <VisualState x:Name="NarrowVisualState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <!--  primary buttons  -->
+                        <Setter Target="toggleButton1.Visibility" Value="Collapsed" />
+                        <Setter Target="openButton1.Visibility" Value="Collapsed" />
+                        <Setter Target="saveButton1.Visibility" Value="Collapsed" />
+                        <!--  secondary buttons  -->
+                        <Setter Target="toggleButton2.Visibility" Value="Visible" />
+                        <Setter Target="openButton2.Visibility" Value="Visible" />
+                        <Setter Target="saveButton2.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="WideVisualState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="800" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <!--  primary buttons  -->
+                        <Setter Target="toggleButton1.Visibility" Value="Visible" />
+                        <Setter Target="openButton1.Visibility" Value="Visible" />
+                        <Setter Target="saveButton1.Visibility" Value="Visible" />
+                        <!--  secondary buttons  -->
+                        <Setter Target="toggleButton2.Visibility" Value="Collapsed" />
+                        <Setter Target="openButton2.Visibility" Value="Collapsed" />
+                        <Setter Target="saveButton2.Visibility" Value="Collapsed" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <CommandBar Background="SteelBlue" RequestedTheme="Dark">
+            <CommandBar.Content>
+                <TextBlock Margin="12,8" FontSize="24" Text="Header" />
+            </CommandBar.Content>
+            <!--  save button  -->
+            <AppBarButton x:Name="saveButton1" Click="{x:Bind ViewModel.Save}" Icon="Save"
+                          Label="Save" />
+            <!--  open button  -->
+            <AppBarButton x:Name="openButton1" Click="{x:Bind ViewModel.Open}" Icon="OpenFile"
+                          Label="Open" />
+            <!--  details toggle  -->
+            <AppBarToggleButton x:Name="toggleButton1" Icon="ClosePane"
+                                IsChecked="{Binding IsPaneOpen, ElementName=splitView, Mode=TwoWay}"
+                                Label="Details" />
+            <CommandBar.SecondaryCommands>
+                <!--  save button  -->
+                <AppBarButton x:Name="saveButton2" Click="{x:Bind ViewModel.Save}" Label="Save" />
+                <!--  open button  -->
+                <AppBarButton x:Name="openButton2" Click="{x:Bind ViewModel.Open}" Label="Open" />
+                <!--  details toggle  -->
+                <AppBarToggleButton x:Name="toggleButton2"
+                                    IsChecked="{Binding IsPaneOpen, ElementName=splitView, Mode=TwoWay}"
+                                    Label="Details" />
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+
+        <SplitView x:Name="splitView" Grid.Row="1">
+            <SplitView.Pane>
+                <Rectangle Fill="LightSteelBlue" />
+            </SplitView.Pane>
+            <SplitView.Content>
+                <TextBox x:Name="textBox"
+                         Text="{Binding File.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         TextWrapping="Wrap" />
+            </SplitView.Content>
+        </SplitView>
+
+    </Grid>
+
+</Page>
+
