@@ -135,7 +135,15 @@ namespace Template10.Controls
             var buttons = _navButtons
                 .Where(x => Equals(x.Value.PageType, pageType));
 
-            pageParam = pageParam ?? NavigationService.CurrentPageParam;
+            if (pageParam == null)
+                pageParam = NavigationService.CurrentPageParam;
+            else
+                try
+                {
+                    pageParam = NavigationService.FrameFacade.SerializationService.Deserialize(pageParam.ToString());
+                }
+                catch { }
+
             buttons = buttons
                 .Where(x => Equals(x.Value.PageParameter, null) || Equals(x.Value.PageParameter, pageParam));
 
@@ -509,6 +517,8 @@ namespace Template10.Controls
                     if (ShellSplitView.DisplayMode == SplitViewDisplayMode.Overlay && ShellSplitView.IsPaneOpen)
                         ShellSplitView.IsPaneOpen = false;
                     else if (ShellSplitView.DisplayMode == SplitViewDisplayMode.CompactOverlay && ShellSplitView.IsPaneOpen)
+                        ShellSplitView.IsPaneOpen = false;
+                    else if (ShellSplitView.DisplayMode == SplitViewDisplayMode.CompactInline && ShellSplitView.IsPaneOpen)
                         ShellSplitView.IsPaneOpen = false;
                 }
             }

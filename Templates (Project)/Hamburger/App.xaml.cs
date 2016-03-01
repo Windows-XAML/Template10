@@ -16,7 +16,6 @@ namespace Sample
         {
             InitializeComponent();
             SplashFactory = (e) => new Views.Splash(e);
-            Template10.Services.LoggingService.LoggingService.Enabled = true;
 
             #region App settings
 
@@ -28,13 +27,12 @@ namespace Sample
             #endregion
         }
 
-            // runs even if restored from state
         public override Task OnInitializeAsync(IActivatedEventArgs args)
         {
             // content may already be shell when resuming
             if ((Window.Current.Content as ModalDialog) == null)
             {
-                // setup hamburger shell
+                // setup hamburger shell inside a modal dialog
                 var nav = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include);
                 Window.Current.Content = new ModalDialog
                 {
@@ -46,9 +44,10 @@ namespace Sample
             return Task.CompletedTask;
         }
 
-        // runs only when not restored from state
         public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
+            // long-running startup tasks go here
+
             NavigationService.Navigate(typeof(Views.MainPage));
             return Task.CompletedTask;
         }       

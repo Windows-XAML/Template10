@@ -182,7 +182,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid x:Name="RootGrid">
+    <Grid x:Name="RootGrid" Background="{x:Bind HamburgerBackground, FallbackValue=DarkRed, Mode=OneWay}">
 
         <VisualStateManager.VisualStateGroups>
 
@@ -216,7 +216,7 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="ShellSplitView.DisplayMode" Value="CompactInline" />
-                        <Setter Target="HamburgerButton.Visibility" Value="Collapsed" />
+                        <Setter Target="HamburgerButton.Visibility" Value="Visible" />
                         <Setter Target="ShellSplitView.IsPaneOpen" Value="True" />
                     </VisualState.Setters>
                 </VisualState>
@@ -362,7 +362,8 @@
 
         </SplitView>
 
-        <Grid Grid.Row="0" Visibility="{x:Bind HamburgerButtonVisibility, Mode=OneWay}">
+        <Grid Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top"
+              Visibility="{x:Bind HamburgerButtonVisibility, Mode=OneWay}">
             <Button x:Name="HamburgerButton"
                     Background="{x:Bind HamburgerBackground, FallbackValue=DarkRed, Mode=OneWay}"
                     Command="{x:Bind HamburgerCommand}"
