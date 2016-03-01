@@ -85,7 +85,7 @@ namespace Template10.Services.NavigationService
                     return viewModel;
                 }
             }
-            return (INavigable)page.DataContext;
+            return page.DataContext as INavigable;
         }
 
         // before navigate (cancellable)
