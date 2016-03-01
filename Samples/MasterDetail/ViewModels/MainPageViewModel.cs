@@ -2,10 +2,12 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using Template10.Mvvm;
 using Windows.UI.Xaml.Navigation;
+using Samples.MasterDetail.Views;
+using Template10.Common;
+using Template10.Mvvm;
 
-namespace Messaging.ViewModels
+namespace Samples.MasterDetail.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
@@ -29,6 +31,9 @@ namespace Messaging.ViewModels
 
         string _searchText = default(string);
         public string SearchText { get { return _searchText; } set { Set(ref _searchText, value); } }
+
+        public DelegateCommand SwitchToControlCommand =
+            new DelegateCommand(() => BootStrapper.Current.NavigationService.Navigate(typeof (MasterDetailsPage)));
 
         Models.Message _selected = default(Models.Message);
         public object Selected
