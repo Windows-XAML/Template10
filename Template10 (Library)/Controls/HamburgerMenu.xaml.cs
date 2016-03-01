@@ -442,7 +442,7 @@ namespace Template10.Controls
             // do not remove this if statement
             //// this is the fix for #410 (click twice)
             if (previous != null)
-                IsOpen = false;
+                IsOpen = (DisplayMode == SplitViewDisplayMode.CompactInline && IsOpen);
 
             // undo previous
             if (previous?.IsChecked ?? true && previous != value)
@@ -459,7 +459,7 @@ namespace Template10.Controls
             {
                 if (NavigationService.Navigate(value.PageType, value?.PageParameter, value?.NavigationTransitionInfo))
                 {
-                    IsOpen = false;
+                    IsOpen = (DisplayMode == SplitViewDisplayMode.CompactInline && IsOpen);
                     if (value.ClearHistory)
                         NavigationService.ClearHistory();
                 }
