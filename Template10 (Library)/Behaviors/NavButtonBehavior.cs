@@ -16,7 +16,6 @@ namespace Template10.Behaviors
     [Microsoft.Xaml.Interactivity.TypeConstraint(typeof(Button))]
     public class NavButtonBehavior : DependencyObject, IBehavior
     {
-        bool update = false;
         private long _goBackReg;
         private long _goForwardReg;
         private IDispatcherWrapper _dispatcher;
