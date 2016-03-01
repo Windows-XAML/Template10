@@ -132,7 +132,7 @@ namespace Template10.Controls
             DebugWrite($"PageType: {pageType} PageParam: {pageParam}");
 
             pageType = pageType ?? NavigationService.CurrentPageType;
-            var buttons = _navButtons
+            var type_match_buttons = _navButtons
                 .Where(x => Equals(x.Value.PageType, pageType));
 
             if (pageParam == null)
@@ -144,11 +144,15 @@ namespace Template10.Controls
                 }
                 catch { }
 
-            buttons = buttons
+            var param_match_buttons = type_match_buttons
                 .Where(x => Equals(x.Value.PageParameter, null) || Equals(x.Value.PageParameter, pageParam));
 
-            Selected = buttons
-                .Select(x => x.Value).FirstOrDefault();
+            var button = param_match_buttons.Select(x => x.Value).FirstOrDefault();
+
+            if (button == null)
+                button = type_match_buttons.Select(x => x.Value).FirstOrDefault();
+
+            Selected = button;
         }
 
         #region commands
@@ -468,6 +472,10 @@ namespace Template10.Controls
                 {
                     if (value.ClearHistory)
                         NavigationService.ClearHistory();
+                }
+                else if (NavigationService.CurrentPageType == value.PageType)
+                {
+                    // just check it
                 }
                 else
                 {
