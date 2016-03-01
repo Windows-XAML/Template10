@@ -623,12 +623,16 @@ namespace Template10.Controls
             {
                 ShellSplitView.IsHitTestVisible = ShellSplitView.IsEnabled = false;
                 ShellSplitView.Content = null;
+                if (RootGrid.Children.Contains(ShellSplitView))
+                    RootGrid.Children.Remove(ShellSplitView);
                 if (!RootGrid.Children.Contains(frame) && frame != null)
                     RootGrid.Children.Add(frame);
             }
             else
             {
                 ShellSplitView.IsHitTestVisible = ShellSplitView.IsEnabled = true;
+                if (!RootGrid.Children.Contains(ShellSplitView))
+                    RootGrid.Children.Add(ShellSplitView);
                 if (RootGrid.Children.Contains(frame) && frame != null)
                     RootGrid.Children.Remove(frame);
                 ShellSplitView.Content = frame;
@@ -706,15 +710,17 @@ namespace Template10.Controls
             // add this radio to the list
             var r = sender as RadioButton;
             var i = r.DataContext as HamburgerButtonInfo;
-            _navButtons.Add(r, i);
-            HighlightCorrectButton();
-
-            if (!_areNavButtonsLoaded)
+            if (!_navButtons.ContainsKey(r))
             {
-                _navButtonsLoadedCounter++;
-                if (_navButtonsLoadedCounter >= NavButtonCount)
-                    _areNavButtonsLoaded = true;
+                _navButtons.Add(r, i);
+                if (!_areNavButtonsLoaded)
+                {
+                    _navButtonsLoadedCounter++;
+                    if (_navButtonsLoadedCounter >= NavButtonCount)
+                        _areNavButtonsLoaded = true;
+                }
             }
+            HighlightCorrectButton();
         }
 
         private void NavButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
