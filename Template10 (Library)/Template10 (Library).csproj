@@ -161,6 +161,7 @@
     <Compile Include="Controls\PageHeader.cs" />
     <Compile Include="Controls\PiePiece.cs" />
     <Compile Include="Controls\Resizer.cs" />
+    <Compile Include="Controls\RingSegment.cs" />
     <Compile Include="Converters\ChangeTypeConverter.cs" />
     <Compile Include="Converters\DateTimeOffsetConverter.cs" />
     <Compile Include="Converters\StringFormatConverter.cs" />

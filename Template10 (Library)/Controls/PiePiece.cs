@@ -6,6 +6,7 @@ using Windows.UI.Xaml.Shapes;
 
 namespace Template10.Controls
 {
+    [Obsolete("Use RignSegment instead")]
     public class PieSlice : Path
     {
         private bool _loaded = false;
