@@ -58,7 +58,6 @@ namespace Template10.Behaviors
             UnregisterPropertyChangedCallback(Frame.CanGoForwardProperty, _goForwardReg);
         }
 
-        private void SizeChanged(object sender, SizeChangedEventArgs e) { update = true; }
         private void LayoutUpdated(object sender, object e) { DoCalculate?.Invoke(this, EventArgs.Empty); }
 
         private void Element_Click(object sender, RoutedEventArgs e)
@@ -139,11 +138,6 @@ namespace Template10.Behaviors
             {
                 behavior._goBackReg = frame.RegisterPropertyChangedCallback(Frame.CanGoBackProperty, (s, e) => behavior.DoCalculate?.Invoke(behavior, EventArgs.Empty));
                 behavior._goForwardReg = frame.RegisterPropertyChangedCallback(Frame.CanGoForwardProperty, (s, e) => behavior.DoCalculate?.Invoke(behavior, EventArgs.Empty));
-                frame.SizeChanged += new Common.WeakReference<NavButtonBehavior, object, SizeChangedEventArgs>(behavior)
-                {
-                    EventAction = (i, s, e) => behavior.SizeChanged(s, e),
-                    DetachAction = (i, w) => frame.SizeChanged -= w.Handler,
-                }.Handler;
                 frame.LayoutUpdated += new Common.WeakReference<NavButtonBehavior, object, object>(behavior)
                 {
                     EventAction = (i, s, e) => behavior.LayoutUpdated(s, e),
