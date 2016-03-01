@@ -47,7 +47,7 @@ namespace Template10.Behaviors
                     EventAction = (i, s, e) => Element_Click(s, e),
                     DetachAction = (i, w) => element.Click -= w.Handler,
                 }.Handler;
-                DoCalculate?.Invoke(this, EventArgs.Empty);
+                Calculate();
             }
         }
 
