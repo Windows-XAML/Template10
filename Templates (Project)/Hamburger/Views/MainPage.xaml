@@ -65,7 +65,7 @@
             <!--  place below page header  -->
             <RelativePanel.Below>pageHeader</RelativePanel.Below>
             <RelativePanel.AlignLeftWithPanel>True</RelativePanel.AlignLeftWithPanel>
-            <TextBox MinWidth="250" MinHeight="62"
+            <TextBox MinWidth="150" MinHeight="62"
                      Header="Parameter to pass"
                      Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      TextWrapping="Wrap">
