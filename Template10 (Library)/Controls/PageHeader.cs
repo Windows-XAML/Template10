@@ -62,10 +62,10 @@ namespace Template10.Controls
             DependencyProperty.Register(nameof(VisualStateNarrowMinWidth), typeof(double), typeof(PageHeader), new PropertyMetadata(-1, VisualStateNarrowMinWidthChanged));
         private static void VisualStateNarrowMinWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (!Equals(e.NewValue, -1) && XamlUtils.Ancestor<HamburgerMenu>(d as Control) == null)
-            {
-                (d as PageHeader).VisualStateNarrowMinWidth = -1;
-            }
+            //if (!Equals(e.NewValue, -1) && XamlUtils.Ancestor<HamburgerMenu>(d as Control) == null)
+            //{
+            //    (d as PageHeader).VisualStateNarrowMinWidth = -1;
+            //}
         }
 
         public double VisualStateNormalMinWidth { get { return (double)GetValue(VisualStateNormalMinWidthProperty); } set { SetValue(VisualStateNormalMinWidthProperty, value); } }

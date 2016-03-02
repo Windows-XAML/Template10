@@ -632,7 +632,7 @@ namespace Template10.Controls
             {
                 ShellSplitView.IsHitTestVisible = ShellSplitView.IsEnabled = true;
                 if (!RootGrid.Children.Contains(ShellSplitView))
-                    RootGrid.Children.Add(ShellSplitView);
+                    RootGrid.Children.Insert(0, ShellSplitView);
                 if (RootGrid.Children.Contains(frame) && frame != null)
                     RootGrid.Children.Remove(frame);
                 ShellSplitView.Content = frame;
