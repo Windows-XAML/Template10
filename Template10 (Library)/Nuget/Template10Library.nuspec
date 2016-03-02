@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/01/nuspec.xsd">
   <metadata minClientVersion="3.0">
 
-    <version>1.1.6</version>
+    <version>1.1.7</version>
 
     <id>Template10</id>
 
@@ -21,15 +21,15 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
 
     <description>
-      A rich library of helpers, services, and base classes for new and
-      existing Windows UWP apps to maximize awesomeness and minimize boilerplate garbage.
-      This library has a companion Visual Studio Extension also called "Template 10".
+A rich library of helpers, services, and base classes for new and
+existing Windows UWP apps to maximize awesomeness and minimize boilerplate garbage.
+This library has a companion Visual Studio Extension called "Template 10 Template Pack".
     </description>
 
     <summary>
-      A rich library of helpers, services, and base classes for new and existing
-      Windows UWP apps to maximize awesomeness and minimize boilerplate garbage.
-      This library has a companion Visual Studio Extension also called "Template 10".
+A rich library of helpers, services, and base classes for new and existing
+Windows UWP apps to maximize awesomeness and minimize boilerplate garbage.
+This library has a companion Visual Studio Extension called "Template 10Template Pack".
     </summary>
 
     <tags>
@@ -41,9 +41,12 @@
     <language />
 
     <releaseNotes>
+      Version 1.1.7
+      Correcting Hamburger focus error.
       Version 1.1.6
       Correcting activation error.
       Also correcting perf in NavBehavior.
+      Now including Rx-Main
       Version 1.1.5
       Correcting double navigation.
       Correcting missing back button behavior.
