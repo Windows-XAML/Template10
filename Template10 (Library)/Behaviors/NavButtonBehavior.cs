@@ -54,6 +54,8 @@ namespace Template10.Behaviors
 
         public void Detach()
         {
+            if (Frame != null)
+                Frame.LayoutUpdated -= LayoutUpdated;
             UnregisterPropertyChangedCallback(Frame.CanGoBackProperty, _goBackReg);
             UnregisterPropertyChangedCallback(Frame.CanGoForwardProperty, _goForwardReg);
         }
@@ -138,11 +140,7 @@ namespace Template10.Behaviors
             {
                 behavior._goBackReg = frame.RegisterPropertyChangedCallback(Frame.CanGoBackProperty, (s, e) => behavior.DoCalculate?.Invoke(behavior, EventArgs.Empty));
                 behavior._goForwardReg = frame.RegisterPropertyChangedCallback(Frame.CanGoForwardProperty, (s, e) => behavior.DoCalculate?.Invoke(behavior, EventArgs.Empty));
-                frame.LayoutUpdated += new Common.WeakReference<NavButtonBehavior, object, object>(behavior)
-                {
-                    EventAction = (i, s, e) => behavior.LayoutUpdated(s, e),
-                    DetachAction = (i, w) => frame.LayoutUpdated -= w.Handler,
-                }.Handler;
+                frame.LayoutUpdated += behavior.LayoutUpdated;
             }
             behavior.DoCalculate?.Invoke(behavior, EventArgs.Empty);
         }
