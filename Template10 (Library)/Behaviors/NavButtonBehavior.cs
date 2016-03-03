@@ -63,9 +63,16 @@ namespace Template10.Behaviors
             UnregisterPropertyChangedCallback(Frame.CanGoForwardProperty, _goForwardReg);
         }
 
-        bool update = false;
-        private void SizeChanged(object sender, SizeChangedEventArgs e) { update = true; }
-        private void LayoutUpdated(object sender, object e) { if (update) DoCalculate?.Invoke(this, EventArgs.Empty); }
+        bool _letLayoutUpdatedInvoke = false;
+        private void SizeChanged(object sender, SizeChangedEventArgs e) { _letLayoutUpdatedInvoke = true; }
+        private void LayoutUpdated(object sender, object e)
+        {
+            if (_letLayoutUpdatedInvoke)
+            {
+                _letLayoutUpdatedInvoke = false;
+                DoCalculate?.Invoke(this, EventArgs.Empty);
+            }
+        }
 
         private void Element_Click(object sender, RoutedEventArgs e)
         {

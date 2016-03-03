@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/01/nuspec.xsd">
   <metadata minClientVersion="3.0">
 
-    <version>1.1.7</version>
+    <version>1.1.8</version>
 
     <id>Template10</id>
 
@@ -41,6 +41,8 @@ This library has a companion Visual Studio Extension called "Template 10Template
     <language />
 
     <releaseNotes>
+      Version 1.1.8
+      Resolving edge case deadlock in NavButton.
       Version 1.1.7
       Correcting Hamburger focus error.
       Version 1.1.6
