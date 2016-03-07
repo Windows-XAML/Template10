@@ -20,14 +20,14 @@ namespace Template10.Utils
             var di = windowWrapper.DisplayInformation();
             di.OrientationChanged += new Common.WeakReference<MonitorUtils, DisplayInformation, object>(this)
             {
-                EventAction = (i, s, e) => Changed?.Invoke(i, EventArgs.Empty),
+                EventAction = (i, s, e) => i.Changed?.Invoke(i, EventArgs.Empty),
                 DetachAction = (i, w) => di.OrientationChanged -= w.Handler
             }.Handler;
 
             var av = windowWrapper.ApplicationView();
             av.VisibleBoundsChanged += new Common.WeakReference<MonitorUtils, ApplicationView, object>(this)
             {
-                EventAction = (i, s, e) => Changed?.Invoke(i, EventArgs.Empty),
+                EventAction = (i, s, e) => i.Changed?.Invoke(i, EventArgs.Empty),
                 DetachAction = (i, w) => av.VisibleBoundsChanged -= w.Handler
             }.Handler;
 
