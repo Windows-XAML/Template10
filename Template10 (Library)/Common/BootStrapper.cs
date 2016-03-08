@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -590,12 +591,19 @@ namespace Template10.Common
             }
             catch { /* this is okay */ }
 
-            // setup custom titlebar
-            foreach (var resource in Application.Current.Resources
-                .Where(x => x.Key.Equals(typeof(Controls.CustomTitleBar))))
+            // this wonky style of loop is important due to a platform bug
+            int count = Application.Current.Resources.Count;
+            foreach (var resource in Application.Current.Resources)
             {
-                var control = new Controls.CustomTitleBar();
-                control.Style = resource.Value as Style;
+                var k = resource.Key;
+                if (k == typeof(Controls.CustomTitleBar))
+                {
+                    var s = resource.Value as Style;
+                    var t = new Controls.CustomTitleBar();
+                    t.Style = s;
+                }
+                count--;
+                if (count == 0) break;
             }
 
             // create the default frame only if there's nothing already there
