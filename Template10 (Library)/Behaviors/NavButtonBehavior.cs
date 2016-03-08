@@ -8,7 +8,6 @@ using Microsoft.Xaml.Interactivity;
 using Template10.Utils;
 using System;
 using Template10.Common;
-using System.Reactive.Linq;
 
 namespace Template10.Behaviors
 {
@@ -35,11 +34,6 @@ namespace Template10.Behaviors
             {
                 _dispatcher = Common.DispatcherWrapper.Current();
 
-                // throttled calculate event
-                var observable = Observable.FromEventPattern(this, nameof(DoCalculate));
-                var throttled = observable.Throttle(TimeSpan.FromMilliseconds(1000));
-                throttled.Subscribe(x => Calculate());
-
                 // handle click
                 element.Click += new Common.WeakReference<NavButtonBehavior, object, RoutedEventArgs>(this)
                 {
@@ -49,8 +43,6 @@ namespace Template10.Behaviors
                 Calculate();
             }
         }
-
-        public event EventHandler DoCalculate;
 
         public void Detach()
         {
@@ -63,14 +55,14 @@ namespace Template10.Behaviors
             UnregisterPropertyChangedCallback(Frame.CanGoForwardProperty, _goForwardReg);
         }
 
-        bool _letLayoutUpdatedInvoke = false;
+        volatile bool _letLayoutUpdatedInvoke = false;
         private void SizeChanged(object sender, SizeChangedEventArgs e) { _letLayoutUpdatedInvoke = true; }
         private void LayoutUpdated(object sender, object e)
         {
             if (_letLayoutUpdatedInvoke)
             {
                 _letLayoutUpdatedInvoke = false;
-                DoCalculate?.Invoke(this, EventArgs.Empty);
+                Calculate();
             }
         }
 
@@ -150,12 +142,12 @@ namespace Template10.Behaviors
             var frame = args.NewValue as Frame;
             if (frame != null)
             {
-                behavior._goBackReg = frame.RegisterPropertyChangedCallback(Frame.CanGoBackProperty, (s, e) => behavior.DoCalculate?.Invoke(behavior, EventArgs.Empty));
-                behavior._goForwardReg = frame.RegisterPropertyChangedCallback(Frame.CanGoForwardProperty, (s, e) => behavior.DoCalculate?.Invoke(behavior, EventArgs.Empty));
+                behavior._goBackReg = frame.RegisterPropertyChangedCallback(Frame.CanGoBackProperty, (s, e) => behavior.Calculate());
+                behavior._goForwardReg = frame.RegisterPropertyChangedCallback(Frame.CanGoForwardProperty, (s, e) => behavior.Calculate());
                 frame.SizeChanged += behavior.SizeChanged;
                 frame.LayoutUpdated += behavior.LayoutUpdated;
             }
-            behavior.DoCalculate?.Invoke(behavior, EventArgs.Empty);
+            behavior.Calculate();
         }
 
         public static Visibility CalculateForwardVisibility(Frame frame)
