@@ -10,5 +10,18 @@ namespace Messaging.Views
         {
             InitializeComponent();
         }
+
+        public int ThrottledEventCount
+        {
+            get { return (int) GetValue(ThrottledEventCountProperty); }
+            set { SetValue(ThrottledEventCountProperty, value); }
+        }
+
+        public static readonly DependencyProperty ThrottledEventCountProperty = DependencyProperty.Register("ThrottledEventCount", typeof (int), typeof (MainPage), new PropertyMetadata(0));
+
+        public void IncreaseThrottledEventCount()
+        {
+            ThrottledEventCount = ThrottledEventCount + 1;
+        }
     }
 }

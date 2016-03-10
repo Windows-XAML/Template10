@@ -16,7 +16,6 @@ namespace Template10.Behaviors
     [Microsoft.Xaml.Interactivity.TypeConstraint(typeof(Button))]
     public class NavButtonBehavior : DependencyObject, IBehavior
     {
-        bool update = false;
         private long _goBackReg;
         private long _goForwardReg;
         private IDispatcherWrapper _dispatcher;
@@ -47,7 +46,7 @@ namespace Template10.Behaviors
                     EventAction = (i, s, e) => Element_Click(s, e),
                     DetachAction = (i, w) => element.Click -= w.Handler,
                 }.Handler;
-                DoCalculate?.Invoke(this, EventArgs.Empty);
+                Calculate();
             }
         }
 
@@ -55,12 +54,25 @@ namespace Template10.Behaviors
 
         public void Detach()
         {
+            if (Frame != null)
+            {
+                Frame.SizeChanged -= SizeChanged;
+                Frame.LayoutUpdated -= LayoutUpdated;
+            }
             UnregisterPropertyChangedCallback(Frame.CanGoBackProperty, _goBackReg);
             UnregisterPropertyChangedCallback(Frame.CanGoForwardProperty, _goForwardReg);
         }
 
-        private void SizeChanged(object sender, SizeChangedEventArgs e) { update = true; }
-        private void LayoutUpdated(object sender, object e) { DoCalculate?.Invoke(this, EventArgs.Empty); }
+        bool _letLayoutUpdatedInvoke = false;
+        private void SizeChanged(object sender, SizeChangedEventArgs e) { _letLayoutUpdatedInvoke = true; }
+        private void LayoutUpdated(object sender, object e)
+        {
+            if (_letLayoutUpdatedInvoke)
+            {
+                _letLayoutUpdatedInvoke = false;
+                DoCalculate?.Invoke(this, EventArgs.Empty);
+            }
+        }
 
         private void Element_Click(object sender, RoutedEventArgs e)
         {
@@ -140,16 +152,8 @@ namespace Template10.Behaviors
             {
                 behavior._goBackReg = frame.RegisterPropertyChangedCallback(Frame.CanGoBackProperty, (s, e) => behavior.DoCalculate?.Invoke(behavior, EventArgs.Empty));
                 behavior._goForwardReg = frame.RegisterPropertyChangedCallback(Frame.CanGoForwardProperty, (s, e) => behavior.DoCalculate?.Invoke(behavior, EventArgs.Empty));
-                frame.SizeChanged += new Common.WeakReference<NavButtonBehavior, object, SizeChangedEventArgs>(behavior)
-                {
-                    EventAction = (i, s, e) => behavior.SizeChanged(s, e),
-                    DetachAction = (i, w) => frame.SizeChanged -= w.Handler,
-                }.Handler;
-                frame.LayoutUpdated += new Common.WeakReference<NavButtonBehavior, object, object>(behavior)
-                {
-                    EventAction = (i, s, e) => behavior.LayoutUpdated(s, e),
-                    DetachAction = (i, w) => frame.LayoutUpdated -= w.Handler,
-                }.Handler;
+                frame.SizeChanged += behavior.SizeChanged;
+                frame.LayoutUpdated += behavior.LayoutUpdated;
             }
             behavior.DoCalculate?.Invoke(behavior, EventArgs.Empty);
         }

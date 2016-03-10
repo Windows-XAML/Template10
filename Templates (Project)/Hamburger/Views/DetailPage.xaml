@@ -8,8 +8,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:Sample.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:vm="using:Sample.ViewModels" x:Name="ThisPage"
-      mc:Ignorable="d">
+      xmlns:vm="using:Sample.ViewModels" x:Name="ThisPage" mc:Ignorable="d">
 
     <Page.DataContext>
         <vm:DetailPageViewModel x:Name="ViewModel" />
@@ -52,9 +51,6 @@
             <RelativePanel.AlignTopWithPanel>True</RelativePanel.AlignTopWithPanel>
             <RelativePanel.AlignRightWithPanel>True</RelativePanel.AlignRightWithPanel>
             <RelativePanel.AlignLeftWithPanel>True</RelativePanel.AlignLeftWithPanel>
-            <Interactivity:Interaction.Behaviors>
-                <Behaviors:EllipsisBehavior Visibility="Auto" />
-            </Interactivity:Interaction.Behaviors>
         </controls:PageHeader>
 
         <!--  content  -->

@@ -25,17 +25,17 @@ namespace Sample
             #endregion
         }
 
-        public override Task OnInitializeAsync(IActivatedEventArgs args)
+        public override async Task OnInitializeAsync(IActivatedEventArgs args)
         {
-            return Task.CompletedTask;
+            await Task.CompletedTask;
         }
 
-        public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
+        public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
             // long-running startup tasks go here
 
             NavigationService.Navigate(typeof(Views.MainPage));
-            return Task.CompletedTask;
+            await Task.CompletedTask;
         }
     }
 }

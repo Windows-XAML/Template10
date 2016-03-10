@@ -24,7 +24,10 @@ namespace Template10.Services.LoggingService
             switch (target)
             {
                 case Targets.Debug:
-                    System.Diagnostics.Debug.WriteLineIf(Enabled, $"{DateTime.Now.TimeOfDay.ToString()} {severity} {caller} {text}");
+                    if (Enabled)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"{DateTime.Now.TimeOfDay.ToString()} {severity} {caller} {text}");
+                    }
                     break;
                 case Targets.Log:
                     throw new NotImplementedException();

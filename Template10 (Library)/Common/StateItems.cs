@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Template10.Common
 {
-    public class StateItems : Dictionary<string, Object>, IStateItems
+    public class StateItems : Dictionary<string, object>, IStateItems
     {
         #region Obsolete 
 
         [Obsolete("Use Add(string, Object) instead.")]
-        public KeyValuePair<StateItemKey, Object> Add(Type type, string key, object value)
+        public KeyValuePair<StateItemKey, object> Add(Type type, string key, object value)
         {
             if (Contains(type, key))
                 throw new ArgumentException("Same type+key exists.");
@@ -31,15 +31,15 @@ namespace Template10.Common
         [Obsolete("Use Remove(string) instead.")]
         public void Remove(Type type, string key)
         {
-            base.Remove(new StateItemKey(type, key).ToString());
+            base.Remove(new StateItemKey(type, key).ToString()); 
         }
 
-        [Obsolete("Use Remove(string) instead.")]
-        public void Remove(object value)
-        {
-            var willRemove = this.Where(x => Object.Equals(x.Value, value)).ToList();
-            willRemove.ForEach(x => base.Remove(x.Key));
-        }
+        //[Obsolete("Use Remove(string) instead.")]
+        //public void Remove(object value)
+        //{
+        //    var willRemove = this.Where(x => Object.Equals(x.Value, value)).ToList();
+        //    willRemove.ForEach(x => base.Remove(x.Key));
+        //}
 
         [Obsolete("Use ContainsKey(string) instead.")]
         public bool Contains(Type type, string key, object value)
