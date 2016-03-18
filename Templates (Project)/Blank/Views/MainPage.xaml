@@ -15,18 +15,14 @@
 
     <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-        <controls:PageHeader x:Name="pageHeader" Content="Main Page">
-            <!--  place stretched, across top  -->
-            <RelativePanel.AlignTopWithPanel>True</RelativePanel.AlignTopWithPanel>
-            <RelativePanel.AlignRightWithPanel>True</RelativePanel.AlignRightWithPanel>
-            <RelativePanel.AlignLeftWithPanel>True</RelativePanel.AlignLeftWithPanel>
-        </controls:PageHeader>
+        <controls:PageHeader x:Name="pageHeader" Content="Main Page"
+                             RelativePanel.AlignLeftWithPanel="True"
+                             RelativePanel.AlignRightWithPanel="True"
+                             RelativePanel.AlignTopWithPanel="True" />
 
-        <TextBlock x:Name="mainTextBlock" Margin="16,12,0,0" Text="Hello World">
-            <!--  place below page header  -->
-            <RelativePanel.Below>pageHeader</RelativePanel.Below>
-            <RelativePanel.AlignLeftWithPanel>True</RelativePanel.AlignLeftWithPanel>
-        </TextBlock>
+        <TextBlock x:Name="mainTextBlock" Margin="16,12,0,0"
+                   RelativePanel.AlignLeftWithPanel="True"
+                   RelativePanel.Below="pageHeader" Text="Hello World" />
 
     </RelativePanel>
 
