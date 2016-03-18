@@ -10,19 +10,20 @@ namespace Messaging
             InitializeComponent();
         }
 
-        public enum Pages { MainPage }
+        public enum Pages { MainPage, DetailPage, AboutPage }
 
         public override Task OnInitializeAsync(IActivatedEventArgs args)
         {
-            var keys = PageKeys<Pages>();
-            keys.Add(Pages.MainPage, typeof(Views.MainPage));
-            return base.OnInitializeAsync(args);
+            PageKeys<Pages>().Add(Pages.MainPage, typeof(Views.MainPage));
+            PageKeys<Pages>().Add(Pages.DetailPage, null); // TODO
+            PageKeys<Pages>().Add(Pages.AboutPage, null); // TODO
+            return Task.CompletedTask;
         }
 
         public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
             NavigationService.Navigate(Pages.MainPage, 2);
-			return Task.CompletedTask;
-		}
+            return Task.CompletedTask;
+        }
     }
 }
