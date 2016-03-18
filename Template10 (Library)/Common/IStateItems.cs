@@ -10,6 +10,7 @@ namespace Template10.Common
         T Get<T>(string key);
         void Add(string key, object value);
         bool Remove(string key);
+        void Clear();
 
         object this[string key] { get; }
 
