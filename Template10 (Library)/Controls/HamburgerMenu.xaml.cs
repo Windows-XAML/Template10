@@ -264,7 +264,6 @@ namespace Template10.Controls
                             NavButtonCheckedBackground = color?.Lighten(ColorUtils.Accents.Plus20).ToSolidColorBrush();
                             NavButtonPressedBackground = Colors.Gainsboro.Darken(ColorUtils.Accents.Plus40).ToSolidColorBrush();
                             NavButtonHoverBackground = Colors.Gainsboro.Darken(ColorUtils.Accents.Plus60).ToSolidColorBrush();
-                            NavButtonCheckedForeground = Colors.White.ToSolidColorBrush();
                             SecondarySeparator = PaneBorderBrush = Colors.Gainsboro.Darken(ColorUtils.Accents.Plus40).ToSolidColorBrush();
                         }
                         break;
@@ -279,7 +278,6 @@ namespace Template10.Controls
                             NavButtonCheckedBackground = color?.Darken(ColorUtils.Accents.Plus40).ToSolidColorBrush();
                             NavButtonPressedBackground = Colors.Gainsboro.Lighten(ColorUtils.Accents.Plus40).ToSolidColorBrush();
                             NavButtonHoverBackground = Colors.Gainsboro.Lighten(ColorUtils.Accents.Plus60).ToSolidColorBrush();
-                            NavButtonCheckedForeground = Colors.White.ToSolidColorBrush();
                             SecondarySeparator = PaneBorderBrush = Colors.Gainsboro.ToSolidColorBrush();
                         }
                         break;
