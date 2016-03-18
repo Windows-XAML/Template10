@@ -14,9 +14,13 @@ namespace Messaging
 
         public override Task OnInitializeAsync(IActivatedEventArgs args)
         {
-            PageKeys<Pages>().Add(Pages.MainPage, typeof(Views.MainPage));
-            PageKeys<Pages>().Add(Pages.DetailPage, null); // TODO
-            PageKeys<Pages>().Add(Pages.AboutPage, null); // TODO
+            var keys = PageKeys<Pages>();
+            if (!keys.ContainsKey(Pages.MainPage))
+                keys.Add(Pages.MainPage, typeof(Views.MainPage));
+            if (!keys.ContainsKey(Pages.DetailPage))
+                keys.Add(Pages.DetailPage, null); // TODO
+            if (!keys.ContainsKey(Pages.AboutPage))
+                keys.Add(Pages.AboutPage, null); // TODO
             return Task.CompletedTask;
         }
 
