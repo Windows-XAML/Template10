@@ -11,7 +11,8 @@
 
     <Grid Background="{StaticResource ExtendedSplashBackground}">
 
-        <Canvas x:Name="rootCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Canvas x:Name="rootCanvas" HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch">
             <Canvas.Background>
                 <ImageBrush ImageSource="ms-appx:///Assets/SplashScreen.png" Stretch="Uniform">
                     <ImageBrush.Transform>
@@ -19,7 +20,9 @@
                     </ImageBrush.Transform>
                 </ImageBrush>
             </Canvas.Background>
-            <Viewbox x:Name="splashImage" Width="{Binding ActualWidth, ElementName=MyCanvas, Mode=OneWay}" Height="{Binding ActualHeight, ElementName=MyCanvas, Mode=OneWay}">
+            <Viewbox x:Name="splashImage"
+                     Width="{Binding ActualWidth, ElementName=MyCanvas, Mode=OneWay}"
+                     Height="{Binding ActualHeight, ElementName=MyCanvas, Mode=OneWay}">
                 <Image Source="ms-appx:///Assets/SplashScreen.png" />
             </Viewbox>
         </Canvas>
