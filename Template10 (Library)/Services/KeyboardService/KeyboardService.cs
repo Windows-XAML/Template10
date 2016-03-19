@@ -92,13 +92,12 @@ namespace Template10.Services.KeyboardService
                 }
 
                 // about
-                else if (e.AltKey && e.ControlKey && e.ShiftKey && e.VirtualKey == Windows.System.VirtualKey.A)
+                else if (e.AltKey && e.ControlKey && e.ShiftKey && e.VirtualKey == Windows.System.VirtualKey.F12)
                 {
                     var open = new Action(async () => { await Windows.System.Launcher.LaunchUriAsync(new Uri("http://aka.ms/template10")); });
                     var about = new Windows.UI.Xaml.Controls.ContentDialog
                     {
                         Title = "Template 10",
-                        Content = "Congratulations. This project uses Template 10, an open source framework for Windows 10 apps written against the Universal Windows Platform.",
                         PrimaryButtonText = "Info",
                         PrimaryButtonCommand = new Mvvm.DelegateCommand(open),
                         SecondaryButtonText = "Close"

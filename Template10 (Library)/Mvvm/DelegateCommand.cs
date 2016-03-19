@@ -59,20 +59,21 @@ namespace Template10.Mvvm
         [DebuggerStepThrough]
         public bool CanExecute(object p)
         {
-            try
-            {
-                var _Value = (T)Convert.ChangeType(p, typeof(T));
-                return _canExecute == null ? true : _canExecute(_Value);
-            }
+            try { return _canExecute(ConvertParameterValue(p)); }
             catch { return false; }
         }
 
         public void Execute(object p)
         {
-            if (!CanExecute(p))
+            if (!this.CanExecute(p))
                 return;
-            var _Value = (T)Convert.ChangeType(p, typeof(T));
-            _execute(_Value);
+            _execute(ConvertParameterValue(p));
+        }
+
+        private static T ConvertParameterValue(object parameter)
+        {
+            parameter = parameter is T ? parameter : Convert.ChangeType(parameter, typeof(T));
+            return (T)parameter;
         }
 
         public void RaiseCanExecuteChanged()

@@ -1,5 +1,6 @@
 ﻿using Template10.Mvvm;
 using System.Collections.Generic;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Template10.Services.NavigationService;
@@ -20,28 +21,28 @@ namespace Sample.ViewModels
         string _Value = "Gas";
         public string Value { get { return _Value; } set { Set(ref _Value, value); } }
 
-        public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> suspensionState)
+        public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> suspensionState)
         {
             if (suspensionState.Any())
             {
                 Value = suspensionState[nameof(Value)]?.ToString();
             }
-            return Task.CompletedTask;
+            await Task.CompletedTask;
         }
 
-        public override Task OnNavigatedFromAsync(IDictionary<string, object> suspensionState, bool suspending)
+        public override async Task OnNavigatedFromAsync(IDictionary<string, object> suspensionState, bool suspending)
         {
             if (suspending)
             {
                 suspensionState[nameof(Value)] = Value;
             }
-            return Task.CompletedTask;
+            await Task.CompletedTask;
         }
 
-        public override Task OnNavigatingFromAsync(NavigatingEventArgs args)
+        public override async Task OnNavigatingFromAsync(NavigatingEventArgs args)
         {
             args.Cancel = false;
-            return Task.CompletedTask;
+            await Task.CompletedTask;
         }
 
         public void GotoDetailsPage() =>

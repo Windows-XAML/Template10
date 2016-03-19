@@ -12,7 +12,7 @@ namespace Sample.Views
     public sealed partial class Shell : Page
     {
         public static Shell Instance { get; set; }
-        public static HamburgerMenu HamburgerMenu { get { return Instance.MyHamburgerMenu; } }
+        public static HamburgerMenu HamburgerMenu => Instance.MyHamburgerMenu;
 
         public Shell()
         {

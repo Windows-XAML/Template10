@@ -9,6 +9,10 @@ namespace Template10.Common
         bool TryGet<T>(string key, out T value);
         T Get<T>(string key);
         void Add(string key, object value);
+        bool Remove(string key);
+        void Clear();
+
+        object this[string key] { get; }
 
         #region Obsolete 
 

@@ -7,7 +7,9 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:Messaging.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      mc:Ignorable="d">
+      xmlns:behaviors="using:Template10.Behaviors"
+      mc:Ignorable="d"
+      x:Name="ThisPage">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -26,6 +28,18 @@
 
             <!--  content  -->
 
+            <StackPanel>
+                <TextBlock Margin="2" FontWeight="Bold">ThrottleEventBehavior sample</TextBlock>
+                <TextBox Margin="2">
+                    <Interactivity:Interaction.Behaviors>
+                        <behaviors:ThrottledEventTriggerBehavior ResetTimer="{Binding ElementName=ThrottleResetTimer, Path=IsChecked, Mode=OneWay, FallbackValue=false}" Throttle="1000" EventName="TextChanged">
+                            <Core:CallMethodAction MethodName="IncreaseThrottledEventCount" TargetObject="{Binding ElementName=ThisPage}" />
+                        </behaviors:ThrottledEventTriggerBehavior>
+                    </Interactivity:Interaction.Behaviors>
+                </TextBox>
+                <CheckBox Margin="2" x:Name="ThrottleResetTimer">Reset throttle timer after event</CheckBox>
+                <TextBlock Margin="2"><Run>Throttled event count: </Run><Run Text="{Binding ElementName=ThisPage, Path=ThrottledEventCount}"/></TextBlock>
+            </StackPanel>
         </Grid>
 
         <!--  #endregion  -->
