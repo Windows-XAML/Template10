@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25029.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates (Project)", "Templates (Project)", "{E9D12E06-A958-4FD7-A2BE-CE590A1FDFDB}"
 EndProject
@@ -64,6 +64,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Snippets", "Snippets", "{82
 		Snippets\T10_Event.snippet = Snippets\T10_Event.snippet
 		Snippets\T10_EventTyped.snippet = Snippets\T10_EventTyped.snippet
 		Snippets\T10_INotifyPropertyChanged.snippet = Snippets\T10_INotifyPropertyChanged.snippet
+		Snippets\T10_PageContent.snippet = Snippets\T10_PageContent.snippet
 		Snippets\T10_Property.snippet = Snippets\T10_Property.snippet
 		Snippets\T10_PropertyObservable.snippet = Snippets\T10_PropertyObservable.snippet
 		Snippets\T10_PropertySetting.snippet = Snippets\T10_PropertySetting.snippet
