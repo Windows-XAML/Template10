@@ -182,7 +182,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid x:Name="RootGrid" Background="{x:Bind HamburgerBackground, FallbackValue=DarkRed, Mode=OneWay}">
+    <Grid x:Name="RootGrid">
 
         <VisualStateManager.VisualStateGroups>
 
@@ -362,7 +362,10 @@
 
         </SplitView>
 
-        <Grid Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top"
+        <Grid x:Name="HamburgerButtonGrid" Grid.Row="0"
+              Width="{x:Bind HamburgerButtonGridWidth, Mode=OneWay}"
+              Background="{x:Bind HamburgerBackground, FallbackValue=DarkRed, Mode=OneWay}"
+              Opacity="0.95" HorizontalAlignment="Left" VerticalAlignment="Top"
               Visibility="{x:Bind HamburgerButtonVisibility, Mode=OneWay}">
             <Button x:Name="HamburgerButton"
                     Background="{x:Bind HamburgerBackground, FallbackValue=DarkRed, Mode=OneWay}"
