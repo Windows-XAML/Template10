@@ -18,6 +18,8 @@ namespace Template10.Behaviors
         private long _goBackReg;
         private long _goForwardReg;
         private IDispatcherWrapper _dispatcher;
+        private EventThrottleHelper _throttleHelper;
+
         Button element => AssociatedObject as Button;
         public DependencyObject AssociatedObject { get; set; }
 
@@ -34,18 +36,24 @@ namespace Template10.Behaviors
             {
                 _dispatcher = Common.DispatcherWrapper.Current();
 
+                // throttled calculate event
+                _throttleHelper = new EventThrottleHelper();
+                _throttleHelper.ThrottledEvent += delegate { Calculate(); };
+                _throttleHelper.Throttle = 1000;
+
                 // handle click
                 element.Click += new Common.WeakReference<NavButtonBehavior, object, RoutedEventArgs>(this)
                 {
                     EventAction = (i, s, e) => Element_Click(s, e),
                     DetachAction = (i, w) => element.Click -= w.Handler,
                 }.Handler;
-                Calculate();
+                CalculateThrottled();
             }
         }
 
         public void Detach()
         {
+            _throttleHelper = null;
             if (Frame != null)
             {
                 Frame.SizeChanged -= SizeChanged;
@@ -62,8 +70,13 @@ namespace Template10.Behaviors
             if (_letLayoutUpdatedInvoke)
             {
                 _letLayoutUpdatedInvoke = false;
-                Calculate();
+                CalculateThrottled();
             }
+        }
+
+        private void CalculateThrottled()
+        {
+            _throttleHelper?.DispatchTriggerEvent(null);
         }
 
         private void Element_Click(object sender, RoutedEventArgs e)
@@ -142,12 +155,12 @@ namespace Template10.Behaviors
             var frame = args.NewValue as Frame;
             if (frame != null)
             {
-                behavior._goBackReg = frame.RegisterPropertyChangedCallback(Frame.CanGoBackProperty, (s, e) => behavior.Calculate());
-                behavior._goForwardReg = frame.RegisterPropertyChangedCallback(Frame.CanGoForwardProperty, (s, e) => behavior.Calculate());
+                behavior._goBackReg = frame.RegisterPropertyChangedCallback(Frame.CanGoBackProperty, (s, e) => behavior.CalculateThrottled());
+                behavior._goForwardReg = frame.RegisterPropertyChangedCallback(Frame.CanGoForwardProperty, (s, e) => behavior.CalculateThrottled());
                 frame.SizeChanged += behavior.SizeChanged;
                 frame.LayoutUpdated += behavior.LayoutUpdated;
             }
-            behavior.Calculate();
+            behavior.CalculateThrottled();
         }
 
         public static Visibility CalculateForwardVisibility(Frame frame)
