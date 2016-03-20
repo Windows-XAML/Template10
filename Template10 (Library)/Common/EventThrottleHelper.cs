@@ -97,9 +97,9 @@ namespace Template10.Common
             });
         }
 
-        private volatile bool isWaiting;
+        private bool isWaiting;
 
-        private volatile bool isRefreshed;
+        private bool isRefreshed;
 
         private DateTime stamp;
 
