@@ -10,9 +10,10 @@ namespace Template10.Utils
         // this has all been moved to private bacause I am unhappy with the API 
         // and don't want anyone using it (except the HamburgerMenu) until we fix it.
 
-        static Color nearBlack = Colors.Black.Lighten(Accents.Plus20);
-
-        static Color nearWhite = Colors.Black.Lighten(Accents.Plus80);
+        //static Color nearBlack = Colors.Black.Lighten(Accents.Plus20);
+        //static Color nearWhite = Colors.Black.Lighten(Accents.Plus80);
+        static Color nearBlack = Color.FromArgb(255, 51, 51, 51);
+        static Color nearWhite = Color.FromArgb(255, 204, 204, 204);
 
         internal enum Accents : long
         {
