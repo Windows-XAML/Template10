@@ -72,22 +72,22 @@ namespace Template10.Services.KeyboardService
                 // use this to nav forward
                 else if (e.VirtualKey == Windows.System.VirtualKey.GoForward)
                 {
-                    DebugWrite("GoForward", caller: nameof(AfterBackGesture));
+                    DebugWrite("GoForward", caller: nameof(AfterForwardGesture));
                     AfterForwardGesture?.Invoke();
                 }
                 else if (e.VirtualKey == Windows.System.VirtualKey.NavigationRight)
                 {
-                    DebugWrite("NavigationRight", caller: nameof(AfterBackGesture));
+                    DebugWrite("NavigationRight", caller: nameof(AfterForwardGesture));
                     AfterForwardGesture?.Invoke();
                 }
                 else if (e.VirtualKey == Windows.System.VirtualKey.GamepadRightShoulder)
                 {
-                    DebugWrite("GamepadRightShoulder", caller: nameof(AfterBackGesture));
+                    DebugWrite("GamepadRightShoulder", caller: nameof(AfterForwardGesture));
                     AfterForwardGesture?.Invoke();
                 }
                 else if (e.OnlyAlt && e.VirtualKey == Windows.System.VirtualKey.Right)
                 {
-                    DebugWrite("Alt+Right", caller: nameof(AfterBackGesture));
+                    DebugWrite("Alt+Right", caller: nameof(AfterForwardGesture));
                     AfterForwardGesture?.Invoke();
                 }
 
@@ -102,7 +102,15 @@ namespace Template10.Services.KeyboardService
                         PrimaryButtonCommand = new Mvvm.DelegateCommand(open),
                         SecondaryButtonText = "Close"
                     };
-                    await about.ShowAsync();
+
+                    try
+                    {
+                        await about.ShowAsync();
+                    }
+                    catch (System.Runtime.InteropServices.COMException)
+                    {
+                        DebugWrite("About dialog already showing");
+                    }
                 }
 
                 // anything else
