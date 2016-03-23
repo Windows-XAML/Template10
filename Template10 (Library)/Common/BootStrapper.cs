@@ -244,7 +244,14 @@ namespace Template10.Common
 
             if (e.PreviousExecutionState != ApplicationExecutionState.Running)
             {
-                await InitializeFrameAsync(e);
+                try
+                {
+                    await InitializeFrameAsync(e);
+                }
+                catch (Exception)
+                {
+
+                }
             }
 
             // okay, now handle launch
@@ -281,13 +288,17 @@ namespace Template10.Common
             }
 
             // handle pre-launch
-            if ((e as LaunchActivatedEventArgs).PrelaunchActivated)
+            var launchActivatedArgs = e as LaunchActivatedEventArgs;
+            if (launchActivatedArgs != null)
             {
-                var runOnStartAsync = false;
-                _HasOnPrelaunchAsync = true;
-                await OnPrelaunchAsync(e, out runOnStartAsync);
-                if (!runOnStartAsync)
-                    return;
+                if (launchActivatedArgs.PrelaunchActivated)
+                {
+                    var runOnStartAsync = false;
+                    _HasOnPrelaunchAsync = true;
+                    await OnPrelaunchAsync(e, out runOnStartAsync);
+                    if (!runOnStartAsync)
+                        return;
+                }
             }
 
             if (!restored)
