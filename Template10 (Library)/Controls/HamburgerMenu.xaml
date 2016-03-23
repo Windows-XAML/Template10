@@ -5,13 +5,13 @@
              xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="using:Template10.Controls"
+             xmlns:converters="using:Template10.Converters"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              x:Name="ThisPage" d:DesignHeight="400" d:DesignWidth="400"
              mc:Ignorable="d">
 
     <UserControl.Resources>
         <ResourceDictionary>
-
             <Style x:Key="HamburgerButtonStyle" TargetType="Button">
                 <Setter Property="Height" Value="48" />
                 <Setter Property="HorizontalAlignment" Value="Left" />
@@ -63,8 +63,20 @@
                              IsEnabled="{Binding IsEnabled, Mode=TwoWay}" Loaded="NavButton_Loaded"
                              RightTapped="NavButton_RightTapped" Tag="{x:Bind Content}"
                              Tapped="NavButton_Tapped"
-                             ToolTipService.ToolTip="{Binding Path=(ToolTipService.ToolTip)}"
+                             ToolTipService.Placement="Top"
                              Visibility="{Binding Visibility, Mode=TwoWay}">
+                    <RadioButton.Resources>
+                        <converters:DPWhenValueConverter x:Key="DPWhenValueConverter"
+                                            DependencyParameter="{Binding LabelString, Mode=OneWay}"
+                                            Otherwise="{x:Null}">
+                            <converters:DPWhenValueConverter.When>
+                                <x:Boolean>False</x:Boolean>
+                            </converters:DPWhenValueConverter.When>
+                        </converters:DPWhenValueConverter>
+                    </RadioButton.Resources>
+                    <ToolTipService.ToolTip>
+                        <Binding Path="IsOpen" ElementName="ThisPage" Converter="{StaticResource DPWhenValueConverter}" ConverterParameter="Potato"/>
+                    </ToolTipService.ToolTip>
                     <RadioButton.Template>
                         <ControlTemplate TargetType="RadioButton">
                             <ToggleButton MinWidth="48" MinHeight="48" MaxWidth="{TemplateBinding MaxWidth}"
@@ -178,7 +190,6 @@
                     </RadioButton.Template>
                 </RadioButton>
             </DataTemplate>
-
         </ResourceDictionary>
     </UserControl.Resources>
 

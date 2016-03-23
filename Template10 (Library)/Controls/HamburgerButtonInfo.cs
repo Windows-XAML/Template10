@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Template10.Mvvm;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Markup;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 
 namespace Template10.Controls
@@ -106,6 +104,20 @@ namespace Template10.Controls
 
         public override string ToString() =>
             string.Format($"IsChecked: {IsChecked} PageType: {PageType}, Parameter: {PageParameter}");
+
+        public string LabelString { get
+            {
+                if (null != Content)
+                {
+                    for (int i = 0; i < VisualTreeHelper.GetChildrenCount(Content); i++)
+                    {
+                        var _Child = VisualTreeHelper.GetChild(Content, i);
+                        if (_Child is TextBlock)
+                            return (_Child as TextBlock).Text;
+                    }
+                }
+                return string.Empty;
+            } }
 
         public event RoutedEventHandler Selected;
         internal void RaiseSelected()
