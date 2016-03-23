@@ -4,6 +4,8 @@ using Sample.Services.SettingsServices;
 using Windows.ApplicationModel.Activation;
 using Template10.Controls;
 using Template10.Common;
+using System;
+using System.Linq;
 
 namespace Sample
 {
@@ -29,11 +31,11 @@ namespace Sample
 
         public override async Task OnInitializeAsync(IActivatedEventArgs args)
         {
-            // content may already be shell when resuming
-            if ((Window.Current.Content as ModalDialog) == null)
+            if (Window.Current.Content as ModalDialog == null)
             {
-                // setup hamburger shell inside a modal dialog
+                // create a new frame 
                 var nav = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include);
+                // create modal root
                 Window.Current.Content = new ModalDialog
                 {
                     DisableBackButtonWhenModal = true,

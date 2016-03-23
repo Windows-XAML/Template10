@@ -8,6 +8,7 @@
 
     <Color x:Key="CustomColor">SteelBlue</Color>
     <Color x:Key="ContrastColor">White</Color>
+    <Color x:Key="SystemAccentColor">SteelBlue</Color>
 
     <ResourceDictionary.ThemeDictionaries>
 

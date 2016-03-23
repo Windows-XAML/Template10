@@ -48,23 +48,23 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <controls:PageHeader x:Name="pageHeader" Text="Main Page">
-            <!--  place stretched, across top  -->
-            <RelativePanel.AlignTopWithPanel>True</RelativePanel.AlignTopWithPanel>
-            <RelativePanel.AlignRightWithPanel>True</RelativePanel.AlignRightWithPanel>
-            <RelativePanel.AlignLeftWithPanel>True</RelativePanel.AlignLeftWithPanel>
+        <controls:PageHeader x:Name="pageHeader" RelativePanel.AlignLeftWithPanel="True"
+                             RelativePanel.AlignRightWithPanel="True"
+                             RelativePanel.AlignTopWithPanel="True" Text="Main Page">
+
             <!--  secondary commands  -->
             <controls:PageHeader.SecondaryCommands>
                 <AppBarButton Click="{x:Bind ViewModel.GotoSettings}" Label="Settings" />
                 <AppBarButton Click="{x:Bind ViewModel.GotoPrivacy}" Label="Privacy" />
                 <AppBarButton Click="{x:Bind ViewModel.GotoAbout}" Label="About" />
             </controls:PageHeader.SecondaryCommands>
+
         </controls:PageHeader>
 
-        <controls:Resizer x:Name="parameterResizer" Margin="16,16,16,0">
-            <!--  place below page header  -->
-            <RelativePanel.Below>pageHeader</RelativePanel.Below>
-            <RelativePanel.AlignLeftWithPanel>True</RelativePanel.AlignLeftWithPanel>
+        <controls:Resizer x:Name="parameterResizer" Margin="16,16,16,0"
+                          RelativePanel.AlignLeftWithPanel="True"
+                          RelativePanel.Below="pageHeader">
+
             <TextBox MinWidth="150" MinHeight="62"
                      Header="Parameter to pass"
                      Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -80,19 +80,18 @@
                     </Core:EventTriggerBehavior>
                 </Interactivity:Interaction.Behaviors>
             </TextBox>
+
         </controls:Resizer>
 
-        <Button x:Name="submitButton" Click="{x:Bind ViewModel.GotoDetailsPage}" Content="Submit">
-            <!--  place next to textbox  -->
-            <RelativePanel.RightOf>parameterResizer</RelativePanel.RightOf>
-            <RelativePanel.AlignBottomWith>parameterResizer</RelativePanel.AlignBottomWith>
-        </Button>
+        <Button x:Name="submitButton"
+                Click="{x:Bind ViewModel.GotoDetailsPage}" Content="Submit"
+                RelativePanel.AlignBottomWith="parameterResizer"
+                RelativePanel.RightOf="parameterResizer" />
 
-        <TextBlock x:Name="stateTextBox" Margin="16,16,0,0" Text="Current Visual State">
-            <!--  place under to textbox  -->
-            <RelativePanel.Below>parameterResizer</RelativePanel.Below>
-            <RelativePanel.AlignLeftWith>parameterResizer</RelativePanel.AlignLeftWith>
-        </TextBlock>
+        <TextBlock x:Name="stateTextBox" Margin="16,16,0,0"
+                   RelativePanel.AlignLeftWith="parameterResizer"
+                   RelativePanel.Below="parameterResizer"
+                   Text="Current Visual State" />
 
     </RelativePanel>
 </Page>
