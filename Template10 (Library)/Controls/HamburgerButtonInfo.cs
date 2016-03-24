@@ -81,6 +81,14 @@ namespace Template10.Controls
             DependencyProperty.Register(nameof(IsEnabled), typeof(bool),
                 typeof(HamburgerButtonInfo), new PropertyMetadata(true));
 
+        public string ToolTipText
+        {
+            get { return (string)GetValue(ToolTipTextProperty); }
+            set { SetValue(ToolTipTextProperty, value); }
+        }
+        public static readonly DependencyProperty ToolTipTextProperty =
+            DependencyProperty.Register("ToolTipText", typeof(string), typeof(HamburgerButtonInfo), new PropertyMetadata(null));
+
         bool _isChecked = false;
         public bool? IsChecked
         {
@@ -104,20 +112,6 @@ namespace Template10.Controls
 
         public override string ToString() =>
             string.Format($"IsChecked: {IsChecked} PageType: {PageType}, Parameter: {PageParameter}");
-
-        public string LabelString { get
-            {
-                if (null != Content)
-                {
-                    for (int i = 0; i < VisualTreeHelper.GetChildrenCount(Content); i++)
-                    {
-                        var _Child = VisualTreeHelper.GetChild(Content, i);
-                        if (_Child is TextBlock)
-                            return (_Child as TextBlock).Text;
-                    }
-                }
-                return string.Empty;
-            } }
 
         public event RoutedEventHandler Selected;
         internal void RaiseSelected()

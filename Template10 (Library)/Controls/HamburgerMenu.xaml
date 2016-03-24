@@ -63,31 +63,36 @@
                              IsEnabled="{Binding IsEnabled, Mode=TwoWay}" Loaded="NavButton_Loaded"
                              RightTapped="NavButton_RightTapped" Tag="{x:Bind Content}"
                              Tapped="NavButton_Tapped"
-                             ToolTipService.Placement="Top"
+                             IsTabStop="False"
                              Visibility="{Binding Visibility, Mode=TwoWay}">
-                    <RadioButton.Resources>
-                        <converters:DPWhenValueConverter x:Key="DPWhenValueConverter"
-                                            DependencyParameter="{Binding LabelString, Mode=OneWay}"
-                                            Otherwise="{x:Null}">
-                            <converters:DPWhenValueConverter.When>
-                                <x:Boolean>False</x:Boolean>
-                            </converters:DPWhenValueConverter.When>
-                        </converters:DPWhenValueConverter>
-                    </RadioButton.Resources>
-                    <ToolTipService.ToolTip>
-                        <Binding Path="IsOpen" ElementName="ThisPage" Converter="{StaticResource DPWhenValueConverter}" ConverterParameter="Potato"/>
-                    </ToolTipService.ToolTip>
                     <RadioButton.Template>
                         <ControlTemplate TargetType="RadioButton">
                             <ToggleButton MinWidth="48" MinHeight="48" MaxWidth="{TemplateBinding MaxWidth}"
                                           HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                                          AutomationProperties.AccessibilityView="Raw" Checked="NavButtonChecked"
+                                          AutomationProperties.AccessibilityView="Control"
+                                          AutomationProperties.Name="{Binding ToolTipText, Mode=OneWay}"
+                                          Checked="NavButtonChecked" Unchecked="NavButtonUnchecked"
                                           Command="{TemplateBinding Command}"
                                           CommandParameter="{TemplateBinding CommandParameter}"
                                           Content="{TemplateBinding Tag}"
-                                          IsChecked="{Binding IsChecked, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                          Unchecked="NavButtonUnchecked" UseSystemFocusVisuals="True"
+                                          IsChecked="{Binding IsChecked, Mode=TwoWay,
+                                                    RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                          UseSystemFocusVisuals="True"
+                                          ToolTipService.Placement="Top" IsTabStop="True"
                                           Visibility="{TemplateBinding Visibility}">
+                                <ToggleButton.Resources>
+                                    <converters:DPWhenValueConverter x:Key="DPWhenValueConverter"
+                                            DependencyParameter="{Binding ToolTipText, Mode=OneWay}"
+                                            Otherwise="{x:Null}">
+                                        <converters:DPWhenValueConverter.When>
+                                            <x:Boolean>False</x:Boolean>
+                                        </converters:DPWhenValueConverter.When>
+                                    </converters:DPWhenValueConverter>
+                                </ToggleButton.Resources>
+                                <ToolTipService.ToolTip>
+                                    <Binding Path="IsOpen" ElementName="ThisPage" 
+                                            Converter="{StaticResource DPWhenValueConverter}"/>
+                                </ToolTipService.ToolTip>
                                 <ToggleButton.Template>
                                     <ControlTemplate TargetType="ToggleButton">
                                         <Grid x:Name="RootGrid" Width="{Binding PaneWidth, ElementName=ThisPage}"
@@ -181,6 +186,7 @@
                                                        IsHitTestVisible="False" Visibility="Collapsed" />
                                             <ContentControl x:Name="NormalFore" Content="{TemplateBinding Content}"
                                                             Foreground="{Binding NavButtonForeground, ElementName=ThisPage, FallbackValue=White}"
+                                                            IsTabStop="False"
                                                             IsHitTestVisible="False" />
                                         </Grid>
                                     </ControlTemplate>
@@ -377,6 +383,8 @@
               Visibility="{x:Bind HamburgerButtonVisibility, Mode=OneWay}">
             <Button x:Name="HamburgerButton"
                     Background="{x:Bind HamburgerBackground, FallbackValue=DarkRed, Mode=OneWay}"
+                    AutomationProperties.AccessibilityView="Control"
+                    AutomationProperties.Name="Hamburger Menu Toggle"
                     Command="{x:Bind HamburgerCommand}"
                     Foreground="{x:Bind HamburgerForeground, FallbackValue=White, Mode=OneWay}"
                     RenderTransformOrigin="0.5,0.5" Style="{StaticResource HamburgerButtonStyle}">
