@@ -15,7 +15,9 @@
 
         <Controls:HamburgerMenu.PrimaryButtons>
             <!--  mainpage button  -->
-            <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:MainPage">
+            <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:MainPage" 
+                                          AutomationProperties.Name="Jerry"
+                                          >
                 <StackPanel Orientation="Horizontal">
                     <SymbolIcon Width="48" Height="48"
                                 Symbol="Home" />
