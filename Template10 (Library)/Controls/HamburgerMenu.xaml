@@ -57,6 +57,7 @@
             <DataTemplate x:Name="NavButtonTemplate" x:DataType="local:HamburgerButtonInfo">
                 <RadioButton Width="{Binding PaneWidth, ElementName=ThisPage}" MinWidth="48"
                              MaxWidth="{x:Bind MaxWidth, Mode=TwoWay}"
+                             AutomationProperties.Name="Hamburger Menu Item"
                              Command="{Binding NavCommand, ElementName=ThisPage}"
                              CommandParameter="{Binding}" GroupName="Nav" Holding="NavButton_Holding"
                              IsChecked="{Binding IsChecked, Mode=TwoWay}"
@@ -167,7 +168,8 @@
                                             <Rectangle x:Name="CheckedBack"
                                                        Fill="{Binding NavButtonCheckedBackground, ElementName=ThisPage}"
                                                        IsHitTestVisible="False" Visibility="Collapsed" />
-                                            <ContentControl x:Name="NormalFore" Content="{TemplateBinding Content}"
+                                            <ContentControl x:Name="NormalFore" AutomationProperties.AccessibilityView="Raw"
+                                                            Content="{TemplateBinding Content}"
                                                             Foreground="{Binding NavButtonForeground, ElementName=ThisPage, FallbackValue=White}"
                                                             IsHitTestVisible="False" />
                                         </Grid>
@@ -245,16 +247,16 @@
             </Interactivity:Interaction.Behaviors>
         </ContentControl>
 
-        <SplitView x:Name="ShellSplitView" Grid.Column="0" DisplayMode="Inline"
-                   IsPaneOpen="False" OpenPaneLength="{x:Bind PaneWidth, Mode=OneWay}"
-                   PaneBackground="Transparent">
+        <SplitView x:Name="ShellSplitView" Grid.Column="0" AutomationProperties.Name="Jerry Nixon"
+                   DisplayMode="Inline" IsPaneOpen="False"
+                   OpenPaneLength="{x:Bind PaneWidth, Mode=OneWay}" PaneBackground="Transparent">
 
             <SplitView.Pane>
 
                 <Grid x:Name="PaneContent" Margin="0,48,0,0"
-                      Background="{x:Bind NavAreaBackground, FallbackValue=Blue, Mode=OneWay}"
-                      BorderBrush="{x:Bind PaneBorderBrush, FallbackValue=White, Mode=OneWay}"
-                      BorderThickness="{x:Bind PaneBorderThickness, FallbackValue='0,0,1,0'}"
+                      Background="{x:Bind NavAreaBackground, Mode=OneWay}"
+                      BorderBrush="{x:Bind PaneBorderBrush, Mode=OneWay}"
+                      BorderThickness="{x:Bind PaneBorderThickness}"
                       ManipulationDelta="PaneContent_ManipulationDelta" ManipulationMode="TranslateX"
                       Tapped="PaneContent_Tapped">
 
@@ -293,7 +295,8 @@
                         </Core:DataTriggerBehavior>
                     </Interactivity:Interaction.Behaviors>
 
-                    <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+                    <ScrollViewer Grid.Row="0" AutomationProperties.AccessibilityView="Raw"
+                                  VerticalScrollBarVisibility="Auto">
 
                         <ItemsControl x:Name="PrimaryButtonContainer"
                                       ItemTemplate="{StaticResource NavButtonTemplate}"
@@ -364,7 +367,7 @@
 
         <Grid Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top"
               Visibility="{x:Bind HamburgerButtonVisibility, Mode=OneWay}">
-            <Button x:Name="HamburgerButton"
+            <Button x:Name="HamburgerButton" AutomationProperties.Name="Hamburger Menu Button"
                     Background="{x:Bind HamburgerBackground, FallbackValue=DarkRed, Mode=OneWay}"
                     Command="{x:Bind HamburgerCommand}"
                     Foreground="{x:Bind HamburgerForeground, FallbackValue=White, Mode=OneWay}"
