@@ -47,20 +47,17 @@
         </VisualStateManager.VisualStateGroups>
 
         <!--  header  -->
-        <controls:PageHeader x:Name="pageHeader" Frame="{x:Bind Frame}" Text="Detail Page">
-            <!--  place stretched, across top  -->
-            <RelativePanel.AlignTopWithPanel>True</RelativePanel.AlignTopWithPanel>
-            <RelativePanel.AlignRightWithPanel>True</RelativePanel.AlignRightWithPanel>
-            <RelativePanel.AlignLeftWithPanel>True</RelativePanel.AlignLeftWithPanel>
-        </controls:PageHeader>
+        <controls:PageHeader x:Name="pageHeader" Frame="{x:Bind Frame}"
+                             RelativePanel.AlignLeftWithPanel="True"
+                             RelativePanel.AlignRightWithPanel="True"
+                             RelativePanel.AlignTopWithPanel="True" Text="Detail Page" />
 
         <!--  content  -->
-        <ScrollViewer Padding="12,8,0,0" VerticalScrollBarVisibility="Auto">
-            <!--  place below page header  -->
-            <RelativePanel.Below>pageHeader</RelativePanel.Below>
-            <RelativePanel.AlignLeftWithPanel>True</RelativePanel.AlignLeftWithPanel>
-            <RelativePanel.AlignRightWithPanel>True</RelativePanel.AlignRightWithPanel>
-            <RelativePanel.AlignBottomWithPanel>True</RelativePanel.AlignBottomWithPanel>
+        <ScrollViewer Padding="12,8,0,0" RelativePanel.AlignBottomWithPanel="True"
+                      RelativePanel.AlignLeftWithPanel="True"
+                      RelativePanel.AlignRightWithPanel="True"
+                      RelativePanel.Below="pageHeader"
+                      VerticalScrollBarVisibility="Auto">
             <StackPanel>
                 <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="You passed:" />
                 <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="{x:Bind ViewModel.Value, Mode=OneWay, FallbackValue=DesigntimeValue}" />

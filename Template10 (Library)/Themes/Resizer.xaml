@@ -36,7 +36,7 @@
                             <Grid.RenderTransform>
                                 <CompositeTransform TranslateX="10" TranslateY="10" />
                             </Grid.RenderTransform>
-                            <Thumb x:Name="PART_THUMB" />
+                            <Thumb x:Name="PART_THUMB" AutomationProperties.AccessibilityView="Raw" />
                             <Viewbox>
                                 <Polygon Fill="{TemplateBinding GrabberBrush}" Points="0,19 19,0, 19,19" />
                             </Viewbox>

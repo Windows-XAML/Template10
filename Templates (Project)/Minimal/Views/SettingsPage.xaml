@@ -48,66 +48,62 @@
         </VisualStateManager.VisualStateGroups>
 
         <!--  header  -->
-        <controls:PageHeader x:Name="pageHeader" Content="Settings Page" Frame="{x:Bind Frame}">
-            <!--  place stretched, across top  -->
-            <RelativePanel.AlignTopWithPanel>True</RelativePanel.AlignTopWithPanel>
-            <RelativePanel.AlignRightWithPanel>True</RelativePanel.AlignRightWithPanel>
-            <RelativePanel.AlignLeftWithPanel>True</RelativePanel.AlignLeftWithPanel>
-        </controls:PageHeader>
+        <controls:PageHeader x:Name="pageHeader" Content="Settings Page"
+                             Frame="{x:Bind Frame}"
+                             RelativePanel.AlignLeftWithPanel="True"
+                             RelativePanel.AlignRightWithPanel="True"
+                             RelativePanel.AlignTopWithPanel="True" />
 
         <!--  content  -->
-        <Pivot x:Name="MyPivot" Grid.Row="1">
-            <!--  place below page header  -->
-            <RelativePanel.Below>pageHeader</RelativePanel.Below>
-            <RelativePanel.AlignLeftWithPanel>True</RelativePanel.AlignLeftWithPanel>
-            <RelativePanel.AlignRightWithPanel>True</RelativePanel.AlignRightWithPanel>
-            <RelativePanel.AlignBottomWithPanel>True</RelativePanel.AlignBottomWithPanel>
+        <Pivot x:Name="MyPivot" Grid.Row="1"
+               RelativePanel.AlignBottomWithPanel="True"
+               RelativePanel.AlignLeftWithPanel="True"
+               RelativePanel.AlignRightWithPanel="True"
+               RelativePanel.Below="pageHeader">
+
             <!--  settings  -->
             <PivotItem DataContext="{Binding SettingsPartViewModel}" Header="Settings">
-                <ScrollViewer Margin="0,12,-12,0" HorizontalContentAlignment="Left" VerticalScrollBarVisibility="Auto">
+                <ScrollViewer Margin="0,12,-12,0" HorizontalContentAlignment="Left"
+                              VerticalScrollBarVisibility="Auto">
                     <RelativePanel HorizontalAlignment="Left">
 
                         <ToggleSwitch x:Name="UseShellDrawnBackButtonToggleSwtich"
                                       Header="Use shell-drawn back button"
                                       IsOn="{Binding UseShellBackButton, Mode=TwoWay}"
                                       OffContent="Back button in page header"
-                                      OnContent="Back button in titlebar or taskbar">
-                            <!--  place at top  -->
-                            <RelativePanel.AlignTopWithPanel>True</RelativePanel.AlignTopWithPanel>
-                            <RelativePanel.AlignLeftWithPanel>True</RelativePanel.AlignLeftWithPanel>
-                        </ToggleSwitch>
+                                      OnContent="Back button in titlebar or taskbar"
+                                      RelativePanel.AlignLeftWithPanel="True"
+                                      RelativePanel.AlignTopWithPanel="True" />
 
                         <ToggleSwitch x:Name="UseLightThemeToggleSwitch" Header="Use Light Theme"
                                       IsOn="{Binding UseLightThemeButton, Mode=TwoWay}"
-                                      OffContent="Dark theme" OnContent="Light theme">
-                            <!--  place below back toggle  -->
-                            <RelativePanel.Below>UseShellDrawnBackButtonToggleSwtich</RelativePanel.Below>
-                            <RelativePanel.AlignLeftWithPanel>True</RelativePanel.AlignLeftWithPanel>
-                        </ToggleSwitch>
+                                      OffContent="Dark theme" OnContent="Light theme"
+                                      RelativePanel.AlignLeftWithPanel="True"
+                                      RelativePanel.Below="UseShellDrawnBackButtonToggleSwtich" />
 
                         <TextBox x:Name="BusyTextTextBox" Width="200"
                                  Margin="0,12,0,0" HorizontalAlignment="Left"
-                                 Header="Busy text"
-                                 Text="{Binding BusyText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                            <!--  place below theme toggle  -->
-                            <RelativePanel.Below>UseLightThemeToggleSwitch</RelativePanel.Below>
-                            <RelativePanel.AlignLeftWithPanel>True</RelativePanel.AlignLeftWithPanel>
-                        </TextBox>
+                                 Header="Busy text" RelativePanel.AlignLeftWithPanel="True"
+                                 RelativePanel.Below="UseLightThemeToggleSwitch"
+                                 Text="{Binding BusyText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-                        <Button Margin="12,0,0,0" Command="{x:Bind ViewModel.SettingsPartViewModel.ShowBusyCommand}" Content="Show Busy">
-                            <!--  place next to busy textbox  -->
-                            <RelativePanel.AlignBottomWith>BusyTextTextBox</RelativePanel.AlignBottomWith>
-                            <RelativePanel.RightOf>BusyTextTextBox</RelativePanel.RightOf>
-                        </Button>
+                        <Button Margin="12,0,0,0"
+                                Command="{x:Bind ViewModel.SettingsPartViewModel.ShowBusyCommand}"
+                                Content="Show Busy"
+                                RelativePanel.AlignBottomWith="BusyTextTextBox"
+                                RelativePanel.RightOf="BusyTextTextBox" />
+
                     </RelativePanel>
 
                 </ScrollViewer>
             </PivotItem>
 
             <!--  privacy  -->
-            <PivotItem DataContext="{Binding SettingsPartViewModel}" Header="Privacy statement" Padding="0">
+            <PivotItem DataContext="{Binding SettingsPartViewModel}"
+                       Header="Privacy statement" Padding="0">
                 <ScrollViewer Margin="0,0,-12,0" VerticalScrollBarVisibility="Auto">
-                    <TextBlock Margin="0,12,24,12" LineHeight="24" TextWrapping="Wrap">
+                    <TextBlock Margin="0,12,24,12" LineHeight="24"
+                               TextWrapping="Wrap">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pharetra dictum nibh vel ornare. Donec sem urna, rhoncus sed cursus ac, aliquet at nisl. Pellentesque cursus et lacus vel porta. Morbi iaculis efficitur volutpat. Curabitur sit amet cursus nisl, ac suscipit mauris. Nulla a tellus a odio tincidunt maximus. Maecenas non eros lacus. Donec aliquam libero nec ex ullamcorper, in lobortis nibh dapibus. Mauris vehicula, tellus quis congue tincidunt, neque massa auctor ante, ut laoreet felis nisi id tellus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nunc sed dapibus quam, in viverra arcu. Vivamus ut metus non magna viverra porttitor a ultrices dui.
                         <LineBreak />
                         <LineBreak />
@@ -147,34 +143,30 @@
 
                     <Border x:Name="LogoImage" HorizontalAlignment="Right"
                             VerticalAlignment="Top" BorderBrush="DimGray"
-                            BorderThickness="1" IsHitTestVisible="False">
-                        <!--  place top left corner  -->
-                        <RelativePanel.AlignTopWithPanel>True</RelativePanel.AlignTopWithPanel>
-                        <RelativePanel.AlignRightWithPanel>True</RelativePanel.AlignRightWithPanel>
+                            BorderThickness="1" IsHitTestVisible="False"
+                            RelativePanel.AlignRightWithPanel="True"
+                            RelativePanel.AlignTopWithPanel="True">
                         <Border.Background>
                             <SolidColorBrush Color="{ThemeResource SystemAccentColor}" />
                         </Border.Background>
-                        <Image Margin="12" Source="{Binding Logo}" Stretch="None" />
+                        <Image Margin="12" Source="{Binding Logo}"
+                               Stretch="None" />
                     </Border>
 
                     <TextBlock x:Name="DisplayNameTextBlock" Margin="0,0,0,12"
-                               FontSize="24" Text="{Binding DisplayName}">
-                        <!--  place stretched, on top  -->
-                        <RelativePanel.AlignTopWithPanel>True</RelativePanel.AlignTopWithPanel>
-                        <RelativePanel.AlignLeftWithPanel>True</RelativePanel.AlignLeftWithPanel>
-                        <RelativePanel.AlignRightWith>LogoImage</RelativePanel.AlignRightWith>
-                    </TextBlock>
+                               FontSize="24" RelativePanel.AlignLeftWithPanel="True"
+                               RelativePanel.AlignRightWith="LogoImage"
+                               RelativePanel.AlignTopWithPanel="True"
+                               Text="{Binding DisplayName}" />
 
-                    <TextBlock x:Name="PublisherTextBlock" Text="{Binding Publisher}">
-                        <!--  place below display name  -->
-                        <RelativePanel.AlignLeftWithPanel>True</RelativePanel.AlignLeftWithPanel>
-                        <RelativePanel.Below>DisplayNameTextBlock</RelativePanel.Below>
-                    </TextBlock>
+                    <TextBlock x:Name="PublisherTextBlock"
+                               RelativePanel.AlignLeftWithPanel="True"
+                               RelativePanel.Below="DisplayNameTextBlock"
+                               Text="{Binding Publisher}" />
 
-                    <TextBlock x:Name="VersionTextBlock">
-                        <!--  place below publisher name  -->
-                        <RelativePanel.AlignLeftWithPanel>True</RelativePanel.AlignLeftWithPanel>
-                        <RelativePanel.Below>PublisherTextBlock</RelativePanel.Below>
+                    <TextBlock x:Name="VersionTextBlock"
+                               RelativePanel.AlignLeftWithPanel="True"
+                               RelativePanel.Below="PublisherTextBlock">
                         <Run>Version</Run>
                         <Run Text="{Binding Version}" />
                     </TextBlock>

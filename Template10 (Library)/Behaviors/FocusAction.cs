@@ -8,10 +8,16 @@ namespace Template10.Behaviors
     {
         public object Execute(object sender, object parameter)
         {
-            var ui = sender as Control;
+            Control ui;
+            if (TargetObject != null)
+                ui = TargetObject;
+            else
+                ui = sender as Control;
             if (ui != null)
                 ui.Focus(FocusState.Programmatic);
             return null;
         }
+
+        public Control TargetObject { get; set; }
     }
 }

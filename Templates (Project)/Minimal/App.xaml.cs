@@ -5,6 +5,8 @@ using Sample.Services.SettingsServices;
 using Windows.ApplicationModel.Activation;
 using Template10.Mvvm;
 using Template10.Common;
+using System;
+using System.Linq;
 
 namespace Sample
 {
