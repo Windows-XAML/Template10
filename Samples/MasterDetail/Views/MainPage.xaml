@@ -20,6 +20,56 @@
     </Page.DataContext>
 
     <Grid x:Name="RootGrid">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="NarrowVisualStateGroup">
+                <VisualState x:Name="DetailVisualState">
+                    <VisualState.Setters>
+                        <Setter Target="BackButton.IsEnabled" Value="True" />
+                        <Setter Target="MailDetail.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="ListVisualState">
+                    <VisualState.Setters>
+                        <Setter Target="BackButton.IsEnabled" Value="False" />
+                        <Setter Target="MailDetail.Visibility" Value="Collapsed" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+            <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
+                <VisualState x:Name="VisualStateNarrow">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource NarrowMinWidth}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="BackButton.Visibility" Value="Visible" />
+                        <Setter Target="MailDetail.Visibility" Value="Collapsed" />
+                        <Setter Target="MailDetail.(Grid.Column)" Value="0" />
+                        <Setter Target="MailList.IsItemClickEnabled" Value="True" />
+                        <Setter Target="MailList.SelectedIndex" Value="-1" />
+                        <Setter Target="LeftColumn.Width" Value="*" />
+                        <Setter Target="RightColumn.Width" Value="0" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="VisualStateNormal">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource NormalMinWidth}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="BackButton.IsEnabled" Value="False" />
+                        <Setter Target="MailDetail.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="VisualStateWide">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource WideMinWidth}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="BackButton.IsEnabled" Value="False" />
+                        <Setter Target="MailDetail.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -86,105 +136,6 @@
                 x:Name="contentControl"
                 Content="{Binding Selected}"
                 ContentTemplate="{StaticResource MessageDetailTemplate}" />
-        </Grid>
-
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="NarrowVisualStateGroup">
-                <VisualState x:Name="DetailVisualState">
-                    <VisualState.Setters>
-                        <Setter Target="BackButton.IsEnabled" Value="True" />
-                        <Setter Target="MailDetail.Visibility" Value="Visible" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="ListVisualState">
-                    <VisualState.Setters>
-                        <Setter Target="BackButton.IsEnabled" Value="False" />
-                        <Setter Target="MailDetail.Visibility" Value="Collapsed" />
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-            <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
-                <VisualState x:Name="VisualStateNarrow">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="{StaticResource NarrowMinWidth}" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="BackButton.Visibility" Value="Visible" />
-                        <Setter Target="MailDetail.Visibility" Value="Collapsed" />
-                        <Setter Target="MailDetail.(Grid.Column)" Value="0" />
-                        <Setter Target="MailList.IsItemClickEnabled" Value="True" />
-                        <Setter Target="MailList.SelectedIndex" Value="-1" />
-                        <Setter Target="LeftColumn.Width" Value="*" />
-                        <Setter Target="RightColumn.Width" Value="0" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="VisualStateNormal">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="{StaticResource NormalMinWidth}" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="BackButton.IsEnabled" Value="False" />
-                        <Setter Target="MailDetail.Visibility" Value="Visible" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="VisualStateWide">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="{StaticResource WideMinWidth}" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="BackButton.IsEnabled" Value="False" />
-                        <Setter Target="MailDetail.Visibility" Value="Visible" />
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="LeftColumn" Width="320" />
-            <ColumnDefinition x:Name="RightColumn" />
-        </Grid.ColumnDefinitions>
-
-        <CommandBar Grid.ColumnSpan="2" Background="LightGray">
-            <CommandBar.Content>
-                <AppBarButton x:Name="BackButton" Icon="Back"
-                              IsEnabled="False" Visibility="Collapsed">
-                    <Interactivity:Interaction.Behaviors>
-                        <Core:EventTriggerBehavior EventName="Click">
-                            <Core:GoToStateAction StateName="ListVisualState" />
-                        </Core:EventTriggerBehavior>
-                        <Behaviors:BackButtonBehavior Handled="{Binding IsEnabled, ElementName=BackButton}">
-                            <Core:GoToStateAction StateName="ListVisualState" />
-                        </Behaviors:BackButtonBehavior>
-                    </Interactivity:Interaction.Behaviors>
-                </AppBarButton>
-            </CommandBar.Content>
-        </CommandBar>
-
-        <ListView x:Name="MailList" Grid.Row="1"
-                  Grid.Column="0" IsItemClickEnabled="False"
-                  ItemContainerStyle="{StaticResource MailListItemContainerStyle}"
-                  ItemTemplate="{StaticResource MessageListItemTemplate}"
-                  ItemsSource="{x:Bind ViewModel.Messages}"
-                  SelectedItem="{x:Bind ViewModel.Selected, Mode=TwoWay}">
-            <Interactivity:Interaction.Behaviors>
-                <Core:EventTriggerBehavior EventName="ItemClick">
-                    <Core:GoToStateAction StateName="DetailVisualState" />
-                </Core:EventTriggerBehavior>
-            </Interactivity:Interaction.Behaviors>
-            <x:String>Sample</x:String>
-            <x:String>Sample</x:String>
-            <x:String>Sample</x:String>
-        </ListView>
-
-        <Grid x:Name="MailDetail" Grid.Row="1" HorizontalAlignment="Left"
-              Grid.Column="1" Background="White" MaxWidth="600">
-            <ContentControl xmlns:m="using:Messaging.Models" x:Name="contentControl" Content="{Binding Selected}" 
-                            ContentTemplate="{StaticResource MessageDetailTemplate}" />
         </Grid>
 
     </Grid>
