@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Template10.Mvvm;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
@@ -82,6 +78,14 @@ namespace Template10.Controls
         public static readonly DependencyProperty IsEnabledProperty =
             DependencyProperty.Register(nameof(IsEnabled), typeof(bool),
                 typeof(HamburgerButtonInfo), new PropertyMetadata(true));
+
+        public string ToolTipText
+        {
+            get { return (string)GetValue(ToolTipTextProperty); }
+            set { SetValue(ToolTipTextProperty, value); }
+        }
+        public static readonly DependencyProperty ToolTipTextProperty =
+            DependencyProperty.Register("ToolTipText", typeof(string), typeof(HamburgerButtonInfo), new PropertyMetadata(null));
 
         bool _isChecked = false;
         public bool? IsChecked

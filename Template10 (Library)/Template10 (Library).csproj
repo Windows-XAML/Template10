@@ -167,6 +167,7 @@
     <Compile Include="Controls\RingSegment.cs" />
     <Compile Include="Converters\ChangeTypeConverter.cs" />
     <Compile Include="Converters\DateTimeOffsetConverter.cs" />
+    <Compile Include="Converters\DPWhenValueConverter.cs" />
     <Compile Include="Converters\StringFormatConverter.cs" />
     <Compile Include="Mvvm\AwaitableDelegateCommand.cs" />
     <Compile Include="Common\WeakReference.cs" />
