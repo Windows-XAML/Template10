@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Windows.UI.Xaml.Controls;
 
 namespace ShareTarget.Views
@@ -8,6 +8,7 @@ namespace ShareTarget.Views
         public MainPage()
         {
             InitializeComponent();
+            NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
         }
     }
 }

@@ -213,11 +213,8 @@ namespace Template10.Common
 
             // onstart is shared with activate and launch
             DebugWrite("Calling", caller: nameof(OnStartAsync));
-            if (!_HasOnStartAsync)
-            {
-                _HasOnStartAsync = true;
-                await OnStartAsync(StartKind.Activate, e);
-            }
+            _HasOnStartAsync = true;
+            await OnStartAsync(StartKind.Activate, e);
 
             // ensure active (this will hide any custom splashscreen)
             Window.Current.Activate();

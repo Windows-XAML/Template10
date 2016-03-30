@@ -1,8 +1,13 @@
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Template10.Common;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.DataTransfer.ShareTarget;
+using Windows.UI.ViewManagement;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace ShareTarget
 {
@@ -19,8 +24,14 @@ namespace ShareTarget
             if (shareArgs != null)
             {
                 var key = nameof(ShareOperation);
+                if (SessionState.ContainsKey(key))
+                    SessionState.Remove(key);
                 SessionState.Add(key, shareArgs.ShareOperation);
-                NavigationService.Navigate(typeof(Views.MainPage), key);
+
+                var frame = new Frame();
+                var nav = NavigationServiceFactory(BackButton.Ignore, ExistingContent.Exclude, frame);
+                Window.Current.Content = frame;
+                nav.Navigate(typeof(Views.SharePage), key);
             }
             else
             {
