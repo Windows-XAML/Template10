@@ -57,44 +57,43 @@
             <DataTemplate x:Name="NavButtonContainerTemplate" x:DataType="local:HamburgerButtonInfo">
                 <RadioButton Width="{Binding PaneWidth, ElementName=ThisPage}" MinWidth="48"
                              MaxWidth="{x:Bind MaxWidth, Mode=TwoWay}"
-                             AutomationProperties.Name="Hamburger Menu Item"
                              Command="{Binding NavCommand, ElementName=ThisPage}"
                              CommandParameter="{Binding}" GroupName="Nav" Holding="NavButton_Holding"
                              IsChecked="{Binding IsChecked, Mode=TwoWay}"
                              IsEnabled="{Binding IsEnabled, Mode=TwoWay}" Loaded="NavButton_Loaded"
                              RightTapped="NavButton_RightTapped" Tag="{x:Bind Content}"
                              Tapped="NavButton_Tapped"
-                             IsTabStop="False"
+                             ToolTipService.Placement="Top" IsTabStop="True"
                              Visibility="{Binding Visibility, Mode=TwoWay}"
+                             AutomationProperties.AccessibilityView="Control"
+                             AutomationProperties.Name="{Binding ToolTipText, Mode=OneWay}"
                              HorizontalAlignment="Stretch">
+                    <RadioButton.Resources>
+                        <converters:DPWhenValueConverter x:Key="DPWhenValueConverter"
+                                            DependencyParameter="{Binding ToolTipText, Mode=OneWay}"
+                                            Otherwise="{x:Null}">
+                            <converters:DPWhenValueConverter.When>
+                                <x:Boolean>False</x:Boolean>
+                            </converters:DPWhenValueConverter.When>
+                        </converters:DPWhenValueConverter>
+                    </RadioButton.Resources>
+                    <ToolTipService.ToolTip>
+                        <Binding Path="IsOpen" ElementName="ThisPage" 
+                                            Converter="{StaticResource DPWhenValueConverter}"/>
+                    </ToolTipService.ToolTip>
                     <RadioButton.Template>
                         <ControlTemplate TargetType="RadioButton">
                             <ToggleButton MinWidth="48" MinHeight="48" MaxWidth="{TemplateBinding MaxWidth}"
                                           HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                                          AutomationProperties.AccessibilityView="Control"
-                                          AutomationProperties.Name="{Binding ToolTipText, Mode=OneWay}"
                                           Checked="NavButtonChecked" Unchecked="NavButtonUnchecked"
                                           Command="{TemplateBinding Command}"
                                           CommandParameter="{TemplateBinding CommandParameter}"
                                           Content="{TemplateBinding Tag}"
                                           IsChecked="{Binding IsChecked, Mode=TwoWay,
                                                     RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                          IsTabStop="False"
                                           UseSystemFocusVisuals="True"
-                                          ToolTipService.Placement="Top" IsTabStop="True"
                                           Visibility="{TemplateBinding Visibility}">
-                                <ToggleButton.Resources>
-                                    <converters:DPWhenValueConverter x:Key="DPWhenValueConverter"
-                                            DependencyParameter="{Binding ToolTipText, Mode=OneWay}"
-                                            Otherwise="{x:Null}">
-                                        <converters:DPWhenValueConverter.When>
-                                            <x:Boolean>False</x:Boolean>
-                                        </converters:DPWhenValueConverter.When>
-                                    </converters:DPWhenValueConverter>
-                                </ToggleButton.Resources>
-                                <ToolTipService.ToolTip>
-                                    <Binding Path="IsOpen" ElementName="ThisPage" 
-                                            Converter="{StaticResource DPWhenValueConverter}"/>
-                                </ToolTipService.ToolTip>
                                 <ToggleButton.Template>
                                     <ControlTemplate TargetType="ToggleButton">
                                         <Grid x:Name="RootGrid" Width="{Binding PaneWidth, ElementName=ThisPage}"
@@ -165,6 +164,7 @@
                                                     <VisualState x:Name="IndeterminateDisabled" />
                                                 </VisualStateGroup>
                                             </VisualStateManager.VisualStateGroups>
+                                            
                                             <Grid.Resources>
                                                 <Style TargetType="ContentPresenter">
                                                     <Setter Property="Background" Value="Transparent" />
@@ -175,6 +175,7 @@
                                                     <Setter Property="Visibility" Value="Collapsed" />
                                                 </Style>
                                             </Grid.Resources>
+                                            
                                             <Rectangle x:Name="NormalBack" Fill="{Binding NavButtonBackground, ElementName=ThisPage}"
                                                        IsHitTestVisible="False" Visibility="Collapsed" />
                                             <Rectangle x:Name="PressedBack"
@@ -186,7 +187,7 @@
                                             <Rectangle x:Name="CheckedBack"
                                                        Fill="{Binding NavButtonCheckedBackground, ElementName=ThisPage}"
                                                        IsHitTestVisible="False" Visibility="Collapsed" />
-                                            <ContentControl x:Name="NormalFore" AutomationProperties.AccessibilityView="Raw"
+                                            <ContentControl x:Name="NormalFore"
                                                             Content="{TemplateBinding Content}"
                                                             Foreground="{Binding NavButtonForeground, ElementName=ThisPage, FallbackValue=White}"
                                                             IsTabStop="False"
@@ -363,7 +364,7 @@
             </Interactivity:Interaction.Behaviors>
         </ContentControl>
 
-        <SplitView x:Name="ShellSplitView" Grid.Column="0" AutomationProperties.Name="Jerry Nixon"
+        <SplitView x:Name="ShellSplitView" Grid.Column="0"
                    DisplayMode="Inline" IsPaneOpen="False"
                    OpenPaneLength="{x:Bind PaneWidth, Mode=OneWay}" PaneBackground="Transparent">
             <SplitView.Pane>
@@ -409,7 +410,7 @@
                         </Core:DataTriggerBehavior>
                     </Interactivity:Interaction.Behaviors>
 
-                    <ScrollViewer Grid.Row="0" AutomationProperties.AccessibilityView="Raw"
+                    <ScrollViewer Grid.Row="0"
                                   VerticalScrollBarVisibility="Auto">
                         <ItemsControl x:Name="PrimaryButtonContainer"
                                       ItemTemplate="{StaticResource NavButtonContainerTemplate}"
@@ -483,9 +484,7 @@
                 <Button.RenderTransform>
                     <CompositeTransform />
                 </Button.RenderTransform>
-                <StackPanel Orientation="Horizontal">
-                    <FontIcon FontSize="20" Glyph="&#xE700;" />
-                </StackPanel>
+                <FontIcon FontSize="20" Glyph="&#xE700;" />
             </Button>
         </Grid>
     </Grid>
