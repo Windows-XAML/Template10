@@ -66,7 +66,7 @@
               typeof(Windows.UI.Colors).GetRuntimeProperties()
                   .Select(x => new { Name = x.Name, Color = (Color)x.GetValue(null) });
          
-          public override Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
+          public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
           {
               if (state.Any())
               {
@@ -77,22 +77,22 @@
               {
                   // use parameter
               }
-              return Task.CompletedTask;
+              await Task.CompletedTask;
           }
 
-          public override Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending)
+          public override async Task OnNavigatedFromAsync(IDictionary<string, object> state, bool suspending)
           {
               if (suspending)
               {
                   // save state
               }
-              return Task.CompletedTask;
+              await Task.CompletedTask;
           }
 
-          public override Task OnNavigatingFromAsync(NavigatingEventArgs args)
+          public override async Task OnNavigatingFromAsync(NavigatingEventArgs args)
           {
               args.Cancel = false;
-              return Task.CompletedTask;
+              await Task.CompletedTask;
           }
         }]]>
       </Code>

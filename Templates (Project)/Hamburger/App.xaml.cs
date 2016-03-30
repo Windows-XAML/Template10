@@ -4,6 +4,8 @@ using Sample.Services.SettingsServices;
 using Windows.ApplicationModel.Activation;
 using Template10.Controls;
 using Template10.Common;
+using System;
+using System.Linq;
 
 namespace Sample
 {
@@ -16,7 +18,6 @@ namespace Sample
         {
             InitializeComponent();
             SplashFactory = (e) => new Views.Splash(e);
-            Template10.Services.LoggingService.LoggingService.Enabled = true;
 
             #region App settings
 
@@ -28,14 +29,13 @@ namespace Sample
             #endregion
         }
 
-            // runs even if restored from state
-        public override Task OnInitializeAsync(IActivatedEventArgs args)
+        public override async Task OnInitializeAsync(IActivatedEventArgs args)
         {
-            // content may already be shell when resuming
-            if ((Window.Current.Content as ModalDialog) == null)
+            if (Window.Current.Content as ModalDialog == null)
             {
-                // setup hamburger shell
+                // create a new frame 
                 var nav = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include);
+                // create modal root
                 Window.Current.Content = new ModalDialog
                 {
                     DisableBackButtonWhenModal = true,
@@ -43,14 +43,15 @@ namespace Sample
                     ModalContent = new Views.Busy(),
                 };
             }
-            return Task.CompletedTask;
+            await Task.CompletedTask;
         }
 
-        // runs only when not restored from state
-        public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
+        public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
+            // long-running startup tasks go here
+
             NavigationService.Navigate(typeof(Views.MainPage));
-            return Task.CompletedTask;
+            await Task.CompletedTask;
         }       
     }
 }

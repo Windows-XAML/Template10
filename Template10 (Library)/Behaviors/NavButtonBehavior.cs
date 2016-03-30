@@ -15,16 +15,19 @@ namespace Template10.Behaviors
     [Microsoft.Xaml.Interactivity.TypeConstraint(typeof(Button))]
     public class NavButtonBehavior : DependencyObject, IBehavior
     {
-        bool update = false;
         private long _goBackReg;
         private long _goForwardReg;
         private IDispatcherWrapper _dispatcher;
+        private EventThrottleHelper _throttleHelper;
+
         Button element => AssociatedObject as Button;
         public DependencyObject AssociatedObject { get; set; }
 
         public void Attach(DependencyObject associatedObject)
         {
             AssociatedObject = associatedObject;
+
+            // process start
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
             {
                 element.Visibility = Visibility.Visible;
@@ -32,17 +35,27 @@ namespace Template10.Behaviors
             else
             {
                 _dispatcher = Common.DispatcherWrapper.Current();
-                element.Click += Element_Click;
-                Calculate(true);
+
+                // throttled calculate event
+                _throttleHelper = new EventThrottleHelper();
+                _throttleHelper.ThrottledEvent += delegate { Calculate(); };
+                _throttleHelper.Throttle = 1000;
+
+                // handle click
+                element.Click += new Common.WeakReference<NavButtonBehavior, object, RoutedEventArgs>(this)
+                {
+                    EventAction = (i, s, e) => Element_Click(s, e),
+                    DetachAction = (i, w) => element.Click -= w.Handler,
+                }.Handler;
+                CalculateThrottled();
             }
         }
 
         public void Detach()
         {
-            element.Click -= Element_Click;
+            _throttleHelper = null;
             if (Frame != null)
             {
-
                 Frame.SizeChanged -= SizeChanged;
                 Frame.LayoutUpdated -= LayoutUpdated;
             }
@@ -50,8 +63,21 @@ namespace Template10.Behaviors
             UnregisterPropertyChangedCallback(Frame.CanGoForwardProperty, _goForwardReg);
         }
 
-        private void SizeChanged(object sender, SizeChangedEventArgs e) { update = true; }
-        private void LayoutUpdated(object sender, object e) { Calculate(true); }
+        volatile bool _letLayoutUpdatedInvoke = false;
+        private void SizeChanged(object sender, SizeChangedEventArgs e) { _letLayoutUpdatedInvoke = true; }
+        private void LayoutUpdated(object sender, object e)
+        {
+            if (_letLayoutUpdatedInvoke)
+            {
+                _letLayoutUpdatedInvoke = false;
+                CalculateThrottled();
+            }
+        }
+
+        private void CalculateThrottled()
+        {
+            _throttleHelper?.DispatchTriggerEvent(null);
+        }
 
         private void Element_Click(object sender, RoutedEventArgs e)
         {
@@ -61,11 +87,15 @@ namespace Template10.Behaviors
                 switch (Direction)
                 {
                     case Directions.Back:
-                        if (Frame?.CanGoBack ?? false) Frame.GoBack();
-                        break;
+                        {
+                            if (Frame?.CanGoBack ?? false) Frame.GoBack();
+                            break;
+                        }
                     case Directions.Forward:
-                        if (Frame?.CanGoForward ?? false) Frame.GoForward();
-                        break;
+                        {
+                            if (Frame?.CanGoForward ?? false) Frame.GoForward();
+                            break;
+                        }
                 }
             }
             else
@@ -73,67 +103,64 @@ namespace Template10.Behaviors
                 switch (Direction)
                 {
                     case Directions.Back:
-                        nav.GoBack();
-                        break;
+                        {
+                            nav.GoBack();
+                            break;
+                        }
                     case Directions.Forward:
-                        nav.GoForward();
-                        break;
+                        {
+                            nav.GoForward();
+                            break;
+                        }
                 }
             }
         }
 
-        private void Calculate(bool allow = false)
+        private void Calculate()
         {
-            if (!allow)
-                if (!update)
-                    return;
-            update = false;
+            // just in case
             if (element == null)
                 return;
+
             // make changes on UI thread
             _dispatcher.Dispatch(() =>
             {
                 switch (Direction)
                 {
                     case Directions.Back:
-                        element.Visibility = CalculateBackVisibility(Frame);
-                        break;
+                        {
+                            element.Visibility = CalculateBackVisibility(Frame);
+                            break;
+                        }
                     case Directions.Forward:
-                        element.Visibility = CalculateForwardVisibility(Frame);
-                        break;
+                        {
+                            element.Visibility = CalculateForwardVisibility(Frame);
+                            break;
+                        }
                 }
             });
         }
 
         public enum Directions { Back, Forward }
-        public Directions Direction
-        {
-            get { return (Directions)GetValue(DirectionProperty); }
-            set { SetValue(DirectionProperty, value); }
-        }
+        public Directions Direction { get { return (Directions)GetValue(DirectionProperty); } set { SetValue(DirectionProperty, value); } }
         public static readonly DependencyProperty DirectionProperty = DependencyProperty.Register(nameof(Direction),
             typeof(Directions), typeof(NavButtonBehavior), new PropertyMetadata(Directions.Back));
 
-        public Frame Frame
-        {
-            get { return (Frame)GetValue(FrameProperty); }
-            set { SetValue(FrameProperty, value); }
-        }
+        public Frame Frame { get { return (Frame)GetValue(FrameProperty); } set { SetValue(FrameProperty, value); } }
         public static readonly DependencyProperty FrameProperty = DependencyProperty.Register(nameof(Frame),
             typeof(Frame), typeof(NavButtonBehavior), new PropertyMetadata(null, FrameChanged));
-
-        private static void FrameChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void FrameChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
         {
-            var b = (d as NavButtonBehavior);
-            var f = e.NewValue as Frame;
-            if (f != null)
+            var behavior = (d as NavButtonBehavior);
+            var frame = args.NewValue as Frame;
+            if (frame != null)
             {
-                b._goBackReg = f.RegisterPropertyChangedCallback(Frame.CanGoBackProperty, (s, args) => b.Calculate(true));
-                b._goForwardReg = f.RegisterPropertyChangedCallback(Frame.CanGoForwardProperty, (s, args) => b.Calculate(true));
-                f.SizeChanged += b.SizeChanged;
-                f.LayoutUpdated += b.LayoutUpdated;
+                behavior._goBackReg = frame.RegisterPropertyChangedCallback(Frame.CanGoBackProperty, (s, e) => behavior.CalculateThrottled());
+                behavior._goForwardReg = frame.RegisterPropertyChangedCallback(Frame.CanGoForwardProperty, (s, e) => behavior.CalculateThrottled());
+                frame.SizeChanged += behavior.SizeChanged;
+                frame.LayoutUpdated += behavior.LayoutUpdated;
             }
-            b.Calculate(true);
+            behavior.CalculateThrottled();
         }
 
         public static Visibility CalculateForwardVisibility(Frame frame)

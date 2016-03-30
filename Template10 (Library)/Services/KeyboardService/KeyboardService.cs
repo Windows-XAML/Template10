@@ -72,38 +72,45 @@ namespace Template10.Services.KeyboardService
                 // use this to nav forward
                 else if (e.VirtualKey == Windows.System.VirtualKey.GoForward)
                 {
-                    DebugWrite("GoForward", caller: nameof(AfterBackGesture));
+                    DebugWrite("GoForward", caller: nameof(AfterForwardGesture));
                     AfterForwardGesture?.Invoke();
                 }
                 else if (e.VirtualKey == Windows.System.VirtualKey.NavigationRight)
                 {
-                    DebugWrite("NavigationRight", caller: nameof(AfterBackGesture));
+                    DebugWrite("NavigationRight", caller: nameof(AfterForwardGesture));
                     AfterForwardGesture?.Invoke();
                 }
                 else if (e.VirtualKey == Windows.System.VirtualKey.GamepadRightShoulder)
                 {
-                    DebugWrite("GamepadRightShoulder", caller: nameof(AfterBackGesture));
+                    DebugWrite("GamepadRightShoulder", caller: nameof(AfterForwardGesture));
                     AfterForwardGesture?.Invoke();
                 }
                 else if (e.OnlyAlt && e.VirtualKey == Windows.System.VirtualKey.Right)
                 {
-                    DebugWrite("Alt+Right", caller: nameof(AfterBackGesture));
+                    DebugWrite("Alt+Right", caller: nameof(AfterForwardGesture));
                     AfterForwardGesture?.Invoke();
                 }
 
                 // about
-                else if (e.AltKey && e.ControlKey && e.ShiftKey && e.VirtualKey == Windows.System.VirtualKey.A)
+                else if (e.AltKey && e.ControlKey && e.ShiftKey && e.VirtualKey == Windows.System.VirtualKey.F12)
                 {
                     var open = new Action(async () => { await Windows.System.Launcher.LaunchUriAsync(new Uri("http://aka.ms/template10")); });
                     var about = new Windows.UI.Xaml.Controls.ContentDialog
                     {
                         Title = "Template 10",
-                        Content = "Congratulations. This project uses Template 10, an open source framework for Windows 10 apps written against the Universal Windows Platform.",
                         PrimaryButtonText = "Info",
                         PrimaryButtonCommand = new Mvvm.DelegateCommand(open),
                         SecondaryButtonText = "Close"
                     };
-                    await about.ShowAsync();
+
+                    try
+                    {
+                        await about.ShowAsync();
+                    }
+                    catch (System.Runtime.InteropServices.COMException)
+                    {
+                        DebugWrite("About dialog already showing");
+                    }
                 }
 
                 // anything else

@@ -19,12 +19,11 @@
       <Code Language="csharp">
         <![CDATA[public class $name$
         {
+          public static $name$ Instance { get; } = new $name$();
           private $name$() 
           {
-            // constructor
+            // private constructor
           }
-          private static $name$ sInstance;
-          public static $name$ Instance => sInstance ?? (sInstance = new $name$());
         }]]>
       </Code>
     </Snippet>

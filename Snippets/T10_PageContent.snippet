@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>T10_PageContent</Title>
+      <Author>daren.may@gmail.com</Author>
+      <Description>
+      </Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>T10_PageContent</Shortcut>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal Editable="true">
+          <ID>viewmodel</ID>
+          <ToolTip>viewmodel</ToolTip>
+          <Default>PageViewModel</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>pageName</ID>
+          <ToolTip>pageName</ToolTip>
+          <Default>Page Name</Default>
+          <Function>
+          </Function>
+        </Literal>
+      </Declarations>
+      <Code Language="xaml" Delimiter="$"><![CDATA[    <Page.DataContext>
+        <viewModels:$viewmodel$ x:Name="ViewModel" />
+    </Page.DataContext>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <!--  header  -->
+
+        <controls:PageHeader Frame="{x:Bind Frame}" Content="$pageName$" />
+
+        <!--  #region content  -->
+
+        <Grid Grid.Row="1">
+            <ScrollViewer Padding="12,8,0,0" VerticalScrollBarVisibility="Auto">
+                <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="{x:Bind ViewModel.Value}"/>
+            </ScrollViewer>
+        </Grid>
+
+        <!--  #endregion  -->
+
+    </Grid>
+]]></Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

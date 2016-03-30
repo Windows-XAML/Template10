@@ -33,6 +33,5 @@ namespace Template10.Mvvm
 
         [JsonIgnore]
         public IStateItems SessionState { get; set; }
-
     }
 }

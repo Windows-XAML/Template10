@@ -593,9 +593,9 @@
                                         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ClipGeometryTransform" Storyboard.TargetProperty="Y">
                                             <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="{Binding TemplateSettings.MinimalVerticalDelta, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                                         </DoubleAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentControl" Storyboard.TargetProperty="IsHitTestVisible">
+                                        <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentControl" Storyboard.TargetProperty="IsHitTestVisible">
                                             <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="False" />
-                                        </ObjectAnimationUsingKeyFrames>
+                                        </ObjectAnimationUsingKeyFrames>-->
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentControl" Storyboard.TargetProperty="IsEnabled">
                                             <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="False" />
                                         </ObjectAnimationUsingKeyFrames>
@@ -608,9 +608,9 @@
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MoreButton" Storyboard.TargetProperty="MinHeight">
                                             <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{ThemeResource AppBarThemeMinimalHeight}" />
                                         </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PrimaryItemsControl" Storyboard.TargetProperty="IsHitTestVisible">
+                                        <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="PrimaryItemsControl" Storyboard.TargetProperty="IsHitTestVisible">
                                             <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="False" />
-                                        </ObjectAnimationUsingKeyFrames>
+                                        </ObjectAnimationUsingKeyFrames>-->
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PrimaryItemsControl" Storyboard.TargetProperty="IsEnabled">
                                             <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="False" />
                                         </ObjectAnimationUsingKeyFrames>
@@ -788,45 +788,6 @@
                             <Grid.RenderTransform>
                                 <TranslateTransform x:Name="ContentTransform" />
                             </Grid.RenderTransform>
-                            <Rectangle x:Name="Spacer" Width="48" Visibility="Collapsed" />
-                            <AppBarButton x:Name="BackButton" Grid.Column="1"
-                                          Width="{ThemeResource AppBarExpandButtonThemeWidth}"
-                                          MinHeight="{ThemeResource AppBarThemeMinHeight}"
-                                          Foreground="{TemplateBinding Foreground}"
-                                          Tag="{TemplateBinding BackButtonContent}"
-                                          Visibility="{TemplateBinding BackButtonVisibility}">
-                                <interactivity:Interaction.Behaviors>
-                                    <behaviors:NavButtonBehavior Direction="Back" Frame="{Binding Frame, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
-                                </interactivity:Interaction.Behaviors>
-                                <AppBarButton.Template>
-                                    <ControlTemplate TargetType="AppBarButton">
-                                        <Grid x:Name="RootGrid" Width="{TemplateBinding Width}"
-                                              Height="{TemplateBinding Height}">
-                                            <VisualStateManager.VisualStateGroups>
-                                                <VisualStateGroup x:Name="CommonStates">
-                                                    <VisualState x:Name="Normal" />
-                                                    <VisualState x:Name="PointerOver">
-                                                        <VisualState.Setters>
-                                                            <Setter Target="RootGrid.Background" Value="{ThemeResource SystemControlHighlightListLowBrush}" />
-                                                        </VisualState.Setters>
-                                                    </VisualState>
-                                                    <VisualState x:Name="Pressed">
-                                                        <VisualState.Setters>
-                                                            <Setter Target="RootGrid.Background" Value="{ThemeResource SystemControlHighlightListMediumBrush}" />
-                                                        </VisualState.Setters>
-                                                    </VisualState>
-                                                    <VisualState x:Name="Disabled">
-                                                        <VisualState.Setters>
-                                                            <Setter Target="RootGrid.Foreground" Value="{ThemeResource SystemControlDisabledBaseLowBrush}" />
-                                                        </VisualState.Setters>
-                                                    </VisualState>
-                                                </VisualStateGroup>
-                                            </VisualStateManager.VisualStateGroups>
-                                            <SymbolIcon IsHitTestVisible="False" x:Name="BackIcon" Margin="0,-10,0,0" Symbol="{TemplateBinding Tag}" />
-                                        </Grid>
-                                    </ControlTemplate>
-                                </AppBarButton.Template>
-                            </AppBarButton>
                             <Grid Grid.Column="2">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -861,7 +822,8 @@
                                     Style="{StaticResource PageHeaderButton}">
                                 <FontIcon x:Name="EllipsisIcon" Height="{ThemeResource AppBarExpandButtonCircleDiameter}"
                                           VerticalAlignment="Center" FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                          FontSize="16" Glyph="&#xE10C;" />
+                                          FontSize="16" Foreground="{TemplateBinding Foreground}"
+                                          Glyph="&#xE10C;" />
                             </Button>
                             <Popup x:Name="OverflowPopup">
                                 <Popup.RenderTransform>
@@ -893,6 +855,47 @@
                             <Rectangle x:Name="HighContrastBorder" Grid.ColumnSpan="2" VerticalAlignment="Stretch"
                                        Stroke="{ThemeResource SystemControlForegroundTransparentBrush}"
                                        StrokeThickness="1" Visibility="Collapsed" x:DeferLoadStrategy="Lazy" />
+                            <Rectangle x:Name="Spacer" Width="48" Visibility="Collapsed" />
+                            <AppBarButton x:Name="BackButton" Grid.Column="1"
+                                          Width="{ThemeResource AppBarExpandButtonThemeWidth}"
+                                          MinHeight="{ThemeResource AppBarThemeMinHeight}"
+                                          Foreground="{TemplateBinding Foreground}"
+                                          Tag="{TemplateBinding BackButtonContent}"
+                                          Visibility="{TemplateBinding BackButtonVisibility}">
+                                <interactivity:Interaction.Behaviors>
+                                    <behaviors:NavButtonBehavior Direction="Back" Frame="{Binding Frame, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                                </interactivity:Interaction.Behaviors>
+                                <AppBarButton.Template>
+                                    <ControlTemplate TargetType="AppBarButton">
+                                        <Grid x:Name="RootGrid" Width="{TemplateBinding Width}"
+                                              Height="{TemplateBinding Height}">
+                                            <VisualStateManager.VisualStateGroups>
+                                                <VisualStateGroup x:Name="CommonStates">
+                                                    <VisualState x:Name="Normal" />
+                                                    <VisualState x:Name="PointerOver">
+                                                        <VisualState.Setters>
+                                                            <Setter Target="RootGrid.Background" Value="{ThemeResource SystemControlHighlightListLowBrush}" />
+                                                        </VisualState.Setters>
+                                                    </VisualState>
+                                                    <VisualState x:Name="Pressed">
+                                                        <VisualState.Setters>
+                                                            <Setter Target="RootGrid.Background" Value="{ThemeResource SystemControlHighlightListMediumBrush}" />
+                                                        </VisualState.Setters>
+                                                    </VisualState>
+                                                    <VisualState x:Name="Disabled">
+                                                        <VisualState.Setters>
+                                                            <Setter Target="RootGrid.Foreground" Value="{ThemeResource SystemControlDisabledBaseLowBrush}" />
+                                                        </VisualState.Setters>
+                                                    </VisualState>
+                                                </VisualStateGroup>
+                                            </VisualStateManager.VisualStateGroups>
+                                            <SymbolIcon x:Name="BackIcon" Margin="0,-10,0,0" IsHitTestVisible="True"
+                                                        Symbol="{TemplateBinding Tag}" />
+                                        </Grid>
+                                    </ControlTemplate>
+                                </AppBarButton.Template>
+                            </AppBarButton>
+
                         </Grid>
                     </Grid>
                 </ControlTemplate>

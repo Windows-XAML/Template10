@@ -7,13 +7,7 @@ namespace Sample.Services.SettingsServices
 {
     public class SettingsService
     {
-        public static SettingsService Instance { get; }
-        static SettingsService()
-        {
-            // implement singleton pattern
-            Instance = Instance ?? new SettingsService();
-        }
-
+        public static SettingsService Instance { get; } = new SettingsService();
         Template10.Services.SettingsService.ISettingsHelper _helper;
         private SettingsService()
         {

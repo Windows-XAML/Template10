@@ -57,6 +57,7 @@
             <DataTemplate x:Name="NavButtonContainerTemplate" x:DataType="local:HamburgerButtonInfo">
                 <RadioButton Width="{Binding PaneWidth, ElementName=ThisPage}" MinWidth="48"
                              MaxWidth="{x:Bind MaxWidth, Mode=TwoWay}"
+                             AutomationProperties.Name="Hamburger Menu Item"
                              Command="{Binding NavCommand, ElementName=ThisPage}"
                              CommandParameter="{Binding}" GroupName="Nav" Holding="NavButton_Holding"
                              IsChecked="{Binding IsChecked, Mode=TwoWay}"
@@ -76,8 +77,106 @@
                                           Content="{TemplateBinding Tag}"
                                           IsChecked="{Binding IsChecked, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                           Unchecked="NavButtonUnchecked" UseSystemFocusVisuals="True"
-                                          Visibility="{TemplateBinding Visibility}"
-                                          Template="{Binding NavButtonTemplate, ElementName=ThisPage}"/>
+                                          Visibility="{TemplateBinding Visibility}">
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Grid x:Name="RootGrid" Width="{Binding PaneWidth, ElementName=ThisPage}"
+                                              Background="Transparent">
+                                            <VisualStateManager.VisualStateGroups>
+                                                <VisualStateGroup x:Name="CommonStates">
+                                                    <VisualState x:Name="Normal">
+                                                        <VisualState.Setters>
+                                                            <Setter Target="NormalBack.Visibility" Value="Visible" />
+                                                        </VisualState.Setters>
+                                                        <Storyboard>
+                                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
+                                                        </Storyboard>
+                                                    </VisualState>
+                                                    <VisualState x:Name="PointerOver">
+                                                        <VisualState.Setters>
+                                                            <Setter Target="HoverBack.Visibility" Value="Visible" />
+                                                        </VisualState.Setters>
+                                                        <Storyboard>
+                                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
+                                                        </Storyboard>
+                                                    </VisualState>
+                                                    <VisualState x:Name="Pressed">
+                                                        <VisualState.Setters>
+                                                            <Setter Target="PressedBack.Visibility" Value="Visible" />
+                                                        </VisualState.Setters>
+                                                        <Storyboard>
+                                                            <PointerDownThemeAnimation Storyboard.TargetName="RootGrid" />
+                                                        </Storyboard>
+                                                    </VisualState>
+                                                    <VisualState x:Name="Disabled">
+                                                        <VisualState.Setters>
+                                                            <Setter Target="NormalFore.Opacity" Value=".5" />
+                                                        </VisualState.Setters>
+                                                    </VisualState>
+                                                    <VisualState x:Name="Checked">
+                                                        <VisualState.Setters>
+                                                            <Setter Target="CheckedBack.Visibility" Value="Visible" />
+                                                        </VisualState.Setters>
+                                                        <Storyboard>
+                                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
+                                                        </Storyboard>
+                                                    </VisualState>
+                                                    <VisualState x:Name="CheckedPointerOver">
+                                                        <VisualState.Setters>
+                                                            <Setter Target="HoverBack.Visibility" Value="Visible" />
+                                                        </VisualState.Setters>
+                                                        <Storyboard>
+                                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
+                                                        </Storyboard>
+                                                    </VisualState>
+                                                    <VisualState x:Name="CheckedPressed">
+                                                        <VisualState.Setters>
+                                                            <Setter Target="PressedBack.Visibility" Value="Visible" />
+                                                        </VisualState.Setters>
+                                                        <Storyboard>
+                                                            <PointerDownThemeAnimation Storyboard.TargetName="RootGrid" />
+                                                        </Storyboard>
+                                                    </VisualState>
+                                                    <VisualState x:Name="CheckedDisabled">
+                                                        <VisualState.Setters>
+                                                            <Setter Target="CheckedBack.Visibility" Value="Visible" />
+                                                        </VisualState.Setters>
+                                                    </VisualState>
+                                                    <VisualState x:Name="Indeterminate" />
+                                                    <VisualState x:Name="IndeterminatePointerOver" />
+                                                    <VisualState x:Name="IndeterminatePressed" />
+                                                    <VisualState x:Name="IndeterminateDisabled" />
+                                                </VisualStateGroup>
+                                            </VisualStateManager.VisualStateGroups>
+                                            <Grid.Resources>
+                                                <Style TargetType="ContentPresenter">
+                                                    <Setter Property="Background" Value="Transparent" />
+                                                    <Setter Property="FontSize" Value="16" />
+                                                    <Setter Property="HorizontalAlignment" Value="Left" />
+                                                    <Setter Property="HorizontalContentAlignment" Value="Left" />
+                                                    <Setter Property="VerticalAlignment" Value="Stretch" />
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                </Style>
+                                            </Grid.Resources>
+                                            <Rectangle x:Name="NormalBack" Fill="{Binding NavButtonBackground, ElementName=ThisPage}"
+                                                       IsHitTestVisible="False" Visibility="Collapsed" />
+                                            <Rectangle x:Name="PressedBack"
+                                                       Fill="{Binding NavButtonPressedBackground, ElementName=ThisPage}"
+                                                       IsHitTestVisible="False" Visibility="Collapsed" />
+                                            <Rectangle x:Name="HoverBack"
+                                                       Fill="{Binding NavButtonHoverBackground, ElementName=ThisPage}"
+                                                       IsHitTestVisible="False" Visibility="Collapsed" />
+                                            <Rectangle x:Name="CheckedBack"
+                                                       Fill="{Binding NavButtonCheckedBackground, ElementName=ThisPage}"
+                                                       IsHitTestVisible="False" Visibility="Collapsed" />
+                                            <ContentControl x:Name="NormalFore" AutomationProperties.AccessibilityView="Raw"
+                                                            Content="{TemplateBinding Content}"
+                                                            Foreground="{Binding NavButtonForeground, ElementName=ThisPage, FallbackValue=White}"
+                                                            IsHitTestVisible="False" />
+                                        </Grid>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                            </ToggleButton>
                         </ControlTemplate>
                     </RadioButton.Template>
                 </RadioButton>
@@ -187,7 +286,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid x:Name="RootGrid">
+    <Grid x:Name="RootGrid" Background="{x:Bind HamburgerBackground, FallbackValue=DarkRed, Mode=OneWay}">
 
         <VisualStateManager.VisualStateGroups>
 
@@ -221,7 +320,7 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="ShellSplitView.DisplayMode" Value="CompactInline" />
-                        <Setter Target="HamburgerButton.Visibility" Value="Collapsed" />
+                        <Setter Target="HamburgerButton.Visibility" Value="Visible" />
                         <Setter Target="ShellSplitView.IsPaneOpen" Value="True" />
                     </VisualState.Setters>
                 </VisualState>
@@ -250,16 +349,16 @@
             </Interactivity:Interaction.Behaviors>
         </ContentControl>
 
-        <SplitView x:Name="ShellSplitView" Grid.Column="0" DisplayMode="Inline"
-                   IsPaneOpen="False" OpenPaneLength="{x:Bind PaneWidth, Mode=OneWay}"
-                   PaneBackground="Transparent">
+        <SplitView x:Name="ShellSplitView" Grid.Column="0" AutomationProperties.Name="Jerry Nixon"
+                   DisplayMode="Inline" IsPaneOpen="False"
+                   OpenPaneLength="{x:Bind PaneWidth, Mode=OneWay}" PaneBackground="Transparent">
 
             <SplitView.Pane>
 
                 <Grid x:Name="PaneContent" Margin="0,48,0,0"
-                      Background="{x:Bind NavAreaBackground, FallbackValue=Blue, Mode=OneWay}"
-                      BorderBrush="{x:Bind PaneBorderBrush, FallbackValue=White, Mode=OneWay}"
-                      BorderThickness="{x:Bind PaneBorderThickness, FallbackValue='0,0,1,0'}"
+                      Background="{x:Bind NavAreaBackground, Mode=OneWay}"
+                      BorderBrush="{x:Bind PaneBorderBrush, Mode=OneWay}"
+                      BorderThickness="{x:Bind PaneBorderThickness}"
                       ManipulationDelta="PaneContent_ManipulationDelta" ManipulationMode="TranslateX"
                       Tapped="PaneContent_Tapped">
 
@@ -298,7 +397,8 @@
                         </Core:DataTriggerBehavior>
                     </Interactivity:Interaction.Behaviors>
 
-                    <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+                    <ScrollViewer Grid.Row="0" AutomationProperties.AccessibilityView="Raw"
+                                  VerticalScrollBarVisibility="Auto">
 
                         <ItemsControl x:Name="PrimaryButtonContainer"
                                       ItemTemplate="{StaticResource NavButtonContainerTemplate}"
@@ -367,8 +467,9 @@
 
         </SplitView>
 
-        <Grid Grid.Row="0" Visibility="{x:Bind HamburgerButtonVisibility, Mode=OneWay}">
-            <Button x:Name="HamburgerButton"
+        <Grid Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top"
+              Visibility="{x:Bind HamburgerButtonVisibility, Mode=OneWay}">
+            <Button x:Name="HamburgerButton" AutomationProperties.Name="Hamburger Menu Button"
                     Background="{x:Bind HamburgerBackground, FallbackValue=DarkRed, Mode=OneWay}"
                     Command="{x:Bind HamburgerCommand}"
                     Foreground="{x:Bind HamburgerForeground, FallbackValue=White, Mode=OneWay}"

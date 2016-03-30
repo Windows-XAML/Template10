@@ -1,6 +1,8 @@
 using System;
 using System.Threading.Tasks;
+using Template10.Utils;
 using Windows.ApplicationModel.Activation;
+using Windows.UI;
 
 namespace Items
 {
@@ -9,7 +11,10 @@ namespace Items
 
     sealed partial class App : Template10.Common.BootStrapper
     {
-        public App() { InitializeComponent(); }
+        public App()
+        {
+            InitializeComponent();
+        }
 
         public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {

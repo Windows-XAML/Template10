@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -182,13 +183,13 @@ namespace Template10.Common
 
         // it is the intent of Template 10 to no longer require Launched/Activated overrides, only OnStartAsync()
 
-        protected override sealed async void OnActivated(IActivatedEventArgs e) { await InternalActivatedAsync(e); }
-        protected override sealed async void OnCachedFileUpdaterActivated(CachedFileUpdaterActivatedEventArgs args) { await InternalActivatedAsync(args); }
-        protected override sealed async void OnFileActivated(FileActivatedEventArgs args) { await InternalActivatedAsync(args); }
-        protected override sealed async void OnFileOpenPickerActivated(FileOpenPickerActivatedEventArgs args) { await InternalActivatedAsync(args); }
-        protected override sealed async void OnFileSavePickerActivated(FileSavePickerActivatedEventArgs args) { await InternalActivatedAsync(args); }
-        protected override sealed async void OnSearchActivated(SearchActivatedEventArgs args) { await InternalActivatedAsync(args); }
-        protected override sealed async void OnShareTargetActivated(ShareTargetActivatedEventArgs args) { await InternalActivatedAsync(args); }
+        protected override sealed async void OnActivated(IActivatedEventArgs e) { DebugWrite(); await InternalActivatedAsync(e); }
+        protected override sealed async void OnCachedFileUpdaterActivated(CachedFileUpdaterActivatedEventArgs args) { DebugWrite(); await InternalActivatedAsync(args); }
+        protected override sealed async void OnFileActivated(FileActivatedEventArgs args) { DebugWrite(); await InternalActivatedAsync(args); }
+        protected override sealed async void OnFileOpenPickerActivated(FileOpenPickerActivatedEventArgs args) { DebugWrite(); await InternalActivatedAsync(args); }
+        protected override sealed async void OnFileSavePickerActivated(FileSavePickerActivatedEventArgs args) { DebugWrite(); await InternalActivatedAsync(args); }
+        protected override sealed async void OnSearchActivated(SearchActivatedEventArgs args) { DebugWrite(); await InternalActivatedAsync(args); }
+        protected override sealed async void OnShareTargetActivated(ShareTargetActivatedEventArgs args) { DebugWrite(); await InternalActivatedAsync(args); }
 
         public IActivatedEventArgs OriginalActivatedArgs { get; private set; }
 
@@ -228,7 +229,7 @@ namespace Template10.Common
 
         // it is the intent of Template 10 to no longer require Launched/Activated overrides, only OnStartAsync()
 
-        protected override sealed void OnLaunched(LaunchActivatedEventArgs e) { InternalLaunchAsync(e); }
+        protected override sealed void OnLaunched(LaunchActivatedEventArgs e) { DebugWrite(); InternalLaunchAsync(e); }
 
         /// <summary>
         /// This handles all the preliminary stuff unique to Launched before calling OnStartAsync().
@@ -292,11 +293,8 @@ namespace Template10.Common
             if (!restored)
             {
                 DebugWrite("Calling", caller: nameof(OnStartAsync));
-                if (!_HasOnStartAsync)
-                {
-                    _HasOnStartAsync = true;
-                    await OnStartAsync(StartKind.Launch, e);
-                }
+                _HasOnStartAsync = true;
+                await OnStartAsync(StartKind.Launch, e);
             }
 
             // ensure active (this will hide any custom splashscreen)
@@ -593,12 +591,19 @@ namespace Template10.Common
             }
             catch { /* this is okay */ }
 
-            // setup custom titlebar
-            foreach (var resource in Application.Current.Resources
-                .Where(x => x.Key.Equals(typeof(Controls.CustomTitleBar))))
+            // this wonky style of loop is important due to a platform bug
+            int count = Application.Current.Resources.Count;
+            foreach (var resource in Application.Current.Resources)
             {
-                var control = new Controls.CustomTitleBar();
-                control.Style = resource.Value as Style;
+                var k = resource.Key;
+                if (k == typeof(Controls.CustomTitleBar))
+                {
+                    var s = resource.Value as Style;
+                    var t = new Controls.CustomTitleBar();
+                    t.Style = s;
+                }
+                count--;
+                if (count == 0) break;
             }
 
             // create the default frame only if there's nothing already there
