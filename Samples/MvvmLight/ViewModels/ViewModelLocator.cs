@@ -1,6 +1,6 @@
 ﻿using Windows.UI.Xaml;
 
-namespace Messaging.ViewModels
+namespace MvvmLight.ViewModels
 {
     public class ViewModelLocator
     {

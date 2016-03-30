@@ -5,9 +5,9 @@
       xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
       xmlns:controls="using:Template10.Controls"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="using:Sample.Views"
+      xmlns:local="using:Cortana.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:vm="using:Sample.ViewModels" xmlns:Behaviors="using:Template10.Behaviors" x:Class="Sample.Views.MainPage"
+      xmlns:vm="using:Cortana.ViewModels" xmlns:Behaviors="using:Template10.Behaviors" x:Class="Cortana.Views.MainPage"
       mc:Ignorable="d">
 
     <Page.DataContext>

@@ -8,7 +8,7 @@ using Template10.Utils;
 using Windows.UI.Popups;
 using Windows.UI.Xaml.Navigation;
 
-namespace Messaging.ViewModels
+namespace Validation.ViewModels
 {
     class MainPageViewModel : ViewModelBase
     {

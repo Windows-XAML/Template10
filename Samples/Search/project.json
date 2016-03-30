@@ -3,8 +3,7 @@
     "AdaptiveTileExtensions": "1.0.1",
     "Microsoft.NETCore.Targets.UniversalWindowsPlatform": "5.0.0",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0",
-    "Microsoft.Xaml.Behaviors.Uwp.Managed": "1.0.3",
-    "Newtonsoft.Json": "8.0.2"
+    "Microsoft.Xaml.Behaviors.Uwp.Managed": "1.1.0"
   },
   "frameworks": {
     "uap10.0": {}

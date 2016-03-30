@@ -1,8 +1,8 @@
-﻿using Messaging.Models;
-using Messaging.Shared;
+﻿using IncrementalLoading.Models;
+using IncrementalLoading.Shared;
 using System.Threading.Tasks;
 
-namespace Messaging.Services.GithubService
+namespace IncrementalLoading.Services.GithubService
 {
     public interface IGithubService
     {

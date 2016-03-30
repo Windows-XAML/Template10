@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 
-namespace MPC.Services.SettingsServices
+namespace VoiceAndInk.Services.SettingsServices
 {
     public partial class SettingsService
     {

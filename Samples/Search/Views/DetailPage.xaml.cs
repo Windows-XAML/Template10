@@ -1,8 +1,8 @@
-﻿using Sample.ViewModels;
+﻿using Search.ViewModels;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Controls;
 
-namespace Sample.Views
+namespace Search.Views
 {
     public sealed partial class DetailPage : Page
     {

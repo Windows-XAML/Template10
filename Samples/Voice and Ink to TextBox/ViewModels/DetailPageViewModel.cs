@@ -7,9 +7,9 @@ using Template10.Mvvm;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Navigation;
 
-namespace MPC.ViewModels
+namespace VoiceAndInk.ViewModels
 {
-    public class DetailPageViewModel : MPC.Mvvm.ViewModelBase
+    public class DetailPageViewModel : VoiceAndInk.Mvvm.ViewModelBase
     {
         public DetailPageViewModel()
         {

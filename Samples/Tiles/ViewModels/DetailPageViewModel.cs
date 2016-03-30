@@ -1,4 +1,4 @@
-﻿using Messaging.Services.TileService;
+﻿using Tiles.Services.TileService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using Template10.Services.NavigationService;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
 
-namespace Messaging.ViewModels
+namespace Tiles.ViewModels
 {
     public class DetailPageViewModel : Template10.Mvvm.ViewModelBase
     {

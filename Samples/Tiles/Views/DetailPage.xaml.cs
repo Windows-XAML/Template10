@@ -1,8 +1,8 @@
-﻿using Messaging.ViewModels;
+﻿using Tiles.ViewModels;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Controls;
 
-namespace Messaging.Views
+namespace Tiles.Views
 {
     public sealed partial class DetailPage : Page
     {

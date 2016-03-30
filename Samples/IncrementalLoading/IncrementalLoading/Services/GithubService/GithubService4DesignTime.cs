@@ -1,11 +1,11 @@
-﻿using Messaging.Models;
-using Messaging.Services;
-using Messaging.Shared;
+﻿using IncrementalLoading.Models;
+using IncrementalLoading.Services;
+using IncrementalLoading.Shared;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Messaging.Services.GithubService
+namespace IncrementalLoading.Services.GithubService
 {
     public class GithubService4DesignTime : IGithubService
     {

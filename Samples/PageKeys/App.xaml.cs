@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 
-namespace Messaging
+namespace PageKeys
 {
     sealed partial class App : Template10.Common.BootStrapper
     {

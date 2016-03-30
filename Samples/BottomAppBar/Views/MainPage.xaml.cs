@@ -4,7 +4,7 @@ using Template10.Mvvm;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Messaging.Views
+namespace BottomAppBar.Views
 {
     public sealed partial class MainPage : Page
     {

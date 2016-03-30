@@ -1,7 +1,7 @@
-﻿using Messaging.ViewModels;
+﻿using MvvmLight.ViewModels;
 using Windows.UI.Xaml.Controls;
 
-namespace Messaging.Views
+namespace MvvmLight.Views
 {
     public sealed partial class MainPage : Page
     {

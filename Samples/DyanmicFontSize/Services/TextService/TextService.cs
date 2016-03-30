@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Documents;
 
-namespace DyanmicFontSize.Services.TextService
+namespace DynamicFontSize.Services.TextService
 {
     public class TextService
     {

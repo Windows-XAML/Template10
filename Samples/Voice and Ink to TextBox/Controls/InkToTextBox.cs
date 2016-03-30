@@ -1,4 +1,4 @@
-﻿using MPC.Common;
+﻿using VoiceAndInk.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +13,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 
-namespace MPC.Controls
+namespace VoiceAndInk.Controls
 {
     [TemplatePart(Name = PART_ROOT_NAME, Type = typeof(Grid))]
     public class InkToTextBox : Control

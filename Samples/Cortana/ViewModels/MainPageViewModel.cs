@@ -9,7 +9,7 @@ using Windows.Media.SpeechSynthesis;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace Sample.ViewModels
+namespace Cortana.ViewModels
 {
     public class MainPageViewModel : Template10.Mvvm.ViewModelBase
     {
@@ -63,7 +63,7 @@ namespace Sample.ViewModels
         {
             try
             {
-                Value = await _SpeechService.ListenAsync("Cortana Sample", "Try saying, 'The quick brown fox jumps over the lazy dog.'");
+                Value = await _SpeechService.ListenAsync("Cortana Cortana", "Try saying, 'The quick brown fox jumps over the lazy dog.'");
             }
             catch (Exception ex)
             {

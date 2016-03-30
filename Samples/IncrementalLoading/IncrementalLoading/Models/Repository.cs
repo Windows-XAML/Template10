@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace Messaging.Models
+namespace IncrementalLoading.Models
 {
     [JsonObject]
     public class Repository

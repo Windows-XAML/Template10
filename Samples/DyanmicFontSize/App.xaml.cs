@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 
-namespace DyanmicFontSize
+namespace DynamicFontSize
 {
     /// Documentation on APIs used in this page:
     /// https://github.com/Windows-XAML/Template10/wiki

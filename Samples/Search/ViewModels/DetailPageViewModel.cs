@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Navigation;
 
-namespace Sample.ViewModels
+namespace Search.ViewModels
 {
     public class DetailPageViewModel : Template10.Mvvm.ViewModelBase
     {

@@ -5,13 +5,13 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("DyanmicFontSize")]
+[assembly: AssemblyTitle("DynamicFontSize")]
 [assembly: AssemblyDescription("http://aka.ms/template10")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("DyanmicFontSize")]
+[assembly: AssemblyProduct("DynamicFontSize")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
-[assembly: AssemblyTrademark("DyanmicFontSize")]
+[assembly: AssemblyTrademark("DynamicFontSize")]
 [assembly: AssemblyCulture("")]
 
 // Version information for an assembly consists of the following four values:

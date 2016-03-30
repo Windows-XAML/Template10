@@ -10,7 +10,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Documents;
 
-namespace DyanmicFontSize.AttachedProperties
+namespace DynamicFontSize.AttachedProperties
 {
     public class RichTextBlockEx : DependencyObject
     {

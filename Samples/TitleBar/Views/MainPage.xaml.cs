@@ -2,7 +2,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Messaging.Views
+namespace TitleBar.Views
 {
     public sealed partial class MainPage : Page
     {

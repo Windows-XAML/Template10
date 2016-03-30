@@ -1,7 +1,7 @@
 ﻿using System;
 using Template10.Mvvm;
 
-namespace Samples.MasterDetail.Models
+namespace MasterDetail.Models
 {
    public class Message : BindableBase
     {

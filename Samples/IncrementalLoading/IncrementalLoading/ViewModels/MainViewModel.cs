@@ -1,13 +1,13 @@
-﻿using Messaging.Extensions;
-using Messaging.Models;
-using Messaging.Services.GithubService;
-using Messaging.Shared;
+﻿using IncrementalLoading.Extensions;
+using IncrementalLoading.Models;
+using IncrementalLoading.Services.GithubService;
+using IncrementalLoading.Shared;
 using System;
 using System.Collections.ObjectModel;
 using Template10.Mvvm;
 using Windows.System;
 
-namespace Messaging.ViewModels
+namespace IncrementalLoading.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {

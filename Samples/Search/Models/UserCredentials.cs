@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Template10.Mvvm;
 
-namespace Sample.Models
+namespace Search.Models
 {
     public class UserCredentials : BindableBase
     {

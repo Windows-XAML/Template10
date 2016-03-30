@@ -5,7 +5,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace Messaging.Views
+namespace PageKeys.Views
 {
     public sealed partial class MainPage : Page
     {

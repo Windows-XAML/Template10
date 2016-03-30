@@ -1,7 +1,7 @@
-﻿using Messaging.ViewModels;
+﻿using IncrementalLoading.ViewModels;
 using Windows.UI.Xaml.Controls;
 
-namespace Messaging.Views
+namespace IncrementalLoading.Views
 {
     public sealed partial class MainView : Page
     {

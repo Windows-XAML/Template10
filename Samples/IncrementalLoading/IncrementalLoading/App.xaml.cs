@@ -1,9 +1,9 @@
-﻿using Messaging.Views;
+﻿using IncrementalLoading.Views;
 using System.Threading.Tasks;
 using Template10.Common;
 using Windows.ApplicationModel.Activation;
 
-namespace Messaging
+namespace IncrementalLoading
 {
     sealed partial class App : BootStrapper
     {

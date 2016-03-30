@@ -5,7 +5,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.VoiceCommands;
 using Windows.Storage;
 
-namespace Sample
+namespace Cortana
 {
     sealed partial class App : Template10.Common.BootStrapper
     {

@@ -10,7 +10,7 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace MPC.Controls
+namespace VoiceAndInk.Controls
 {
     public class VoiceToTextBox : TextBox
     {

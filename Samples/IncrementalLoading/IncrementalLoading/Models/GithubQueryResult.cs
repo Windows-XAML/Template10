@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Messaging.Models
+namespace IncrementalLoading.Models
 {
     [JsonObject]
     public class GithubQueryResult<T>

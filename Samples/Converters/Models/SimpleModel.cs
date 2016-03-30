@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Messaging.Models
+namespace Converters.Models
 {
     public class SimpleModel
     {

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Documents;
 
-namespace DyanmicFontSize.Models
+namespace DynamicFontSize.Models
 {
     public class Header : IBlock
     {

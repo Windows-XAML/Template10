@@ -1,8 +1,8 @@
-using MPC.ViewModels;
+using VoiceAndInk.ViewModels;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace MPC.Views
+namespace VoiceAndInk.Views
 {
     public sealed partial class SettingsPage : Page
     {

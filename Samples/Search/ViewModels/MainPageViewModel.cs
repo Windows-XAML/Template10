@@ -6,7 +6,7 @@ using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using Template10.Mvvm;
 
-namespace Sample.ViewModels
+namespace Search.ViewModels
 {
     public class MainPageViewModel : Template10.Mvvm.ViewModelBase
     {

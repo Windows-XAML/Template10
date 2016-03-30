@@ -1,6 +1,4 @@
-using System;
 using System.Threading.Tasks;
-using Template10.Common;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.DataTransfer.ShareTarget;
 

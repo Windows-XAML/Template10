@@ -55,6 +55,6 @@ private void LoginHide(object sender, System.EventArgs e)
 }
 ````
 
-That second handler (LoginHide) is a custom event we put on our user control as a way to communicate back to our Shell. This event is effectively asking to return to the Normal visual state. You can handle this any way you want in your app, including Sample. This event is the easy approach.
+That second handler (LoginHide) is a custom event we put on our user control as a way to communicate back to our Shell. This event is effectively asking to return to the Normal visual state. You can handle this any way you want in your app, including Search. This event is the easy approach.
 
 Good luck!

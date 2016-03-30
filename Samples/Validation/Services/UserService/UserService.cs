@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Messaging.Models;
+using Validation.Models;
 using Template10.Utils;
 using Template10.Validation;
 
-namespace Messaging.Services.UserService
+namespace Validation.Services.UserService
 {
     public class UserService
     {

@@ -1,8 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
-using Windows.Storage;
-using Windows.Storage.AccessCache;
 
 namespace JumpList
 {

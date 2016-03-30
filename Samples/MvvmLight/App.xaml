@@ -1,9 +1,9 @@
-﻿<common:BootStrapper x:Class="Messaging.App"
+﻿<common:BootStrapper x:Class="MvvmLight.App"
                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                      xmlns:common="using:Template10.Common"
-                     xmlns:controls="using:Template10.Controls" xmlns:local="using:Messaging"
-                     xmlns:vm="using:Messaging.ViewModels">
+                     xmlns:controls="using:Template10.Controls" xmlns:local="using:MvvmLight"
+                     xmlns:vm="using:MvvmLight.ViewModels">
 
     <Application.Resources>
         <vm:ViewModelLocator x:Key="Locator" />

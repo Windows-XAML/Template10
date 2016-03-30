@@ -7,7 +7,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
-namespace MPC.Common
+namespace VoiceAndInk.Common
 {
     class VisualTreeHelperEx
     {

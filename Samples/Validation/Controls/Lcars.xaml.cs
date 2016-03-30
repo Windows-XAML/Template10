@@ -5,7 +5,7 @@ using Windows.UI.Xaml.Media.Animation;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace Messaging.Controls
+namespace Validation.Controls
 {
     public sealed partial class Lcars : UserControl
     {
