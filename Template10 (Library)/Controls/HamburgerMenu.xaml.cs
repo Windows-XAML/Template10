@@ -97,6 +97,12 @@ namespace Template10.Controls
                     // in case the developer has defined zero buttons
                     if (NavButtonCount == 0)
                         _areNavButtonsLoaded = true;
+
+                    // set component styles to default style resources if developer hasn't defined a custom style
+                    if (HamburgerButtonStyle == null)
+                        HamburgerButtonStyle = (Style)Resources["DefaultHamburgerButtonStyle"];
+                    if (NavButtonTemplate == null)
+                        NavButtonTemplate = (ControlTemplate)Resources["DefaultNavButtonTemplate"];
                 };
             }
         }
@@ -245,18 +251,15 @@ namespace Template10.Controls
                 // since every brush will be based on one color,
                 // we will do so with theme in mind.
 
+                Color? checkedBackgroundColor = null;
+
                 switch (RequestedTheme)
                 {
                     case ElementTheme.Default:
                     case ElementTheme.Light:
                         {
-                            HamburgerBackground = color?.ToSolidColorBrush();
-                            HamburgerForeground = Colors.White.ToSolidColorBrush();
                             NavAreaBackground = Colors.DimGray.ToSolidColorBrush();
-                            NavButtonBackground = Colors.Transparent.ToSolidColorBrush();
-                            NavButtonForeground = Colors.White.ToSolidColorBrush();
-                            NavButtonCheckedForeground = Colors.White.ToSolidColorBrush();
-                            NavButtonCheckedBackground = color?.Lighten(ColorUtils.Accents.Plus20).ToSolidColorBrush();
+                            checkedBackgroundColor = color?.Lighten(ColorUtils.Accents.Plus20);
                             NavButtonPressedBackground = Colors.Gainsboro.Darken(ColorUtils.Accents.Plus40).ToSolidColorBrush();
                             NavButtonHoverBackground = Colors.Gainsboro.Darken(ColorUtils.Accents.Plus60).ToSolidColorBrush();
                             SecondarySeparator = PaneBorderBrush = Colors.Gainsboro.Darken(ColorUtils.Accents.Plus40).ToSolidColorBrush();
@@ -264,19 +267,23 @@ namespace Template10.Controls
                         break;
                     case ElementTheme.Dark:
                         {
-                            HamburgerBackground = color?.ToSolidColorBrush();
-                            HamburgerForeground = Colors.White.ToSolidColorBrush();
                             NavAreaBackground = Colors.Gainsboro.Darken(ColorUtils.Accents.Plus80).ToSolidColorBrush();
-                            NavButtonBackground = Colors.Transparent.ToSolidColorBrush();
-                            NavButtonForeground = Colors.White.ToSolidColorBrush();
-                            NavButtonCheckedForeground = Colors.White.ToSolidColorBrush();
-                            NavButtonCheckedBackground = color?.Darken(ColorUtils.Accents.Plus40).ToSolidColorBrush();
+                            checkedBackgroundColor = color?.Darken(ColorUtils.Accents.Plus40);
                             NavButtonPressedBackground = Colors.Gainsboro.Lighten(ColorUtils.Accents.Plus40).ToSolidColorBrush();
                             NavButtonHoverBackground = Colors.Gainsboro.Lighten(ColorUtils.Accents.Plus60).ToSolidColorBrush();
                             SecondarySeparator = PaneBorderBrush = Colors.Gainsboro.ToSolidColorBrush();
                         }
                         break;
                 }
+
+                HamburgerBackground = color?.ToSolidColorBrush();
+                HamburgerForeground = Colors.White.ToSolidColorBrush();
+                NavButtonBackground = Colors.Transparent.ToSolidColorBrush();
+                NavButtonForeground = Colors.White.ToSolidColorBrush();
+                NavButtonCheckedBackground = checkedBackgroundColor?.ToSolidColorBrush();
+                NavButtonCheckedForeground = Colors.White.ToSolidColorBrush();
+                NavButtonCheckedPressedBackground = checkedBackgroundColor?.Darken(ColorUtils.Accents.Plus20).ToSolidColorBrush();
+                NavButtonCheckedHoverBackground = checkedBackgroundColor?.Lighten(ColorUtils.Accents.Plus10).ToSolidColorBrush();
             }
         }
 
@@ -392,6 +399,24 @@ namespace Template10.Controls
         public static readonly DependencyProperty NavButtonHoverBackgroundProperty =
               DependencyProperty.Register(nameof(NavButtonHoverBackground), typeof(SolidColorBrush),
                   typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(NavButtonHoverBackground), e)));
+
+        public SolidColorBrush NavButtonCheckedPressedBackground
+        {
+            get { return GetValue(NavButtonCheckedPressedBackgroundProperty) as SolidColorBrush; }
+            set { SetValue(NavButtonCheckedPressedBackgroundProperty, value); }
+        }
+        public static readonly DependencyProperty NavButtonCheckedPressedBackgroundProperty =
+              DependencyProperty.Register(nameof(NavButtonCheckedPressedBackground), typeof(SolidColorBrush),
+                  typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(NavButtonCheckedPressedBackground), e)));
+
+        public SolidColorBrush NavButtonCheckedHoverBackground
+        {
+            get { return GetValue(NavButtonCheckedHoverBackgroundProperty) as SolidColorBrush; }
+            set { SetValue(NavButtonCheckedHoverBackgroundProperty, value); }
+        }
+        public static readonly DependencyProperty NavButtonCheckedHoverBackgroundProperty =
+              DependencyProperty.Register(nameof(NavButtonCheckedHoverBackground), typeof(SolidColorBrush),
+                  typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(NavButtonCheckedHoverBackground), e)));
 
         #endregion
 
@@ -689,6 +714,28 @@ namespace Template10.Controls
         public static readonly DependencyProperty HeaderContentProperty =
             DependencyProperty.Register(nameof(HeaderContent), typeof(UIElement),
                 typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(HeaderContent), e)));
+
+        #endregion
+
+        #region Component Style Properties
+
+        public Style HamburgerButtonStyle
+        {
+            get { return (Style)GetValue(HamburgerButtonStyleProperty); }
+            set { SetValue(HamburgerButtonStyleProperty, value); }
+        }
+        public static readonly DependencyProperty HamburgerButtonStyleProperty =
+            DependencyProperty.Register(nameof(HamburgerButtonStyle), typeof(Style), typeof(HamburgerMenu),
+                new PropertyMetadata(null, (d, e) => Changed(nameof(HamburgerButtonStyle), e)));
+        
+        public ControlTemplate NavButtonTemplate
+        {
+            get { return (ControlTemplate)GetValue(NavButtonTemplateProperty); }
+            set { SetValue(NavButtonTemplateProperty, value); }
+        }
+        public static readonly DependencyProperty NavButtonTemplateProperty =
+            DependencyProperty.Register(nameof(NavButtonTemplate), typeof(ControlTemplate), typeof(HamburgerMenu),
+                new PropertyMetadata(null, (d, e) => Changed(nameof(NavButtonTemplate), e)));
 
         #endregion
 
