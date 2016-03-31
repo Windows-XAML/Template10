@@ -10,5 +10,12 @@ namespace ShareTarget.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
+        string _Date = default(string);
+        public string Date { get { return _Date; } set { Set(ref _Date, value); } }
+
+        public void Do()
+        {
+            Date = DateTime.Now.ToString();
+        }
     }
 }

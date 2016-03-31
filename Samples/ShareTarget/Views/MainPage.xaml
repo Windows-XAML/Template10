@@ -21,7 +21,10 @@
 
         <TextBlock x:Name="mainTextBlock" Margin="16,12,0,0"
                    RelativePanel.AlignLeftWithPanel="True" RelativePanel.Below="pageHeader"
-                   Text="Hello World" />
+                   Text="{Binding Date}" />
+
+        <Button Margin="16,12,0,0" Click="{x:Bind ViewModel.Do}" Content="Do action"
+                RelativePanel.Below="mainTextBlock" />
 
     </RelativePanel>
 
