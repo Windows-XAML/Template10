@@ -1,13 +1,12 @@
 ﻿using Newtonsoft.Json;
-using IncrementalLoading.Extensions;
-using IncrementalLoading.Models;
-using IncrementalLoading.Shared;
+using Template10.Samples.IncrementalLoadingSample.Extensions;
+using Template10.Samples.IncrementalLoadingSample.Models;
 using System;
 using System.Net;
 using System.Threading.Tasks;
 using Windows.Web.Http;
 
-namespace IncrementalLoading.Services.GithubService
+namespace Template10.Samples.IncrementalLoadingSample.Services.GithubService
 {
     public class GithubService4RunTime : IGithubService
     {

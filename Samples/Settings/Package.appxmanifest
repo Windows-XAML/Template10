@@ -3,7 +3,7 @@
   <Identity Name="1588e8bf-f355-468f-b300-1fd5bfcdd7a0" Publisher="CN=jerry" Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="1588e8bf-f355-468f-b300-1fd5bfcdd7a0" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>Settings</DisplayName>
+    <DisplayName>Template10.Samples.SettingsSample</DisplayName>
     <PublisherDisplayName>jerry</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -14,7 +14,7 @@
     <Resource Language="x-generate" />
   </Resources>
   <Applications>
-    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Settings.App">
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Template10.Samples.SettingsSample.App">
       <uap:VisualElements DisplayName="T10 Settings Sample" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="Blank" BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png">
         </uap:DefaultTile>

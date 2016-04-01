@@ -1,7 +1,7 @@
-﻿using MvvmLight.ViewModels;
+﻿using Template10.Samples.MvvmLightSample.ViewModels;
 using Windows.UI.Xaml.Controls;
 
-namespace MvvmLight.Views
+namespace Template10.Samples.MvvmLightSample.Views
 {
     public sealed partial class MainPage : Page
     {

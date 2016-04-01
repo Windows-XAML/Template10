@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Navigation;
 
-namespace VoiceAndInk.ViewModels
+namespace Template10.Samples.VoiceAndInkSample.ViewModels
 {
     public class MainPageViewModel : Mvvm.ViewModelBase
     {

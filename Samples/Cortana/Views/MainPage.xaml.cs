@@ -1,7 +1,7 @@
-﻿using Cortana.ViewModels;
+﻿using Template10.Samples.CortanaSample.ViewModels;
 using Windows.UI.Xaml.Controls;
 
-namespace Cortana.Views
+namespace Template10.Samples.CortanaSample.Views
 {
     public sealed partial class MainPage : Page
     {

@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 
-namespace TitleBar
+namespace Template10.Samples.TitleBarSample
 {
     sealed partial class App : Template10.Common.BootStrapper
     {

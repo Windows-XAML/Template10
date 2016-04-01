@@ -1,9 +1,9 @@
-﻿using IncrementalLoading.Views;
+﻿using Template10.Samples.IncrementalLoadingSample.Views;
 using System.Threading.Tasks;
 using Template10.Common;
 using Windows.ApplicationModel.Activation;
 
-namespace IncrementalLoading
+namespace Template10.Samples.IncrementalLoadingSample
 {
     sealed partial class App : BootStrapper
     {

@@ -5,13 +5,13 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("JumpList")]
+[assembly: AssemblyTitle("Template10.Samples.JumpListSample")]
 [assembly: AssemblyDescription("http://aka.ms/template10")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("JumpList")]
+[assembly: AssemblyProduct("Template10.Samples.JumpListSample")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
-[assembly: AssemblyTrademark("JumpList")]
+[assembly: AssemblyTrademark("Template10.Samples.JumpListSample")]
 [assembly: AssemblyCulture("")]
 
 // Version information for an assembly consists of the following four values:

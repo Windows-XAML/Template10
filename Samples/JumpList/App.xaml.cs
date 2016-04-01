@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 
-namespace JumpList
+namespace Template10.Samples.JumpListSample
 {
     sealed partial class App : Template10.Common.BootStrapper
     {

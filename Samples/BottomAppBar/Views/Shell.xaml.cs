@@ -1,12 +1,8 @@
-﻿using System.ComponentModel;
-using Template10.Common;
-using Template10.Controls;
+﻿using Template10.Controls;
 using Template10.Services.NavigationService;
-using Windows.UI.Core;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace BottomAppBar.Views
+namespace Template10.Samples.BottomAppBarSample.Views
 {
     public sealed partial class Shell : Page
     {

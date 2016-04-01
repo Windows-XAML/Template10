@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
-using MasterDetail.Views;
+using Template10.Samples.MasterDetailSample.Views;
 
-namespace MasterDetail
+namespace Template10.Samples.MasterDetailSample
 {
     sealed partial class App : Template10.Common.BootStrapper
     {

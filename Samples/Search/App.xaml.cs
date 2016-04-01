@@ -2,7 +2,7 @@
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 
-namespace Search
+namespace Template10.Samples.SearchSample
 {
     sealed partial class App : Template10.Common.BootStrapper
     {

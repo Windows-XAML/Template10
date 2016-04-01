@@ -3,7 +3,7 @@
   <Identity Name="2dff1729-cd34-49bb-b961-7b22b343014d" Publisher="CN=jerry" Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="2dff1729-cd34-49bb-b961-7b22b343014d" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>FileActivation</DisplayName>
+    <DisplayName>Template10.Samples.FileActivationSample</DisplayName>
     <PublisherDisplayName>jerry</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -14,7 +14,7 @@
     <Resource Language="x-generate" />
   </Resources>
   <Applications>
-    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="FileActivation.App">
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Template10.Samples.FileActivationSample.App">
       <uap:VisualElements DisplayName="T10 FileActivation Sample" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="Sample" BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png">
         </uap:DefaultTile>

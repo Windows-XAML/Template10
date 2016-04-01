@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using MasterDetail.Models;
+using Template10.Samples.MasterDetailSample.Models;
 using Template10.Utils;
 
-namespace MasterDetail.Services.MessageService
+namespace Template10.Samples.MasterDetailSample.Services.MessageService
 {
     public partial class MessageService
     {

@@ -1,9 +1,9 @@
 using System;
 using Windows.UI.Xaml;
 
-namespace VoiceAndInk.ViewModels
+namespace Template10.Samples.VoiceAndInkSample.ViewModels
 {
-    public class SettingsPageViewModel : VoiceAndInk.Mvvm.ViewModelBase
+    public class SettingsPageViewModel : Template10.Samples.VoiceAndInkSample.Mvvm.ViewModelBase
     {
         public SettingsPartViewModel SettingsPartViewModel { get; } = new SettingsPartViewModel();
         public AboutPartViewModel AboutPartViewModel { get; } = new AboutPartViewModel();

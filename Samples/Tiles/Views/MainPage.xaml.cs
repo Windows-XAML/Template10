@@ -1,7 +1,7 @@
-﻿using Tiles.ViewModels;
+﻿using Template10.Samples.TilesSample.ViewModels;
 using Windows.UI.Xaml.Controls;
 
-namespace Tiles.Views
+namespace Template10.Samples.TilesSample.Views
 {
     public sealed partial class MainPage : Page
     {

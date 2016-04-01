@@ -1,8 +1,7 @@
-﻿using IncrementalLoading.Models;
-using IncrementalLoading.Shared;
+﻿using Template10.Samples.IncrementalLoadingSample.Models;
 using System.Threading.Tasks;
 
-namespace IncrementalLoading.Services.GithubService
+namespace Template10.Samples.IncrementalLoadingSample.Services.GithubService
 {
     public interface IGithubService
     {

@@ -1,4 +1,4 @@
-﻿#PageKeys
+﻿#Template10.Samples.PageKeysSample
 
 Template 10 allows developers to navigate by page type (which is standard on the XAML Frame) and by key. Using a key allows developers to isolate view types from view models. This is a common approach for developers implementing MVVM (but is not necessary to successfully use Template 10).
 
@@ -10,14 +10,14 @@ The first step is creating a custom Enum that represents the pages we want to na
 public enum Pages { MainPage, DetailPage }
 ````
 
-##BootStrapper.PageKeys<T>()
+##BootStrapper.Template10.Samples.PageKeysSample<T>()
 
-Then, tipically in the BootStrapper.OnInitializeAsync method, we populate the BootStrapper.PageKeys dictionary associating each page type with the corresponding enum value.
+Then, tipically in the BootStrapper.OnInitializeAsync method, we populate the BootStrapper.Template10.Samples.PageKeysSample dictionary associating each page type with the corresponding enum value.
 
 ````chsarp
 public override Task OnInitializeAsync(IActivatedEventArgs args)
 {
-    var keys = PageKeys<Pages>();
+    var keys = Template10.Samples.PageKeysSample<Pages>();
     keys.Add(Pages.MainPage, typeof(MainPage));
     keys.Add(Pages.DetailPage, typeof(DetailPage));
 

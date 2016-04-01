@@ -3,7 +3,7 @@
   <Identity Name="2a82fa46-ec14-4ae9-b1e8-27b8a2aef383" Publisher="CN=gian" Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="2a82fa46-ec14-4ae9-b1e8-27b8a2aef383" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>VoiceAndInk</DisplayName>
+    <DisplayName>Template10.Samples.VoiceAndInkSample</DisplayName>
     <PublisherDisplayName>gian</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -14,7 +14,7 @@
     <Resource Language="x-generate" />
   </Resources>
   <Applications>
-    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="VoiceAndInk.App">
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Template10.Samples.VoiceAndInkSample.App">
       <uap:VisualElements DisplayName="T10 Voice and Ink to TextBox Sample" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="Minimal" BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png">
         </uap:DefaultTile>

@@ -1,7 +1,7 @@
 ﻿using Prism.Events;
 using System;
 
-namespace Messaging.Messages
+namespace Template10.Samples.MessagingSample.Messages
 {
     public class UpdateDateTimeMessage : PubSubEvent<DateTime>
     {

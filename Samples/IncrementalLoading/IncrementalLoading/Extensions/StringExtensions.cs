@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace IncrementalLoading.Extensions
+namespace Template10.Samples.IncrementalLoadingSample.Extensions
 {
     public static class StringExtensions
     {

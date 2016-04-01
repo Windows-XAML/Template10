@@ -1,7 +1,7 @@
-<common:BootStrapper x:Class="ShareTarget.App"
+<common:BootStrapper x:Class="Template10.Samples.ShareTargetSample.App"
                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                     xmlns:common="using:Template10.Common" xmlns:local="using:ShareTarget"
+                     xmlns:common="using:Template10.Common" xmlns:local="using:Template10.Samples.ShareTargetSample"
                      RequestedTheme="Light">
 
 </common:BootStrapper>

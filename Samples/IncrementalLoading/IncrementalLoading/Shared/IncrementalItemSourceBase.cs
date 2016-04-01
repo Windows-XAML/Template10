@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace IncrementalLoading.Shared
+namespace Template10.Samples.IncrementalLoadingSample.Shared
 {
     public abstract class IncrementalItemSourceBase<TItem>
     {

@@ -3,13 +3,13 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Navigation;
-using MasterDetail.Models;
-using MasterDetail.Views;
+using Template10.Samples.MasterDetailSample.Models;
+using Template10.Samples.MasterDetailSample.Views;
 using Template10.Common;
 using Template10.Mvvm;
 using Template10.Utils;
 
-namespace MasterDetail.ViewModels
+namespace Template10.Samples.MasterDetailSample.ViewModels
 {
     public class MasterDetailsPageViewModel : ViewModelBase
     {

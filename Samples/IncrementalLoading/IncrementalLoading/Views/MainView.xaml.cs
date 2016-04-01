@@ -1,7 +1,7 @@
-﻿using IncrementalLoading.ViewModels;
+﻿using Template10.Samples.IncrementalLoadingSample.ViewModels;
 using Windows.UI.Xaml.Controls;
 
-namespace IncrementalLoading.Views
+namespace Template10.Samples.IncrementalLoadingSample.Views
 {
     public sealed partial class MainView : Page
     {

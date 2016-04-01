@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 
-namespace Settings
+namespace Template10.Samples.SettingsSample
 {
     /// Documentation on APIs used in this page:
     /// https://github.com/Windows-XAML/Template10/wiki

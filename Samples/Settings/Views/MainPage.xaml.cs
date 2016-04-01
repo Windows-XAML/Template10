@@ -1,6 +1,6 @@
 ﻿using Windows.UI.Xaml.Controls;
 
-namespace Settings.Views
+namespace Template10.Samples.SettingsSample.Views
 {
     public sealed partial class MainPage : Page
     {

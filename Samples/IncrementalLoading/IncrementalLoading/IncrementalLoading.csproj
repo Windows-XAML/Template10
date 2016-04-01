@@ -96,7 +96,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DataModels\RepositorySource.cs" />
     <Compile Include="Services\GithubService\GithubIncrementalItemSource.cs" />
     <Compile Include="Services\GithubService\GithubService4DesignTime.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />

@@ -1,7 +1,6 @@
-using System;
 using Windows.UI.Xaml.Controls;
 
-namespace FileActivation.Views
+namespace Template10.Samples.FileActivationSample.Views
 {
     public sealed partial class MainPage : Page
     {

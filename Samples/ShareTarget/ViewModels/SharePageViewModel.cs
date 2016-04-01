@@ -1,19 +1,13 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Template10.Common;
 using System;
 using Template10.Mvvm;
-using Template10.Services.NavigationService;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.DataTransfer.ShareTarget;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Media.Imaging;
-using Windows.ApplicationModel;
-using Windows.Storage.Streams;
-using Windows.ApplicationModel.Activation;
 
-namespace ShareTarget.ViewModels
+namespace Template10.Samples.ShareTargetSample.ViewModels
 {
     public class SharePageViewModel : ViewModelBase
     {

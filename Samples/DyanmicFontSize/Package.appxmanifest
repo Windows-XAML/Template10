@@ -3,7 +3,7 @@
   <Identity Name="84a23efb-c399-44fc-b4cb-eb84d6c14c09" Publisher="CN=jerry" Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="84a23efb-c399-44fc-b4cb-eb84d6c14c09" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>DynamicFontSize</DisplayName>
+    <DisplayName>Template10.Samples.DynamicFontSizeSample</DisplayName>
     <PublisherDisplayName>jerry</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -14,7 +14,7 @@
     <Resource Language="x-generate" />
   </Resources>
   <Applications>
-    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="DynamicFontSize.App">
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Template10.Samples.DynamicFontSizeSample.App">
       <uap:VisualElements DisplayName="T10 DynamicFontSize Sample" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="Sample" BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png">
         </uap:DefaultTile>

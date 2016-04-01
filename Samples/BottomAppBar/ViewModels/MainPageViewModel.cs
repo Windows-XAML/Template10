@@ -1,13 +1,9 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
 using Template10.Mvvm;
-using Template10.Services.NavigationService;
-using Windows.UI.Xaml.Navigation;
 using System.Collections.ObjectModel;
 
-namespace BottomAppBar.ViewModels
+namespace Template10.Samples.BottomAppBarSample.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {

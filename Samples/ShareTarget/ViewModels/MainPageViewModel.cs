@@ -1,12 +1,7 @@
-﻿using System.Collections.Generic;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System;
 using Template10.Mvvm;
-using Template10.Services.NavigationService;
-using Windows.UI.Xaml.Navigation;
 
-namespace ShareTarget.ViewModels
+namespace Template10.Samples.ShareTargetSample.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {

@@ -1,9 +1,9 @@
-using PageHeader.ViewModels;
+using Template10.Samples.PageHeaderSample.ViewModels;
 using Windows.Foundation;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Controls;
 
-namespace PageHeader.Views
+namespace Template10.Samples.PageHeaderSample.Views
 {
 	public sealed partial class MainPage : Page
 	{

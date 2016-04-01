@@ -1,4 +1,4 @@
-Instead of changing the margin of BottomAppBar, I removed Page.BottomAppBar, and added a CommandBar inside the root Grid, since this will behave like any other control on the page, the SplitView.Pane will not be occluded. 
+Instead of changing the margin of Template10.Samples.BottomAppBarSample, I removed Page.Template10.Samples.BottomAppBarSample, and added a CommandBar inside the root Grid, since this will behave like any other control on the page, the SplitView.Pane will not be occluded. 
 
 ````xaml
  <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -30,7 +30,7 @@ Instead of changing the margin of BottomAppBar, I removed Page.BottomAppBar, and
 Old Method below:
 
 
-It turns out that the BottomAppBar property of Page, when set, occludes the SpltView.Pane. This is because it is drawn over the content, even though the page is nested inside the SplitView. The SplitView is a good choice for developers who want a bottom app bar and want their bottom app bar to move when the soft keyboard is displayed. I personally think this is a 1% case, but it is real. 
+It turns out that the Template10.Samples.BottomAppBarSample property of Page, when set, occludes the SpltView.Pane. This is because it is drawn over the content, even though the page is nested inside the SplitView. The SplitView is a good choice for developers who want a bottom app bar and want their bottom app bar to move when the soft keyboard is displayed. I personally think this is a 1% case, but it is real. 
 
 What to do?
 
@@ -50,13 +50,13 @@ public MainPage()
 private void UpdateMargin(HamburgerMenu ham)
 {
     var value = (ham.IsOpen) ? ham.PaneWidth : 48d;
-    BottomAppBar.Margin = new Thickness(value, 0, 0, 0);
+    Template10.Samples.BottomAppBarSample.Margin = new Thickness(value, 0, 0, 0);
 }
 ````
 
 One final note. In Template 10, we have the Modal Dialog control to help developers show a busy 
-indicator. Since the BottomAppBar is drawn over the content of the Window, it is up to the developer
-to disable the BottomAppBar manually when they need it to be disabled. 
+indicator. Since the Template10.Samples.BottomAppBarSample is drawn over the content of the Window, it is up to the developer
+to disable the Template10.Samples.BottomAppBarSample manually when they need it to be disabled. 
 
 This is how the sample does this:
 
@@ -64,11 +64,11 @@ This is how the sample does this:
 private void SampleClick(object sender, RoutedEventArgs e)
 {
     Shell.SetBusy(true, "Please wait...");
-    BottomAppBar.IsEnabled = false;
+    Template10.Samples.BottomAppBarSample.IsEnabled = false;
     Template10.Common.WindowWrapper.Current().Dispatcher.Dispatch(() =>
     {
         Shell.SetBusy(false);
-        BottomAppBar.IsEnabled = true;
+        Template10.Samples.BottomAppBarSample.IsEnabled = true;
     }, 3000);
 }
 ````

@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 
-namespace PageHeader
+namespace Template10.Samples.PageHeaderSample
 {
     /// Documentation on APIs used in this page:
     /// https://github.com/Windows-XAML/Template10/wiki

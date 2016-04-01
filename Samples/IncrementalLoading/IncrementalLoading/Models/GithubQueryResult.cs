@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace IncrementalLoading.Models
+namespace Template10.Samples.IncrementalLoadingSample.Models
 {
     [JsonObject]
     public class GithubQueryResult<T>

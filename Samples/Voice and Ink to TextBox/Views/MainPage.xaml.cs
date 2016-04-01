@@ -1,7 +1,7 @@
-using VoiceAndInk.ViewModels;
+using Template10.Samples.VoiceAndInkSample.ViewModels;
 using Windows.UI.Xaml.Controls;
 
-namespace VoiceAndInk.Views
+namespace Template10.Samples.VoiceAndInkSample.Views
 {
     public sealed partial class MainPage : Page
     {

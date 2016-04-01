@@ -1,6 +1,6 @@
 ﻿using Windows.UI.Xaml.Controls;
 
-namespace MasterDetail.Views
+namespace Template10.Samples.MasterDetailSample.Views
 {
     public sealed partial class MainPage : Page
     {
