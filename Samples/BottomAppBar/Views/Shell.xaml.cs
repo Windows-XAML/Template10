@@ -8,7 +8,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace BottomAppBar.Views
 {
-    public sealed partial class Shell : Page, INotifyPropertyChanged
+    public sealed partial class Shell : Page
     {
         public static Shell Instance { get; set; }
         public static HamburgerMenu HamburgerMenu { get { return Instance.MyHamburgerMenu; } }
@@ -18,27 +18,6 @@ namespace BottomAppBar.Views
             Instance = this;
             InitializeComponent();
             HamburgerMenu.NavigationService = navigationService;
-        }
-
-        public bool IsBusy { get; set; } = false;
-        public string BusyText { get; set; } = "Please wait...";
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public static void SetBusy(bool busy, string text = null)
-        {
-            WindowWrapper.Current().Dispatcher.Dispatch(() =>
-            {
-                if (busy)
-                    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-                else
-                    BootStrapper.Current.UpdateShellBackButton();
-
-                Instance.IsBusy = busy;
-                Instance.BusyText = text;
-
-                Instance.PropertyChanged?.Invoke(Instance, new PropertyChangedEventArgs(nameof(IsBusy)));
-                Instance.PropertyChanged?.Invoke(Instance, new PropertyChangedEventArgs(nameof(BusyText)));
-            });
         }
     }
 }

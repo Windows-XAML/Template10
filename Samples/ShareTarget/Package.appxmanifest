@@ -22,7 +22,7 @@
       </uap:VisualElements>
       <Extensions>
         <uap:Extension Category="windows.shareTarget">
-          <uap:ShareTarget Description="T10 Sample Share Target">
+          <uap:ShareTarget Description="T10 ShareTarget Share Target">
             <uap:SupportedFileTypes>
               <uap:SupportsAnyFileType />
             </uap:SupportedFileTypes>

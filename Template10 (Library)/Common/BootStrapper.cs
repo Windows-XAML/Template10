@@ -127,8 +127,8 @@ namespace Template10.Common
                     }
 
                     // call system-level suspend
-                    DebugWrite($"Calling. Prelaunch {(OriginalActivatedArgs as LaunchActivatedEventArgs).PrelaunchActivated}", caller: nameof(OnSuspendingAsync));
-                    await OnSuspendingAsync(s, e, (OriginalActivatedArgs as LaunchActivatedEventArgs).PrelaunchActivated);
+                    DebugWrite($"Calling. Prelaunch {(OriginalActivatedArgs as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false}", caller: nameof(OnSuspendingAsync));
+                    await OnSuspendingAsync(s, e, (OriginalActivatedArgs as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false);
                 }
                 catch { /* do nothing */ }
                 finally { deferral.Complete(); }
@@ -213,11 +213,8 @@ namespace Template10.Common
 
             // onstart is shared with activate and launch
             DebugWrite("Calling", caller: nameof(OnStartAsync));
-            if (!_HasOnStartAsync)
-            {
-                _HasOnStartAsync = true;
-                await OnStartAsync(StartKind.Activate, e);
-            }
+            _HasOnStartAsync = true;
+            await OnStartAsync(StartKind.Activate, e);
 
             // ensure active (this will hide any custom splashscreen)
             Window.Current.Activate();
@@ -244,7 +241,14 @@ namespace Template10.Common
 
             if (e.PreviousExecutionState != ApplicationExecutionState.Running)
             {
-                await InitializeFrameAsync(e);
+                try
+                {
+                    await InitializeFrameAsync(e);
+                }
+                catch (Exception)
+                {
+                    // nothing
+                }
             }
 
             // okay, now handle launch
@@ -281,7 +285,7 @@ namespace Template10.Common
             }
 
             // handle pre-launch
-            if ((e as LaunchActivatedEventArgs).PrelaunchActivated)
+            if ((e as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false)
             {
                 var runOnStartAsync = false;
                 _HasOnPrelaunchAsync = true;

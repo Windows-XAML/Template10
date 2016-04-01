@@ -73,6 +73,7 @@ namespace Template10.Controls
                     if ((d as SplitView).IsPaneOpen)
                     {
                         PaneOpened?.Invoke(ShellSplitView, EventArgs.Empty);
+                        HamburgerButtonGridWidth = (ShellSplitView.DisplayMode == SplitViewDisplayMode.CompactInline) ? PaneWidth : 48;
                     }
                     else
                         PaneClosed?.Invoke(ShellSplitView, EventArgs.Empty);
@@ -122,6 +123,7 @@ namespace Template10.Controls
             var m = (SplitViewDisplayMode)e.NewValue;
             if (h.ShellSplitView.DisplayMode != m)
                 h.ShellSplitView.DisplayMode = m;
+            h.HamburgerButtonGridWidth = (h.ShellSplitView.DisplayMode == SplitViewDisplayMode.CompactInline)? h.PaneWidth : 48;
         }
 
         internal void HighlightCorrectButton(Type pageType = null, object pageParam = null)
@@ -513,6 +515,7 @@ namespace Template10.Controls
                 if (value)
                 {
                     ShellSplitView.IsPaneOpen = true;
+                    HamburgerButtonGridWidth = (ShellSplitView.DisplayMode == SplitViewDisplayMode.CompactInline) ? PaneWidth : 48;
                 }
                 else
                 {
@@ -523,6 +526,7 @@ namespace Template10.Controls
                         ShellSplitView.IsPaneOpen = false;
                     else if (ShellSplitView.DisplayMode == SplitViewDisplayMode.CompactInline && ShellSplitView.IsPaneOpen)
                         ShellSplitView.IsPaneOpen = false;
+                    HamburgerButtonGridWidth = 48;
                 }
             }
         }
@@ -694,6 +698,33 @@ namespace Template10.Controls
         public static readonly DependencyProperty HeaderContentProperty =
             DependencyProperty.Register(nameof(HeaderContent), typeof(UIElement),
                 typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(HeaderContent), e)));
+
+
+        /// <summary>
+        /// HamburgerButtonGridWidth represents the width of a Grid containing 
+        /// the HamburgerMenu button.
+        /// </summary>
+        /// <remarks>
+        /// The Grid width must remain the same size as the HamburgerMenu button (48px wide)
+        /// except when (ShellSplitView.DisplayMode == SplitViewDisplayMode.CompactInline) &&
+        /// (ShellSplitView.IsPaneOpen == true), in which case it must adjust to the width of 
+        /// PaneWidth to fill in the gap between HamburgerMenu button and PageHeader.
+        /// Previous implementation applied the HamburgerMenu background brush 
+        /// to the RootGrid control but this rather easy approach had its drawback of momentarily
+        /// showing the page-wide RootGrid background while changing the dark/light theme (as noticeable flash 
+        /// for bright colors such as variants of prime colors). With this adaptive 
+        /// HamburgerButtonGridWidth, the area is just a narrow strip (as opposed to page-wide 
+        /// RootGrid control) and the the flashing problem is virtually non-existent.
+        /// </remarks>
+ 
+        public double HamburgerButtonGridWidth
+        {
+            get { return (double)GetValue(HamburgerButtonGridWidthProperty); }
+            set { SetValue(HamburgerButtonGridWidthProperty, value); }
+        }
+        public static readonly DependencyProperty HamburgerButtonGridWidthProperty =
+            DependencyProperty.Register(nameof(HamburgerButtonGridWidth), typeof(double),
+               typeof(HamburgerMenu), new PropertyMetadata(48d, (d, e) => Changed(nameof(HamburgerButtonGridWidth), e)));
 
         #endregion
 

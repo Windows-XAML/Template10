@@ -3,6 +3,7 @@ using System.ComponentModel;
 
 namespace Template10.Common
 {
+    [Obsolete("Use Foundation.TypedEventHandler<T> native to UWP")]
     public delegate void TypedEventHandler<T>(object sender, T e);
 
     public class EventArgs<T> : EventArgs
@@ -23,5 +24,16 @@ namespace Template10.Common
         }
 
         public T Value { get; private set; }
+    }
+
+    public class DeferredEventArgs : EventArgs
+    {
+        DeferralManager Manager;
+        public DeferredEventArgs(DeferralManager manager)
+        {
+            Manager = manager;
+        }
+
+        public Deferral GetDeferral() => Manager.GetDeferral();
     }
 }
