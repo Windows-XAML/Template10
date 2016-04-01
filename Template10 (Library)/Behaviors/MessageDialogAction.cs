@@ -1,10 +1,7 @@
 ﻿using Microsoft.Xaml.Interactivity;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Windows.UI.Popups;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -14,8 +11,13 @@ namespace Template10.Behaviors
     {
         public object Execute(object sender, object parameter)
         {
-            var d = new ContentDialog {Title = Title, Content = Content, PrimaryButtonText = OkText};
-            Task.Run(async () => await d.ShowAsync());
+            var d = new ContentDialog { Title = Title, Content = Content, PrimaryButtonText = OkText };
+
+            Task.Run(async () =>
+            {
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () => await d.ShowAsync());
+            });
+
             return this;
         }
 
