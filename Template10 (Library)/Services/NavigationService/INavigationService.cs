@@ -10,15 +10,19 @@ namespace Template10.Services.NavigationService
     public interface INavigationService
     {
         void GoBack();
-        bool CanGoBack { get; }
-
         void GoForward();
+
+        void Navigate(Type page, object parameter = null, NavigationTransitionInfo infoOverride = null);
+        void Navigate<T>(T key, object parameter = null, NavigationTransitionInfo infoOverride = null) where T : struct, IConvertible;
+
+        Task<bool> NavigateAsync(Type page, object parameter = null, NavigationTransitionInfo infoOverride = null);
+        Task<bool> NavigateAsync<T>(T key, object parameter = null, NavigationTransitionInfo infoOverride = null) where T : struct, IConvertible;
+
+        bool CanGoBack { get; }
         bool CanGoForward { get; }
 
         void Refresh();
 
-        bool Navigate(Type page, object parameter = null, NavigationTransitionInfo infoOverride = null);
-        bool Navigate<T>(T key, object parameter = null, NavigationTransitionInfo infoOverride = null) where T : struct, IConvertible;
         Task OpenAsync(Type page, object parameter = null, string title = null, ViewSizePreference size = ViewSizePreference.UseHalf);
 
         object CurrentPageParam { get; }

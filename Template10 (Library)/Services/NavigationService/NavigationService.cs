@@ -73,7 +73,7 @@ namespace Template10.Services.NavigationService
                 }, 1);
             };
         }
-        
+
         private INavigable ResolveForPage(Page page)
         {
             if (!(page.DataContext is INavigable) | page.DataContext == null)
@@ -160,7 +160,7 @@ namespace Template10.Services.NavigationService
                 }
 
                 var dataContext = ResolveForPage(page);
-                
+
                 if (dataContext != null)
                 {
                     // prepare for state load
@@ -203,49 +203,54 @@ namespace Template10.Services.NavigationService
             });
         }
 
-        public bool Navigate(Type page, object parameter = null, NavigationTransitionInfo infoOverride = null)
+        public async Task<bool> NavigateAsync(Type page, object parameter = null, NavigationTransitionInfo infoOverride = null)
         {
             DebugWrite($"Page: {page}, Parameter: {parameter}, NavigationTransitionInfo: {infoOverride}");
 
             if (page == null)
                 throw new ArgumentNullException(nameof(page));
-            if (page.FullName.Equals(LastNavigationType))
-            {
-                if (parameter == LastNavigationParameter)
-                    return false;
 
-                if (parameter != null && parameter.Equals(LastNavigationParameter))
-                    return false;
-            }
+            if ((page.FullName == LastNavigationType) && (parameter == LastNavigationParameter))
+                return false;
+
+            if ((page.FullName == LastNavigationType) && (parameter?.Equals(LastNavigationParameter) ?? false))
+                return false;
 
             parameter = SerializationService.Serialize(parameter);
+
             return FrameFacadeInternal.Navigate(page, parameter, infoOverride);
         }
 
-        /*
-            Navigate<T> allows developers to navigate using a
-            page key instead of the view type. This is accomplished by
-            creating a custom Enum and setting up the PageKeys dict
-            with the Key/Type pairs for your views. The dict is
-            shared by all NavigationServices and is stored in
-            the BootStrapper (or Application) of the app.
+        public async void Navigate(Type page, object parameter = null, NavigationTransitionInfo infoOverride = null)
+        {
+            DebugWrite($"Page: {page}, Parameter: {parameter}, NavigationTransitionInfo: {infoOverride}");
 
-            Implementation example:
+            await NavigateAsync(page, parameter, infoOverride);
+        }
 
-            // define your Enum
-            public Enum Pages { MainPage, DetailPage }
-
-            // setup the keys dict
-            var keys = BootStrapper.PageKeys<Views>();
-            keys.Add(Pages.MainPage, typeof(Views.MainPage));
-            keys.Add(Pages.DetailPage, typeof(Views.DetailPage));
-
-            // use Navigate<T>()
-            NavigationService.Navigate(Pages.MainPage);
-        */
-
-        // T must be the same custom Enum used with BootStrapper.PageKeys()
-        public bool Navigate<T>(T key, object parameter = null, NavigationTransitionInfo infoOverride = null)
+        /// <summary>
+        /// Navigate<T> allows developers to navigate using a
+        /// page key instead of the view type.This is accomplished by
+        /// creating a custom Enum and setting up the PageKeys dict
+        /// with the Key/Type pairs for your views.The dict is
+        /// shared by all NavigationServices and is stored in
+        /// the BootStrapper (or Application) of the app.
+        /// 
+        /// Implementation example:
+        /// 
+        /// // define your Enum
+        /// public Enum Pages { MainPage, DetailPage }
+        /// 
+        /// // setup the keys dict
+        /// var keys = BootStrapper.PageKeys<Views>();
+        /// keys.Add(Pages.MainPage, typeof(Views.MainPage));
+        /// keys.Add(Pages.DetailPage, typeof(Views.DetailPage));
+        /// 
+        /// // use Navigate<T>()
+        /// NavigationService.Navigate(Pages.MainPage);
+        /// </remarks>
+        /// <typeparam name="T">T must be the same custom Enum used with BootStrapper.PageKeys()</typeparam>
+        public async Task<bool> NavigateAsync<T>(T key, object parameter = null, NavigationTransitionInfo infoOverride = null)
             where T : struct, IConvertible
         {
             DebugWrite($"Key: {key}, Parameter: {parameter}, NavigationTransitionInfo: {infoOverride}");
@@ -257,17 +262,15 @@ namespace Template10.Services.NavigationService
 
             var page = keys[key];
 
-            if (page.FullName.Equals(LastNavigationType))
-            {
-                if (parameter == LastNavigationParameter)
-                    return false;
+            return await NavigateAsync(page, parameter, infoOverride);
+        }
 
-                if (parameter != null && parameter.Equals(LastNavigationParameter))
-                    return false;
-            }
+        public async void Navigate<T>(T key, object parameter = null, NavigationTransitionInfo infoOverride = null)
+            where T : struct, IConvertible
+        {
+            DebugWrite($"Key: {key}, Parameter: {parameter}, NavigationTransitionInfo: {infoOverride}");
 
-            parameter = SerializationService.Serialize(parameter);
-            return FrameFacadeInternal.Navigate(page, parameter, infoOverride);
+            await NavigateAsync(key, parameter, infoOverride);
         }
 
         public ISerializationService SerializationService { get; set; }

@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Template10.Common;
 using Template10.Services.KeyboardService;
 using Template10.Services.NavigationService;
@@ -418,14 +419,14 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty SelectedProperty =
             DependencyProperty.Register(nameof(Selected), typeof(HamburgerButtonInfo),
-                typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) =>
+                typeof(HamburgerMenu), new PropertyMetadata(null, async (d, e) =>
                 {
                     Changed(nameof(Selected), e);
 
                     (d as HamburgerMenu)._insideOperation = true;
                     try
                     {
-                        (d as HamburgerMenu).SetSelected((HamburgerButtonInfo)e.OldValue, (HamburgerButtonInfo)e.NewValue);
+                        await (d as HamburgerMenu).SetSelectedAsync((HamburgerButtonInfo)e.OldValue, (HamburgerButtonInfo)e.NewValue);
                     }
                     catch (Exception ex)
                     {
@@ -436,7 +437,7 @@ namespace Template10.Controls
                         (d as HamburgerMenu)._insideOperation = false;
                     }
                 }));
-        private void SetSelected(HamburgerButtonInfo previous, HamburgerButtonInfo value)
+        private async Task SetSelectedAsync(HamburgerButtonInfo previous, HamburgerButtonInfo value)
         {
             DebugWrite($"OldValue: {previous}, NewValue: {value}");
 
@@ -458,7 +459,7 @@ namespace Template10.Controls
             // navigate only when all navigation buttons have been loaded
             if (_areNavButtonsLoaded && value?.PageType != null)
             {
-                if (NavigationService.Navigate(value.PageType, value?.PageParameter, value?.NavigationTransitionInfo))
+                if (await NavigationService.NavigateAsync(value.PageType, value?.PageParameter, value?.NavigationTransitionInfo))
                 {
                     IsOpen = (DisplayMode == SplitViewDisplayMode.CompactInline && IsOpen);
                     if (value.ClearHistory)
