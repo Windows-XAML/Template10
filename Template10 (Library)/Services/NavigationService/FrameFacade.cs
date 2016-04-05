@@ -238,7 +238,7 @@ namespace Template10.Services.NavigationService
             add { if (!_navigatingEventHandlers.Contains(value)) _navigatingEventHandlers.Add(value); }
             remove { if (_navigatingEventHandlers.Contains(value)) _navigatingEventHandlers.Remove(value); }
         }
-        private void FacadeNavigatingCancelEventHandler(object sender, NavigatingCancelEventArgs e)
+        private async void FacadeNavigatingCancelEventHandler(object sender, NavigatingCancelEventArgs e)
         {
             DebugWrite();
 

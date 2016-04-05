@@ -106,13 +106,15 @@ namespace Template10.Services.NavigationService
                     dataContext.NavigationService = this;
                     dataContext.Dispatcher = WindowWrapper.Current(this)?.Dispatcher;
                     dataContext.SessionState = BootStrapper.Current.SessionState;
-                    var args = new NavigatingEventArgs
+                    var deferral = new DeferralManager();
+                    var args = new NavigatingEventArgs(deferral)
                     {
                         NavigationMode = mode,
                         PageType = FrameFacadeInternal.CurrentPageType,
                         Parameter = FrameFacadeInternal.CurrentPageParam,
                         Suspending = suspending,
                     };
+                    await deferral.WaitForDeferralsAsync();
                     await dataContext.OnNavigatingFromAsync(args);
                     return !args.Cancel;
                 }

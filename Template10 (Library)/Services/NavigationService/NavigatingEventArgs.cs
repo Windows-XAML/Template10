@@ -10,7 +10,12 @@ namespace Template10.Services.NavigationService
         DeferralManager Manager;
         public Deferral GetDeferral() => Manager.GetDeferral();
 
-        public NavigatingEventArgs(DeferralManager manager, NavigatingCancelEventArgs e, Page page, object parameter): base()
+        public NavigatingEventArgs(DeferralManager manager) : base()
+        {
+            Manager = manager;
+        }
+
+        public NavigatingEventArgs(DeferralManager manager, NavigatingCancelEventArgs e, Page page, object parameter) : this(manager)
         {
             NavigationMode = e.NavigationMode;
             PageType = e.SourcePageType;
@@ -19,6 +24,6 @@ namespace Template10.Services.NavigationService
         }
 
         public bool Cancel { get; set; } = false;
-        public bool Suspending { get; private set; } = false;
+        public bool Suspending { get; set; } = false;
     }
 }
