@@ -1,20 +1,24 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using Template10.Common;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Services.NavigationService
 {
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-NavigationService
-    public class NavigatingEventArgs: NavigatedEventArgs
+    public class NavigatingEventArgs : NavigatedEventArgs
     {
-        public NavigatingEventArgs() { }
-        public NavigatingEventArgs(NavigatingCancelEventArgs e, Page page, object parameter)
+        DeferralManager Manager;
+        public Deferral GetDeferral() => Manager.GetDeferral();
+
+        public NavigatingEventArgs(DeferralManager manager, NavigatingCancelEventArgs e, Page page, object parameter): base()
         {
             NavigationMode = e.NavigationMode;
             PageType = e.SourcePageType;
             Page = page;
             Parameter = parameter;
         }
+
         public bool Cancel { get; set; } = false;
-        public bool Suspending { get; set; } = false;
+        public bool Suspending { get; private set; } = false;
     }
 }
