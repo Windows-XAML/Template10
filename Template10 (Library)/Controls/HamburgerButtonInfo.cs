@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Template10.Mvvm;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
@@ -44,6 +45,30 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty PageParameterProperty =
             DependencyProperty.Register(nameof(PageParameter), typeof(object),
+                typeof(HamburgerButtonInfo), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Sets and gets the Command property.
+        /// </summary>
+        public ICommand Command
+        {
+            get { return (ICommand)GetValue(CommandProperty); }
+            set { SetValue(CommandProperty, value); }
+        }
+        public static readonly DependencyProperty CommandProperty =
+            DependencyProperty.Register(nameof(Command), typeof(ICommand),
+                typeof(HamburgerButtonInfo), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Sets and gets the CommandParameter property.
+        /// </summary>
+        public object CommandParameter
+        {
+            get { return GetValue(CommandParameterProperty); }
+            set { SetValue(CommandParameterProperty, value); }
+        }
+        public static readonly DependencyProperty CommandParameterProperty =
+            DependencyProperty.Register(nameof(CommandParameter), typeof(object),
                 typeof(HamburgerButtonInfo), new PropertyMetadata(null));
 
         /// <summary>

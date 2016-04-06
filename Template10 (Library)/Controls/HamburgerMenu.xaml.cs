@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Windows.Input;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -769,6 +770,16 @@ namespace Template10.Controls
             var radio = sender as RadioButton;
             var info = radio.DataContext as HamburgerButtonInfo;
             info.RaiseTapped(e);
+
+            ICommand command = info.Command;
+            if (command != null)
+            {
+                var commandParameter = info.CommandParameter;
+                if (command.CanExecute(commandParameter))
+                {
+                    command.Execute(commandParameter);
+                }
+            }
 
             // do not bubble to SplitView
             e.Handled = true;
