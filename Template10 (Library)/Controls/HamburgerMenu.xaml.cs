@@ -185,8 +185,8 @@ namespace Template10.Controls
 
         public double VisualStateNarrowMinWidth
         {
-            get { return VisualStateNarrowTrigger.MinWindowWidth; }
-            set { SetValue(VisualStateNarrowMinWidthProperty, VisualStateNarrowTrigger.MinWindowWidth = value); }
+            get { return (double)GetValue(VisualStateNarrowMinWidthProperty); }
+            set { SetValue(VisualStateNarrowMinWidthProperty, value); }
         }
         public static readonly DependencyProperty VisualStateNarrowMinWidthProperty =
             DependencyProperty.Register(nameof(VisualStateNarrowMinWidth), typeof(double),
@@ -194,8 +194,8 @@ namespace Template10.Controls
 
         public double VisualStateNormalMinWidth
         {
-            get { return VisualStateNormalTrigger.MinWindowWidth; }
-            set { SetValue(VisualStateNormalMinWidthProperty, VisualStateNormalTrigger.MinWindowWidth = value); }
+            get { return (double)GetValue(VisualStateNormalMinWidthProperty); }
+            set { SetValue(VisualStateNormalMinWidthProperty, value); }
         }
         public static readonly DependencyProperty VisualStateNormalMinWidthProperty =
             DependencyProperty.Register(nameof(VisualStateNormalMinWidth), typeof(double),
@@ -203,8 +203,8 @@ namespace Template10.Controls
 
         public double VisualStateWideMinWidth
         {
-            get { return VisualStateWideTrigger.MinWindowWidth; }
-            set { SetValue(VisualStateWideMinWidthProperty, VisualStateWideTrigger.MinWindowWidth = value); }
+            get { return (double)GetValue(VisualStateWideMinWidthProperty); }
+            set { SetValue(VisualStateWideMinWidthProperty, value); }
         }
         public static readonly DependencyProperty VisualStateWideMinWidthProperty =
             DependencyProperty.Register(nameof(VisualStateWideMinWidth), typeof(double),
