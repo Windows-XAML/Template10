@@ -90,6 +90,14 @@ namespace Template10.Controls
                     // this will keep the two properties in sync
                     DisplayMode = ShellSplitView.DisplayMode;
                 });
+                LayoutUpdated += (s, e) =>
+                {
+                    if (!_isLayoutUpdated)
+                    {
+                        _isLayoutUpdated = true;
+                        UpdateFullScreen();
+                    }
+                };
                 Loaded += (s, e) =>
                 {
                     // look to see if any brush property has been set
@@ -616,28 +624,32 @@ namespace Template10.Controls
                 }));
         private void UpdateFullScreen(bool? manual = null)
         {
-            DebugWrite($"Mavnual: {manual}, IsFullScreen: {IsFullScreen}");
+            if (_isLayoutUpdated)
+            {
+                DebugWrite($"Manual: {manual}, IsFullScreen: {IsFullScreen}");
 
-            var frame = NavigationService?.FrameFacade?.Frame;
-            if (manual ?? IsFullScreen)
-            {
-                ShellSplitView.IsHitTestVisible = ShellSplitView.IsEnabled = false;
-                ShellSplitView.Content = null;
-                if (RootGrid.Children.Contains(ShellSplitView))
-                    RootGrid.Children.Remove(ShellSplitView);
-                if (!RootGrid.Children.Contains(frame) && frame != null)
-                    RootGrid.Children.Add(frame);
-            }
-            else
-            {
-                ShellSplitView.IsHitTestVisible = ShellSplitView.IsEnabled = true;
-                if (!RootGrid.Children.Contains(ShellSplitView))
-                    RootGrid.Children.Insert(0, ShellSplitView);
-                if (RootGrid.Children.Contains(frame) && frame != null)
-                    RootGrid.Children.Remove(frame);
-                ShellSplitView.Content = frame;
+                var frame = NavigationService?.FrameFacade?.Frame;
+                if (manual ?? IsFullScreen)
+                {
+                    ShellSplitView.IsHitTestVisible = ShellSplitView.IsEnabled = false;
+                    ShellSplitView.Content = null;
+                    if (RootGrid.Children.Contains(ShellSplitView))
+                        RootGrid.Children.Remove(ShellSplitView);
+                    if (!RootGrid.Children.Contains(frame) && frame != null)
+                        RootGrid.Children.Add(frame);
+                }
+                else
+                {
+                    ShellSplitView.IsHitTestVisible = ShellSplitView.IsEnabled = true;
+                    if (!RootGrid.Children.Contains(ShellSplitView))
+                        RootGrid.Children.Insert(0, ShellSplitView);
+                    if (RootGrid.Children.Contains(frame) && frame != null)
+                        RootGrid.Children.Remove(frame);
+                    ShellSplitView.Content = frame;
+                }
             }
         }
+        private bool _isLayoutUpdated;
 
         /// <summary>
         /// SecondaryButtons are the button at the bottom of the HamburgerMenu
