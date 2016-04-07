@@ -92,7 +92,7 @@ namespace Template10.Utils
                 case "Windows.Team": return DeviceFamilies.Team;
                 case "Windows.IoT": return DeviceFamilies.IoT;
                 case "Windows.Xbox": return DeviceFamilies.Xbox;
-                case "Windows.HoloLens": return DeviceFamilies.HoloLens;
+                case "Windows.Holographic": return DeviceFamilies.HoloLens;
                 default: return DeviceFamilies.Unknown;
             }
         }
