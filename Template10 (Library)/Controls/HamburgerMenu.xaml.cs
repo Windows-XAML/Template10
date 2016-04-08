@@ -616,7 +616,7 @@ namespace Template10.Controls
                 }));
         private void UpdateFullScreen(bool? manual = null)
         {
-            DebugWrite($"Mavnual: {manual}, IsFullScreen: {IsFullScreen}");
+            DebugWrite($"Manual: {manual}, IsFullScreen: {IsFullScreen}");
 
             var frame = NavigationService?.FrameFacade?.Frame;
             if (manual ?? IsFullScreen)
