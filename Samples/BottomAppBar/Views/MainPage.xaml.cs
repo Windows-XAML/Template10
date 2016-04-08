@@ -4,7 +4,7 @@ using Template10.Mvvm;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Messaging.Views
+namespace BottomAppBar.Views
 {
     public sealed partial class MainPage : Page
     {
@@ -13,36 +13,42 @@ namespace Messaging.Views
             InitializeComponent();
         }
 
-        DelegateCommand _TogglePaneCommand;
-        public DelegateCommand TogglePaneCommand
-           => _TogglePaneCommand ?? (_TogglePaneCommand = new DelegateCommand(TogglePaneCommandExecute, TogglePaneCommandCanExecute));
-        bool TogglePaneCommandCanExecute() => true;
-        void TogglePaneCommandExecute()
+        void TogglePane()
         {
             Shell.HamburgerMenu.IsOpen = !Shell.HamburgerMenu.IsOpen;
         }
 
         DelegateCommand<int> _SetPaneCommand;
         public DelegateCommand<int> SetPaneCommand
-           => _SetPaneCommand ?? (_SetPaneCommand = new DelegateCommand<int>(SetPaneCommandExecute, SetPaneCommandCanExecute));
-        bool SetPaneCommandCanExecute(int param) => true;
+           => _SetPaneCommand ?? (_SetPaneCommand = new DelegateCommand<int>(SetPaneCommandExecute));
         void SetPaneCommandExecute(int param)
         {
-            var h = Shell.HamburgerMenu;
-            h.HamburgerButtonVisibility = Visibility.Collapsed;
-            h.DisplayMode = (SplitViewDisplayMode)param;
-            h.VisualStateNarrowMinWidth = -1;
-            h.VisualStateNormalMinWidth = -1;
-            h.VisualStateWideMinWidth = -1;
-            switch (h.DisplayMode)
+            var menu = Shell.HamburgerMenu;
+            menu.DisplayMode = (SplitViewDisplayMode)param;
+
+            menu.VisualStateNarrowMinWidth = -1;
+            menu.VisualStateNormalMinWidth = -1;
+            menu.VisualStateWideMinWidth = -1;
+            MyPageHeader.Margin = new Thickness(0);
+
+            switch (menu.DisplayMode)
             {
                 case SplitViewDisplayMode.Inline:
+                    menu.HamburgerButtonVisibility = Visibility.Collapsed;
+                    menu.IsOpen = true;
+                    break;
                 case SplitViewDisplayMode.CompactInline:
-                    h.IsOpen = true;
+                    menu.HamburgerButtonVisibility = Visibility.Visible;
+                    menu.IsOpen = true;
                     break;
                 case SplitViewDisplayMode.Overlay:
+                    menu.HamburgerButtonVisibility = Visibility.Visible;
+                    MyPageHeader.Margin = new Thickness(48,0,0,0);
+                    menu.IsOpen = false;
+                    break;
                 case SplitViewDisplayMode.CompactOverlay:
-                    h.IsOpen = false;
+                    menu.HamburgerButtonVisibility = Visibility.Visible;
+                    menu.IsOpen = false;
                     break;
             }
         }

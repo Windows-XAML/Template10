@@ -24,4 +24,15 @@ namespace Template10.Common
 
         public T Value { get; private set; }
     }
+
+    public class DeferredEventArgs : EventArgs
+    {
+        DeferralManager Manager;
+        public DeferredEventArgs(DeferralManager manager)
+        {
+            Manager = manager;
+        }
+
+        public Deferral GetDeferral() => Manager.GetDeferral();
+    }
 }

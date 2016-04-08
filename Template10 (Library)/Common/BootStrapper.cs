@@ -115,23 +115,30 @@ namespace Template10.Common
 
                 // one, global deferral
                 var deferral = e.SuspendingOperation.GetDeferral();
-                try
+                // using (var session = new Windows.ApplicationModel.ExtendedExecution.ExtendedExecutionSession
+                // {
+                //     Description = this.GetType().ToString(),
+                //     Reason = Windows.ApplicationModel.ExtendedExecution.ExtendedExecutionReason.SavingData
+                // })
                 {
-                    foreach (var nav in WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices))
+                    try
                     {
-                        // date the cache (which marks the date/time it was suspended)
-                        nav.FrameFacade.SetFrameState(CacheDateKey, DateTime.Now.ToString());
-                        // call view model suspend (OnNavigatedfrom)
-                        DebugWrite($"Nav:{nav}", caller: nameof(nav.SuspendingAsync));
-                        await nav.SuspendingAsync();
-                    }
+                        foreach (var nav in WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices))
+                        {
+                            // date the cache (which marks the date/time it was suspended)
+                            nav.FrameFacade.SetFrameState(CacheDateKey, DateTime.Now.ToString());
+                            // call view model suspend (OnNavigatedfrom)
+                            DebugWrite($"Nav:{nav}", caller: nameof(nav.SuspendingAsync));
+                            await nav.SuspendingAsync();
+                        }
 
-                    // call system-level suspend
-                    DebugWrite($"Calling. Prelaunch {(OriginalActivatedArgs as LaunchActivatedEventArgs).PrelaunchActivated}", caller: nameof(OnSuspendingAsync));
-                    await OnSuspendingAsync(s, e, (OriginalActivatedArgs as LaunchActivatedEventArgs).PrelaunchActivated);
+                        // call system-level suspend
+                        DebugWrite($"Calling. Prelaunch {(OriginalActivatedArgs as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false}", caller: nameof(OnSuspendingAsync));
+                        await OnSuspendingAsync(s, e, (OriginalActivatedArgs as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false);
+                    }
+                    catch { /* do nothing */ }
+                    finally { deferral.Complete(); }
                 }
-                catch { /* do nothing */ }
-                finally { deferral.Complete(); }
             };
         }
 
@@ -213,11 +220,8 @@ namespace Template10.Common
 
             // onstart is shared with activate and launch
             DebugWrite("Calling", caller: nameof(OnStartAsync));
-            if (!_HasOnStartAsync)
-            {
-                _HasOnStartAsync = true;
-                await OnStartAsync(StartKind.Activate, e);
-            }
+            _HasOnStartAsync = true;
+            await OnStartAsync(StartKind.Activate, e);
 
             // ensure active (this will hide any custom splashscreen)
             Window.Current.Activate();
@@ -244,7 +248,14 @@ namespace Template10.Common
 
             if (e.PreviousExecutionState != ApplicationExecutionState.Running)
             {
-                await InitializeFrameAsync(e);
+                try
+                {
+                    await InitializeFrameAsync(e);
+                }
+                catch (Exception)
+                {
+                    // nothing
+                }
             }
 
             // okay, now handle launch
@@ -281,7 +292,7 @@ namespace Template10.Common
             }
 
             // handle pre-launch
-            if ((e as LaunchActivatedEventArgs).PrelaunchActivated)
+            if ((e as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false)
             {
                 var runOnStartAsync = false;
                 _HasOnPrelaunchAsync = true;

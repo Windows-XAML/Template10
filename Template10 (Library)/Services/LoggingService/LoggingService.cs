@@ -15,7 +15,7 @@ namespace Template10.Services.LoggingService
 
     public static class LoggingService
     {
-        public static bool Enabled { get; set; } = false;
+        public static bool Enabled { get; set; } = true;
 
         public static DebugWriteDelegate WriteLine { get; set; } = new DebugWriteDelegate(WriteLineInternal);
 
