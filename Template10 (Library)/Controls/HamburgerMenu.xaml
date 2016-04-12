@@ -367,12 +367,11 @@
 
         <Grid x:Name="HamburgerButtonGrid" Grid.Row="0"
               Width="{x:Bind HamburgerButtonGridWidth, Mode=OneWay}"
+              HorizontalAlignment="Left" VerticalAlignment="Top"
               Background="{x:Bind HamburgerBackground, FallbackValue=DarkRed, Mode=OneWay}"
-              Opacity="0.95" HorizontalAlignment="Left" VerticalAlignment="Top"
-              Visibility="{x:Bind HamburgerButtonVisibility, Mode=OneWay}">
+              Opacity="0.95" Visibility="{x:Bind HamburgerButtonVisibility, Mode=OneWay}">
             <Button x:Name="HamburgerButton" AutomationProperties.Name="Hamburger Menu Button"
-                    Background="{x:Bind HamburgerBackground, FallbackValue=DarkRed, Mode=OneWay}"
-                    Command="{x:Bind HamburgerCommand}"
+                    Background="Transparent" Command="{x:Bind HamburgerCommand}"
                     Foreground="{x:Bind HamburgerForeground, FallbackValue=White, Mode=OneWay}"
                     RenderTransformOrigin="0.5,0.5" Style="{StaticResource HamburgerButtonStyle}">
                 <Button.RenderTransform>

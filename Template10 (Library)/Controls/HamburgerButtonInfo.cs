@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Template10.Mvvm;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
@@ -23,6 +24,30 @@ namespace Template10.Controls
             get { return _navigationTransitionInfo; }
             set { _navigationTransitionInfo = value; }
         }
+
+        /// <summary>  
+        /// Sets and gets the Command property.  
+        /// </summary>  
+        public ICommand Command
+        {
+            get { return (ICommand)GetValue(CommandProperty); }
+            set { SetValue(CommandProperty, value); }
+        }
+        public static readonly DependencyProperty CommandProperty =
+             DependencyProperty.Register(nameof(Command), typeof(ICommand),
+             typeof(HamburgerButtonInfo), new PropertyMetadata(null));
+
+        /// <summary>  
+        /// Sets and gets the CommandParameter property.  
+        /// </summary>  
+        public object CommandParameter
+        {
+            get { return GetValue(CommandParameterProperty); }
+            set { SetValue(CommandParameterProperty, value); }
+        }
+        public static readonly DependencyProperty CommandParameterProperty =
+          DependencyProperty.Register(nameof(CommandParameter), typeof(object),
+          typeof(HamburgerButtonInfo), new PropertyMetadata(null));
 
         /// <summary>
         /// Sets and gets the PageType property.
@@ -104,20 +129,13 @@ namespace Template10.Controls
             set { Set(ref _maxWidth, value); }
         }
 
-        public override string ToString() =>
-            string.Format($"IsChecked: {IsChecked} PageType: {PageType}, Parameter: {PageParameter}");
+        public override string ToString() => string.Format($"IsChecked: {IsChecked} PageType: {PageType}, Parameter: {PageParameter}");
 
         public event RoutedEventHandler Selected;
-        internal void RaiseSelected()
-        {
-            Selected?.Invoke(this, new RoutedEventArgs());
-        }
+        internal void RaiseSelected() => Selected?.Invoke(this, new RoutedEventArgs());
 
         public event RoutedEventHandler Unselected;
-        internal void RaiseUnselected()
-        {
-            Unselected?.Invoke(this, new RoutedEventArgs());
-        }
+        internal void RaiseUnselected() => Unselected?.Invoke(this, new RoutedEventArgs());
 
         public event RoutedEventHandler Checked;
         internal void RaiseChecked(RoutedEventArgs args)
@@ -134,21 +152,12 @@ namespace Template10.Controls
         }
 
         public event RoutedEventHandler Tapped;
-        internal void RaiseTapped(RoutedEventArgs args)
-        {
-            Tapped?.Invoke(this, args);
-        }
+        internal void RaiseTapped(RoutedEventArgs args) => Tapped?.Invoke(this, args);
 
         public event RightTappedEventHandler RightTapped;
-        internal void RaiseRightTapped(Windows.UI.Xaml.Input.RightTappedRoutedEventArgs args)
-        {
-            RightTapped?.Invoke(this, args);
-        }
+        internal void RaiseRightTapped(Windows.UI.Xaml.Input.RightTappedRoutedEventArgs args) => RightTapped?.Invoke(this, args);
 
         public event HoldingEventHandler Holding;
-        internal void RaiseHolding(HoldingRoutedEventArgs args)
-        {
-            Holding?.Invoke(this, args);
-        }
+        internal void RaiseHolding(HoldingRoutedEventArgs args) => Holding?.Invoke(this, args);
     }
 }
