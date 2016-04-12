@@ -10,7 +10,7 @@ namespace Template10.Behaviors
     {
         public object Execute(object sender, object parameter)
         {
-            var parent = sender as DependencyObject;
+            var parent = TargetObject ?? sender as DependencyObject;
             while (parent != null)
             {
                 if (parent is FlyoutPresenter)
@@ -25,5 +25,7 @@ namespace Template10.Behaviors
             }
             return null;
         }
+
+        public Control TargetObject { get; set; }
     }
 }
