@@ -628,26 +628,24 @@ namespace Template10.Controls
             {
                 DebugWrite($"Manual: {manual}, IsFullScreen: {IsFullScreen}");
 
-            var frame = NavigationService?.FrameFacade?.Frame;
-            if (manual ?? IsFullScreen)
-            {
-                ShellSplitView.IsHitTestVisible = ShellSplitView.IsEnabled = false;
-                ShellSplitView.Content = null;
-                if (RootGrid.Children.Contains(ShellSplitView))
-                    RootGrid.Children.Remove(ShellSplitView);
-                if (!RootGrid.Children.Contains(frame) && frame != null)
-                    RootGrid.Children.Add(frame);
+                var frame = NavigationService?.FrameFacade?.Frame;
+                if (manual ?? IsFullScreen)
+                {
+                    ShellSplitView.IsHitTestVisible = ShellSplitView.IsEnabled = false;
+                    ShellSplitView.Visibility = Visibility.Collapsed;
+                    ShellSplitView.Content = null;
+                    if (!RootGrid.Children.Contains(frame) && frame != null)
+                        RootGrid.Children.Add(frame);
+                }
+                else
+                {
+                    ShellSplitView.IsHitTestVisible = ShellSplitView.IsEnabled = true;
+                    ShellSplitView.Visibility = Visibility.Visible;
+                    if (RootGrid.Children.Contains(frame) && frame != null)
+                        RootGrid.Children.Remove(frame);
+                    ShellSplitView.Content = frame;
+                }
             }
-            else
-            {
-                ShellSplitView.IsHitTestVisible = ShellSplitView.IsEnabled = true;
-                if (!RootGrid.Children.Contains(ShellSplitView))
-                    RootGrid.Children.Insert(0, ShellSplitView);
-                if (RootGrid.Children.Contains(frame) && frame != null)
-                    RootGrid.Children.Remove(frame);
-                ShellSplitView.Content = frame;
-            }
-        }
         }
         private bool _isLayoutUpdated;
 
