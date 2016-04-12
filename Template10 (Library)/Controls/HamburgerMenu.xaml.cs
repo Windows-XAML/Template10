@@ -70,6 +70,18 @@ namespace Template10.Controls
                     else
                         _SecondaryButtonStackPanel.Orientation = Orientation.Vertical;
 
+                    //disable overlay pan area, don`t prevent clicking navbuttons
+                    if ((d as SplitView).IsPaneOpen)
+                    {
+                        OverlayPanArea.IsHitTestVisible = false;
+                    }
+                    else
+                    {
+                        OverlayPanArea.IsHitTestVisible = true;
+                    }
+
+
+
                     // overall events
                     if ((d as SplitView).IsPaneOpen)
                     {
@@ -633,17 +645,17 @@ namespace Template10.Controls
             {
                 ShellSplitView.IsHitTestVisible = ShellSplitView.IsEnabled = false;
                 ShellSplitView.Content = null;
-                if (RootGrid.Children.Contains(ShellSplitView))
-                    RootGrid.Children.Remove(ShellSplitView);
-                if (!RootGrid.Children.Contains(frame) && frame != null)
+                    if (RootGrid.Children.Contains(ShellSplitView))
+                        RootGrid.Children.Remove(ShellSplitView);
+                   if (!RootGrid.Children.Contains(frame) && frame != null)
                     RootGrid.Children.Add(frame);
             }
             else
             {
                 ShellSplitView.IsHitTestVisible = ShellSplitView.IsEnabled = true;
-                if (!RootGrid.Children.Contains(ShellSplitView))
-                    RootGrid.Children.Insert(0, ShellSplitView);
-                if (RootGrid.Children.Contains(frame) && frame != null)
+                    if (!RootGrid.Children.Contains(ShellSplitView))
+                        RootGrid.Children.Insert(0, ShellSplitView);
+                    if (RootGrid.Children.Contains(frame) && frame != null)
                     RootGrid.Children.Remove(frame);
                 ShellSplitView.Content = frame;
             }

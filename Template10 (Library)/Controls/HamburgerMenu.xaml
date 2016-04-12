@@ -184,7 +184,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid x:Name="RootGrid">
+    <Grid x:Name="RootGrid"  >
 
         <VisualStateManager.VisualStateGroups>
 
@@ -246,10 +246,10 @@
                 </Core:DataTriggerBehavior>
             </Interactivity:Interaction.Behaviors>
         </ContentControl>
-
-        <SplitView x:Name="ShellSplitView" Grid.Column="0" AutomationProperties.Name="Jerry Nixon"
+            <SplitView Grid.Column="0" x:Name="ShellSplitView" AutomationProperties.Name="Jerry Nixon"
                    DisplayMode="Inline" IsPaneOpen="False"
-                   OpenPaneLength="{x:Bind PaneWidth, Mode=OneWay}" PaneBackground="Transparent">
+                   OpenPaneLength="{x:Bind PaneWidth, Mode=OneWay}" PaneBackground="Transparent"                  
+                   >
 
             <SplitView.Pane>
 
@@ -364,7 +364,10 @@
             </SplitView.Pane>
 
         </SplitView>
-
+        <Rectangle Grid.Column="0"  IsHitTestVisible="False" x:Name="OverlayPanArea" Fill="Transparent" VerticalAlignment="Stretch" 
+                    HorizontalAlignment="Left" Width="{Binding Path=CompactPaneLength,ElementName=ShellSplitView}" 
+                    ManipulationDelta="PaneContent_ManipulationDelta" 
+                    ManipulationMode="TranslateX" />
         <Grid x:Name="HamburgerButtonGrid" Grid.Row="0"
               Width="{x:Bind HamburgerButtonGridWidth, Mode=OneWay}"
               Background="{x:Bind HamburgerBackground, FallbackValue=DarkRed, Mode=OneWay}"
