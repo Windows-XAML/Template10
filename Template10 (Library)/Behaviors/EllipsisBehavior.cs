@@ -3,6 +3,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Template10.Utils;
 using System.Linq;
+using Windows.Foundation.Collections;
 
 namespace Template10.Behaviors
 {
@@ -17,6 +18,7 @@ namespace Template10.Behaviors
         {
             AssociatedObject = associatedObject;
             commandBar.Loaded += CommandBar_Loaded;
+            commandBar.LayoutUpdated += CommandBar_LayoutUpdated;
             commandBar.PrimaryCommands.VectorChanged += Commands_VectorChanged;
             commandBar.SecondaryCommands.VectorChanged += Commands_VectorChanged;
             Update();
@@ -25,15 +27,14 @@ namespace Template10.Behaviors
         public void Detach()
         {
             commandBar.Loaded -= CommandBar_Loaded;
+            commandBar.LayoutUpdated += CommandBar_LayoutUpdated;
             commandBar.PrimaryCommands.VectorChanged -= Commands_VectorChanged;
             commandBar.SecondaryCommands.VectorChanged -= Commands_VectorChanged;
         }
 
         private void CommandBar_Loaded(object sender, RoutedEventArgs e) => Update();
-
-        private void Commands_VectorChanged(Windows.Foundation.Collections.IObservableVector<ICommandBarElement> sender,
-            Windows.Foundation.Collections.IVectorChangedEventArgs @event)
-        { Update(); }
+        private void CommandBar_LayoutUpdated(object sender, object e) => Update();
+        private void Commands_VectorChanged(IObservableVector<ICommandBarElement> sender, IVectorChangedEventArgs @event) => Update();
 
         public enum Visibilities { Visible, Collapsed, Auto }
         public Visibilities Visibility
