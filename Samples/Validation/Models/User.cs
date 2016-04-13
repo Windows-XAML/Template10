@@ -1,5 +1,5 @@
-﻿using Template10.Template10.Samples.ValidationSample;
-using System;
+﻿using System;
+using Template10.Validation;
 
 namespace Template10.Samples.ValidationSample.Models
 {
