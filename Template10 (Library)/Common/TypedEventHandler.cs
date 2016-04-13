@@ -3,7 +3,6 @@ using System.ComponentModel;
 
 namespace Template10.Common
 {
-    [Obsolete("Use Foundation.TypedEventHandler<T> native to UWP")]
     public delegate void TypedEventHandler<T>(object sender, T e);
 
     public class EventArgs<T> : EventArgs

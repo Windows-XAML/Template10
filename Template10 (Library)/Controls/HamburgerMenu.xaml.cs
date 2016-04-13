@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Template10.Common;
 using Template10.Services.KeyboardService;
 using Template10.Services.NavigationService;
@@ -89,6 +90,14 @@ namespace Template10.Controls
                     // this will keep the two properties in sync
                     DisplayMode = ShellSplitView.DisplayMode;
                 });
+                LayoutUpdated += (s, e) =>
+                {
+                    if (!_isLayoutUpdated)
+                    {
+                        _isLayoutUpdated = true;
+                        UpdateFullScreen();
+                    }
+                };
                 Loaded += (s, e) =>
                 {
                     // look to see if any brush property has been set
@@ -184,8 +193,8 @@ namespace Template10.Controls
 
         public double VisualStateNarrowMinWidth
         {
-            get { return VisualStateNarrowTrigger.MinWindowWidth; }
-            set { SetValue(VisualStateNarrowMinWidthProperty, VisualStateNarrowTrigger.MinWindowWidth = value); }
+            get { return (double)GetValue(VisualStateNarrowMinWidthProperty); }
+            set { SetValue(VisualStateNarrowMinWidthProperty, value); }
         }
         public static readonly DependencyProperty VisualStateNarrowMinWidthProperty =
             DependencyProperty.Register(nameof(VisualStateNarrowMinWidth), typeof(double),
@@ -193,8 +202,8 @@ namespace Template10.Controls
 
         public double VisualStateNormalMinWidth
         {
-            get { return VisualStateNormalTrigger.MinWindowWidth; }
-            set { SetValue(VisualStateNormalMinWidthProperty, VisualStateNormalTrigger.MinWindowWidth = value); }
+            get { return (double)GetValue(VisualStateNormalMinWidthProperty); }
+            set { SetValue(VisualStateNormalMinWidthProperty, value); }
         }
         public static readonly DependencyProperty VisualStateNormalMinWidthProperty =
             DependencyProperty.Register(nameof(VisualStateNormalMinWidth), typeof(double),
@@ -202,8 +211,8 @@ namespace Template10.Controls
 
         public double VisualStateWideMinWidth
         {
-            get { return VisualStateWideTrigger.MinWindowWidth; }
-            set { SetValue(VisualStateWideMinWidthProperty, VisualStateWideTrigger.MinWindowWidth = value); }
+            get { return (double)GetValue(VisualStateWideMinWidthProperty); }
+            set { SetValue(VisualStateWideMinWidthProperty, value); }
         }
         public static readonly DependencyProperty VisualStateWideMinWidthProperty =
             DependencyProperty.Register(nameof(VisualStateWideMinWidth), typeof(double),
@@ -418,14 +427,14 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty SelectedProperty =
             DependencyProperty.Register(nameof(Selected), typeof(HamburgerButtonInfo),
-                typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) =>
+                typeof(HamburgerMenu), new PropertyMetadata(null, async (d, e) =>
                 {
                     Changed(nameof(Selected), e);
 
                     (d as HamburgerMenu)._insideOperation = true;
                     try
                     {
-                        (d as HamburgerMenu).SetSelected((HamburgerButtonInfo)e.OldValue, (HamburgerButtonInfo)e.NewValue);
+                        await (d as HamburgerMenu).SetSelectedAsync((HamburgerButtonInfo)e.OldValue, (HamburgerButtonInfo)e.NewValue);
                     }
                     catch (Exception ex)
                     {
@@ -436,7 +445,7 @@ namespace Template10.Controls
                         (d as HamburgerMenu)._insideOperation = false;
                     }
                 }));
-        private void SetSelected(HamburgerButtonInfo previous, HamburgerButtonInfo value)
+        private async Task SetSelectedAsync(HamburgerButtonInfo previous, HamburgerButtonInfo value)
         {
             DebugWrite($"OldValue: {previous}, NewValue: {value}");
 
@@ -458,7 +467,7 @@ namespace Template10.Controls
             // navigate only when all navigation buttons have been loaded
             if (_areNavButtonsLoaded && value?.PageType != null)
             {
-                if (NavigationService.Navigate(value.PageType, value?.PageParameter, value?.NavigationTransitionInfo))
+                if (await NavigationService.NavigateAsync(value.PageType, value?.PageParameter, value?.NavigationTransitionInfo))
                 {
                     IsOpen = (DisplayMode == SplitViewDisplayMode.CompactInline && IsOpen);
                     if (value.ClearHistory)
@@ -615,7 +624,9 @@ namespace Template10.Controls
                 }));
         private void UpdateFullScreen(bool? manual = null)
         {
-            DebugWrite($"Mavnual: {manual}, IsFullScreen: {IsFullScreen}");
+            if (_isLayoutUpdated)
+            {
+                DebugWrite($"Manual: {manual}, IsFullScreen: {IsFullScreen}");
 
             var frame = NavigationService?.FrameFacade?.Frame;
             if (manual ?? IsFullScreen)
@@ -637,6 +648,8 @@ namespace Template10.Controls
                 ShellSplitView.Content = frame;
             }
         }
+        }
+        private bool _isLayoutUpdated;
 
         /// <summary>
         /// SecondaryButtons are the button at the bottom of the HamburgerMenu

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Windows.UI.Xaml.Data;
 
 namespace Template10.Converters
@@ -8,6 +9,8 @@ namespace Template10.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
+            if (Debug)
+                Debugger.Break();
             try
             {
                 if (object.Equals(value,parameter ?? When))
@@ -22,6 +25,8 @@ namespace Template10.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
+            if (Debug)
+                Debugger.Break();
             if (OtherwiseValueBack == null)
                 throw new InvalidOperationException("Cannot ConvertBack if no OtherwiseValueBack is set!");
             try
@@ -40,5 +45,6 @@ namespace Template10.Converters
         public object Otherwise { get; set; }
         public object When { get; set; }
         public object OtherwiseValueBack{ get; set; }
+        public bool Debug { get; set; }
     }
 }
