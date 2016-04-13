@@ -372,28 +372,19 @@ namespace Template10.Controls
         /// </summary>
         public bool IsOpen
         {
-            get
-            {
-                var open = ShellSplitView.IsPaneOpen;
-                if (open != (bool)GetValue(IsOpenProperty))
-                    SetValue(IsOpenProperty, open);
-                return open;
-            }
+            get { return (bool)GetValue(IsOpenProperty); }
             set { SetValue(IsOpenProperty, value); }
         }
         public static readonly DependencyProperty IsOpenProperty =
             DependencyProperty.Register(nameof(IsOpen), typeof(bool),
                 typeof(HamburgerMenu), new PropertyMetadata(false, (d, e) => Changed(nameof(IsOpen), e)));
 
+        /// <summary>
+        /// SecondaryButtons are the button at the top of the HamburgerMenu
+        /// </summary>
         public ObservableCollection<HamburgerButtonInfo> PrimaryButtons
         {
-            get
-            {
-                var PrimaryButtons = (ObservableCollection<HamburgerButtonInfo>)base.GetValue(PrimaryButtonsProperty);
-                if (PrimaryButtons == null)
-                    SetValue(PrimaryButtonsProperty, PrimaryButtons = new ObservableCollection<HamburgerButtonInfo>());
-                return PrimaryButtons;
-            }
+            get { return (ObservableCollection<HamburgerButtonInfo>)base.GetValue(PrimaryButtonsProperty); }
             set { SetValue(PrimaryButtonsProperty, value); }
         }
         public static readonly DependencyProperty PrimaryButtonsProperty =
@@ -405,13 +396,7 @@ namespace Template10.Controls
         /// </summary>
         public ObservableCollection<HamburgerButtonInfo> SecondaryButtons
         {
-            get
-            {
-                var SecondaryButtons = (ObservableCollection<HamburgerButtonInfo>)base.GetValue(SecondaryButtonsProperty);
-                if (SecondaryButtons == null)
-                    SetValue(SecondaryButtonsProperty, SecondaryButtons = new ObservableCollection<HamburgerButtonInfo>());
-                return SecondaryButtons;
-            }
+            get { return (ObservableCollection<HamburgerButtonInfo>)base.GetValue(SecondaryButtonsProperty); }
             set { SetValue(SecondaryButtonsProperty, value); }
         }
         public static readonly DependencyProperty SecondaryButtonsProperty =
@@ -424,19 +409,20 @@ namespace Template10.Controls
         private static void Changed(string v, DependencyPropertyChangedEventArgs e)
         {
             DebugWrite($"OldValue: {e.OldValue} NewValue: {e.NewValue}", caller: v);
-            PropertyChangedHandlers.Where(x => x.Key == v).ForEach(x =>
+            var matches = PropertyChangedHandlers.Where(x => x.Key == v);
+            foreach (var item in matches)
             {
-                DebugWrite($"Property: {x.Key}", caller: "Changed/Nested");
+                DebugWrite($"Property: {item.Key}", caller: "Changed/Nested");
                 try
                 {
-                    x.Value.Invoke(e);
+                    item.Value.Invoke(e);
                 }
                 catch (Exception ex)
                 {
                     Debugger.Break();
                     throw;
                 }
-            });
+            }
         }
     }
 }

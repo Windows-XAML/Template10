@@ -35,6 +35,7 @@ namespace Sample
             {
                 // create a new frame 
                 var nav = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include);
+
                 // create modal root
                 Window.Current.Content = new ModalDialog
                 {
@@ -49,6 +50,7 @@ namespace Sample
         public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
             // long-running startup tasks go here
+            await Task.Delay(1000);
 
             NavigationService.Navigate(typeof(Views.MainPage));
             await Task.CompletedTask;

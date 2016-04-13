@@ -44,24 +44,12 @@ namespace Template10.Controls
         {
             DebugWrite();
 
-            InitializeComponent();
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
             {
-                // nothing
+                InitializeComponent();
             }
             else
             {
-                PrimaryButtons = new ObservableItemCollection<HamburgerButtonInfo>();
-                SecondaryButtons = new ObservableItemCollection<HamburgerButtonInfo>();
-
-                // control event handlers
-                Loaded += HamburgerMenu_Loaded;
-                LayoutUpdated += HamburgerMenu_LayoutUpdated;
-
-                // splitview property changes
-                ShellSplitView.RegisterPropertyChangedCallback(SplitView.IsPaneOpenProperty, (d, e) => SplitViewIsPaneOpenChanged(e));
-                ShellSplitView.RegisterPropertyChangedCallback(SplitView.DisplayModeProperty, (d, e) => SplitViewDisplayModeChanged(e));
-
                 // hamburger menu property changes
                 PropertyChangedHandlers.Add(nameof(IsFullScreen), e => FullScreenPropertyChanged((bool?)e.OldValue, (bool?)e.NewValue));
                 PropertyChangedHandlers.Add(nameof(Selected), e => SelectedPropertyChanged(e.OldValue as HamburgerButtonInfo, e.NewValue as HamburgerButtonInfo));
@@ -69,30 +57,30 @@ namespace Template10.Controls
                 PropertyChangedHandlers.Add(nameof(HamburgerButtonVisibility), e => HamburgerButtonVisibilityPropertyChanged((Visibility)e.NewValue));
                 PropertyChangedHandlers.Add(nameof(IsOpen), e => IsOpenPropertyChanged((bool)e.OldValue, (bool)e.NewValue));
                 PropertyChangedHandlers.Add(nameof(NavigationService), e => NavigationServicePropertyChanged(e.OldValue as INavigationService, e.NewValue as INavigationService));
+                PropertyChangedHandlers.Add(nameof(AccentColor), e => AccentColorPropertyChanged(e.OldValue as Color?, e.NewValue as Color?));
+                DebugWrite("AFTER ADD");
+
+                // default values;
+                PrimaryButtons = new ObservableItemCollection<HamburgerButtonInfo>();
+                SecondaryButtons = new ObservableItemCollection<HamburgerButtonInfo>();
+
+                // calling this now, let's handlers wire up before styles apply
+                InitializeComponent();
+
+                // control event handlers
+                Loaded += HamburgerMenu_Loaded;
+                LayoutUpdated += HamburgerMenu_LayoutUpdated;
             }
 
         }
 
-        void HamburgerMenu_Loaded(object sender, RoutedEventArgs e)
+        void HamburgerMenu_Loaded(object sender, RoutedEventArgs args)
         {
             DebugWrite();
 
-            // look to see if any brush property has been set
-            var any = GetType().GetRuntimeProperties()
-                .Where(x => x.PropertyType == typeof(SolidColorBrush))
-                .Any(x => x.GetValue(this) != null);
-
-            // this is the default color if the user supplies none
-            if (!any)
-            {
-                AccentColor = (Color)Resources["SystemAccentColor"];
-            }
-
-            // in case the developer has defined zero buttons
-            if (NavButtonCount == 0)
-            {
-                _navButtonsAreLoaded = true;
-            }
+            // splitview property changes
+            ShellSplitView.RegisterPropertyChangedCallback(SplitView.IsPaneOpenProperty, (d, e) => SplitViewIsPaneOpenChanged(e));
+            ShellSplitView.RegisterPropertyChangedCallback(SplitView.DisplayModeProperty, (d, e) => SplitViewDisplayModeChanged(e));
         }
 
         bool _hasLayoutUpdatedOnce;
@@ -141,21 +129,18 @@ namespace Template10.Controls
             }
 
             // this will keep the two properties in sync
-            IsOpen = ShellSplitView.IsPaneOpen;
+            if (IsOpen != ShellSplitView.IsPaneOpen)
+                IsOpen = ShellSplitView.IsPaneOpen;
         }
+
+        void AccentColorPropertyChanged(Color? previous, Color? value) => RefreshStyles(value);
 
         void FullScreenPropertyChanged(bool? previous, bool? value) => SetFullScreen(value);
 
         void IsOpenPropertyChanged(bool previous, bool value)
         {
-            var open = ShellSplitView.IsPaneOpen;
-            if (open == value)
-            {
-                return;
-            }
-
             // this will keep the two properties in sync
-            if (IsOpen)
+            if (value)
             {
                 ShellSplitView.IsPaneOpen = true;
                 HamburgerButtonGridWidth = (ShellSplitView.DisplayMode == SplitViewDisplayMode.CompactInline) ? PaneWidth : squareWidth;
@@ -240,7 +225,7 @@ namespace Template10.Controls
 
             SetFullScreen();
 
-            value.AfterRestoreSavedNavigation += (s, e) => HighlightCorrectButton();
+            value.AfterRestoreSavedNavigation += (s, e) => HighlightCorrectButton(NavigationService.CurrentPageType, NavigationService.CurrentPageParam);
             value.FrameFacade.Navigated += (s, e) => HighlightCorrectButton(e.PageType, e.Parameter);
         }
 
@@ -248,12 +233,12 @@ namespace Template10.Controls
 
         #endregion
 
-        internal void HighlightCorrectButton(Type pageType = null, object pageParam = null)
+        internal void HighlightCorrectButton(Type pageType, object pageParam)
         {
             DebugWrite($"PageType: {pageType} PageParam: {pageParam}");
 
-            pageType = pageType ?? NavigationService.CurrentPageType;
-            var type_matches_buttons = NavButtons
+            // pageType = pageType ?? NavigationService.CurrentPageType;
+            var type_matches_buttons = LoadedNavButtons
                 .Where(x => Equals(x.Value.PageType, pageType));
 
             if (pageParam == null)
@@ -295,13 +280,13 @@ namespace Template10.Controls
             }
 
             // reset all, except selected
-            foreach (var button in NavButtons.Where(x => x.Value != value).Select(x => x.Value))
+            foreach (var button in LoadedNavButtons.Where(x => x.Value != value).Select(x => x.Value))
             {
                 button.IsChecked = false;
             }
 
             // navigate only when all navigation buttons have been loaded
-            if (_navButtonsAreLoaded && value?.PageType != null)
+            if (AllNavButtonsAreLoaded && value?.PageType != null)
             {
                 if (await NavigationService.NavigateAsync(value.PageType, value?.PageParameter, value?.NavigationTransitionInfo))
                 {
@@ -415,32 +400,26 @@ namespace Template10.Controls
 
         #endregion
 
-        private int _navButtonsLoadedCounter = 0;
-        private bool _navButtonsAreLoaded = false;
-        readonly Dictionary<RadioButton, HamburgerButtonInfo> NavButtons = new Dictionary<RadioButton, HamburgerButtonInfo>();
+        bool AllNavButtonsAreLoaded => LoadedNavButtons.Count >= NavButtonCount;
+        readonly Dictionary<RadioButton, HamburgerButtonInfo> LoadedNavButtons = new Dictionary<RadioButton, HamburgerButtonInfo>();
 
         void NavButton_Loaded(object sender, RoutedEventArgs e)
         {
             DebugWrite($"Info: {(sender as FrameworkElement).DataContext}");
 
-            // add this radio to the list
             AddNavButtonToNavButtons(sender as RadioButton);
-            HighlightCorrectButton();
         }
 
         void AddNavButtonToNavButtons(RadioButton button)
         {
             DebugWrite();
 
-            if (!NavButtons.ContainsKey(button))
+            if (LoadedNavButtons.ContainsKey(button)) return;
+            var info = button.DataContext as HamburgerButtonInfo;
+            LoadedNavButtons.Add(button, info);
+            if (AllNavButtonsAreLoaded)
             {
-                var info = button.DataContext as HamburgerButtonInfo;
-                NavButtons.Add(button, info);
-                if (!_navButtonsAreLoaded)
-                {
-                    _navButtonsLoadedCounter++;
-                    _navButtonsAreLoaded = _navButtonsLoadedCounter >= NavButtonCount;
-                }
+                HighlightCorrectButton(NavigationService.CurrentPageType, NavigationService.CurrentPageParam);
             }
         }
 
@@ -451,13 +430,13 @@ namespace Template10.Controls
             var radio = sender as RadioButton;
             var info = radio.DataContext as HamburgerButtonInfo;
             info.RaiseTapped(e);
-            WireUpICommand(info);
+            ExecuteICommand(info);
 
             // do not bubble to SplitView
             e.Handled = true;
         }
 
-        void WireUpICommand(HamburgerButtonInfo info)
+        void ExecuteICommand(HamburgerButtonInfo info)
         {
             ICommand command = info.Command;
             if (command != null)
@@ -502,15 +481,15 @@ namespace Template10.Controls
             Monitor.Enter(NavButtonInsideOperationLock);
             try
             {
-                var t = sender as ToggleButton;
-                var i = t.DataContext as HamburgerButtonInfo;
+                var radio = sender as ToggleButton;
+                var info = radio.DataContext as HamburgerButtonInfo;
 
                 // only toggle buttons can be checked
-                t.IsChecked = (i.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
+                radio.IsChecked = (info.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
 
-                if (t.IsChecked ?? true) HighlightCorrectButton();
-                t.IsChecked = Equals(i, Selected);
-                if (t.IsChecked ?? true) i.RaiseChecked(e);
+                if (radio.IsChecked ?? true) Selected = info;
+                radio.IsChecked = Equals(info, Selected);
+                if (radio.IsChecked ?? true) info.RaiseChecked(e);
             }
             finally
             {
@@ -525,19 +504,19 @@ namespace Template10.Controls
             Monitor.Enter(NavButtonInsideOperationLock);
             try
             {
-                var t = sender as ToggleButton;
-                var i = t.DataContext as HamburgerButtonInfo;
+                var radio = sender as ToggleButton;
+                var info = radio.DataContext as HamburgerButtonInfo;
 
-                if (t.FocusState != FocusState.Unfocused)
+                if (radio.FocusState != FocusState.Unfocused)
                 {
                     // prevent un-select
-                    t.IsChecked = (i.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
+                    radio.IsChecked = (info.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
                     IsOpen = false;
                     return;
                 }
 
-                i.RaiseUnchecked(e);
-                HighlightCorrectButton();
+                info.RaiseUnchecked(e);
+                HighlightCorrectButton(NavigationService.CurrentPageType, NavigationService.CurrentPageParam);
             }
             finally
             {
