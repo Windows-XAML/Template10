@@ -83,16 +83,12 @@ namespace Template10.Controls
             ShellSplitView.RegisterPropertyChangedCallback(SplitView.DisplayModeProperty, (d, e) => SplitViewDisplayModeChanged(e));
         }
 
-        bool _hasLayoutUpdatedOnce;
         void HamburgerMenu_LayoutUpdated(object sender, object e)
         {
             DebugWrite();
 
-            if (!_hasLayoutUpdatedOnce)
-            {
-                _hasLayoutUpdatedOnce = true;
-                SetFullScreen();
-            }
+            LayoutUpdated -= HamburgerMenu_LayoutUpdated;
+            SetFullScreen();
         }
 
         #region property changed handlers
@@ -176,7 +172,6 @@ namespace Template10.Controls
 
         void HamburgerButtonVisibilityPropertyChanged(Visibility value) => HamburgerButton.Visibility = value;
 
-        object NavButtonInsideOperationLock = new object();
         async void SelectedPropertyChanged(HamburgerButtonInfo previous, HamburgerButtonInfo value)
         {
             if ((value?.Equals(previous) ?? false))
@@ -186,7 +181,6 @@ namespace Template10.Controls
 
             SelectedChanged?.Invoke(this, new ChangedEventArgs<HamburgerButtonInfo>(previous, value));
 
-            Monitor.Enter(NavButtonInsideOperationLock);
             try
             {
                 await SetSelectedAsync(previous, value);
@@ -194,10 +188,6 @@ namespace Template10.Controls
             catch (Exception ex)
             {
                 DebugWrite($"Catch Ex.Message: {ex.Message}", caller: "SelectedPropertyChanged");
-            }
-            finally
-            {
-                Monitor.Exit(NavButtonInsideOperationLock);
             }
         }
 
@@ -279,8 +269,8 @@ namespace Template10.Controls
             }
 
             // reset all, except selected
-            var buttons = LoadedNavButtons.Where(x => x.Value != value).Select(x => x.Value);
-            buttons.ForEach(x => x.IsChecked = false);
+            var buttons = LoadedNavButtons.Where(x => x.Value != value);
+            buttons.ForEach(x => x.Value.IsChecked = false);
 
             // navigate only when all navigation buttons have been loaded
             if (AllNavButtonsAreLoaded && value?.PageType != null)
@@ -334,31 +324,28 @@ namespace Template10.Controls
         /// </remarks>
         void SetFullScreen(bool? manual = null)
         {
-            if (_hasLayoutUpdatedOnce)
-            {
-                DebugWrite($"Manual: {manual}, IsFullScreen: {IsFullScreen}");
+            DebugWrite($"Manual: {manual}, IsFullScreen: {IsFullScreen}");
 
-                var frame = NavigationService?.Frame;
-                if (manual ?? IsFullScreen)
+            var frame = NavigationService?.Frame;
+            if (manual ?? IsFullScreen)
+            {
+                ShellSplitView.IsHitTestVisible = ShellSplitView.IsEnabled = false;
+                AutomationProperties.SetAccessibilityView(ShellSplitView, Windows.UI.Xaml.Automation.Peers.AccessibilityView.Raw);
+                ShellSplitView.Content = null;
+                if (!RootGrid.Children.Contains(frame) && frame != null)
                 {
-                    ShellSplitView.IsHitTestVisible = ShellSplitView.IsEnabled = false;
-                    AutomationProperties.SetAccessibilityView(ShellSplitView, Windows.UI.Xaml.Automation.Peers.AccessibilityView.Raw);
-                    ShellSplitView.Content = null;
-                    if (!RootGrid.Children.Contains(frame) && frame != null)
-                    {
-                        RootGrid.Children.Add(frame);
-                    }
+                    RootGrid.Children.Add(frame);
                 }
-                else
+            }
+            else
+            {
+                ShellSplitView.IsHitTestVisible = ShellSplitView.IsEnabled = true;
+                AutomationProperties.SetAccessibilityView(ShellSplitView, Windows.UI.Xaml.Automation.Peers.AccessibilityView.Control);
+                if (RootGrid.Children.Contains(frame) && frame != null)
                 {
-                    ShellSplitView.IsHitTestVisible = ShellSplitView.IsEnabled = true;
-                    AutomationProperties.SetAccessibilityView(ShellSplitView, Windows.UI.Xaml.Automation.Peers.AccessibilityView.Control);
-                    if (RootGrid.Children.Contains(frame) && frame != null)
-                    {
-                        RootGrid.Children.Remove(frame);
-                    }
-                    ShellSplitView.Content = frame;
+                    RootGrid.Children.Remove(frame);
                 }
+                ShellSplitView.Content = frame;
             }
         }
 
@@ -397,23 +384,28 @@ namespace Template10.Controls
 
         #endregion
 
+        int NavButtonCount => PrimaryButtons.Count + SecondaryButtons.Count;
         bool AllNavButtonsAreLoaded => LoadedNavButtons.Count >= NavButtonCount;
-        readonly Dictionary<RadioButton, HamburgerButtonInfo> LoadedNavButtons = new Dictionary<RadioButton, HamburgerButtonInfo>();
+        readonly Dictionary<ToggleButton, HamburgerButtonInfo> LoadedNavButtons = new Dictionary<ToggleButton, HamburgerButtonInfo>();
+
+        public class ButtonInfo
+        {
+            public ButtonInfo(object sender)
+            {
+                Button = sender as ToggleButton;
+                HamburgerButtonInfo = Button.DataContext as HamburgerButtonInfo;
+            }
+            public ToggleButton Button { get; }
+            public HamburgerButtonInfo HamburgerButtonInfo { get; }
+        }
 
         void NavButton_Loaded(object sender, RoutedEventArgs e)
         {
-            DebugWrite($"Info: {(sender as FrameworkElement).DataContext}");
-
-            AddNavButtonToNavButtons(sender as RadioButton);
-        }
-
-        void AddNavButtonToNavButtons(RadioButton button)
-        {
             DebugWrite();
 
-            if (LoadedNavButtons.ContainsKey(button)) return;
-            var info = button.DataContext as HamburgerButtonInfo;
-            LoadedNavButtons.Add(button, info);
+            var button = new ButtonInfo(sender);
+            if (LoadedNavButtons.ContainsKey(button.Button)) return;
+            LoadedNavButtons.Add(button.Button, button.HamburgerButtonInfo);
             if (AllNavButtonsAreLoaded)
             {
                 HighlightCorrectButton(NavigationService.CurrentPageType, NavigationService.CurrentPageParam);
@@ -422,14 +414,11 @@ namespace Template10.Controls
 
         void NavButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            DebugWrite($"Info: {(sender as FrameworkElement).DataContext}");
+            DebugWrite();
 
-            var radio = sender as RadioButton;
-            var info = radio.DataContext as HamburgerButtonInfo;
-            info.RaiseTapped(e);
-            ExecuteICommand(info);
-
-            // do not bubble to SplitView
+            var button = new ButtonInfo(sender);
+            button.HamburgerButtonInfo.RaiseTapped(e);
+            ExecuteICommand(button.HamburgerButtonInfo);
             e.Handled = true;
         }
 
@@ -448,77 +437,40 @@ namespace Template10.Controls
 
         void NavButton_RightTapped(object sender, Windows.UI.Xaml.Input.RightTappedRoutedEventArgs e)
         {
-            DebugWrite($"Info: {(sender as FrameworkElement).DataContext}");
+            DebugWrite();
 
-            var radio = sender as RadioButton;
-            var info = radio.DataContext as HamburgerButtonInfo;
-            info.RaiseRightTapped(e);
-
-            // do not bubble to SplitView
+            var button = new ButtonInfo(sender);
+            button.HamburgerButtonInfo.RaiseRightTapped(e);
             e.Handled = true;
         }
 
         void NavButton_Holding(object sender, Windows.UI.Xaml.Input.HoldingRoutedEventArgs e)
         {
-            DebugWrite($"Info: {(sender as FrameworkElement).DataContext}");
+            DebugWrite();
 
-            var radio = sender as RadioButton;
-            var info = radio.DataContext as HamburgerButtonInfo;
-            info.RaiseHolding(e);
-
+            var button = new ButtonInfo(sender);
+            button.HamburgerButtonInfo.RaiseHolding(e);
             e.Handled = true;
         }
 
-        int NavButtonCount => PrimaryButtons.Count + SecondaryButtons.Count;
-
         void NavButtonChecked(object sender, RoutedEventArgs e)
         {
-            DebugWrite($"Info: {(sender as FrameworkElement).DataContext}");
+            DebugWrite();
 
-            Monitor.Enter(NavButtonInsideOperationLock);
-            try
-            {
-                var radio = sender as ToggleButton;
-                var info = radio.DataContext as HamburgerButtonInfo;
-
-                // only toggle buttons can be checked
-                radio.IsChecked = (info.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
-
-                if (radio.IsChecked ?? true) Selected = info;
-                radio.IsChecked = Equals(info, Selected);
-                if (radio.IsChecked ?? true) info.RaiseChecked(e);
-            }
-            finally
-            {
-                Monitor.Exit(NavButtonInsideOperationLock);
-            }
+            var button = new ButtonInfo(sender);
+            button.Button.IsChecked = (button.HamburgerButtonInfo.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
+            if (button.Button.IsChecked ?? true) Selected = button.HamburgerButtonInfo;
+            if (button.Button.IsChecked ?? true) button.HamburgerButtonInfo.RaiseChecked(e);
+            button.Button.IsHitTestVisible = !button.Button.IsChecked ?? false;
         }
 
         void NavButtonUnchecked(object sender, RoutedEventArgs e)
         {
-            DebugWrite($"Info: {(sender as FrameworkElement).DataContext}");
+            DebugWrite();
 
-            Monitor.Enter(NavButtonInsideOperationLock);
-            try
-            {
-                var radio = sender as ToggleButton;
-                var info = radio.DataContext as HamburgerButtonInfo;
-
-                if (radio.FocusState != FocusState.Unfocused)
-                {
-                    // prevent un-select
-                    radio.IsChecked = (info.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
-                    IsOpen = false;
-                    return;
-                }
-
-                info.RaiseUnchecked(e);
-                HighlightCorrectButton(NavigationService.CurrentPageType, NavigationService.CurrentPageParam);
-            }
-            finally
-            {
-                Monitor.Exit(NavButtonInsideOperationLock);
-            }
+            var button = new ButtonInfo(sender);
+            button.HamburgerButtonInfo.RaiseUnchecked(e);
+            button.Button.IsHitTestVisible = true;
         }
 
         #endregion
@@ -566,5 +518,27 @@ namespace Template10.Controls
         }
 
         #endregion
+
+        private void NavButton_VisualStateChanged(object sender, VisualStateChangedEventArgs e)
+        {
+            var button = new ButtonInfo(e.Control);
+            switch (e.NewState.Name)
+            {
+                //case "Normal": button.Button.Style = NavButtonStyle; break;
+                //case "PointerOver": button.Button.Style = NavButtonStyle; break;
+                //case "Pressed": button.Button.Style = NavButtonStyle; break;
+                //case "Disabled": button.Button.Style = NavButtonStyle; break;
+                //case "Checked": button.Button.Style = NavButtonStyle; break;
+                //case "CheckedPointerOver":
+                //case "CheckedPressed":
+                //case "CheckedDisabled":
+                //case "Indeterminate":
+                //case "IndeterminatePointerOver":
+                //case "IndeterminatePressed":
+                //case "IndeterminateDisabled":
+                default:
+                    break;
+            }
+        }
     }
 }
