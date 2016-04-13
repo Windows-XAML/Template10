@@ -237,15 +237,15 @@ namespace Template10.Controls
         {
             DebugWrite($"PageType: {pageType} PageParam: {pageParam}");
 
-            // pageType = pageType ?? NavigationService.CurrentPageType;
-            var type_matches_buttons = LoadedNavButtons
+            // match type only
+            var buttons = LoadedNavButtons
                 .Where(x => Equals(x.Value.PageType, pageType));
 
             if (pageParam == null)
             {
                 pageParam = NavigationService.CurrentPageParam;
             }
-            else
+            else if (pageParam.ToString().StartsWith("{"))
             {
                 try
                 {
@@ -254,11 +254,11 @@ namespace Template10.Controls
                 catch { }
             }
 
-            var param_matches_buttons = type_matches_buttons
+            // add parameter match
+            buttons = buttons
                 .Where(x => Equals(x.Value.PageParameter, null) || Equals(x.Value.PageParameter, pageParam));
 
-            var button = param_matches_buttons.Select(x => x.Value).FirstOrDefault();
-            button = button ?? type_matches_buttons.Select(x => x.Value).FirstOrDefault();
+            var button = buttons.Select(x => x.Value).FirstOrDefault();
             Selected = button;
         }
 
@@ -266,24 +266,21 @@ namespace Template10.Controls
         {
             DebugWrite($"OldValue: {previous}, NewValue: {value}");
 
-            // do not remove this if statement
-            //// this is the fix for #410 (click twice)
+            // pls. do not remove this if statement. this is the fix for #410 (click twice)
             if (previous != null)
             {
                 IsOpen = (DisplayMode == SplitViewDisplayMode.CompactInline && IsOpen);
             }
 
-            // undo previous
+            // signal previous
             if (previous?.IsChecked ?? true && previous != value)
             {
                 previous?.RaiseUnselected();
             }
 
             // reset all, except selected
-            foreach (var button in LoadedNavButtons.Where(x => x.Value != value).Select(x => x.Value))
-            {
-                button.IsChecked = false;
-            }
+            var buttons = LoadedNavButtons.Where(x => x.Value != value).Select(x => x.Value);
+            buttons.ForEach(x => x.IsChecked = false);
 
             // navigate only when all navigation buttons have been loaded
             if (AllNavButtonsAreLoaded && value?.PageType != null)

@@ -159,12 +159,10 @@
     <Compile Include="Common\ChangedEventArgs.cs" />
     <Compile Include="Common\WindowWrapper.cs" />
     <Compile Include="Common\ObservableItemCollection.cs" />
-    <Compile Include="Controls\HamburgerMenu.Methods.xaml.cs">
+    <Compile Include="Controls\HamburgerMenu.PublicMethods.xaml.cs">
       <DependentUpon>HamburgerMenu.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\HamburgerMenu.Properties.xaml.cs">
-      <SubType>Code</SubType>
-      <Generator>MSBuild:Compile</Generator>
+    <Compile Include="Controls\HamburgerMenu.PublicProperties.xaml.cs">
       <DependentUpon>HamburgerMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ModalDialog.cs" />

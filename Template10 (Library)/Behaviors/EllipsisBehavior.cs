@@ -16,7 +16,7 @@ namespace Template10.Behaviors
         public void Attach(DependencyObject associatedObject)
         {
             AssociatedObject = associatedObject;
-            commandBar.Loaded += (s, e) => Update();
+            commandBar.Loaded += CommandBar_Loaded;
             commandBar.PrimaryCommands.VectorChanged += Commands_VectorChanged;
             commandBar.SecondaryCommands.VectorChanged += Commands_VectorChanged;
             Update();
@@ -24,10 +24,12 @@ namespace Template10.Behaviors
 
         public void Detach()
         {
-            commandBar.Loaded -= (s, e) => Update();
+            commandBar.Loaded -= CommandBar_Loaded;
             commandBar.PrimaryCommands.VectorChanged -= Commands_VectorChanged;
             commandBar.SecondaryCommands.VectorChanged -= Commands_VectorChanged;
         }
+
+        private void CommandBar_Loaded(object sender, RoutedEventArgs e) => Update();
 
         private void Commands_VectorChanged(Windows.Foundation.Collections.IObservableVector<ICommandBarElement> sender,
             Windows.Foundation.Collections.IVectorChangedEventArgs @event)
