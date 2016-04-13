@@ -82,20 +82,25 @@ namespace Template10.Utils
 
         #endregion
 
-        public DeviceFamilies DeviceFamily()
+        public static DeviceFamilies CurrentDeviceFamily
         {
-            var family = Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily;
-            switch (family)
+            get
             {
-                case "Windows.Desktop": return DeviceFamilies.Desktop;
-                case "Windows.Mobile": return DeviceFamilies.Mobile;
-                case "Windows.Team": return DeviceFamilies.Team;
-                case "Windows.IoT": return DeviceFamilies.IoT;
-                case "Windows.Xbox": return DeviceFamilies.Xbox;
-                case "Windows.Holographic": return DeviceFamilies.HoloLens;
-                default: return DeviceFamilies.Unknown;
+                var family = Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily;
+                switch (family)
+                {
+                    case "Windows.Desktop": return DeviceFamilies.Desktop;
+                    case "Windows.Mobile": return DeviceFamilies.Mobile;
+                    case "Windows.Team": return DeviceFamilies.Team;
+                    case "Windows.IoT": return DeviceFamilies.IoT;
+                    case "Windows.Xbox": return DeviceFamilies.Xbox;
+                    case "Windows.Holographic": return DeviceFamilies.HoloLens;
+                    default: return DeviceFamilies.Unknown;
+                }
             }
         }
+
+        public DeviceFamilies DeviceFamily() => CurrentDeviceFamily;
 
         public DeviceDispositions DeviceDisposition()
         {
