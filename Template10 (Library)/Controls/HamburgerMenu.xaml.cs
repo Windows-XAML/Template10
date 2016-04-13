@@ -58,7 +58,6 @@ namespace Template10.Controls
                 PropertyChangedHandlers.Add(nameof(IsOpen), e => IsOpenPropertyChanged((bool)e.OldValue, (bool)e.NewValue));
                 PropertyChangedHandlers.Add(nameof(NavigationService), e => NavigationServicePropertyChanged(e.OldValue as INavigationService, e.NewValue as INavigationService));
                 PropertyChangedHandlers.Add(nameof(AccentColor), e => AccentColorPropertyChanged(e.OldValue as Color?, e.NewValue as Color?));
-                DebugWrite("AFTER ADD");
 
                 // default values;
                 PrimaryButtons = new ObservableItemCollection<HamburgerButtonInfo>();
@@ -70,6 +69,7 @@ namespace Template10.Controls
                 // control event handlers
                 Loaded += HamburgerMenu_Loaded;
                 LayoutUpdated += HamburgerMenu_LayoutUpdated;
+                KeyboardService.Instance.AfterMenuGesture += () => IsOpen = !IsOpen;
             }
 
         }

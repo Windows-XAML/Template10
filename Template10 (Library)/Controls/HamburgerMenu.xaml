@@ -76,6 +76,7 @@
                                           Command="{TemplateBinding Command}"
                                           CommandParameter="{TemplateBinding CommandParameter}"
                                           Content="{TemplateBinding Tag}"
+                                          Foreground="{Binding NavButtonForeground, ElementName=ThisPage, FallbackValue=White}"
                                           IsChecked="{Binding IsChecked, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                           Unchecked="NavButtonUnchecked" UseSystemFocusVisuals="True"
                                           Visibility="{TemplateBinding Visibility}">
@@ -167,12 +168,11 @@
                                             <Rectangle x:Name="HoverBack"
                                                        Fill="{Binding NavButtonHoverBackground, ElementName=ThisPage}"
                                                        IsHitTestVisible="False" Visibility="Collapsed" />
-                                            <Rectangle x:Name="CheckedBack"
+                                            <Rectangle x:Name="CheckedBack" Width="4" HorizontalAlignment="Left"
                                                        Fill="{Binding NavButtonCheckedBackground, ElementName=ThisPage}"
                                                        IsHitTestVisible="False" Visibility="Collapsed" />
                                             <ContentControl x:Name="NormalFore" AutomationProperties.AccessibilityView="Raw"
-                                                            Content="{TemplateBinding Content}"
-                                                            Foreground="{Binding NavButtonForeground, ElementName=ThisPage, FallbackValue=White}"
+                                                            Content="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}"
                                                             IsHitTestVisible="False" />
                                         </Grid>
                                     </ControlTemplate>
@@ -371,7 +371,7 @@
               Width="{x:Bind HamburgerButtonGridWidth, Mode=OneWay}"
               HorizontalAlignment="Left" VerticalAlignment="Top"
               Background="{x:Bind HamburgerBackground, FallbackValue=DarkRed, Mode=OneWay}"
-              Opacity="0.95" Visibility="{x:Bind HamburgerButtonVisibility, Mode=OneWay}">
+              Visibility="{x:Bind HamburgerButtonVisibility, Mode=OneWay}">
             <Button x:Name="HamburgerButton" AutomationProperties.Name="Hamburger Menu Button"
                     Background="Transparent" Command="{x:Bind HamburgerCommand}"
                     Foreground="{x:Bind HamburgerForeground, FallbackValue=White, Mode=OneWay}"
