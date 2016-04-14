@@ -7,7 +7,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="using:Template10.Controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             x:Name="ThisPage" d:DesignHeight="400" d:DesignWidth="400"
+             x:Name="ThisPage"
+             d:DesignHeight="400"
+             d:DesignWidth="400"
              mc:Ignorable="d">
 
     <UserControl.Resources>
@@ -32,8 +34,10 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
-                            <Grid x:Name="RootGrid" Width="{TemplateBinding Width}"
-                                  Height="{TemplateBinding Height}" Background="{TemplateBinding Background}">
+                            <Grid x:Name="RootGrid"
+                                  Width="{TemplateBinding Width}"
+                                  Height="{TemplateBinding Height}"
+                                  Background="{TemplateBinding Background}">
                                 <VisualStateManager.VisualStateGroups>
                                     <VisualStateGroup x:Name="CommonStates">
                                         <VisualState x:Name="Normal">
@@ -54,12 +58,18 @@
                                         <VisualState x:Name="Disabled" />
                                     </VisualStateGroup>
                                 </VisualStateManager.VisualStateGroups>
-                                <Rectangle x:Name="PressedOverlay" Fill="White" Opacity=".4"
+                                <Rectangle x:Name="PressedOverlay"
+                                           Fill="White"
+                                           Opacity=".4"
                                            Visibility="Collapsed" />
-                                <Rectangle x:Name="HoverOverlay" Fill="White" Opacity=".2"
+                                <Rectangle x:Name="HoverOverlay"
+                                           Fill="White"
+                                           Opacity=".2"
                                            Visibility="Collapsed" />
-                                <FontIcon x:Name="ContentPresenter" FontSize="20"
-                                          Foreground="{TemplateBinding Foreground}" Glyph="&#xE700;" />
+                                <FontIcon x:Name="ContentPresenter"
+                                          FontSize="20"
+                                          Foreground="{TemplateBinding Foreground}"
+                                          Glyph="&#xE700;" />
                             </Grid>
                         </ControlTemplate>
                     </Setter.Value>
@@ -69,22 +79,38 @@
                 <Setter Property="Width" Value="48" />
             </Style>
 
+            <DataTemplate x:Name="NavButtonLiteralTemplate" x:DataType="local:HamburgerButtonInfo">
+                <ContentPresenter x:Name="ContentPresenter"
+                                  Width="{Binding PaneWidth, ElementName=ThisPage}"
+                                  MinWidth="48"
+                                  MaxWidth="{x:Bind MaxWidth, Mode=TwoWay}"
+                                  Content="{Binding Content}"
+                                  ToolTipService.ToolTip="{Binding Path=(ToolTipService.ToolTip)}"
+                                  Visibility="{Binding Visibility, Mode=TwoWay}" />
+            </DataTemplate>
+
             <DataTemplate x:Name="NavButtonTemplate" x:DataType="local:HamburgerButtonInfo">
-                <ToggleButton Width="{Binding PaneWidth, ElementName=ThisPage}" MinWidth="48"
+                <ToggleButton Width="{Binding PaneWidth, ElementName=ThisPage}"
+                              MinWidth="48"
                               MaxWidth="{x:Bind MaxWidth, Mode=TwoWay}"
                               AutomationProperties.Name="Hamburger Menu Item"
                               Command="{Binding NavCommand, ElementName=ThisPage}"
-                              CommandParameter="{Binding}" Content="{Binding Content}"
-                              Holding="NavButton_Holding" IsChecked="{Binding IsChecked, Mode=TwoWay}"
+                              CommandParameter="{Binding}"
+                              Content="{Binding Content}"
+                              Holding="NavButton_Holding"
+                              IsChecked="{Binding IsChecked, Mode=TwoWay}"
                               IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
                               IsHitTestVisible="{Binding IsChecked, Converter={StaticResource ReverseBooleanConverer}}"
-                              Loaded="NavButton_Loaded" RightTapped="NavButton_RightTapped"
-                              Style="{Binding NavButtonStyle}" Tapped="NavButton_Tapped"
+                              Loaded="NavButton_Loaded"
+                              RightTapped="NavButton_RightTapped"
+                              Style="{Binding NavButtonStyle}"
+                              Tapped="NavButton_Tapped"
                               ToolTipService.ToolTip="{Binding Path=(ToolTipService.ToolTip)}"
                               Visibility="{Binding Visibility, Mode=TwoWay}">
                     <ToggleButton.Template>
                         <ControlTemplate TargetType="ToggleButton">
-                            <Grid x:Name="RootGrid" Width="{Binding PaneWidth, ElementName=ThisPage}"
+                            <Grid x:Name="RootGrid"
+                                  Width="{Binding PaneWidth, ElementName=ThisPage}"
                                   Background="Transparent">
                                 <VisualStateManager.VisualStateGroups>
                                     <VisualStateGroup x:Name="CommonStates" CurrentStateChanged="NavButton_VisualStateChanged">
@@ -159,7 +185,9 @@
                                     </VisualStateGroup>
                                 </VisualStateManager.VisualStateGroups>
                                 <ContentPresenter x:Name="ContentPresenter" Content="{Binding Content}" />
-                                <Rectangle x:Name="Indicator" Width="4" HorizontalAlignment="Left"
+                                <Rectangle x:Name="Indicator"
+                                           Width="4"
+                                           HorizontalAlignment="Left"
                                            Fill="{Binding NavButtonCheckedIndicatorBrush, ElementName=ThisPage}"
                                            Visibility="Collapsed" />
                             </Grid>
@@ -213,8 +241,11 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <ContentControl x:Name="Header" Height="48" Margin="48,0,0,0"
-                        VerticalAlignment="Top" HorizontalContentAlignment="Stretch"
+        <ContentControl x:Name="Header"
+                        Height="48"
+                        Margin="48,0,0,0"
+                        VerticalAlignment="Top"
+                        HorizontalContentAlignment="Stretch"
                         Content="{Binding HeaderContent, ElementName=ThisPage}">
             <Interactivity:Interaction.Behaviors>
                 <Core:DataTriggerBehavior Binding="{Binding Visibility, ElementName=HamburgerButton}" Value="Visible">
@@ -234,17 +265,23 @@
             </Interactivity:Interaction.Behaviors>
         </ContentControl>
 
-        <SplitView x:Name="ShellSplitView" Grid.Column="0" AutomationProperties.Name="Jerry Nixon"
-                   DisplayMode="Inline" IsPaneOpen="False"
-                   OpenPaneLength="{x:Bind PaneWidth, Mode=OneWay}" PaneBackground="Transparent">
+        <SplitView x:Name="ShellSplitView"
+                   Grid.Column="0"
+                   AutomationProperties.Name="Jerry Nixon"
+                   DisplayMode="Inline"
+                   IsPaneOpen="False"
+                   OpenPaneLength="{x:Bind PaneWidth, Mode=OneWay}"
+                   PaneBackground="Transparent">
 
             <SplitView.Pane>
 
-                <Grid x:Name="PaneContent" Margin="0,48,0,0"
+                <Grid x:Name="PaneContent"
+                      Margin="0,48,0,0"
                       Background="{x:Bind NavAreaBackground, Mode=OneWay}"
                       BorderBrush="{x:Bind PaneBorderBrush, Mode=OneWay}"
                       BorderThickness="{x:Bind PaneBorderThickness}"
-                      ManipulationDelta="PaneContent_ManipulationDelta" ManipulationMode="TranslateX"
+                      ManipulationDelta="PaneContent_ManipulationDelta"
+                      ManipulationMode="TranslateX"
                       Tapped="PaneContent_Tapped">
 
                     <Grid.RowDefinitions>
@@ -261,7 +298,8 @@
                             </Core:ChangePropertyAction>
                         </Core:DataTriggerBehavior>
                         <Core:DataTriggerBehavior Binding="{Binding Visibility, ElementName=HamburgerButton, Mode=OneWay}" Value="Collapsed">
-                            <b:ConditionalAction xmlns:b="using:Template10.Behaviors" LeftValue="{x:Bind HeaderContent}"
+                            <b:ConditionalAction xmlns:b="using:Template10.Behaviors"
+                                                 LeftValue="{x:Bind HeaderContent}"
                                                  Operator="IsNull">
                                 <Core:ChangePropertyAction PropertyName="Margin" TargetObject="{Binding ElementName=PaneContent}">
                                     <Core:ChangePropertyAction.Value>
@@ -271,7 +309,8 @@
                             </b:ConditionalAction>
                         </Core:DataTriggerBehavior>
                         <Core:DataTriggerBehavior Binding="{Binding Visibility, ElementName=HamburgerButton, Mode=OneWay}" Value="Collapsed">
-                            <b:ConditionalAction xmlns:b="using:Template10.Behaviors" LeftValue="{x:Bind HeaderContent}"
+                            <b:ConditionalAction xmlns:b="using:Template10.Behaviors"
+                                                 LeftValue="{x:Bind HeaderContent}"
                                                  Operator="IsNotNull">
                                 <Core:ChangePropertyAction PropertyName="Margin" TargetObject="{Binding ElementName=PaneContent}">
                                     <Core:ChangePropertyAction.Value>
@@ -282,7 +321,8 @@
                         </Core:DataTriggerBehavior>
                     </Interactivity:Interaction.Behaviors>
 
-                    <ScrollViewer Grid.Row="0" AutomationProperties.AccessibilityView="Raw"
+                    <ScrollViewer Grid.Row="0"
+                                  AutomationProperties.AccessibilityView="Raw"
                                   VerticalScrollBarVisibility="Auto">
 
                         <ItemsControl x:Name="PrimaryButtonContainer"
@@ -298,20 +338,32 @@
                             <!--  designtime  -->
                             <local:HamburgerButtonInfo>
                                 <StackPanel Orientation="Horizontal">
-                                    <SymbolIcon Width="48" Height="48" Symbol="Home" />
-                                    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Lorem ipsum" />
+                                    <SymbolIcon Width="48"
+                                                Height="48"
+                                                Symbol="Home" />
+                                    <TextBlock Margin="12,0,0,0"
+                                               VerticalAlignment="Center"
+                                               Text="Lorem ipsum" />
                                 </StackPanel>
                             </local:HamburgerButtonInfo>
                             <local:HamburgerButtonInfo>
                                 <StackPanel Orientation="Horizontal">
-                                    <SymbolIcon Width="48" Height="48" Symbol="Admin" />
-                                    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Lorem ipsum" />
+                                    <SymbolIcon Width="48"
+                                                Height="48"
+                                                Symbol="Admin" />
+                                    <TextBlock Margin="12,0,0,0"
+                                               VerticalAlignment="Center"
+                                               Text="Lorem ipsum" />
                                 </StackPanel>
                             </local:HamburgerButtonInfo>
                             <local:HamburgerButtonInfo>
                                 <StackPanel Orientation="Horizontal">
-                                    <SymbolIcon Width="48" Height="48" Symbol="Clock" />
-                                    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Lorem ipsum" />
+                                    <SymbolIcon Width="48"
+                                                Height="48"
+                                                Symbol="Clock" />
+                                    <TextBlock Margin="12,0,0,0"
+                                               VerticalAlignment="Center"
+                                               Text="Lorem ipsum" />
                                 </StackPanel>
                             </local:HamburgerButtonInfo>
 
@@ -319,28 +371,43 @@
 
                     </ScrollViewer>
 
-                    <ItemsControl x:Name="SecondaryButtonContainer" Grid.Row="1"
-                                  ItemTemplate="{StaticResource NavButtonTemplate}"
+                    <ItemsControl x:Name="SecondaryButtonContainer"
+                                  Grid.Row="1"
                                   ItemsSource="{Binding SecondaryButtons, ElementName=ThisPage}">
 
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel BorderBrush="{Binding SecondarySeparator, ElementName=ThisPage, FallbackValue=White}"
-                                            BorderThickness="0,1,0,0" Loaded="SecondaryButtonStackPanel_Loaded" />
+                                            BorderThickness="0,1,0,0"
+                                            Loaded="SecondaryButtonStackPanel_Loaded" />
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
+
+                        <ItemsControl.ItemTemplateSelector>
+                            <local:HamburgerButtonTemplateSelected CommandTemplate="{StaticResource NavButtonTemplate}"
+                                                                   LiteralTemplate="{StaticResource NavButtonLiteralTemplate}"
+                                                                   ToggleTemplate="{StaticResource NavButtonTemplate}" />
+                        </ItemsControl.ItemTemplateSelector>
 
                         <!--  designtime  -->
                         <local:HamburgerButtonInfo>
                             <StackPanel Orientation="Horizontal">
-                                <SymbolIcon Width="48" Height="48" Symbol="Contact" />
-                                <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Lorem ipsum" />
+                                <SymbolIcon Width="48"
+                                            Height="48"
+                                            Symbol="Contact" />
+                                <TextBlock Margin="12,0,0,0"
+                                           VerticalAlignment="Center"
+                                           Text="Lorem ipsum" />
                             </StackPanel>
                         </local:HamburgerButtonInfo>
                         <local:HamburgerButtonInfo>
                             <StackPanel Orientation="Horizontal">
-                                <SymbolIcon Width="48" Height="48" Symbol="Setting" />
-                                <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Lorem ipsum" />
+                                <SymbolIcon Width="48"
+                                            Height="48"
+                                            Symbol="Setting" />
+                                <TextBlock Margin="12,0,0,0"
+                                           VerticalAlignment="Center"
+                                           Text="Lorem ipsum" />
                             </StackPanel>
                         </local:HamburgerButtonInfo>
 
@@ -352,15 +419,20 @@
 
         </SplitView>
 
-        <Grid x:Name="HamburgerButtonGrid" Grid.Row="0"
+        <Grid x:Name="HamburgerButtonGrid"
+              Grid.Row="0"
               Width="{x:Bind HamburgerButtonGridWidth, Mode=OneWay}"
-              HorizontalAlignment="Left" VerticalAlignment="Top"
+              HorizontalAlignment="Left"
+              VerticalAlignment="Top"
               Background="{x:Bind HamburgerBackground, FallbackValue=DarkRed, Mode=OneWay}"
               Visibility="{x:Bind HamburgerButtonVisibility, Mode=OneWay}">
-            <Button x:Name="HamburgerButton" AutomationProperties.Name="Hamburger Menu Button"
-                    Background="Transparent" Command="{x:Bind HamburgerCommand}"
+            <Button x:Name="HamburgerButton"
+                    AutomationProperties.Name="Hamburger Menu Button"
+                    Background="Transparent"
+                    Command="{x:Bind HamburgerCommand}"
                     Foreground="{x:Bind HamburgerForeground, FallbackValue=White, Mode=OneWay}"
-                    RenderTransformOrigin="0.5,0.5" Style="{StaticResource HamburgerButtonStyle}">
+                    RenderTransformOrigin="0.5,0.5"
+                    Style="{StaticResource HamburgerButtonStyle}">
                 <Button.RenderTransform>
                     <CompositeTransform />
                 </Button.RenderTransform>

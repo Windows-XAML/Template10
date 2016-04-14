@@ -44,6 +44,8 @@ namespace Template10.Controls
 
             if (color == null)
                 color = AccentColor;
+            if (color == default(Color))
+                return;
 
             // since every brush will be based on one color,
             // we will do so with theme in mind.

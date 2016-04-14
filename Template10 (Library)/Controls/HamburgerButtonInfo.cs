@@ -15,7 +15,7 @@ namespace Template10.Controls
     [ContentProperty(Name = nameof(Content))]
     public class HamburgerButtonInfo : DependencyBindableBase
     {
-        public enum ButtonTypes { Toggle, Command }
+        public enum ButtonTypes { Toggle, Command, Literal }
 
         public ButtonTypes ButtonType
         {

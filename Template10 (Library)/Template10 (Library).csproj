@@ -159,6 +159,7 @@
     <Compile Include="Common\ChangedEventArgs.cs" />
     <Compile Include="Common\WindowWrapper.cs" />
     <Compile Include="Common\ObservableItemCollection.cs" />
+    <Compile Include="Controls\HamburgerButtonTemplateSelected.cs" />
     <Compile Include="Controls\HamburgerMenu.PublicMethods.xaml.cs">
       <DependentUpon>HamburgerMenu.xaml</DependentUpon>
     </Compile>
