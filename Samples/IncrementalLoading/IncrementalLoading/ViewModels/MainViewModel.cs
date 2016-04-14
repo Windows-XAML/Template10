@@ -1,13 +1,12 @@
-﻿using Messaging.Extensions;
-using Messaging.Models;
-using Messaging.Services.GithubService;
-using Messaging.Shared;
+﻿using Template10.Samples.IncrementalLoadingSample.Extensions;
+using Template10.Samples.IncrementalLoadingSample.Models;
+using Template10.Samples.IncrementalLoadingSample.Services.GithubService;
+using Template10.Samples.IncrementalLoadingSample.Shared;
 using System;
-using System.Collections.ObjectModel;
 using Template10.Mvvm;
 using Windows.System;
 
-namespace Messaging.ViewModels
+namespace Template10.Samples.IncrementalLoadingSample.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {

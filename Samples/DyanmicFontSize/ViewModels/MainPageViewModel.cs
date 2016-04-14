@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Template10.Mvvm;
 using Windows.UI.Xaml.Navigation;
 
-namespace DyanmicFontSize.ViewModels
+namespace Template10.Samples.DynamicFontSizeSample.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {

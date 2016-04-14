@@ -1,8 +1,8 @@
 ﻿<common:BootStrapper 
-    x:Class="Messaging.App" 
+    x:Class="Template10.Samples.BusyIndicatorControlSample.App" 
     xmlns:common="using:Template10.Common" 
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-    xmlns:local="using:Messaging">
+    xmlns:local="using:Template10.Samples.BusyIndicatorControlSample">
 
 </common:BootStrapper>

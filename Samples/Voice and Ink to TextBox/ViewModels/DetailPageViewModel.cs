@@ -1,15 +1,12 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Template10.Mvvm;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Navigation;
 
-namespace MPC.ViewModels
+namespace Template10.Samples.VoiceAndInkSample.ViewModels
 {
-    public class DetailPageViewModel : MPC.Mvvm.ViewModelBase
+    public class DetailPageViewModel : Template10.Samples.VoiceAndInkSample.Mvvm.ViewModelBase
     {
         public DetailPageViewModel()
         {

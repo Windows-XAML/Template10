@@ -1,8 +1,7 @@
-﻿using Windows.UI.ViewManagement;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Messaging.Views
+namespace Template10.Samples.BehaviorsSample.Views
 {
     public sealed partial class MainPage : Page
     {

@@ -1,4 +1,4 @@
-<Page x:Class="PageHeaderSample.Views.MainPage"
+<Page x:Class="Template10.Samples.PageHeaderSample.Views.MainPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:Behaviors="using:Template10.Behaviors"
@@ -6,9 +6,9 @@
       xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
       xmlns:controls="using:Template10.Controls"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="using:PageHeaderSample.Views"
+      xmlns:local="using:Template10.Samples.PageHeaderSample.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:vm="using:PageHeaderSample.ViewModels" 
+      xmlns:vm="using:Template10.Samples.PageHeaderSample.ViewModels" 
       mc:Ignorable="d"
       d:DataContext="{d:DesignInstance Type=vm:MainPageViewModel, IsDesignTimeCreatable=True}">
 
@@ -44,8 +44,7 @@
         <!--  page header  -->
 
         <controls:PageHeader BackButtonVisibility="Collapsed" Content="Main Page" Frame="{x:Bind Frame}"
-                             Visibility="{x:Bind ViewModel.PageHeaderVisibility, Mode=OneWay}"
-                             >
+                             Visibility="{x:Bind ViewModel.PageHeaderVisibility, Mode=OneWay}">
             <Interactivity:Interaction.Behaviors>
                 <Behaviors:EllipsisBehavior Visibility="Auto" />
             </Interactivity:Interaction.Behaviors>

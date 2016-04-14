@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.Storage;
 
-namespace FileActivation
+namespace Template10.Samples.FileActivationSample
 {
     /// Documentation on APIs used in this page:
     /// https://github.com/Windows-XAML/Template10/wiki

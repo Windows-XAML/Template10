@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Template10.Mvvm;
-using Windows.Media.SpeechRecognition;
-using Windows.Media.SpeechSynthesis;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace Sample.ViewModels
+namespace Template10.Samples.CortanaSample.ViewModels
 {
     public class MainPageViewModel : Template10.Mvvm.ViewModelBase
     {
@@ -63,7 +58,7 @@ namespace Sample.ViewModels
         {
             try
             {
-                Value = await _SpeechService.ListenAsync("Cortana Sample", "Try saying, 'The quick brown fox jumps over the lazy dog.'");
+                Value = await _SpeechService.ListenAsync("Template10.Samples.CortanaSample Template10.Samples.CortanaSample", "Try saying, 'The quick brown fox jumps over the lazy dog.'");
             }
             catch (Exception ex)
             {

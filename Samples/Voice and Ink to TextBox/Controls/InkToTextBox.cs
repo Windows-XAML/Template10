@@ -1,9 +1,8 @@
-﻿using MPC.Common;
+﻿using Template10.Samples.VoiceAndInkSample.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI;
@@ -13,7 +12,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 
-namespace MPC.Controls
+namespace Template10.Samples.VoiceAndInkSample.Controls
 {
     [TemplatePart(Name = PART_ROOT_NAME, Type = typeof(Grid))]
     public class InkToTextBox : Control

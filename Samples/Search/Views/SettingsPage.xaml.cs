@@ -2,7 +2,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Sample.Views
+namespace Template10.Samples.SearchSample.Views
 {
     public sealed partial class SettingsPage : Page
     {

@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace Messaging.Models
+namespace Template10.Samples.IncrementalLoadingSample.Models
 {
     [JsonObject]
     public class Repository

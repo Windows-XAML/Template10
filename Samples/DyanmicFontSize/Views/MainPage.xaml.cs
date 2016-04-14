@@ -1,7 +1,6 @@
-using System;
 using Windows.UI.Xaml.Controls;
 
-namespace DyanmicFontSize.Views
+namespace Template10.Samples.DynamicFontSizeSample.Views
 {
     public sealed partial class MainPage : Page
     {

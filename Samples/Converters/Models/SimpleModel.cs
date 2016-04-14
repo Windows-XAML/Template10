@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Messaging.Models
+namespace Template10.Samples.ConvertersSample.Models
 {
     public class SimpleModel
     {

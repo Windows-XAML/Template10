@@ -1,11 +1,9 @@
-﻿using Messaging.Models;
-using Messaging.Services;
-using Messaging.Shared;
+﻿using Template10.Samples.IncrementalLoadingSample.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Messaging.Services.GithubService
+namespace Template10.Samples.IncrementalLoadingSample.Services.GithubService
 {
     public class GithubService4DesignTime : IGithubService
     {

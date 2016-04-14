@@ -1,7 +1,7 @@
-﻿using Template10.Validation;
-using System;
+﻿using System;
+using Template10.Validation;
 
-namespace Messaging.Models
+namespace Template10.Samples.ValidationSample.Models
 {
     public class User : ModelBase
     {

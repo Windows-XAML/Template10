@@ -1,10 +1,8 @@
-﻿using System;
-using Template10.Controls;
-using Template10.Mvvm;
+﻿using Template10.Mvvm;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace BottomAppBar.Views
+namespace Template10.Samples.BottomAppBarSample.Views
 {
     public sealed partial class MainPage : Page
     {

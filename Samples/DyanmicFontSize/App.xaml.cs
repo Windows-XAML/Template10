@@ -1,8 +1,7 @@
-using System;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 
-namespace DyanmicFontSize
+namespace Template10.Samples.DynamicFontSizeSample
 {
     /// Documentation on APIs used in this page:
     /// https://github.com/Windows-XAML/Template10/wiki

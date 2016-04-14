@@ -45,13 +45,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Settings", "Samples\Setting
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BottomAppBar", "Samples\BottomAppBar\BottomAppBar.csproj", "{B49DF7B7-FF1F-4D2A-A40B-0DA15C237EA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BehaviorSample", "Samples\BehaviorSample\BehaviorSample.csproj", "{9CF86270-F587-4828-BC6B-14BEAA4FB56E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Behaviors", "Samples\BehaviorSample\Behaviors.csproj", "{9CF86270-F587-4828-BC6B-14BEAA4FB56E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusyIndicatorControl", "Samples\BusyIndicatorControl\BusyIndicatorControl.csproj", "{4ABC9BD1-DEFE-4092-9DCC-ADC0CB567338}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Validation", "Samples\Validation\Validation.csproj", "{AAE53064-C591-43FB-A8BE-9FED2104B98F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PageHeaderSample", "Samples\PageHeaderSample\PageHeaderSample.csproj", "{BF45794D-044C-416E-B4C2-116F3B5F114C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PageHeader", "Samples\PageHeaderSample\PageHeader.csproj", "{BF45794D-044C-416E-B4C2-116F3B5F114C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Snippets", "Snippets", "{82C5A128-EF55-4352-8064-BB068F8FD4DA}"
 	ProjectSection(SolutionItems) = preProject
@@ -110,7 +110,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Items", "Templates (Items)\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JumpList", "Samples\JumpList\JumpList.csproj", "{A717344F-D486-4855-B73D-D2A3DBA33554}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DyanmicFontSize", "Samples\DyanmicFontSize\DyanmicFontSize.csproj", "{14F8D8E6-194A-4A95-A6EA-0D74A9CED8D2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicFontSize", "Samples\DyanmicFontSize\DynamicFontSize.csproj", "{14F8D8E6-194A-4A95-A6EA-0D74A9CED8D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

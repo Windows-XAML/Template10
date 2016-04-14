@@ -1,15 +1,12 @@
-﻿using Messaging.Services.TileService;
-using System;
+﻿using Template10.Samples.TilesSample.Services.TileService;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Template10.Mvvm;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
 
-namespace Messaging.ViewModels
+namespace Template10.Samples.TilesSample.ViewModels
 {
     public class DetailPageViewModel : Template10.Mvvm.ViewModelBase
     {

@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Template10.Utils;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Documents;
 
-namespace DyanmicFontSize.AttachedProperties
+namespace Template10.Samples.DynamicFontSizeSample.AttachedProperties
 {
     public class RichTextBlockEx : DependencyObject
     {

@@ -1,15 +1,12 @@
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
 
-namespace PageHeaderSample.ViewModels
+namespace Template10.Samples.PageHeaderSample.ViewModels
 {
-	public class MainPageViewModel : Mvvm.ViewModelBase
+    public class MainPageViewModel : Mvvm.ViewModelBase
 	{
 		public MainPageViewModel()
 		{

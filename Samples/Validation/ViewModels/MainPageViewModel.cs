@@ -5,10 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Template10.Mvvm;
 using Template10.Utils;
-using Windows.UI.Popups;
 using Windows.UI.Xaml.Navigation;
 
-namespace Messaging.ViewModels
+namespace Template10.Samples.ValidationSample.ViewModels
 {
     class MainPageViewModel : ViewModelBase
     {

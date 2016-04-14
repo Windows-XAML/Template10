@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Template10.Mvvm;
 using Windows.UI.Xaml.Navigation;
 
-namespace Messaging.ViewModels
+namespace Template10.Samples.MvvmLightSample.ViewModels
 {
     public class MainPageViewModel : Mvvm.ViewModelBase
     {

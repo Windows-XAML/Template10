@@ -1,11 +1,11 @@
 using System;
 using Windows.UI.Xaml;
 using System.Threading.Tasks;
-using MPC.Services.SettingsServices;
+using Template10.Samples.VoiceAndInkSample.Services.SettingsServices;
 using Windows.ApplicationModel.Activation;
 using Template10.Services.NavigationService;
 
-namespace MPC
+namespace Template10.Samples.VoiceAndInkSample
 {
     /// Documentation on APIs used in this page:
     /// https://github.com/Windows-XAML/Template10/wiki

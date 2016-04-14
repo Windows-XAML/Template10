@@ -1,7 +1,7 @@
 using System;
 using Windows.UI.Xaml;
 
-namespace MPC.Services.SettingsServices
+namespace Template10.Samples.VoiceAndInkSample.Services.SettingsServices
 {
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SettingsService
     public partial class SettingsService : ISettingsService

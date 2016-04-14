@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Messaging.Shared
+namespace Template10.Samples.IncrementalLoadingSample.Shared
 {
     public abstract class IncrementalItemSourceBase<TItem>
     {

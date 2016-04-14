@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Linq;
 using Template10.Common;
-using Template10.Controls;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Sample.Views
+namespace Template10.Samples.SearchSample.Views
 {
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SplitView
     public sealed partial class Shell : Page
@@ -61,7 +59,7 @@ namespace Sample.Views
 
         #endregion
 
-        #region Search
+        #region Template10.Samples.SearchSample
 
         private void SearchTapped(object sender, RoutedEventArgs e)
         {

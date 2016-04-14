@@ -1,11 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
 
-namespace MPC.Services.SettingsServices
+namespace Template10.Samples.VoiceAndInkSample.Services.SettingsServices
 {
     public partial class SettingsService
     {

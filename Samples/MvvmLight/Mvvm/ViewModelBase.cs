@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Navigation;
 
-namespace Messaging.Mvvm
+namespace Template10.Samples.MvvmLightSample.Mvvm
 {
     public abstract class ViewModelBase :
          GalaSoft.MvvmLight.ViewModelBase, Template10.Services.NavigationService.INavigable

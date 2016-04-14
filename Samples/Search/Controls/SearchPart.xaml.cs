@@ -5,7 +5,7 @@ using Template10.Common;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Sample.Controls
+namespace Template10.Samples.SearchSample.Controls
 {
     public sealed partial class SearchPart : UserControl
     {
@@ -41,7 +41,7 @@ namespace Sample.Controls
             Results.Clear();
             foreach (var item in Enumerable.Range(1, 10))
             {
-                Results.Add(string.Format("Search Result {0}", item));
+                Results.Add(string.Format("Template10.Samples.SearchSample Result {0}", item));
             }
         }
     }

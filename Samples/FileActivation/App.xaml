@@ -1,7 +1,5 @@
-<common:BootStrapper x:Class="FileActivation.App"
+<common:BootStrapper x:Class="Template10.Samples.FileActivationSample.App"
                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                     xmlns:common="using:Template10.Common" xmlns:local="using:FileActivation"
-                     RequestedTheme="Light">
-
-</common:BootStrapper>
+                     xmlns:common="using:Template10.Common" xmlns:local="using:Template10.Samples.FileActivationSample"
+                     RequestedTheme="Light" />

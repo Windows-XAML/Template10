@@ -1,4 +1,4 @@
-﻿<common:BootStrapper x:Class="Samples.MasterDetail.App"
+﻿<common:BootStrapper x:Class="Template10.Samples.MasterDetailSample.App"
                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                      xmlns:converters="using:Template10.Converters"
@@ -7,6 +7,7 @@
                      xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
                      xmlns:core="using:Microsoft.Xaml.Interactions.Core"
                      xmlns:behaviors="using:Template10.Behaviors"
+                     xmlns:c="using:Template10.Converters"
                      xmlns:triggers="using:WindowsStateTriggers">
 
     <Application.Resources>
@@ -22,7 +23,7 @@
 
         <converters:StringFormatConverter x:Key="StringFormatConverter" />
 
-        <c:ValueWhenConverter xmlns:c="using:Template10.Converters" x:Name="TrueWhenVisibleConverter">
+        <c:ValueWhenConverter x:Name="TrueWhenVisibleConverter">
             <c:ValueWhenConverter.When>
                 <Visibility>Visible</Visibility>
             </c:ValueWhenConverter.When>
@@ -34,7 +35,7 @@
             </c:ValueWhenConverter.Otherwise>
         </c:ValueWhenConverter>
 
-        <c:ValueWhenConverter xmlns:c="using:Template10.Converters" x:Name="VisibleWhenFalseConverter">
+        <c:ValueWhenConverter x:Name="VisibleWhenFalseConverter">
             <c:ValueWhenConverter.When>
                 <x:Boolean>False</x:Boolean>
             </c:ValueWhenConverter.When>
@@ -46,7 +47,7 @@
             </c:ValueWhenConverter.Otherwise>
         </c:ValueWhenConverter>
 
-        <c:ValueWhenConverter xmlns:c="using:Template10.Converters" x:Name="CollapsedWhenFalseConverter">
+        <c:ValueWhenConverter x:Name="CollapsedWhenFalseConverter">
             <c:ValueWhenConverter.When>
                 <x:Boolean>False</x:Boolean>
             </c:ValueWhenConverter.When>

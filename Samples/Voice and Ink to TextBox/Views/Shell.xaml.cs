@@ -5,7 +5,7 @@ using Template10.Services.NavigationService;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 
-namespace MPC.Views
+namespace Template10.Samples.VoiceAndInkSample.Views
 {
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SplitView
     public sealed partial class Shell : Page, INotifyPropertyChanged

@@ -3,7 +3,7 @@
   <Identity Name="2063986e-5301-499a-a986-a7a44c807e80" Publisher="CN=jerry" Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="2063986e-5301-499a-a986-a7a44c807e80" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>BottomAppBar</DisplayName>
+    <DisplayName>Template10.Samples.BottomAppBarSample</DisplayName>
     <PublisherDisplayName>jerry</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -14,8 +14,8 @@
     <Resource Language="x-generate" />
   </Resources>
   <Applications>
-    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="BottomAppBar.App">
-      <uap:VisualElements DisplayName="BottomAppBar Sample" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="Minimal" BackgroundColor="transparent">
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Template10.Samples.BottomAppBarSample.App">
+      <uap:VisualElements DisplayName="T10 BottomAppBar Sample" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="Minimal" BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png">
         </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />

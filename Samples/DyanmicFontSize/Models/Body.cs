@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Xaml.Documents;
+﻿using Windows.UI.Xaml.Documents;
 
-namespace DyanmicFontSize.Models
+namespace Template10.Samples.DynamicFontSizeSample.Models
 {
     public class Body : IBlock
     {

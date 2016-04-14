@@ -1,6 +1,6 @@
-﻿# Cortana (and Speech)
+﻿# Template10.Samples.CortanaSample (and Speech)
 
-This project demonstrates how to use Cortana's speech functionality and Template10's audio utilities in your application.
+This project demonstrates how to use Template10.Samples.CortanaSample's speech functionality and Template10's audio utilities in your application.
 
 ## Speech Service
 
@@ -40,9 +40,9 @@ This example creates a SpeechSynthesizer instance with a female US voice and con
         media.SetSource(stream, stream.ContentType);
     }
 
-## Cortana XML
+## Template10.Samples.CortanaSample XML
 
-This project also includes a sample XML file illustrating the natural language voice capabilities with Cortana.
+This project also includes a sample XML file illustrating the natural language voice capabilities with Template10.Samples.CortanaSample.
 
     <VoiceCommands xmlns="http://schemas.microsoft.com/voicecommands/1.2">
       <CommandSet xml:lang="en-us" Name="FreeText_en-us">

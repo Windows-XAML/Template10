@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BottomAppBar.Models
+﻿namespace Template10.Samples.BottomAppBarSample.Models
 {
     public class DataItem
     {

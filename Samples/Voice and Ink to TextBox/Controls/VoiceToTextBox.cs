@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Template10.Utils;
-using Windows.Foundation.Metadata;
 using Windows.Media.SpeechRecognition;
-using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace MPC.Controls
+namespace Template10.Samples.VoiceAndInkSample.Controls
 {
     public class VoiceToTextBox : TextBox
     {

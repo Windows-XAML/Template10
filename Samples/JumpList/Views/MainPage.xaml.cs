@@ -1,7 +1,6 @@
-using System;
 using Windows.UI.Xaml.Controls;
 
-namespace JumpList.Views
+namespace Template10.Samples.JumpListSample.Views
 {
     public sealed partial class MainPage : Page
     {

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 
-namespace Messaging
+namespace Template10.Samples.MessagingSample
 {
     /// Documentation on APIs used in this page:
     /// https://github.com/Windows-XAML/Template10/wiki
@@ -20,7 +20,7 @@ namespace Messaging
 
         public override Task OnInitializeAsync(IActivatedEventArgs args)
         {
-            var evt = EventAggregator.GetEvent<Messaging.Messages.UpdateDateTimeMessage>();
+            var evt = EventAggregator.GetEvent<Template10.Samples.MessagingSample.Messages.UpdateDateTimeMessage>();
             var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
             timer.Tick += (s, e) => evt.Publish(DateTime.Now);
             timer.Start();

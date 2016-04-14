@@ -1,11 +1,5 @@
-<common:BootStrapper x:Class="JumpList.App"
+<common:BootStrapper x:Class="Template10.Samples.JumpListSample.App"
                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                     xmlns:common="using:Template10.Common" xmlns:local="using:JumpList"
-                     RequestedTheme="Light">
-
-    <Application.Resources>
-        <ResourceDictionary Source="Styles\Custom.xaml" />
-    </Application.Resources>
-
-</common:BootStrapper>
+                     xmlns:common="using:Template10.Common" xmlns:local="using:Template10.Samples.JumpListSample"
+                     RequestedTheme="Light" />

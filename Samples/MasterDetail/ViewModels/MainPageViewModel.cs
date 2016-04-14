@@ -3,11 +3,11 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Navigation;
-using Samples.MasterDetail.Views;
+using Template10.Samples.MasterDetailSample.Views;
 using Template10.Common;
 using Template10.Mvvm;
 
-namespace Samples.MasterDetail.ViewModels
+namespace Template10.Samples.MasterDetailSample.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {

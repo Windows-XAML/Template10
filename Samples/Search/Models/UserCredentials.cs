@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Template10.Mvvm;
+﻿using Template10.Mvvm;
 
-namespace Sample.Models
+namespace Template10.Samples.SearchSample.Models
 {
     public class UserCredentials : BindableBase
     {

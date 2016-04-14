@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Navigation;
 
-namespace Messaging.ViewModels
+namespace Template10.Samples.MvvmLightSample.ViewModels
 {
     public class DetailPageViewModel : Mvvm.ViewModelBase
     {

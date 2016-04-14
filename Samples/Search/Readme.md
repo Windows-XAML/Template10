@@ -1,10 +1,10 @@
-﻿#Search (and Login)
+﻿#Template10.Samples.SearchSample (and Login)
 
 This project demonstrates how to have an overlay while using the HamburgerMenu control. This is accomplished by handling the HamburgerButtonInfo.Tapped event and showing the correct UI.
 
 In this sample, the correct UI is not the result of navigating to another page, but overlaying the UI over the HamburgerButton. Each of the different views is controlled by two (2) Visual States in ModalDialog Control.
 
-##Search example:
+##Template10.Samples.SearchSample example:
 
 The search example takes advantage of the fact that when HamburgerButtonInfo.ButtonType is Command, underlying logic allows for HamburgerButtonInfo.Tapped event to be Raised. As a result, handling the HamburgerButtonInfo.Tapped event can be declared in XAML like this (found in Shell.xaml):
 
@@ -12,7 +12,7 @@ The search example takes advantage of the fact that when HamburgerButtonInfo.But
 <Controls:HamburgerButtonInfo ButtonType="Command" Tapped="SearchTapped">
     <StackPanel Orientation="Horizontal">
         <SymbolIcon Width="48" Height="48" Symbol="Find" />
-        <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Search" />
+        <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Template10.Samples.SearchSample" />
     </StackPanel>
 </Controls:HamburgerButtonInfo>
 ````
@@ -55,6 +55,6 @@ private void LoginHide(object sender, System.EventArgs e)
 }
 ````
 
-That second handler (LoginHide) is a custom event we put on our user control as a way to communicate back to our Shell. This event is effectively asking to return to the Normal visual state. You can handle this any way you want in your app, including Sample. This event is the easy approach.
+That second handler (LoginHide) is a custom event we put on our user control as a way to communicate back to our Shell. This event is effectively asking to return to the Normal visual state. You can handle this any way you want in your app, including Template10.Samples.SearchSample. This event is the easy approach.
 
 Good luck!

@@ -1,6 +1,6 @@
 ﻿using Template10.Mvvm;
 
-namespace Messaging.ViewModels
+namespace Template10.Samples.SettingsSample.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {

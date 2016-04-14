@@ -1,12 +1,9 @@
-﻿using Messaging.Models;
+﻿using Template10.Samples.ConvertersSample.Models;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Messaging.ViewModels
+namespace Template10.Samples.ConvertersSample.ViewModels
 {
     class MainPageViewModel : Template10.Mvvm.ViewModelBase
     {

@@ -1,7 +1,7 @@
 using System;
 using Windows.UI.Xaml;
 
-namespace MPC.Services.SettingsServices
+namespace Template10.Samples.VoiceAndInkSample.Services.SettingsServices
 {
     public interface ISettingsService
     {

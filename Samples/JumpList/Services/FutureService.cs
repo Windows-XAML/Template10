@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
 
-namespace JumpList.Services
+namespace Template10.Samples.JumpListSample.Services
 {
     class FutureService
     {

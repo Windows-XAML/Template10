@@ -1,14 +1,14 @@
-﻿<Page x:Class="Sample.Views.Shell"
+﻿<Page x:Class="Template10.Samples.SearchSample.Views.Shell"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:Controls="using:Template10.Controls"
       xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
       xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="using:Sample.Views"
+      xmlns:local="using:Template10.Samples.SearchSample.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:sample="using:Sample.Controls"
-      xmlns:views="using:Sample.Views" x:Name="ThisPage"
+      xmlns:sample="using:Template10.Samples.SearchSample.Controls"
+      xmlns:views="using:Template10.Samples.SearchSample.Views" x:Name="ThisPage"
       mc:Ignorable="d">
 
     <Grid x:Name="RootGrid">
@@ -25,7 +25,7 @@
                 <Controls:HamburgerButtonInfo ButtonType="Command" Tapped="SearchTapped">
                     <StackPanel Orientation="Horizontal">
                         <SymbolIcon Width="48" Height="48" Symbol="Find" />
-                        <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Search" />
+                        <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Text="Template10.Samples.SearchSample" />
                     </StackPanel>
                 </Controls:HamburgerButtonInfo>
                 <!-- mainpage button -->

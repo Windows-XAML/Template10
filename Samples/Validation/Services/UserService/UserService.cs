@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Messaging.Models;
+using Template10.Samples.ValidationSample.Models;
 using Template10.Utils;
 using Template10.Validation;
 
-namespace Messaging.Services.UserService
+namespace Template10.Samples.ValidationSample.Services.UserService
 {
     public class UserService
     {

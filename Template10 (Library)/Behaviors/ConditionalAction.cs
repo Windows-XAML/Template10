@@ -1,8 +1,6 @@
-﻿using Microsoft.Xaml.Interactions.Core;
-using Microsoft.Xaml.Interactivity;
+﻿using Microsoft.Xaml.Interactivity;
 using System;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
 
 namespace Template10.Behaviors

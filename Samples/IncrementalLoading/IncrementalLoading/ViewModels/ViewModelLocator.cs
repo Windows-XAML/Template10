@@ -1,8 +1,8 @@
-﻿using Messaging.Services.GithubService;
+﻿using Template10.Samples.IncrementalLoadingSample.Services.GithubService;
 using System;
 using Windows.ApplicationModel;
 
-namespace Messaging.ViewModels
+namespace Template10.Samples.IncrementalLoadingSample.ViewModels
 {
     public class ViewModelLocator
     {

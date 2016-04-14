@@ -1,5 +1,5 @@
-﻿<common:BootStrapper x:Class="Sample.App"
+﻿<common:BootStrapper x:Class="Template10.Samples.CortanaSample.App"
                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                      xmlns:common="using:Template10.Common"
-                     xmlns:controls="using:Template10.Controls" xmlns:local="using:Sample" />
+                     xmlns:controls="using:Template10.Controls" xmlns:local="using:Template10.Samples.CortanaSample" />

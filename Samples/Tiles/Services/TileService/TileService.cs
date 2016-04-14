@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Messaging.ViewModels;
+using Template10.Samples.TilesSample.ViewModels;
 using Windows.UI.StartScreen;
 using Windows.UI.Notifications;
 using NotificationsExtensions.Tiles;
 using NotificationsExtensions.Toasts;
-using Windows.ApplicationModel.DataTransfer;
 
-namespace Messaging.Services.TileService
+namespace Template10.Samples.TilesSample.Services.TileService
 {
     class TileService
     {

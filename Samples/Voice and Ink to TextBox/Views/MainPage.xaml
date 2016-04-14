@@ -1,15 +1,15 @@
-<Page x:Class="MPC.Views.MainPage"
+<Page x:Class="Template10.Samples.VoiceAndInkSample.Views.MainPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:Behaviors="using:Template10.Behaviors"
       xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
       xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
       xmlns:controls="using:Template10.Controls"
-      xmlns:c="using:MPC.Controls"
+      xmlns:c="using:Template10.Samples.VoiceAndInkSample.Controls"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="using:MPC.Views"
+      xmlns:local="using:Template10.Samples.VoiceAndInkSample.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:vm="using:MPC.ViewModels" mc:Ignorable="d">
+      xmlns:vm="using:Template10.Samples.VoiceAndInkSample.ViewModels" mc:Ignorable="d">
 
     <Page.DataContext>
         <vm:MainPageViewModel />
@@ -72,11 +72,15 @@
         <Grid Grid.Row="1" Padding="12,8,0,0">
 
             <StackPanel>
-                <TextBox Margin="10,50,10,10" Text="try inking above this" Width="400" Header="Try to ink abve each TexBox displayd on this page and check out the effect!"/>
+                <TextBox Margin="10,50,10,10" Text="try inking above this" Width="400">
+                    <TextBox.Header>
+                        Try to ink above each TexBox displayed on this page and check out the effect!
+                    </TextBox.Header>
+                </TextBox>
 
                 <c:VoiceToTextBox Margin="10,50,10,10" Width="400" Text="hello from xaml">
                     <c:VoiceToTextBox.Header>
-                        Use keyboard or click on the microphone button and speach to add text to the texbox below
+                        Use keyboard or click on the microphone button and use speech to add text to the texbox below
                     </c:VoiceToTextBox.Header>
                 </c:VoiceToTextBox>
                 

@@ -1,9 +1,8 @@
-﻿using System;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 
-namespace BottomAppBar
+namespace Template10.Samples.BottomAppBarSample
 {
     sealed partial class App : Template10.Common.BootStrapper
     {

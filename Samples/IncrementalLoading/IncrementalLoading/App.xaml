@@ -1,9 +1,9 @@
-﻿<common:BootStrapper x:Class="Messaging.App"
+﻿<common:BootStrapper x:Class="Template10.Samples.IncrementalLoadingSample.App"
                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                      xmlns:common="using:Template10.Common"
-                     xmlns:local="using:IncrementalLoading"
-                     xmlns:vm="using:Messaging.ViewModels" RequestedTheme="Light">
+                     xmlns:local="using:Template10.Samples.IncrementalLoadingSample"
+                     xmlns:vm="using:Template10.Samples.IncrementalLoadingSample.ViewModels" RequestedTheme="Light">
 
     <Application.Resources>
         <ResourceDictionary>
