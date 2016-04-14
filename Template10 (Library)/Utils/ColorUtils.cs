@@ -7,60 +7,44 @@ namespace Template10.Utils
     {
         public static SolidColorBrush ToSolidColorBrush(this Color color) => new SolidColorBrush(color);
 
-        // this has all been moved to private bacause I am unhappy with the API 
-        // and don't want anyone using it (except the HamburgerMenu) until we fix it.
-
-        static Color nearBlack = Colors.Black.Lighten(Accents.Plus20);
-
-        static Color nearWhite = Colors.Black.Lighten(Accents.Plus80);
-
-        internal enum Accents : long
+        internal enum Add : long
         {
-            Plus90 = 90,
-            Plus80 = 80,
-            Plus70 = 70,
-            Plus60 = 60,
-            Plus50 = 50,
-            Plus40 = 40,
-            Plus30 = 30,
-            Plus20 = 20,
-            Plus10 = 10,
+            _90p = 90, _80p = 80, _70p = 70, _60p = 60, _50p = 50, _40p = 40, _30p = 30, _20p = 20, _10p = 10,
         }
 
-        internal static float Lerp(this float start, float end, float amount)
+        internal static Color Darken(this Color color, Add amount)
         {
-            float difference = end - start;
-            float adjusted = difference * amount;
-            return start + adjusted;
+            var value = ((int)amount) * -.01;
+            return ChangeColorBrightness(color, (float)value);
         }
 
-        internal static Color Darken(this Color color, Accents amount)
+        internal static Color Lighten(this Color color, Add amount)
         {
-            var value = (float)amount;
-            value = value * .01f;
-            return Lerp(color, nearBlack, value);
+            var value = ((int)amount) * .01;
+            return ChangeColorBrightness(color, (float)value);
         }
 
-        internal static Color Lighten(this Color color, Accents amount)
+        static Color ChangeColorBrightness(Color color, float correctionFactor)
         {
-            var value = (float)amount;
-            value = value * .01f;
-            return Lerp(color, nearWhite, value);
-        }
+            float red = (float)color.R;
+            float green = (float)color.G;
+            float blue = (float)color.B;
 
-        internal static Color Lerp(this Color color, Color target, float amount)
-        {
-            float sr = color.R,
-                sg = color.G,
-                sb = color.B;
-            float er = target.R,
-                eg = target.G,
-                eb = target.B;
-            byte r = (byte)sr.Lerp(er, amount),
-                 g = (byte)sg.Lerp(eg, amount),
-                 b = (byte)sb.Lerp(eb, amount);
-            return Color.FromArgb(255, r, g, b);
-        }
+            if (correctionFactor < 0)
+            {
+                correctionFactor = 1 + correctionFactor;
+                red *= correctionFactor;
+                green *= correctionFactor;
+                blue *= correctionFactor;
+            }
+            else
+            {
+                red = (255 - red) * correctionFactor + red;
+                green = (255 - green) * correctionFactor + green;
+                blue = (255 - blue) * correctionFactor + blue;
+            }
 
+            return Color.FromArgb(color.A, (byte)red, (byte)green, (byte)blue);
+        }
     }
 }

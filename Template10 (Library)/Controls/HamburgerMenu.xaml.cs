@@ -60,8 +60,8 @@ namespace Template10.Controls
                 PropertyChangedHandlers.Add(nameof(AccentColor), e => AccentColorPropertyChanged(e.OldValue as Color?, e.NewValue as Color?));
 
                 // default values;
-                PrimaryButtons = new ObservableItemCollection<HamburgerButtonInfo>();
-                SecondaryButtons = new ObservableItemCollection<HamburgerButtonInfo>();
+                PrimaryButtons = new ObservableCollection<HamburgerButtonInfo>();
+                SecondaryButtons = new ObservableCollection<HamburgerButtonInfo>();
 
                 // calling this now, let's handlers wire up before styles apply
                 InitializeComponent();
@@ -473,6 +473,28 @@ namespace Template10.Controls
             button.Button.IsHitTestVisible = true;
         }
 
+        private void NavButton_VisualStateChanged(object sender, VisualStateChangedEventArgs e)
+        {
+            var button = new ButtonInfo(e.Control);
+            switch (e.NewState.Name)
+            {
+                case "Normal":
+                case "PointerOver":
+                case "Pressed":
+                case "Disabled":
+                case "Checked":
+                case "CheckedPointerOver":
+                case "CheckedPressed":
+                case "CheckedDisabled":
+                case "Indeterminate":
+                case "IndeterminatePointerOver":
+                case "IndeterminatePressed":
+                case "IndeterminateDisabled":
+                default:
+                    break;
+            }
+        }
+
         #endregion
 
         #region  Touch gesture to OpenClose
@@ -517,28 +539,6 @@ namespace Template10.Controls
             else if (delta > threshold) IsOpen = true;
         }
 
-        #endregion
-
-        private void NavButton_VisualStateChanged(object sender, VisualStateChangedEventArgs e)
-        {
-            var button = new ButtonInfo(e.Control);
-            switch (e.NewState.Name)
-            {
-                //case "Normal": button.Button.Style = NavButtonStyle; break;
-                //case "PointerOver": button.Button.Style = NavButtonStyle; break;
-                //case "Pressed": button.Button.Style = NavButtonStyle; break;
-                //case "Disabled": button.Button.Style = NavButtonStyle; break;
-                //case "Checked": button.Button.Style = NavButtonStyle; break;
-                //case "CheckedPointerOver":
-                //case "CheckedPressed":
-                //case "CheckedDisabled":
-                //case "Indeterminate":
-                //case "IndeterminatePointerOver":
-                //case "IndeterminatePressed":
-                //case "IndeterminateDisabled":
-                default:
-                    break;
-            }
-        }
+        #endregion       
     }
 }

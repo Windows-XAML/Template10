@@ -28,131 +28,140 @@ namespace Template10.Controls
     {
         #region style properties
 
-        public SolidColorBrush NavAreaBackground
+        public Brush NavAreaBackground
         {
-            get { return GetValue(NavAreaBackgroundProperty) as SolidColorBrush; }
+            get { return GetValue(NavAreaBackgroundProperty) as Brush; }
             set { SetValue(NavAreaBackgroundProperty, value); }
         }
         public static readonly DependencyProperty NavAreaBackgroundProperty =
-              DependencyProperty.Register(nameof(NavAreaBackground), typeof(SolidColorBrush),
+              DependencyProperty.Register(nameof(NavAreaBackground), typeof(Brush),
                   typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(NavAreaBackground), e)));
 
-        public SolidColorBrush SecondarySeparator
+        public Brush SecondarySeparator
         {
-            get { return GetValue(SecondarySeparatorProperty) as SolidColorBrush; }
+            get { return GetValue(SecondarySeparatorProperty) as Brush; }
             set { SetValue(SecondarySeparatorProperty, value); }
         }
         public static readonly DependencyProperty SecondarySeparatorProperty =
-              DependencyProperty.Register(nameof(SecondarySeparator), typeof(SolidColorBrush),
+              DependencyProperty.Register(nameof(SecondarySeparator), typeof(Brush),
                   typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(SecondarySeparator), e)));
 
-        public SolidColorBrush PaneBorderBrush
+        public Brush PaneBorderBrush
         {
-            get { return GetValue(PaneBorderBrushProperty) as SolidColorBrush; }
+            get { return GetValue(PaneBorderBrushProperty) as Brush; }
             set { SetValue(PaneBorderBrushProperty, value); }
         }
         public static readonly DependencyProperty PaneBorderBrushProperty =
-              DependencyProperty.Register(nameof(PaneBorderBrush), typeof(SolidColorBrush),
+              DependencyProperty.Register(nameof(PaneBorderBrush), typeof(Brush),
                   typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(PaneBorderBrush), e)));
 
         // ham button
 
-        public SolidColorBrush HamburgerForeground
+        public Brush HamburgerForeground
         {
-            get { return GetValue(HamburgerForegroundProperty) as SolidColorBrush; }
+            get { return GetValue(HamburgerForegroundProperty) as Brush; }
             set { SetValue(HamburgerForegroundProperty, value); }
         }
         public static readonly DependencyProperty HamburgerForegroundProperty =
-              DependencyProperty.Register(nameof(HamburgerForeground), typeof(SolidColorBrush),
+              DependencyProperty.Register(nameof(HamburgerForeground), typeof(Brush),
                   typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(HamburgerForeground), e)));
 
-        public SolidColorBrush HamburgerBackground
+        public Brush HamburgerBackground
         {
-            get { return GetValue(HamburgerBackgroundProperty) as SolidColorBrush; }
+            get { return GetValue(HamburgerBackgroundProperty) as Brush; }
             set { SetValue(HamburgerBackgroundProperty, value); }
         }
         public static readonly DependencyProperty HamburgerBackgroundProperty =
-            DependencyProperty.Register(nameof(HamburgerBackground), typeof(SolidColorBrush),
+            DependencyProperty.Register(nameof(HamburgerBackground), typeof(Brush),
                 typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(HamburgerBackground), e)));
 
         // nav button | normal
 
-        public SolidColorBrush NavButtonForeground
+        public Brush NavButtonForeground
         {
-            get { return GetValue(NavButtonForegroundProperty) as SolidColorBrush; }
+            get { return GetValue(NavButtonForegroundProperty) as Brush; }
             set { SetValue(NavButtonForegroundProperty, value); }
         }
         public static readonly DependencyProperty NavButtonForegroundProperty =
-            DependencyProperty.Register(nameof(NavButtonForeground), typeof(SolidColorBrush),
+            DependencyProperty.Register(nameof(NavButtonForeground), typeof(Brush),
                 typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(NavButtonForeground), e)));
 
-        public SolidColorBrush NavButtonBackground
+        public Brush NavButtonBackground
         {
-            get { return GetValue(NavButtonBackgroundProperty) as SolidColorBrush; }
+            get { return GetValue(NavButtonBackgroundProperty) as Brush; }
             set { SetValue(NavButtonBackgroundProperty, value); }
         }
         public static readonly DependencyProperty NavButtonBackgroundProperty =
-            DependencyProperty.Register(nameof(NavButtonBackground), typeof(SolidColorBrush),
+            DependencyProperty.Register(nameof(NavButtonBackground), typeof(Brush),
                 typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(NavButtonBackground), e)));
 
         // nav button | checked
 
-        public SolidColorBrush NavButtonCheckedForeground
+        public Brush NavButtonCheckedForeground
         {
-            get { return GetValue(NavButtonCheckedForegroundProperty) as SolidColorBrush; }
+            get { return GetValue(NavButtonCheckedForegroundProperty) as Brush; }
             set { SetValue(NavButtonCheckedForegroundProperty, value); }
         }
         public static readonly DependencyProperty NavButtonCheckedForegroundProperty =
-              DependencyProperty.Register(nameof(NavButtonCheckedForeground), typeof(SolidColorBrush),
+              DependencyProperty.Register(nameof(NavButtonCheckedForeground), typeof(Brush),
                   typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(NavButtonCheckedForeground), e)));
 
-        public SolidColorBrush NavButtonCheckedBackground
+        public Brush NavButtonCheckedBackground
         {
-            get { return GetValue(NavButtonCheckedBackgroundProperty) as SolidColorBrush; }
+            get { return GetValue(NavButtonCheckedBackgroundProperty) as Brush; }
             set { SetValue(NavButtonCheckedBackgroundProperty, value); }
         }
         public static readonly DependencyProperty NavButtonCheckedBackgroundProperty =
-              DependencyProperty.Register(nameof(NavButtonCheckedBackground), typeof(SolidColorBrush),
+              DependencyProperty.Register(nameof(NavButtonCheckedBackground), typeof(Brush),
                   typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(NavButtonCheckedBackground), e)));
+
+        public Brush NavButtonCheckedIndicatorBrush
+        {
+            get { return GetValue(NavButtonCheckedIndicatorBrushProperty) as Brush; }
+            set { SetValue(NavButtonCheckedIndicatorBrushProperty, value); }
+        }
+        public static readonly DependencyProperty NavButtonCheckedIndicatorBrushProperty =
+              DependencyProperty.Register(nameof(NavButtonCheckedIndicatorBrush), typeof(Brush),
+                  typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(NavButtonCheckedIndicatorBrush), e)));
 
         // nav button | pressed
 
-        public SolidColorBrush NavButtonPressedForeground
+        public Brush NavButtonPressedForeground
         {
-            get { return GetValue(NavButtonPressedForegroundProperty) as SolidColorBrush; }
+            get { return GetValue(NavButtonPressedForegroundProperty) as Brush; }
             set { SetValue(NavButtonPressedForegroundProperty, value); }
         }
         public static readonly DependencyProperty NavButtonPressedForegroundProperty =
-              DependencyProperty.Register(nameof(NavButtonPressedForeground), typeof(SolidColorBrush),
+              DependencyProperty.Register(nameof(NavButtonPressedForeground), typeof(Brush),
                   typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(NavButtonPressedForeground), e)));
 
-        public SolidColorBrush NavButtonPressedBackground
+        public Brush NavButtonPressedBackground
         {
-            get { return GetValue(NavButtonPressedBackgroundProperty) as SolidColorBrush; }
+            get { return GetValue(NavButtonPressedBackgroundProperty) as Brush; }
             set { SetValue(NavButtonPressedBackgroundProperty, value); }
         }
         public static readonly DependencyProperty NavButtonPressedBackgroundProperty =
-              DependencyProperty.Register(nameof(NavButtonPressedBackground), typeof(SolidColorBrush),
+              DependencyProperty.Register(nameof(NavButtonPressedBackground), typeof(Brush),
                   typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(NavButtonPressedBackground), e)));
 
         // nav button | hover
 
-        public SolidColorBrush NavButtonHoverForeground
+        public Brush NavButtonHoverForeground
         {
-            get { return GetValue(NavButtonHoverForegroundProperty) as SolidColorBrush; }
+            get { return GetValue(NavButtonHoverForegroundProperty) as Brush; }
             set { SetValue(NavButtonHoverForegroundProperty, value); }
         }
         public static readonly DependencyProperty NavButtonHoverForegroundProperty =
-              DependencyProperty.Register(nameof(NavButtonHoverForeground), typeof(SolidColorBrush),
+              DependencyProperty.Register(nameof(NavButtonHoverForeground), typeof(Brush),
                   typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(NavButtonHoverForeground), e)));
 
-        public SolidColorBrush NavButtonHoverBackground
+        public Brush NavButtonHoverBackground
         {
-            get { return GetValue(NavButtonHoverBackgroundProperty) as SolidColorBrush; }
+            get { return GetValue(NavButtonHoverBackgroundProperty) as Brush; }
             set { SetValue(NavButtonHoverBackgroundProperty, value); }
         }
         public static readonly DependencyProperty NavButtonHoverBackgroundProperty =
-              DependencyProperty.Register(nameof(NavButtonHoverBackground), typeof(SolidColorBrush),
+              DependencyProperty.Register(nameof(NavButtonHoverBackground), typeof(Brush),
                   typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(NavButtonHoverBackground), e)));
 
         #endregion
@@ -441,15 +450,7 @@ namespace Template10.Controls
             foreach (var item in matches)
             {
                 DebugWrite($"Property: {item.Key}", caller: "Changed/Nested");
-                try
-                {
-                    item.Value.Invoke(e);
-                }
-                catch (Exception ex)
-                {
-                    Debugger.Break();
-                    throw;
-                }
+                item.Value.Invoke(e);
             }
         }
     }

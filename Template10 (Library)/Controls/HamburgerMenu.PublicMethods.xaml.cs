@@ -27,9 +27,7 @@ namespace Template10.Controls
     public sealed partial class HamburgerMenu : UserControl
     {
         public event EventHandler PaneOpened;
-
         public event EventHandler PaneClosed;
-
         public event EventHandler<ChangedEventArgs<HamburgerButtonInfo>> SelectedChanged;
 
         public void RefreshStyles(ApplicationTheme theme)
@@ -53,50 +51,30 @@ namespace Template10.Controls
             switch (RequestedTheme)
             {
                 case ElementTheme.Light:
-                    {
-                        NavAreaBackground = Colors.DimGray.ToSolidColorBrush();
-                        SecondarySeparator = Colors.Gainsboro.Darken(ColorUtils.Accents.Plus40).ToSolidColorBrush();
-                        PaneBorderBrush = Colors.Gainsboro.Darken(ColorUtils.Accents.Plus40).ToSolidColorBrush();
-
-                        HamburgerForeground = Colors.White.ToSolidColorBrush();
-                        HamburgerBackground = color?.ToSolidColorBrush();
-
-                        NavButtonForeground = Colors.White.ToSolidColorBrush();
-                        NavButtonBackground = Colors.Transparent.ToSolidColorBrush();
-
-                        NavButtonCheckedForeground = Colors.White.ToSolidColorBrush();
-                        NavButtonCheckedBackground = color?.Lighten(ColorUtils.Accents.Plus20).ToSolidColorBrush();
-
-                        NavButtonPressedForeground = Colors.White.ToSolidColorBrush();
-                        NavButtonPressedBackground = Colors.Gainsboro.Darken(ColorUtils.Accents.Plus40).ToSolidColorBrush();
-
-                        NavButtonHoverForeground = Colors.White.ToSolidColorBrush();
-                        NavButtonHoverBackground = Colors.Gainsboro.Darken(ColorUtils.Accents.Plus60).ToSolidColorBrush();
-                    }
-                    break;
                 case ElementTheme.Default:
                 case ElementTheme.Dark:
                     {
-                        NavAreaBackground = Colors.Gainsboro.Darken(ColorUtils.Accents.Plus80).ToSolidColorBrush();
-                        SecondarySeparator = Colors.Gainsboro.ToSolidColorBrush();
-                        PaneBorderBrush = Colors.Gainsboro.ToSolidColorBrush();
+                        NavAreaBackground = Colors.Gainsboro.Darken(ColorUtils.Add._80p).ToSolidColorBrush();
+                        SecondarySeparator = Colors.DimGray.ToSolidColorBrush();
+                        PaneBorderBrush = Colors.Transparent.ToSolidColorBrush();
 
                         HamburgerForeground = Colors.White.ToSolidColorBrush();
                         HamburgerBackground = color?.ToSolidColorBrush();
 
-                        NavButtonForeground = Colors.White.ToSolidColorBrush();
+                        NavButtonForeground = Colors.White.Darken(ColorUtils.Add._20p).ToSolidColorBrush();
                         NavButtonBackground = Colors.Transparent.ToSolidColorBrush();
 
                         NavButtonCheckedForeground = Colors.White.ToSolidColorBrush();
-                        NavButtonCheckedBackground = color?.Darken(ColorUtils.Accents.Plus40).ToSolidColorBrush();
+                        NavButtonCheckedBackground = Colors.Transparent.ToSolidColorBrush();
+                        NavButtonCheckedIndicatorBrush = Colors.White.ToSolidColorBrush();
 
-                        NavButtonPressedForeground = Colors.White.ToSolidColorBrush();
-                        NavButtonPressedBackground = Colors.Gainsboro.Lighten(ColorUtils.Accents.Plus40).ToSolidColorBrush();
+                        NavButtonPressedForeground = Colors.White.Darken(ColorUtils.Add._30p).ToSolidColorBrush();
+                        NavButtonPressedBackground = Colors.Transparent.ToSolidColorBrush();
 
-                        NavButtonHoverForeground = Colors.White.ToSolidColorBrush();
-                        NavButtonHoverBackground = Colors.Gainsboro.Lighten(ColorUtils.Accents.Plus60).ToSolidColorBrush();
+                        NavButtonHoverForeground = Colors.White.Darken(ColorUtils.Add._10p).ToSolidColorBrush();
+                        NavButtonHoverBackground = Colors.Transparent.ToSolidColorBrush();
+                        break;
                     }
-                    break;
             }
         }
     }

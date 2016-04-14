@@ -1,6 +1,7 @@
 ﻿<UserControl x:Class="Template10.Controls.HamburgerMenu"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:Converters="using:Template10.Converters"
              xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
              xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -11,6 +12,18 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
+
+            <Converters:ValueWhenConverter x:Name="ReverseBooleanConverer">
+                <Converters:ValueWhenConverter.When>
+                    <x:Boolean>True</x:Boolean>
+                </Converters:ValueWhenConverter.When>
+                <Converters:ValueWhenConverter.Value>
+                    <x:Boolean>False</x:Boolean>
+                </Converters:ValueWhenConverter.Value>
+                <Converters:ValueWhenConverter.Otherwise>
+                    <x:Boolean>True</x:Boolean>
+                </Converters:ValueWhenConverter.Otherwise>
+            </Converters:ValueWhenConverter>
 
             <Style x:Key="HamburgerButtonStyle" TargetType="Button">
                 <Setter Property="Height" Value="48" />
@@ -63,9 +76,10 @@
                               Command="{Binding NavCommand, ElementName=ThisPage}"
                               CommandParameter="{Binding}" Content="{Binding Content}"
                               Holding="NavButton_Holding" IsChecked="{Binding IsChecked, Mode=TwoWay}"
-                              IsEnabled="{Binding IsEnabled, Mode=TwoWay}" Loaded="NavButton_Loaded"
-                              RightTapped="NavButton_RightTapped" Style="{Binding NavButtonStyle}"
-                              Tapped="NavButton_Tapped"
+                              IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                              IsHitTestVisible="{Binding IsChecked, Converter={StaticResource ReverseBooleanConverer}}"
+                              Loaded="NavButton_Loaded" RightTapped="NavButton_RightTapped"
+                              Style="{Binding NavButtonStyle}" Tapped="NavButton_Tapped"
                               ToolTipService.ToolTip="{Binding Path=(ToolTipService.ToolTip)}"
                               Visibility="{Binding Visibility, Mode=TwoWay}">
                     <ToggleButton.Template>
@@ -111,10 +125,33 @@
                                                 <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
                                             </Storyboard>
                                         </VisualState>
-                                        <VisualState x:Name="Disabled" />
-                                        <VisualState x:Name="CheckedPointerOver" />
-                                        <VisualState x:Name="CheckedPressed" />
-                                        <VisualState x:Name="CheckedDisabled" />
+                                        <VisualState x:Name="CheckedPointerOver">
+                                            <VisualState.Setters>
+                                                <Setter Target="ContentPresenter.Foreground" Value="{Binding NavButtonCheckedForeground, ElementName=ThisPage}" />
+                                                <Setter Target="ContentPresenter.Background" Value="{Binding NavButtonCheckedBackground, ElementName=ThisPage}" />
+                                                <Setter Target="Indicator.Visibility" Value="Visible" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="CheckedPressed">
+                                            <VisualState.Setters>
+                                                <Setter Target="ContentPresenter.Foreground" Value="{Binding NavButtonCheckedForeground, ElementName=ThisPage}" />
+                                                <Setter Target="ContentPresenter.Background" Value="{Binding NavButtonCheckedBackground, ElementName=ThisPage}" />
+                                                <Setter Target="Indicator.Visibility" Value="Visible" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="CheckedDisabled">
+                                            <VisualState.Setters>
+                                                <Setter Target="ContentPresenter.Foreground" Value="{Binding NavButtonCheckedForeground, ElementName=ThisPage}" />
+                                                <Setter Target="ContentPresenter.Background" Value="{Binding NavButtonCheckedBackground, ElementName=ThisPage}" />
+                                                <Setter Target="Indicator.Visibility" Value="Visible" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="Disabled">
+                                            <VisualState.Setters>
+                                                <Setter Target="ContentPresenter.Foreground" Value="DimGray" />
+                                                <Setter Target="ContentPresenter.Background" Value="Transparent" />
+                                            </VisualState.Setters>
+                                        </VisualState>
                                         <VisualState x:Name="Indeterminate" />
                                         <VisualState x:Name="IndeterminatePointerOver" />
                                         <VisualState x:Name="IndeterminatePressed" />
@@ -123,7 +160,7 @@
                                 </VisualStateManager.VisualStateGroups>
                                 <ContentPresenter x:Name="ContentPresenter" Content="{Binding Content}" />
                                 <Rectangle x:Name="Indicator" Width="4" HorizontalAlignment="Left"
-                                           Fill="{Binding NavButtonCheckedForeground, ElementName=ThisPage}"
+                                           Fill="{Binding NavButtonCheckedIndicatorBrush, ElementName=ThisPage}"
                                            Visibility="Collapsed" />
                             </Grid>
                         </ControlTemplate>
