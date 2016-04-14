@@ -13,43 +13,48 @@ namespace Template10.Mvvm
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public virtual bool Set<T>(ref T storage, T value, [CallerMemberName]string propertyName = null)
+        {
+            if (object.Equals(storage, value))
+                return false;
+
+            storage = value;
+            this.RaisePropertyChanged(propertyName);
+            return true;
+        }
+
         public virtual void RaisePropertyChanged([CallerMemberName]string propertyName = null)
         {
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
                 return;
 
-            var handler = this.PropertyChanged;
-            //if is not null
+            var handler = PropertyChanged;
             if (!object.Equals(handler, null))
             {
                 var args = new PropertyChangedEventArgs(propertyName);
-                try
+                var dispatcher = WindowWrapper.Current().Dispatcher;
+                if (dispatcher.HasThreadAccess())
                 {
-                    handler.Invoke(this, args);
+                    try
+                    {
+                        handler.Invoke(this, args);
+                    }
+                    catch
+                    {
+                        dispatcher.Dispatch(() => handler.Invoke(this, args));
+                    }
                 }
-                catch
+                else
                 {
-                    WindowWrapper.Current().Dispatcher.Dispatch(() => handler.Invoke(this, args));
+                    dispatcher.Dispatch(() => handler.Invoke(this, args));
                 }
             }
-        }
-
-        public virtual bool Set<T>(ref T storage, T value, [CallerMemberName]string propertyName = null)
-        {
-            if (object.Equals(storage, value))
-                return false;
-            storage = value;
-            RaisePropertyChanged(propertyName);
-            return true;
         }
 
         public virtual bool Set<T>(Expression<Func<T>> propertyExpression, ref T field, T newValue)
         {
-            //if is equal 
             if (object.Equals(field, newValue))
-            {
                 return false;
-            }
 
             field = newValue;
             RaisePropertyChanged(propertyExpression);
@@ -62,21 +67,27 @@ namespace Template10.Mvvm
                 return;
 
             var handler = PropertyChanged;
-            //if is not null
             if (!object.Equals(handler, null))
             {
                 var propertyName = ExpressionUtils.GetPropertyName(propertyExpression);
-
                 if (!object.Equals(propertyName, null))
                 {
                     var args = new PropertyChangedEventArgs(propertyName);
-                    try
+                    var dispatcher = WindowWrapper.Current().Dispatcher;
+                    if (dispatcher.HasThreadAccess())
                     {
-                        handler.Invoke(this, args);
+                        try
+                        {
+                            handler.Invoke(this, args);
+                        }
+                        catch
+                        {
+                            dispatcher.Dispatch(() => handler.Invoke(this, args));
+                        }
                     }
-                    catch
+                    else
                     {
-                        WindowWrapper.Current().Dispatcher.Dispatch(() => handler.Invoke(this, args));
+                        dispatcher.Dispatch(() => handler.Invoke(this, args));
                     }
                 }
             }
