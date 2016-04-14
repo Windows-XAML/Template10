@@ -59,6 +59,7 @@ namespace Template10.Controls
                         NavAreaBackground = Colors.Gainsboro.Darken(ColorUtils.Add._80p).ToSolidColorBrush();
                         SecondarySeparator = Colors.DimGray.ToSolidColorBrush();
                         PaneBorderBrush = Colors.Transparent.ToSolidColorBrush();
+                        PaneBorderThickness = new Thickness(0);
 
                         HamburgerForeground = Colors.White.ToSolidColorBrush();
                         HamburgerBackground = color?.ToSolidColorBrush();

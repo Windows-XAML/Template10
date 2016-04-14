@@ -433,12 +433,7 @@
                     Foreground="{x:Bind HamburgerForeground, FallbackValue=White, Mode=OneWay}"
                     RenderTransformOrigin="0.5,0.5"
                     Style="{StaticResource HamburgerButtonStyle}">
-                <Button.RenderTransform>
-                    <CompositeTransform />
-                </Button.RenderTransform>
-                <StackPanel Orientation="Horizontal">
-                    <FontIcon FontSize="20" Glyph="&#xE700;" />
-                </StackPanel>
+                <FontIcon FontSize="20" Glyph="&#xE700;" />
             </Button>
         </Grid>
 
