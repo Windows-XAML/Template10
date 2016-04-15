@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/01/nuspec.xsd">
   <metadata minClientVersion="3.0">
 
-    <version>1.1.8</version>
+    <version>1.1.9</version>
 
     <id>Template10</id>
 
@@ -21,15 +21,15 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
 
     <description>
-A rich library of helpers, services, and base classes for new and
-existing Windows UWP apps to maximize awesomeness and minimize boilerplate garbage.
-This library has a companion Visual Studio Extension called "Template 10 Template Pack".
+      A rich library of helpers, services, and base classes for new and
+      existing Windows UWP apps to maximize awesomeness and minimize boilerplate garbage.
+      This library has a companion Visual Studio Extension called "Template 10 Template Pack".
     </description>
 
     <summary>
-A rich library of helpers, services, and base classes for new and existing
-Windows UWP apps to maximize awesomeness and minimize boilerplate garbage.
-This library has a companion Visual Studio Extension called "Template 10Template Pack".
+      A rich library of helpers, services, and base classes for new and existing
+      Windows UWP apps to maximize awesomeness and minimize boilerplate garbage.
+      This library has a companion Visual Studio Extension called "Template 10Template Pack".
     </summary>
 
     <tags>
@@ -41,6 +41,10 @@ This library has a companion Visual Studio Extension called "Template 10Template
     <language />
 
     <releaseNotes>
+      Version 1.1.9
+      Build 2016 design guidelines update.
+      Updated NetCore to v5.1.0
+      Updated Behaviors to v1.1.0
       Version 1.1.8
       Resolving edge case deadlock in NavButton.
       Version 1.1.7
@@ -73,9 +77,9 @@ This library has a companion Visual Studio Extension called "Template 10Template
     </releaseNotes>
 
     <dependencies>
-      <dependency id="Rx-Main" version="2.2.5" />
-      <dependency id="Newtonsoft.Json" version="8.0.2" />
-      <dependency id="Microsoft.Xaml.Behaviors.Uwp.Managed" version="1.0.3" />
+      <dependency id="Microsoft.NETCore.UniversalWindowsPlatform" version="5.1.0" />
+      <dependency id="Microsoft.Xaml.Behaviors.Uwp.Managed" version="1.1.0" />
+      <dependency id="Newtonsoft.Json" version="8.0.3" />
     </dependencies>
 
   </metadata>

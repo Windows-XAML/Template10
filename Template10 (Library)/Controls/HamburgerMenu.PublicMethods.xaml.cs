@@ -30,6 +30,14 @@ namespace Template10.Controls
         public event EventHandler PaneClosed;
         public event EventHandler<ChangedEventArgs<HamburgerButtonInfo>> SelectedChanged;
 
+        public void RefreshStyles(ElementTheme theme)
+        {
+            DebugWrite($"Theme: {theme}");
+
+            if (theme == ElementTheme.Default && RequestedTheme == ElementTheme.Default) RefreshStyles(AccentColor);
+            else RefreshStyles(RequestedTheme.ToApplicationTheme());
+        }
+
         public void RefreshStyles(ApplicationTheme theme)
         {
             DebugWrite($"Theme: {theme}");
@@ -42,10 +50,8 @@ namespace Template10.Controls
         {
             DebugWrite($"Color: {color}");
 
-            if (color == null)
-                color = AccentColor;
-            if (color == default(Color))
-                return;
+            if (color == null) color = AccentColor;
+            if (color == default(Color)) return;
 
             // since every brush will be based on one color,
             // we will do so with theme in mind.

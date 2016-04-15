@@ -81,10 +81,10 @@ namespace Template10.Controls
             // non-custom property changes
             ShellSplitView.RegisterPropertyChangedCallback(SplitView.IsPaneOpenProperty, (d, e) => SplitViewIsPaneOpenChanged(e));
             ShellSplitView.RegisterPropertyChangedCallback(SplitView.DisplayModeProperty, (d, e) => SplitViewDisplayModeChanged(e));
-            RegisterPropertyChangedCallback(RequestedThemeProperty, (d, e) => RefreshStyles(this.RequestedTheme.ToApplicationTheme()));
+            RegisterPropertyChangedCallback(RequestedThemeProperty, (d, e) => RefreshStyles(RequestedTheme));
 
             // initial styles
-            RefreshStyles(this.RequestedTheme.ToApplicationTheme());
+            RefreshStyles(RequestedTheme);
         }
 
         void HamburgerMenu_LayoutUpdated(object sender, object e)

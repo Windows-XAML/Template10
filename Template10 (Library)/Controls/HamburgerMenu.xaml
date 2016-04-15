@@ -103,7 +103,6 @@
                               IsHitTestVisible="{Binding IsChecked, Converter={StaticResource ReverseBooleanConverer}}"
                               Loaded="NavButton_Loaded"
                               RightTapped="NavButton_RightTapped"
-                              Style="{Binding NavButtonStyle}"
                               Tapped="NavButton_Tapped"
                               ToolTipService.ToolTip="{Binding Path=(ToolTipService.ToolTip)}"
                               Visibility="{Binding Visibility, Mode=TwoWay}">
