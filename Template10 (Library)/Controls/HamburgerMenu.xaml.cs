@@ -21,6 +21,7 @@ using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 
@@ -70,11 +71,26 @@ namespace Template10.Controls
                 Loaded += HamburgerMenu_Loaded;
                 LayoutUpdated += HamburgerMenu_LayoutUpdated;
                 KeyboardService.Instance.AfterMenuGesture += () => IsOpen = !IsOpen;
+				GotFocus += HamburgerMenu_GotFocus;
             }
 
         }
 
-        void HamburgerMenu_Loaded(object sender, RoutedEventArgs args)
+		private void HamburgerMenu_GotFocus(object sender, RoutedEventArgs e) {
+			if (ShellSplitView.FocusState == FocusState.Keyboard) {//splitview is the item that gets focus when the UserControl gets focus
+				if (PrimaryButtonContainer.SelectedItem == null) {
+					PrimaryButtonContainer.SelectedItem = PrimaryButtonContainer.Items.FirstOrDefault();
+				}
+				if (SecondaryButtonContainer.SelectedItem == null) {
+					SecondaryButtonContainer.SelectedItem = SecondaryButtonContainer.Items.FirstOrDefault();
+				}
+				PrimaryButtonContainer.Focus(FocusState.Keyboard);
+				PrimaryButtonContainer_OnSelectionChanged(null, null);
+			}
+			var elem = FocusManager.GetFocusedElement() as FrameworkElement;
+		}
+
+		void HamburgerMenu_Loaded(object sender, RoutedEventArgs args)
         {
             DebugWrite();
 
@@ -543,6 +559,32 @@ namespace Template10.Controls
             else if (delta > threshold) IsOpen = true;
         }
 
-        #endregion       
-    }
+        #endregion
+
+	    private void PrimaryButtonContainer_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
+		    ContainerSelectionChanged(PrimaryButtonContainer);
+
+	    }
+
+	    private void ContainerSelectionChanged(GridView container) {
+			Debug.WriteLine("Selected item: " + (container.SelectedItem??"") + " and container: " + container.Name);
+			var itm = container.SelectedItem ?? container.Items.FirstOrDefault();
+			if (itm == null)
+				return;
+			var oth = container.ContainerFromItem(itm);
+			while (oth != null) {
+				//in theory there is just one level below the gridview control (listviewcontainer) but this is a bit of a safer way to find itContainerSelectionChanged(PrimaryButtonContainer);
+				oth = VisualTreeHelper.GetChild(oth, 0);
+				var btn = oth as ToggleButton;
+				if (btn == null)
+					continue;
+				btn.Focus(FocusState.Keyboard);
+				return;
+			}
+		}
+
+	    private void SecondaryButtonContainer_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
+			ContainerSelectionChanged(SecondaryButtonContainer);
+		}
+	}
 }
