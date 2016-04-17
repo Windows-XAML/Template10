@@ -901,7 +901,7 @@
                                               MinHeight="{ThemeResource AppBarThemeMinHeight}"
                                               HorizontalAlignment="Right"
                                               IsTabStop="False"
-                                              Visibility="{TemplateBinding PrimaryCommandVisibility}">
+                                              Visibility="{TemplateBinding PrimaryCommandsVisibility}">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
                                             <StackPanel Orientation="Horizontal" />
