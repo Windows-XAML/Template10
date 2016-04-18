@@ -55,7 +55,7 @@ namespace Template10.Behaviors
         }
         public static readonly DependencyProperty ActionsProperty =
             DependencyProperty.Register(nameof(Actions), typeof(ActionCollection),
-                typeof(TextBoxEnterKeyBehavior), new PropertyMetadata(null));
+                typeof(DeviceDispositionBehavior), new PropertyMetadata(null));
 
         public bool IoT { get { return (bool)GetValue(IoTProperty); } set { SetValue(IoTProperty, value); } }
         public static readonly DependencyProperty IoTProperty =
