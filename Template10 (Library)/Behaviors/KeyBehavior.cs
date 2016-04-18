@@ -86,6 +86,6 @@ namespace Template10.Behaviors
         }
         public static readonly DependencyProperty ActionsProperty =
             DependencyProperty.Register(nameof(Actions), typeof(ActionCollection),
-                typeof(TextBoxEnterKeyBehavior), new PropertyMetadata(null));
+                typeof(KeyBehavior), new PropertyMetadata(null));
     }
 }
