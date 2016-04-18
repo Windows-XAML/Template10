@@ -242,7 +242,7 @@
 
         <ContentControl x:Name="Header"
                         Height="48"
-                        Margin="48,0,0,0"
+                        Margin="48,0,0,0"  IsTabStop="False"
                         VerticalAlignment="Top"
                         HorizontalContentAlignment="Stretch"
                         Content="{Binding HeaderContent, ElementName=ThisPage}">
@@ -324,9 +324,9 @@
                                   AutomationProperties.AccessibilityView="Raw"
                                   VerticalScrollBarVisibility="Auto">
 
-                        <ItemsControl x:Name="PrimaryButtonContainer"
+                        <GridView x:Name="PrimaryButtonContainer"
                                       ItemTemplate="{StaticResource NavButtonTemplate}"
-                                      ItemsSource="{Binding PrimaryButtons, ElementName=ThisPage}">
+                                      ItemsSource="{Binding PrimaryButtons, ElementName=ThisPage}" SelectionChanged="PrimaryButtonContainer_OnSelectionChanged">
 
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -366,13 +366,13 @@
                                 </StackPanel>
                             </local:HamburgerButtonInfo>
 
-                        </ItemsControl>
+                        </GridView>
 
                     </ScrollViewer>
 
-                    <ItemsControl x:Name="SecondaryButtonContainer"
+                    <GridView x:Name="SecondaryButtonContainer"
                                   Grid.Row="1"
-                                  ItemsSource="{Binding SecondaryButtons, ElementName=ThisPage}">
+                                  ItemsSource="{Binding SecondaryButtons, ElementName=ThisPage}"  SelectionChanged="SecondaryButtonContainer_OnSelectionChanged">
 
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -410,7 +410,7 @@
                             </StackPanel>
                         </local:HamburgerButtonInfo>
 
-                    </ItemsControl>
+                    </GridView>
 
                 </Grid>
 
