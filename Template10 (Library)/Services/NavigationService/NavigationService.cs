@@ -220,6 +220,7 @@ namespace Template10.Services.NavigationService
 
             parameter = SerializationService.Serialize(parameter);
 
+            await Task.CompletedTask;
             return FrameFacadeInternal.Navigate(page, parameter, infoOverride);
         }
 
