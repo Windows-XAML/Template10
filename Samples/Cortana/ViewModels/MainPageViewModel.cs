@@ -70,7 +70,12 @@ namespace Template10.Samples.CortanaSample.ViewModels
             }
         }
 
-        public async Task Speak()
+        public async void Speak()
+        {
+            await SpeakAsync();
+        }
+
+        public async Task SpeakAsync()
         {
             await _SpeechService.SpeakAsync(Value);
         }

@@ -17,7 +17,7 @@ namespace Template10.Samples.JumpListSample
             return base.OnInitializeAsync(args);
         }
 
-        public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
+        public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
             string arguments = string.Empty;
             if (DetermineStartCause(args) == AdditionalKinds.JumpListItem)
@@ -26,6 +26,7 @@ namespace Template10.Samples.JumpListSample
                 FileReceived?.Invoke(this, arguments);
             }
             NavigationService.Navigate(typeof(Views.MainPage), arguments);
+            return Task.CompletedTask;
         }
 
         public static event EventHandler<string> FileReceived;

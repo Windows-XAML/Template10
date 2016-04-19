@@ -31,7 +31,7 @@ namespace Template10.Common
         [Obsolete("Use Remove(string) instead.")]
         public void Remove(Type type, string key)
         {
-            base.Remove(new StateItemKey(type, key).ToString()); 
+            base.Remove(new StateItemKey(type, key).ToString());
         }
 
         //[Obsolete("Use Remove(string) instead.")]
@@ -73,11 +73,7 @@ namespace Template10.Common
         public T Get<T>(string key)
         {
             object tryGetValue;
-            if (TryGetValue(new StateItemKey(typeof(T), key).ToString(), out tryGetValue))
-            {
-                return (T)tryGetValue;
-            }
-            else if (TryGetValue(key, out tryGetValue))
+            if (TryGetValue(key, out tryGetValue))
             {
                 return (T)tryGetValue;
             }
@@ -88,12 +84,14 @@ namespace Template10.Common
         {
             object tryGetValue;
             bool success = false;
-            if (success = TryGetValue(new StateItemKey(typeof(T), key).ToString(), out tryGetValue))
+            if (success = TryGetValue(key, out tryGetValue))
+            {
                 value = (T)tryGetValue;
-            else if (success = TryGetValue(key, out tryGetValue))
-                value = (T)tryGetValue;
+            }
             else
+            {
                 value = default(T);
+            }
             return success;
         }
     }

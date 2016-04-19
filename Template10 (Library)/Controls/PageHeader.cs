@@ -104,8 +104,13 @@ namespace Template10.Controls
 
         public string Text
         {
-            get { return Content?.ToString(); }
-            set { Content = value; }
+            get { return (string)GetValue(TextProperty); }
+            set { SetValue(TextProperty, value); }
         }
+        public static readonly DependencyProperty TextProperty =
+            DependencyProperty.Register("Text", typeof(string), typeof(PageHeader), new PropertyMetadata(string.Empty, (d, e) =>
+            {
+                (d as PageHeader).Content = e.NewValue;
+            }));
     }
 }

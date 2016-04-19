@@ -40,17 +40,10 @@ namespace Template10.Common
         #region dependency injection
 
         /// <summary>
-        /// If a developer overrides this method, and leaves the DataContext of a page null, then BootStrapper
-        /// will atttempt to fill the DataContext the return value of this method. 
-        /// </summary>
-        [Obsolete("Use ResolveForPage(Page, NavigationService) instead")]
-        public virtual Services.NavigationService.INavigable ResolveForPage(Type page, NavigationService navigationService) => null;
-
-        /// <summary>
         /// If a developer overrides this method, the developer can resolve DataContext or unwrap DataContext 
         /// available for the Page object when using a MVVM pattern that relies on a wrapped/porxy around ViewModels
         /// </summary>
-        public virtual Services.NavigationService.INavigable ResolveForPage(Page page, NavigationService navigationService) => ResolveForPage(page.GetType(), navigationService);
+        public virtual Services.NavigationService.INavigable ResolveForPage(Page page, NavigationService navigationService) => null;
 
         #endregion
 

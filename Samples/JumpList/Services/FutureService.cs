@@ -15,8 +15,6 @@ namespace Template10.Samples.JumpListSample.Services
             _future = StorageApplicationPermissions.FutureAccessList;
         }
 
-        private static StorageFile recent;
-
         public async Task<StorageFile> GetAsync(string path)
         {
             if (!_future.Entries.Any(x => x.Metadata.Equals(path)))

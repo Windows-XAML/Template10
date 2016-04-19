@@ -9,7 +9,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:vm="using:Template10.Samples.IncrementalLoadingSample.ViewModels"
       DataContext="{Binding Main, Source={StaticResource Locator}}"
-      RequestedTheme="Dark" mc:Ignorable="d">
+      RequestedTheme="Dark"
+      mc:Ignorable="d">
 
     <Page.TopAppBar>
         <CommandBar ClosedDisplayMode="Compact">
@@ -20,17 +21,22 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <TextBox x:Name="SearchTextBox" Grid.Column="0"
-                             VerticalContentAlignment="Center" BorderThickness="0"
-                             Padding="8,16,0,0" PlaceholderText="Search github"
+                    <TextBox x:Name="SearchTextBox"
+                             Grid.Column="0"
+                             VerticalContentAlignment="Center"
+                             BorderThickness="0"
+                             Padding="8,16,0,0"
+                             PlaceholderText="Search github"
                              Text="{Binding Query, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <Interactivity:Interaction.Behaviors>
-                            <Behaviors:TextBoxEnterKeyBehavior>
+                            <Behaviors:KeyBehavior Key="Enter">
                                 <Core:InvokeCommandAction Command="{Binding QueryCommand}" />
-                            </Behaviors:TextBoxEnterKeyBehavior>
+                            </Behaviors:KeyBehavior>
                         </Interactivity:Interaction.Behaviors>
                     </TextBox>
-                    <AppBarButton x:Name="SearchButton" Grid.Column="1" Command="{Binding QueryCommand}">
+                    <AppBarButton x:Name="SearchButton"
+                                  Grid.Column="1"
+                                  Command="{Binding QueryCommand}">
                         <SymbolIcon Symbol="Find" />
                     </AppBarButton>
                 </Grid>
@@ -42,9 +48,15 @@
     </Page.TopAppBar>
 
     <Grid Background="SteelBlue">
-        <ListView ItemTemplate="{StaticResource MyItemTemplate}" ItemsSource="{Binding Repositories}" SelectionMode="None">
+        <ListView ItemTemplate="{StaticResource MyItemTemplate}"
+                  ItemsSource="{Binding Repositories}"
+                  SelectionMode="None">
             <ListView.Header>
-                <TextBlock Margin="8,0,0,0" Style="{StaticResource HeaderTextBlockStyle}" TextWrapping="NoWrap">Github Repositories</TextBlock>
+                <TextBlock Margin="8,0,0,0"
+                           Style="{StaticResource HeaderTextBlockStyle}"
+                           TextWrapping="NoWrap">
+                    Github Repositories
+                </TextBlock>
             </ListView.Header>
             <ListView.ItemContainerTransitions>
                 <TransitionCollection>
@@ -57,7 +69,8 @@
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>
-        <ProgressRing Width="125" Height="125"
+        <ProgressRing Width="125"
+                      Height="125"
                       Foreground="White"
                       IsActive="{Binding Repositories.IsLoading}" />
     </Grid>
