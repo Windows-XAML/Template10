@@ -246,7 +246,7 @@
                         Height="48"
                         Margin="48,0,0,0"
                         VerticalAlignment="Top"
-                        HorizontalContentAlignment="Stretch"
+                        HorizontalContentAlignment="Stretch" IsTabStop="False"
                         Content="{Binding HeaderContent, ElementName=ThisPage}">
             <Interactivity:Interaction.Behaviors>
                 <Core:DataTriggerBehavior Binding="{Binding Visibility, ElementName=HamburgerButton}" Value="Visible">
@@ -269,7 +269,7 @@
         <SplitView x:Name="ShellSplitView"
                    Grid.Column="0"
                    AutomationProperties.Name="Jerry Nixon"
-                   DisplayMode="Inline"
+                   DisplayMode="Inline" IsTabStop="False"
                    IsPaneOpen="False"
                    OpenPaneLength="{x:Bind PaneWidth, Mode=OneWay}"
                    PaneBackground="Transparent">
@@ -327,7 +327,7 @@
                                   VerticalScrollBarVisibility="Auto">
 
                         <ItemsControl x:Name="PrimaryButtonContainer"
-                                      ItemTemplate="{StaticResource NavButtonTemplate}"
+                                      ItemTemplate="{StaticResource NavButtonTemplate}" IsTabStop="False"
                                       ItemsSource="{Binding PrimaryButtons, ElementName=ThisPage}">
 
                             <ItemsControl.ItemsPanel>
@@ -373,7 +373,7 @@
                     </ScrollViewer>
 
                     <ItemsControl x:Name="SecondaryButtonContainer"
-                                  Grid.Row="1"
+                                  Grid.Row="1" IsTabStop="False"
                                   ItemsSource="{Binding SecondaryButtons, ElementName=ThisPage}">
 
                         <ItemsControl.ItemsPanel>
@@ -381,6 +381,7 @@
                                 <StackPanel BorderBrush="{Binding SecondarySeparator, ElementName=ThisPage, FallbackValue=White}"
                                             BorderThickness="0,1,0,0"
                                             Loaded="SecondaryButtonStackPanel_Loaded" />
+									
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
 
