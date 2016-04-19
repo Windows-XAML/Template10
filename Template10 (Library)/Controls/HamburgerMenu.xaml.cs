@@ -15,12 +15,15 @@ using Template10.Services.KeyboardService;
 using Template10.Services.NavigationService;
 using Template10.Utils;
 using Windows.Foundation;
+using Windows.System;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 
@@ -82,6 +85,7 @@ namespace Template10.Controls
             ShellSplitView.RegisterPropertyChangedCallback(SplitView.IsPaneOpenProperty, (d, e) => SplitViewIsPaneOpenChanged(e));
             ShellSplitView.RegisterPropertyChangedCallback(SplitView.DisplayModeProperty, (d, e) => SplitViewDisplayModeChanged(e));
             RegisterPropertyChangedCallback(RequestedThemeProperty, (d, e) => RefreshStyles(RequestedTheme));
+            KeyDown += HamburgerMenu_KeyDown;
 
             // initial styles
             RefreshStyles(RequestedTheme);
@@ -543,6 +547,76 @@ namespace Template10.Controls
             else if (delta > threshold) IsOpen = true;
         }
 
-        #endregion       
+        #endregion
+
+        #region new focus logic
+
+        private void TryMoveFocus(FocusNavigationDirection direction)
+        {
+            if (direction == FocusNavigationDirection.Next || direction == FocusNavigationDirection.Previous)
+            {
+                FocusManager.TryMoveFocus(direction);
+            }
+            else
+            {
+                var control = FocusManager.FindNextFocusableElement(direction) as Control;
+                control?.Focus(FocusState.Programmatic);
+            }
+        }
+
+        private void HamburgerMenu_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            var focusedItem = FocusManager.GetFocusedElement();
+
+            switch (e.Key)
+            {
+                case VirtualKey.Up:
+                    TryMoveFocus(FocusNavigationDirection.Up);
+                    e.Handled = true;
+                    break;
+
+                case VirtualKey.Down:
+                    TryMoveFocus(FocusNavigationDirection.Down);
+                    e.Handled = true;
+                    break;
+
+                case VirtualKey.Tab:
+                    var shiftKeyState = CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Shift);
+                    var shiftKeyDown = (shiftKeyState & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
+
+                    if (focusedItem is ListViewItem)
+                    {
+                        var currentItem = (ListViewItem)focusedItem;
+                        if (!shiftKeyDown)
+                        {
+                            TryMoveFocus(FocusNavigationDirection.Down);
+                        }
+                        else // Shift + Tab
+                        {
+                            TryMoveFocus(FocusNavigationDirection.Up);
+                        }
+                    }
+                    else if (focusedItem is Control)
+                    {
+                        if (!shiftKeyDown)
+                        {
+                            TryMoveFocus(FocusNavigationDirection.Down);
+                        }
+                        else // Shift + Tab
+                        {
+                            TryMoveFocus(FocusNavigationDirection.Up);
+                        }
+                    }
+
+                    e.Handled = true;
+                    break;
+
+                default:
+                    base.OnKeyDown(e);
+                    break;
+            }
+        }
+
+        #endregion
     }
 }
