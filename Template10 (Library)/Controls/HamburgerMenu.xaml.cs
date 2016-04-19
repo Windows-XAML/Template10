@@ -549,65 +549,57 @@ namespace Template10.Controls
 
         #endregion
 
-        #region new focus logic
-
-        private void TryMoveFocus(FocusNavigationDirection direction)
-        {
-            if (direction == FocusNavigationDirection.Next || direction == FocusNavigationDirection.Previous)
-            {
-                FocusManager.TryMoveFocus(direction);
-            }
-            else
-            {
-                var control = FocusManager.FindNextFocusableElement(direction) as Control;
-                control?.Focus(FocusState.Programmatic);
-            }
-        }
-
         private void HamburgerMenu_KeyDown(object sender, KeyRoutedEventArgs e)
         {
             var focusedItem = FocusManager.GetFocusedElement();
+            var focus = new Action<FocusNavigationDirection>(d =>
+            {
+                if (d == FocusNavigationDirection.Next || d == FocusNavigationDirection.Previous)
+                {
+                    FocusManager.TryMoveFocus(d);
+                }
+                else
+                {
+                    var control = FocusManager.FindNextFocusableElement(d) as Control;
+                    control?.Focus(FocusState.Programmatic);
+                }
+            });
 
             switch (e.Key)
             {
                 case VirtualKey.Up:
-                    TryMoveFocus(FocusNavigationDirection.Up);
+                    focus(FocusNavigationDirection.Up);
                     e.Handled = true;
                     break;
 
                 case VirtualKey.Down:
-                    TryMoveFocus(FocusNavigationDirection.Down);
+                    focus(FocusNavigationDirection.Down);
+                    e.Handled = true;
+                    break;
+
+                case VirtualKey.Right:
+                    focus(FocusNavigationDirection.Right);
+                    e.Handled = true;
+                    break;
+
+                case VirtualKey.Left:
+                    focus(FocusNavigationDirection.Left);
                     e.Handled = true;
                     break;
 
                 case VirtualKey.Tab:
                     var shiftKeyState = CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Shift);
                     var shiftKeyDown = (shiftKeyState & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
-
                     if (focusedItem is ListViewItem)
                     {
-                        var currentItem = (ListViewItem)focusedItem;
-                        if (!shiftKeyDown)
-                        {
-                            TryMoveFocus(FocusNavigationDirection.Down);
-                        }
-                        else // Shift + Tab
-                        {
-                            TryMoveFocus(FocusNavigationDirection.Up);
-                        }
+                        if (shiftKeyDown) focus(FocusNavigationDirection.Up);
+                        else focus(FocusNavigationDirection.Down);
                     }
                     else if (focusedItem is Control)
                     {
-                        if (!shiftKeyDown)
-                        {
-                            TryMoveFocus(FocusNavigationDirection.Down);
-                        }
-                        else // Shift + Tab
-                        {
-                            TryMoveFocus(FocusNavigationDirection.Up);
-                        }
+                        if (shiftKeyDown) focus(FocusNavigationDirection.Up);
+                        else focus(FocusNavigationDirection.Down);
                     }
-
                     e.Handled = true;
                     break;
 
@@ -616,7 +608,5 @@ namespace Template10.Controls
                     break;
             }
         }
-
-        #endregion
     }
 }

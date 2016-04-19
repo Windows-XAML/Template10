@@ -94,6 +94,7 @@
                               MinWidth="48"
                               MaxWidth="{x:Bind MaxWidth, Mode=TwoWay}"
                               AutomationProperties.Name="Hamburger Menu Item"
+                              Checked="NavButtonChecked"
                               Command="{Binding NavCommand, ElementName=ThisPage}"
                               CommandParameter="{Binding}"
                               Content="{Binding Content}"
@@ -105,6 +106,7 @@
                               RightTapped="NavButton_RightTapped"
                               Tapped="NavButton_Tapped"
                               ToolTipService.ToolTip="{Binding Path=(ToolTipService.ToolTip)}"
+                              Unchecked="NavButtonUnchecked"
                               Visibility="{Binding Visibility, Mode=TwoWay}">
                     <ToggleButton.Template>
                         <ControlTemplate TargetType="ToggleButton">
