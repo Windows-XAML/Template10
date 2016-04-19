@@ -552,16 +552,17 @@ namespace Template10.Controls
         private void HamburgerMenu_KeyDown(object sender, KeyRoutedEventArgs e)
         {
             var focusedItem = FocusManager.GetFocusedElement();
-            var focus = new Action<FocusNavigationDirection>(d =>
+            var focus = new Func<FocusNavigationDirection,bool>(d =>
             {
                 if (d == FocusNavigationDirection.Next || d == FocusNavigationDirection.Previous)
                 {
-                    FocusManager.TryMoveFocus(d);
+                    return FocusManager.TryMoveFocus(d);
                 }
                 else
                 {
                     var control = FocusManager.FindNextFocusableElement(d) as Control;
                     control?.Focus(FocusState.Programmatic);
+	                return control != null;
                 }
             });
 
@@ -590,17 +591,19 @@ namespace Template10.Controls
                 case VirtualKey.Tab:
                     var shiftKeyState = CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Shift);
                     var shiftKeyDown = (shiftKeyState & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
-                    if (focusedItem is ListViewItem)
-                    {
-                        if (shiftKeyDown) focus(FocusNavigationDirection.Up);
-                        else focus(FocusNavigationDirection.Down);
-                    }
-                    else if (focusedItem is Control)
-                    {
-                        if (shiftKeyDown) focus(FocusNavigationDirection.Up);
-                        else focus(FocusNavigationDirection.Down);
-                    }
-                    e.Handled = true;
+		            if (shiftKeyDown)
+					{
+			            if (!focus(FocusNavigationDirection.Previous))
+				            focus(FocusNavigationDirection.Up);
+
+		            }
+					else
+					{
+			            if (!focus(FocusNavigationDirection.Next))
+				            focus(FocusNavigationDirection.Down);
+		            }
+
+		            e.Handled = true;
                     break;
 
                 default:
