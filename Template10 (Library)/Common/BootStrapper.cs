@@ -108,21 +108,21 @@ namespace Template10.Common
 
                 // one, global deferral
                 var deferral = e.SuspendingOperation.GetDeferral();
-                // using (var session = new Windows.ApplicationModel.ExtendedExecution.ExtendedExecutionSession
-                // {
-                //     Description = this.GetType().ToString(),
-                //     Reason = Windows.ApplicationModel.ExtendedExecution.ExtendedExecutionReason.SavingData
-                // })
+                using (var session = new Windows.ApplicationModel.ExtendedExecution.ExtendedExecutionSession
+                {
+                    Description = this.GetType().ToString(),
+                    Reason = Windows.ApplicationModel.ExtendedExecution.ExtendedExecutionReason.SavingData
+                })
                 {
                     try
                     {
-                        foreach (var nav in WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices))
+                        foreach (INavigationService nav in WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices))
                         {
                             // date the cache (which marks the date/time it was suspended)
                             nav.FrameFacade.SetFrameState(CacheDateKey, DateTime.Now.ToString());
                             // call view model suspend (OnNavigatedfrom)
                             DebugWrite($"Nav:{nav}", caller: nameof(nav.SuspendingAsync));
-                            await nav.SuspendingAsync();
+                            await (nav as INavigationService).Dispatcher.DispatchAsync(async () => await nav.SuspendingAsync());
                         }
 
                         // call system-level suspend
