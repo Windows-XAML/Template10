@@ -80,6 +80,17 @@ namespace Template10.Controls
                     HamburgerCommand.Execute();
                     HamburgerButton.Focus(FocusState.Programmatic);
                 };
+
+                GotFocus += (s, e) =>
+                {
+                    var element = FocusManager.GetFocusedElement() as FrameworkElement;
+                    var name = element?.Name ?? "no-name";
+                    var content = (((element as ContentControl)?.Content as StackPanel)?.Children[0] as SymbolIcon)?.Symbol.ToString() ?? "icon";
+                    if (content == null)
+                        content = (element as ContentControl)?.Content?.ToString() ?? "no-content";
+                    var value = $"{element?.ToString() ?? "null"} {name} {content}";
+                    DebugWrite(value, caller: "GotFocus");
+                };
             }
 
         }
@@ -434,15 +445,15 @@ namespace Template10.Controls
             }
         }
 
-        void NavButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
-        {
-            DebugWrite();
+        //void NavButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        //{
+        //    DebugWrite();
 
-            var button = new InfoElement(sender);
-            ExecuteICommand(button.HamburgerButtonInfo);
-            button.HamburgerButtonInfo.RaiseTapped(e);
-            e.Handled = true;
-        }
+        //    var button = new InfoElement(sender);
+        //    ExecuteICommand(button.HamburgerButtonInfo);
+        //    button.HamburgerButtonInfo.RaiseTapped(e);
+        //    e.Handled = true;
+        //}
 
         void ExecuteICommand(HamburgerButtonInfo info)
         {
@@ -589,15 +600,22 @@ namespace Template10.Controls
 
             var escape = new Func<bool>(() =>
             {
-                IsOpen = false;
+                if (DisplayMode == SplitViewDisplayMode.CompactOverlay
+                    || DisplayMode == SplitViewDisplayMode.Overlay)
+                    IsOpen = false;
                 if (Equals(ShellSplitView.PanePlacement, SplitViewPanePlacement.Left))
                 {
-                    return focus(FocusNavigationDirection.Right);
+                    ShellSplitView.Content.RenderTransform = new TranslateTransform { X = 48 + ShellSplitView.OpenPaneLength };
+                    focus(FocusNavigationDirection.Right);
+                    ShellSplitView.Content.RenderTransform = null;
                 }
                 else
                 {
-                    return focus(FocusNavigationDirection.Left);
+                    ShellSplitView.Content.RenderTransform = new TranslateTransform { X = -48 - ShellSplitView.OpenPaneLength };
+                    focus(FocusNavigationDirection.Left);
+                    ShellSplitView.Content.RenderTransform = null;
                 }
+                return true;
             });
 
             var previous = new Func<bool>(() =>
@@ -610,9 +628,9 @@ namespace Template10.Controls
                 {
                     return HamburgerButton.Focus(FocusState.Programmatic);
                 }
-                else if (!focus(FocusNavigationDirection.Previous))
+                else if (focus(FocusNavigationDirection.Previous) || focus(FocusNavigationDirection.Up))
                 {
-                    return focus(FocusNavigationDirection.Up);
+                    return true;
                 }
                 else
                 {
@@ -630,9 +648,9 @@ namespace Template10.Controls
                 {
                     return escape();
                 }
-                else if (!focus(FocusNavigationDirection.Next))
+                else if (focus(FocusNavigationDirection.Next) || focus(FocusNavigationDirection.Down))
                 {
-                    return focus(FocusNavigationDirection.Down);
+                    return true;
                 }
                 else
                 {
@@ -657,10 +675,17 @@ namespace Template10.Controls
                 case VirtualKey.Right:
                 case VirtualKey.GamepadDPadRight:
 
-                    if (SecondaryButtonContainer.Items.Contains(currentItem)
+                    if (SecondaryButtonContainer.Items.Contains(currentItem?.DataContext)
                         && SecondaryButtonOrientation == Orientation.Horizontal)
                     {
-                        if (!(e.Handled = next())) Debugger.Break();
+                        if (Equals(lastItem.FrameworkElement, currentItem))
+                        {
+                            if (!(e.Handled = escape())) Debugger.Break();
+                        }
+                        else
+                        {
+                            if (!(e.Handled = next())) Debugger.Break();
+                        }
                     }
                     else
                     {
@@ -671,27 +696,21 @@ namespace Template10.Controls
                 case VirtualKey.Left:
                 case VirtualKey.GamepadDPadLeft:
 
-                    if (SecondaryButtonContainer.Items.Contains(currentItem)
+                    if (SecondaryButtonContainer.Items.Contains(currentItem?.DataContext)
                        && SecondaryButtonOrientation == Orientation.Horizontal)
                     {
-                        if (!(e.Handled = previous())) Debugger.Break();
+                        if (Equals(lastItem.FrameworkElement, currentItem))
+                        {
+                            if (!(e.Handled = escape())) Debugger.Break();
+                        }
+                        else
+                        {
+                            if (!(e.Handled = previous())) Debugger.Break();
+                        }
                     }
                     else
                     {
                         if (!(e.Handled = escape())) Debugger.Break();
-                    }
-                    break;
-
-                case VirtualKey.Tab:
-
-                    var shiftState = CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Shift);
-                    if (Equals(shiftState & CoreVirtualKeyStates.Down, CoreVirtualKeyStates.Down))
-                    {
-                        if (!(e.Handled = previous())) Debugger.Break();
-                    }
-                    else
-                    {
-                        if (!(e.Handled = next())) Debugger.Break();
                     }
                     break;
 
@@ -700,12 +719,7 @@ namespace Template10.Controls
                 case VirtualKey.GamepadA:
 
                     var info = new InfoElement(currentItem);
-                    if (info?.HamburgerButtonInfo != Selected)
-                    {
-                        NavButton_Tapped(currentItem, new TappedRoutedEventArgs());
-                        NavButtonChecked(currentItem, new RoutedEventArgs());
-                        Selected = info.HamburgerButtonInfo;
-                    }
+                    NavCommand.Execute(info?.HamburgerButtonInfo);
                     break;
 
                 case VirtualKey.Escape:

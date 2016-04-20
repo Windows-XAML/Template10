@@ -5,6 +5,7 @@
                     xmlns:interactivity="using:Microsoft.Xaml.Interactivity">
 
     <Style TargetType="controls:ModalDialog">
+        <Setter Property="IsTabStop" Value="False" />
         <Setter Property="ModalBackground">
             <Setter.Value>
                 <SolidColorBrush Opacity=".8" Color="{ThemeResource SystemAccentColor}" />

@@ -28,6 +28,7 @@
             </Converters:ValueWhenConverter>
 
             <Style x:Key="HamburgerButtonStyle" TargetType="Button">
+                <Setter Property="TabIndex" Value="1" />
                 <Setter Property="Height" Value="48" />
                 <Setter Property="Width" Value="48" />
                 <Setter Property="HorizontalAlignment" Value="Left" />
@@ -105,7 +106,7 @@
                               IsTabStop="{Binding IsChecked, Converter={StaticResource ReverseBooleanConverter}}"
                               Loaded="NavButton_Loaded"
                               RightTapped="NavButton_RightTapped"
-                              Tapped="NavButton_Tapped"
+                              TabIndex="2"
                               ToolTipService.ToolTip="{Binding Path=(ToolTipService.ToolTip)}"
                               Unchecked="NavButtonUnchecked"
                               Visibility="{Binding Visibility, Mode=TwoWay}">
@@ -212,7 +213,7 @@
                         IsEnabled="{x:Bind IsEnabled}"
                         Loaded="NavButton_Loaded"
                         RightTapped="NavButton_RightTapped"
-                        Tapped="NavButton_Tapped"
+                        TabIndex="2"
                         ToolTipService.ToolTip="{x:Bind Path=(ToolTipService.ToolTip)}"
                         Visibility="{x:Bind Visibility}">
                     <Button.Template>
@@ -334,6 +335,25 @@
             </Interactivity:Interaction.Behaviors>
         </ContentControl>
 
+        <Grid x:Name="HamburgerButtonGrid"
+              Grid.Row="0"
+              Width="{x:Bind HamburgerButtonGridWidth, Mode=OneWay}"
+              HorizontalAlignment="Left"
+              VerticalAlignment="Top"
+              Background="{x:Bind HamburgerBackground, FallbackValue=DarkRed, Mode=OneWay}"
+              Canvas.ZIndex="123"
+              Visibility="{x:Bind HamburgerButtonVisibility, Mode=OneWay}">
+            <Button x:Name="HamburgerButton"
+                    AutomationProperties.Name="Hamburger Menu Button"
+                    Background="Transparent"
+                    Command="{x:Bind HamburgerCommand}"
+                    Foreground="{x:Bind HamburgerForeground, FallbackValue=White, Mode=OneWay}"
+                    RenderTransformOrigin="0.5,0.5"
+                    Style="{StaticResource HamburgerButtonStyle}">
+                <FontIcon FontSize="20" Glyph="&#xE700;" />
+            </Button>
+        </Grid>
+
         <SplitView x:Name="ShellSplitView"
                    Grid.Column="0"
                    AutomationProperties.Name="Jerry Nixon"
@@ -391,7 +411,7 @@
                         </Core:DataTriggerBehavior>
                     </Interactivity:Interaction.Behaviors>
 
-                    <ScrollViewer Grid.Row="0"
+                    <ScrollViewer Grid.Row="0" 
                                   AutomationProperties.AccessibilityView="Raw"
                                   VerticalScrollBarVisibility="Auto">
 
@@ -495,24 +515,6 @@
             </SplitView.Pane>
 
         </SplitView>
-
-        <Grid x:Name="HamburgerButtonGrid"
-              Grid.Row="0"
-              Width="{x:Bind HamburgerButtonGridWidth, Mode=OneWay}"
-              HorizontalAlignment="Left"
-              VerticalAlignment="Top"
-              Background="{x:Bind HamburgerBackground, FallbackValue=DarkRed, Mode=OneWay}"
-              Visibility="{x:Bind HamburgerButtonVisibility, Mode=OneWay}">
-            <Button x:Name="HamburgerButton"
-                    AutomationProperties.Name="Hamburger Menu Button"
-                    Background="Transparent"
-                    Command="{x:Bind HamburgerCommand}"
-                    Foreground="{x:Bind HamburgerForeground, FallbackValue=White, Mode=OneWay}"
-                    RenderTransformOrigin="0.5,0.5"
-                    Style="{StaticResource HamburgerButtonStyle}">
-                <FontIcon FontSize="20" Glyph="&#xE700;" />
-            </Button>
-        </Grid>
 
     </Grid>
 </UserControl>

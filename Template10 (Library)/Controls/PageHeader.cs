@@ -33,6 +33,8 @@ namespace Template10.Controls
             var c = new Microsoft.Xaml.Interactivity.BehaviorCollection();
             c.Add(b);
             SetValue(Microsoft.Xaml.Interactivity.Interaction.BehaviorsProperty, c);
+
+            TabIndex = 5000;
         }
 
         public Behaviors.EllipsisBehavior.Visibilities EllipsisVisibility

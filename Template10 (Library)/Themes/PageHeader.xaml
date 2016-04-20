@@ -5,6 +5,7 @@
                     xmlns:interactivity="using:Microsoft.Xaml.Interactivity">
 
     <Style x:Key="PageHeaderButton" TargetType="Button">
+        <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />

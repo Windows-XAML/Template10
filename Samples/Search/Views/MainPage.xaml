@@ -30,7 +30,7 @@
 
         <!--  #region content  -->
 
-        <RelativePanel Grid.Row="1" Padding="12,8,0,0">
+        <RelativePanel Grid.Row="1" Padding="16,8,0,0">
             <TextBox x:Name="ParameterTextBox" Width="200"
                      Margin="0" Header="Parameter to pass to this page"
                      Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
