@@ -14,6 +14,7 @@ using Template10.Common;
 using Template10.Services.KeyboardService;
 using Template10.Services.NavigationService;
 using Template10.Utils;
+using Windows.Devices.Input;
 using Windows.Foundation;
 using Windows.System;
 using Windows.UI;
@@ -72,7 +73,13 @@ namespace Template10.Controls
                 // control event handlers
                 Loaded += HamburgerMenu_Loaded;
                 LayoutUpdated += HamburgerMenu_LayoutUpdated;
-                KeyboardService.Instance.AfterMenuGesture += () => IsOpen = !IsOpen;
+
+                // xbox controller menu button support
+                KeyboardService.Instance.AfterMenuGesture += () =>
+                {
+                    HamburgerCommand.Execute();
+                    HamburgerButton.Focus(FocusState.Programmatic);
+                };
             }
 
         }
@@ -85,7 +92,10 @@ namespace Template10.Controls
             ShellSplitView.RegisterPropertyChangedCallback(SplitView.IsPaneOpenProperty, (d, e) => SplitViewIsPaneOpenChanged(e));
             ShellSplitView.RegisterPropertyChangedCallback(SplitView.DisplayModeProperty, (d, e) => SplitViewDisplayModeChanged(e));
             RegisterPropertyChangedCallback(RequestedThemeProperty, (d, e) => RefreshStyles(RequestedTheme));
-            KeyDown += HamburgerMenu_KeyDown;
+
+            // keyboard navigation
+            HamburgerButton.KeyDown += HamburgerMenu_KeyDown;
+            PaneContent.KeyDown += HamburgerMenu_KeyDown;
 
             // initial styles
             RefreshStyles(RequestedTheme);
@@ -236,9 +246,9 @@ namespace Template10.Controls
             DebugWrite($"PageType: {pageType} PageParam: {pageParam}");
 
             // match type only
-            var buttons = LoadedNavButtons
-                .Where(x => Equals(x.Value.PageType, pageType));
+            var buttons = LoadedNavButtons.Where(x => Equals(x.HamburgerButtonInfo.PageType, pageType));
 
+            // serialize parameter for matching
             if (pageParam == null)
             {
                 pageParam = NavigationService.CurrentPageParam;
@@ -253,10 +263,8 @@ namespace Template10.Controls
             }
 
             // add parameter match
-            buttons = buttons
-                .Where(x => Equals(x.Value.PageParameter, null) || Equals(x.Value.PageParameter, pageParam));
-
-            var button = buttons.Select(x => x.Value).FirstOrDefault();
+            buttons = buttons.Where(x => Equals(x.HamburgerButtonInfo.PageParameter, null) || Equals(x.HamburgerButtonInfo.PageParameter, pageParam));
+            var button = buttons.Select(x => x.HamburgerButtonInfo).FirstOrDefault();
             Selected = button;
         }
 
@@ -271,14 +279,11 @@ namespace Template10.Controls
             }
 
             // signal previous
-            if (previous?.IsChecked ?? true && previous != value)
+            if (previous != null && previous != value && previous.IsChecked.Value)
             {
-                previous?.RaiseUnselected();
+                previous.IsChecked = false;
+                previous.RaiseUnselected();
             }
-
-            // reset all, except selected
-            var buttons = LoadedNavButtons.Where(x => x.Value != value);
-            buttons.ForEach(x => x.Value.IsChecked = false);
 
             // navigate only when all navigation buttons have been loaded
             if (AllNavButtonsAreLoaded && value?.PageType != null)
@@ -303,6 +308,7 @@ namespace Template10.Controls
                 {
                     return;
                 }
+                IsOpen = false;
             }
 
             // that's it if null
@@ -394,16 +400,16 @@ namespace Template10.Controls
 
         int NavButtonCount => PrimaryButtons.Count + SecondaryButtons.Count;
         bool AllNavButtonsAreLoaded => LoadedNavButtons.Count >= NavButtonCount;
-        readonly Dictionary<ToggleButton, HamburgerButtonInfo> LoadedNavButtons = new Dictionary<ToggleButton, HamburgerButtonInfo>();
+        readonly List<InfoElement> LoadedNavButtons = new List<InfoElement>();
 
-        public class ButtonInfo
+        public class InfoElement
         {
-            public ButtonInfo(object sender)
+            public InfoElement(object sender)
             {
-                Button = sender as ToggleButton;
-                HamburgerButtonInfo = Button.DataContext as HamburgerButtonInfo;
+                FrameworkElement = sender as FrameworkElement;
+                HamburgerButtonInfo = FrameworkElement?.DataContext as HamburgerButtonInfo;
             }
-            public ToggleButton Button { get; }
+            public FrameworkElement FrameworkElement { get; }
             public HamburgerButtonInfo HamburgerButtonInfo { get; }
         }
 
@@ -411,12 +417,14 @@ namespace Template10.Controls
         {
             DebugWrite();
 
-            var button = new ButtonInfo(sender);
-            if (LoadedNavButtons.ContainsKey(button.Button)) return;
-            LoadedNavButtons.Add(button.Button, button.HamburgerButtonInfo);
-            if (AllNavButtonsAreLoaded)
+            var button = new InfoElement(sender);
+            if (!LoadedNavButtons.Any(x => x.FrameworkElement == button.FrameworkElement))
             {
-                HighlightCorrectButton(NavigationService.CurrentPageType, NavigationService.CurrentPageParam);
+                LoadedNavButtons.Add(button);
+                if (AllNavButtonsAreLoaded)
+                {
+                    HighlightCorrectButton(NavigationService.CurrentPageType, NavigationService.CurrentPageParam);
+                }
             }
         }
 
@@ -424,9 +432,9 @@ namespace Template10.Controls
         {
             DebugWrite();
 
-            var button = new ButtonInfo(sender);
-            button.HamburgerButtonInfo.RaiseTapped(e);
+            var button = new InfoElement(sender);
             ExecuteICommand(button.HamburgerButtonInfo);
+            button.HamburgerButtonInfo.RaiseTapped(e);
             e.Handled = true;
         }
 
@@ -447,7 +455,7 @@ namespace Template10.Controls
         {
             DebugWrite();
 
-            var button = new ButtonInfo(sender);
+            var button = new InfoElement(sender);
             button.HamburgerButtonInfo.RaiseRightTapped(e);
             e.Handled = true;
         }
@@ -456,7 +464,7 @@ namespace Template10.Controls
         {
             DebugWrite();
 
-            var button = new ButtonInfo(sender);
+            var button = new InfoElement(sender);
             button.HamburgerButtonInfo.RaiseHolding(e);
             e.Handled = true;
         }
@@ -465,25 +473,31 @@ namespace Template10.Controls
         {
             DebugWrite();
 
-            var button = new ButtonInfo(sender);
-            button.Button.IsChecked = (button.HamburgerButtonInfo.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
-            if (button.Button.IsChecked ?? true) Selected = button.HamburgerButtonInfo;
-            if (button.Button.IsChecked ?? true) button.HamburgerButtonInfo.RaiseChecked(e);
-            button.Button.IsHitTestVisible = !button.Button.IsChecked ?? false;
+            var button = new InfoElement(sender);
+            if (button.HamburgerButtonInfo.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle)
+            {
+                button.HamburgerButtonInfo.IsChecked = (button.HamburgerButtonInfo.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
+                if (button.HamburgerButtonInfo.IsChecked ?? true) Selected = button.HamburgerButtonInfo;
+                if (button.HamburgerButtonInfo.IsChecked ?? true) button.HamburgerButtonInfo.RaiseChecked(e);
+                button.FrameworkElement.IsHitTestVisible = !button.HamburgerButtonInfo.IsChecked ?? false;
+            }
         }
 
         void NavButtonUnchecked(object sender, RoutedEventArgs e)
         {
             DebugWrite();
 
-            var button = new ButtonInfo(sender);
-            button.HamburgerButtonInfo.RaiseUnchecked(e);
-            button.Button.IsHitTestVisible = true;
+            var button = new InfoElement(sender);
+            if (button.HamburgerButtonInfo.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle)
+            {
+                button.HamburgerButtonInfo.RaiseUnchecked(e);
+                button.FrameworkElement.IsHitTestVisible = true;
+            }
         }
 
         private void NavButton_VisualStateChanged(object sender, VisualStateChangedEventArgs e)
         {
-            var button = new ButtonInfo(e.Control);
+            var button = new InfoElement(e.Control);
             switch (e.NewState.Name)
             {
                 case "Normal":
@@ -511,35 +525,30 @@ namespace Template10.Controls
         {
             DebugWrite($"OpenCloseMode {OpenCloseMode}");
 
-            if (OpenCloseMode.HasFlag(OpenCloseModes.None)) return;
-            else if (OpenCloseMode.HasFlag(OpenCloseModes.Auto))
+            var button = new InfoElement(e.OriginalSource);
+            if (button.HamburgerButtonInfo?.IsChecked ?? false) return;
+
+            switch (OpenCloseMode)
             {
-                switch (e.PointerDeviceType)
-                {
-                    case Windows.Devices.Input.PointerDeviceType.Touch:
-                        return;
-                }
+                case OpenCloseModes.Auto:
+                case OpenCloseModes.Tap:
+                    HamburgerCommand.Execute(null);
+                    break;
             }
-            else if (OpenCloseMode.HasFlag(OpenCloseModes.Tap)) return;
-            HamburgerCommand.Execute(null);
         }
 
         void PaneContent_ManipulationDelta(object sender, Windows.UI.Xaml.Input.ManipulationDeltaRoutedEventArgs e)
         {
             DebugWrite($"OpenCloseMode {OpenCloseMode}");
 
-            if (OpenCloseMode.HasFlag(OpenCloseModes.None)) return;
-            else if (OpenCloseMode.HasFlag(OpenCloseModes.Auto))
+            if (e.PointerDeviceType == PointerDeviceType.Mouse) return;
+            if (e.PointerDeviceType == PointerDeviceType.Pen) return;
+            switch (OpenCloseMode)
             {
-                // this is only for touch
-                switch (e.PointerDeviceType)
-                {
-                    case Windows.Devices.Input.PointerDeviceType.Pen:
-                    case Windows.Devices.Input.PointerDeviceType.Mouse:
-                        return;
-                }
+                case OpenCloseModes.None:
+                case OpenCloseModes.Tap:
+                    return;
             }
-            else if (!OpenCloseMode.HasFlag(OpenCloseModes.Swipe)) return;
 
             var threshold = 24;
             var delta = e.Cumulative.Translation.X;
@@ -551,57 +560,95 @@ namespace Template10.Controls
 
         private void HamburgerMenu_KeyDown(object sender, KeyRoutedEventArgs e)
         {
-            var focusedItem = FocusManager.GetFocusedElement();
-            var focus = new Action<FocusNavigationDirection>(d =>
+            var item = FocusManager.GetFocusedElement();
+            var focus = new Func<FocusNavigationDirection, bool>(d =>
             {
+                bool result = false;
                 if (d == FocusNavigationDirection.Next || d == FocusNavigationDirection.Previous)
                 {
-                    FocusManager.TryMoveFocus(d);
+                    result = FocusManager.TryMoveFocus(d);
                 }
                 else
                 {
                     var control = FocusManager.FindNextFocusableElement(d) as Control;
-                    control?.Focus(FocusState.Programmatic);
+                    result = control?.Focus(FocusState.Programmatic) ?? false;
                 }
+                // Debug.WriteLine($"FocusManager: {FocusManager.FindNextFocusableElement(d)}");
+                return result;
             });
-
             switch (e.Key)
             {
                 case VirtualKey.Up:
-                    focus(FocusNavigationDirection.Up);
+                    if (!focus(FocusNavigationDirection.Previous))
+                        focus(FocusNavigationDirection.Up);
                     e.Handled = true;
                     break;
 
                 case VirtualKey.Down:
-                    focus(FocusNavigationDirection.Down);
+                    if (!focus(FocusNavigationDirection.Next))
+                        focus(FocusNavigationDirection.Down);
                     e.Handled = true;
                     break;
 
                 case VirtualKey.Right:
-                    focus(FocusNavigationDirection.Right);
+                    if (!focus(FocusNavigationDirection.Right))
+                        focus(FocusNavigationDirection.Next);
                     e.Handled = true;
                     break;
 
                 case VirtualKey.Left:
-                    focus(FocusNavigationDirection.Left);
+                    if (!focus(FocusNavigationDirection.Left))
+                        focus(FocusNavigationDirection.Previous);
                     e.Handled = true;
                     break;
 
                 case VirtualKey.Tab:
-                    var shiftKeyState = CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Shift);
-                    var shiftKeyDown = (shiftKeyState & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
-                    if (focusedItem is ListViewItem)
+                    var shiftState = CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Shift);
+                    var shiftDown = (shiftState & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
+                    if (shiftDown)
                     {
-                        if (shiftKeyDown) focus(FocusNavigationDirection.Up);
-                        else focus(FocusNavigationDirection.Down);
+                        if (!focus(FocusNavigationDirection.Previous))
+                            focus(FocusNavigationDirection.Up);
                     }
-                    else if (focusedItem is Control)
+                    else
                     {
-                        if (shiftKeyDown) focus(FocusNavigationDirection.Up);
-                        else focus(FocusNavigationDirection.Down);
+                        if (!focus(FocusNavigationDirection.Next))
+                            focus(FocusNavigationDirection.Down);
                     }
                     e.Handled = true;
                     break;
+
+                case VirtualKey.Space: // not firing
+                case VirtualKey.Enter:
+                    if (item is ToggleButton)
+                    {
+                        var data = (item as ToggleButton).DataContext as HamburgerButtonInfo;
+                        if (data != null && data != Selected)
+                        {
+                            NavButton_Tapped(item, new TappedRoutedEventArgs());
+                            NavButtonChecked(item, new RoutedEventArgs());
+                            Selected = data;
+                        }
+                    }
+                    e.Handled = true;
+                    break;
+
+                //case VirtualKey.Escape:
+                //    var i = PrimaryButtonContainer.Items.FirstOrDefault();
+                //    if (i != null)
+                //    {
+                //        var c = PrimaryButtonContainer.ContainerFromItem(i) as ToggleButton;
+                //        c?.Focus(FocusState.Programmatic);
+                //    }
+                //    if (ShellSplitView.PanePlacement == SplitViewPanePlacement.Left)
+                //    {
+                //        FocusManager.TryMoveFocus(FocusNavigationDirection.Right);
+                //    }
+                //    else
+                //    {
+                //        FocusManager.TryMoveFocus(FocusNavigationDirection.Left);
+                //    }
+                //    break;
 
                 default:
                     base.OnKeyDown(e);
