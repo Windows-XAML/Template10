@@ -567,30 +567,18 @@ namespace Template10.Controls
 
             var focus = new Func<FocusNavigationDirection, bool>(d =>
             {
-                switch (d)
+                if (d == FocusNavigationDirection.Next)
                 {
-                    case FocusNavigationDirection.Next:
-                    case FocusNavigationDirection.Previous:
-                        return FocusManager.TryMoveFocus(d);
-                    default:
-                        var control = FocusManager.FindNextFocusableElement(d) as Control;
-                        if (control == null)
-                        {
-                            // one more try
-                            control = FocusManager.FindNextFocusableElement(FocusNavigationDirection.Next) as Control;
-                            if (control == null)
-                            {
-                                return false;
-                            }
-                            else
-                            {
-                                return control.Focus(FocusState.Programmatic);
-                            }
-                        }
-                        else
-                        {
-                            return control.Focus(FocusState.Programmatic);
-                        }
+                    return FocusManager.TryMoveFocus(d);
+                }
+                else if (d == FocusNavigationDirection.Previous)
+                {
+                    return FocusManager.TryMoveFocus(d);
+                }
+                else
+                {
+                    var control = FocusManager.FindNextFocusableElement(d) as Control;
+                    return control?.Focus(FocusState.Programmatic) ?? false;
                 }
             });
 
@@ -664,13 +652,29 @@ namespace Template10.Controls
                 case VirtualKey.Right:
                 case VirtualKey.GamepadDPadRight:
 
-                    if (!next()) Debugger.Break();
+                    if (SecondaryButtonContainer.Items.Contains(currentItem)
+                        && SecondaryButtonOrientation == Orientation.Horizontal)
+                    {
+                        if (!next()) Debugger.Break();
+                    }
+                    else
+                    {
+                        if (!escape()) Debugger.Break();
+                    }
                     break;
 
                 case VirtualKey.Left:
                 case VirtualKey.GamepadDPadLeft:
 
-                    if (!previous()) Debugger.Break();
+                    if (SecondaryButtonContainer.Items.Contains(currentItem)
+                       && SecondaryButtonOrientation == Orientation.Horizontal)
+                    {
+                        if (!previous()) Debugger.Break();
+                    }
+                    else
+                    {
+                        if (!escape()) Debugger.Break();
+                    }
                     break;
 
                 case VirtualKey.Tab:
