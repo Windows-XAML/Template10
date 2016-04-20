@@ -85,9 +85,8 @@ namespace Template10.Controls
                 {
                     var element = FocusManager.GetFocusedElement() as FrameworkElement;
                     var name = element?.Name ?? "no-name";
-                    var content = (((element as ContentControl)?.Content as StackPanel)?.Children[0] as SymbolIcon)?.Symbol.ToString() ?? "icon";
-                    if (content == null)
-                        content = (element as ContentControl)?.Content?.ToString() ?? "no-content";
+                    var content = (((element as ContentControl)?.Content as StackPanel)?.Children[0] as SymbolIcon)?.Symbol;
+                    if (content == null) content = (element as ContentControl)?.Content?.ToString() ?? "no-content";
                     var value = $"{element?.ToString() ?? "null"} {name} {content}";
                     DebugWrite(value, caller: "GotFocus");
                 };
