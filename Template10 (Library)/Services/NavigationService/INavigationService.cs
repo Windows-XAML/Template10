@@ -45,5 +45,8 @@ namespace Template10.Services.NavigationService
 
         Frame Frame { get; }
         FrameFacade FrameFacade { get; }
+
+        object LastNavigationParameter { get; }
+        string LastNavigationParameterString { get; }
     }
 }

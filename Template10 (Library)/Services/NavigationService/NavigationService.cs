@@ -22,8 +22,8 @@ namespace Template10.Services.NavigationService
         FrameFacade FrameFacadeInternal { get; set; }
         public FrameFacade FrameFacade => FrameFacadeInternal;
         public Frame Frame => FrameFacade.Frame;
-        object LastNavigationParameter { get; set; }
-        object LastNavigationParameterString { get; set; }
+        internal object LastNavigationParameter { get; set; }
+        internal string LastNavigationParameterString { get; set; }
         string LastNavigationType { get; set; }
         public object Content => Frame.Content;
 
@@ -404,6 +404,13 @@ namespace Template10.Services.NavigationService
 
         public Type CurrentPageType => FrameFacadeInternal.CurrentPageType;
         public object CurrentPageParam => FrameFacadeInternal.CurrentPageParam;
+
+        #region Explicit Implementation of INavigationService
+
+        object INavigationService.LastNavigationParameter => LastNavigationParameter;
+        string INavigationService.LastNavigationParameterString => LastNavigationParameterString;
+
+        #endregion
     }
 }
 
