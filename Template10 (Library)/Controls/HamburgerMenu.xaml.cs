@@ -95,7 +95,8 @@ namespace Template10.Controls
 
             // keyboard navigation
             HamburgerButton.KeyDown += HamburgerMenu_KeyDown;
-            PaneContent.KeyDown += HamburgerMenu_KeyDown;
+            PrimaryButtonContainer.KeyDown += HamburgerMenu_KeyDown;
+            SecondaryButtonContainer.KeyDown += HamburgerMenu_KeyDown;
 
             // initial styles
             RefreshStyles(RequestedTheme);
@@ -560,98 +561,151 @@ namespace Template10.Controls
 
         private void HamburgerMenu_KeyDown(object sender, KeyRoutedEventArgs e)
         {
-            var item = FocusManager.GetFocusedElement();
+            var currentItem = FocusManager.GetFocusedElement() as FrameworkElement;
+            var firstItem = LoadedNavButtons.FirstOrDefault(x => x.HamburgerButtonInfo == (PrimaryButtons.Any() ? PrimaryButtons.FirstOrDefault() : SecondaryButtons.FirstOrDefault()));
+            var lastItem = LoadedNavButtons.FirstOrDefault(x => x.HamburgerButtonInfo == (SecondaryButtons.Any() ? SecondaryButtons.LastOrDefault() : PrimaryButtons.LastOrDefault()));
+
             var focus = new Func<FocusNavigationDirection, bool>(d =>
             {
-                bool result = false;
-                if (d == FocusNavigationDirection.Next || d == FocusNavigationDirection.Previous)
+                switch (d)
                 {
-                    result = FocusManager.TryMoveFocus(d);
+                    case FocusNavigationDirection.Next:
+                    case FocusNavigationDirection.Previous:
+                        return FocusManager.TryMoveFocus(d);
+                    default:
+                        var control = FocusManager.FindNextFocusableElement(d) as Control;
+                        if (control == null)
+                        {
+                            // one more try
+                            control = FocusManager.FindNextFocusableElement(FocusNavigationDirection.Next) as Control;
+                            if (control == null)
+                            {
+                                return false;
+                            }
+                            else
+                            {
+                                return control.Focus(FocusState.Programmatic);
+                            }
+                        }
+                        else
+                        {
+                            return control.Focus(FocusState.Programmatic);
+                        }
+                }
+            });
+
+            var escape = new Func<bool>(() =>
+            {
+                IsOpen = false;
+                if (Equals(ShellSplitView.PanePlacement, SplitViewPanePlacement.Left))
+                {
+                    return focus(FocusNavigationDirection.Right);
                 }
                 else
                 {
-                    var control = FocusManager.FindNextFocusableElement(d) as Control;
-                    result = control?.Focus(FocusState.Programmatic) ?? false;
+                    return focus(FocusNavigationDirection.Left);
                 }
-                // Debug.WriteLine($"FocusManager: {FocusManager.FindNextFocusableElement(d)}");
-                return result;
             });
+
+            var previous = new Func<bool>(() =>
+            {
+                if (Equals(currentItem, HamburgerButton))
+                {
+                    return true;
+                }
+                else if (Equals(currentItem, firstItem.FrameworkElement))
+                {
+                    return HamburgerButton.Focus(FocusState.Programmatic);
+                }
+                else if (!focus(FocusNavigationDirection.Previous))
+                {
+                    return focus(FocusNavigationDirection.Up);
+                }
+                else
+                {
+                    return escape();
+                }
+            });
+
+            var next = new Func<bool>(() =>
+            {
+                if (Equals(currentItem, HamburgerButton))
+                {
+                    return focus(FocusNavigationDirection.Down);
+                }
+                else if (Equals(currentItem, lastItem.FrameworkElement))
+                {
+                    return escape();
+                }
+                else if (!focus(FocusNavigationDirection.Next))
+                {
+                    return focus(FocusNavigationDirection.Down);
+                }
+                else
+                {
+                    return escape();
+                }
+            });
+
             switch (e.Key)
             {
                 case VirtualKey.Up:
-                    if (!focus(FocusNavigationDirection.Previous))
-                        focus(FocusNavigationDirection.Up);
-                    e.Handled = true;
+                case VirtualKey.GamepadDPadUp:
+
+                    if (!previous()) Debugger.Break();
                     break;
 
                 case VirtualKey.Down:
-                    if (!focus(FocusNavigationDirection.Next))
-                        focus(FocusNavigationDirection.Down);
-                    e.Handled = true;
+                case VirtualKey.GamepadDPadDown:
+
+                    if (!next()) Debugger.Break();
                     break;
 
                 case VirtualKey.Right:
-                    if (!focus(FocusNavigationDirection.Right))
-                        focus(FocusNavigationDirection.Next);
-                    e.Handled = true;
+                case VirtualKey.GamepadDPadRight:
+
+                    if (!next()) Debugger.Break();
                     break;
 
                 case VirtualKey.Left:
-                    if (!focus(FocusNavigationDirection.Left))
-                        focus(FocusNavigationDirection.Previous);
-                    e.Handled = true;
+                case VirtualKey.GamepadDPadLeft:
+
+                    if (!previous()) Debugger.Break();
                     break;
 
                 case VirtualKey.Tab:
+
                     var shiftState = CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Shift);
-                    var shiftDown = (shiftState & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
-                    if (shiftDown)
+                    if (Equals(shiftState & CoreVirtualKeyStates.Down, CoreVirtualKeyStates.Down))
                     {
-                        if (!focus(FocusNavigationDirection.Previous))
-                            focus(FocusNavigationDirection.Up);
+                        if (!previous()) Debugger.Break();
                     }
                     else
                     {
-                        if (!focus(FocusNavigationDirection.Next))
-                            focus(FocusNavigationDirection.Down);
+                        if (!next()) Debugger.Break();
                     }
-                    e.Handled = true;
                     break;
 
-                case VirtualKey.Space: // not firing
+                case VirtualKey.Space:
                 case VirtualKey.Enter:
-                    if (item is ToggleButton)
+                case VirtualKey.GamepadA:
+
+                    if (currentItem is ToggleButton)
                     {
-                        var data = (item as ToggleButton).DataContext as HamburgerButtonInfo;
-                        if (data != null && data != Selected)
+                        var info = new InfoElement(currentItem);
+                        if (info?.HamburgerButtonInfo != Selected)
                         {
-                            NavButton_Tapped(item, new TappedRoutedEventArgs());
-                            NavButtonChecked(item, new RoutedEventArgs());
-                            Selected = data;
+                            NavButton_Tapped(currentItem, new TappedRoutedEventArgs());
+                            NavButtonChecked(currentItem, new RoutedEventArgs());
+                            Selected = info.HamburgerButtonInfo;
                         }
                     }
-                    e.Handled = true;
                     break;
 
-                //case VirtualKey.Escape:
-                //    var i = PrimaryButtonContainer.Items.FirstOrDefault();
-                //    if (i != null)
-                //    {
-                //        var c = PrimaryButtonContainer.ContainerFromItem(i) as ToggleButton;
-                //        c?.Focus(FocusState.Programmatic);
-                //    }
-                //    if (ShellSplitView.PanePlacement == SplitViewPanePlacement.Left)
-                //    {
-                //        FocusManager.TryMoveFocus(FocusNavigationDirection.Right);
-                //    }
-                //    else
-                //    {
-                //        FocusManager.TryMoveFocus(FocusNavigationDirection.Left);
-                //    }
-                //    break;
+                case VirtualKey.Escape:
+                case VirtualKey.GamepadB:
 
-                default:
-                    base.OnKeyDown(e);
+                    if (!escape()) Debugger.Break();
                     break;
             }
         }
