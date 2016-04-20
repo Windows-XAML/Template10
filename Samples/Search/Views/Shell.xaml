@@ -75,8 +75,8 @@
 
         <Controls:ModalDialog x:Name="LoginModal" CanBackButtonDismiss="False" DisableBackButtonWhenModal="True">
             <Controls:ModalDialog.ModalContent>
-                <sample:LoginPart x:Name="loginPart" HorizontalAlignment="Left" VerticalAlignment="Stretch"
-                    HideRequested="LoginHide" LoggedIn="LoginLoggedIn" Margin="48,0,0,0" />
+                <sample:LoginPart x:Name="loginPart" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    HideRequested="LoginHide" LoggedIn="LoginLoggedIn"  />
             </Controls:ModalDialog.ModalContent>
         </Controls:ModalDialog>
 
