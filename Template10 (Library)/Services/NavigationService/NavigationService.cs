@@ -23,6 +23,7 @@ namespace Template10.Services.NavigationService
         public FrameFacade FrameFacade => FrameFacadeInternal;
         public Frame Frame => FrameFacade.Frame;
         object LastNavigationParameter { get; set; }
+        object LastNavigationParameterString { get; set; }
         string LastNavigationType { get; set; }
         public object Content => Frame.Content;
 
@@ -63,16 +64,23 @@ namespace Template10.Services.NavigationService
             };
             FrameFacadeInternal.Navigated += async (s, e) =>
             {
-                var parameter = SerializationService.Deserialize(e.Parameter?.ToString());
+                object parameter;
+                string parameterString = e.Parameter?.ToString();
                 var currentContent = FrameFacadeInternal.Frame.Content;
-                if (Equals(e.Parameter?.ToString(), SerializationService.Serialize(LastNavigationParameter)))
+                if (string.Equals(parameterString, LastNavigationParameterString))
+                {
                     parameter = LastNavigationParameter;
+                }
+                else
+                {
+                    parameter = SerializationService.Deserialize(parameterString);
+                }
                 await WindowWrapper.Current().Dispatcher.DispatchAsync(async () =>
                 {
                     try
                     {
                         if (currentContent == FrameFacadeInternal.Frame.Content)
-                            await NavigateToAsync(e.NavigationMode, parameter, FrameFacadeInternal.Frame.Content);
+                            await NavigateToAsync(e.NavigationMode, parameter, parameterString, FrameFacadeInternal.Frame.Content);
                     }
                     catch (Exception ex)
                     {
@@ -153,13 +161,21 @@ namespace Template10.Services.NavigationService
             }
         }
 
-        async Task NavigateToAsync(NavigationMode mode, object parameter, object frameContent = null)
+        async Task NavigateToAsync(NavigationMode mode, object parameter, string parameterString = null, object frameContent = null)
         {
             DebugWrite($"Mode: {mode}, Parameter: {parameter} FrameContent: {frameContent}");
 
             frameContent = frameContent ?? FrameFacadeInternal.Frame.Content;
 
-            LastNavigationParameter = parameter;
+            if (!ReferenceEquals(LastNavigationParameter, parameter))
+            {
+                LastNavigationParameter = parameter;
+                if (parameterString == null)
+                {
+                    parameterString = SerializationService.Serialize(parameter);
+                }
+                LastNavigationParameterString = parameterString;
+            }
             LastNavigationType = frameContent.GetType().FullName;
 
             var page = frameContent as Page;
@@ -228,10 +244,13 @@ namespace Template10.Services.NavigationService
             if ((page.FullName == LastNavigationType) && (parameter?.Equals(LastNavigationParameter) ?? false))
                 return false;
 
-            parameter = SerializationService.Serialize(parameter);
+            string parameterString = SerializationService.Serialize(parameter);
+
+            LastNavigationParameter = parameter;
+            LastNavigationParameterString = parameterString;
 
             await Task.CompletedTask;
-            return FrameFacadeInternal.Navigate(page, parameter, infoOverride);
+            return FrameFacadeInternal.Navigate(page, parameterString, infoOverride);
         }
 
         public async void Navigate(Type page, object parameter = null, NavigationTransitionInfo infoOverride = null)
@@ -248,17 +267,17 @@ namespace Template10.Services.NavigationService
         /// with the Key/Type pairs for your views.The dict is
         /// shared by all NavigationServices and is stored in
         /// the BootStrapper (or Application) of the app.
-        /// 
+        ///
         /// Implementation example:
-        /// 
+        ///
         /// // define your Enum
         /// public Enum Pages { MainPage, DetailPage }
-        /// 
+        ///
         /// // setup the keys dict
         /// var keys = BootStrapper.PageKeys<Views>();
         /// keys.Add(Pages.MainPage, typeof(Views.MainPage));
         /// keys.Add(Pages.DetailPage, typeof(Views.DetailPage));
-        /// 
+        ///
         /// // use Navigate<T>()
         /// NavigationService.Navigate(Pages.MainPage);
         /// </remarks>
