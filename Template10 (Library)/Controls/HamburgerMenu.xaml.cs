@@ -395,6 +395,11 @@ namespace Template10.Controls
             {
                 Selected = commandInfo;
             }
+            else
+            {
+                ExecuteICommand(commandInfo);
+                commandInfo.RaiseTapped(new RoutedEventArgs());
+            }
         }
 
         #endregion
