@@ -89,7 +89,7 @@
                                   Visibility="{Binding Visibility, Mode=TwoWay}" />
             </DataTemplate>
 
-            <DataTemplate x:Name="NavButtonTemplate" x:DataType="local:HamburgerButtonInfo">
+            <DataTemplate x:Name="NavToggleButtonTemplate" x:DataType="local:HamburgerButtonInfo">
                 <ToggleButton Width="{Binding PaneWidth, ElementName=ThisPage}"
                               MinWidth="48"
                               MaxWidth="{x:Bind MaxWidth, Mode=TwoWay}"
@@ -102,6 +102,7 @@
                               IsChecked="{Binding IsChecked, Mode=TwoWay}"
                               IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
                               IsHitTestVisible="{Binding IsChecked, Converter={StaticResource ReverseBooleanConverer}}"
+                              IsTabStop="{Binding IsChecked, Converter={StaticResource ReverseBooleanConverer}}"
                               Loaded="NavButton_Loaded"
                               RightTapped="NavButton_RightTapped"
                               Tapped="NavButton_Tapped"
@@ -197,6 +198,72 @@
                 </ToggleButton>
             </DataTemplate>
 
+            <DataTemplate x:Name="NavCommandButtonTemplate" x:DataType="local:HamburgerButtonInfo">
+                <Button Width="{Binding PaneWidth, ElementName=ThisPage}"
+                        MinWidth="48"
+                        MaxWidth="{x:Bind MaxWidth}"
+                        AutomationProperties.Name="Hamburger Menu Item"
+                        BorderBrush="Red"
+                        BorderThickness="1"
+                        Command="{Binding NavCommand, ElementName=ThisPage}"
+                        CommandParameter="{Binding}"
+                        Content="{x:Bind Content}"
+                        Holding="NavButton_Holding"
+                        IsEnabled="{x:Bind IsEnabled}"
+                        Loaded="NavButton_Loaded"
+                        RightTapped="NavButton_RightTapped"
+                        Tapped="NavButton_Tapped"
+                        ToolTipService.ToolTip="{x:Bind Path=(ToolTipService.ToolTip)}"
+                        Visibility="{x:Bind Visibility}">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Grid x:Name="RootGrid" 
+                                  Width="{Binding PaneWidth, ElementName=ThisPage}"
+                                  Background="Transparent">
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates" CurrentStateChanged="NavButton_VisualStateChanged">
+                                        <VisualState x:Name="Normal">
+                                            <VisualState.Setters>
+                                                <Setter Target="ContentPresenter.Foreground" Value="{Binding NavButtonForeground, ElementName=ThisPage}" />
+                                                <Setter Target="ContentPresenter.Background" Value="{Binding NavButtonBackground, ElementName=ThisPage}" />
+                                            </VisualState.Setters>
+                                            <Storyboard>
+                                                <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="PointerOver">
+                                            <VisualState.Setters>
+                                                <Setter Target="ContentPresenter.Foreground" Value="{Binding NavButtonHoverForeground, ElementName=ThisPage}" />
+                                                <Setter Target="ContentPresenter.Background" Value="{Binding NavButtonHoverBackground, ElementName=ThisPage}" />
+                                            </VisualState.Setters>
+                                            <Storyboard>
+                                                <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Pressed">
+                                            <VisualState.Setters>
+                                                <Setter Target="ContentPresenter.Foreground" Value="{Binding NavButtonPressedForeground, ElementName=ThisPage}" />
+                                                <Setter Target="ContentPresenter.Background" Value="{Binding NavButtonPressedBackground, ElementName=ThisPage}" />
+                                            </VisualState.Setters>
+                                            <Storyboard>
+                                                <PointerDownThemeAnimation Storyboard.TargetName="RootGrid" />
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Disabled">
+                                            <VisualState.Setters>
+                                                <Setter Target="ContentPresenter.Foreground" Value="DimGray" />
+                                                <Setter Target="ContentPresenter.Background" Value="Transparent" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <ContentPresenter x:Name="ContentPresenter" Content="{Binding Content}" />
+                            </Grid>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </DataTemplate>
+
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -247,7 +314,8 @@
                         Margin="48,0,0,0"
                         VerticalAlignment="Top"
                         HorizontalContentAlignment="Stretch"
-                        Content="{Binding HeaderContent, ElementName=ThisPage}">
+                        Content="{Binding HeaderContent, ElementName=ThisPage}"
+                        IsTabStop="False">
             <Interactivity:Interaction.Behaviors>
                 <Core:DataTriggerBehavior Binding="{Binding Visibility, ElementName=HamburgerButton}" Value="Visible">
                     <Core:ChangePropertyAction PropertyName="Margin" TargetObject="{Binding ElementName=Header}">
@@ -271,6 +339,7 @@
                    AutomationProperties.Name="Jerry Nixon"
                    DisplayMode="Inline"
                    IsPaneOpen="False"
+                   IsTabStop="False"
                    OpenPaneLength="{x:Bind PaneWidth, Mode=OneWay}"
                    PaneBackground="Transparent">
 
@@ -327,8 +396,14 @@
                                   VerticalScrollBarVisibility="Auto">
 
                         <ItemsControl x:Name="PrimaryButtonContainer"
-                                      ItemTemplate="{StaticResource NavButtonTemplate}"
+                                      IsTabStop="False"
                                       ItemsSource="{Binding PrimaryButtons, ElementName=ThisPage}">
+
+                            <ItemsControl.ItemTemplateSelector>
+                                <local:HamburgerButtonTemplateSelected CommandTemplate="{StaticResource NavCommandButtonTemplate}"
+                                                                       LiteralTemplate="{StaticResource NavButtonLiteralTemplate}"
+                                                                       ToggleTemplate="{StaticResource NavToggleButtonTemplate}" />
+                            </ItemsControl.ItemTemplateSelector>
 
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -374,6 +449,7 @@
 
                     <ItemsControl x:Name="SecondaryButtonContainer"
                                   Grid.Row="1"
+                                  IsTabStop="False"
                                   ItemsSource="{Binding SecondaryButtons, ElementName=ThisPage}">
 
                         <ItemsControl.ItemsPanel>
@@ -385,9 +461,9 @@
                         </ItemsControl.ItemsPanel>
 
                         <ItemsControl.ItemTemplateSelector>
-                            <local:HamburgerButtonTemplateSelected CommandTemplate="{StaticResource NavButtonTemplate}"
+                            <local:HamburgerButtonTemplateSelected CommandTemplate="{StaticResource NavCommandButtonTemplate}"
                                                                    LiteralTemplate="{StaticResource NavButtonLiteralTemplate}"
-                                                                   ToggleTemplate="{StaticResource NavButtonTemplate}" />
+                                                                   ToggleTemplate="{StaticResource NavToggleButtonTemplate}" />
                         </ItemsControl.ItemTemplateSelector>
 
                         <!--  designtime  -->

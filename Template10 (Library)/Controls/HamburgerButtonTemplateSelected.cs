@@ -18,8 +18,8 @@ namespace Template10.Controls
                 case HamburgerButtonInfo.ButtonTypes.Toggle: return ToggleTemplate;
                 case HamburgerButtonInfo.ButtonTypes.Command: return CommandTemplate;
                 case HamburgerButtonInfo.ButtonTypes.Literal: return LiteralTemplate;
+                default: return ToggleTemplate;
             }
-            return base.SelectTemplateCore(item, container);
         }
         public DataTemplate ToggleTemplate { get; set; }
         public DataTemplate CommandTemplate { get; set; }
