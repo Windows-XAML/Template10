@@ -228,7 +228,15 @@ namespace Template10.Services.NavigationService
             DebugWrite();
 
             CurrentPageType = e.SourcePageType;
-            CurrentPageParam = SerializationService.Deserialize(e.Parameter?.ToString());
+            string parameterString = e.Parameter?.ToString();
+            if (string.Equals(parameterString, NavigationService.LastNavigationParameterString))
+            {
+                CurrentPageParam = NavigationService.LastNavigationParameter;
+            }
+            else
+            {
+                CurrentPageParam = SerializationService.Deserialize(parameterString);
+            }
             var args = new NavigatedEventArgs(e, Content as Page);
             if (NavigationModeHint != NavigationMode.New)
                 args.NavigationMode = NavigationModeHint;
@@ -252,7 +260,15 @@ namespace Template10.Services.NavigationService
             object parameter = null;
             try
             {
-                parameter = SerializationService.Deserialize(e.Parameter?.ToString());
+                string parameterString = e.Parameter?.ToString();
+                if (string.Equals(parameterString, NavigationService.LastNavigationParameterString))
+                {
+                    parameter = NavigationService.LastNavigationParameter;
+                }
+                else
+                {
+                    parameter = SerializationService.Deserialize(parameterString);
+                }
             }
             catch (Exception ex)
             {
