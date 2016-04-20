@@ -329,13 +329,13 @@ namespace Template10.Controls
 
         /// <summary>
         /// When IsFullScreen is true, the content is displayed on top of the SplitView and the SplitView is
-        /// not visible. Even as the user navigates (if possible) the SplitView remains hidden until 
-        /// IsFullScreen is set to false. 
+        /// not visible. Even as the user navigates (if possible) the SplitView remains hidden until
+        /// IsFullScreen is set to false.
         /// </summary>
         /// <remarks>
         /// The original intent for this property was to allow the splash screen to be visible while the
         /// remaining content loaded duing app start. In Minimal (Shell), this is still used for this purpose,
-        /// but many developers also leverage this property to view media full screen and similar use cases. 
+        /// but many developers also leverage this property to view media full screen and similar use cases.
         /// </remarks>
         void SetFullScreen(bool? manual = null)
         {
@@ -394,6 +394,11 @@ namespace Template10.Controls
             if (commandInfo.PageType != null)
             {
                 Selected = commandInfo;
+            }
+            else
+            {
+                ExecuteICommand(commandInfo);
+                commandInfo.RaiseTapped(new RoutedEventArgs());
             }
         }
 

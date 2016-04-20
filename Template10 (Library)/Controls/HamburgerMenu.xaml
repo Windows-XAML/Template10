@@ -15,7 +15,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
 
-            <Converters:ValueWhenConverter x:Name="ReverseBooleanConverer">
+            <Converters:ValueWhenConverter x:Name="ReverseBooleanConverter">
                 <Converters:ValueWhenConverter.When>
                     <x:Boolean>True</x:Boolean>
                 </Converters:ValueWhenConverter.When>
@@ -101,8 +101,8 @@
                               Holding="NavButton_Holding"
                               IsChecked="{Binding IsChecked, Mode=TwoWay}"
                               IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
-                              IsHitTestVisible="{Binding IsChecked, Converter={StaticResource ReverseBooleanConverer}}"
-                              IsTabStop="{Binding IsChecked, Converter={StaticResource ReverseBooleanConverer}}"
+                              IsHitTestVisible="{Binding IsChecked, Converter={StaticResource ReverseBooleanConverter}}"
+                              IsTabStop="{Binding IsChecked, Converter={StaticResource ReverseBooleanConverter}}"
                               Loaded="NavButton_Loaded"
                               RightTapped="NavButton_RightTapped"
                               Tapped="NavButton_Tapped"
@@ -217,7 +217,7 @@
                         Visibility="{x:Bind Visibility}">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
-                            <Grid x:Name="RootGrid" 
+                            <Grid x:Name="RootGrid"
                                   Width="{Binding PaneWidth, ElementName=ThisPage}"
                                   Background="Transparent">
                                 <VisualStateManager.VisualStateGroups>
