@@ -645,13 +645,13 @@ namespace Template10.Controls
                 case VirtualKey.Up:
                 case VirtualKey.GamepadDPadUp:
 
-                    if (!previous()) Debugger.Break();
+                    if (!(e.Handled = previous())) Debugger.Break();
                     break;
 
                 case VirtualKey.Down:
                 case VirtualKey.GamepadDPadDown:
 
-                    if (!next()) Debugger.Break();
+                    if (!(e.Handled = next())) Debugger.Break();
                     break;
 
                 case VirtualKey.Right:
@@ -660,11 +660,11 @@ namespace Template10.Controls
                     if (SecondaryButtonContainer.Items.Contains(currentItem)
                         && SecondaryButtonOrientation == Orientation.Horizontal)
                     {
-                        if (!next()) Debugger.Break();
+                        if (!(e.Handled = next())) Debugger.Break();
                     }
                     else
                     {
-                        if (!escape()) Debugger.Break();
+                        if (!(e.Handled = escape())) Debugger.Break();
                     }
                     break;
 
@@ -674,11 +674,11 @@ namespace Template10.Controls
                     if (SecondaryButtonContainer.Items.Contains(currentItem)
                        && SecondaryButtonOrientation == Orientation.Horizontal)
                     {
-                        if (!previous()) Debugger.Break();
+                        if (!(e.Handled = previous())) Debugger.Break();
                     }
                     else
                     {
-                        if (!escape()) Debugger.Break();
+                        if (!(e.Handled = escape())) Debugger.Break();
                     }
                     break;
 
@@ -687,11 +687,11 @@ namespace Template10.Controls
                     var shiftState = CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Shift);
                     if (Equals(shiftState & CoreVirtualKeyStates.Down, CoreVirtualKeyStates.Down))
                     {
-                        if (!previous()) Debugger.Break();
+                        if (!(e.Handled = previous())) Debugger.Break();
                     }
                     else
                     {
-                        if (!next()) Debugger.Break();
+                        if (!(e.Handled = next())) Debugger.Break();
                     }
                     break;
 
@@ -699,22 +699,19 @@ namespace Template10.Controls
                 case VirtualKey.Enter:
                 case VirtualKey.GamepadA:
 
-                    if (currentItem is ToggleButton)
+                    var info = new InfoElement(currentItem);
+                    if (info?.HamburgerButtonInfo != Selected)
                     {
-                        var info = new InfoElement(currentItem);
-                        if (info?.HamburgerButtonInfo != Selected)
-                        {
-                            NavButton_Tapped(currentItem, new TappedRoutedEventArgs());
-                            NavButtonChecked(currentItem, new RoutedEventArgs());
-                            Selected = info.HamburgerButtonInfo;
-                        }
+                        NavButton_Tapped(currentItem, new TappedRoutedEventArgs());
+                        NavButtonChecked(currentItem, new RoutedEventArgs());
+                        Selected = info.HamburgerButtonInfo;
                     }
                     break;
 
                 case VirtualKey.Escape:
                 case VirtualKey.GamepadB:
 
-                    if (!escape()) Debugger.Break();
+                    if (!(e.Handled = escape())) Debugger.Break();
                     break;
             }
         }
