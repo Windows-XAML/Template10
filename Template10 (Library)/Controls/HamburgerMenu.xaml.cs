@@ -236,13 +236,26 @@ namespace Template10.Controls
             {
                 pageParam = NavigationService.CurrentPageParam;
             }
-            else if (pageParam.ToString().StartsWith("{"))
+            else
             {
-                try
+                string pageParamString = pageParam.ToString();
+                if (pageParamString.StartsWith("{"))
                 {
-                    pageParam = NavigationService.FrameFacade.SerializationService.Deserialize(pageParam.ToString());
+                    try
+                    {
+                        if (string.Equals(pageParamString, NavigationService.LastNavigationParameterString))
+                        {
+                            pageParam = NavigationService.LastNavigationParameter;
+                        }
+                        else
+                        {
+                            pageParam = NavigationService.FrameFacade.SerializationService.Deserialize(pageParamString);
+                        }
+                    }
+                    catch
+                    {
+                    }
                 }
-                catch { }
             }
 
             // add parameter match
