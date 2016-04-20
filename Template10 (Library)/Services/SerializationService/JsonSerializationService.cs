@@ -30,6 +30,8 @@ namespace Template10.Services.SerializationService
                 TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple,
                 PreserveReferencesHandling = PreserveReferencesHandling.All,
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ObjectCreationHandling = ObjectCreationHandling.Auto,
+                ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor
             };
         }
 
