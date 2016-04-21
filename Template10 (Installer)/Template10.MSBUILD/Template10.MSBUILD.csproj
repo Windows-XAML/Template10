@@ -74,7 +74,7 @@
   </Target>
   -->
   <Target Name="AfterBuild">
-    <Copy SourceFiles="$(TargetPath)" DestinationFiles="$(SolutionDir)Template10 (Installer)\Lib\$(TargetFileName)" OverwriteReadOnlyFiles="true">
+    <Copy SourceFiles="$(TargetPath)" DestinationFiles="$(SolutionDir)Lib\$(TargetFileName)" OverwriteReadOnlyFiles="true">
     </Copy>
   </Target>
 </Project>
