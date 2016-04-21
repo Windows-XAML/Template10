@@ -192,7 +192,7 @@ namespace Template10.MSBUILD
         /// Adds the template10 nuget.
         /// </summary>
         /// <param name="jsonProj">The json proj.</param>
-        private void AddTemplate10Nuget(string jsonProj)
+        public void AddTemplate10Nuget(string jsonProj)
         {
             string txt = FileHelper.ReadFile(jsonProj);
 
@@ -201,13 +201,13 @@ namespace Template10.MSBUILD
                 return;
             }
 
-            string template10Txt = Constants.TEMPLATE10PROJECTJSON;
-            string newtonsoft = Constants.NEWTONSOFT_PROJECTJSON;
-            txt = txt.Insert(txt.IndexOf(newtonsoft) + newtonsoft.Length, ",\n\r" + template10Txt);
+            int startIndex = txt.IndexOf(@"""dependencies"": {");
 
+            string template10Txt = Constants.TEMPLATE10PROJECTJSON;
+            int insertIndex = txt.IndexOf("},", startIndex) - 4;
+            txt = txt.Insert(insertIndex, "," + Environment.NewLine + template10Txt);
             FileHelper.WriteFile(jsonProj, txt);
         }
-
 
         /// <summary>
         /// Sets up the help file, basically changing the redirect.
