@@ -30,14 +30,14 @@ namespace Template10.Common
 
         private CoreDispatcher dispatcher;
 
-        public async Task DispatchAsync(Action action, int delayms = 0)
+        public async Task DispatchAsync(Action action, int delayms = 0, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal)
         {
             await Task.Delay(delayms);
-            if (dispatcher.HasThreadAccess) { action(); }
+            if (dispatcher.HasThreadAccess && priority == CoreDispatcherPriority.Normal) { action(); }
             else
             {
                 var tcs = new TaskCompletionSource<object>();
-                await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                await dispatcher.RunAsync(priority, () =>
                 {
                     try { action(); tcs.TrySetResult(null); }
                     catch (Exception ex) { tcs.TrySetException(ex); }
@@ -46,14 +46,14 @@ namespace Template10.Common
             }
         }
 
-        public async Task DispatchAsync(Func<Task> func, int delayms = 0)
+        public async Task DispatchAsync(Func<Task> func, int delayms = 0, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal)
         {
             await Task.Delay(delayms);
-            if (dispatcher.HasThreadAccess) { await func?.Invoke(); }
+            if (dispatcher.HasThreadAccess && priority == CoreDispatcherPriority.Normal) { await func?.Invoke(); }
             else
             {
                 var tcs = new TaskCompletionSource<object>();
-                await dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                await dispatcher.RunAsync(priority, async () =>
                 {
                     try { await func(); tcs.TrySetResult(null); }
                     catch (Exception ex) { tcs.TrySetException(ex); }
@@ -62,14 +62,14 @@ namespace Template10.Common
             }
         }
 
-        public async Task<T> DispatchAsync<T>(Func<T> func, int delayms = 0)
+        public async Task<T> DispatchAsync<T>(Func<T> func, int delayms = 0, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal)
         {
             await Task.Delay(delayms);
-            if (dispatcher.HasThreadAccess) { return func(); }
+            if (dispatcher.HasThreadAccess && priority == CoreDispatcherPriority.Normal) { return func(); }
             else
             {
                 var tcs = new TaskCompletionSource<T>();
-                await dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                await dispatcher.RunAsync(priority, () =>
                 {
                     try { tcs.TrySetResult(func()); }
                     catch (Exception ex) { tcs.TrySetException(ex); }
@@ -79,24 +79,24 @@ namespace Template10.Common
             }
         }
 
-        public async void Dispatch(Action action, int delayms = 0)
+        public async void Dispatch(Action action, int delayms = 0, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal)
         {
             await Task.Delay(delayms);
-            if (dispatcher.HasThreadAccess) { action(); }
+            if (dispatcher.HasThreadAccess && priority == CoreDispatcherPriority.Normal) { action(); }
             else
             {
-                dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => action()).AsTask().Wait();
+                dispatcher.RunAsync(priority, () => action()).AsTask().Wait();
             }
         }
 
-        public T Dispatch<T>(Func<T> action, int delayms = 0) where T : class
+        public T Dispatch<T>(Func<T> action, int delayms = 0, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal) where T : class
         {
-            Task.Delay(delayms);
-            if (dispatcher.HasThreadAccess) { return action(); }
+            Task.Delay(delayms).Wait();
+            if (dispatcher.HasThreadAccess && priority == CoreDispatcherPriority.Normal) { return action(); }
             else
             {
                 T result = null;
-                dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => result = action()).AsTask().Wait();
+                dispatcher.RunAsync(priority, () => result = action()).AsTask().Wait();
                 return result;
             }
         }
