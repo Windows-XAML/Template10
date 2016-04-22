@@ -577,8 +577,7 @@ namespace Template10.Controls
         private void HamburgerMenu_KeyDown(object sender, KeyRoutedEventArgs e)
         {
             var currentItem = FocusManager.GetFocusedElement() as FrameworkElement;
-            var firstItem = LoadedNavButtons.FirstOrDefault(x => x.HamburgerButtonInfo == (PrimaryButtons.Any() ? PrimaryButtons.FirstOrDefault() : SecondaryButtons.FirstOrDefault()));
-            var lastItem = LoadedNavButtons.FirstOrDefault(x => x.HamburgerButtonInfo == (SecondaryButtons.Any() ? SecondaryButtons.LastOrDefault() : PrimaryButtons.LastOrDefault()));
+            var lastItem = LoadedNavButtons.FirstOrDefault(x => x.HamburgerButtonInfo == ( SecondaryButtons.LastOrDefault(a=>a != Selected) ?? PrimaryButtons.LastOrDefault(a => a != Selected)));
 
             var focus = new Func<FocusNavigationDirection, bool>(d =>
             {
@@ -623,10 +622,6 @@ namespace Template10.Controls
                 {
                     return true;
                 }
-                else if (Equals(currentItem, firstItem.FrameworkElement))
-                {
-                    return HamburgerButton.Focus(FocusState.Programmatic);
-                }
                 else if (focus(FocusNavigationDirection.Previous) || focus(FocusNavigationDirection.Up))
                 {
                     return true;
@@ -642,10 +637,6 @@ namespace Template10.Controls
                 if (Equals(currentItem, HamburgerButton))
                 {
                     return focus(FocusNavigationDirection.Down);
-                }
-                else if (Equals(currentItem, lastItem.FrameworkElement))
-                {
-                    return escape();
                 }
                 else if (focus(FocusNavigationDirection.Next) || focus(FocusNavigationDirection.Down))
                 {
@@ -673,7 +664,6 @@ namespace Template10.Controls
 
                 case VirtualKey.Right:
                 case VirtualKey.GamepadDPadRight:
-
                     if (SecondaryButtonContainer.Items.Contains(currentItem?.DataContext)
                         && SecondaryButtonOrientation == Orientation.Horizontal)
                     {
