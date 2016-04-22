@@ -100,5 +100,61 @@ namespace Template10.Common
                 return result;
             }
         }
+
+        public async Task DispatchIdleAsync(Action action, int delayms = 0)
+        {
+            await Task.Delay(delayms);
+
+            var tcs = new TaskCompletionSource<object>();
+            await dispatcher.RunIdleAsync(delegate
+            {
+                try { action(); tcs.TrySetResult(null); }
+                catch (Exception ex) { tcs.TrySetException(ex); }
+            });
+            await tcs.Task;
+        }
+
+        public async Task DispatchIdleAsync(Func<Task> func, int delayms = 0)
+        {
+            await Task.Delay(delayms);
+
+            var tcs = new TaskCompletionSource<object>();
+            await dispatcher.RunIdleAsync(async delegate
+            {
+                try { await func(); tcs.TrySetResult(null); }
+                catch (Exception ex) { tcs.TrySetException(ex); }
+            });
+            await tcs.Task;
+        }
+
+        public async Task<T> DispatchIdleAsync<T>(Func<T> func, int delayms = 0)
+        {
+            await Task.Delay(delayms);
+
+            var tcs = new TaskCompletionSource<T>();
+            await dispatcher.RunIdleAsync(delegate
+            {
+                try { tcs.TrySetResult(func()); }
+                catch (Exception ex) { tcs.TrySetException(ex); }
+            });
+            await tcs.Task;
+            return tcs.Task.Result;
+        }
+
+        public async void DispatchIdle(Action action, int delayms = 0)
+        {
+            await Task.Delay(delayms);
+
+            dispatcher.RunIdleAsync(delegate { action(); }).AsTask().Wait();
+        }
+
+        public T DispatchIdle<T>(Func<T> action, int delayms = 0) where T : class
+        {
+            Task.Delay(delayms).Wait();
+
+            T result = null;
+            dispatcher.RunIdleAsync(delegate { result = action(); }).AsTask().Wait();
+            return result;
+        }
     }
 }
