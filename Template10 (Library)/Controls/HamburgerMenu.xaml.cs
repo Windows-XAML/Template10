@@ -319,7 +319,6 @@ namespace Template10.Controls
                 {
                     return;
                 }
-                IsOpen = false;
             }
 
             // that's it if null
