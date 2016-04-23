@@ -354,6 +354,7 @@ namespace Template10.Controls
             var frame = NavigationService?.Frame;
             if (manual ?? IsFullScreen)
             {
+                HamburgerButtonGrid.Visibility = Visibility.Collapsed;
                 ShellSplitView.IsHitTestVisible = ShellSplitView.IsEnabled = false;
                 AutomationProperties.SetAccessibilityView(ShellSplitView, Windows.UI.Xaml.Automation.Peers.AccessibilityView.Raw);
                 ShellSplitView.Content = null;
@@ -364,6 +365,7 @@ namespace Template10.Controls
             }
             else
             {
+                HamburgerButtonGrid.Visibility = Visibility.Visible;
                 ShellSplitView.IsHitTestVisible = ShellSplitView.IsEnabled = true;
                 AutomationProperties.SetAccessibilityView(ShellSplitView, Windows.UI.Xaml.Automation.Peers.AccessibilityView.Control);
                 if (RootGrid.Children.Contains(frame) && frame != null)
