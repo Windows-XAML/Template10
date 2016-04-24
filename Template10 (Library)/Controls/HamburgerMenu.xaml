@@ -27,7 +27,7 @@
                 </Converters:ValueWhenConverter.Otherwise>
             </Converters:ValueWhenConverter>
 
-            <Style x:Key="HamburgerButtonStyle" TargetType="Button">
+            <Style x:Key="DefaultHamburgerButtonStyle" TargetType="Button">
                 <Setter Property="TabIndex" Value="1" />
                 <Setter Property="Height" Value="48" />
                 <Setter Property="Width" Value="48" />
@@ -349,7 +349,7 @@
                     Command="{x:Bind HamburgerCommand}"
                     Foreground="{x:Bind HamburgerForeground, FallbackValue=White, Mode=OneWay}"
                     RenderTransformOrigin="0.5,0.5"
-                    Style="{StaticResource HamburgerButtonStyle}">
+                    Style="{x:Bind HamburgerButtonStyle, Mode=OneWay}">
                 <FontIcon FontSize="20" Glyph="&#xE700;" />
             </Button>
         </Grid>

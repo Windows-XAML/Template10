@@ -440,6 +440,18 @@ namespace Template10.Controls
             DependencyProperty.Register(nameof(SecondaryButtons), typeof(ObservableCollection<HamburgerButtonInfo>),
                 typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(SecondaryButtons), e)));
 
+        /// <summary>
+        /// HamburgerButtonStyle is the style is used for the hamburger menu button.
+        /// </summary>
+        public Style HamburgerButtonStyle
+        {
+            get { return (Style)GetValue(HamburgerButtonStyleProperty); }
+            set { SetValue(HamburgerButtonStyleProperty, value); }
+        }
+        public static readonly DependencyProperty HamburgerButtonStyleProperty =
+            DependencyProperty.Register(nameof(HamburgerButtonStyle), typeof(Style),
+                typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(HamburgerButtonStyle), e)));
+
         // manage change
         private readonly static Dictionary<string, PropertyChangeHandlerDelegate> PropertyChangedHandlers
             = new Dictionary<string, PropertyChangeHandlerDelegate>();

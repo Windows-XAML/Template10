@@ -110,6 +110,12 @@ namespace Template10.Controls
 
             // initial styles
             RefreshStyles(RequestedTheme);
+
+            // apply default component styles
+            if (HamburgerButtonStyle == null)
+            {
+                HamburgerButtonStyle = (Style)Resources["DefaultHamburgerButtonStyle"];
+            }
         }
 
         void HamburgerMenu_LayoutUpdated(object sender, object e)
