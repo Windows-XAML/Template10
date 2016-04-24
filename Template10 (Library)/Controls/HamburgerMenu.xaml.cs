@@ -116,6 +116,14 @@ namespace Template10.Controls
             {
                 HamburgerButtonStyle = (Style)Resources["DefaultHamburgerButtonStyle"];
             }
+            if (NavToggleButtonControlTemplate == null)
+            {
+                NavToggleButtonControlTemplate = (ControlTemplate)Resources["DefaultNavToggleButtonControlTemplate"];
+            }
+            if (NavCommandButtonControlTemplate == null)
+            {
+                NavCommandButtonControlTemplate = (ControlTemplate)Resources["DefaultNavCommandButtonControlTemplate"];
+            }
         }
 
         void HamburgerMenu_LayoutUpdated(object sender, object e)

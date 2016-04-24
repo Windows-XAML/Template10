@@ -165,7 +165,6 @@
                 </Grid>
             </ControlTemplate>
 
-
             <ControlTemplate x:Key="DefaultNavCommandButtonControlTemplate" TargetType="Button">
                 <Grid x:Name="RootGrid"
                       Width="{Binding PaneWidth, ElementName=ThisPage}"
@@ -241,7 +240,7 @@
                               ToolTipService.ToolTip="{Binding Path=(ToolTipService.ToolTip)}"
                               Unchecked="NavButtonUnchecked"
                               Visibility="{Binding Visibility, Mode=TwoWay}"
-                              Template="{StaticResource DefaultNavToggleButtonControlTemplate}" />
+                              Template="{Binding NavToggleButtonControlTemplate, ElementName=ThisPage}" />
             </DataTemplate>
 
             <DataTemplate x:Name="NavCommandButtonTemplate" x:DataType="local:HamburgerButtonInfo">
@@ -261,7 +260,7 @@
                         TabIndex="2"
                         ToolTipService.ToolTip="{x:Bind Path=(ToolTipService.ToolTip)}"
                         Visibility="{x:Bind Visibility}"
-                        Template="{StaticResource DefaultNavCommandButtonControlTemplate}" />
+                        Template="{Binding NavCommandButtonControlTemplate, ElementName=ThisPage}" />
             </DataTemplate>
 
         </ResourceDictionary>
