@@ -418,7 +418,7 @@ namespace Template10.Controls
         int NavButtonCount => PrimaryButtons.Count + SecondaryButtons.Count;
         bool AllNavButtonsAreLoaded => LoadedNavButtons.Count >= NavButtonCount;
         readonly List<InfoElement> LoadedNavButtons = new List<InfoElement>();
-
+        public List<InfoElement> LoadedNavigationButtons { get { return LoadedNavButtons; } }
         public class InfoElement
         {
             public InfoElement(object sender)
