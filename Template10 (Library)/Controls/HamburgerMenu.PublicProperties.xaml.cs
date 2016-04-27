@@ -453,5 +453,24 @@ namespace Template10.Controls
                 item.Value.Invoke(e);
             }
         }
+
+        public bool IsSettingToNormalVisualState
+        {
+            get { return (bool)GetValue(SetToNormalVisualStateProperty); }
+            set { SetValue(SetToNormalVisualStateProperty, value); }
+        }
+        public static readonly DependencyProperty SetToNormalVisualStateProperty =
+            DependencyProperty.Register(nameof(IsSettingToNormalVisualState), typeof(bool),
+        typeof(HamburgerMenu), new PropertyMetadata(false, async (d, e) => {
+
+            Changed(nameof(IsSettingToNormalVisualState), e);
+
+            if ((bool)e.NewValue)
+            {
+                // If set to Normal visual state, persist it for sometime and negate it.
+                await Task.Delay(50);
+                (d as HamburgerMenu).IsSettingToNormalVisualState = false;
+            }
+        }));
     }
 }
