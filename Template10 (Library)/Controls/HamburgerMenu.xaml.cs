@@ -649,6 +649,11 @@ namespace Template10.Controls
                 }
             });
 
+            if (IsFullScreen)
+            {
+                return;
+            }
+
             switch (e.Key)
             {
                 case VirtualKey.Up:
