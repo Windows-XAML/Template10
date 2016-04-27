@@ -26,10 +26,10 @@ namespace Template10.Mvvm
         }
 
         [JsonIgnore]
-        public INavigationService NavigationService { get; set; }
+        public virtual INavigationService NavigationService { get; set; }
 
         [JsonIgnore]
-        public IDispatcherWrapper Dispatcher { get; set; }
+        public virtual IDispatcherWrapper Dispatcher { get; set; }
 
         [JsonIgnore]
         public IStateItems SessionState { get; set; }
