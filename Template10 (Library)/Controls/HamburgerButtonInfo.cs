@@ -128,7 +128,7 @@ namespace Template10.Controls
             set { SetValue(IsCheckedProperty, value); }
         }
         public static readonly DependencyProperty IsCheckedProperty =
-            DependencyProperty.Register(nameof(IsChecked), typeof(bool?),
+            DependencyProperty.Register(nameof(IsChecked), typeof(object),
                 typeof(HamburgerButtonInfo), new PropertyMetadata(false));
 
         public UIElement Content
