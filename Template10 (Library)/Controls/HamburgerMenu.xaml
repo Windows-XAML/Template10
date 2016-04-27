@@ -42,9 +42,9 @@
                                 <VisualStateManager.VisualStateGroups>
                                     <VisualStateGroup x:Name="CommonStates">
                                         <VisualState x:Name="Normal">
-                                            <Storyboard>
+                                            <!--<Storyboard>
                                                 <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
-                                            </Storyboard>
+                                            </Storyboard>-->
                                         </VisualState>
                                         <VisualState x:Name="PointerOver">
                                             <VisualState.Setters>
@@ -122,27 +122,27 @@
                                                 <Setter Target="ContentPresenter.Foreground" Value="{Binding NavButtonForeground, ElementName=ThisPage}" />
                                                 <Setter Target="ContentPresenter.Background" Value="{Binding NavButtonBackground, ElementName=ThisPage}" />
                                             </VisualState.Setters>
-                                            <Storyboard>
+                                            <!--<Storyboard>
                                                 <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
-                                            </Storyboard>
+                                            </Storyboard>-->
                                         </VisualState>
                                         <VisualState x:Name="PointerOver">
                                             <VisualState.Setters>
                                                 <Setter Target="ContentPresenter.Foreground" Value="{Binding NavButtonHoverForeground, ElementName=ThisPage}" />
                                                 <Setter Target="ContentPresenter.Background" Value="{Binding NavButtonHoverBackground, ElementName=ThisPage}" />
                                             </VisualState.Setters>
-                                            <Storyboard>
+                                            <!--<Storyboard>
                                                 <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
-                                            </Storyboard>
+                                            </Storyboard>-->
                                         </VisualState>
                                         <VisualState x:Name="Pressed">
                                             <VisualState.Setters>
                                                 <Setter Target="ContentPresenter.Foreground" Value="{Binding NavButtonPressedForeground, ElementName=ThisPage}" />
                                                 <Setter Target="ContentPresenter.Background" Value="{Binding NavButtonPressedBackground, ElementName=ThisPage}" />
                                             </VisualState.Setters>
-                                            <Storyboard>
+                                            <!--<Storyboard>
                                                 <PointerDownThemeAnimation Storyboard.TargetName="RootGrid" />
-                                            </Storyboard>
+                                            </Storyboard>-->
                                         </VisualState>
                                         <VisualState x:Name="Checked">
                                             <VisualState.Setters>
@@ -150,9 +150,9 @@
                                                 <Setter Target="ContentPresenter.Background" Value="{Binding NavButtonCheckedBackground, ElementName=ThisPage}" />
                                                 <Setter Target="Indicator.Visibility" Value="Visible" />
                                             </VisualState.Setters>
-                                            <Storyboard>
+                                            <!--<Storyboard>
                                                 <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
-                                            </Storyboard>
+                                            </Storyboard>-->
                                         </VisualState>
                                         <VisualState x:Name="CheckedPointerOver">
                                             <VisualState.Setters>
@@ -228,27 +228,27 @@
                                                 <Setter Target="ContentPresenter.Foreground" Value="{Binding NavButtonForeground, ElementName=ThisPage}" />
                                                 <Setter Target="ContentPresenter.Background" Value="{Binding NavButtonBackground, ElementName=ThisPage}" />
                                             </VisualState.Setters>
-                                            <Storyboard>
+                                            <!--<Storyboard>
                                                 <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
-                                            </Storyboard>
+                                            </Storyboard>-->
                                         </VisualState>
                                         <VisualState x:Name="PointerOver">
                                             <VisualState.Setters>
                                                 <Setter Target="ContentPresenter.Foreground" Value="{Binding NavButtonHoverForeground, ElementName=ThisPage}" />
                                                 <Setter Target="ContentPresenter.Background" Value="{Binding NavButtonHoverBackground, ElementName=ThisPage}" />
                                             </VisualState.Setters>
-                                            <Storyboard>
+                                            <!--<Storyboard>
                                                 <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
-                                            </Storyboard>
+                                            </Storyboard>-->
                                         </VisualState>
                                         <VisualState x:Name="Pressed">
                                             <VisualState.Setters>
                                                 <Setter Target="ContentPresenter.Foreground" Value="{Binding NavButtonPressedForeground, ElementName=ThisPage}" />
                                                 <Setter Target="ContentPresenter.Background" Value="{Binding NavButtonPressedBackground, ElementName=ThisPage}" />
                                             </VisualState.Setters>
-                                            <Storyboard>
+                                            <!--<Storyboard>
                                                 <PointerDownThemeAnimation Storyboard.TargetName="RootGrid" />
-                                            </Storyboard>
+                                            </Storyboard>-->
                                         </VisualState>
                                         <VisualState x:Name="Disabled">
                                             <VisualState.Setters>
@@ -357,11 +357,11 @@
         <SplitView x:Name="ShellSplitView"
                    Grid.Column="0"
                    AutomationProperties.Name="Jerry Nixon"
+                   Background="{x:Bind NavAreaBackground, Mode=OneWay}"
                    DisplayMode="Inline"
                    IsPaneOpen="False"
                    IsTabStop="False"
-                   OpenPaneLength="{x:Bind PaneWidth, Mode=OneWay}"
-                   Background="{x:Bind NavAreaBackground, Mode=OneWay}">
+                   OpenPaneLength="{x:Bind PaneWidth, Mode=OneWay}">
 
             <SplitView.Pane>
 
@@ -411,7 +411,7 @@
                         </Core:DataTriggerBehavior>
                     </Interactivity:Interaction.Behaviors>
 
-                    <ScrollViewer Grid.Row="0" 
+                    <ScrollViewer Grid.Row="0"
                                   AutomationProperties.AccessibilityView="Raw"
                                   VerticalScrollBarVisibility="Auto">
 
