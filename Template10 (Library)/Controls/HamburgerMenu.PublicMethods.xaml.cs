@@ -62,26 +62,26 @@ namespace Template10.Controls
                 case ElementTheme.Default:
                 case ElementTheme.Dark:
                     {
-                        NavAreaBackground = Colors.Gainsboro.Darken(ColorUtils.Add._80p).ToSolidColorBrush();
-                        SecondarySeparator = Colors.DimGray.ToSolidColorBrush();
-                        PaneBorderBrush = Colors.Transparent.ToSolidColorBrush();
-                        PaneBorderThickness = new Thickness(0);
+                        this.SetIfNotSet(NavAreaBackgroundProperty, Colors.Gainsboro.Darken(ColorUtils.Add._80p).ToSolidColorBrush());
+                        this.SetIfNotSet(SecondarySeparatorProperty, Colors.DimGray.ToSolidColorBrush());
+                        this.SetIfNotSet(PaneBorderBrushProperty, Colors.Transparent.ToSolidColorBrush());
+                        this.SetIfNotSet(PaneBorderThicknessProperty, new Thickness(0));
 
-                        HamburgerForeground = Colors.White.ToSolidColorBrush();
-                        HamburgerBackground = color?.ToSolidColorBrush();
+                        this.SetIfNotSet(HamburgerForegroundProperty, Colors.White.ToSolidColorBrush());
+                        this.SetIfNotSet(HamburgerBackgroundProperty, color?.ToSolidColorBrush());
 
-                        NavButtonForeground = Colors.White.Darken(ColorUtils.Add._20p).ToSolidColorBrush();
-                        NavButtonBackground = Colors.Transparent.ToSolidColorBrush();
+                        this.SetIfNotSet(NavButtonForegroundProperty, Colors.White.Darken(ColorUtils.Add._20p).ToSolidColorBrush());
+                        this.SetIfNotSet(NavButtonBackgroundProperty, Colors.Transparent.ToSolidColorBrush());
 
-                        NavButtonCheckedForeground = Colors.White.ToSolidColorBrush();
-                        NavButtonCheckedBackground = Colors.Transparent.ToSolidColorBrush();
-                        NavButtonCheckedIndicatorBrush = Colors.White.ToSolidColorBrush();
+                        this.SetIfNotSet(NavButtonCheckedForegroundProperty, Colors.White.ToSolidColorBrush());
+                        this.SetIfNotSet(NavButtonCheckedBackgroundProperty, Colors.Transparent.ToSolidColorBrush());
+                        this.SetIfNotSet(NavButtonCheckedIndicatorBrushProperty, Colors.White.ToSolidColorBrush());
 
-                        NavButtonPressedForeground = Colors.White.Darken(ColorUtils.Add._30p).ToSolidColorBrush();
-                        NavButtonPressedBackground = Colors.Transparent.ToSolidColorBrush();
+                        this.SetIfNotSet(NavButtonPressedForegroundProperty, Colors.White.Darken(ColorUtils.Add._30p).ToSolidColorBrush());
+                        this.SetIfNotSet(NavButtonPressedBackgroundProperty, Colors.Transparent.ToSolidColorBrush());
 
-                        NavButtonHoverForeground = Colors.White.Darken(ColorUtils.Add._10p).ToSolidColorBrush();
-                        NavButtonHoverBackground = Colors.Transparent.ToSolidColorBrush();
+                        this.SetIfNotSet(NavButtonHoverForegroundProperty, Colors.White.Darken(ColorUtils.Add._10p).ToSolidColorBrush());
+                        this.SetIfNotSet(NavButtonHoverBackgroundProperty, Colors.Transparent.ToSolidColorBrush());
                         break;
                     }
             }

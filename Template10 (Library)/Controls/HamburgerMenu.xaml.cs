@@ -333,7 +333,6 @@ namespace Template10.Controls
                 {
                     return;
                 }
-                IsOpen = false;
             }
 
             // that's it if null
@@ -368,6 +367,7 @@ namespace Template10.Controls
             var frame = NavigationService?.Frame;
             if (manual ?? IsFullScreen)
             {
+                HamburgerButtonGrid.Opacity = 0;
                 ShellSplitView.IsHitTestVisible = ShellSplitView.IsEnabled = false;
                 AutomationProperties.SetAccessibilityView(ShellSplitView, Windows.UI.Xaml.Automation.Peers.AccessibilityView.Raw);
                 ShellSplitView.Content = null;
@@ -378,6 +378,7 @@ namespace Template10.Controls
             }
             else
             {
+                HamburgerButtonGrid.Opacity = 1;
                 ShellSplitView.IsHitTestVisible = ShellSplitView.IsEnabled = true;
                 AutomationProperties.SetAccessibilityView(ShellSplitView, Windows.UI.Xaml.Automation.Peers.AccessibilityView.Control);
                 if (RootGrid.Children.Contains(frame) && frame != null)
@@ -591,8 +592,7 @@ namespace Template10.Controls
         private void HamburgerMenu_KeyDown(object sender, KeyRoutedEventArgs e)
         {
             var currentItem = FocusManager.GetFocusedElement() as FrameworkElement;
-            var firstItem = LoadedNavButtons.FirstOrDefault(x => x.HamburgerButtonInfo == (PrimaryButtons.Any() ? PrimaryButtons.FirstOrDefault() : SecondaryButtons.FirstOrDefault()));
-            var lastItem = LoadedNavButtons.FirstOrDefault(x => x.HamburgerButtonInfo == (SecondaryButtons.Any() ? SecondaryButtons.LastOrDefault() : PrimaryButtons.LastOrDefault()));
+            var lastItem = LoadedNavButtons.FirstOrDefault(x => x.HamburgerButtonInfo == ( SecondaryButtons.LastOrDefault(a=>a != Selected) ?? PrimaryButtons.LastOrDefault(a => a != Selected)));
 
             var focus = new Func<FocusNavigationDirection, bool>(d =>
             {
@@ -637,10 +637,6 @@ namespace Template10.Controls
                 {
                     return true;
                 }
-                else if (Equals(currentItem, firstItem.FrameworkElement))
-                {
-                    return HamburgerButton.Focus(FocusState.Programmatic);
-                }
                 else if (focus(FocusNavigationDirection.Previous) || focus(FocusNavigationDirection.Up))
                 {
                     return true;
@@ -656,10 +652,6 @@ namespace Template10.Controls
                 if (Equals(currentItem, HamburgerButton))
                 {
                     return focus(FocusNavigationDirection.Down);
-                }
-                else if (Equals(currentItem, lastItem.FrameworkElement))
-                {
-                    return escape();
                 }
                 else if (focus(FocusNavigationDirection.Next) || focus(FocusNavigationDirection.Down))
                 {
@@ -687,7 +679,6 @@ namespace Template10.Controls
 
                 case VirtualKey.Right:
                 case VirtualKey.GamepadDPadRight:
-
                     if (SecondaryButtonContainer.Items.Contains(currentItem?.DataContext)
                         && SecondaryButtonOrientation == Orientation.Horizontal)
                     {
