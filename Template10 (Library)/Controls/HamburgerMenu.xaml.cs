@@ -294,6 +294,15 @@ namespace Template10.Controls
             {
                 previous.IsChecked = false;
                 previous.RaiseUnselected();
+
+                // Workaround for visual state of ToggleButton not reset correctly
+                var fwe = LoadedNavButtons.Where(x => x.HamburgerButtonInfo == previous)
+                    .Select(x => x.FrameworkElement)
+                    .FirstOrDefault() as Control;
+                if (fwe != null)
+                {
+                    VisualStateManager.GoToState(fwe, "Normal", true);
+                }
             }
 
             // navigate only when all navigation buttons have been loaded
