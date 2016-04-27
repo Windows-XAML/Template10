@@ -361,7 +361,7 @@
                    IsPaneOpen="False"
                    IsTabStop="False"
                    OpenPaneLength="{x:Bind PaneWidth, Mode=OneWay}"
-                   PaneBackground="Transparent">
+                   Background="{x:Bind NavAreaBackground, Mode=OneWay}">
 
             <SplitView.Pane>
 
