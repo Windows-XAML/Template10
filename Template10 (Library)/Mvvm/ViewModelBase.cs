@@ -32,6 +32,6 @@ namespace Template10.Mvvm
         public virtual IDispatcherWrapper Dispatcher { get; set; }
 
         [JsonIgnore]
-        public IStateItems SessionState { get; set; }
+        public virtual IStateItems SessionState { get; set; }
     }
 }
