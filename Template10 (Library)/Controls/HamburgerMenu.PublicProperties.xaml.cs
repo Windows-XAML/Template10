@@ -440,6 +440,42 @@ namespace Template10.Controls
             DependencyProperty.Register(nameof(SecondaryButtons), typeof(ObservableCollection<HamburgerButtonInfo>),
                 typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(SecondaryButtons), e)));
 
+        /// <summary>
+        /// HamburgerButtonStyle is the style is used for the hamburger menu button.
+        /// </summary>
+        public Style HamburgerButtonStyle
+        {
+            get { return (Style)GetValue(HamburgerButtonStyleProperty); }
+            set { SetValue(HamburgerButtonStyleProperty, value); }
+        }
+        public static readonly DependencyProperty HamburgerButtonStyleProperty =
+            DependencyProperty.Register(nameof(HamburgerButtonStyle), typeof(Style),
+                typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(HamburgerButtonStyle), e)));
+
+        /// <summary>
+        /// NavToggleButtonControlTemplate is the ControlTemplate used for the internal ToggleButton within nav menu toggle button items.
+        /// </summary>
+        public ControlTemplate NavToggleButtonControlTemplate
+        {
+            get { return (ControlTemplate)GetValue(NavToggleButtonControlTemplateProperty); }
+            set { SetValue(NavToggleButtonControlTemplateProperty, value); }
+        }
+        public static readonly DependencyProperty NavToggleButtonControlTemplateProperty =
+            DependencyProperty.Register(nameof(NavToggleButtonControlTemplate), typeof(ControlTemplate),
+                typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(NavToggleButtonControlTemplate), e)));
+        
+        /// <summary>
+        /// NavCommandButtonControlTemplate is the ControlTemplate used for the internal Button within nav menu command button items.
+        /// </summary>
+        public ControlTemplate NavCommandButtonControlTemplate
+        {
+            get { return (ControlTemplate)GetValue(NavCommandButtonControlTemplateProperty); }
+            set { SetValue(NavCommandButtonControlTemplateProperty, value); }
+        }
+        public static readonly DependencyProperty NavCommandButtonControlTemplateProperty =
+            DependencyProperty.Register(nameof(NavCommandButtonControlTemplate), typeof(ControlTemplate),
+                typeof(ControlTemplate), new PropertyMetadata(null, (d, e) => Changed(nameof(NavCommandButtonControlTemplate), e)));
+
         // manage change
         private readonly static Dictionary<string, PropertyChangeHandlerDelegate> PropertyChangedHandlers
             = new Dictionary<string, PropertyChangeHandlerDelegate>();
