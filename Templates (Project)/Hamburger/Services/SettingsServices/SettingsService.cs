@@ -54,5 +54,15 @@ namespace Sample.Services.SettingsServices
                 BootStrapper.Current.CacheMaxDuration = value;
             }
         }
+
+        public bool ShowHamburgerButton
+        {
+            get { return _helper.Read<bool>(nameof(ShowHamburgerButton), true); }
+            set
+            {
+                _helper.Write(nameof(ShowHamburgerButton), value);
+                Views.Shell.HamburgerMenu.HamburgerButtonVisibility = value ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
     }
 }

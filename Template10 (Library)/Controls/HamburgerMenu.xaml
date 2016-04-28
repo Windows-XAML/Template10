@@ -202,20 +202,20 @@
             <DataTemplate x:Name="NavCommandButtonTemplate" x:DataType="local:HamburgerButtonInfo">
                 <Button Width="{Binding PaneWidth, ElementName=ThisPage}"
                         MinWidth="48"
-                        MaxWidth="{x:Bind MaxWidth}"
+                        MaxWidth="{x:Bind MaxWidth, Mode=OneWay}"
                         AutomationProperties.Name="Hamburger Menu Item"
                         BorderBrush="Red"
                         BorderThickness="1"
                         Command="{Binding NavCommand, ElementName=ThisPage}"
                         CommandParameter="{Binding}"
-                        Content="{x:Bind Content}"
+                        Content="{x:Bind Content, Mode=OneWay}"
                         Holding="NavButton_Holding"
-                        IsEnabled="{x:Bind IsEnabled}"
+                        IsEnabled="{x:Bind IsEnabled, Mode=OneWay}"
                         Loaded="NavButton_Loaded"
                         RightTapped="NavButton_RightTapped"
                         TabIndex="2"
-                        ToolTipService.ToolTip="{x:Bind Path=(ToolTipService.ToolTip)}"
-                        Visibility="{x:Bind Visibility}">
+                        ToolTipService.ToolTip="{x:Bind Path=(ToolTipService.ToolTip), Mode=OneWay}"
+                        Visibility="{x:Bind Visibility, Mode=OneWay}">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Grid x:Name="RootGrid"
@@ -268,7 +268,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid x:Name="RootGrid">
+    <RelativePanel x:Name="RootGrid">
 
         <VisualStateManager.VisualStateGroups>
 
@@ -281,7 +281,6 @@
                     <VisualState.Setters>
                         <Setter Target="ShellSplitView.DisplayMode" Value="Overlay" />
                         <Setter Target="ShellSplitView.IsPaneOpen" Value="False" />
-                        <Setter Target="HamburgerButton.Visibility" Value="Visible" />
                     </VisualState.Setters>
                 </VisualState>
 
@@ -292,7 +291,6 @@
                     <VisualState.Setters>
                         <Setter Target="ShellSplitView.DisplayMode" Value="CompactOverlay" />
                         <Setter Target="ShellSplitView.IsPaneOpen" Value="False" />
-                        <Setter Target="HamburgerButton.Visibility" Value="Visible" />
                     </VisualState.Setters>
                 </VisualState>
 
@@ -302,7 +300,6 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="ShellSplitView.DisplayMode" Value="CompactInline" />
-                        <Setter Target="HamburgerButton.Visibility" Value="Visible" />
                         <Setter Target="ShellSplitView.IsPaneOpen" Value="True" />
                     </VisualState.Setters>
                 </VisualState>
@@ -310,49 +307,23 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <ContentControl x:Name="Header"
-                        Height="48"
-                        Margin="48,0,0,0"
-                        VerticalAlignment="Top"
-                        HorizontalContentAlignment="Stretch"
-                        Content="{Binding HeaderContent, ElementName=ThisPage}"
-                        IsTabStop="False">
-            <Interactivity:Interaction.Behaviors>
-                <Core:DataTriggerBehavior Binding="{Binding Visibility, ElementName=HamburgerButton}" Value="Visible">
-                    <Core:ChangePropertyAction PropertyName="Margin" TargetObject="{Binding ElementName=Header}">
-                        <Core:ChangePropertyAction.Value>
-                            <Thickness>48,0,0,0</Thickness>
-                        </Core:ChangePropertyAction.Value>
-                    </Core:ChangePropertyAction>
-                </Core:DataTriggerBehavior>
-                <Core:DataTriggerBehavior Binding="{Binding Visibility, ElementName=HamburgerButton, Mode=OneWay}" Value="Collapsed">
-                    <Core:ChangePropertyAction PropertyName="Margin" TargetObject="{Binding ElementName=Header}">
-                        <Core:ChangePropertyAction.Value>
-                            <Thickness>0,0,0,0</Thickness>
-                        </Core:ChangePropertyAction.Value>
-                    </Core:ChangePropertyAction>
-                </Core:DataTriggerBehavior>
-            </Interactivity:Interaction.Behaviors>
-        </ContentControl>
-
-        
-
         <SplitView x:Name="ShellSplitView"
-                   Grid.Column="0"
                    AutomationProperties.Name="Jerry Nixon"
-                   Background="{x:Bind NavAreaBackground, Mode=OneWay}"
                    DisplayMode="Inline"
-                   IsPaneOpen="False"
                    IsTabStop="False"
-                   OpenPaneLength="{x:Bind PaneWidth, Mode=OneWay}">
+                   OpenPaneLength="{x:Bind PaneWidth, Mode=OneWay}"
+                   PaneBackground="Transparent"
+                   RelativePanel.AlignBottomWithPanel="True"
+                   RelativePanel.AlignLeftWithPanel="True"
+                   RelativePanel.AlignRightWithPanel="True"
+                   RelativePanel.AlignTopWithPanel="True">
 
             <SplitView.Pane>
 
                 <Grid x:Name="PaneContent"
-                      Margin="0,48,0,0"
                       Background="{x:Bind NavAreaBackground, Mode=OneWay}"
                       BorderBrush="{x:Bind PaneBorderBrush, Mode=OneWay}"
-                      BorderThickness="{x:Bind PaneBorderThickness}"
+                      BorderThickness="{x:Bind PaneBorderThickness, Mode=OneWay}"
                       ManipulationDelta="PaneContent_ManipulationDelta"
                       ManipulationMode="TranslateX"
                       Tapped="PaneContent_Tapped">
@@ -362,40 +333,9 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <Interactivity:Interaction.Behaviors>
-                        <Core:DataTriggerBehavior Binding="{Binding Visibility, ElementName=HamburgerButton, Mode=OneWay}" Value="Visible">
-                            <Core:ChangePropertyAction PropertyName="Margin" TargetObject="{Binding ElementName=PaneContent}">
-                                <Core:ChangePropertyAction.Value>
-                                    <Thickness>0,48,0,0</Thickness>
-                                </Core:ChangePropertyAction.Value>
-                            </Core:ChangePropertyAction>
-                        </Core:DataTriggerBehavior>
-                        <Core:DataTriggerBehavior Binding="{Binding Visibility, ElementName=HamburgerButton, Mode=OneWay}" Value="Collapsed">
-                            <b:ConditionalAction xmlns:b="using:Template10.Behaviors"
-                                                 LeftValue="{x:Bind HeaderContent}"
-                                                 Operator="IsNull">
-                                <Core:ChangePropertyAction PropertyName="Margin" TargetObject="{Binding ElementName=PaneContent}">
-                                    <Core:ChangePropertyAction.Value>
-                                        <Thickness>0,0,0,0</Thickness>
-                                    </Core:ChangePropertyAction.Value>
-                                </Core:ChangePropertyAction>
-                            </b:ConditionalAction>
-                        </Core:DataTriggerBehavior>
-                        <Core:DataTriggerBehavior Binding="{Binding Visibility, ElementName=HamburgerButton, Mode=OneWay}" Value="Collapsed">
-                            <b:ConditionalAction xmlns:b="using:Template10.Behaviors"
-                                                 LeftValue="{x:Bind HeaderContent}"
-                                                 Operator="IsNotNull">
-                                <Core:ChangePropertyAction PropertyName="Margin" TargetObject="{Binding ElementName=PaneContent}">
-                                    <Core:ChangePropertyAction.Value>
-                                        <Thickness>0,48,0,0</Thickness>
-                                    </Core:ChangePropertyAction.Value>
-                                </Core:ChangePropertyAction>
-                            </b:ConditionalAction>
-                        </Core:DataTriggerBehavior>
-                    </Interactivity:Interaction.Behaviors>
-
-                    <ScrollViewer Grid.Row="0" TabIndex="2"
+                    <ScrollViewer Grid.Row="0"
                                   AutomationProperties.AccessibilityView="Raw"
+                                  TabIndex="2"
                                   VerticalScrollBarVisibility="Auto">
 
                         <ItemsControl x:Name="PrimaryButtonContainer"
@@ -452,8 +392,9 @@
 
                     <ItemsControl x:Name="SecondaryButtonContainer"
                                   Grid.Row="1"
-                                  IsTabStop="False" TabIndex="3"
-                                  ItemsSource="{Binding SecondaryButtons, ElementName=ThisPage}">
+                                  IsTabStop="False"
+                                  ItemsSource="{Binding SecondaryButtons, ElementName=ThisPage}"
+                                  TabIndex="3">
 
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -498,23 +439,38 @@
             </SplitView.Pane>
 
         </SplitView>
-        <Grid x:Name="HamburgerButtonGrid"
-              Grid.Row="0"
-              Width="{x:Bind HamburgerButtonGridWidth, Mode=OneWay}"
-              HorizontalAlignment="Left"
-              VerticalAlignment="Top"
-              Background="{x:Bind HamburgerBackground, FallbackValue=DarkRed, Mode=OneWay}"
-              Visibility="{x:Bind HamburgerButtonVisibility, Mode=OneWay}">
-            <Button x:Name="HamburgerButton"
-                    AutomationProperties.Name="Hamburger Menu Button"
-                    Background="Transparent"
-                    TabIndex="1"
-                    Command="{x:Bind HamburgerCommand}"
-                    Foreground="{x:Bind HamburgerForeground, FallbackValue=White, Mode=OneWay}"
-                    RenderTransformOrigin="0.5,0.5"
-                    Style="{StaticResource HamburgerButtonStyle}">
-                <FontIcon FontSize="20" Glyph="&#xE700;" />
-            </Button>
-        </Grid>
-    </Grid>
+
+        <Rectangle x:Name="HeaderBackground"
+                   Width="{x:Bind HamburgerButtonGridWidth, Mode=OneWay}"
+                   Height="48"
+                   Canvas.ZIndex="-1"
+                   Fill="{x:Bind HamburgerBackground, FallbackValue=DarkRed, Mode=OneWay}"
+                   RelativePanel.AlignLeftWithPanel="True"
+                   RelativePanel.AlignTopWithPanel="True" />
+
+        <Button x:Name="HamburgerButton"
+                AutomationProperties.Name="Hamburger Menu Button"
+                Background="{x:Bind HamburgerBackground, FallbackValue=DarkRed, Mode=OneWay}"
+                Canvas.ZIndex="2"
+                Command="{x:Bind HamburgerCommand, Mode=OneWay}"
+                Foreground="{x:Bind HamburgerForeground, FallbackValue=White, Mode=OneWay}"
+                RenderTransformOrigin="0.5,0.5"
+                Style="{StaticResource HamburgerButtonStyle}"
+                TabIndex="1"
+                Visibility="{x:Bind HamburgerButtonVisibility, Mode=OneWay}">
+            <FontIcon FontSize="20" Glyph="&#xE700;" />
+        </Button>
+
+        <ContentControl x:Name="Header"
+                        Height="48"
+                        HorizontalContentAlignment="Left"
+                        VerticalContentAlignment="Center"
+                        Canvas.ZIndex="2"
+                        Content="{Binding HeaderContent, ElementName=ThisPage}"
+                        IsTabStop="False"
+                        RelativePanel.AlignRightWith="HeaderBackground"
+                        RelativePanel.AlignTopWith="HamburgerButton"
+                        RelativePanel.RightOf="HamburgerButton" />
+
+    </RelativePanel>
 </UserControl>

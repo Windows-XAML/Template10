@@ -15,11 +15,15 @@
     <Grid x:Name="RootGrid">
 
         <!--  non-modal content  -->
-        <Controls:HamburgerMenu x:Name="MyHamburgerMenu"
+        <Controls:HamburgerMenu x:Name="MyHamburgerMenu" HamburgerButtonVisibility="Collapsed"
                                 SecondaryButtonOrientation="Horizontal"
                                 VisualStateNarrowMinWidth="-1"
                                 VisualStateNormalMinWidth="320"
                                 VisualStateWideMinWidth="1020">
+
+            <!--<Controls:HamburgerMenu.HeaderContent>
+                <TextBlock Text="Hamburger Content!" VerticalAlignment="Center" HorizontalAlignment="Left" />
+            </Controls:HamburgerMenu.HeaderContent>-->
 
             <Controls:HamburgerMenu.PrimaryButtons>
                 <!--  search button  -->

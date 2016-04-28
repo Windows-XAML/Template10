@@ -47,6 +47,15 @@ namespace Template10.Controls
              DependencyProperty.Register(nameof(Command), typeof(ICommand),
              typeof(HamburgerButtonInfo), new PropertyMetadata(null));
 
+        public object ToolTip
+        {
+            get { return (object)GetValue(ToolTipProperty); }
+            set { SetValue(ToolTipProperty, value); }
+        }
+        public static readonly DependencyProperty ToolTipProperty =
+            DependencyProperty.Register(nameof(ToolTip), typeof(object), 
+                typeof(HamburgerButtonInfo), new PropertyMetadata(null));
+
         /// <summary>  
         /// Sets and gets the CommandParameter property.  
         /// </summary>  

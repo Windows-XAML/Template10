@@ -18,6 +18,13 @@ namespace Sample.Views
         {
             Instance = this;
             InitializeComponent();
+
+            #region App Settings
+
+            var settings = Services.SettingsServices.SettingsService.Instance;
+            HamburgerMenu.Visibility = settings.ShowHamburgerButton ? Visibility.Visible : Visibility.Collapsed;
+
+            #endregion
         }
 
         public Shell(INavigationService navigationService) : this()

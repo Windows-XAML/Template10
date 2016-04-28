@@ -29,6 +29,12 @@ namespace Sample.ViewModels
             }
         }
 
+        public bool ShowHamburgerButton
+        {
+            get { return _settings.ShowHamburgerButton; }
+            set { _settings.ShowHamburgerButton = value; base.RaisePropertyChanged(); }
+        }
+
         public bool UseShellBackButton
         {
             get { return _settings.UseShellBackButton; }
