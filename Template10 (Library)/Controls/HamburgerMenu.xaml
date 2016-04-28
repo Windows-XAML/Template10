@@ -115,12 +115,24 @@
                             <Grid x:Name="RootGrid"
                                   Width="{Binding PaneWidth, ElementName=ThisPage}"
                                   Background="Transparent">
+<!--
+Facilitates initialization of style visual state when the theme is changed during runtime.
+Setting the DP IsSettingToNormalVisualState = true in codebehind will set the visual state to Normal.                              
+-->
+                                <Interactivity:Interaction.Behaviors>
+                                    <Core:DataTriggerBehavior Binding="{Binding IsSettingToNormalVisualState, ElementName=ThisPage}" Value="True">
+                                        <Core:GoToStateAction StateName="Indeterminate" />
+                                    </Core:DataTriggerBehavior>
+                                </Interactivity:Interaction.Behaviors>
+
+
                                 <VisualStateManager.VisualStateGroups>
                                     <VisualStateGroup x:Name="CommonStates" CurrentStateChanged="NavButton_VisualStateChanged">
                                         <VisualState x:Name="Normal">
                                             <VisualState.Setters>
                                                 <Setter Target="ContentPresenter.Foreground" Value="{Binding NavButtonForeground, ElementName=ThisPage}" />
                                                 <Setter Target="ContentPresenter.Background" Value="{Binding NavButtonBackground, ElementName=ThisPage}" />
+                                                <Setter Target="Indicator.Visibility" Value="Collapsed" />
                                             </VisualState.Setters>
                                             <Storyboard>
                                                 <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
@@ -130,6 +142,7 @@
                                             <VisualState.Setters>
                                                 <Setter Target="ContentPresenter.Foreground" Value="{Binding NavButtonHoverForeground, ElementName=ThisPage}" />
                                                 <Setter Target="ContentPresenter.Background" Value="{Binding NavButtonHoverBackground, ElementName=ThisPage}" />
+                                                <Setter Target="Indicator.Visibility" Value="Collapsed" />
                                             </VisualState.Setters>
                                             <Storyboard>
                                                 <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
@@ -221,6 +234,14 @@
                             <Grid x:Name="RootGrid"
                                   Width="{Binding PaneWidth, ElementName=ThisPage}"
                                   Background="Transparent">
+                                
+                                <!-- See comment above under NavToggleButtonTemplate -->
+                                
+                                <Interactivity:Interaction.Behaviors>
+                                    <Core:DataTriggerBehavior Binding="{Binding IsSettingToNormalVisualState, ElementName=ThisPage}" Value="True">
+                                        <Core:GoToStateAction StateName="DummyState" />
+                                    </Core:DataTriggerBehavior>
+                                </Interactivity:Interaction.Behaviors>
                                 <VisualStateManager.VisualStateGroups>
                                     <VisualStateGroup x:Name="CommonStates" CurrentStateChanged="NavButton_VisualStateChanged">
                                         <VisualState x:Name="Normal">
@@ -256,6 +277,9 @@
                                                 <Setter Target="ContentPresenter.Background" Value="Transparent" />
                                             </VisualState.Setters>
                                         </VisualState>
+
+                                        <VisualState x:Name="DummyState" />
+
                                     </VisualStateGroup>
                                 </VisualStateManager.VisualStateGroups>
                                 <ContentPresenter x:Name="ContentPresenter" Content="{Binding Content}" />
@@ -504,6 +528,7 @@
               HorizontalAlignment="Left"
               VerticalAlignment="Top"
               Background="{x:Bind HamburgerBackground, FallbackValue=DarkRed, Mode=OneWay}"
+              Canvas.ZIndex="123"
               Visibility="{x:Bind HamburgerButtonVisibility, Mode=OneWay}">
             <Button x:Name="HamburgerButton"
                     AutomationProperties.Name="Hamburger Menu Button"
