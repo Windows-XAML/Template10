@@ -22,7 +22,7 @@ namespace Sample.Views
             #region App Settings
 
             var settings = Services.SettingsServices.SettingsService.Instance;
-            HamburgerMenu.Visibility = settings.ShowHamburgerButton ? Visibility.Visible : Visibility.Collapsed;
+            HamburgerMenu.HamburgerButtonVisibility = settings.ShowHamburgerButton ? Visibility.Visible : Visibility.Collapsed;
 
             #endregion
         }
