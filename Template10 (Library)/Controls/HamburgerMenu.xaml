@@ -335,24 +335,7 @@
             </Interactivity:Interaction.Behaviors>
         </ContentControl>
 
-        <Grid x:Name="HamburgerButtonGrid"
-              Grid.Row="0"
-              Width="{x:Bind HamburgerButtonGridWidth, Mode=OneWay}"
-              HorizontalAlignment="Left"
-              VerticalAlignment="Top"
-              Background="{x:Bind HamburgerBackground, FallbackValue=DarkRed, Mode=OneWay}"
-              Canvas.ZIndex="123"
-              Visibility="{x:Bind HamburgerButtonVisibility, Mode=OneWay}">
-            <Button x:Name="HamburgerButton"
-                    AutomationProperties.Name="Hamburger Menu Button"
-                    Background="Transparent"
-                    Command="{x:Bind HamburgerCommand}"
-                    Foreground="{x:Bind HamburgerForeground, FallbackValue=White, Mode=OneWay}"
-                    RenderTransformOrigin="0.5,0.5"
-                    Style="{StaticResource HamburgerButtonStyle}">
-                <FontIcon FontSize="20" Glyph="&#xE700;" />
-            </Button>
-        </Grid>
+        
 
         <SplitView x:Name="ShellSplitView"
                    Grid.Column="0"
@@ -411,7 +394,7 @@
                         </Core:DataTriggerBehavior>
                     </Interactivity:Interaction.Behaviors>
 
-                    <ScrollViewer Grid.Row="0"
+                    <ScrollViewer Grid.Row="0" TabIndex="2"
                                   AutomationProperties.AccessibilityView="Raw"
                                   VerticalScrollBarVisibility="Auto">
 
@@ -469,7 +452,7 @@
 
                     <ItemsControl x:Name="SecondaryButtonContainer"
                                   Grid.Row="1"
-                                  IsTabStop="False"
+                                  IsTabStop="False" TabIndex="3"
                                   ItemsSource="{Binding SecondaryButtons, ElementName=ThisPage}">
 
                         <ItemsControl.ItemsPanel>
@@ -515,6 +498,23 @@
             </SplitView.Pane>
 
         </SplitView>
-
+        <Grid x:Name="HamburgerButtonGrid"
+              Grid.Row="0"
+              Width="{x:Bind HamburgerButtonGridWidth, Mode=OneWay}"
+              HorizontalAlignment="Left"
+              VerticalAlignment="Top"
+              Background="{x:Bind HamburgerBackground, FallbackValue=DarkRed, Mode=OneWay}"
+              Visibility="{x:Bind HamburgerButtonVisibility, Mode=OneWay}">
+            <Button x:Name="HamburgerButton"
+                    AutomationProperties.Name="Hamburger Menu Button"
+                    Background="Transparent"
+                    TabIndex="1"
+                    Command="{x:Bind HamburgerCommand}"
+                    Foreground="{x:Bind HamburgerForeground, FallbackValue=White, Mode=OneWay}"
+                    RenderTransformOrigin="0.5,0.5"
+                    Style="{StaticResource HamburgerButtonStyle}">
+                <FontIcon FontSize="20" Glyph="&#xE700;" />
+            </Button>
+        </Grid>
     </Grid>
 </UserControl>

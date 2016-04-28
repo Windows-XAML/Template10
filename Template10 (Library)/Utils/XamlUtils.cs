@@ -95,5 +95,11 @@ namespace Template10.Utils
                     return ApplicationTheme.Dark;
             }
         }
+
+        public static void SetIfNotSet(this DependencyObject o, DependencyProperty dp, object value)
+        {
+            if (o.ReadLocalValue(dp) == DependencyProperty.UnsetValue)
+                o.SetValue(dp, value);
+        }
     }
 }
