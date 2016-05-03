@@ -9,7 +9,7 @@ namespace Template10.Behaviors
     {
         public object Execute(object sender, object parameter)
         {
-         var ui = (Target == null ? sender : Target) as Control;
+         var ui = (TargetObject == null ? sender : TargetObject) as Control;
          if (ui != null)
             ui.Focus(FocusState.Programmatic);
          return null;
@@ -19,7 +19,7 @@ namespace Template10.Behaviors
       /// Backing storage for the Target property
       /// 
       public static readonly DependencyProperty TargetProperty = DependencyProperty.Register(
-          "Target",
+          "TargetObject",
           typeof(Control),
           typeof(FocusAction),
           new PropertyMetadata(null));
@@ -27,7 +27,7 @@ namespace Template10.Behaviors
       /// 
       /// Control to set the focus to.
       /// 
-      public Control Target
+      public Control TargetObject
       {
          get
          {
