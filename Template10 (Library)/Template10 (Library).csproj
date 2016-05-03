@@ -133,9 +133,7 @@
     <Compile Include="Behaviors\DeviceDispositionBehavior.cs" />
     <Compile Include="Common\EventThrottleHelper.cs" />
     <Compile Include="Behaviors\EventTriggerBehaviorBase.cs" />
-    <Compile Include="..\..\..\..\temp\FocusAction.cs">
-      <Link>Behaviors\FocusAction.cs</Link>
-    </Compile>
+    <Compile Include="Behaviors\FocusAction.cs" />
     <Compile Include="Behaviors\MessageDialogAction.cs" />
     <Compile Include="Behaviors\NavButtonBehavior.cs" />
     <Compile Include="Behaviors\EllipsisBehavior.cs" />
