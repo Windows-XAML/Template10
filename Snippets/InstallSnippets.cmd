@@ -4,8 +4,9 @@ for /f "tokens=3*" %%p in ('REG QUERY "HKCU\Software\Microsoft\Windows\CurrentVe
     set DocumentsFolder=%%p
 )
 set SnippetsFolder="%DocumentsFolder%\Visual Studio 2015\Code Snippets\Visual C#\My Code Snippets\"
-set LocalFolder="%~dp0%*T10_*.snippet"
+set LocalFolder="%~dp0%\..\Template10 (Installer)\Template10.Installer\Snippets\CSharp\Template10\*T10_*.snippet"
 echo Source = %LocalFolder%
 echo Target = %SnippetsFolder%
 xcopy.exe %LocalFolder% %SnippetsFolder% /y 
 pause
+
