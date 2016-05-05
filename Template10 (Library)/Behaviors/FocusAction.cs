@@ -18,6 +18,12 @@ namespace Template10.Behaviors
             return null;
         }
 
-        public Control TargetObject { get; set; }
+        public Control TargetObject
+        {
+            get { return (Control)GetValue(TargetObjectProperty); }
+            set { SetValue(TargetObjectProperty, value); }
+        }
+        public static readonly DependencyProperty TargetObjectProperty =
+            DependencyProperty.Register(nameof(TargetObject), typeof(Control), typeof(FocusAction), new PropertyMetadata(null));
     }
 }
