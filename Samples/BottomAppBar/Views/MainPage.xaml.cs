@@ -9,11 +9,13 @@ namespace Template10.Samples.BottomAppBarSample.Views
         public MainPage()
         {
             InitializeComponent();
+            //var menu = Shell.HamburgerMenu;
+            //menu.Visibility = Visibility.Visible;
         }
 
         void TogglePane()
         {
-            Shell.HamburgerMenu.IsOpen = !Shell.HamburgerMenu.IsOpen;
+            // Shell.HamburgerMenu.IsOpen = !Shell.HamburgerMenu.IsOpen;
         }
 
         DelegateCommand<int> _SetPaneCommand;
@@ -21,6 +23,7 @@ namespace Template10.Samples.BottomAppBarSample.Views
            => _SetPaneCommand ?? (_SetPaneCommand = new DelegateCommand<int>(SetPaneCommandExecute));
         void SetPaneCommandExecute(int param)
         {
+            return;
             var menu = Shell.HamburgerMenu;
             menu.DisplayMode = (SplitViewDisplayMode)param;
 
@@ -32,20 +35,20 @@ namespace Template10.Samples.BottomAppBarSample.Views
             switch (menu.DisplayMode)
             {
                 case SplitViewDisplayMode.Inline:
-                    menu.HamburgerButtonVisibility = Visibility.Collapsed;
+                    //menu.HamburgerButtonVisibility = Visibility.Collapsed;
                     menu.IsOpen = true;
                     break;
                 case SplitViewDisplayMode.CompactInline:
-                    menu.HamburgerButtonVisibility = Visibility.Visible;
+                    //menu.HamburgerButtonVisibility = Visibility.Visible;
                     menu.IsOpen = true;
                     break;
                 case SplitViewDisplayMode.Overlay:
-                    menu.HamburgerButtonVisibility = Visibility.Visible;
-                    MyPageHeader.Margin = new Thickness(48,0,0,0);
+                    //menu.HamburgerButtonVisibility = Visibility.Visible;
+                    // MyPageHeader.Margin = new Thickness(48,0,0,0);
                     menu.IsOpen = false;
                     break;
                 case SplitViewDisplayMode.CompactOverlay:
-                    menu.HamburgerButtonVisibility = Visibility.Visible;
+                    //menu.HamburgerButtonVisibility = Visibility.Visible;
                     menu.IsOpen = false;
                     break;
             }
