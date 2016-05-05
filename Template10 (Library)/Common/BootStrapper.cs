@@ -83,56 +83,8 @@ namespace Template10.Common
             // Hook up the default Back handler
             SystemNavigationManager.GetForCurrentView().BackRequested += BackHandler;
 
-            Resuming += async (s, e) =>
-            {
-                DebugWrite(caller: nameof(Resuming));
-
-                if ((OriginalActivatedArgs as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false)
-                {
-                    OnResuming(s, e, AppExecutionState.Prelaunch);
-                    if (!_HasOnStartAsync)
-                    {
-                        DebugWrite("From OnResume(PreLaunch)", caller: nameof(OnStartAsync));
-                        _HasOnStartAsync = true;
-                        await OnStartAsync(StartKind.Launch, OriginalActivatedArgs);
-                    }
-                    Window.Current.Activate();
-                }
-                else
-                    OnResuming(s, e, AppExecutionState.Suspended);
-            };
-
-            Suspending += async (s, e) =>
-            {
-                DebugWrite(caller: nameof(Suspending));
-
-                // one, global deferral
-                var deferral = e.SuspendingOperation.GetDeferral();
-                using (var session = new Windows.ApplicationModel.ExtendedExecution.ExtendedExecutionSession
-                {
-                    Description = this.GetType().ToString(),
-                    Reason = Windows.ApplicationModel.ExtendedExecution.ExtendedExecutionReason.SavingData
-                })
-                {
-                    try
-                    {
-                        foreach (INavigationService nav in WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices))
-                        {
-                            // date the cache (which marks the date/time it was suspended)
-                            nav.FrameFacade.SetFrameState(CacheDateKey, DateTime.Now.ToString());
-                            // call view model suspend (OnNavigatedfrom)
-                            DebugWrite($"Nav:{nav}", caller: nameof(nav.SuspendingAsync));
-                            await (nav as INavigationService).Dispatcher.DispatchAsync(async () => await nav.SuspendingAsync());
-                        }
-
-                        // call system-level suspend
-                        DebugWrite($"Calling. Prelaunch {(OriginalActivatedArgs as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false}", caller: nameof(OnSuspendingAsync));
-                        await OnSuspendingAsync(s, e, (OriginalActivatedArgs as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false);
-                    }
-                    catch { /* do nothing */ }
-                    finally { deferral.Complete(); }
-                }
-            };
+            Resuming += HandleResuming;
+            Suspending += HandleSuspending;
         }
 
         public event EventHandler<WindowCreatedEventArgs> WindowCreated;
@@ -212,12 +164,10 @@ namespace Template10.Common
             }
 
             // onstart is shared with activate and launch
-            DebugWrite("Calling", caller: nameof(OnStartAsync));
-            _HasOnStartAsync = true;
-            await OnStartAsync(StartKind.Activate, e);
+            await CallOnStartAsync(true, StartKind.Activate);
 
             // ensure active (this will hide any custom splashscreen)
-            Window.Current.Activate();
+            ActivateWindow(ActivateWindowSources.Activating);
         }
 
         #endregion
@@ -296,13 +246,11 @@ namespace Template10.Common
 
             if (!restored)
             {
-                DebugWrite("Calling", caller: nameof(OnStartAsync));
-                _HasOnStartAsync = true;
-                await OnStartAsync(StartKind.Launch, e);
+                await CallOnStartAsync(true, StartKind.Launch);
             }
 
             // ensure active (this will hide any custom splashscreen)
-            Window.Current.Activate();
+            ActivateWindow(ActivateWindowSources.Launching);
         }
 
         private void BackHandler(object sender, BackRequestedEventArgs args)
@@ -577,7 +525,7 @@ namespace Template10.Common
             DebugWrite($"{nameof(IActivatedEventArgs)}:{e.Kind}");
 
             ProcessSplashScreen(e);
-            await CallOnInitializeAsync(e);
+            await CallOnInitializeAsync(true, e);
             ProcessCustomTitleBar();
 
             // if there's custom content then there's nothing to do
@@ -594,6 +542,22 @@ namespace Template10.Common
                 // nothing: custom content
             }
         }
+
+        #endregion
+
+        public enum ActivateWindowSources { Launching, Activating, SplashScreen, Resuming }
+        /// <summary>
+        /// Override this method only if you (the developer) wants to programmatically
+        /// control the means by which and when the Core Window is activated by Template 10.
+        /// One scenario might be a delayed activation for Splash Screen.
+        /// </summary>
+        /// <param name="source">Reason for the call from Template 10</param>
+        public virtual void ActivateWindow(ActivateWindowSources source)
+        {
+            Window.Current.Activate();
+        }
+
+        #region Workers
 
         /// <summary>
         ///  By default, Template 10 will setup the root element to be a Template 10
@@ -640,10 +604,22 @@ namespace Template10.Common
             }
         }
 
-        private async Task CallOnInitializeAsync(IActivatedEventArgs e)
+        private async Task CallOnInitializeAsync(bool canRepeat, IActivatedEventArgs e)
         {
+            if (!canRepeat && _HasOnInitializeAsync)
+                return;
             _HasOnInitializeAsync = true;
             await OnInitializeAsync(e);
+        }
+
+        private async Task CallOnStartAsync(bool canRepeat, StartKind startKind)
+        {
+            DebugWrite();
+
+            if (!canRepeat && _HasOnStartAsync)
+                return;
+            _HasOnStartAsync = true;
+            await OnStartAsync(startKind, OriginalActivatedArgs);
         }
 
         private FrameworkElement ProcessSplashScreen(IActivatedEventArgs e)
@@ -653,7 +629,7 @@ namespace Template10.Common
             {
                 Window.Current.Content = splash = SplashFactory(e.SplashScreen);
                 CurrentState = States.Splashing;
-                Window.Current.Activate();
+                ActivateWindow(ActivateWindowSources.SplashScreen);
             }
 
             return splash;
@@ -667,7 +643,54 @@ namespace Template10.Common
             return new Frame();
         }
 
-        #endregion  
+        private async void HandleResuming(object sender, object e)
+        {
+            DebugWrite(caller: nameof(Resuming));
+
+            if ((OriginalActivatedArgs as LaunchActivatedEventArgs)?.PrelaunchActivated ?? true)
+            {
+                OnResuming(sender, e, AppExecutionState.Prelaunch);
+                await CallOnStartAsync(false, StartKind.Launch);
+                ActivateWindow(ActivateWindowSources.Resuming);
+            }
+            else
+                OnResuming(sender, e, AppExecutionState.Suspended);
+        }
+
+        private async void HandleSuspending(object sender, SuspendingEventArgs e)
+        {
+            DebugWrite();
+
+            // one, global deferral
+            var deferral = e.SuspendingOperation.GetDeferral();
+            using (var session = new Windows.ApplicationModel.ExtendedExecution.ExtendedExecutionSession
+            {
+                Description = this.GetType().ToString(),
+                Reason = Windows.ApplicationModel.ExtendedExecution.ExtendedExecutionReason.SavingData
+            })
+            {
+                try
+                {
+                    var services = WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices);
+                    foreach (INavigationService nav in services)
+                    {
+                        // date the cache (which marks the date/time it was suspended)
+                        nav.FrameFacade.SetFrameState(CacheDateKey, DateTime.Now.ToString());
+                        // call view model suspend (OnNavigatedfrom)
+                        DebugWrite($"Nav:{nav}", caller: nameof(nav.SuspendingAsync));
+                        await (nav as INavigationService).Dispatcher.DispatchAsync(async () => await nav.SuspendingAsync());
+                    }
+
+                    // call system-level suspend
+                    DebugWrite($"Calling. Prelaunch {(OriginalActivatedArgs as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false}", caller: nameof(OnSuspendingAsync));
+                    await OnSuspendingAsync(sender, e, (OriginalActivatedArgs as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false);
+                }
+                catch { /* do nothing */ }
+                finally { deferral.Complete(); }
+            }
+        }
+
+        #endregion
 
         // The default frame is automatically wrapped in a modal dialog.
         // this is how you access it to set ModalContent or the IsModal property. 
