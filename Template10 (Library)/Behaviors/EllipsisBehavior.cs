@@ -3,7 +3,10 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Template10.Utils;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Windows.Foundation.Collections;
+using Windows.UI.Xaml.Media;
+using Template10.Controls;
 
 namespace Template10.Behaviors
 {
@@ -46,10 +49,51 @@ namespace Template10.Behaviors
             DependencyProperty.Register(nameof(Visibility), typeof(Visibilities),
                 typeof(EllipsisBehavior), new PropertyMetadata(Visibilities.Auto));
 
-        private void Update()
+        private Button FindButtonInternal()
+        {
+            return (commandBar as PageHeader)?.GetMoreButton();
+        }
+
+        private Button FindButtonByName()
+        {
+            if (VisualTreeHelper.GetChildrenCount(commandBar) > 0)
+            {
+                var child = VisualTreeHelper.GetChild(commandBar, 0) as FrameworkElement; /* Templated root */
+                return child?.FindName("MoreButton") as Button;
+            }
+            return null;
+        }
+
+        private Button FindButtonByTreeEnum()
         {
             var controls = XamlUtils.AllChildren<Control>(commandBar);
-            var button = controls.OfType<Button>().FirstOrDefault(x => x.Name.Equals("MoreButton"));
+            return controls.OfType<Button>().FirstOrDefault(x => x.Name.Equals("MoreButton"));
+        }
+
+        private Button FindButton()
+        {
+            if (commandBar == null)
+            {
+                return null;
+            }
+            var r = FindButtonInternal(); // try get button from internal cached value
+                                          // most optimized scenario for PageHeader control, no WinRT interop calls
+            if (r != null)
+            {
+                return r;
+            }
+            r = FindButtonByName(); // try find button by name from templated root
+                                    // minimized WinRT interop calls (3 calls) for MUCH better performance
+            if (r != null)
+            {
+                return r;
+            }
+            return FindButtonByTreeEnum(); // fallback method - many WinRT interop calls so it is very expensive
+        }
+
+        private void Update()
+        {
+            var button = FindButton();
             if (button == null)
                 return;
             switch (Visibility)
