@@ -114,5 +114,18 @@ namespace Template10.Controls
             {
                 (d as PageHeader).Content = e.NewValue;
             }));
+
+        private Button moreButton;
+
+        protected override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+            moreButton = GetTemplateChild("MoreButton") as Button;
+        }
+
+        internal Button GetMoreButton()
+        {
+            return moreButton;
+        }
     }
 }
