@@ -400,6 +400,8 @@ namespace Template10.Controls
                 if (!RootGrid.Children.Contains(frame) && frame != null)
                 {
                     RootGrid.Children.Add(frame);
+                    Grid.SetColumnSpan(frame, int.MaxValue);
+                    Grid.SetRowSpan(frame, int.MaxValue);
                 }
             }
             else

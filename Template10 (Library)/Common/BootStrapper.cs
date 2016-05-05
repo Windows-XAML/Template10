@@ -564,6 +564,9 @@ namespace Template10.Common
             return navigationService;
         }
 
+        public enum States { Starting, Splashing, ShowingContent }
+        public States CurrentState { get; set; } = States.Starting;
+
         /// <summary>
         /// InitializeFrameAsync creates a default Frame preceeded by the optional 
         /// splash screen, then OnInitialzieAsync, then the new frame (if necessary).
@@ -573,18 +576,44 @@ namespace Template10.Common
         {
             DebugWrite($"{nameof(IActivatedEventArgs)}:{e.Kind}");
 
-            // first show the splash 
-            FrameworkElement splash = null;
-            if (SplashFactory != null && e.PreviousExecutionState != ApplicationExecutionState.Suspended)
+            ProcessSplashScreen(e);
+            await CallOnInitializeAsync(e);
+            ProcessCustomTitleBar();
+
+            // if there's custom content then there's nothing to do
+            if (CurrentState == States.Splashing)
             {
-                Window.Current.Content = splash = SplashFactory(e.SplashScreen);
-                Window.Current.Activate();
+                Window.Current.Content = RootElementFactory(e);
             }
+            else if (Window.Current.Content == null)
+            {
+                Window.Current.Content = RootElementFactory(e);
+            }
+            else
+            {
+                // nothing: custom content
+            }
+        }
 
-            // allow the user to do things, even when restoring
-            _HasOnInitializeAsync = true;
-            await OnInitializeAsync(e);
+        /// <summary>
+        ///  By default, Template 10 will setup the root element to be a Template 10
+        ///  Modal Dialog control. If you desire something different, you can set it here.
+        /// </summary>
+        public Func<IActivatedEventArgs, UIElement> RootElementFactory { get; set; } = (e) =>
+        {
+            var b = Current;
+            var frame = new Frame();
+            var include = (b.CurrentState == States.Splashing) ? ExistingContent.Include : ExistingContent.Exclude;
+            var nav = b.NavigationServiceFactory(BackButton.Attach, include, frame);
+            return new Controls.ModalDialog
+            {
+                DisableBackButtonWhenModal = true,
+                Content = nav.Frame
+            };
+        };
 
+        private static void ProcessCustomTitleBar()
+        {
             // this "unused" bit is very important because of a quirk in ResourceThemes
             try
             {
@@ -609,22 +638,28 @@ namespace Template10.Common
                 count--;
                 if (count == 0) break;
             }
-
-            // create the default frame only if there's nothing already there
-            // if it is not null, by the way, then the developer injected something & they win
-            if (Window.Current.Content == null || Window.Current.Content == splash)
-            {
-                // build the default frame
-                var frame = CreateRootFrame(e);
-                var modal = new Controls.ModalDialog
-                {
-                    DisableBackButtonWhenModal = true,
-                    Content = (NavigationServiceFactory(BackButton.Attach, ExistingContent.Include, frame)).FrameFacade.Frame
-                };
-                Window.Current.Content = modal;
-            }
         }
 
+        private async Task CallOnInitializeAsync(IActivatedEventArgs e)
+        {
+            _HasOnInitializeAsync = true;
+            await OnInitializeAsync(e);
+        }
+
+        private FrameworkElement ProcessSplashScreen(IActivatedEventArgs e)
+        {
+            FrameworkElement splash = null;
+            if (SplashFactory != null && e.PreviousExecutionState != ApplicationExecutionState.Suspended)
+            {
+                Window.Current.Content = splash = SplashFactory(e.SplashScreen);
+                CurrentState = States.Splashing;
+                Window.Current.Activate();
+            }
+
+            return splash;
+        }
+
+        [Obsolete("Use RootElementFactory.")]
         protected virtual Frame CreateRootFrame(IActivatedEventArgs e)
         {
             DebugWrite($"{nameof(IActivatedEventArgs)}:{e}");
