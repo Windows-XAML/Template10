@@ -28,11 +28,11 @@ namespace Template10.Controls
             DefaultStyleKey = typeof(PageHeader);
 
             // behaviors
-            var b = new Behaviors.EllipsisBehavior();
-            RegisterPropertyChangedCallback(EllipsisVisibilityProperty, (s, e) => b.Visibility = EllipsisVisibility);
-            var c = new Microsoft.Xaml.Interactivity.BehaviorCollection();
-            c.Add(b);
-            SetValue(Microsoft.Xaml.Interactivity.Interaction.BehaviorsProperty, c);
+            var behavior = new Behaviors.EllipsisBehavior();
+            RegisterPropertyChangedCallback(EllipsisVisibilityProperty, (s, e) => behavior.Visibility = EllipsisVisibility);
+            var collection = new Microsoft.Xaml.Interactivity.BehaviorCollection();
+            collection.Add(behavior);
+            SetValue(Microsoft.Xaml.Interactivity.Interaction.BehaviorsProperty, collection);
 
             TabIndex = 5000;
         }
@@ -115,7 +115,6 @@ namespace Template10.Controls
                 (d as PageHeader).Content = e.NewValue;
             }));
 
-        private Button moreButton;
 
         protected override void OnApplyTemplate()
         {
@@ -123,9 +122,7 @@ namespace Template10.Controls
             moreButton = GetTemplateChild("MoreButton") as Button;
         }
 
-        internal Button GetMoreButton()
-        {
-            return moreButton;
-        }
+        private Button moreButton;
+        internal Button GetMoreButton() => moreButton;
     }
 }
