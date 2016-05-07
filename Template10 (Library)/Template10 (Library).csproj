@@ -183,6 +183,7 @@
     <Compile Include="Services\NavigationService\AlternativeNavigationEventArgs.cs" />
     <Compile Include="Services\NavigationService\INavigationService.cs" />
     <Compile Include="Services\NavigationService\NavigationServiceList.cs" />
+    <Compile Include="Services\PopupService\PopupService.cs" />
     <Compile Include="Services\SerializationService\ISerializationService.cs" />
     <Compile Include="Services\SerializationService\JsonSerializationService.cs" />
     <Compile Include="Services\SerializationService\SerializationService.cs" />

@@ -13,6 +13,7 @@ using System.Windows.Input;
 using Template10.Common;
 using Template10.Services.KeyboardService;
 using Template10.Services.NavigationService;
+using Template10.Services.PopupService;
 using Template10.Utils;
 using Windows.Devices.Input;
 using Windows.Foundation;
@@ -314,9 +315,9 @@ namespace Template10.Controls
         public void UpdatePaneMargin()
         {
             if (HamburgerButtonVisibility == Visibility.Collapsed && HeaderContent == null)
-                PaneContent.Margin= new Thickness(0, 0, 0, 0);
+                PaneContent.Margin = new Thickness(0, 0, 0, 0);
             else
-                PaneContent.Margin= new Thickness(0, squareHeight, 0, 0);
+                PaneContent.Margin = new Thickness(0, squareHeight, 0, 0);
         }
 
         async Task UpdateSelectedAsync(HamburgerButtonInfo previous, HamburgerButtonInfo value)
@@ -390,32 +391,36 @@ namespace Template10.Controls
         {
             DebugWrite($"Manual: {manual}, IsFullScreen: {IsFullScreen}");
 
-            var frame = NavigationService?.Frame;
-            if (manual ?? IsFullScreen)
+            if ((manual ?? IsFullScreen) && !(popup?.IsOpen ?? false))
             {
-                HamburgerButton.Opacity = 0;
+                this.Opacity = ShellSplitView.Opacity = HamburgerButton.Opacity = HamburgerBackground.Opacity = 0;
                 ShellSplitView.IsHitTestVisible = ShellSplitView.IsEnabled = false;
                 AutomationProperties.SetAccessibilityView(ShellSplitView, Windows.UI.Xaml.Automation.Peers.AccessibilityView.Raw);
+
                 ShellSplitView.Content = null;
-                if (!RootGrid.Children.Contains(frame) && frame != null)
+                var frame = NavigationService?.Frame;
+                if (popup == null)
                 {
-                    RootGrid.Children.Add(frame);
-                    Grid.SetColumnSpan(frame, int.MaxValue);
-                    Grid.SetRowSpan(frame, int.MaxValue);
+                    var service = new PopupService();
+                    popup = service.Open(PopupService.PopupSize.FullScreen, frame);
+                }
+                else
+                {
+                    popup.Open(frame);
                 }
             }
-            else
+            else if (!(manual ?? IsFullScreen) && (popup?.IsOpen ?? false))
             {
-                HamburgerButton.Opacity = 1;
+                this.Opacity = ShellSplitView.Opacity = HamburgerButton.Opacity = HamburgerBackground.Opacity = 1;
                 ShellSplitView.IsHitTestVisible = ShellSplitView.IsEnabled = true;
                 AutomationProperties.SetAccessibilityView(ShellSplitView, Windows.UI.Xaml.Automation.Peers.AccessibilityView.Control);
-                if (RootGrid.Children.Contains(frame) && frame != null)
-                {
-                    RootGrid.Children.Remove(frame);
-                }
+
+                popup.Close(null);
+                var frame = NavigationService?.Frame;
                 ShellSplitView.Content = frame;
             }
         }
+        Popup popup = null;
 
         #endregion
 
