@@ -567,14 +567,6 @@ namespace Template10.Controls
             {
                 button.HamburgerButtonInfo.RaiseUnchecked(e);
                 button.FrameworkElement.IsHitTestVisible = true;
-
-                // This fixes the VisualState transition with checking/unchecking a ToggleButton. Could this problem be 
-                // because there is no explicit "UnChecked" state for ToggleButton? Having spent sometime trying to figure
-                // out and nothing obvious, my only guess is that there must be a bug with the ToggleButton VisualState.
-                // This workaround forces the "UnChecked" state to the "Normal" visual state as it should.
-
-                ToggleButton btn = button.FrameworkElement as ToggleButton;
-                VisualStateManager.GoToState(btn, "Normal", false);
             }
         }
 
