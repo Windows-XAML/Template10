@@ -505,16 +505,6 @@ namespace Template10.Controls
             }
         }
 
-        //void NavButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
-        //{
-        //    DebugWrite();
-
-        //    var button = new InfoElement(sender);
-        //    ExecuteICommand(button.HamburgerButtonInfo);
-        //    button.HamburgerButtonInfo.RaiseTapped(e);
-        //    e.Handled = true;
-        //}
-
         void ExecuteICommand(HamburgerButtonInfo info)
         {
             ICommand command = info.Command;
