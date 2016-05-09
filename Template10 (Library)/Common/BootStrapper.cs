@@ -447,7 +447,7 @@ namespace Template10.Common
         {
             DebugWrite($"Frame:{frame}");
 
-            return new Services.NavigationService.NavigationService(frame);
+            return new NavigationService(frame);
         }
 
         /// <summary>
