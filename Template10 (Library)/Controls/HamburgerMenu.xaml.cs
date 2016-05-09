@@ -573,28 +573,6 @@ namespace Template10.Controls
             }
         }
 
-        private void NavButton_VisualStateChanged(object sender, VisualStateChangedEventArgs e)
-        {
-            var button = new InfoElement(e.Control);
-            switch (e.NewState.Name)
-            {
-                case "Normal":
-                case "PointerOver":
-                case "Pressed":
-                case "Disabled":
-                case "Checked":
-                case "CheckedPointerOver":
-                case "CheckedPressed":
-                case "CheckedDisabled":
-                case "Indeterminate":
-                case "IndeterminatePointerOver":
-                case "IndeterminatePressed":
-                case "IndeterminateDisabled":
-                default:
-                    break;
-            }
-        }
-
         #endregion
 
         #region  Touch gesture to OpenClose

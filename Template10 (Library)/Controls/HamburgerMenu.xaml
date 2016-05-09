@@ -214,7 +214,7 @@
                                   Width="{Binding PaneWidth, ElementName=ThisPage}"
                                   Background="Transparent">
                                 <VisualStateManager.VisualStateGroups>
-                                    <VisualStateGroup x:Name="CommonStates" CurrentStateChanged="NavButton_VisualStateChanged">
+                                    <VisualStateGroup x:Name="CommonStates">
                                         <VisualState x:Name="Normal">
                                             <VisualState.Setters>
                                                 <Setter Target="ContentPresenter.Foreground" Value="{Binding NavButtonForeground, ElementName=ThisPage}" />
