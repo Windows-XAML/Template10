@@ -603,8 +603,15 @@ namespace Template10.Controls
         {
             DebugWrite($"OpenCloseMode {OpenCloseMode}");
 
+            if (IsOpen || DisplayMode == SplitViewDisplayMode.CompactInline || DisplayMode == SplitViewDisplayMode.Inline)
+            {
+                return;
+            }
             var button = new InfoElement(e.OriginalSource);
-            if (button.HamburgerButtonInfo?.IsChecked ?? false) return;
+            if (button.HamburgerButtonInfo?.IsChecked ?? false)
+            {
+                return;
+            }
 
             switch (OpenCloseMode)
             {
