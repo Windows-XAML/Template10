@@ -84,6 +84,7 @@ namespace Template10.Services.NavigationService
                 var viewModel = BootStrapper.Current.ResolveForPage(page, this);
                 if ((viewModel != null))
                 {
+                    page.DataContext = viewModel;
                     return viewModel;
                 }
             }

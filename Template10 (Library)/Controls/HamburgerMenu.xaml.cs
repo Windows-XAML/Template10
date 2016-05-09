@@ -195,7 +195,8 @@ namespace Template10.Controls
 
         void NavigationServicePropertyChanged(INavigationService previous, INavigationService value)
         {
-            ShellSplitView.Content = value.FrameFacade.Frame;
+            if (!IsFullScreen)
+                ShellSplitView.Content = value.FrameFacade.Frame;
 
             // If splash screen then continue showing until navigated once
             if (value.FrameFacade.BackStackDepth == 0
@@ -216,6 +217,15 @@ namespace Template10.Controls
             }
 
             UpdateFullScreen();
+
+            if (popup != null)
+            {
+                var frame = value.FrameFacade.Frame;
+                if (frame != null)
+                {
+                    popup.Open(frame);
+                }
+            }
 
             value.AfterRestoreSavedNavigation += (s, e) => HighlightCorrectButton(NavigationService.CurrentPageType, NavigationService.CurrentPageParam);
             value.FrameFacade.Navigated += (s, e) => HighlightCorrectButton(e.PageType, e.Parameter);
