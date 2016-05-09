@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+using Windows.ApplicationModel.Core;
 using Template10.Services.NavigationService;
 using Windows.Graphics.Display;
 using Windows.UI.ViewManagement;
@@ -29,7 +31,20 @@ namespace Template10.Common
             DebugWrite(caller: "Constructor");
         }
 
-        public static WindowWrapper Default() => ActiveWrappers.FirstOrDefault();
+        public static WindowWrapper Default()
+        {
+            try
+            {
+                var mainDispatcher = CoreApplication.MainView.Dispatcher;
+                return ActiveWrappers.FirstOrDefault(x => x.Window.Dispatcher == mainDispatcher) ??
+                        ActiveWrappers.FirstOrDefault();
+            }
+            catch (COMException)
+            {
+                //MainView might exist but still be not accessible
+                return ActiveWrappers.FirstOrDefault();
+            }
+        }
 
         public readonly static List<WindowWrapper> ActiveWrappers = new List<WindowWrapper>();
 
