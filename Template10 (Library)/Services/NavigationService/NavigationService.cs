@@ -57,13 +57,15 @@ namespace Template10.Services.NavigationService
             FrameFacadeInternal.Navigated += async (s, e) =>
             {
                 var parameter = SerializationService.Deserialize(e.Parameter?.ToString());
+                var currentContent = FrameFacadeInternal.Frame.Content;
                 if (Equals(e.Parameter?.ToString(), SerializationService.Serialize(LastNavigationParameter)))
                     parameter = LastNavigationParameter;
                 await WindowWrapper.Current().Dispatcher.DispatchAsync(async () =>
                 {
                     try
                     {
-                        await NavigateToAsync(e.NavigationMode, parameter, FrameFacadeInternal.Frame.Content);
+                        if (currentContent == FrameFacadeInternal.Frame.Content)
+                            await NavigateToAsync(e.NavigationMode, parameter, FrameFacadeInternal.Frame.Content);
                     }
                     catch (Exception ex)
                     {
