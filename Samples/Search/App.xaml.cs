@@ -13,7 +13,7 @@ namespace Template10.Samples.SearchSample
 
         public override Task OnInitializeAsync(IActivatedEventArgs args)
         {
-            var nav = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include);
+            var nav = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include, null);
             Window.Current.Content = new Views.Shell(nav);
 			return Task.CompletedTask;
 		}

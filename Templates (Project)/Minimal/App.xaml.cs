@@ -14,34 +14,22 @@ namespace Sample
     /// https://github.com/Windows-XAML/Template10/wiki
 
     [Bindable]
-    sealed partial class App : Template10.Common.BootStrapper
+    sealed partial class App : BootStrapper
     {
         public App()
         {
             InitializeComponent();
             SplashFactory = (e) => new Views.Splash(e);
 
-            #region App settings
-
-            var _settings = SettingsService.Instance;
-            RequestedTheme = _settings.AppTheme;
-            CacheMaxDuration = _settings.CacheMaxDuration;
-            ShowShellBackButton = _settings.UseShellBackButton;
-
-            #endregion
-        }
-
-        public override async Task OnInitializeAsync(IActivatedEventArgs args)
-        {
-            await Task.CompletedTask;
+            var settings = SettingsService.Instance;
+            RequestedTheme = settings.AppTheme;
+            CacheMaxDuration = settings.CacheMaxDuration;
+            ShowShellBackButton = settings.UseShellBackButton;
         }
 
         public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
-            // long-running startup tasks go here
-
-            NavigationService.Navigate(typeof(Views.MainPage));
-            await Task.CompletedTask;
+            await NavigationService.NavigateAsync(typeof(Views.MainPage));
         }
     }
 }

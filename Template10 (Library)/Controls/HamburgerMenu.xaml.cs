@@ -402,7 +402,7 @@ namespace Template10.Controls
 
             if ((manual ?? IsFullScreen) && !(popup?.IsOpen ?? false))
             {
-                this.Opacity = ShellSplitView.Opacity = HamburgerButton.Opacity = HamburgerBackground.Opacity = 0;
+                this.Opacity = 0;
                 ShellSplitView.IsHitTestVisible = ShellSplitView.IsEnabled = false;
                 AutomationProperties.SetAccessibilityView(ShellSplitView, Windows.UI.Xaml.Automation.Peers.AccessibilityView.Raw);
 
@@ -420,7 +420,7 @@ namespace Template10.Controls
             }
             else if (!(manual ?? IsFullScreen) && (popup?.IsOpen ?? false))
             {
-                this.Opacity = ShellSplitView.Opacity = HamburgerButton.Opacity = HamburgerBackground.Opacity = 1;
+                this.Opacity = 1;
                 ShellSplitView.IsHitTestVisible = ShellSplitView.IsEnabled = true;
                 AutomationProperties.SetAccessibilityView(ShellSplitView, Windows.UI.Xaml.Automation.Peers.AccessibilityView.Control);
 
@@ -485,6 +485,8 @@ namespace Template10.Controls
                 HamburgerButtonInfo = FrameworkElement?.DataContext as HamburgerButtonInfo;
             }
             public FrameworkElement FrameworkElement { get; }
+            public Button Button => FrameworkElement as Button;
+            public ToggleButton ToggleButton => FrameworkElement as ToggleButton;
             public HamburgerButtonInfo HamburgerButtonInfo { get; }
         }
 
@@ -567,6 +569,7 @@ namespace Template10.Controls
             {
                 button.HamburgerButtonInfo.RaiseUnchecked(e);
                 button.FrameworkElement.IsHitTestVisible = true;
+                VisualStateManager.GoToState(button.ToggleButton, "Normal", true);
             }
         }
 

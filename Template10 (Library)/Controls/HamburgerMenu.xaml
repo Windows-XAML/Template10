@@ -116,33 +116,27 @@
                                   Width="{Binding PaneWidth, ElementName=ThisPage}"
                                   Background="Transparent">
                                 <VisualStateManager.VisualStateGroups>
-                                    <VisualStateGroup x:Name="CommonStates" CurrentStateChanged="NavButton_VisualStateChanged">
+                                    <VisualStateGroup x:Name="CommonStates">
                                         <VisualState x:Name="Normal">
                                             <VisualState.Setters>
                                                 <Setter Target="ContentPresenter.Foreground" Value="{Binding NavButtonForeground, ElementName=ThisPage}" />
                                                 <Setter Target="ContentPresenter.Background" Value="{Binding NavButtonBackground, ElementName=ThisPage}" />
+                                                <Setter Target="Indicator.Visibility" Value="Collapsed" />
                                             </VisualState.Setters>
-                                            <!--<Storyboard>
-                                                <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
-                                            </Storyboard>-->
                                         </VisualState>
                                         <VisualState x:Name="PointerOver">
                                             <VisualState.Setters>
                                                 <Setter Target="ContentPresenter.Foreground" Value="{Binding NavButtonHoverForeground, ElementName=ThisPage}" />
                                                 <Setter Target="ContentPresenter.Background" Value="{Binding NavButtonHoverBackground, ElementName=ThisPage}" />
+                                                <Setter Target="Indicator.Visibility" Value="Collapsed" />
                                             </VisualState.Setters>
-                                            <!--<Storyboard>
-                                                <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
-                                            </Storyboard>-->
                                         </VisualState>
                                         <VisualState x:Name="Pressed">
                                             <VisualState.Setters>
                                                 <Setter Target="ContentPresenter.Foreground" Value="{Binding NavButtonPressedForeground, ElementName=ThisPage}" />
                                                 <Setter Target="ContentPresenter.Background" Value="{Binding NavButtonPressedBackground, ElementName=ThisPage}" />
+                                                <Setter Target="Indicator.Visibility" Value="Collapsed" />
                                             </VisualState.Setters>
-                                            <!--<Storyboard>
-                                                <PointerDownThemeAnimation Storyboard.TargetName="RootGrid" />
-                                            </Storyboard>-->
                                         </VisualState>
                                         <VisualState x:Name="Checked">
                                             <VisualState.Setters>
@@ -150,9 +144,6 @@
                                                 <Setter Target="ContentPresenter.Background" Value="{Binding NavButtonCheckedBackground, ElementName=ThisPage}" />
                                                 <Setter Target="Indicator.Visibility" Value="Visible" />
                                             </VisualState.Setters>
-                                            <!--<Storyboard>
-                                                <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
-                                            </Storyboard>-->
                                         </VisualState>
                                         <VisualState x:Name="CheckedPointerOver">
                                             <VisualState.Setters>
@@ -179,6 +170,7 @@
                                             <VisualState.Setters>
                                                 <Setter Target="ContentPresenter.Foreground" Value="DimGray" />
                                                 <Setter Target="ContentPresenter.Background" Value="Transparent" />
+                                                <Setter Target="Indicator.Visibility" Value="Collapsed" />
                                             </VisualState.Setters>
                                         </VisualState>
                                         <VisualState x:Name="Indeterminate" />
@@ -191,8 +183,8 @@
                                 <Rectangle x:Name="Indicator"
                                            Width="4"
                                            HorizontalAlignment="Left"
-                                           Fill="{Binding NavButtonCheckedIndicatorBrush, ElementName=ThisPage}"
-                                           Visibility="Collapsed" />
+                                           Fill="{Binding NavButtonCheckedIndicatorBrush, ElementName=ThisPage}" />
+                                <Rectangle x:Name="DisableInteraction" Fill="Transparent" />
                             </Grid>
                         </ControlTemplate>
                     </ToggleButton.Template>
