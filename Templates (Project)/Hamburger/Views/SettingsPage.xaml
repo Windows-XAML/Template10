@@ -94,13 +94,21 @@
                                       RelativePanel.AlignLeftWithPanel="True"
                                       RelativePanel.Below="UseLightThemeToggleSwitch" />
 
+                        <ToggleSwitch x:Name="IsFullScreenToggleSwitch"
+                                      Header="Hamburger Menu is Full Screen"
+                                      IsOn="{Binding IsFullScreen, Mode=TwoWay}"
+                                      OffContent="Content is not Full Screen"
+                                      OnContent="Content is Full Screen"
+                                      RelativePanel.AlignLeftWithPanel="True"
+                                      RelativePanel.Below="ShowHamburgerButtonToggleSwitch" />
+
                         <TextBox x:Name="BusyTextTextBox"
                                  Width="200"
                                  Margin="0,12,0,0"
                                  HorizontalAlignment="Left"
                                  Header="Busy text"
                                  RelativePanel.AlignLeftWithPanel="True"
-                                 RelativePanel.Below="ShowHamburgerButtonToggleSwitch"
+                                 RelativePanel.Below="IsFullScreenToggleSwitch"
                                  Text="{Binding BusyText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                         <Button Margin="12,0,0,0"

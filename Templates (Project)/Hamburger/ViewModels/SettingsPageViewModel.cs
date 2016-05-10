@@ -35,6 +35,12 @@ namespace Sample.ViewModels
             set { _settings.ShowHamburgerButton = value; base.RaisePropertyChanged(); }
         }
 
+        public bool IsFullScreen
+        {
+            get { return _settings.IsFullScreen; }
+            set { _settings.IsFullScreen = value; base.RaisePropertyChanged(); }
+        }
+
         public bool UseShellBackButton
         {
             get { return _settings.UseShellBackButton; }

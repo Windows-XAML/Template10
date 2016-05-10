@@ -128,7 +128,11 @@ namespace Template10.Controls
 
         private void HeaderContentPropertyChanged(object oldValue, object newValue) => UpdatePaneMargin();
 
-        void SplitViewDisplayModeChanged(DependencyProperty dp) => DisplayMode = ShellSplitView.DisplayMode;
+        void SplitViewDisplayModeChanged(DependencyProperty dp)
+        {
+            DisplayMode = ShellSplitView.DisplayMode;
+            UpdateFullScreen();
+        }
 
         void SplitViewIsPaneOpenChanged(DependencyProperty dp)
         {
@@ -153,9 +157,9 @@ namespace Template10.Controls
 
         void IsOpenPropertyChanged(bool previous, bool value)
         {
-            // this will keep the two properties in sync
             UpdateIsPaneOpen(value);
             UpdateHamburgerButtonGridWidth();
+            UpdateFullScreen();
         }
 
         void DisplayModePropertyChanged(SplitViewDisplayMode previous, SplitViewDisplayMode value)
@@ -195,8 +199,9 @@ namespace Template10.Controls
 
         void NavigationServicePropertyChanged(INavigationService previous, INavigationService value)
         {
-            if (!IsFullScreen)
-                ShellSplitView.Content = value.FrameFacade.Frame;
+            value.AfterRestoreSavedNavigation += (s, e) => HighlightCorrectButton(NavigationService.CurrentPageType, NavigationService.CurrentPageParam);
+            value.FrameFacade.Navigated += (s, e) => HighlightCorrectButton(e.PageType, e.Parameter);
+            ShellSplitView.Content = value.Frame;
 
             // If splash screen then continue showing until navigated once
             if (value.FrameFacade.BackStackDepth == 0
@@ -205,30 +210,17 @@ namespace Template10.Controls
                 && BootStrapper.Current.OriginalActivatedArgs.PreviousExecutionState != Windows.ApplicationModel.Activation.ApplicationExecutionState.Terminated)
             {
                 var once = false;
-                IsFullScreen = true;
+                UpdateFullScreen(true);
                 value.FrameFacade.Navigated += (s, e) =>
                 {
                     if (!once)
                     {
                         once = true;
-                        IsFullScreen = false;
+                        if (!IsFullScreen)
+                            UpdateFullScreen(false);
                     }
                 };
             }
-
-            UpdateFullScreen();
-
-            if (popup != null)
-            {
-                var frame = value.FrameFacade.Frame;
-                if (frame != null)
-                {
-                    popup.Open(frame);
-                }
-            }
-
-            value.AfterRestoreSavedNavigation += (s, e) => HighlightCorrectButton(NavigationService.CurrentPageType, NavigationService.CurrentPageParam);
-            value.FrameFacade.Navigated += (s, e) => HighlightCorrectButton(e.PageType, e.Parameter);
         }
 
         void IsFullScreenPropertyChanged(bool previous, bool value) => UpdateFullScreen(value);
@@ -317,17 +309,25 @@ namespace Template10.Controls
         private void UpdateHamburgerButtonGridWidth()
         {
             if (ShellSplitView.IsPaneOpen)
+            {
                 HamburgerButtonGridWidth = (ShellSplitView.DisplayMode == SplitViewDisplayMode.CompactInline) ? ShellSplitView.OpenPaneLength : squareWidth;
+            }
             else
+            {
                 HamburgerButtonGridWidth = squareWidth;
+            }
         }
 
         public void UpdatePaneMargin()
         {
             if (HamburgerButtonVisibility == Visibility.Collapsed && HeaderContent == null)
+            {
                 PaneContent.Margin = new Thickness(0, 0, 0, 0);
+            }
             else
+            {
                 PaneContent.Margin = new Thickness(0, squareHeight, 0, 0);
+            }
         }
 
         async Task UpdateSelectedAsync(HamburgerButtonInfo previous, HamburgerButtonInfo value)
@@ -347,13 +347,8 @@ namespace Template10.Controls
                 previous.RaiseUnselected();
 
                 // Workaround for visual state of ToggleButton not reset correctly
-                var fwe = LoadedNavButtons.Where(x => x.HamburgerButtonInfo == previous)
-                    .Select(x => x.FrameworkElement)
-                    .FirstOrDefault() as Control;
-                if (fwe != null)
-                {
-                    VisualStateManager.GoToState(fwe, "Normal", true);
-                }
+                var ctrl = LoadedNavButtons.First(x => x.HamburgerButtonInfo == value).GetElement<Control>();
+                VisualStateManager.GoToState(ctrl, "Normal", true);
             }
 
             // navigate only when all navigation buttons have been loaded
@@ -408,38 +403,32 @@ namespace Template10.Controls
         /// </remarks>
         void UpdateFullScreen(bool? manual = null)
         {
-            DebugWrite($"Manual: {manual}, IsFullScreen: {IsFullScreen}");
+            DebugWrite($"Manual: {manual}, IsFullScreen: {IsFullScreen} DisplayMode: {DisplayMode}");
 
-            if ((manual ?? IsFullScreen) && !(popup?.IsOpen ?? false))
+            var opacity = 1;
+            if ((DisplayMode != SplitViewDisplayMode.Overlay) && (manual ?? IsFullScreen))
             {
-                this.Opacity = 0;
-                ShellSplitView.IsHitTestVisible = ShellSplitView.IsEnabled = false;
-                AutomationProperties.SetAccessibilityView(ShellSplitView, Windows.UI.Xaml.Automation.Peers.AccessibilityView.Raw);
-
-                ShellSplitView.Content = null;
-                var frame = NavigationService?.Frame;
-                if (popup == null)
+                opacity = 0;
+                if (IsOpen)
                 {
-                    var service = new PopupService();
-                    popup = service.Open(PopupService.PopupSize.FullScreen, frame);
+                    Margin = new Thickness(-PaneWidth, 0, 0, 0);
                 }
                 else
                 {
-                    popup.Open(frame);
+                    Margin = new Thickness(-squareWidth, 0, 0, 0);
                 }
             }
-            else if (!(manual ?? IsFullScreen) && (popup?.IsOpen ?? false))
+            else
             {
-                this.Opacity = 1;
-                ShellSplitView.IsHitTestVisible = ShellSplitView.IsEnabled = true;
-                AutomationProperties.SetAccessibilityView(ShellSplitView, Windows.UI.Xaml.Automation.Peers.AccessibilityView.Control);
-
-                popup.Close(null);
-                var frame = NavigationService?.Frame;
-                ShellSplitView.Content = frame;
+                Margin = new Thickness(0);
             }
+
+            // hiding these elements prevents flicker
+            Header.Opacity = opacity;
+            HamburgerButton.Opacity = opacity;
+            HamburgerBackground.Opacity = opacity;
+            PaneContent.Opacity = opacity;
         }
-        Popup popup = null;
 
         #endregion
 
@@ -494,9 +483,10 @@ namespace Template10.Controls
                 FrameworkElement = sender as FrameworkElement;
                 HamburgerButtonInfo = FrameworkElement?.DataContext as HamburgerButtonInfo;
             }
+            public T GetElement<T>() where T : DependencyObject => FrameworkElement as T;
             public FrameworkElement FrameworkElement { get; }
-            public Button Button => FrameworkElement as Button;
-            public ToggleButton ToggleButton => FrameworkElement as ToggleButton;
+            public Button Button => GetElement<Button>();
+            public ToggleButton ToggleButton => GetElement<ToggleButton>();
             public HamburgerButtonInfo HamburgerButtonInfo { get; }
         }
 

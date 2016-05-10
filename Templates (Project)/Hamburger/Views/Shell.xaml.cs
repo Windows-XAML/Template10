@@ -13,18 +13,13 @@ namespace Sample.Views
     {
         public static Shell Instance { get; set; }
         public static HamburgerMenu HamburgerMenu => Instance.MyHamburgerMenu;
+        Services.SettingsServices.SettingsService _settings;
 
         public Shell()
         {
             Instance = this;
             InitializeComponent();
-
-            #region App Settings
-
-            var settings = Services.SettingsServices.SettingsService.Instance;
-            HamburgerMenu.HamburgerButtonVisibility = settings.ShowHamburgerButton ? Visibility.Visible : Visibility.Collapsed;
-
-            #endregion
+            _settings = Services.SettingsServices.SettingsService.Instance;
         }
 
         public Shell(INavigationService navigationService) : this()
@@ -35,6 +30,8 @@ namespace Sample.Views
         public void SetNavigationService(INavigationService navigationService)
         {
             MyHamburgerMenu.NavigationService = navigationService;
+            HamburgerMenu.IsFullScreen = _settings.IsFullScreen;
+            HamburgerMenu.HamburgerButtonVisibility = _settings.ShowHamburgerButton ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }
