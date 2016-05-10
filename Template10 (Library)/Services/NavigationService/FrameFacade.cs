@@ -92,6 +92,11 @@ namespace Template10.Services.NavigationService
             return FrameStateSettingsService().Open(GetPageStateKey(FrameId, type, BackStackDepth), true);
         }
 
+        public ISettingsService PageStateSettingsService(string key)
+        {
+            return FrameStateSettingsService().Open(key, true);
+        }
+
         public void ClearPageState(Type type)
         {
             this.FrameStateSettingsService().Remove(GetPageStateKey(FrameId, type, BackStackDepth));

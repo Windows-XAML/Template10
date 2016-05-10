@@ -651,14 +651,17 @@ namespace Template10.Common
         {
             DebugWrite(caller: nameof(Resuming));
 
-            if ((OriginalActivatedArgs as LaunchActivatedEventArgs)?.PrelaunchActivated ?? true)
+            var args = OriginalActivatedArgs as LaunchActivatedEventArgs;
+            if (args?.PrelaunchActivated ?? true)
             {
                 OnResuming(sender, e, AppExecutionState.Prelaunch);
                 await CallOnStartAsync(false, StartKind.Launch);
                 ActivateWindow(ActivateWindowSources.Resuming);
             }
             else
+            {
                 OnResuming(sender, e, AppExecutionState.Suspended);
+            }
         }
 
         private async void HandleSuspending(object sender, SuspendingEventArgs e)
