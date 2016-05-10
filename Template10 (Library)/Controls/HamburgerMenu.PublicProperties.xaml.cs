@@ -64,7 +64,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty HamburgerForegroundProperty =
               DependencyProperty.Register(nameof(HamburgerForeground), typeof(Brush),
-                  typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(HamburgerForeground), e)));
+                  typeof(HamburgerMenu), new PropertyMetadata(Colors.White.ToSolidColorBrush(), (d, e) => Changed(nameof(HamburgerForeground), e)));
 
         public Brush HamburgerBackground
         {
@@ -73,7 +73,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty HamburgerBackgroundProperty =
             DependencyProperty.Register(nameof(HamburgerBackground), typeof(Brush),
-                typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(HamburgerBackground), e)));
+                typeof(HamburgerMenu), new PropertyMetadata(Colors.SteelBlue.ToSolidColorBrush(), (d, e) => Changed(nameof(HamburgerBackground), e)));
 
         // nav button | normal
 
