@@ -95,10 +95,10 @@
                                       RelativePanel.Below="UseLightThemeToggleSwitch" />
 
                         <ToggleSwitch x:Name="IsFullScreenToggleSwitch"
-                                      Header="Hamburger Menu is Full Screen"
+                                      Header="Page content is Full Screen"
                                       IsOn="{Binding IsFullScreen, Mode=TwoWay}"
-                                      OffContent="Content is not Full Screen"
-                                      OnContent="Content is Full Screen"
+                                      OffContent="Hamburger Menu is visible"
+                                      OnContent="Hamburger Menu is hidden"
                                       RelativePanel.AlignLeftWithPanel="True"
                                       RelativePanel.Below="ShowHamburgerButtonToggleSwitch" />
 

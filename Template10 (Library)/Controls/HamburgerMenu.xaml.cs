@@ -409,10 +409,14 @@ namespace Template10.Controls
             DebugWrite($"Manual: {manual}, IsFullScreen: {IsFullScreen} DisplayMode: {DisplayMode}");
 
             var opacity = 1;
-            if ((DisplayMode != SplitViewDisplayMode.Overlay) && (manual ?? IsFullScreen))
+            if (manual ?? IsFullScreen)
             {
                 opacity = 0;
-                if (IsOpen)
+                if (ShellSplitView.DisplayMode == SplitViewDisplayMode.Overlay)
+                {
+                    Margin = new Thickness(0, 0, 0, 0);
+                }
+                else if (IsOpen)
                 {
                     Margin = new Thickness(-PaneWidth, 0, 0, 0);
                 }
