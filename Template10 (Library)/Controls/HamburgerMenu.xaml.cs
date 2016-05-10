@@ -34,9 +34,9 @@ namespace Template10.Controls
     [ContentProperty(Name = nameof(PrimaryButtons))]
     public sealed partial class HamburgerMenu : UserControl
     {
-        const int squareWidth = 48;
-        const int squareHeight = 48;
-        delegate void PropertyChangeHandlerDelegate(DependencyPropertyChangedEventArgs e);
+        private const int squareWidth = 48;
+        private const int squareHeight = 48;
+        private delegate void PropertyChangeHandlerDelegate(DependencyPropertyChangedEventArgs e);
 
         #region Debug
 
@@ -64,6 +64,7 @@ namespace Template10.Controls
                 PropertyChangedHandlers.Add(nameof(NavigationService), e => NavigationServicePropertyChanged(e.OldValue as INavigationService, e.NewValue as INavigationService));
                 PropertyChangedHandlers.Add(nameof(AccentColor), e => AccentColorPropertyChanged(e.OldValue as Color?, e.NewValue as Color?));
                 PropertyChangedHandlers.Add(nameof(HeaderContent), e => HeaderContentPropertyChanged(e.OldValue, e.NewValue));
+                RegisterPropertyChangedCallback(RequestedThemeProperty, (d, e) => RefreshStyles(this.RequestedTheme));
 
                 // default values;
                 PrimaryButtons = new ObservableCollection<HamburgerButtonInfo>();
@@ -96,7 +97,7 @@ namespace Template10.Controls
 
         }
 
-        void HamburgerMenu_Loaded(object sender, RoutedEventArgs args)
+        private void HamburgerMenu_Loaded(object sender, RoutedEventArgs args)
         {
             DebugWrite();
 
@@ -116,7 +117,7 @@ namespace Template10.Controls
             UpdatePaneMargin();
         }
 
-        void HamburgerMenu_LayoutUpdated(object sender, object e)
+        private void HamburgerMenu_LayoutUpdated(object sender, object e)
         {
             DebugWrite();
 
@@ -128,13 +129,13 @@ namespace Template10.Controls
 
         private void HeaderContentPropertyChanged(object oldValue, object newValue) => UpdatePaneMargin();
 
-        void SplitViewDisplayModeChanged(DependencyProperty dp)
+        private void SplitViewDisplayModeChanged(DependencyProperty dp)
         {
             DisplayMode = ShellSplitView.DisplayMode;
             UpdateFullScreen();
         }
 
-        void SplitViewIsPaneOpenChanged(DependencyProperty dp)
+        private void SplitViewIsPaneOpenChanged(DependencyProperty dp)
         {
             // this can occur if the user resizes before it loads
             if (_SecondaryButtonStackPanel == null)
@@ -151,18 +152,18 @@ namespace Template10.Controls
                 IsOpen = ShellSplitView.IsPaneOpen;
         }
 
-        void AccentColorPropertyChanged(Color? previous, Color? value) => RefreshStyles(value);
+        private void AccentColorPropertyChanged(Color? previous, Color? value) => RefreshStyles(value);
 
-        void FullScreenPropertyChanged(bool? previous, bool? value) => UpdateFullScreen(value);
+        private void FullScreenPropertyChanged(bool? previous, bool? value) => UpdateFullScreen(value);
 
-        void IsOpenPropertyChanged(bool previous, bool value)
+        private void IsOpenPropertyChanged(bool previous, bool value)
         {
             UpdateIsPaneOpen(value);
             UpdateHamburgerButtonGridWidth();
             UpdateFullScreen();
         }
 
-        void DisplayModePropertyChanged(SplitViewDisplayMode previous, SplitViewDisplayMode value)
+        private void DisplayModePropertyChanged(SplitViewDisplayMode previous, SplitViewDisplayMode value)
         {
             // this will keep the two properties in sync
             if (ShellSplitView.DisplayMode != value)
@@ -172,13 +173,13 @@ namespace Template10.Controls
             HamburgerButtonGridWidth = (value == SplitViewDisplayMode.CompactInline) ? PaneWidth : squareWidth;
         }
 
-        void HamburgerButtonVisibilityPropertyChanged(Visibility value)
+        private void HamburgerButtonVisibilityPropertyChanged(Visibility value)
         {
             HamburgerButton.Visibility = value;
             UpdatePaneMargin();
         }
 
-        async void SelectedPropertyChanged(HamburgerButtonInfo previous, HamburgerButtonInfo value)
+        private async void SelectedPropertyChanged(HamburgerButtonInfo previous, HamburgerButtonInfo value)
         {
             if ((value?.Equals(previous) ?? false))
             {
@@ -197,7 +198,7 @@ namespace Template10.Controls
             }
         }
 
-        void NavigationServicePropertyChanged(INavigationService previous, INavigationService value)
+        private void NavigationServicePropertyChanged(INavigationService previous, INavigationService value)
         {
             value.AfterRestoreSavedNavigation += (s, e) => HighlightCorrectButton(NavigationService.CurrentPageType, NavigationService.CurrentPageParam);
             value.FrameFacade.Navigated += (s, e) => HighlightCorrectButton(e.PageType, e.Parameter);
@@ -223,7 +224,7 @@ namespace Template10.Controls
             }
         }
 
-        void IsFullScreenPropertyChanged(bool previous, bool value) => UpdateFullScreen(value);
+        private void IsFullScreenPropertyChanged(bool previous, bool value) => UpdateFullScreen(value);
 
         #endregion
 
@@ -487,6 +488,15 @@ namespace Template10.Controls
                 HamburgerButtonInfo = FrameworkElement?.DataContext as HamburgerButtonInfo;
             }
             public T GetElement<T>() where T : DependencyObject => FrameworkElement as T;
+
+            public void RefreshVisualState()
+            {
+                var group = VisualStateManager.GetVisualStateGroups(FrameworkElement).First(x => x.Name == "CommonStates");
+                var current = group.CurrentState.Name;
+                VisualStateManager.GoToState(GetElement<Control>(), "Indeterminate", false);
+                VisualStateManager.GoToState(GetElement<Control>(), current, false);
+            }
+
             public FrameworkElement FrameworkElement { get; }
             public Button Button => GetElement<Button>();
             public ToggleButton ToggleButton => GetElement<ToggleButton>();

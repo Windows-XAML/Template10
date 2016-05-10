@@ -59,6 +59,29 @@ namespace Template10.Controls
             switch (RequestedTheme)
             {
                 case ElementTheme.Light:
+                    {
+                        this.SetIfNotSet(NavAreaBackgroundProperty, Colors.Gainsboro.Darken(ColorUtils.Add._40p).ToSolidColorBrush());
+                        this.SetIfNotSet(SecondarySeparatorProperty, Colors.DimGray.ToSolidColorBrush());
+                        this.SetIfNotSet(PaneBorderBrushProperty, Colors.Transparent.ToSolidColorBrush());
+                        this.SetIfNotSet(PaneBorderThicknessProperty, new Thickness(0));
+
+                        this.SetIfNotSet(HamburgerForegroundProperty, Colors.White.ToSolidColorBrush());
+                        this.SetIfNotSet(HamburgerBackgroundProperty, color?.ToSolidColorBrush());
+
+                        this.SetIfNotSet(NavButtonForegroundProperty, Colors.White.Darken(ColorUtils.Add._20p).ToSolidColorBrush());
+                        this.SetIfNotSet(NavButtonBackgroundProperty, Colors.Transparent.ToSolidColorBrush());
+
+                        this.SetIfNotSet(NavButtonCheckedForegroundProperty, Colors.White.ToSolidColorBrush());
+                        this.SetIfNotSet(NavButtonCheckedBackgroundProperty, Colors.Transparent.ToSolidColorBrush());
+                        this.SetIfNotSet(NavButtonCheckedIndicatorBrushProperty, Colors.White.ToSolidColorBrush());
+
+                        this.SetIfNotSet(NavButtonPressedForegroundProperty, Colors.White.Darken(ColorUtils.Add._30p).ToSolidColorBrush());
+                        this.SetIfNotSet(NavButtonPressedBackgroundProperty, Colors.Transparent.ToSolidColorBrush());
+
+                        this.SetIfNotSet(NavButtonHoverForegroundProperty, Colors.White.Darken(ColorUtils.Add._10p).ToSolidColorBrush());
+                        this.SetIfNotSet(NavButtonHoverBackgroundProperty, Colors.Transparent.ToSolidColorBrush());
+                        break;
+                    }
                 case ElementTheme.Default:
                 case ElementTheme.Dark:
                     {
@@ -85,6 +108,9 @@ namespace Template10.Controls
                         break;
                     }
             }
+
+            // ensure
+            LoadedNavButtons.ForEach(x => x.GotoNormal());
         }
     }
 }
