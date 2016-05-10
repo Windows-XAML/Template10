@@ -8,6 +8,7 @@ using Windows.UI.ViewManagement;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Template10.Common;
+using Template10.Services.NavigationService;
 
 namespace Sample.ViewModels
 {

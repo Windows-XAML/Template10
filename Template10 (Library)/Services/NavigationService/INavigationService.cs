@@ -23,6 +23,7 @@ namespace Template10.Services.NavigationService
 
         void Refresh();
 
+        [Obsolete("Use Template10.Services.ViewService.IViewService.OpenAsync instead")]
         Task OpenAsync(Type page, object parameter = null, string title = null, ViewSizePreference size = ViewSizePreference.UseHalf);
 
         object CurrentPageParam { get; }

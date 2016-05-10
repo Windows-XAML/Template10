@@ -22,12 +22,11 @@
 
 using System;
 using System.Collections.Concurrent;
-using System.Diagnostics;
-using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Template10.Common;
+using Template10.Services.NavigationService;
 
 namespace Template10.Services.ViewService
 {
@@ -82,7 +81,10 @@ namespace Template10.Services.ViewService
         public WindowWrapper WindowWrapper { get; }
         #endregion
 
-        // Instantiate views using "CreateForCurrentView"
+        #region NavigationService
+        public INavigationService NavigationService { get; set; }
+        #endregion
+
         private ViewLifetimeControl(CoreWindow newWindow)
         {
             CoreDispatcher = newWindow.Dispatcher;
@@ -94,16 +96,11 @@ namespace Template10.Services.ViewService
             RegisterForEvents();
         }
 
-        // Register for events on the current view
         private void RegisterForEvents()
         {
-            // A view is consolidated with other views when there's no way for the user to get to it (it's not in the list of recently used apps, cannot be
-            // launched from Start, etc.) A view stops being consolidated when it's visible--at that point the user can interact with it, move it on or off screen, etc.
-            // It's generally a good idea to close a view after it has been consolidated, but keep it open while it's visible.
             ApplicationView.GetForCurrentView().Consolidated += ViewConsolidated;
         }
 
-        // Unregister for events. Call this method before closing the view to prevent leaks.
         private void UnregisterForEvents()
         {
             ApplicationView.GetForCurrentView().Consolidated -= ViewConsolidated;
@@ -119,7 +116,7 @@ namespace Template10.Services.ViewService
 
         // Called when a view has been "consolidated" (no longer accessible to the user) 
         // and no other view is trying to interact with it. This should only be closed after the reference
-        // count goes to 0 (including being consolidated). At the end of this, the view is closed. 
+        // count goes to 0 (including being consolidated). At the end of this, the view should be closed manually. 
         private void FinalizeRelease()
         {
             bool justReleased = false;
@@ -143,16 +140,26 @@ namespace Template10.Services.ViewService
             }
         }
 
+        /// <summary>
+        /// Retrieves existing or creates new instance of <see cref="ViewLifetimeControl"/> for current <see cref="CoreWindow"/>
+        /// </summary>
+        /// <returns>Instance of <see cref="ViewLifetimeControl"/> that is associated with current window</returns>
         public static ViewLifetimeControl GetForCurrentView()
         {
             var wnd = Window.Current.CoreWindow;
+            /*BUG: use this strange way to get Id as for ShareTarget hosted window on desktop version ApplicationView.GetForCurrentView() throws "Catastrofic failure" COMException.
+              Link to question on msdn: https://social.msdn.microsoft.com/Forums/security/en-US/efa50111-043a-4007-8af8-2b53f72ba207/uwp-c-xaml-comexception-catastrofic-failure-due-to-applicationviewgetforcurrentview-in?forum=wpdevelop  */
             return WindowControlsMap.GetOrAdd(ApplicationView.GetApplicationViewIdForWindow(wnd), id => new ViewLifetimeControl(wnd));
         }
 
+        /// <summary>
+        /// Tries to retrieve existing instance of <see cref="ViewLifetimeControl"/> for current <see cref="CoreWindow"/>
+        /// </summary>
+        /// <returns>Instance of <see cref="ViewLifetimeControl"/> that is associated with current window or <value>null</value> if no calls to <see cref="GetForCurrentView"/> were made
+        /// before.</returns>
         public static ViewLifetimeControl TryGetForCurrentView()
         {
-            ViewLifetimeControl res;
-            //BUG: use this strange way to get Id as for ShareTarget hosted window on desktop version ApplicationView.GetForCurrentView() throws "Catastrofic failure" COMException
+            ViewLifetimeControl res;            
             WindowControlsMap.TryGetValue(ApplicationView.GetApplicationViewIdForWindow(Window.Current.CoreWindow), out res);
             return res;
         }             
@@ -164,8 +171,6 @@ namespace Template10.Services.ViewService
             bool releasedCopy = false;
             int refCountCopy = 0;
 
-            // This method is called from several different threads
-            // (each view lives on its own thread)
             lock (syncObject)
             {
                 releasedCopy = this.released;
@@ -228,7 +233,7 @@ namespace Template10.Services.ViewService
         {
             add
             {
-                bool releasedCopy = false;
+                bool releasedCopy;
                 lock (syncObject)
                 {
                     releasedCopy = released;

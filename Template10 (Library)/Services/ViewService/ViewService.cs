@@ -56,6 +56,7 @@ namespace Template10.Services.ViewService
                 var newAppView = ApplicationView.GetForCurrentView();
                 newAppView.Title = title;                
                 var nav = BootStrapper.Current.NavigationServiceFactory(BootStrapper.BackButton.Ignore, BootStrapper.ExistingContent.Exclude);
+                control.NavigationService = nav;
                 nav.Navigate(page, parameter);
                 newWindow.Content = nav.Frame;
                 newWindow.Activate();
