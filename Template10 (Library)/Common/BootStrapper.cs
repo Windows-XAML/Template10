@@ -37,15 +37,11 @@ namespace Template10.Common
 
         #endregion
 
-        #region dependency injection
-
         /// <summary>
         /// If a developer overrides this method, the developer can resolve DataContext or unwrap DataContext 
         /// available for the Page object when using a MVVM pattern that relies on a wrapped/porxy around ViewModels
         /// </summary>
-        public virtual Services.NavigationService.INavigable ResolveForPage(Page page, NavigationService navigationService) => null;
-
-        #endregion
+        public virtual INavigable ResolveForPage(Page page, NavigationService navigationService) => null;
 
         public static new BootStrapper Current { get; private set; }
 
@@ -58,10 +54,18 @@ namespace Template10.Common
 
         #endregion
 
+        public BootStrapper()
+        {
+            DebugWrite("base.Constructor");
+
+            Current = this;
+            Resuming += HandleResuming;
+            Suspending += HandleSuspending;
+        }
+
         private void Loaded()
         {
             DebugWrite();
-            Current = this;
 
             // Hook up keyboard and mouse Back handler
             var KeyboardService = Services.KeyboardService.KeyboardService.Instance;
@@ -82,9 +86,6 @@ namespace Template10.Common
 
             // Hook up the default Back handler
             SystemNavigationManager.GetForCurrentView().BackRequested += BackHandler;
-
-            Resuming += HandleResuming;
-            Suspending += HandleSuspending;
         }
 
         public event EventHandler<WindowCreatedEventArgs> WindowCreated;
@@ -680,12 +681,12 @@ namespace Template10.Common
                         // date the cache (which marks the date/time it was suspended)
                         nav.FrameFacade.SetFrameState(CacheDateKey, DateTime.Now.ToString());
                         // call view model suspend (OnNavigatedfrom)
-                        DebugWrite($"Nav:{nav}", caller: nameof(nav.SuspendingAsync));
+                        DebugWrite($"Nav.FrameId:{nav.FrameFacade.FrameId}", caller: nameof(nav.SuspendingAsync));
                         await (nav as INavigationService).Dispatcher.DispatchAsync(async () => await nav.SuspendingAsync());
                     }
 
                     // call system-level suspend
-                    DebugWrite($"Calling. Prelaunch {(OriginalActivatedArgs as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false}", caller: nameof(OnSuspendingAsync));
+                    DebugWrite($"Calling. OnSuspendingAsync {(OriginalActivatedArgs as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false}", caller: nameof(OnSuspendingAsync));
                     await OnSuspendingAsync(sender, e, (OriginalActivatedArgs as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false);
                 }
                 catch { /* do nothing */ }
