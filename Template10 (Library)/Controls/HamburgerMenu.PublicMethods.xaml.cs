@@ -110,7 +110,7 @@ namespace Template10.Controls
             }
 
             // ensure
-            LoadedNavButtons.ForEach(x => x.GotoNormal());
+            LoadedNavButtons.ForEach(x => x.RefreshVisualState());
         }
     }
 }
