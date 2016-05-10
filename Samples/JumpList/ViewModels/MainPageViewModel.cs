@@ -26,7 +26,10 @@ namespace Template10.Samples.JumpListSample.ViewModels
 
         public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
-            File = await _DataService.GetFileInfoAsync(_SettingService.Recent);
+            if (string.IsNullOrWhiteSpace(parameter as string))
+                File = await _DataService.GetFileInfoAsync(_SettingService.Recent);
+            else
+                File = await _DataService.GetFileInfoAsync(parameter.ToString());
             App.FileReceived += FileReceivedHandler;
         }
 
