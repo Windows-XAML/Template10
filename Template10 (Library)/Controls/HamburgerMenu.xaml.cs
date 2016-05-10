@@ -64,7 +64,6 @@ namespace Template10.Controls
                 PropertyChangedHandlers.Add(nameof(NavigationService), e => NavigationServicePropertyChanged(e.OldValue as INavigationService, e.NewValue as INavigationService));
                 PropertyChangedHandlers.Add(nameof(AccentColor), e => AccentColorPropertyChanged(e.OldValue as Color?, e.NewValue as Color?));
                 PropertyChangedHandlers.Add(nameof(HeaderContent), e => HeaderContentPropertyChanged(e.OldValue, e.NewValue));
-                RegisterPropertyChangedCallback(RequestedThemeProperty, (d, e) => RefreshStyles(this.RequestedTheme));
 
                 // default values;
                 PrimaryButtons = new ObservableCollection<HamburgerButtonInfo>();
@@ -491,7 +490,10 @@ namespace Template10.Controls
 
             public void RefreshVisualState()
             {
-                var group = VisualStateManager.GetVisualStateGroups(FrameworkElement).First(x => x.Name == "CommonStates");
+                var children = FrameworkElement.AllChildren();
+                var child = children.OfType<Grid>().First(x => x.Name == "RootGrid");
+                var groups = VisualStateManager.GetVisualStateGroups(child);
+                var group = groups.First(x => x.Name == "CommonStates");
                 var current = group.CurrentState.Name;
                 VisualStateManager.GoToState(GetElement<Control>(), "Indeterminate", false);
                 VisualStateManager.GoToState(GetElement<Control>(), current, false);

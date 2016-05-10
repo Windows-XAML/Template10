@@ -41,7 +41,7 @@ namespace Sample.Services.SettingsServices
             {
                 _helper.Write(nameof(AppTheme), value.ToString());
                 (Window.Current.Content as FrameworkElement).RequestedTheme = value.ToElementTheme();
-                Views.Shell.HamburgerMenu.RefreshStyles(value);
+                Views.Shell.HamburgerMenu.RefreshStyles(value, true);
             }
         }
 

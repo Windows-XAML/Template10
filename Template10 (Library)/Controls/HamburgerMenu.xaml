@@ -179,6 +179,11 @@
                                         <VisualState x:Name="IndeterminateDisabled" />
                                     </VisualStateGroup>
                                 </VisualStateManager.VisualStateGroups>
+                                <!--<Grid.Resources>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="FontSize" Value="{ThemeResource BodyCopy}" />
+                                    </Style>
+                                </Grid.Resources>-->
                                 <ContentPresenter x:Name="ContentPresenter" Content="{Binding Content}" />
                                 <Rectangle x:Name="Indicator"
                                            Width="4"

@@ -56,6 +56,18 @@ namespace Template10.Utils
             return null;
         }
 
+        public static List<DependencyObject> AllChildren(this DependencyObject parent)
+        {
+            var list = new List<DependencyObject>();
+            var count = VisualTreeHelper.GetChildrenCount(parent);
+            for (int i = 0; i < count; i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+                list.AddRange(AllChildren(list.AddAndReturn(child)));
+            }
+            return list;
+        }
+
         public static List<T> AllChildren<T>(DependencyObject parent) where T : DependencyObject
         {
             var list = new List<T>();
@@ -94,6 +106,11 @@ namespace Template10.Utils
                 default:
                     return ApplicationTheme.Dark;
             }
+        }
+
+        public static void SetAsNotSet(this DependencyObject o, DependencyProperty dp)
+        {
+            o.SetValue(dp, DependencyProperty.UnsetValue);
         }
 
         public static void SetIfNotSet(this DependencyObject o, DependencyProperty dp, object value)
