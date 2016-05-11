@@ -21,6 +21,7 @@ namespace Sample
             InitializeComponent();
             SplashFactory = (e) => new Views.Splash(e);
 
+            // some settings must be set in app.constructor
             var settings = SettingsService.Instance;
             RequestedTheme = settings.AppTheme;
             CacheMaxDuration = settings.CacheMaxDuration;

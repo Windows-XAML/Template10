@@ -105,7 +105,8 @@
                               IsTabStop="{Binding IsChecked, Converter={StaticResource ReverseBooleanConverter}}"
                               Loaded="NavButton_Loaded"
                               RightTapped="NavButton_RightTapped"
-                              TabIndex="2" Tapped="NavButton_Tapped"
+                              TabIndex="2"
+                              Tapped="NavButton_Tapped"
                               ToolTipService.ToolTip="{Binding Path=(ToolTipService.ToolTip)}"
                               Unchecked="NavButtonUnchecked"
                               Visibility="{Binding Visibility, Mode=TwoWay}">
@@ -204,7 +205,8 @@
                         IsEnabled="{x:Bind IsEnabled, Mode=OneWay}"
                         Loaded="NavButton_Loaded"
                         RightTapped="NavButton_RightTapped"
-                        TabIndex="2" Tapped="NavButton_Tapped"
+                        TabIndex="2"
+                        Tapped="NavButton_Tapped"
                         ToolTipService.ToolTip="{x:Bind Path=(ToolTipService.ToolTip), Mode=OneWay}"
                         Visibility="{x:Bind Visibility, Mode=OneWay}">
                     <Button.Template>
