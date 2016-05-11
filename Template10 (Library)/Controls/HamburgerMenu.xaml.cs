@@ -590,7 +590,7 @@ namespace Template10.Controls
         {
             DebugWrite($"OpenCloseMode {OpenCloseMode}");
 
-            if (IsOpen || DisplayMode == SplitViewDisplayMode.CompactInline || DisplayMode == SplitViewDisplayMode.Inline)
+            if (DisplayMode == SplitViewDisplayMode.CompactInline || DisplayMode == SplitViewDisplayMode.Inline)
             {
                 return;
             }
