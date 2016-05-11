@@ -780,5 +780,8 @@ namespace Template10.Controls
                     break;
             }
         }
+
+        private void NavButton_Tapped(object sender, TappedRoutedEventArgs e) => e.Handled = true;
+
     }
 }
