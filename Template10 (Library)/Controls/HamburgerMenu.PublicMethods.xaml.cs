@@ -29,6 +29,7 @@ namespace Template10.Controls
         public event EventHandler PaneOpened;
         public event EventHandler PaneClosed;
         public event EventHandler<ChangedEventArgs<HamburgerButtonInfo>> SelectedChanged;
+        public event EventHandler<ChangedEventArgs<SplitViewDisplayMode>> DisplayModeChanged;
 
         public void RefreshStyles(ElementTheme theme, bool clearExisting = false)
         {

@@ -170,6 +170,7 @@ namespace Template10.Controls
                 ShellSplitView.DisplayMode = value;
             }
             HamburgerButtonGridWidth = (value == SplitViewDisplayMode.CompactInline) ? PaneWidth : squareWidth;
+            DisplayModeChanged?.Invoke(this, new ChangedEventArgs<SplitViewDisplayMode>(previous, value));
         }
 
         private void HamburgerButtonVisibilityPropertyChanged(Visibility value)
