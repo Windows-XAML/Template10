@@ -465,7 +465,7 @@ namespace Template10.Controls
             }
             else
             {
-                ExecuteICommand(commandInfo);
+                ExecuteNavButtonICommand(commandInfo);
                 commandInfo.RaiseTapped(new RoutedEventArgs());
             }
         }
@@ -502,7 +502,7 @@ namespace Template10.Controls
             public HamburgerButtonInfo HamburgerButtonInfo { get; }
         }
 
-        void NavButton_Loaded(object sender, RoutedEventArgs e)
+        private void NavButton_Loaded(object sender, RoutedEventArgs e)
         {
             DebugWrite();
 
@@ -517,7 +517,7 @@ namespace Template10.Controls
             }
         }
 
-        void ExecuteICommand(HamburgerButtonInfo info)
+        private void ExecuteNavButtonICommand(HamburgerButtonInfo info)
         {
             ICommand command = info.Command;
             if (command != null)
@@ -530,7 +530,7 @@ namespace Template10.Controls
             }
         }
 
-        void NavButton_RightTapped(object sender, Windows.UI.Xaml.Input.RightTappedRoutedEventArgs e)
+        private void NavButton_RightTapped(object sender, Windows.UI.Xaml.Input.RightTappedRoutedEventArgs e)
         {
             DebugWrite();
 
@@ -539,7 +539,7 @@ namespace Template10.Controls
             e.Handled = true;
         }
 
-        void NavButton_Holding(object sender, Windows.UI.Xaml.Input.HoldingRoutedEventArgs e)
+        private void NavButton_Holding(object sender, Windows.UI.Xaml.Input.HoldingRoutedEventArgs e)
         {
             DebugWrite();
 
@@ -548,7 +548,7 @@ namespace Template10.Controls
             e.Handled = true;
         }
 
-        void NavButtonChecked(object sender, RoutedEventArgs e)
+        private void NavButtonChecked(object sender, RoutedEventArgs e)
         {
             DebugWrite();
 
@@ -562,7 +562,7 @@ namespace Template10.Controls
             }
         }
 
-        void NavButtonUnchecked(object sender, RoutedEventArgs e)
+        private void NavButtonUnchecked(object sender, RoutedEventArgs e)
         {
             DebugWrite();
 
