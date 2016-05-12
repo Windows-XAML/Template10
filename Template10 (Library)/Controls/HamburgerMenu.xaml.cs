@@ -397,7 +397,7 @@ namespace Template10.Controls
         /// remaining content loaded duing app start. In Minimal (Shell), this is still used for this purpose,
         /// but many developers also leverage this property to view media full screen and similar use cases.
         /// </remarks>
-        void UpdateFullScreen(bool? manual = null)
+        private void UpdateFullScreen(bool? manual = null)
         {
             DebugWrite($"Manual: {manual}, IsFullScreen: {IsFullScreen} DisplayMode: {DisplayMode}");
 
