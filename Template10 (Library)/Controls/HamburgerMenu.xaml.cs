@@ -1,30 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Template10.Common;
 using Template10.Services.KeyboardService;
 using Template10.Services.NavigationService;
-using Template10.Services.PopupService;
 using Template10.Utils;
 using Windows.Devices.Input;
-using Windows.Foundation;
 using Windows.System;
 using Windows.UI;
-using Windows.UI.Core;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
@@ -87,9 +78,11 @@ namespace Template10.Controls
                 {
                     var element = FocusManager.GetFocusedElement() as FrameworkElement;
                     var name = element?.Name ?? "no-name";
-                    var content = (((element as ContentControl)?.Content as StackPanel)?.Children[0] as SymbolIcon)?.Symbol.ToString();
-                    if (content == null) content = (element as ContentControl)?.Content?.ToString() ?? "no-content";
-                    var value = $"{element?.ToString() ?? "null"} {name} {content}";
+                    var stackpanel = (element as ContentControl)?.Content as StackPanel;
+                    var symbolicon = stackpanel?.Children[0] as SymbolIcon;
+                    var symbol = symbolicon?.Symbol.ToString();
+                    symbol = symbol ?? (element as ContentControl)?.Content?.ToString() ?? "no-content";
+                    var value = $"{element?.ToString() ?? "null"} name:{name} symbol:{symbol}";
                     DebugWrite(value, caller: "GotFocus");
                 };
             }
