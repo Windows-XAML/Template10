@@ -323,7 +323,7 @@ namespace Template10.Controls
             }
         }
 
-        async Task UpdateSelectedAsync(HamburgerButtonInfo previous, HamburgerButtonInfo value)
+        private async Task UpdateSelectedAsync(HamburgerButtonInfo previous, HamburgerButtonInfo value)
         {
             DebugWrite($"OldValue: {previous}, NewValue: {value}");
 
