@@ -21,15 +21,20 @@ namespace Sample
             InitializeComponent();
             SplashFactory = (e) => new Views.Splash(e);
 
+            #region app settings
+
             // some settings must be set in app.constructor
             var settings = SettingsService.Instance;
             RequestedTheme = settings.AppTheme;
             CacheMaxDuration = settings.CacheMaxDuration;
             ShowShellBackButton = settings.UseShellBackButton;
+
+            #endregion
         }
 
         public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
+            // TODO: add you rlong-running task here
             await NavigationService.NavigateAsync(typeof(Views.MainPage));
         }
     }
