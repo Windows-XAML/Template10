@@ -191,7 +191,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty DisplayModeProperty =
             DependencyProperty.Register(nameof(DisplayMode), typeof(SplitViewDisplayMode),
-                typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(DisplayModeProperty), e)));
+                typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) => Changed(nameof(DisplayMode), e)));
 
         /// <summary>
         /// This is one of three visual state properties. It sets the minimum value used to invoke the Wide visual state.
