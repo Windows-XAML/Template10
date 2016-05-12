@@ -54,7 +54,7 @@ namespace Template10.Services.PopupService
             return popup;
         }
 
-        public Popup Open(PopupSize size, UIElement content = null)
+        public Popup Show(PopupSize size, UIElement content = null)
         {
             var popup = Create(size, content);
             popup.IsOpen = true;
@@ -76,17 +76,17 @@ namespace Template10.Services.PopupService
             contentControl.Content = newContent;
         }
 
-        public static void Open(this Popup popup, UIElement newContent)
+        public static void Show(this Popup popup, UIElement newContent)
         {
             SetContent(popup, newContent);
-            Open(popup);
+            Show(popup);
         }
-        public static void Open(this Popup popup) => popup.IsOpen = true;
-        public static void Close(this Popup popup) => popup.IsOpen = false;
-        public static void Close(this Popup popup, UIElement newContent)
+        public static void Show(this Popup popup) => popup.IsOpen = true;
+        public static void Hide(this Popup popup) => popup.IsOpen = false;
+        public static void Hide(this Popup popup, UIElement newContent)
         {
             SetContent(popup, newContent);
-            Close(popup);
+            Hide(popup);
         }
     }
 }

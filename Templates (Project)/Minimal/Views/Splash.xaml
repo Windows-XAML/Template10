@@ -21,10 +21,8 @@
                     </ImageBrush.Transform>
                 </ImageBrush>
             </Canvas.Background>
-            <Viewbox x:Name="splashImage"
-                     Width="{x:Bind rootCanvas.ActualWidth, Mode=OneWay}"
-                     Height="{x:Bind rootCanvas.ActualHeight, Mode=OneWay}">
-                <Image Source="ms-appx:///Assets/SplashScreen.png" />
+            <Viewbox x:Name="splashImage">
+                <Image Source="ms-appx:///Assets/SplashScreen.png" ImageOpened="Image_Loaded" />
             </Viewbox>
         </Canvas>
 

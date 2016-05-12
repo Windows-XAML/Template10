@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Template10.Services.NavigationService;
+using Template10.Services.PopupService;
 using Template10.Utils;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -14,6 +15,7 @@ using Windows.Foundation.Metadata;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 
 namespace Template10.Common
 {
@@ -250,7 +252,6 @@ namespace Template10.Common
                 await CallOnStartAsync(true, StartKind.Launch);
             }
 
-            // ensure active (this will hide any custom splashscreen)
             ActivateWindow(ActivateWindowSources.Launching);
         }
 
@@ -554,8 +555,17 @@ namespace Template10.Common
         /// One scenario might be a delayed activation for Splash Screen.
         /// </summary>
         /// <param name="source">Reason for the call from Template 10</param>
-        public virtual void ActivateWindow(ActivateWindowSources source)
+        private void ActivateWindow(ActivateWindowSources source)
         {
+            DebugWrite($"source:{source}");
+
+            if (source != ActivateWindowSources.SplashScreen)
+            {
+                if (CurrentState == States.Splashing)
+                    SplashScreenPopup?.Hide();
+                CurrentState = States.ShowingContent;
+            }
+
             Window.Current.Activate();
         }
 
@@ -569,8 +579,7 @@ namespace Template10.Common
         {
             var b = Current;
             var frame = new Frame();
-            var include = (b.CurrentState == States.Splashing) ? ExistingContent.Include : ExistingContent.Exclude;
-            var nav = b.NavigationServiceFactory(BackButton.Attach, include, frame);
+            var nav = b.NavigationServiceFactory(BackButton.Attach, ExistingContent.Exclude, frame);
             return new Controls.ModalDialog
             {
                 DisableBackButtonWhenModal = true,
@@ -627,16 +636,17 @@ namespace Template10.Common
             await OnStartAsync(startKind, OriginalActivatedArgs);
         }
 
-        private FrameworkElement ShowSplashScreen(IActivatedEventArgs e)
+        internal Popup SplashScreenPopup = null;
+        private void ShowSplashScreen(IActivatedEventArgs e)
         {
-            FrameworkElement splash = null;
             if (SplashFactory != null && e.PreviousExecutionState != ApplicationExecutionState.Suspended)
             {
-                Window.Current.Content = splash = SplashFactory(e.SplashScreen);
                 CurrentState = States.Splashing;
+                var splash = SplashFactory(e.SplashScreen);
+                var service = new PopupService();
+                SplashScreenPopup = service.Show(PopupService.PopupSize.FullScreen, splash);
                 ActivateWindow(ActivateWindowSources.SplashScreen);
             }
-            return splash;
         }
 
         [Obsolete("Use RootElementFactory.")]

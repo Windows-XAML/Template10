@@ -31,7 +31,7 @@ namespace Sample
 
         public override UIElement CreateRootElement(IActivatedEventArgs e)
         {
-            var service = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include);
+            var service = NavigationServiceFactory(BackButton.Attach, ExistingContent.Exclude);
             return new ModalDialog
             {
                 DisableBackButtonWhenModal = true,
@@ -42,6 +42,7 @@ namespace Sample
 
         public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
+            await Task.Delay(10000);
             await NavigationService.NavigateAsync(typeof(Views.MainPage));
         }
     }
