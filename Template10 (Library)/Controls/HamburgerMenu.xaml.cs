@@ -579,7 +579,7 @@ namespace Template10.Controls
 
         #region  Touch gesture to OpenClose
 
-        void PaneContent_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        private void PaneContent_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
             DebugWrite($"OpenCloseMode {OpenCloseMode}");
 
@@ -602,7 +602,7 @@ namespace Template10.Controls
             }
         }
 
-        void PaneContent_ManipulationDelta(object sender, Windows.UI.Xaml.Input.ManipulationDeltaRoutedEventArgs e)
+        private void PaneContent_ManipulationDelta(object sender, Windows.UI.Xaml.Input.ManipulationDeltaRoutedEventArgs e)
         {
             DebugWrite($"OpenCloseMode {OpenCloseMode}");
 
