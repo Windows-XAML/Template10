@@ -249,7 +249,8 @@ namespace Template10.Common
 
             if (!restored)
             {
-                await CallOnStartAsync(true, StartKind.Launch);
+                var kind = e.PreviousExecutionState == ApplicationExecutionState.Running ? StartKind.Activate : StartKind.Launch;
+                await CallOnStartAsync(true, kind);
             }
 
             ActivateWindow(ActivateWindowSources.Launching);
@@ -665,7 +666,8 @@ namespace Template10.Common
             if (args?.PrelaunchActivated ?? true)
             {
                 OnResuming(sender, e, AppExecutionState.Prelaunch);
-                await CallOnStartAsync(false, StartKind.Launch);
+                var kind = args.PreviousExecutionState == ApplicationExecutionState.Running ? StartKind.Activate : StartKind.Launch;
+                await CallOnStartAsync(false, kind);
                 ActivateWindow(ActivateWindowSources.Resuming);
             }
             else
