@@ -86,6 +86,7 @@
                                   MinWidth="48"
                                   MaxWidth="{x:Bind MaxWidth, Mode=TwoWay}"
                                   Content="{Binding Content}"
+                                  Loaded="NavButton_Loaded"
                                   ToolTipService.ToolTip="{Binding Path=(ToolTipService.ToolTip)}"
                                   Visibility="{Binding Visibility, Mode=TwoWay}" />
             </DataTemplate>
