@@ -224,7 +224,7 @@ namespace Template10.Common
                             This is okay & by design.
                         */
 
-                        if (DetermineStartCause(e) == AdditionalKinds.Primary)
+                        if (EnableAutoRestoreAfterTerminated && DetermineStartCause(e) == AdditionalKinds.Primary)
                         {
                             restored = await NavigationService.RestoreSavedNavigationAsync();
                             DebugWrite($"{nameof(restored)}:{restored}", caller: nameof(NavigationService.RestoreSavedNavigationAsync));
@@ -255,6 +255,8 @@ namespace Template10.Common
 
             ActivateWindow(ActivateWindowSources.Launching);
         }
+
+        public bool EnableAutoRestoreAfterTerminated { get; set; } = true;
 
         private void BackHandler(object sender, BackRequestedEventArgs args)
         {
