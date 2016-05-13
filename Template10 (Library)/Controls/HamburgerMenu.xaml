@@ -300,9 +300,9 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <SplitView x:Name="ShellSplitView"
+        <SplitView x:Name="ShellSplitView" 
                    AutomationProperties.Name="Jerry Nixon"
-                   DisplayMode="Inline"
+                   DisplayMode="{x:Bind DisplayMode, Mode=TwoWay}"
                    IsTabStop="False"
                    OpenPaneLength="{x:Bind PaneWidth, Mode=OneWay}"
                    PaneBackground="Transparent"
