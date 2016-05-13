@@ -28,7 +28,6 @@ namespace Template10.Controls
     {
         public event EventHandler PaneOpened;
         public event EventHandler PaneClosed;
-        public event EventHandler<ChangedEventArgs<HamburgerButtonInfo>> SelectedChanged;
 
         public void RefreshStyles(ElementTheme theme, bool clearExisting = false)
         {
