@@ -24,6 +24,7 @@ namespace Template10.Services.NavigationService
         public Frame Frame => FrameFacade.Frame;
         object LastNavigationParameter { get; set; }
         string LastNavigationType { get; set; }
+        public object Content => Frame.Content;
 
         #region Debug
 
