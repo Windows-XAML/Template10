@@ -126,11 +126,11 @@ namespace Template10.Controls
 
         #region property changed handlers
 
-        private void HamburgerMenu_HeaderContentChanged(object sender, ValuesEventArgs<UIElement> e) => UpdatePaneMargin();
-        private void HamburgerMenu_AccentColorChanged(object sender, ValuesEventArgs<Color> e) => RefreshStyles(e.NewValue);
-        private void HamburgerMenu_IsFullScreenChanged(object sender, ValuesEventArgs<bool> e) => UpdateFullScreen(e.NewValue);
+        private void HamburgerMenu_HeaderContentChanged(object sender, ChangedEventArgs<UIElement> e) => UpdatePaneMargin();
+        private void HamburgerMenu_AccentColorChanged(object sender, ChangedEventArgs<Color> e) => RefreshStyles(e.NewValue);
+        private void HamburgerMenu_IsFullScreenChanged(object sender, ChangedEventArgs<bool> e) => UpdateFullScreen(e.NewValue);
 
-        private void HamburgerMenu_IsOpenChanged(object sender, ValuesEventArgs<bool> e)
+        private void HamburgerMenu_IsOpenChanged(object sender, ChangedEventArgs<bool> e)
         {
             UpdateIsPaneOpen(e.NewValue);
             UpdateHamburgerButtonGridWidth();
@@ -145,7 +145,7 @@ namespace Template10.Controls
             }
         }
 
-        private void HamburgerMenu_DisplayModeChanged(object sender, ValuesEventArgs<SplitViewDisplayMode> e)
+        private void HamburgerMenu_DisplayModeChanged(object sender, ChangedEventArgs<SplitViewDisplayMode> e)
         {
             HamburgerButtonGridWidth = (e.NewValue == SplitViewDisplayMode.CompactInline) ? PaneWidth : squareWidth;
             UpdateFullScreen();
@@ -170,13 +170,13 @@ namespace Template10.Controls
             }
         }
 
-        private void HamburgerMenu_HamburgerButtonVisibilityChanged(object sender, ValuesEventArgs<Visibility> e)
+        private void HamburgerMenu_HamburgerButtonVisibilityChanged(object sender, ChangedEventArgs<Visibility> e)
         {
             HamburgerButton.Visibility = e.NewValue;
             UpdatePaneMargin();
         }
 
-        private async void HamburgerMenu_SelectedChanged(object sender, ValuesEventArgs<HamburgerButtonInfo> e)
+        private async void HamburgerMenu_SelectedChanged(object sender, ChangedEventArgs<HamburgerButtonInfo> e)
         {
             if ((e.NewValue?.Equals(e.OldValue) ?? false))
             {
@@ -193,7 +193,7 @@ namespace Template10.Controls
             }
         }
 
-        private void HamburgerMenu_NavigationServiceChanged(object sender, ValuesEventArgs<INavigationService> e)
+        private void HamburgerMenu_NavigationServiceChanged(object sender, ChangedEventArgs<INavigationService> e)
         {
             e.NewValue.AfterRestoreSavedNavigation += (s, args) => HighlightCorrectButton(NavigationService.CurrentPageType, NavigationService.CurrentPageParam);
             e.NewValue.FrameFacade.Navigated += (s, args) => HighlightCorrectButton(args.PageType, args.Parameter);
