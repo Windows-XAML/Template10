@@ -4,6 +4,7 @@
       xmlns:Controls="using:Template10.Controls"
       xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
       xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+      xmlns:behaviors="using:Template10.Behaviors"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:Sample.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -15,29 +16,63 @@
 
         <Controls:HamburgerMenu.PrimaryButtons>
             <!--  mainpage button  -->
-            <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:MainPage" 
-                                          AutomationProperties.Name="Jerry"
-                                          >
+            <Controls:HamburgerButtonInfo ButtonType="Literal">
+                <RelativePanel Height="48">
+                    <SymbolIcon x:Name="Symbol"
+                                Width="48"
+                                RelativePanel.AlignVerticalCenterWithPanel="True"
+                                Symbol="Find" />
+                    <TextBox x:Name="SearchTextBox"
+                             Margin="12,0,12,0"
+                             PlaceholderText="Search"
+                             RelativePanel.AlignRightWithPanel="True"
+                             RelativePanel.AlignVerticalCenterWithPanel="True"
+                             RelativePanel.RightOf="Symbol" />
+                </RelativePanel>
+            </Controls:HamburgerButtonInfo>
+            <!--  mainpage button  -->
+            <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:MainPage">
                 <StackPanel Orientation="Horizontal">
-                    <SymbolIcon Width="48" Height="48"
+                    <SymbolIcon Width="48"
+                                Height="48"
                                 Symbol="Home" />
-                    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
+                    <TextBlock Margin="12,0,0,0"
+                               VerticalAlignment="Center"
                                Text="Home" />
                 </StackPanel>
             </Controls:HamburgerButtonInfo>
         </Controls:HamburgerMenu.PrimaryButtons>
 
         <Controls:HamburgerMenu.SecondaryButtons>
+            <!--  profile button  -->
+            <Controls:HamburgerButtonInfo ButtonType="Command">
+                <Interactivity:Interaction.Behaviors>
+                    <Core:EventTriggerBehavior EventName="Tapped">
+                        <behaviors:MessageDialogAction Content="Show profile" />
+                    </Core:EventTriggerBehavior>
+                </Interactivity:Interaction.Behaviors>
+                <StackPanel Orientation="Horizontal">
+                    <SymbolIcon Width="48"
+                                Height="48"
+                                Symbol="Contact" />
+                    <TextBlock Margin="12,0,0,0"
+                               VerticalAlignment="Center"
+                               Text="Profile" />
+                </StackPanel>
+            </Controls:HamburgerButtonInfo>
             <!--  settingspage button  -->
-            <Controls:HamburgerButtonInfo x:Name="SettingsButton" PageParameter="0"
+            <Controls:HamburgerButtonInfo x:Name="SettingsButton"
+                                          PageParameter="0"
                                           PageType="views:SettingsPage">
                 <Controls:HamburgerButtonInfo.NavigationTransitionInfo>
                     <SuppressNavigationTransitionInfo />
                 </Controls:HamburgerButtonInfo.NavigationTransitionInfo>
                 <StackPanel Orientation="Horizontal">
-                    <SymbolIcon Width="48" Height="48"
+                    <SymbolIcon Width="48"
+                                Height="48"
                                 Symbol="Setting" />
-                    <TextBlock Margin="12,0,0,0" VerticalAlignment="Center"
+                    <TextBlock Margin="12,0,0,0"
+                               VerticalAlignment="Center"
                                Text="Settings" />
                 </StackPanel>
             </Controls:HamburgerButtonInfo>
