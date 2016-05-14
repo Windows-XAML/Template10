@@ -318,9 +318,10 @@ namespace Template10.Services.NavigationService
                     return false;
                 }
 
-                FrameFacadeInternal.SetNavigationState(state.Read<string>("NavigateState"));
                 FrameFacadeInternal.CurrentPageType = Type.GetType(state.Read<string>("CurrentPageType"));
                 FrameFacadeInternal.CurrentPageParam = state.Read<object>("CurrentPageParam");
+                FrameFacadeInternal.SetNavigationState(state.Read<string>("NavigateState"));
+
                 await NavigateToAsync(NavigationMode.Refresh, FrameFacadeInternal.CurrentPageParam);
                 while (FrameFacadeInternal.Frame.Content == null)
                 {
