@@ -282,7 +282,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty DisplayModeProperty =
             DependencyProperty.Register(nameof(DisplayMode), typeof(SplitViewDisplayMode),
-                typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) =>
+                typeof(HamburgerMenu), new PropertyMetadata(SplitViewDisplayMode.Inline, (d, e) =>
                 {
                     Changed(nameof(DisplayMode), e);
                     (d as HamburgerMenu).DisplayModeChanged?.Invoke(d, e.ToValues<SplitViewDisplayMode>());
@@ -612,18 +612,10 @@ namespace Template10.Controls
                     Changed(nameof(SecondaryButtons), e);
                 }));
 
-        // manage change
-        private readonly static Dictionary<string, PropertyChangeHandlerDelegate> PropertyChangedHandlers
-            = new Dictionary<string, PropertyChangeHandlerDelegate>();
+        // debug write change
         private static void Changed(string v, DependencyPropertyChangedEventArgs e)
         {
             DebugWrite($"OldValue: {e.OldValue} NewValue: {e.NewValue}", caller: v);
-            var matches = PropertyChangedHandlers.Where(x => x.Key == v);
-            foreach (var item in matches)
-            {
-                DebugWrite($"Property: {item.Key}", caller: "Changed/Nested");
-                item.Value.Invoke(e);
-            }
         }
     }
 }
