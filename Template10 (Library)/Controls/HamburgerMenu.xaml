@@ -88,6 +88,7 @@
                                   Background="{Binding NavButtonBackground, ElementName=ThisPage, FallbackValue=DarkRed, Mode=OneWay}"
                                   Content="{Binding Content}"
                                   Foreground="{Binding NavButtonForeground, ElementName=ThisPage, FallbackValue=White, Mode=OneWay}"
+                                  Loaded="NavButton_Loaded"
                                   ToolTipService.ToolTip="{Binding Path=(ToolTipService.ToolTip)}"
                                   Visibility="{Binding Visibility, Mode=TwoWay}" />
             </DataTemplate>
