@@ -274,6 +274,7 @@ namespace Template10.Controls
             DependencyProperty.Register(nameof(DisplayMode), typeof(SplitViewDisplayMode),
                 typeof(HamburgerMenu), new PropertyMetadata(SplitViewDisplayMode.Inline, (d, e) =>
                 {
+                    (d as HamburgerMenu).UpdateHamburgerButtonGridWidth();
                     Changed(nameof(DisplayMode), e);
                     (d as HamburgerMenu).DisplayModeChanged?.Invoke(d, e.ToChangedEventArgs<SplitViewDisplayMode>());
                 }));
@@ -567,6 +568,10 @@ namespace Template10.Controls
             DependencyProperty.Register(nameof(IsOpen), typeof(bool),
                 typeof(HamburgerMenu), new PropertyMetadata(false, (d, e) =>
                 {
+                    (d as HamburgerMenu).UpdateHamburgerButtonGridWidth();
+                                      
+
+
                     Changed(nameof(IsOpen), e);
                     (d as HamburgerMenu).IsOpenChanged?.Invoke(d, e.ToChangedEventArgs<bool>());
                 }));
