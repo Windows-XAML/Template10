@@ -29,8 +29,7 @@ namespace Sample.ViewModels
 
         private async void OpenView()
         {
-            var service = new ViewService();
-            var control = await service.OpenAsync(typeof (SecondaryPage), null, Guid.NewGuid().ToString());
+            var control = await NavigationService.OpenAsync(typeof (SecondaryPage), null, Guid.NewGuid().ToString());
             control.Released += Control_Released;
         }
 

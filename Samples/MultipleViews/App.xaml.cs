@@ -17,7 +17,6 @@ namespace Sample
         public App()
         {
             InitializeComponent();
-            ViewService.Initialize(this);
         }
 
         public override async Task OnInitializeAsync(IActivatedEventArgs args)

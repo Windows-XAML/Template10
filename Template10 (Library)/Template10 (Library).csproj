@@ -196,7 +196,7 @@
     <Compile Include="Services\SettingsService\SettingsService.cs" />
     <Compile Include="Services\SettingsService\SettingsStrategy.cs" />
     <Compile Include="Services\ViewService\IViewService.cs" />
-    <Compile Include="Services\ViewService\SecondaryViewSynchronizationContextFacade.cs" />
+    <Compile Include="Services\ViewService\SecondaryViewSynchronizationContextDecorator.cs" />
     <Compile Include="Services\ViewService\ViewLifetimeControl.cs" />
     <Compile Include="Services\ViewService\ViewService.cs" />
     <Compile Include="Utils\ApiUtils.cs" />

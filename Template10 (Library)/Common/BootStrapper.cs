@@ -14,6 +14,7 @@ using Windows.Foundation.Metadata;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Template10.Services.ViewService;
 
 namespace Template10.Common
 {
@@ -91,14 +92,15 @@ namespace Template10.Common
         protected sealed override void OnWindowCreated(WindowCreatedEventArgs args)
         {
             DebugWrite();
-
+            //should be called to initialize and set new SynchronizationContext
+            ViewService.OnWindowCreated();
             if (!WindowWrapper.ActiveWrappers.Any())
                 Loaded();
 
             // handle window
             var window = new WindowWrapper(args.Window);
             WindowCreated?.Invoke(this, args);
-            base.OnWindowCreated(args);
+            base.OnWindowCreated(args);           
         }
 
         #region properties

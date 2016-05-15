@@ -8,12 +8,12 @@ using Logging=Template10.Services.LoggingService.LoggingService;
 
 namespace Template10.Services.ViewService
 {
-    class SecondaryViewSynchronizationContextFacade : SynchronizationContext
+    class SecondaryViewSynchronizationContextDecorator : SynchronizationContext
     {
         private readonly ViewLifetimeControl control;
         private readonly SynchronizationContext context;
 
-        public SecondaryViewSynchronizationContextFacade(ViewLifetimeControl control, SynchronizationContext context)
+        public SecondaryViewSynchronizationContextDecorator(ViewLifetimeControl control, SynchronizationContext context)
         {
             if (context == null)
                 throw new ArgumentNullException(nameof(context));
@@ -30,7 +30,7 @@ namespace Template10.Services.ViewService
             try
             {
                 var count = control.StartViewInUse();
-                Logging.WriteLine("SecondaryViewSynchronizationContextFacade : OperationStarted: " + count);
+                Logging.WriteLine("SecondaryViewSynchronizationContextDecorator : OperationStarted: " + count);
                 context.OperationStarted();
             }
             catch (ViewLifetimeControl.ViewLifeTimeException)
@@ -56,7 +56,7 @@ namespace Template10.Services.ViewService
             {
                 context.OperationCompleted();
                 var count = control.StopViewInUse();
-                Logging.WriteLine("SecondaryViewSynchronizationContextFacade : OperationCompleted: " + count);
+                Logging.WriteLine("SecondaryViewSynchronizationContextDecorator : OperationCompleted: " + count);
             }
             catch (ViewLifetimeControl.ViewLifeTimeException)
             {
@@ -68,7 +68,7 @@ namespace Template10.Services.ViewService
         {
             var copyControl = ViewLifetimeControl.GetForCurrentView();
             copyControl = copyControl != control ? copyControl : control;
-            return new SecondaryViewSynchronizationContextFacade(copyControl, context.CreateCopy());
+            return new SecondaryViewSynchronizationContextDecorator(copyControl, context.CreateCopy());
         }
     }
 }
