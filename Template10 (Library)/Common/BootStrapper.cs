@@ -582,7 +582,7 @@ namespace Template10.Common
         {
             var b = Current;
             var frame = new Frame();
-            var nav = b.NavigationServiceFactory(BackButton.Attach, ExistingContent.Exclude, frame);
+            var nav = b.NavigationServiceFactory(BackButton.Attach, ExistingContent.Include, frame);
             return new Controls.ModalDialog
             {
                 DisableBackButtonWhenModal = true,

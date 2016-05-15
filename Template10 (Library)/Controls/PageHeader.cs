@@ -23,6 +23,8 @@ namespace Template10.Controls
     [ContentProperty(Name = nameof(PrimaryCommands))]
     public sealed class PageHeader : CommandBar
     {
+        private static long? callBackIsOpenId;
+        private static long? callBackDisplayModeId;
         public PageHeader()
         {
             DefaultStyleKey = typeof(PageHeader);
@@ -35,6 +37,21 @@ namespace Template10.Controls
             SetValue(Microsoft.Xaml.Interactivity.Interaction.BehaviorsProperty, collection);
 
             TabIndex = 5000;
+        }
+
+
+        private void OnHamburgerMenuIsOpenPropertyChanged(DependencyObject s, DependencyProperty dp)  => UpdatePageHeaderLeftMargin(s as HamburgerMenu);
+
+        private void UpdatePageHeaderLeftMargin(HamburgerMenu hamburgerMenu)
+        {
+            if (hamburgerMenu != null) Margin =
+                    (hamburgerMenu.DisplayMode == SplitViewDisplayMode.Inline && !hamburgerMenu.IsOpen)
+                ? new Thickness(48, 0, 0, 0) : this.Margin = new Thickness(0);
+        }
+        private void OnHamburgerMenuDisplayModePropertyChanged(DependencyObject sender, DependencyProperty dp)
+        {
+            this.Margin = ((sender as HamburgerMenu).DisplayMode == SplitViewDisplayMode.Inline)
+               ? new Thickness(48, 0, 0, 0) : new Thickness(0);
         }
 
         public Behaviors.EllipsisBehavior.Visibilities EllipsisVisibility
@@ -80,6 +97,15 @@ namespace Template10.Controls
         private static void OnFramePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var frame = (Frame)e.NewValue;
+
+            var hamburgerMenu = frame.GetFirstAncestorOfType<HamburgerMenu>();
+            (d as PageHeader).UpdatePageHeaderLeftMargin(hamburgerMenu);
+
+            hamburgerMenu?.UnregisterPropertyChangedCallback(HamburgerMenu.IsOpenProperty, callBackIsOpenId ?? 0);
+            callBackIsOpenId = hamburgerMenu?.RegisterPropertyChangedCallback(HamburgerMenu.IsOpenProperty, (sender, dp) => (d as PageHeader).OnHamburgerMenuIsOpenPropertyChanged(sender,dp));
+            hamburgerMenu?.UnregisterPropertyChangedCallback(HamburgerMenu.DisplayModeProperty, callBackDisplayModeId ?? 0);
+            callBackDisplayModeId = hamburgerMenu?.RegisterPropertyChangedCallback(HamburgerMenu.DisplayModeProperty, (sender, dp) => (d as PageHeader).OnHamburgerMenuDisplayModePropertyChanged(sender, dp));
+
             if (frame.FlowDirection == FlowDirection.LeftToRight)
                 d.SetValue(BackButtonContentProperty, Symbol.Back);
             else
