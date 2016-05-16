@@ -407,7 +407,7 @@ namespace Template10.Controls
         /// </remarks>
         public INavigationService NavigationService
         {
-            get { return (NavigationService)GetValue(NavigationServiceProperty); }
+            get { return (INavigationService)GetValue(NavigationServiceProperty); }
             set { SetValue(NavigationServiceProperty, value); }
         }
         public static readonly DependencyProperty NavigationServiceProperty =
