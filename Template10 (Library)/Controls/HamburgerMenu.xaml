@@ -268,29 +268,37 @@
 
         <VisualStateManager.VisualStateGroups>
 
-            <VisualStateGroup x:Name="VisualStateGroup" CurrentStateChanged="VisualStateGroup_CurrentStateChanged">
+            <VisualStateGroup x:Name="VisualStateGroup">
 
                 <VisualState x:Name="VisualStateNarrow">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger x:Name="VisualStateNarrowTrigger" MinWindowWidth="{Binding VisualStateNarrowMinWidth, ElementName=ThisPage, Mode=OneWay}" />
+                        <AdaptiveTrigger x:Name="VisualStateNarrowTrigger" MinWindowWidth="{x:Bind VisualStateNarrowMinWidth, Mode=OneWay}" />
                     </VisualState.StateTriggers>
-                    <!--  see code-behind  -->
+                    <VisualState.Setters>
+                        <Setter Target="ThisPage.DisplayMode" Value="Overlay"/>
+                        <Setter Target="ThisPage.IsOpen" Value="False"/>
+                    </VisualState.Setters>
                 </VisualState>
 
                 <VisualState x:Name="VisualStateNormal">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger x:Name="VisualStateNormalTrigger" MinWindowWidth="{Binding VisualStateNormalMinWidth, ElementName=ThisPage, Mode=OneWay}" />
+                        <AdaptiveTrigger x:Name="VisualStateNormalTrigger" MinWindowWidth="{x:Bind VisualStateNormalMinWidth, Mode=OneWay}" />
                     </VisualState.StateTriggers>
-                    <!--  see code-behind  -->
+                    <VisualState.Setters>
+                        <Setter Target="ThisPage.DisplayMode" Value="CompactOverlay"/>
+                        <Setter Target="ThisPage.IsOpen" Value="False"/>
+                    </VisualState.Setters>
                 </VisualState>
 
                 <VisualState x:Name="VisualStateWide">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger x:Name="VisualStateWideTrigger" MinWindowWidth="{Binding VisualStateWideMinWidth, ElementName=ThisPage, Mode=OneWay}" />
+                        <AdaptiveTrigger x:Name="VisualStateWideTrigger" MinWindowWidth="{x:Bind VisualStateWideMinWidth, Mode=OneWay}" />
                     </VisualState.StateTriggers>
-                    <!--  see code-behind  -->
+                    <VisualState.Setters>
+                        <Setter Target="ThisPage.DisplayMode" Value="CompactInline"/>
+                        <Setter Target="ThisPage.IsOpen" Value="True"/>
+                    </VisualState.Setters>
                 </VisualState>
-
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 

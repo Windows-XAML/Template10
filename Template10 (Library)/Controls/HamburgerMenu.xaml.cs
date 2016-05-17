@@ -785,23 +785,5 @@ namespace Template10.Controls
             }
         }
 
-        private void VisualStateGroup_CurrentStateChanged(object sender, VisualStateChangedEventArgs e)
-        {
-            if (e.NewState == VisualStateNarrow)
-            {
-                DisplayMode = SplitViewDisplayMode.Overlay;
-                IsOpen = false;
-            }
-            else if (e.NewState == VisualStateNormal)
-            {
-                DisplayMode = SplitViewDisplayMode.CompactOverlay;
-                IsOpen = false;
-            }
-            else if (e.NewState == VisualStateWide)
-            {
-                DisplayMode = SplitViewDisplayMode.CompactInline;
-                IsOpen = true;
-            }
-        }
     }
 }
