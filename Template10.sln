@@ -110,9 +110,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JumpList", "Samples\JumpLis
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicFontSize", "Samples\DyanmicFontSize\DynamicFontSize.csproj", "{14F8D8E6-194A-4A95-A6EA-0D74A9CED8D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.VSIX (Template Pack)", "Template10 (Installer)\Template10.VSIX (Template Pack)\Template10.VSIX (Template Pack).csproj", "{AFEA71CA-4EE6-4982-BA6E-332E20985E1D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.VSIX (Snippet Pack)", "Template10 (Installer)\Template10.VSIX (Snippet Pack)\Template10.VSIX (Snippet Pack).csproj", "{AFEA71CA-4EE6-4982-BA6E-332E20985E1D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.VSIX (Snippet Pack)", "Template10 (Installer)\Template10.VSIX (Snippet Pack)\Template10.VSIX (Snippet Pack).csproj", "{FD63EF06-F97C-4113-B5AC-2A4D7DBEA6EB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.VSIX (Template Pack)", "Template10 (Installer)\Template10.VSIX (Template Pack)\Template10.VSIX (Template Pack).csproj", "{FD63EF06-F97C-4113-B5AC-2A4D7DBEA6EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
