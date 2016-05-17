@@ -45,6 +45,18 @@ namespace Template10.Utils
             update?.Invoke(bindings, null);
         }
 
+        public static T FirstAncestor<T>(this DependencyObject control) where T : DependencyObject
+        {
+            var parent = VisualTreeHelper.GetParent(control) as DependencyObject;
+            while (parent != null)
+            {
+                if (parent is T) return (T)parent;
+                parent = VisualTreeHelper.GetParent(parent) as DependencyObject;
+            }
+            return null;
+        }
+
+        [Obsolete("Use FirstAncestor<T> instead", true)]
         public static T Ancestor<T>(this DependencyObject control) where T : DependencyObject
         {
             var parent = VisualTreeHelper.GetParent(control) as DependencyObject;
