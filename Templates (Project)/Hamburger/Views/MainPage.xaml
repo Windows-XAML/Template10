@@ -8,8 +8,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:Sample.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:vm="using:Sample.ViewModels"
-      mc:Ignorable="d">
+      xmlns:vm="using:Sample.ViewModels" mc:Ignorable="d">
 
     <Page.DataContext>
         <vm:MainPageViewModel x:Name="ViewModel" />
@@ -49,11 +48,9 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <controls:PageHeader x:Name="pageHeader"
-                             RelativePanel.AlignLeftWithPanel="True"
+        <controls:PageHeader x:Name="pageHeader" RelativePanel.AlignLeftWithPanel="True"
                              RelativePanel.AlignRightWithPanel="True"
-                             RelativePanel.AlignTopWithPanel="True"
-                             Text="Main Page">
+                             RelativePanel.AlignTopWithPanel="True" Text="Main Page">
 
             <!--  secondary commands  -->
             <controls:PageHeader.SecondaryCommands>
@@ -64,13 +61,11 @@
 
         </controls:PageHeader>
 
-        <controls:Resizer x:Name="parameterResizer"
-                          Margin="16,16,16,0"
+        <controls:Resizer x:Name="parameterResizer" Margin="16,16,16,0"
                           RelativePanel.AlignLeftWithPanel="True"
                           RelativePanel.Below="pageHeader">
 
-            <TextBox MinWidth="150"
-                     MinHeight="62"
+            <TextBox MinWidth="150" MinHeight="62"
                      Header="Parameter to pass"
                      Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      TextWrapping="Wrap">
@@ -89,13 +84,11 @@
         </controls:Resizer>
 
         <Button x:Name="submitButton"
-                Click="{x:Bind ViewModel.GotoDetailsPage}"
-                Content="Submit"
+                Click="{x:Bind ViewModel.GotoDetailsPage}" Content="Submit"
                 RelativePanel.AlignBottomWith="parameterResizer"
                 RelativePanel.RightOf="parameterResizer" />
 
-        <TextBlock x:Name="stateTextBox"
-                   Margin="16,16,0,0"
+        <TextBlock x:Name="stateTextBox" Margin="16,16,0,0"
                    RelativePanel.AlignLeftWith="parameterResizer"
                    RelativePanel.Below="parameterResizer"
                    Text="Current Visual State" />
