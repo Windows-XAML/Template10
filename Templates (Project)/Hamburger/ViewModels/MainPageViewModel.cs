@@ -18,6 +18,9 @@ namespace Sample.ViewModels
             }
         }
 
+        string _Value = "Gas";
+        public string Value { get { return _Value; } set { Set(ref _Value, value); } }
+
         public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> suspensionState)
         {
             if (suspensionState.Any())
@@ -42,12 +45,17 @@ namespace Sample.ViewModels
             await Task.CompletedTask;
         }
 
-        string _Value = "Gas";
-        public string Value { get { return _Value; } set { Set(ref _Value, value); } }
-        public void GotoDetailsPage() => NavigationService.Navigate(typeof(Views.DetailPage), Value);
+        public void GotoDetailsPage() =>
+            NavigationService.Navigate(typeof(Views.DetailPage), Value);
 
-        public void GotoSettings() => NavigationService.Navigate(typeof(Views.SettingsPage), 0);
-        public void GotoPrivacy() => NavigationService.Navigate(typeof(Views.SettingsPage), 1);
-        public void GotoAbout() => NavigationService.Navigate(typeof(Views.SettingsPage), 2);
+        public void GotoSettings() =>
+            NavigationService.Navigate(typeof(Views.SettingsPage), 0);
+
+        public void GotoPrivacy() =>
+            NavigationService.Navigate(typeof(Views.SettingsPage), 1);
+
+        public void GotoAbout() =>
+            NavigationService.Navigate(typeof(Views.SettingsPage), 2);
+
     }
 }

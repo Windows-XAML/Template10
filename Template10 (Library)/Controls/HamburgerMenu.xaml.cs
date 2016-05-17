@@ -356,7 +356,7 @@ namespace Template10.Controls
                     IsOpen = (DisplayMode == SplitViewDisplayMode.CompactInline && IsOpen);
                     if (value.ClearHistory)
                         NavigationService.ClearHistory();
-                    if (value.ClearNavigationCache)
+                    if (value.ClearCache)
                         NavigationService.ClearCache(true);
                 }
                 else if (NavigationService.CurrentPageType == value.PageType
@@ -364,7 +364,7 @@ namespace Template10.Controls
                 {
                     if (value.ClearHistory)
                         NavigationService.ClearHistory();
-                    if (value.ClearNavigationCache)
+                    if (value.ClearCache)
                         NavigationService.ClearCache(true);
                 }
                 else if (NavigationService.CurrentPageType == value.PageType)
