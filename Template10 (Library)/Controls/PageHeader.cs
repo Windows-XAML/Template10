@@ -42,72 +42,56 @@ namespace Template10.Controls
 
         private void PageHeader_Loaded(object sender, RoutedEventArgs e)
         {
-            var page = this.GetFirstAncestorOfType<Page>();
-            var frame = page?.Frame;
-            var hamburgerMenu = frame?.GetFirstAncestorOfType<HamburgerMenu>();
-
-            hamburgerMenu?.UnregisterPropertyChangedCallback(HamburgerMenu.IsOpenProperty, callBackIsOpenId ?? 0);
-            callBackIsOpenId = hamburgerMenu?.RegisterPropertyChangedCallback(HamburgerMenu.IsOpenProperty, (obj, dp) => OnHamburgerMenuIsOpenPropertyChanged(obj as HamburgerMenu));
-
-            hamburgerMenu?.UnregisterPropertyChangedCallback(HamburgerMenu.DisplayModeProperty, callBackDisplayModeId ?? 0);
-            callBackDisplayModeId = hamburgerMenu?.RegisterPropertyChangedCallback(HamburgerMenu.DisplayModeProperty, (obj, dp) => OnHamburgerMenuDisplayModePropertyChanged(obj as HamburgerMenu));
-
-            //******************************************************************************************************
-            // Temp fix till HM VisualState Manager is checked out.
-            // HamburgerMenu.xaml.cs/VisualStateGroup_CurrentStateChanged is expected to fire on sartup but doeesn't
-            // Test with this to verify:
-            // Set initial value for DisplayMode DP PropertyMetadata to SplitViewDisplayMode.Inline (for this test
-            // comment out any code-behind or XAML setting of DisplayMode elsewhere, usually in Shell) and see if 
-            // VisualStateGroup_CurrentStateChanged triggers for Windows Phone.
-            // VisualState Manager should setDisplayMode to Overlay but stays Inline!
-            //******************************************************************************************************
-
-            if (hamburgerMenu.DisplayMode == SplitViewDisplayMode.Inline)
-            {
-                Margin = (page.ActualWidth <= VisualStateNormalMinWidth) ? new Thickness(0) : new Thickness(48, 0, 0, 0);
-
-            }else if(hamburgerMenu.DisplayMode == SplitViewDisplayMode.Overlay)
-            {
-                Margin = (page.ActualWidth <= VisualStateNormalMinWidth) ? new Thickness(0) : new Thickness(48, 0, 0, 0);
-
-            }
-            else
-            {
-                Margin = (page.ActualWidth <= VisualStateNormalMinWidth) ? new Thickness(-48, 0, 0, 0) : new Thickness(0);
-
-            }
+            var hamburgerMenu = ParentHamburgerMenu;
+            RegisterHamburgerMenuChanges(hamburgerMenu);
+            UpdateMarginToFitHamburgerMenu(hamburgerMenu);
         }
-        private void OnHamburgerMenuDisplayModePropertyChanged(HamburgerMenu hamburgerMenu)
+
+        private void RegisterHamburgerMenuChanges(HamburgerMenu hamburgerMenu)
         {
-            Margin = (hamburgerMenu.DisplayMode == SplitViewDisplayMode.Inline)
-           ? new Thickness(48, 0, 0, 0) : new Thickness(0);
+            hamburgerMenu = hamburgerMenu ?? ParentHamburgerMenu;
+            if (hamburgerMenu == null)
+            {
+                return;
+            }
+
+            hamburgerMenu.UnregisterPropertyChangedCallback(HamburgerMenu.IsOpenProperty, callBackIsOpenId ?? 0);
+            callBackIsOpenId = hamburgerMenu.RegisterPropertyChangedCallback(HamburgerMenu.IsOpenProperty, (obj, dp) => OnHamburgerMenuIsOpenPropertyChanged(obj as HamburgerMenu));
+
+            hamburgerMenu.UnregisterPropertyChangedCallback(HamburgerMenu.DisplayModeProperty, callBackDisplayModeId ?? 0);
+            callBackDisplayModeId = hamburgerMenu.RegisterPropertyChangedCallback(HamburgerMenu.DisplayModeProperty, (obj, dp) => OnHamburgerMenuDisplayModePropertyChanged(obj as HamburgerMenu));
         }
 
-        private void OnHamburgerMenuIsOpenPropertyChanged(HamburgerMenu hamburgerMenu)
+        private void UpdateMarginToFitHamburgerMenu(HamburgerMenu hamburgerMenu = null)
         {
-
-            if (hamburgerMenu.DisplayMode == SplitViewDisplayMode.Inline)
+            hamburgerMenu = hamburgerMenu ?? ParentHamburgerMenu;
+            if (hamburgerMenu == null)
             {
-                if (hamburgerMenu.ActualWidth == 500)
-                {
-                    Margin = (hamburgerMenu.IsOpen) ? new Thickness(-48, 0, 0, 0) : new Thickness(0);
-                }
-                else
-                {
-                    Margin = (hamburgerMenu.IsOpen) ? new Thickness(0) : new Thickness(48, 0, 0, 0);
-                }
+                Margin = new Thickness(0);
+                return;
             }
-            else if (hamburgerMenu.DisplayMode == SplitViewDisplayMode.Overlay)
+            switch (hamburgerMenu.DisplayMode)
             {
-                Margin = (hamburgerMenu.ActualWidth <= 500) ? new Thickness(0, 0, 0, 0) : new Thickness(48, 0, 0, 0);
-
-            }
-            else
-            {
-                Margin = (hamburgerMenu.ActualWidth == 500) ? new Thickness(-48, 0, 0, 0) : new Thickness(0);
-
+                case SplitViewDisplayMode.Overlay:
+                    {
+                        var buttonVisible = hamburgerMenu.HamburgerButtonVisibility == Visibility.Visible;
+                        Margin = buttonVisible ? new Thickness(0) : new Thickness(48, 0, 0, 0);
+                    }
+                    break;
+                case SplitViewDisplayMode.Inline:
+                case SplitViewDisplayMode.CompactOverlay:
+                case SplitViewDisplayMode.CompactInline:
+                    {
+                        Margin = new Thickness(0);
+                    }
+                    break;
             }
         }
+
+        private Page ParentPage => this.FirstAncestor<Page>();
+        private HamburgerMenu ParentHamburgerMenu => ParentPage?.Frame?.FirstAncestor<HamburgerMenu>();
+        private void OnHamburgerMenuDisplayModePropertyChanged(HamburgerMenu hamburgerMenu) => UpdateMarginToFitHamburgerMenu(hamburgerMenu);
+        private void OnHamburgerMenuIsOpenPropertyChanged(HamburgerMenu hamburgerMenu) => UpdateMarginToFitHamburgerMenu(hamburgerMenu);
 
         public Behaviors.EllipsisBehavior.Visibilities EllipsisVisibility
         {

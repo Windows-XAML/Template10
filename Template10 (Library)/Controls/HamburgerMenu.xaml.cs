@@ -104,9 +104,9 @@ namespace Template10.Controls
             SecondaryButtonContainer.KeyDown += HamburgerMenu_KeyDown;
 
             // initial styles
-            UpdateHamburgerButtonGridWidth();
+            UpdateHamburgerButtonGridWidthToFillAnyGap();
             RefreshStyles(RequestedTheme);
-            UpdatePaneMargin();
+            UpdatePaneMarginToShowHamburgerButton();
         }
 
         private void HamburgerMenu_RequestedThemeChanged(DependencyObject sender, DependencyProperty dp)
@@ -121,20 +121,20 @@ namespace Template10.Controls
             DebugWrite();
 
             LayoutUpdated -= HamburgerMenu_LayoutUpdated;
-            UpdateFullScreen();
+            UpdateControl();
         }
 
         #region property changed handlers
 
-        private void HamburgerMenu_HeaderContentChanged(object sender, ChangedEventArgs<UIElement> e) => UpdatePaneMargin();
+        private void HamburgerMenu_HeaderContentChanged(object sender, ChangedEventArgs<UIElement> e) => UpdatePaneMarginToShowHamburgerButton();
         private void HamburgerMenu_AccentColorChanged(object sender, ChangedEventArgs<Color> e) => RefreshStyles(e.NewValue);
-        private void HamburgerMenu_IsFullScreenChanged(object sender, ChangedEventArgs<bool> e) => UpdateFullScreen(e.NewValue);
+        private void HamburgerMenu_IsFullScreenChanged(object sender, ChangedEventArgs<bool> e) => UpdateControl(e.NewValue);
 
         private void HamburgerMenu_IsOpenChanged(object sender, ChangedEventArgs<bool> e)
         {
             UpdateIsPaneOpen(e.NewValue);
-            UpdateHamburgerButtonGridWidth();
-            UpdateFullScreen();
+            UpdateHamburgerButtonGridWidthToFillAnyGap();
+            UpdateControl();
         }
 
         private void SplitView_DisplayModeChanged(DependencyObject sender, DependencyProperty dp)
@@ -147,8 +147,8 @@ namespace Template10.Controls
 
         private void HamburgerMenu_DisplayModeChanged(object sender, ChangedEventArgs<SplitViewDisplayMode> e)
         {
-            UpdateFullScreen();
-            UpdateHamburgerButtonGridWidth();
+            UpdateControl();
+            UpdateHamburgerButtonGridWidthToFillAnyGap();
         }
 
         private void SplitView_IsPaneOpenChanged(DependencyObject sender, DependencyProperty dp)
@@ -160,7 +160,7 @@ namespace Template10.Controls
             }
 
             UpdateSecondaryButtonOrientation();
-            RaisePaneOpenedClosedEvents();
+            RaisePaneOpenedOrClosedEvents();
 
             // this will keep the two properties in sync
             if (IsOpen != ShellSplitView.IsPaneOpen)
@@ -168,13 +168,13 @@ namespace Template10.Controls
                 IsOpen = ShellSplitView.IsPaneOpen;
             }
 
-            UpdateHamburgerButtonGridWidth();
+            UpdateHamburgerButtonGridWidthToFillAnyGap();
         }
 
         private void HamburgerMenu_HamburgerButtonVisibilityChanged(object sender, ChangedEventArgs<Visibility> e)
         {
             HamburgerButton.Visibility = e.NewValue;
-            UpdatePaneMargin();
+            UpdatePaneMarginToShowHamburgerButton();
         }
 
         private async void HamburgerMenu_SelectedChanged(object sender, ChangedEventArgs<HamburgerButtonInfo> e)
@@ -207,14 +207,16 @@ namespace Template10.Controls
                 && BootStrapper.Current.OriginalActivatedArgs.PreviousExecutionState != Windows.ApplicationModel.Activation.ApplicationExecutionState.Terminated)
             {
                 var once = false;
-                UpdateFullScreen(true);
+                UpdateControl(true);
                 e.NewValue.FrameFacade.Navigated += (s, args) =>
                 {
                     if (!once)
                     {
                         once = true;
                         if (!IsFullScreen)
-                            UpdateFullScreen(false);
+                        {
+                            UpdateControl(false);
+                        }
                     }
                 };
             }
@@ -249,6 +251,27 @@ namespace Template10.Controls
             buttons = buttons.Where(x => Equals(x.HamburgerButtonInfo.PageParameter, null) || Equals(x.HamburgerButtonInfo.PageParameter, pageParam));
             var button = buttons.Select(x => x.HamburgerButtonInfo).FirstOrDefault();
             Selected = button;
+
+            ManuallyUpdateVisualStates();
+        }
+
+        private async void ManuallyUpdateVisualStates()
+        {
+            await ResetValueAsync(VisualStateNarrowMinWidthProperty, -1d);
+            await ResetValueAsync(VisualStateNormalMinWidthProperty, -1d);
+            await ResetValueAsync(VisualStateWideMinWidthProperty, -1d);
+        }
+
+        async Task ResetValueAsync(DependencyProperty prop, object tempValue, int wait = 10)
+        {
+            if (GetValue(prop) == DependencyProperty.UnsetValue)
+            {
+                return;
+            }
+            var original = GetValue(prop);
+            SetValue(prop, tempValue);
+            await Task.Delay(wait);
+            SetValue(prop, original);
         }
 
         private void UpdateIsPaneOpen(bool open)
@@ -288,7 +311,7 @@ namespace Template10.Controls
             }
         }
 
-        private void RaisePaneOpenedClosedEvents()
+        private void RaisePaneOpenedOrClosedEvents()
         {
             // overall events
             if (IsOpen)
@@ -301,7 +324,7 @@ namespace Template10.Controls
             }
         }
 
-        private void UpdateHamburgerButtonGridWidth()
+        private void UpdateHamburgerButtonGridWidthToFillAnyGap()
         {
             if (DisplayMode == SplitViewDisplayMode.Inline || DisplayMode == SplitViewDisplayMode.CompactInline)
             {
@@ -313,7 +336,7 @@ namespace Template10.Controls
             }
         }
 
-        public void UpdatePaneMargin()
+        public void UpdatePaneMarginToShowHamburgerButton()
         {
             if (HamburgerButtonVisibility == Visibility.Collapsed && HeaderContent == null)
             {
@@ -393,20 +416,22 @@ namespace Template10.Controls
             }
         }
 
-        /// <summary>
-        /// When IsFullScreen is true, the content is displayed on top of the SplitView and the SplitView is
-        /// not visible. Even as the user navigates (if possible) the SplitView remains hidden until
-        /// IsFullScreen is set to false.
-        /// </summary>
-        /// <remarks>
-        /// The original intent for this property was to allow the splash screen to be visible while the
-        /// remaining content loaded duing app start. In Minimal (Shell), this is still used for this purpose,
-        /// but many developers also leverage this property to view media full screen and similar use cases.
-        /// </remarks>
-        private void UpdateFullScreen(bool? manual = null)
-        {
-            DebugWrite($"Manual: {manual}, IsFullScreen: {IsFullScreen} DisplayMode: {DisplayMode}");
 
+        private void UpdateControl(bool? manualFullScreen = null)
+        {
+            DebugWrite($"Manual: {manualFullScreen}, IsFullScreen: {IsFullScreen} DisplayMode: {DisplayMode}");
+
+            if (!IsFullScreen)
+            {
+                UpdateVisualStates();
+            }
+
+            UpdateFullScreen(manualFullScreen);
+        }
+
+        // intended to be marshalled by UpdateControl()
+        private void UpdateFullScreen(bool? manual)
+        {
             var opacity = 1;
             if (manual ?? IsFullScreen)
             {
@@ -434,6 +459,27 @@ namespace Template10.Controls
             HamburgerButton.Opacity = opacity;
             HamburgerBackground.Opacity = opacity;
             PaneContent.Opacity = opacity;
+        }
+
+        // intended to be marshalled by UpdateControl()
+        private void UpdateVisualStates()
+        {
+            var state = VisualStateGroup.CurrentState ?? VisualStateNormal;
+            if (state == VisualStateNarrow)
+            {
+                DisplayMode = SplitViewDisplayMode.Overlay;
+                IsOpen = false;
+            }
+            else if (state == VisualStateNormal)
+            {
+                DisplayMode = SplitViewDisplayMode.CompactOverlay;
+                IsOpen = false;
+            }
+            else if (state == VisualStateWide)
+            {
+                DisplayMode = SplitViewDisplayMode.CompactInline;
+                IsOpen = true;
+            }
         }
 
         #endregion
@@ -785,23 +831,6 @@ namespace Template10.Controls
             }
         }
 
-        private void VisualStateGroup_CurrentStateChanged(object sender, VisualStateChangedEventArgs e)
-        {
-            if (e.NewState == VisualStateNarrow)
-            {
-                DisplayMode = SplitViewDisplayMode.Overlay;
-                IsOpen = false;
-            }
-            else if (e.NewState == VisualStateNormal)
-            {
-                DisplayMode = SplitViewDisplayMode.CompactOverlay;
-                IsOpen = false;
-            }
-            else if (e.NewState == VisualStateWide)
-            {
-                DisplayMode = SplitViewDisplayMode.CompactInline;
-                IsOpen = true;
-            }
-        }
+        private void VisualStateGroup_CurrentStateChanged(object sender, VisualStateChangedEventArgs e) => UpdateControl();
     }
 }
