@@ -357,7 +357,7 @@ namespace Template10.Controls
                     if (value.ClearHistory)
                         NavigationService.ClearHistory();
                     if (value.ClearCache)
-                        NavigationService.ClearCache();
+                        NavigationService.ClearCache(true);
                 }
                 else if (NavigationService.CurrentPageType == value.PageType
                      && (NavigationService.CurrentPageParam ?? string.Empty) == (value.PageParameter ?? string.Empty))
@@ -365,7 +365,7 @@ namespace Template10.Controls
                     if (value.ClearHistory)
                         NavigationService.ClearHistory();
                     if (value.ClearCache)
-                        NavigationService.ClearCache();
+                        NavigationService.ClearCache(true);
                 }
                 else if (NavigationService.CurrentPageType == value.PageType)
                 {
