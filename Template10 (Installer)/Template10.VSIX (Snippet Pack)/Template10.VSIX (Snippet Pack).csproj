@@ -15,7 +15,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectTypeGuids>{82b43b9b-a64c-4715-b499-d71e9ca2bd60};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{AFEA71CA-4EE6-4982-BA6E-332E20985E1D}</ProjectGuid>
+    <ProjectGuid>{FD63EF06-F97C-4113-B5AC-2A4D7DBEA6EB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Template10.Installer</RootNamespace>
@@ -53,65 +53,34 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="Template10.pkgdef">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
     <Content Include="Template10.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <None Include="packages.config" />
-    <Content Include="Snippets\CSharp\Template10\T10_Command.snippet">
+    <Content Include="ProjectTemplates\Windows\Universal\1 Template10Blank.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="Snippets\CSharp\Template10\T10_CommandTyped.snippet">
+    <Content Include="ProjectTemplates\Windows\Universal\2 Template10Minimal.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="Snippets\CSharp\Template10\T10_Dispatch.snippet">
+    <Content Include="ProjectTemplates\Windows\Universal\3 Template10Hamburger.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="Snippets\CSharp\Template10\T10_DispatchAwait.snippet">
+    <Content Include="ProjectTemplates\Windows\Universal\Template10\1 Template10Blank.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="Snippets\CSharp\Template10\T10_DispatchAwaitResult.snippet">
+    <Content Include="ProjectTemplates\Windows\Universal\Template10\2 Template10Minimal.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="Snippets\CSharp\Template10\T10_Event.snippet">
+    <Content Include="ProjectTemplates\Windows\Universal\Template10\3 Template10Hamburger.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Snippets\CSharp\Template10\T10_EventTyped.snippet">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Snippets\CSharp\Template10\T10_INotifyPropertyChanged.snippet">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Snippets\CSharp\Template10\T10_PageContent.snippet">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Snippets\CSharp\Template10\T10_Property.snippet">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Snippets\CSharp\Template10\T10_PropertyObservable.snippet">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Snippets\CSharp\Template10\T10_PropertySetting.snippet">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Snippets\CSharp\Template10\T10_PropertyValidated.snippet">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Snippets\CSharp\Template10\T10_SampleData.snippet">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Snippets\CSharp\Template10\T10_SingletonClass.snippet">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Snippets\CSharp\Template10\T10_ViewModel.snippet">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Snippets\CSharp\Template10\T10_ViewModelFull.snippet">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
