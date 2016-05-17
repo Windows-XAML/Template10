@@ -130,6 +130,7 @@ namespace Template10.Services.NavigationService
 
         internal ISerializationService SerializationService => NavigationService.SerializationService;
 
+        [Obsolete("Use NavigationService.NavigationState instead")]
         public void SetNavigationState(string state)
         {
             DebugWrite($"State {state}");
@@ -137,6 +138,7 @@ namespace Template10.Services.NavigationService
             Frame.SetNavigationState(state);
         }
 
+        [Obsolete("Use NavigationService.NavigationState instead")]
         public string GetNavigationState()
         {
             DebugWrite();

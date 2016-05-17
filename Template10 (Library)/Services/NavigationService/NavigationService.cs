@@ -26,6 +26,12 @@ namespace Template10.Services.NavigationService
         string LastNavigationType { get; set; }
         public object Content => Frame.Content;
 
+        public string NavigationState
+        {
+            get { return Frame.GetNavigationState(); }
+            set { Frame.SetNavigationState(value); }
+        }
+
         #region Debug
 
         static void DebugWrite(string text = null, Services.LoggingService.Severities severity = Services.LoggingService.Severities.Template10, [CallerMemberName]string caller = null) =>

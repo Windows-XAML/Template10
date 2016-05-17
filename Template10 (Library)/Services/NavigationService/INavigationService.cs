@@ -23,6 +23,8 @@ namespace Template10.Services.NavigationService
         bool CanGoBack { get; }
         bool CanGoForward { get; }
 
+        string NavigationState { get; set; }
+
         void Refresh();
 
         Task OpenAsync(Type page, object parameter = null, string title = null, ViewSizePreference size = ViewSizePreference.UseHalf);
