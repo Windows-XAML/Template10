@@ -295,6 +295,34 @@ namespace Template10.Controls
                 }));
         public event EventHandler<ChangedEventArgs<SplitViewDisplayMode>> DisplayModeChanged;
 
+
+        public SplitViewDisplayMode PreferredNormalDisplayMode
+        {
+            get { return (SplitViewDisplayMode)GetValue(PreferredNormalDisplayModeProperty); }
+            set { SetValue(PreferredNormalDisplayModeProperty, value); }
+        }
+
+        public static readonly DependencyProperty PreferredNormalDisplayModeProperty =
+            DependencyProperty.Register(nameof(PreferredNormalDisplayMode), typeof(SplitViewDisplayMode),
+                typeof(HamburgerMenu), new PropertyMetadata(SplitViewDisplayMode.CompactOverlay, (d, e) =>
+                {
+                    Changed(nameof(PreferredNormalDisplayMode), e);
+                }));
+
+        public SplitViewDisplayMode PreferredWideDisplayMode
+        {
+            get { return (SplitViewDisplayMode)GetValue(PreferredWideDisplayModeProperty); }
+            set { SetValue(PreferredWideDisplayModeProperty, value); }
+        }
+
+        public static readonly DependencyProperty PreferredWideDisplayModeProperty =
+            DependencyProperty.Register(nameof(PreferredWideDisplayMode), typeof(SplitViewDisplayMode),
+                typeof(HamburgerMenu), new PropertyMetadata(SplitViewDisplayMode.CompactInline, (d, e) =>
+                {
+                    Changed(nameof(PreferredWideDisplayMode), e);
+                }));
+
+
         /// <summary>
         /// This is one of three visual state properties. It sets the minimum value used to invoke the Wide visual state.
         /// </summary>
