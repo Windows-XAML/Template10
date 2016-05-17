@@ -106,6 +106,19 @@ namespace Template10.Controls
                 typeof(HamburgerButtonInfo), new PropertyMetadata(false));
 
         /// <summary>
+        /// Sets and gets the ClearCache property.
+        /// If true, navigation page cache is cleared when navigating to this page
+        /// </summary>
+        public bool ClearCache
+        {
+            get { return (bool)GetValue(ClearCacheProperty); }
+            set { SetValue(ClearCacheProperty, value); }
+        }
+        public static readonly DependencyProperty ClearCacheProperty =
+            DependencyProperty.Register(nameof(ClearCache), typeof(bool),
+                typeof(HamburgerButtonInfo), new PropertyMetadata(false));
+
+        /// <summary>
         /// Sets and gets the Visibility property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
