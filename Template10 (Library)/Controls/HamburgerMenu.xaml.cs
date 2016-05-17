@@ -356,12 +356,16 @@ namespace Template10.Controls
                     IsOpen = (DisplayMode == SplitViewDisplayMode.CompactInline && IsOpen);
                     if (value.ClearHistory)
                         NavigationService.ClearHistory();
+                    if (value.ClearCache)
+                        NavigationService.ClearCache(true);
                 }
                 else if (NavigationService.CurrentPageType == value.PageType
                      && (NavigationService.CurrentPageParam ?? string.Empty) == (value.PageParameter ?? string.Empty))
                 {
                     if (value.ClearHistory)
                         NavigationService.ClearHistory();
+                    if (value.ClearCache)
+                        NavigationService.ClearCache(true);
                 }
                 else if (NavigationService.CurrentPageType == value.PageType)
                 {
