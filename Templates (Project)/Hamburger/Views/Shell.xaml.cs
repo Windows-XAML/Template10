@@ -7,6 +7,7 @@ using Template10.Services.NavigationService;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Sample.ViewModels;
 
 namespace Sample.Views
 {
@@ -34,6 +35,23 @@ namespace Sample.Views
             HamburgerMenu.RefreshStyles(_settings.AppTheme, true);
             HamburgerMenu.IsFullScreen = _settings.IsFullScreen;
             HamburgerMenu.HamburgerButtonVisibility = _settings.ShowHamburgerButton ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void SearchTextBox_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
+            var text = SearchTextBox.Text;
+            var nav = BootStrapper.Current.NavigationService;
+            if (nav.CurrentPageType == typeof(Views.SearchPage))
+            {
+                var page = nav.Content as SearchPage;
+                var data = page.DataContext as SearchPageViewModel;
+                data.Filter = text;
+                data.ApplyFilter();
+            }
+            else
+            {
+                nav.Navigate(typeof(SearchPage), text);
+            }
         }
     }
 }

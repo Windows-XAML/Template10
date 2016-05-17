@@ -68,7 +68,7 @@
                                            Opacity=".2"
                                            Visibility="Collapsed" />
                                 <FontIcon x:Name="ContentPresenter"
-                                          FontSize="20"
+                                          FontSize="16"
                                           Foreground="{TemplateBinding Foreground}"
                                           Glyph="&#xE700;" />
                             </Grid>
@@ -87,6 +87,7 @@
                                   MaxWidth="{x:Bind MaxWidth, Mode=TwoWay}"
                                   Background="{Binding NavButtonBackground, ElementName=ThisPage, FallbackValue=DarkRed, Mode=OneWay}"
                                   Content="{Binding Content}"
+                                  FontSize="16"
                                   Foreground="{Binding NavButtonForeground, ElementName=ThisPage, FallbackValue=White, Mode=OneWay}"
                                   Loaded="NavButton_Loaded"
                                   ToolTipService.ToolTip="{Binding Path=(ToolTipService.ToolTip)}"
@@ -102,6 +103,7 @@
                               Command="{Binding NavCommand, ElementName=ThisPage}"
                               CommandParameter="{Binding}"
                               Content="{Binding Content}"
+                              FontSize="16"
                               Holding="NavButton_Holding"
                               IsChecked="{Binding IsChecked, Mode=TwoWay}"
                               IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
@@ -204,6 +206,7 @@
                         Command="{Binding NavCommand, ElementName=ThisPage}"
                         CommandParameter="{Binding}"
                         Content="{x:Bind Content, Mode=OneWay}"
+                        FontSize="16"
                         Holding="NavButton_Holding"
                         IsEnabled="{x:Bind IsEnabled, Mode=OneWay}"
                         Loaded="NavButton_Loaded"
@@ -446,7 +449,7 @@
                 Style="{StaticResource HamburgerButtonStyle}"
                 TabIndex="1"
                 Visibility="{x:Bind HamburgerButtonVisibility, Mode=OneWay}">
-            <FontIcon FontSize="20" Glyph="&#xE700;" />
+            <FontIcon FontSize="16" Glyph="&#xE700;" />
         </Button>
 
         <ContentControl x:Name="Header"

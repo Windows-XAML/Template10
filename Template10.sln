@@ -34,6 +34,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Converters", "Samples\Converters\Converters.csproj", "{5AC4757E-2FAA-4B65-A4FB-E774B76C41AD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Installer", "Installer", "{51E4D965-841A-4EC3-8DE0-6F5B0B87D9B9}"
+	ProjectSection(SolutionItems) = preProject
+		Template10 (Installer)\InstallSnippets.cmd = Template10 (Installer)\InstallSnippets.cmd
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.MSBUILD", "Template10 (Installer)\Template10.MSBUILD\Template10.MSBUILD.csproj", "{3D60A698-A7DD-40C9-A5E8-8E7DB85E220A}"
 EndProject
@@ -50,28 +53,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Validation", "Samples\Validation\Validation.csproj", "{AAE53064-C591-43FB-A8BE-9FED2104B98F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PageHeader", "Samples\PageHeaderSample\PageHeader.csproj", "{BF45794D-044C-416E-B4C2-116F3B5F114C}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Snippets", "Snippets", "{82C5A128-EF55-4352-8064-BB068F8FD4DA}"
-	ProjectSection(SolutionItems) = preProject
-		Snippets\InstallSnippets.cmd = Snippets\InstallSnippets.cmd
-		Snippets\T10_Command.snippet = Snippets\T10_Command.snippet
-		Snippets\T10_CommandTyped.snippet = Snippets\T10_CommandTyped.snippet
-		Snippets\T10_Dispatch.snippet = Snippets\T10_Dispatch.snippet
-		Snippets\T10_DispatchAwait.snippet = Snippets\T10_DispatchAwait.snippet
-		Snippets\T10_DispatchAwaitResult.snippet = Snippets\T10_DispatchAwaitResult.snippet
-		Snippets\T10_Event.snippet = Snippets\T10_Event.snippet
-		Snippets\T10_EventTyped.snippet = Snippets\T10_EventTyped.snippet
-		Snippets\T10_INotifyPropertyChanged.snippet = Snippets\T10_INotifyPropertyChanged.snippet
-		Snippets\T10_PageContent.snippet = Snippets\T10_PageContent.snippet
-		Snippets\T10_Property.snippet = Snippets\T10_Property.snippet
-		Snippets\T10_PropertyObservable.snippet = Snippets\T10_PropertyObservable.snippet
-		Snippets\T10_PropertySetting.snippet = Snippets\T10_PropertySetting.snippet
-		Snippets\T10_PropertyValidated.snippet = Snippets\T10_PropertyValidated.snippet
-		Snippets\T10_SampleData.snippet = Snippets\T10_SampleData.snippet
-		Snippets\T10_SingletonClass.snippet = Snippets\T10_SingletonClass.snippet
-		Snippets\T10_ViewModel.snippet = Snippets\T10_ViewModel.snippet
-		Snippets\T10_ViewModelFull.snippet = Snippets\T10_ViewModelFull.snippet
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messaging", "Samples\Messaging\Messaging.csproj", "{D7EBECCB-202C-4FEA-AB83-D7CAF1CAE2F0}"
 EndProject
