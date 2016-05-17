@@ -89,7 +89,7 @@ namespace Template10.Controls
 
         }
 
-        private void HamburgerMenu_Loaded(object sender, RoutedEventArgs args)
+        private async void HamburgerMenu_Loaded(object sender, RoutedEventArgs args)
         {
             DebugWrite();
 
@@ -121,6 +121,7 @@ namespace Template10.Controls
             DebugWrite();
 
             LayoutUpdated -= HamburgerMenu_LayoutUpdated;
+            UpdateVisualStates();
             UpdateControl();
         }
 
@@ -251,28 +252,19 @@ namespace Template10.Controls
             buttons = buttons.Where(x => Equals(x.HamburgerButtonInfo.PageParameter, null) || Equals(x.HamburgerButtonInfo.PageParameter, pageParam));
             var button = buttons.Select(x => x.HamburgerButtonInfo).FirstOrDefault();
             Selected = button;
-
-            ManuallyUpdateVisualStates();
         }
 
-        private async void ManuallyUpdateVisualStates()
-        {
-            await ResetValueAsync(VisualStateNarrowMinWidthProperty, -1d);
-            await ResetValueAsync(VisualStateNormalMinWidthProperty, -1d);
-            await ResetValueAsync(VisualStateWideMinWidthProperty, -1d);
-        }
-
-        async Task ResetValueAsync(DependencyProperty prop, object tempValue, int wait = 10)
-        {
-            if (GetValue(prop) == DependencyProperty.UnsetValue)
-            {
-                return;
-            }
-            var original = GetValue(prop);
-            SetValue(prop, tempValue);
-            await Task.Delay(wait);
-            SetValue(prop, original);
-        }
+        //async Task ResetValueAsync(DependencyProperty prop, object tempValue, int wait = 10)
+        //{
+        //    if (GetValue(prop) == DependencyProperty.UnsetValue)
+        //    {
+        //        return;
+        //    }
+        //    var original = GetValue(prop);
+        //    SetValue(prop, tempValue);
+        //    await Task.Delay(wait);
+        //    SetValue(prop, original);
+        //}
 
         private void UpdateIsPaneOpen(bool open)
         {
@@ -430,7 +422,7 @@ namespace Template10.Controls
         }
 
         // intended to be marshalled by UpdateControl()
-        private void UpdateFullScreen(bool? manual)
+        private void UpdateFullScreen(bool? manual = null)
         {
             var opacity = 1;
             if (manual ?? IsFullScreen)
@@ -467,18 +459,27 @@ namespace Template10.Controls
             var state = VisualStateGroup.CurrentState ?? VisualStateNormal;
             if (state == VisualStateNarrow)
             {
-                DisplayMode = SplitViewDisplayMode.Overlay;
-                IsOpen = false;
+                if (DisplayMode != SplitViewDisplayMode.Overlay)
+                {
+                    DisplayMode = SplitViewDisplayMode.Overlay;
+                    IsOpen = false;
+                }
             }
             else if (state == VisualStateNormal)
             {
-                DisplayMode = SplitViewDisplayMode.CompactOverlay;
-                IsOpen = false;
+                if (DisplayMode != SplitViewDisplayMode.CompactOverlay)
+                {
+                    DisplayMode = SplitViewDisplayMode.CompactOverlay;
+                    IsOpen = false;
+                }
             }
             else if (state == VisualStateWide)
             {
-                DisplayMode = SplitViewDisplayMode.CompactInline;
-                IsOpen = true;
+                if (DisplayMode != SplitViewDisplayMode.CompactInline)
+                {
+                    DisplayMode = SplitViewDisplayMode.CompactInline;
+                    IsOpen = true;
+                }
             }
         }
 
@@ -831,6 +832,13 @@ namespace Template10.Controls
             }
         }
 
-        private void VisualStateGroup_CurrentStateChanged(object sender, VisualStateChangedEventArgs e) => UpdateControl();
+        private void VisualStateGroup_CurrentStateChanged(object sender, VisualStateChangedEventArgs e)
+        {
+            UpdateVisualStates();
+            if (IsFullScreen)
+            {
+                UpdateFullScreen();
+            }
+        }
     }
 }

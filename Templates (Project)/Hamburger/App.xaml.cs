@@ -46,7 +46,7 @@ namespace Sample
 
         public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
-            // TODO: add you rlong-running task here
+            // TODO: add your long-running task here
             await NavigationService.NavigateAsync(typeof(Views.MainPage));
         }
     }
