@@ -147,8 +147,8 @@ namespace Template10.Controls
 
         private void HamburgerMenu_DisplayModeChanged(object sender, ChangedEventArgs<SplitViewDisplayMode> e)
         {
-            HamburgerButtonGridWidth = (e.NewValue == SplitViewDisplayMode.CompactInline) ? PaneWidth : squareWidth;
             UpdateFullScreen();
+            UpdateHamburgerButtonGridWidth();
         }
 
         private void SplitView_IsPaneOpenChanged(DependencyObject sender, DependencyProperty dp)
@@ -160,7 +160,6 @@ namespace Template10.Controls
             }
 
             UpdateSecondaryButtonOrientation();
-            UpdateHamburgerButtonGridWidth();
             RaisePaneOpenedClosedEvents();
 
             // this will keep the two properties in sync
@@ -168,6 +167,8 @@ namespace Template10.Controls
             {
                 IsOpen = ShellSplitView.IsPaneOpen;
             }
+
+            UpdateHamburgerButtonGridWidth();
         }
 
         private void HamburgerMenu_HamburgerButtonVisibilityChanged(object sender, ChangedEventArgs<Visibility> e)
@@ -302,9 +303,9 @@ namespace Template10.Controls
 
         private void UpdateHamburgerButtonGridWidth()
         {
-            if (IsOpen)
+            if (DisplayMode == SplitViewDisplayMode.Inline || DisplayMode == SplitViewDisplayMode.CompactInline)
             {
-                HamburgerButtonGridWidth = (DisplayMode == SplitViewDisplayMode.CompactInline) ? ShellSplitView.OpenPaneLength : squareWidth;
+                HamburgerButtonGridWidth = (IsOpen) ? ShellSplitView.OpenPaneLength : squareWidth;
             }
             else
             {

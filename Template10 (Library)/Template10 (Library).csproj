@@ -205,6 +205,7 @@
     <Compile Include="Utils\MonitorUtils.cs" />
     <Compile Include="Utils\IEnumerableUtils.cs" />
     <Compile Include="Utils\Template10Utils.cs" />
+    <Compile Include="Utils\VisualTree.cs" />
     <Compile Include="Utils\XamlUtils.cs" />
     <Compile Include="Controls\HamburgerMenu.xaml.cs">
       <DependentUpon>HamburgerMenu.xaml</DependentUpon>

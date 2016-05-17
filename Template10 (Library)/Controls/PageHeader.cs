@@ -23,6 +23,8 @@ namespace Template10.Controls
     [ContentProperty(Name = nameof(PrimaryCommands))]
     public sealed class PageHeader : CommandBar
     {
+        private static long? callBackIsOpenId;
+        private static long? callBackDisplayModeId;
         public PageHeader()
         {
             DefaultStyleKey = typeof(PageHeader);
@@ -35,6 +37,76 @@ namespace Template10.Controls
             SetValue(Microsoft.Xaml.Interactivity.Interaction.BehaviorsProperty, collection);
 
             TabIndex = 5000;
+            Loaded += PageHeader_Loaded;
+        }
+
+        private void PageHeader_Loaded(object sender, RoutedEventArgs e)
+        {
+            var page = this.GetFirstAncestorOfType<Page>();
+            var frame = page?.Frame;
+            var hamburgerMenu = frame?.GetFirstAncestorOfType<HamburgerMenu>();
+
+            hamburgerMenu?.UnregisterPropertyChangedCallback(HamburgerMenu.IsOpenProperty, callBackIsOpenId ?? 0);
+            callBackIsOpenId = hamburgerMenu?.RegisterPropertyChangedCallback(HamburgerMenu.IsOpenProperty, (obj, dp) => OnHamburgerMenuIsOpenPropertyChanged(obj as HamburgerMenu));
+
+            hamburgerMenu?.UnregisterPropertyChangedCallback(HamburgerMenu.DisplayModeProperty, callBackDisplayModeId ?? 0);
+            callBackDisplayModeId = hamburgerMenu?.RegisterPropertyChangedCallback(HamburgerMenu.DisplayModeProperty, (obj, dp) => OnHamburgerMenuDisplayModePropertyChanged(obj as HamburgerMenu));
+
+            //******************************************************************************************************
+            // Temp fix till HM VisualState Manager is checked out.
+            // HamburgerMenu.xaml.cs/VisualStateGroup_CurrentStateChanged is expected to fire on sartup but doeesn't
+            // Test with this to verify:
+            // Set initial value for DisplayMode DP PropertyMetadata to SplitViewDisplayMode.Inline (for this test
+            // comment out any code-behind or XAML setting of DisplayMode elsewhere, usually in Shell) and see if 
+            // VisualStateGroup_CurrentStateChanged triggers for Windows Phone.
+            // VisualState Manager should setDisplayMode to Overlay but stays Inline!
+            //******************************************************************************************************
+
+            if (hamburgerMenu.DisplayMode == SplitViewDisplayMode.Inline)
+            {
+                Margin = (page.ActualWidth <= VisualStateNormalMinWidth) ? new Thickness(0) : new Thickness(48, 0, 0, 0);
+
+            }else if(hamburgerMenu.DisplayMode == SplitViewDisplayMode.Overlay)
+            {
+                Margin = (page.ActualWidth <= VisualStateNormalMinWidth) ? new Thickness(0) : new Thickness(48, 0, 0, 0);
+
+            }
+            else
+            {
+                Margin = (page.ActualWidth <= VisualStateNormalMinWidth) ? new Thickness(-48, 0, 0, 0) : new Thickness(0);
+
+            }
+        }
+        private void OnHamburgerMenuDisplayModePropertyChanged(HamburgerMenu hamburgerMenu)
+        {
+            Margin = (hamburgerMenu.DisplayMode == SplitViewDisplayMode.Inline)
+           ? new Thickness(48, 0, 0, 0) : new Thickness(0);
+        }
+
+        private void OnHamburgerMenuIsOpenPropertyChanged(HamburgerMenu hamburgerMenu)
+        {
+
+            if (hamburgerMenu.DisplayMode == SplitViewDisplayMode.Inline)
+            {
+                if (hamburgerMenu.ActualWidth == 500)
+                {
+                    Margin = (hamburgerMenu.IsOpen) ? new Thickness(-48, 0, 0, 0) : new Thickness(0);
+                }
+                else
+                {
+                    Margin = (hamburgerMenu.IsOpen) ? new Thickness(0) : new Thickness(48, 0, 0, 0);
+                }
+            }
+            else if (hamburgerMenu.DisplayMode == SplitViewDisplayMode.Overlay)
+            {
+                Margin = (hamburgerMenu.ActualWidth <= 500) ? new Thickness(0, 0, 0, 0) : new Thickness(48, 0, 0, 0);
+
+            }
+            else
+            {
+                Margin = (hamburgerMenu.ActualWidth == 500) ? new Thickness(-48, 0, 0, 0) : new Thickness(0);
+
+            }
         }
 
         public Behaviors.EllipsisBehavior.Visibilities EllipsisVisibility
@@ -93,7 +165,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty VisualStateNarrowMinWidthProperty =
             DependencyProperty.Register(nameof(VisualStateNarrowMinWidth), typeof(double),
-                typeof(PageHeader), new PropertyMetadata(-1));
+                typeof(PageHeader), new PropertyMetadata((double)-1));
 
         public double VisualStateNormalMinWidth
         {
@@ -102,7 +174,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty VisualStateNormalMinWidthProperty =
             DependencyProperty.Register(nameof(VisualStateNormalMinWidth), typeof(double),
-                typeof(PageHeader), new PropertyMetadata(0));
+                typeof(PageHeader), new PropertyMetadata(0d));
 
         public string Text
         {

@@ -268,11 +268,27 @@ namespace Template10.Controls
         public SplitViewDisplayMode DisplayMode
         {
             get { return (SplitViewDisplayMode)GetValue(DisplayModeProperty); }
-            set { SetValue(DisplayModeProperty, value); }
+            set
+            {
+                // Override DisplayMode for small screen sizes.
+                // Developer should set VisualStateNormalMinWidth value (default 521d) for HamburgerMenu,
+                // commonly in Shell.xaml or Shell.xaml.cs, for the value to propagate here in time for startup.
+                // It may be necessary to set DisplayMode as the last thing in Shell.Loaded event handler
+                // for values such as VisualStateNormalMinWidth to propagate from applying styles.
+
+                if (Window.Current.Bounds.Width < VisualStateNormalMinWidth)
+                {
+                    SetValue(DisplayModeProperty, SplitViewDisplayMode.Overlay);
+                }
+                else
+                {
+                    SetValue(DisplayModeProperty, value);
+                }
+            }
         }
         public static readonly DependencyProperty DisplayModeProperty =
             DependencyProperty.Register(nameof(DisplayMode), typeof(SplitViewDisplayMode),
-                typeof(HamburgerMenu), new PropertyMetadata(SplitViewDisplayMode.Inline, (d, e) =>
+                typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) =>
                 {
                     Changed(nameof(DisplayMode), e);
                     (d as HamburgerMenu).DisplayModeChanged?.Invoke(d, e.ToChangedEventArgs<SplitViewDisplayMode>());
@@ -312,7 +328,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty VisualStateNormalMinWidthProperty =
             DependencyProperty.Register(nameof(VisualStateNormalMinWidth), typeof(double),
-                typeof(HamburgerMenu), new PropertyMetadata((double)0, (d, e) =>
+                typeof(HamburgerMenu), new PropertyMetadata((double)-1, (d, e) =>
                 {
                     Changed(nameof(VisualStateNormalMinWidth), e);
                     (d as HamburgerMenu).VisualStateNormalMinWidthChanged?.Invoke(d, e.ToChangedEventArgs<double>());
