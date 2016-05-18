@@ -222,11 +222,14 @@ namespace Template10.Services.NavigationService
             if (page == null)
                 throw new ArgumentNullException(nameof(page));
 
-            if ((page.FullName == LastNavigationType) && (parameter == LastNavigationParameter))
+            // use CurrentPageType/Param instead of LastNavigationType/Parameter to avoid new navigation to the current
+            // page in some race conditions.
+            if ((page.FullName == CurrentPageType?.FullName) && (parameter == CurrentPageParam))
                 return false;
 
-            if ((page.FullName == LastNavigationType) && (parameter?.Equals(LastNavigationParameter) ?? false))
+            if ((page.FullName == CurrentPageType?.FullName) && (parameter?.Equals(CurrentPageParam) ?? false))
                 return false;
+
 
             parameter = SerializationService.Serialize(parameter);
 
