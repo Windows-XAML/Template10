@@ -456,20 +456,34 @@ namespace Template10.Controls
         // intended to be marshalled by UpdateControl()
         private void UpdateVisualStates()
         {
+            var mode = DisplayMode;
             var state = VisualStateGroup.CurrentState ?? VisualStateNormal;
             if (state == VisualStateNarrow)
             {
-                DisplayMode = VisualStateNarrowDisplayMode;
+                mode = VisualStateNarrowDisplayMode;
             }
             else if (state == VisualStateNormal)
             {
-                DisplayMode = VisualStateNormalDisplayMode;
+                mode = VisualStateNormalDisplayMode;
             }
             else if (state == VisualStateWide)
             {
-                DisplayMode = VisualStateWideDisplayMode;
+                mode = VisualStateWideDisplayMode;
             }
-            IsOpen = DisplayMode.ToString().Contains("Overlay") ? false : true;
+            if (DisplayMode != mode)
+            {
+                DisplayMode = mode;
+            }
+            switch (mode)
+            {
+                case SplitViewDisplayMode.Overlay:
+                case SplitViewDisplayMode.CompactOverlay:
+                    IsOpen = false;
+                    break;
+                default:
+                    IsOpen = true;
+                    break;
+            }
         }
 
         #endregion
