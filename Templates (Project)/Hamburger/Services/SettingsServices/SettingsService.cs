@@ -20,7 +20,7 @@ namespace Sample.Services.SettingsServices
             set
             {
                 _helper.Write(nameof(UseShellBackButton), value);
-                BootStrapper.Current.NavigationService.Dispatcher.Dispatch(() =>
+                BootStrapper.Current.NavigationService.GetDispatcherWrapper().Dispatch(() =>
                 {
                     BootStrapper.Current.ShowShellBackButton = value;
                     BootStrapper.Current.UpdateShellBackButton();
