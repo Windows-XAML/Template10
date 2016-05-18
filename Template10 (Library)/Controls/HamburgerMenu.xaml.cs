@@ -628,12 +628,11 @@ namespace Template10.Controls
             }
             switch (mode)
             {
-                case SplitViewDisplayMode.Overlay:
-                case SplitViewDisplayMode.CompactOverlay:
-                    IsOpen = false;
+                case SplitViewDisplayMode.CompactInline:
+                    IsOpen = true;
                     break;
                 default:
-                    IsOpen = true;
+                    IsOpen = false;
                     break;
             }
         }
