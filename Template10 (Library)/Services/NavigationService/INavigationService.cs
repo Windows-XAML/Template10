@@ -31,6 +31,8 @@ namespace Template10.Services.NavigationService
 
         object CurrentPageParam { get; }
         Type CurrentPageType { get; }
+
+        [Obsolete("Use NavigationService.GetDispatcherWrapper() extension method instead.", true)]
         DispatcherWrapper Dispatcher { get; }
 
         Task SaveNavigationAsync();

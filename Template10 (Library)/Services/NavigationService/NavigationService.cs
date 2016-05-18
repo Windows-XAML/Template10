@@ -19,12 +19,16 @@ namespace Template10.Services.NavigationService
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-NavigationService
     public partial class NavigationService : INavigationService
     {
-        FrameFacade FrameFacadeInternal { get; set; }
+        FrameFacade FrameFacadeInternal { get; }
         public FrameFacade FrameFacade => FrameFacadeInternal;
         public Frame Frame => FrameFacade.Frame;
         object LastNavigationParameter { get; set; }
         string LastNavigationType { get; set; }
         public object Content => Frame.Content;
+
+        [Obsolete("Use NavigationService.GetDispatcherWrapper() extension method instead.", true)]
+        public DispatcherWrapper Dispatcher => this.GetDispatcherWrapper() as DispatcherWrapper;
+
 
         public string NavigationState
         {
@@ -41,8 +45,6 @@ namespace Template10.Services.NavigationService
 
         public static INavigationService GetForFrame(Frame frame) =>
             WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices).FirstOrDefault(x => x.FrameFacade.Frame.Equals(frame));
-
-        public DispatcherWrapper Dispatcher => WindowWrapper.Current(this).Dispatcher;
 
         protected internal NavigationService(Frame frame)
         {
@@ -67,7 +69,7 @@ namespace Template10.Services.NavigationService
                 var currentContent = FrameFacadeInternal.Frame.Content;
                 if (Equals(e.Parameter?.ToString(), SerializationService.Serialize(LastNavigationParameter)))
                     parameter = LastNavigationParameter;
-                await WindowWrapper.Current().Dispatcher.DispatchAsync(async () =>
+                await this.GetDispatcherWrapper().DispatchAsync(async () =>
                 {
                     try
                     {
@@ -114,7 +116,7 @@ namespace Template10.Services.NavigationService
                 if (dataContext != null)
                 {
                     dataContext.NavigationService = this;
-                    dataContext.Dispatcher = WindowWrapper.Current(this)?.Dispatcher;
+                    dataContext.Dispatcher = this.GetDispatcherWrapper();
                     dataContext.SessionState = BootStrapper.Current.SessionState;
                     var deferral = new DeferralManager();
                     var args = new NavigatingEventArgs(deferral)
@@ -145,7 +147,7 @@ namespace Template10.Services.NavigationService
                 if (dataContext != null)
                 {
                     dataContext.NavigationService = this;
-                    dataContext.Dispatcher = WindowWrapper.Current(this)?.Dispatcher;
+                    dataContext.Dispatcher = this.GetDispatcherWrapper();
                     dataContext.SessionState = BootStrapper.Current.SessionState;
                     var pageState = FrameFacadeInternal.PageStateSettingsService(page.GetType()).Values;
                     await dataContext.OnNavigatedFromAsync(pageState, suspending);
@@ -177,7 +179,7 @@ namespace Template10.Services.NavigationService
                 {
                     // prepare for state load
                     dataContext.NavigationService = this;
-                    dataContext.Dispatcher = WindowWrapper.Current(this)?.Dispatcher;
+                    dataContext.Dispatcher = this.GetDispatcherWrapper();
                     dataContext.SessionState = BootStrapper.Current.SessionState;
                     var pageState = FrameFacadeInternal.PageStateSettingsService(page.GetType()).Values;
                     await dataContext.OnNavigatedToAsync(parameter, mode, pageState);
@@ -201,7 +203,7 @@ namespace Template10.Services.NavigationService
             var dispatcher = new DispatcherWrapper(newView.Dispatcher);
             await dispatcher.DispatchAsync(async () =>
             {
-                var newWindow = Window.Current;
+                var newWindow = this.GetWindowWrapper().Window;
                 var newAppView = ApplicationView.GetForCurrentView();
                 newAppView.Title = title;
 
