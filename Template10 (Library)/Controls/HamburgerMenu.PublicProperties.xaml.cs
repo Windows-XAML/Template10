@@ -268,23 +268,7 @@ namespace Template10.Controls
         public SplitViewDisplayMode DisplayMode
         {
             get { return (SplitViewDisplayMode)GetValue(DisplayModeProperty); }
-            set
-            {
-                // Override DisplayMode for small screen sizes.
-                // Developer should set VisualStateNormalMinWidth value (default 521d) for HamburgerMenu,
-                // commonly in Shell.xaml or Shell.xaml.cs, for the value to propagate here in time for startup.
-                // It may be necessary to set DisplayMode as the last thing in Shell.Loaded event handler
-                // for values such as VisualStateNormalMinWidth to propagate from applying styles.
-
-                if (Window.Current.Bounds.Width < VisualStateNormalMinWidth)
-                {
-                    SetValue(DisplayModeProperty, SplitViewDisplayMode.Overlay);
-                }
-                else
-                {
-                    SetValue(DisplayModeProperty, value);
-                }
-            }
+            set { SetValue(DisplayModeProperty, value); }
         }
         public static readonly DependencyProperty DisplayModeProperty =
             DependencyProperty.Register(nameof(DisplayMode), typeof(SplitViewDisplayMode),
@@ -295,33 +279,47 @@ namespace Template10.Controls
                 }));
         public event EventHandler<ChangedEventArgs<SplitViewDisplayMode>> DisplayModeChanged;
 
-
-        public SplitViewDisplayMode PreferredNormalDisplayMode
+        public SplitViewDisplayMode VisualStateNarrowDisplayMode
         {
-            get { return (SplitViewDisplayMode)GetValue(PreferredNormalDisplayModeProperty); }
-            set { SetValue(PreferredNormalDisplayModeProperty, value); }
+            get { return (SplitViewDisplayMode)GetValue(VisualStateNarrowDisplayModeProperty); }
+            set { SetValue(VisualStateNarrowDisplayModeProperty, value); }
         }
+        public static readonly DependencyProperty VisualStateNarrowDisplayModeProperty =
+            DependencyProperty.Register(nameof(VisualStateNarrowDisplayMode), typeof(SplitViewDisplayMode),
+                typeof(HamburgerMenu), new PropertyMetadata(SplitViewDisplayMode.Overlay, (d, e) =>
+                {
+                    Changed(nameof(VisualStateNarrowDisplayMode), e);
+                    (d as HamburgerMenu).VisualStateNarrowDisplayModeChanged?.Invoke(d, e.ToChangedEventArgs<SplitViewDisplayMode>());
+                }));
+        public event EventHandler<ChangedEventArgs<SplitViewDisplayMode>> VisualStateNarrowDisplayModeChanged;
 
-        public static readonly DependencyProperty PreferredNormalDisplayModeProperty =
-            DependencyProperty.Register(nameof(PreferredNormalDisplayMode), typeof(SplitViewDisplayMode),
+        public SplitViewDisplayMode VisualStateNormalDisplayMode
+        {
+            get { return (SplitViewDisplayMode)GetValue(VisualStateNormalDisplayModeProperty); }
+            set { SetValue(VisualStateNormalDisplayModeProperty, value); }
+        }
+        public static readonly DependencyProperty VisualStateNormalDisplayModeProperty =
+            DependencyProperty.Register(nameof(VisualStateNormalDisplayMode), typeof(SplitViewDisplayMode),
                 typeof(HamburgerMenu), new PropertyMetadata(SplitViewDisplayMode.CompactOverlay, (d, e) =>
                 {
-                    Changed(nameof(PreferredNormalDisplayMode), e);
+                    Changed(nameof(VisualStateNormalDisplayMode), e);
+                    (d as HamburgerMenu).VisualStateNormalDisplayModeChanged?.Invoke(d, e.ToChangedEventArgs<SplitViewDisplayMode>());
                 }));
+        public event EventHandler<ChangedEventArgs<SplitViewDisplayMode>> VisualStateNormalDisplayModeChanged;
 
-        public SplitViewDisplayMode PreferredWideDisplayMode
+        public SplitViewDisplayMode VisualStateWideDisplayMode
         {
-            get { return (SplitViewDisplayMode)GetValue(PreferredWideDisplayModeProperty); }
-            set { SetValue(PreferredWideDisplayModeProperty, value); }
+            get { return (SplitViewDisplayMode)GetValue(VisualStateWideDisplayModeProperty); }
+            set { SetValue(VisualStateWideDisplayModeProperty, value); }
         }
-
-        public static readonly DependencyProperty PreferredWideDisplayModeProperty =
-            DependencyProperty.Register(nameof(PreferredWideDisplayMode), typeof(SplitViewDisplayMode),
+        public static readonly DependencyProperty VisualStateWideDisplayModeProperty =
+            DependencyProperty.Register(nameof(VisualStateWideDisplayMode), typeof(SplitViewDisplayMode),
                 typeof(HamburgerMenu), new PropertyMetadata(SplitViewDisplayMode.CompactInline, (d, e) =>
                 {
-                    Changed(nameof(PreferredWideDisplayMode), e);
+                    Changed(nameof(VisualStateWideDisplayMode), e);
+                    (d as HamburgerMenu).VisualStateWideDisplayModeChanged?.Invoke(d, e.ToChangedEventArgs<SplitViewDisplayMode>());
                 }));
-
+        public event EventHandler<ChangedEventArgs<SplitViewDisplayMode>> VisualStateWideDisplayModeChanged;
 
         /// <summary>
         /// This is one of three visual state properties. It sets the minimum value used to invoke the Wide visual state.

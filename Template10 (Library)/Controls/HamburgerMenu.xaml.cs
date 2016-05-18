@@ -459,28 +459,17 @@ namespace Template10.Controls
             var state = VisualStateGroup.CurrentState ?? VisualStateNormal;
             if (state == VisualStateNarrow)
             {
-                if (DisplayMode != SplitViewDisplayMode.Overlay)
-                {
-                    DisplayMode = SplitViewDisplayMode.Overlay;
-                    IsOpen = false;
-                }
+                DisplayMode = VisualStateNarrowDisplayMode;
             }
             else if (state == VisualStateNormal)
             {
-                if (DisplayMode != PreferredNormalDisplayMode)
-                {
-                    DisplayMode = PreferredNormalDisplayMode;
-                    IsOpen = DisplayMode.ToString().Contains("Overlay") ? false : true;
-                }
+                DisplayMode = VisualStateNormalDisplayMode;
             }
             else if (state == VisualStateWide)
             {
-                if (DisplayMode != PreferredWideDisplayMode)
-                {
-                    DisplayMode = PreferredWideDisplayMode;
-                    IsOpen = DisplayMode.ToString().Contains("Overlay") ? false : true;
-                }
+                DisplayMode = VisualStateWideDisplayMode;
             }
+            IsOpen = DisplayMode.ToString().Contains("Overlay") ? false : true;
         }
 
         #endregion
