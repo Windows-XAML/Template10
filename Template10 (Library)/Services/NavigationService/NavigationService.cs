@@ -21,6 +21,7 @@ namespace Template10.Services.NavigationService
     {
         FrameFacade FrameFacadeInternal { get; }
         public FrameFacade FrameFacade => FrameFacadeInternal;
+        public bool IsForMainView { get; }
         public Frame Frame => FrameFacade.Frame;
         object LastNavigationParameter { get; set; }
         string LastNavigationType { get; set; }
@@ -49,7 +50,7 @@ namespace Template10.Services.NavigationService
         protected internal NavigationService(Frame frame)
         {
             SerializationService = Services.SerializationService.SerializationService.Json;
-
+            IsForMainView = CoreApplication.MainView == CoreApplication.GetCurrentView();
             FrameFacadeInternal = new FrameFacade(this, frame);
             FrameFacadeInternal.Navigating += async (s, e) =>
             {
@@ -224,11 +225,14 @@ namespace Template10.Services.NavigationService
             if (page == null)
                 throw new ArgumentNullException(nameof(page));
 
-            if ((page.FullName == LastNavigationType) && (parameter == LastNavigationParameter))
+            // use CurrentPageType/Param instead of LastNavigationType/Parameter to avoid new navigation to the current
+            // page in some race conditions.
+            if ((page.FullName == CurrentPageType?.FullName) && (parameter == CurrentPageParam))
                 return false;
 
-            if ((page.FullName == LastNavigationType) && (parameter?.Equals(LastNavigationParameter) ?? false))
+            if ((page.FullName == CurrentPageType?.FullName) && (parameter?.Equals(CurrentPageParam) ?? false))
                 return false;
+
 
             parameter = SerializationService.Serialize(parameter);
 

@@ -692,7 +692,8 @@ namespace Template10.Common
             {
                 try
                 {
-                    var services = WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices);
+                    //allow only main view NavigationService as others won't be able to use Dispatcher and processing will stuck
+                    var services = WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices).Where(x=>x.IsForMainView);
                     foreach (INavigationService nav in services)
                     {
                         // date the cache (which marks the date/time it was suspended)
