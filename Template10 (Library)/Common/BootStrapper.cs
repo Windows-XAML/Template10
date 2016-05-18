@@ -699,7 +699,7 @@ namespace Template10.Common
                         nav.FrameFacade.SetFrameState(CacheDateKey, DateTime.Now.ToString());
                         // call view model suspend (OnNavigatedfrom)
                         DebugWrite($"Nav.FrameId:{nav.FrameFacade.FrameId}", caller: nameof(nav.SuspendingAsync));
-                        await (nav as INavigationService).Dispatcher.DispatchAsync(async () => await nav.SuspendingAsync());
+                        await (nav as INavigationService).GetDispatcherWrapper().DispatchAsync(async () => await nav.SuspendingAsync());
                     }
 
                     // call system-level suspend
