@@ -20,7 +20,7 @@ namespace Template10.Utils
         public static async Task<bool> NavigateAsyncEx<T>(this Frame frame, T key, object parameter = null, NavigationTransitionInfo infoOverride = null) where T : struct, IConvertible
             => await frame.GetNavigationService().NavigateAsync(key, parameter, infoOverride);
 
-        public static IWindowWrapper GetWindowWrapper(this INavigationService service)
+        public static WindowWrapper GetWindowWrapper(this INavigationService service)
             => WindowWrapper.ActiveWrappers.FirstOrDefault(x => x.NavigationServices.Contains(service));
 
         public static IDispatcherWrapper GetDispatcherWrapper(this INavigationService service)
