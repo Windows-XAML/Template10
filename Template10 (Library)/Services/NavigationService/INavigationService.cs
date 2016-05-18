@@ -13,6 +13,8 @@ namespace Template10.Services.NavigationService
         void GoBack();
         void GoForward();
 
+        object Content { get; }
+
         void Navigate(Type page, object parameter = null, NavigationTransitionInfo infoOverride = null);
         void Navigate<T>(T key, object parameter = null, NavigationTransitionInfo infoOverride = null) where T : struct, IConvertible;
 
@@ -21,6 +23,8 @@ namespace Template10.Services.NavigationService
 
         bool CanGoBack { get; }
         bool CanGoForward { get; }
+
+        string NavigationState { get; set; }
 
         void Refresh();
 

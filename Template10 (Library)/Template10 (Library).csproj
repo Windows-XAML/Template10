@@ -179,6 +179,8 @@
     <Compile Include="Mvvm\AwaitableDelegateCommand.cs" />
     <Compile Include="Common\WeakReference.cs" />
     <Compile Include="Mvvm\DependencyBindableBase.cs" />
+    <Compile Include="Services\FileService\FileHelper.cs" />
+    <Compile Include="Services\FileService\IFileService.cs" />
     <Compile Include="Services\LoggingService\LoggingService.cs" />
     <Compile Include="Services\NavigationService\AlternativeNavigationEventArgs.cs" />
     <Compile Include="Services\NavigationService\INavigationService.cs" />
@@ -280,7 +282,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>call "$(ProjectDir)\Nuget\Build.cmd" "$(TargetDir)" "$(TargetName)" "$(ProjectDir)"
-call "$(SolutionDir)\Snippets\InstallSnippets.cmd"</PostBuildEvent>
+call "$(SolutionDir)\Template10 (Installer)\InstallSnippets.cmd"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

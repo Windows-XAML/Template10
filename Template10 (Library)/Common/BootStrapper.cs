@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Template10.Services.NavigationService;
+using Template10.Services.PopupService;
 using Template10.Utils;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -14,6 +15,7 @@ using Windows.Foundation.Metadata;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using Template10.Services.ViewService;
 
 namespace Template10.Common
@@ -38,15 +40,11 @@ namespace Template10.Common
 
         #endregion
 
-        #region dependency injection
-
         /// <summary>
         /// If a developer overrides this method, the developer can resolve DataContext or unwrap DataContext 
         /// available for the Page object when using a MVVM pattern that relies on a wrapped/porxy around ViewModels
         /// </summary>
-        public virtual Services.NavigationService.INavigable ResolveForPage(Page page, NavigationService navigationService) => null;
-
-        #endregion
+        public virtual INavigable ResolveForPage(Page page, NavigationService navigationService) => null;
 
         public static new BootStrapper Current { get; private set; }
 
@@ -59,10 +57,18 @@ namespace Template10.Common
 
         #endregion
 
+        public BootStrapper()
+        {
+            DebugWrite("base.Constructor");
+
+            Current = this;
+            Resuming += HandleResuming;
+            Suspending += HandleSuspending;
+        }
+
         private void Loaded()
         {
             DebugWrite();
-            Current = this;
 
             // Hook up keyboard and mouse Back handler
             var KeyboardService = Services.KeyboardService.KeyboardService.Instance;
@@ -83,9 +89,6 @@ namespace Template10.Common
 
             // Hook up the default Back handler
             SystemNavigationManager.GetForCurrentView().BackRequested += BackHandler;
-
-            Resuming += HandleResuming;
-            Suspending += HandleSuspending;
         }
 
         public event EventHandler<WindowCreatedEventArgs> WindowCreated;
@@ -223,7 +226,7 @@ namespace Template10.Common
                             This is okay & by design.
                         */
 
-                        if (DetermineStartCause(e) == AdditionalKinds.Primary)
+                        if (EnableAutoRestoreAfterTerminated && DetermineStartCause(e) == AdditionalKinds.Primary)
                         {
                             restored = await NavigationService.RestoreSavedNavigationAsync();
                             DebugWrite($"{nameof(restored)}:{restored}", caller: nameof(NavigationService.RestoreSavedNavigationAsync));
@@ -248,12 +251,14 @@ namespace Template10.Common
 
             if (!restored)
             {
-                await CallOnStartAsync(true, StartKind.Launch);
+                var kind = e.PreviousExecutionState == ApplicationExecutionState.Running ? StartKind.Activate : StartKind.Launch;
+                await CallOnStartAsync(true, kind);
             }
 
-            // ensure active (this will hide any custom splashscreen)
             ActivateWindow(ActivateWindowSources.Launching);
         }
+
+        public bool EnableAutoRestoreAfterTerminated { get; set; } = true;
 
         private void BackHandler(object sender, BackRequestedEventArgs args)
         {
@@ -555,8 +560,17 @@ namespace Template10.Common
         /// One scenario might be a delayed activation for Splash Screen.
         /// </summary>
         /// <param name="source">Reason for the call from Template 10</param>
-        public virtual void ActivateWindow(ActivateWindowSources source)
+        private void ActivateWindow(ActivateWindowSources source)
         {
+            DebugWrite($"source:{source}");
+
+            if (source != ActivateWindowSources.SplashScreen)
+            {
+                if (CurrentState == States.Splashing)
+                    SplashScreenPopup?.Hide();
+                CurrentState = States.ShowingContent;
+            }
+
             Window.Current.Activate();
         }
 
@@ -570,8 +584,7 @@ namespace Template10.Common
         {
             var b = Current;
             var frame = new Frame();
-            var include = (b.CurrentState == States.Splashing) ? ExistingContent.Include : ExistingContent.Exclude;
-            var nav = b.NavigationServiceFactory(BackButton.Attach, include, frame);
+            var nav = b.NavigationServiceFactory(BackButton.Attach, ExistingContent.Include, frame);
             return new Controls.ModalDialog
             {
                 DisableBackButtonWhenModal = true,
@@ -628,16 +641,17 @@ namespace Template10.Common
             await OnStartAsync(startKind, OriginalActivatedArgs);
         }
 
-        private FrameworkElement ShowSplashScreen(IActivatedEventArgs e)
+        internal Popup SplashScreenPopup = null;
+        private void ShowSplashScreen(IActivatedEventArgs e)
         {
-            FrameworkElement splash = null;
             if (SplashFactory != null && e.PreviousExecutionState != ApplicationExecutionState.Suspended)
             {
-                Window.Current.Content = splash = SplashFactory(e.SplashScreen);
                 CurrentState = States.Splashing;
+                var splash = SplashFactory(e.SplashScreen);
+                var service = new PopupService();
+                SplashScreenPopup = service.Show(PopupService.PopupSize.FullScreen, splash);
                 ActivateWindow(ActivateWindowSources.SplashScreen);
             }
-            return splash;
         }
 
         [Obsolete("Use RootElementFactory.")]
@@ -652,14 +666,18 @@ namespace Template10.Common
         {
             DebugWrite(caller: nameof(Resuming));
 
-            if ((OriginalActivatedArgs as LaunchActivatedEventArgs)?.PrelaunchActivated ?? true)
+            var args = OriginalActivatedArgs as LaunchActivatedEventArgs;
+            if (args?.PrelaunchActivated ?? true)
             {
                 OnResuming(sender, e, AppExecutionState.Prelaunch);
-                await CallOnStartAsync(false, StartKind.Launch);
+                var kind = args.PreviousExecutionState == ApplicationExecutionState.Running ? StartKind.Activate : StartKind.Launch;
+                await CallOnStartAsync(false, kind);
                 ActivateWindow(ActivateWindowSources.Resuming);
             }
             else
+            {
                 OnResuming(sender, e, AppExecutionState.Suspended);
+            }
         }
 
         private async void HandleSuspending(object sender, SuspendingEventArgs e)
@@ -682,12 +700,12 @@ namespace Template10.Common
                         // date the cache (which marks the date/time it was suspended)
                         nav.FrameFacade.SetFrameState(CacheDateKey, DateTime.Now.ToString());
                         // call view model suspend (OnNavigatedfrom)
-                        DebugWrite($"Nav:{nav}", caller: nameof(nav.SuspendingAsync));
+                        DebugWrite($"Nav.FrameId:{nav.FrameFacade.FrameId}", caller: nameof(nav.SuspendingAsync));
                         await (nav as INavigationService).Dispatcher.DispatchAsync(async () => await nav.SuspendingAsync());
                     }
 
                     // call system-level suspend
-                    DebugWrite($"Calling. Prelaunch {(OriginalActivatedArgs as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false}", caller: nameof(OnSuspendingAsync));
+                    DebugWrite($"Calling. OnSuspendingAsync {(OriginalActivatedArgs as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false}", caller: nameof(OnSuspendingAsync));
                     await OnSuspendingAsync(sender, e, (OriginalActivatedArgs as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false);
                 }
                 catch { /* do nothing */ }

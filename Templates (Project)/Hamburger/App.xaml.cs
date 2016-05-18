@@ -22,15 +22,20 @@ namespace Sample
             InitializeComponent();
             SplashFactory = (e) => new Views.Splash(e);
 
+            #region app settings
+            
+            // some settings must be set in app.constructor
             var settings = SettingsService.Instance;
             RequestedTheme = settings.AppTheme;
             CacheMaxDuration = settings.CacheMaxDuration;
             ShowShellBackButton = settings.UseShellBackButton;
+
+            #endregion
         }
 
         public override UIElement CreateRootElement(IActivatedEventArgs e)
         {
-            var service = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include);
+            var service = NavigationServiceFactory(BackButton.Attach, ExistingContent.Exclude);
             return new ModalDialog
             {
                 DisableBackButtonWhenModal = true,
@@ -41,6 +46,7 @@ namespace Sample
 
         public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
+            // TODO: add your long-running task here
             await NavigationService.NavigateAsync(typeof(Views.MainPage));
         }
     }

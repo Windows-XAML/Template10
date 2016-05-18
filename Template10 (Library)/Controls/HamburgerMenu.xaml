@@ -85,7 +85,10 @@
                                   Width="{Binding PaneWidth, ElementName=ThisPage}"
                                   MinWidth="48"
                                   MaxWidth="{x:Bind MaxWidth, Mode=TwoWay}"
+                                  Background="{Binding NavButtonBackground, ElementName=ThisPage, FallbackValue=DarkRed, Mode=OneWay}"
                                   Content="{Binding Content}"
+                                  Foreground="{Binding NavButtonForeground, ElementName=ThisPage, FallbackValue=White, Mode=OneWay}"
+                                  Loaded="NavButton_Loaded"
                                   ToolTipService.ToolTip="{Binding Path=(ToolTipService.ToolTip)}"
                                   Visibility="{Binding Visibility, Mode=TwoWay}" />
             </DataTemplate>
@@ -102,11 +105,11 @@
                               Holding="NavButton_Holding"
                               IsChecked="{Binding IsChecked, Mode=TwoWay}"
                               IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
-                              IsHitTestVisible="{Binding IsChecked, Converter={StaticResource ReverseBooleanConverter}}"
                               IsTabStop="{Binding IsChecked, Converter={StaticResource ReverseBooleanConverter}}"
                               Loaded="NavButton_Loaded"
                               RightTapped="NavButton_RightTapped"
                               TabIndex="2"
+                              Tapped="NavButton_Tapped"
                               ToolTipService.ToolTip="{Binding Path=(ToolTipService.ToolTip)}"
                               Unchecked="NavButtonUnchecked"
                               Visibility="{Binding Visibility, Mode=TwoWay}">
@@ -206,6 +209,7 @@
                         Loaded="NavButton_Loaded"
                         RightTapped="NavButton_RightTapped"
                         TabIndex="2"
+                        Tapped="NavButton_Tapped"
                         ToolTipService.ToolTip="{x:Bind Path=(ToolTipService.ToolTip), Mode=OneWay}"
                         Visibility="{x:Bind Visibility, Mode=OneWay}">
                     <Button.Template>
@@ -264,36 +268,27 @@
 
         <VisualStateManager.VisualStateGroups>
 
-            <VisualStateGroup x:Name="VisualStateGroup">
+            <VisualStateGroup x:Name="VisualStateGroup" CurrentStateChanged="VisualStateGroup_CurrentStateChanged">
 
                 <VisualState x:Name="VisualStateNarrow">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger x:Name="VisualStateNarrowTrigger" MinWindowWidth="{Binding VisualStateNarrowMinWidth, ElementName=ThisPage, Mode=OneWay}" />
                     </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="ShellSplitView.DisplayMode" Value="Overlay" />
-                        <Setter Target="ShellSplitView.IsPaneOpen" Value="False" />
-                    </VisualState.Setters>
+                    <!--  see code-behind  -->
                 </VisualState>
 
                 <VisualState x:Name="VisualStateNormal">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger x:Name="VisualStateNormalTrigger" MinWindowWidth="{Binding VisualStateNormalMinWidth, ElementName=ThisPage, Mode=OneWay}" />
                     </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="ShellSplitView.DisplayMode" Value="CompactOverlay" />
-                        <Setter Target="ShellSplitView.IsPaneOpen" Value="False" />
-                    </VisualState.Setters>
+                    <!--  see code-behind  -->
                 </VisualState>
 
                 <VisualState x:Name="VisualStateWide">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger x:Name="VisualStateWideTrigger" MinWindowWidth="{Binding VisualStateWideMinWidth, ElementName=ThisPage, Mode=OneWay}" />
                     </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="ShellSplitView.DisplayMode" Value="CompactInline" />
-                        <Setter Target="ShellSplitView.IsPaneOpen" Value="True" />
-                    </VisualState.Setters>
+                    <!--  see code-behind  -->
                 </VisualState>
 
             </VisualStateGroup>
@@ -301,7 +296,8 @@
 
         <SplitView x:Name="ShellSplitView"
                    AutomationProperties.Name="Jerry Nixon"
-                   DisplayMode="Inline"
+                   DisplayMode="{x:Bind DisplayMode, Mode=TwoWay}"
+                   IsPaneOpen="{x:Bind IsOpen, Mode=TwoWay}"
                    IsTabStop="False"
                    OpenPaneLength="{x:Bind PaneWidth, Mode=OneWay}"
                    PaneBackground="Transparent"

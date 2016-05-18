@@ -1,0 +1,44 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>Blank (Template 10)</Name>
+    <Description>A rich library of helpers, services, and base classes for new and existing Windows UWP apps to maximize awesomeness and minimize boilerplate garbage. </Description>
+    <ProjectType>CSharp</ProjectType>
+    <ProjectSubType>Template10</ProjectSubType>
+    <SortOrder>0</SortOrder>
+    <TemplateID>Microsoft.CS.WinRT.UAP.BlankApplication</TemplateID>
+    <TemplateGroupID>WinRT-Managed</TemplateGroupID>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>WindowsApp</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <TargetPlatformName>Windows</TargetPlatformName>
+    <RequiredPlatformVersion>6.1.0</RequiredPlatformVersion>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <Icon>__TemplateIcon.png</Icon>
+    <PreviewImage>__PreviewImageBlank.png</PreviewImage>
+    <NumberOfParentCategoriesToRollUp>0</NumberOfParentCategoriesToRollUp>
+  </TemplateData>
+  <TemplateContent PreferedSolutionConfiguration="Debug|x86">
+<Project TargetFileName="Blank.csproj" File="Blank.csproj" ReplaceParameters="true">
+<ProjectItem ReplaceParameters="false" TargetFileName="help.htm" OpenInWebBrowser="true">help.htm</ProjectItem><ProjectItem ReplaceParameters = "true" TargetFileName="project.json">project.json</ProjectItem><ProjectItem ReplaceParameters = "true" TargetFileName="Package.appxmanifest">Package.appxmanifest</ProjectItem><ProjectItem ReplaceParameters="false" TargetFileName="$projectname$_TemporaryKey.pfx" BlendDoNotCreate="true">Application_TemporaryKey.pfx</ProjectItem><ProjectItem ReplaceParameters = "true" TargetFileName="App.xaml.cs">App.xaml.cs</ProjectItem><ProjectItem ReplaceParameters = "true" TargetFileName="App.xaml">App.xaml</ProjectItem><Folder Name="Assets" TargetFolderName="Assets" ><ProjectItem ReplaceParameters = "true" TargetFileName="LockScreenLogo.scale-200.png">LockScreenLogo.scale-200.png</ProjectItem><ProjectItem ReplaceParameters = "true" TargetFileName="SplashScreen.scale-200.png">SplashScreen.scale-200.png</ProjectItem><ProjectItem ReplaceParameters = "true" TargetFileName="Square150x150Logo.scale-200.png">Square150x150Logo.scale-200.png</ProjectItem><ProjectItem ReplaceParameters = "true" TargetFileName="Square44x44Logo.scale-200.png">Square44x44Logo.scale-200.png</ProjectItem><ProjectItem ReplaceParameters = "true" TargetFileName="Square44x44Logo.targetsize-24_altform-unplated.png">Square44x44Logo.targetsize-24_altform-unplated.png</ProjectItem><ProjectItem ReplaceParameters = "true" TargetFileName="StoreLogo.png">StoreLogo.png</ProjectItem><ProjectItem ReplaceParameters = "true" TargetFileName="Wide310x150Logo.scale-200.png">Wide310x150Logo.scale-200.png</ProjectItem></Folder><Folder Name="Properties" TargetFolderName="Properties" ><ProjectItem ReplaceParameters = "true" TargetFileName="AssemblyInfo.cs">AssemblyInfo.cs</ProjectItem><ProjectItem ReplaceParameters = "true" TargetFileName="Default.rd.xml">Default.rd.xml</ProjectItem></Folder><Folder Name="Styles" TargetFolderName="Styles" ><ProjectItem ReplaceParameters = "true" TargetFileName="Custom.xaml">Custom.xaml</ProjectItem></Folder><Folder Name="ViewModels" TargetFolderName="ViewModels" ><ProjectItem ReplaceParameters = "true" TargetFileName="MainPageViewModel.cs">MainPageViewModel.cs</ProjectItem></Folder><Folder Name="Views" TargetFolderName="Views" ><ProjectItem ReplaceParameters = "true" TargetFileName="MainPage.xaml">MainPage.xaml</ProjectItem><ProjectItem ReplaceParameters = "true" TargetFileName="MainPage.xaml.cs">MainPage.xaml.cs</ProjectItem></Folder>
+</Project>
+
+</TemplateContent>
+  <WizardExtension>
+    <Assembly>Microsoft.VisualStudio.WinRT.TemplateWizards, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</Assembly>
+    <FullClassName>Microsoft.VisualStudio.WinRT.TemplateWizards.CreateProjectCertificate.Wizard</FullClassName>
+  </WizardExtension>
+  <WizardExtension>
+    <Assembly>NuGet.VisualStudio.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</Assembly>
+    <FullClassName>NuGet.VisualStudio.TemplateWizard</FullClassName>
+  </WizardExtension>
+  <WizardExtension>
+    <Assembly>Microsoft.VisualStudio.Universal.TemplateWizards, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</Assembly>
+    <FullClassName>Microsoft.VisualStudio.Universal.TemplateWizards.PlatformVersion.Wizard</FullClassName>
+  </WizardExtension>
+  <WizardData>
+    <packages repository="registry" keyName="NETCoreSDK" isPreunzipped="true">
+      <package id="Microsoft.NETCore.UniversalWindowsPlatform" version="5.0.0" skipAssemblyReferences="false" />
+    </packages>
+  </WizardData>
+</VSTemplate>

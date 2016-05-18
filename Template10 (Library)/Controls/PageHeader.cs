@@ -23,6 +23,8 @@ namespace Template10.Controls
     [ContentProperty(Name = nameof(PrimaryCommands))]
     public sealed class PageHeader : CommandBar
     {
+        private static long? callBackIsOpenId;
+        private static long? callBackDisplayModeId;
         public PageHeader()
         {
             DefaultStyleKey = typeof(PageHeader);
@@ -35,7 +37,61 @@ namespace Template10.Controls
             SetValue(Microsoft.Xaml.Interactivity.Interaction.BehaviorsProperty, collection);
 
             TabIndex = 5000;
+            Loaded += PageHeader_Loaded;
         }
+
+        private void PageHeader_Loaded(object sender, RoutedEventArgs e)
+        {
+            var hamburgerMenu = ParentHamburgerMenu;
+            RegisterHamburgerMenuChanges(hamburgerMenu);
+            UpdateMarginToFitHamburgerMenu(hamburgerMenu);
+        }
+
+        private void RegisterHamburgerMenuChanges(HamburgerMenu hamburgerMenu)
+        {
+            hamburgerMenu = hamburgerMenu ?? ParentHamburgerMenu;
+            if (hamburgerMenu == null)
+            {
+                return;
+            }
+
+            hamburgerMenu.UnregisterPropertyChangedCallback(HamburgerMenu.IsOpenProperty, callBackIsOpenId ?? 0);
+            callBackIsOpenId = hamburgerMenu.RegisterPropertyChangedCallback(HamburgerMenu.IsOpenProperty, (obj, dp) => OnHamburgerMenuIsOpenPropertyChanged(obj as HamburgerMenu));
+
+            hamburgerMenu.UnregisterPropertyChangedCallback(HamburgerMenu.DisplayModeProperty, callBackDisplayModeId ?? 0);
+            callBackDisplayModeId = hamburgerMenu.RegisterPropertyChangedCallback(HamburgerMenu.DisplayModeProperty, (obj, dp) => OnHamburgerMenuDisplayModePropertyChanged(obj as HamburgerMenu));
+        }
+
+        private void UpdateMarginToFitHamburgerMenu(HamburgerMenu hamburgerMenu = null)
+        {
+            hamburgerMenu = hamburgerMenu ?? ParentHamburgerMenu;
+            if (hamburgerMenu == null)
+            {
+                Margin = new Thickness(0);
+                return;
+            }
+            switch (hamburgerMenu.DisplayMode)
+            {
+                case SplitViewDisplayMode.Overlay:
+                    {
+                        var buttonVisible = hamburgerMenu.HamburgerButtonVisibility == Visibility.Visible;
+                        Margin = buttonVisible ? new Thickness(0) : new Thickness(48, 0, 0, 0);
+                    }
+                    break;
+                case SplitViewDisplayMode.Inline:
+                case SplitViewDisplayMode.CompactOverlay:
+                case SplitViewDisplayMode.CompactInline:
+                    {
+                        Margin = new Thickness(0);
+                    }
+                    break;
+            }
+        }
+
+        private Page ParentPage => this.FirstAncestor<Page>();
+        private HamburgerMenu ParentHamburgerMenu => ParentPage?.Frame?.FirstAncestor<HamburgerMenu>();
+        private void OnHamburgerMenuDisplayModePropertyChanged(HamburgerMenu hamburgerMenu) => UpdateMarginToFitHamburgerMenu(hamburgerMenu);
+        private void OnHamburgerMenuIsOpenPropertyChanged(HamburgerMenu hamburgerMenu) => UpdateMarginToFitHamburgerMenu(hamburgerMenu);
 
         public Behaviors.EllipsisBehavior.Visibilities EllipsisVisibility
         {
@@ -93,7 +149,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty VisualStateNarrowMinWidthProperty =
             DependencyProperty.Register(nameof(VisualStateNarrowMinWidth), typeof(double),
-                typeof(PageHeader), new PropertyMetadata(-1));
+                typeof(PageHeader), new PropertyMetadata((double)-1));
 
         public double VisualStateNormalMinWidth
         {
@@ -102,7 +158,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty VisualStateNormalMinWidthProperty =
             DependencyProperty.Register(nameof(VisualStateNormalMinWidth), typeof(double),
-                typeof(PageHeader), new PropertyMetadata(0));
+                typeof(PageHeader), new PropertyMetadata(0d));
 
         public string Text
         {

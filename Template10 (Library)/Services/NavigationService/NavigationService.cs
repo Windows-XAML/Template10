@@ -26,6 +26,13 @@ namespace Template10.Services.NavigationService
         public Frame Frame => FrameFacade.Frame;
         object LastNavigationParameter { get; set; }
         string LastNavigationType { get; set; }
+        public object Content => Frame.Content;
+
+        public string NavigationState
+        {
+            get { return Frame.GetNavigationState(); }
+            set { Frame.SetNavigationState(value); }
+        }
 
         #region Debug
 
@@ -276,13 +283,13 @@ namespace Template10.Services.NavigationService
             if (args.Cancel)
                 return;
 
-            var state = FrameFacadeInternal.PageStateSettingsService(GetType());
+            var state = FrameFacadeInternal.PageStateSettingsService(GetType().ToString());
             if (state == null)
             {
                 throw new InvalidOperationException("State container is unexpectedly null");
             }
 
-            state.Write<string>("CurrentPageType", CurrentPageType.AssemblyQualifiedName);
+            state.Write<string>("CurrentPageType", CurrentPageType.ToString());
             state.Write<object>("CurrentPageParam", CurrentPageParam);
             state.Write<string>("NavigateState", FrameFacadeInternal?.GetNavigationState());
             await Task.CompletedTask;
@@ -295,7 +302,7 @@ namespace Template10.Services.NavigationService
 
             try
             {
-                var state = FrameFacadeInternal.PageStateSettingsService(GetType());
+                var state = FrameFacadeInternal.PageStateSettingsService(GetType().ToString());
                 if (state == null || !state.Exists("CurrentPageType"))
                 {
                     return false;
@@ -304,6 +311,7 @@ namespace Template10.Services.NavigationService
                 FrameFacadeInternal.CurrentPageType = Type.GetType(state.Read<string>("CurrentPageType"));
                 FrameFacadeInternal.CurrentPageParam = state.Read<object>("CurrentPageParam");
                 FrameFacadeInternal.SetNavigationState(state.Read<string>("NavigateState"));
+
                 await NavigateToAsync(NavigationMode.Refresh, FrameFacadeInternal.CurrentPageParam);
                 while (FrameFacadeInternal.Frame.Content == null)
                 {

@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\Microsoft.VSSDK.BuildTools.14.1.24720\build\Microsoft.VSSDK.BuildTools.props" Condition="Exists('..\..\packages\Microsoft.VSSDK.BuildTools.14.1.24720\build\Microsoft.VSSDK.BuildTools.props')" />
+  <UsingTask AssemblyFile="$(SolutionDir)Lib\Template10.MSBUILD.dll" TaskName="VSTemplateBuildTask">
+  </UsingTask>
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectTypeGuids>{82b43b9b-a64c-4715-b499-d71e9ca2bd60};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{FD63EF06-F97C-4113-B5AC-2A4D7DBEA6EB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Template10.Installer</RootNamespace>
+    <AssemblyName>Template10.Installer</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <GeneratePkgDefFile>false</GeneratePkgDefFile>
+    <IncludeAssemblyInVSIXContainer>false</IncludeAssemblyInVSIXContainer>
+    <IncludeDebugSymbolsInVSIXContainer>false</IncludeDebugSymbolsInVSIXContainer>
+    <IncludeDebugSymbolsInLocalVSIXDeployment>false</IncludeDebugSymbolsInLocalVSIXDeployment>
+    <CopyBuildOutputToOutputDirectory>false</CopyBuildOutputToOutputDirectory>
+    <CopyOutputSymbolsToOutputDirectory>false</CopyOutputSymbolsToOutputDirectory>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="NuGetLogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Template10.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <None Include="packages.config" />
+    <Content Include="ProjectTemplates\Windows\Universal\1 Template10Blank.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="ProjectTemplates\Windows\Universal\2 Template10Minimal.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="ProjectTemplates\Windows\Universal\3 Template10Hamburger.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="ProjectTemplates\Windows\Universal\Template10\1 Template10Blank.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="ProjectTemplates\Windows\Universal\Template10\2 Template10Minimal.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="ProjectTemplates\Windows\Universal\Template10\3 Template10Hamburger.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <None Include="source.extension.vsixmanifest">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="stylesheet.css" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Reference Include="Microsoft.Build.Framework" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+            task.ProjectDescription = projectDescription;
+            task.ProjectFriendlyName = projectFriendlyName;
+            task.CsprojFile = projectLocation;
+            task.TargetDir = outputLocation;
+            task.PreviewImagePath = previewImageLocation;
+            task.ZipName = zipName;
+            task.HelpUrl = helpLocation;
+            -->
+  <!--custom build task to convert projects to project templates-->
+  <Target Name="BeforeBuild">
+    <VSTemplateBuildTask ProjectDescription="A rich library of helpers, services, and base classes for new and existing Windows UWP apps to maximize awesomeness and minimize boilerplate garbage. " ProjectFriendlyName="Blank (Template 10)" SourceDir="$(SolutionDir)Templates (Project)\Blank\" CsprojFile="$(SolutionDir)Templates (Project)\Blank\Blank.csproj" TargetDir="$(SolutionDir)Template10 (Installer)\Template10.Installer\ProjectTemplates\Windows\Universal\Template10" ZipName="1 Template10Blank.zip" PreviewImagePath="__PreviewImageBlank.png" HelpUrl="http://aka.ms/T10-Blank" />
+    <VSTemplateBuildTask ProjectDescription="A rich library of helpers, services, and base classes for new and existing Windows UWP apps to maximize awesomeness and minimize boilerplate garbage. " ProjectFriendlyName="Minimal (Template 10)" SourceDir="$(SolutionDir)Templates (Project)\Minimal\" CsprojFile="$(SolutionDir)Templates (Project)\Minimal\Minimal.csproj" TargetDir="$(SolutionDir)Template10 (Installer)\Template10.Installer\ProjectTemplates\Windows\Universal\Template10" ZipName="2 Template10Minimal.zip" PreviewImagePath="__PreviewImageMinimal.png" HelpUrl="http://aka.ms/T10-Minimal" />
+    <VSTemplateBuildTask ProjectDescription="A rich library of helpers, services, and base classes for new and existing Windows UWP apps to maximize awesomeness and minimize boilerplate garbage. " ProjectFriendlyName="Hamburger (Template 10)" SourceDir="$(SolutionDir)Templates (Project)\Hamburger\" CsprojFile="$(SolutionDir)Templates (Project)\Hamburger\Hamburger.csproj" TargetDir="$(SolutionDir)Template10 (Installer)\Template10.Installer\ProjectTemplates\Windows\Universal\Template10" ZipName="3 Template10Hamburger.zip" PreviewImagePath="__PreviewImageHamburger.png" HelpUrl="http://aka.ms/T10-Hamburger" />
+    <Copy SourceFiles="$(SolutionDir)Template10 (Installer)\Template10.Installer\ProjectTemplates\Windows\Universal\Template10\1 Template10Blank.zip" DestinationFolder="$(SolutionDir)Template10 (Installer)\Template10.Installer\ProjectTemplates\Windows\Universal\" />
+    <Copy SourceFiles="$(SolutionDir)Template10 (Installer)\Template10.Installer\ProjectTemplates\Windows\Universal\Template10\2 Template10Minimal.zip" DestinationFolder="$(SolutionDir)Template10 (Installer)\Template10.Installer\ProjectTemplates\Windows\Universal\" />
+    <Copy SourceFiles="$(SolutionDir)Template10 (Installer)\Template10.Installer\ProjectTemplates\Windows\Universal\Template10\3 Template10Hamburger.zip" DestinationFolder="$(SolutionDir)Template10 (Installer)\Template10.Installer\ProjectTemplates\Windows\Universal\" />
+  </Target>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\Microsoft.VSSDK.BuildTools.14.1.24720\build\Microsoft.VSSDK.BuildTools.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.VSSDK.BuildTools.14.1.24720\build\Microsoft.VSSDK.BuildTools.props'))" />
+    <Error Condition="!Exists('..\..\packages\Microsoft.VSSDK.BuildTools.14.1.24720\build\Microsoft.VSSDK.BuildTools.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.VSSDK.BuildTools.14.1.24720\build\Microsoft.VSSDK.BuildTools.targets'))" />
+  </Target>
+  <Import Project="..\..\packages\Microsoft.VSSDK.BuildTools.14.1.24720\build\Microsoft.VSSDK.BuildTools.targets" Condition="Exists('..\..\packages\Microsoft.VSSDK.BuildTools.14.1.24720\build\Microsoft.VSSDK.BuildTools.targets')" />
+</Project>

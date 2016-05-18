@@ -41,7 +41,7 @@ namespace Sample.Services.SettingsServices
             {
                 _helper.Write(nameof(AppTheme), value.ToString());
                 (Window.Current.Content as FrameworkElement).RequestedTheme = value.ToElementTheme();
-                Views.Shell.HamburgerMenu.RefreshStyles(value);
+                Views.Shell.HamburgerMenu.RefreshStyles(value, true);
             }
         }
 
@@ -62,6 +62,16 @@ namespace Sample.Services.SettingsServices
             {
                 _helper.Write(nameof(ShowHamburgerButton), value);
                 Views.Shell.HamburgerMenu.HamburgerButtonVisibility = value ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
+
+        public bool IsFullScreen
+        {
+            get { return _helper.Read<bool>(nameof(IsFullScreen), false); }
+            set
+            {
+                _helper.Write(nameof(IsFullScreen), value);
+                Views.Shell.HamburgerMenu.IsFullScreen = value;
             }
         }
     }

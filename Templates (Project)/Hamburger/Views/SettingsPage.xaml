@@ -5,6 +5,7 @@
       xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
       xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
       xmlns:controls="using:Template10.Controls"
+      xmlns:converter="using:Template10.Converters"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:Sample.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -15,6 +16,19 @@
         <vm:SettingsPageViewModel x:Name="ViewModel" />
     </Page.DataContext>
 
+    <Page.Resources>
+        <converter:ValueWhenConverter x:Name="FalseWhenTrueConverter">
+            <converter:ValueWhenConverter.When>
+                <x:Boolean>True</x:Boolean>
+            </converter:ValueWhenConverter.When>
+            <converter:ValueWhenConverter.Value>
+                <x:Boolean>False</x:Boolean>
+            </converter:ValueWhenConverter.Value>
+            <converter:ValueWhenConverter.Otherwise>
+                <x:Boolean>True</x:Boolean>
+            </converter:ValueWhenConverter.Otherwise>
+        </converter:ValueWhenConverter>
+    </Page.Resources>
 
     <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -71,28 +85,37 @@
                     <RelativePanel HorizontalAlignment="Left">
 
                         <ToggleSwitch x:Name="UseShellDrawnBackButtonToggleSwtich"
-                                      Header="Use shell-drawn back button"
+                                      Header="Shell-drawn Back Button"
                                       IsOn="{Binding UseShellBackButton, Mode=TwoWay}"
-                                      OffContent="Back button in page header"
-                                      OnContent="Back button in titlebar or taskbar"
+                                      OffContent="Back button is in Page Header"
+                                      OnContent="Back button in Title/TaskBar"
                                       RelativePanel.AlignLeftWithPanel="True"
                                       RelativePanel.AlignTopWithPanel="True" />
 
                         <ToggleSwitch x:Name="UseLightThemeToggleSwitch"
-                                      Header="Use Light Theme"
+                                      Header="Requested Application Theme"
                                       IsOn="{Binding UseLightThemeButton, Mode=TwoWay}"
-                                      OffContent="Dark theme"
-                                      OnContent="Light theme"
+                                      OffContent="Current theme is Dark"
+                                      OnContent="Current theme is Light"
                                       RelativePanel.AlignLeftWithPanel="True"
                                       RelativePanel.Below="UseShellDrawnBackButtonToggleSwtich" />
 
                         <ToggleSwitch x:Name="ShowHamburgerButtonToggleSwitch"
-                                      Header="Show Hamburger Button"
+                                      Header="Hamburger Button Visibility"
+                                      IsEnabled="{Binding IsOn, ElementName=IsFullScreenToggleSwitch, Converter={StaticResource FalseWhenTrueConverter}}"
                                       IsOn="{Binding ShowHamburgerButton, Mode=TwoWay}"
-                                      OffContent="Hide button"
-                                      OnContent="Show button"
+                                      OffContent="Hamburger Button is hidden"
+                                      OnContent="Hamburger Button is visible"
                                       RelativePanel.AlignLeftWithPanel="True"
                                       RelativePanel.Below="UseLightThemeToggleSwitch" />
+
+                        <ToggleSwitch x:Name="IsFullScreenToggleSwitch"
+                                      Header="Page content is Full Screen"
+                                      IsOn="{Binding IsFullScreen, Mode=TwoWay}"
+                                      OffContent="Hamburger Menu is visible"
+                                      OnContent="Hamburger Menu is hidden"
+                                      RelativePanel.AlignLeftWithPanel="True"
+                                      RelativePanel.Below="ShowHamburgerButtonToggleSwitch" />
 
                         <TextBox x:Name="BusyTextTextBox"
                                  Width="200"
@@ -100,7 +123,7 @@
                                  HorizontalAlignment="Left"
                                  Header="Busy text"
                                  RelativePanel.AlignLeftWithPanel="True"
-                                 RelativePanel.Below="ShowHamburgerButtonToggleSwitch"
+                                 RelativePanel.Below="IsFullScreenToggleSwitch"
                                  Text="{Binding BusyText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                         <Button Margin="12,0,0,0"

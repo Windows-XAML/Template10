@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+  <Metadata>
+    <Identity Id="Template10ProjectTemplate" Version="1.17" Language="en-US" Publisher="Jerry Nixon" />
+    <DisplayName>Template 10 Template Pack</DisplayName>
+    <Description xml:space="preserve">A rich library of helpers, services, and base classes for new and existing Windows UWP apps to maximize awesomeness and minimize boilerplate garbage. </Description>
+    <MoreInfo>http://aka.ms/template10</MoreInfo>
+    <GettingStartedGuide>http://aka.ms/template10</GettingStartedGuide>
+    <ReleaseNotes>http://aka.ms/template10</ReleaseNotes>
+    <Icon>NuGetLogo.png</Icon>
+    <PreviewImage>NuGetLogo.png</PreviewImage>
+    <Tags>T10, Template 10, UWP, UAP, Windows app, Windows 10, XAML, WinRT</Tags>
+  </Metadata>
+  <Installation AllUsers="true">
+    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[14.0]" />
+  </Installation>
+  <Dependencies>
+    <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
+  </Dependencies>
+  <Assets>
+    <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="ProjectTemplates" d:TargetPath="ProjectTemplates\Windows\Universal\1 Template10Blank.zip" />
+    <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="ProjectTemplates" d:TargetPath="ProjectTemplates\Windows\Universal\Template10\1 Template10Blank.zip" />
+    <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="ProjectTemplates" d:TargetPath="ProjectTemplates\Windows\Universal\2 Template10Minimal.zip" />
+    <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="ProjectTemplates" d:TargetPath="ProjectTemplates\Windows\Universal\Template10\2 Template10Minimal.zip" />
+    <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="ProjectTemplates" d:TargetPath="ProjectTemplates\Windows\Universal\3 Template10Hamburger.zip" />
+    <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="File" Path="ProjectTemplates" d:TargetPath="ProjectTemplates\Windows\Universal\Template10\3 Template10Hamburger.zip" />
+  </Assets>
+</PackageManifest>

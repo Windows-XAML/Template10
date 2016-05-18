@@ -46,6 +46,8 @@ namespace Template10.Common
             }
         }
 
+        public object Content => Dispatcher.Dispatch(() => Window.Content);
+
         public readonly static List<WindowWrapper> ActiveWrappers = new List<WindowWrapper>();
 
         public static WindowWrapper Current() => ActiveWrappers.FirstOrDefault(x => x.Window == Window.Current) ?? Default();
@@ -62,12 +64,21 @@ namespace Template10.Common
 
         internal WindowWrapper(Window window)
         {
-            if (ActiveWrappers.Any(x => x.Window == window))
+            if (Current(window) != null)
+            {
                 throw new Exception("Windows already has a wrapper; use Current(window) to fetch.");
+            }
             Window = window;
             ActiveWrappers.Add(this);
             Dispatcher = new DispatcherWrapper(window.Dispatcher);
-            window.Closed += (s, e) => { ActiveWrappers.Remove(this); };
+            window.CoreWindow.Closed += (s, e) =>
+            {
+                ActiveWrappers.Remove(this);
+            };
+            window.Closed += (s, e) =>
+            {
+                ActiveWrappers.Remove(this);
+            };
         }
 
         public void Close() { Window.Close(); }
