@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Core;
 using Template10.Common;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Controls;
@@ -45,5 +46,11 @@ namespace Template10.Services.NavigationService
 
         Frame Frame { get; }
         FrameFacade FrameFacade { get; }
+
+        /// <summary>
+        /// Specifies if this instance of INavigationService associated with <see cref="CoreApplication.MainView"/> or any other secondary view.
+        /// </summary>
+        /// <returns><value>true</value> if associated with MainView, <value>false</value> otherwise</returns>
+        bool IsForMainView { get; }
     }
 }
