@@ -467,18 +467,18 @@ namespace Template10.Controls
             }
             else if (state == VisualStateNormal)
             {
-                if (DisplayMode != SplitViewDisplayMode.CompactOverlay)
+                if (DisplayMode != PreferredNormalDisplayMode)
                 {
-                    DisplayMode = SplitViewDisplayMode.CompactOverlay;
-                    IsOpen = false;
+                    DisplayMode = PreferredNormalDisplayMode;
+                    IsOpen = DisplayMode.ToString().Contains("Overlay") ? false : true;
                 }
             }
             else if (state == VisualStateWide)
             {
-                if (DisplayMode != SplitViewDisplayMode.CompactInline)
+                if (DisplayMode != PreferredWideDisplayMode)
                 {
-                    DisplayMode = SplitViewDisplayMode.CompactInline;
-                    IsOpen = true;
+                    DisplayMode = PreferredWideDisplayMode;
+                    IsOpen = DisplayMode.ToString().Contains("Overlay") ? false : true;
                 }
             }
         }
