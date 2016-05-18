@@ -21,13 +21,12 @@ namespace Template10.Services.NavigationService
     {
         FrameFacade FrameFacadeInternal { get; }
         public FrameFacade FrameFacade => FrameFacadeInternal;
-        public bool IsForMainView { get; }
+        public bool IsInMainView { get; }
         public Frame Frame => FrameFacade.Frame;
         object LastNavigationParameter { get; set; }
         string LastNavigationType { get; set; }
         public object Content => Frame.Content;
 
-        [Obsolete("Use NavigationService.GetDispatcherWrapper() extension method instead.", true)]
         public DispatcherWrapper Dispatcher => this.GetDispatcherWrapper() as DispatcherWrapper;
 
 
@@ -50,7 +49,7 @@ namespace Template10.Services.NavigationService
         protected internal NavigationService(Frame frame)
         {
             SerializationService = Services.SerializationService.SerializationService.Json;
-            IsForMainView = CoreApplication.MainView == CoreApplication.GetCurrentView();
+            IsInMainView = CoreApplication.MainView == CoreApplication.GetCurrentView();
             FrameFacadeInternal = new FrameFacade(this, frame);
             FrameFacadeInternal.Navigating += async (s, e) =>
             {

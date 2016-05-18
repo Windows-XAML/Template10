@@ -33,7 +33,6 @@ namespace Template10.Services.NavigationService
         object CurrentPageParam { get; }
         Type CurrentPageType { get; }
 
-        [Obsolete("Use NavigationService.GetDispatcherWrapper() extension method instead.", true)]
         DispatcherWrapper Dispatcher { get; }
 
         Task SaveNavigationAsync();
@@ -53,6 +52,6 @@ namespace Template10.Services.NavigationService
         /// Specifies if this instance of INavigationService associated with <see cref="CoreApplication.MainView"/> or any other secondary view.
         /// </summary>
         /// <returns><value>true</value> if associated with MainView, <value>false</value> otherwise</returns>
-        bool IsForMainView { get; }
+        bool IsInMainView { get; }
     }
 }
