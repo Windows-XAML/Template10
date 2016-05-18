@@ -45,8 +45,10 @@ namespace Template10.Controls
                   {
                       Changed(nameof(NavAreaBackground), e);
                       (d as HamburgerMenu).NavAreaBackgroundChanged?.Invoke(d, e.ToChangedEventArgs<Brush>());
+                      (d as HamburgerMenu).InternalNavAreaBackgroundChanged(e.ToChangedEventArgs<Brush>());
                   }));
         public event EventHandler<ChangedEventArgs<Brush>> NavAreaBackgroundChanged;
+        partial void InternalNavAreaBackgroundChanged(ChangedEventArgs<Brush> e);
 
         public Brush SecondarySeparator
         {
@@ -59,8 +61,10 @@ namespace Template10.Controls
                   {
                       Changed(nameof(SecondarySeparator), e);
                       (d as HamburgerMenu).SecondarySeparatorChanged?.Invoke(d, e.ToChangedEventArgs<Brush>());
+                      (d as HamburgerMenu).InternalSecondarySeparatorChanged(e.ToChangedEventArgs<Brush>());
                   }));
         public event EventHandler<ChangedEventArgs<Brush>> SecondarySeparatorChanged;
+        partial void InternalSecondarySeparatorChanged(ChangedEventArgs<Brush> e);
 
         public Brush PaneBorderBrush
         {
@@ -73,8 +77,11 @@ namespace Template10.Controls
                   {
                       Changed(nameof(PaneBorderBrush), e);
                       (d as HamburgerMenu).PaneBorderBrushChanged?.Invoke(d, e.ToChangedEventArgs<Brush>());
+                      (d as HamburgerMenu).InternalPaneBorderBrushChanged(e.ToChangedEventArgs<Brush>());
                   }));
         public event EventHandler<ChangedEventArgs<Brush>> PaneBorderBrushChanged;
+        partial void InternalPaneBorderBrushChanged(ChangedEventArgs<Brush> e);
+
 
         // ham button
 
@@ -89,8 +96,11 @@ namespace Template10.Controls
                   {
                       Changed(nameof(HamburgerForeground), e);
                       (d as HamburgerMenu).HamburgerForegroundChanged?.Invoke(d, e.ToChangedEventArgs<Brush>());
+                      (d as HamburgerMenu).InternalHamburgerForegroundChanged(e.ToChangedEventArgs<Brush>());
                   }));
         public event EventHandler<ChangedEventArgs<Brush>> HamburgerForegroundChanged;
+        partial void InternalHamburgerForegroundChanged(ChangedEventArgs<Brush> e);
+
 
         public Brush HamburgerBackground
         {
@@ -103,8 +113,11 @@ namespace Template10.Controls
                 {
                     Changed(nameof(HamburgerBackground), e);
                     (d as HamburgerMenu).HamburgerBackgroundChanged?.Invoke(d, e.ToChangedEventArgs<Brush>());
+                    (d as HamburgerMenu).InternalHamburgerBackgroundChanged(e.ToChangedEventArgs<Brush>());
                 }));
         public event EventHandler<ChangedEventArgs<Brush>> HamburgerBackgroundChanged;
+        partial void InternalHamburgerBackgroundChanged(ChangedEventArgs<Brush> e);
+
 
         // nav button | normal
 
@@ -119,8 +132,11 @@ namespace Template10.Controls
                 {
                     Changed(nameof(NavButtonForeground), e);
                     (d as HamburgerMenu).NavButtonForegroundChanged?.Invoke(d, e.ToChangedEventArgs<Brush>());
+                    (d as HamburgerMenu).InternalNavButtonForegroundChanged(e.ToChangedEventArgs<Brush>());
                 }));
         public event EventHandler<ChangedEventArgs<Brush>> NavButtonForegroundChanged;
+        partial void InternalNavButtonForegroundChanged(ChangedEventArgs<Brush> e);
+
 
         public Brush NavButtonBackground
         {
@@ -133,8 +149,11 @@ namespace Template10.Controls
                 {
                     Changed(nameof(NavButtonBackground), e);
                     (d as HamburgerMenu).NavButtonBackgroundChanged?.Invoke(d, e.ToChangedEventArgs<Brush>());
+                    (d as HamburgerMenu).InternalNavButtonBackgroundChanged(e.ToChangedEventArgs<Brush>());
                 }));
         public event EventHandler<ChangedEventArgs<Brush>> NavButtonBackgroundChanged;
+        partial void InternalNavButtonBackgroundChanged(ChangedEventArgs<Brush> e);
+
 
         // nav button | checked
 
@@ -149,8 +168,11 @@ namespace Template10.Controls
                   {
                       Changed(nameof(NavButtonCheckedForeground), e);
                       (d as HamburgerMenu).NavButtonCheckedForegroundChanged?.Invoke(d, e.ToChangedEventArgs<Brush>());
+                      (d as HamburgerMenu).InternalNavButtonCheckedForegroundChanged(e.ToChangedEventArgs<Brush>());
                   }));
         public event EventHandler<ChangedEventArgs<Brush>> NavButtonCheckedForegroundChanged;
+        partial void InternalNavButtonCheckedForegroundChanged(ChangedEventArgs<Brush> e);
+
 
         public Brush NavButtonCheckedBackground
         {
@@ -163,8 +185,11 @@ namespace Template10.Controls
                   {
                       Changed(nameof(NavButtonCheckedBackground), e);
                       (d as HamburgerMenu).NavButtonCheckedBackgroundChanged?.Invoke(d, e.ToChangedEventArgs<Brush>());
+                      (d as HamburgerMenu).InternalNavButtonCheckedBackgroundChanged(e.ToChangedEventArgs<Brush>());
                   }));
         public event EventHandler<ChangedEventArgs<Brush>> NavButtonCheckedBackgroundChanged;
+        partial void InternalNavButtonCheckedBackgroundChanged(ChangedEventArgs<Brush> e);
+
 
         public Brush NavButtonCheckedIndicatorBrush
         {
@@ -177,8 +202,11 @@ namespace Template10.Controls
                   {
                       Changed(nameof(NavButtonCheckedIndicatorBrush), e);
                       (d as HamburgerMenu).NavButtonCheckedIndicatorBrushChanged?.Invoke(d, e.ToChangedEventArgs<Brush>());
+                      (d as HamburgerMenu).InternalNavButtonCheckedIndicatorBrushChanged(e.ToChangedEventArgs<Brush>());
                   }));
         public event EventHandler<ChangedEventArgs<Brush>> NavButtonCheckedIndicatorBrushChanged;
+        partial void InternalNavButtonCheckedIndicatorBrushChanged(ChangedEventArgs<Brush> e);
+
 
         // nav button | pressed
 
@@ -193,8 +221,11 @@ namespace Template10.Controls
                   {
                       Changed(nameof(NavButtonPressedForeground), e);
                       (d as HamburgerMenu).NavButtonPressedForegroundChanged?.Invoke(d, e.ToChangedEventArgs<Brush>());
+                      (d as HamburgerMenu).InternalNavButtonPressedForegroundChanged(e.ToChangedEventArgs<Brush>());
                   }));
         public event EventHandler<ChangedEventArgs<Brush>> NavButtonPressedForegroundChanged;
+        partial void InternalNavButtonPressedForegroundChanged(ChangedEventArgs<Brush> e);
+
 
         public Brush NavButtonPressedBackground
         {
@@ -207,8 +238,11 @@ namespace Template10.Controls
                   {
                       Changed(nameof(NavButtonPressedBackground), e);
                       (d as HamburgerMenu).NavButtonPressedBackgroundChanged?.Invoke(d, e.ToChangedEventArgs<Brush>());
+                      (d as HamburgerMenu).InternalNavButtonPressedBackgroundChanged(e.ToChangedEventArgs<Brush>());
                   }));
         public event EventHandler<ChangedEventArgs<Brush>> NavButtonPressedBackgroundChanged;
+        partial void InternalNavButtonPressedBackgroundChanged(ChangedEventArgs<Brush> e);
+
 
         // nav button | hover
 
@@ -223,8 +257,11 @@ namespace Template10.Controls
                   {
                       Changed(nameof(NavButtonHoverForeground), e);
                       (d as HamburgerMenu).NavButtonHoverForegroundChanged?.Invoke(d, e.ToChangedEventArgs<Brush>());
+                      (d as HamburgerMenu).InternalNavButtonHoverForegroundChanged(e.ToChangedEventArgs<Brush>());
                   }));
         public event EventHandler<ChangedEventArgs<Brush>> NavButtonHoverForegroundChanged;
+        partial void InternalNavButtonHoverForegroundChanged(ChangedEventArgs<Brush> e);
+
 
         public Brush NavButtonHoverBackground
         {
@@ -237,8 +274,11 @@ namespace Template10.Controls
                   {
                       Changed(nameof(NavButtonHoverBackground), e);
                       (d as HamburgerMenu).NavButtonHoverBackgroundChanged?.Invoke(d, e.ToChangedEventArgs<Brush>());
+                      (d as HamburgerMenu).InternalNavButtonHoverBackgroundChanged(e.ToChangedEventArgs<Brush>());
                   }));
         public event EventHandler<ChangedEventArgs<Brush>> NavButtonHoverBackgroundChanged;
+        partial void InternalNavButtonHoverBackgroundChanged(ChangedEventArgs<Brush> e);
+
 
         #endregion
 
@@ -257,8 +297,11 @@ namespace Template10.Controls
                 {
                     Changed(nameof(HamburgerButtonVisibility), e);
                     (d as HamburgerMenu).HamburgerButtonVisibilityChanged?.Invoke(d, e.ToChangedEventArgs<Visibility>());
+                    (d as HamburgerMenu).InternalHamburgerButtonVisibilityChanged(e.ToChangedEventArgs<Visibility>());
                 }));
         public event EventHandler<ChangedEventArgs<Visibility>> HamburgerButtonVisibilityChanged;
+        partial void InternalHamburgerButtonVisibilityChanged(ChangedEventArgs<Visibility> e);
+
 
         /// <summary>
         /// DisplayMode is a projection of the DisplayMode property in the underlying SplitView. Setting this property
@@ -276,8 +319,11 @@ namespace Template10.Controls
                 {
                     Changed(nameof(DisplayMode), e);
                     (d as HamburgerMenu).DisplayModeChanged?.Invoke(d, e.ToChangedEventArgs<SplitViewDisplayMode>());
+                    (d as HamburgerMenu).InternalDisplayModeChanged(e.ToChangedEventArgs<SplitViewDisplayMode>());
                 }));
         public event EventHandler<ChangedEventArgs<SplitViewDisplayMode>> DisplayModeChanged;
+        partial void InternalDisplayModeChanged(ChangedEventArgs<SplitViewDisplayMode> e);
+
 
         public SplitViewDisplayMode VisualStateNarrowDisplayMode
         {
@@ -290,8 +336,11 @@ namespace Template10.Controls
                 {
                     Changed(nameof(VisualStateNarrowDisplayMode), e);
                     (d as HamburgerMenu).VisualStateNarrowDisplayModeChanged?.Invoke(d, e.ToChangedEventArgs<SplitViewDisplayMode>());
+                    (d as HamburgerMenu).InternalVisualStateNarrowDisplayModeChanged(e.ToChangedEventArgs<SplitViewDisplayMode>());
                 }));
         public event EventHandler<ChangedEventArgs<SplitViewDisplayMode>> VisualStateNarrowDisplayModeChanged;
+        partial void InternalVisualStateNarrowDisplayModeChanged(ChangedEventArgs<SplitViewDisplayMode> e);
+
 
         public SplitViewDisplayMode VisualStateNormalDisplayMode
         {
@@ -304,8 +353,11 @@ namespace Template10.Controls
                 {
                     Changed(nameof(VisualStateNormalDisplayMode), e);
                     (d as HamburgerMenu).VisualStateNormalDisplayModeChanged?.Invoke(d, e.ToChangedEventArgs<SplitViewDisplayMode>());
+                    (d as HamburgerMenu).InternalVisualStateNormalDisplayModeChanged(e.ToChangedEventArgs<SplitViewDisplayMode>());
                 }));
         public event EventHandler<ChangedEventArgs<SplitViewDisplayMode>> VisualStateNormalDisplayModeChanged;
+        partial void InternalVisualStateNormalDisplayModeChanged(ChangedEventArgs<SplitViewDisplayMode> e);
+
 
         public SplitViewDisplayMode VisualStateWideDisplayMode
         {
@@ -318,8 +370,11 @@ namespace Template10.Controls
                 {
                     Changed(nameof(VisualStateWideDisplayMode), e);
                     (d as HamburgerMenu).VisualStateWideDisplayModeChanged?.Invoke(d, e.ToChangedEventArgs<SplitViewDisplayMode>());
+                    (d as HamburgerMenu).InternalVisualStateWideDisplayModeChanged(e.ToChangedEventArgs<SplitViewDisplayMode>());
                 }));
         public event EventHandler<ChangedEventArgs<SplitViewDisplayMode>> VisualStateWideDisplayModeChanged;
+        partial void InternalVisualStateWideDisplayModeChanged(ChangedEventArgs<SplitViewDisplayMode> e);
+
 
         /// <summary>
         /// This is one of three visual state properties. It sets the minimum value used to invoke the Wide visual state.
@@ -338,8 +393,11 @@ namespace Template10.Controls
                 {
                     Changed(nameof(VisualStateNarrowMinWidth), e);
                     (d as HamburgerMenu).VisualStateNarrowMinWidthChanged?.Invoke(d, e.ToChangedEventArgs<double>());
+                    (d as HamburgerMenu).InternalVisualStateNarrowMinWidthChanged(e.ToChangedEventArgs<double>());
                 }));
         public event EventHandler<ChangedEventArgs<double>> VisualStateNarrowMinWidthChanged;
+        partial void InternalVisualStateNarrowMinWidthChanged(ChangedEventArgs<double> e);
+
 
         /// <summary>
         /// This is one of three visual state properties. It sets the minimum value used to invoke the Normal visual state.
@@ -358,8 +416,11 @@ namespace Template10.Controls
                 {
                     Changed(nameof(VisualStateNormalMinWidth), e);
                     (d as HamburgerMenu).VisualStateNormalMinWidthChanged?.Invoke(d, e.ToChangedEventArgs<double>());
+                    (d as HamburgerMenu).InternalVisualStateNormalMinWidthChanged(e.ToChangedEventArgs<double>());
                 }));
         public event EventHandler<ChangedEventArgs<double>> VisualStateNormalMinWidthChanged;
+        partial void InternalVisualStateNormalMinWidthChanged(ChangedEventArgs<double> e);
+
 
         /// <summary>
         /// This is one of three visual state properties. It sets the minimum value used to invoke the Minimum visual state.
@@ -378,8 +439,11 @@ namespace Template10.Controls
                 {
                     Changed(nameof(VisualStateWideMinWidth), e);
                     (d as HamburgerMenu).VisualStateWideMinWidthChanged?.Invoke(d, e.ToChangedEventArgs<double>());
+                    (d as HamburgerMenu).InternalVisualStateWideMinWidthChanged(e.ToChangedEventArgs<double>());
                 }));
         public event EventHandler<ChangedEventArgs<double>> VisualStateWideMinWidthChanged;
+        partial void InternalVisualStateWideMinWidthChanged(ChangedEventArgs<double> e);
+
 
         /// <summary>
         /// This sets or gets if the bottom buttons in the Hamburger Menu are arranged vertically or horizontally.
@@ -397,8 +461,11 @@ namespace Template10.Controls
                 {
                     Changed(nameof(SecondaryButtonOrientation), e);
                     (d as HamburgerMenu).SecondaryButtonOrientationChanged?.Invoke(d, e.ToChangedEventArgs<Orientation>());
+                    (d as HamburgerMenu).InternalSecondaryButtonOrientationChanged(e.ToChangedEventArgs<Orientation>());
                 }));
         public event EventHandler<ChangedEventArgs<Orientation>> SecondaryButtonOrientationChanged;
+        partial void InternalSecondaryButtonOrientationChanged(ChangedEventArgs<Orientation> e);
+
 
         /// <summary>
         /// There are several color properties in the Hamburger Menu control, however, the AccentColor property
@@ -417,8 +484,11 @@ namespace Template10.Controls
                 {
                     Changed(nameof(AccentColor), e);
                     (d as HamburgerMenu).AccentColorChanged?.Invoke(d, e.ToChangedEventArgs<Color>());
+                    (d as HamburgerMenu).InternalAccentColorChanged(e.ToChangedEventArgs<Color>());
                 }));
         public event EventHandler<ChangedEventArgs<Color>> AccentColorChanged;
+        partial void InternalAccentColorChanged(ChangedEventArgs<Color> e);
+
 
         /// <summary>
         /// Selected indicates the current button highlighted in the navigation Pane. Setting this
@@ -435,8 +505,11 @@ namespace Template10.Controls
                 {
                     Changed(nameof(Selected), e);
                     (d as HamburgerMenu).SelectedChanged?.Invoke(d, e.ToChangedEventArgs<HamburgerButtonInfo>());
+                    (d as HamburgerMenu).InternalSelectedChanged(e.ToChangedEventArgs<HamburgerButtonInfo>());
                 }));
         public event EventHandler<ChangedEventArgs<HamburgerButtonInfo>> SelectedChanged;
+        partial void InternalSelectedChanged(ChangedEventArgs<HamburgerButtonInfo> e);
+
 
         /// <summary>
         /// The Navigation Service is used to synchronize the hamburger buttons in the navigation Pane
@@ -458,8 +531,11 @@ namespace Template10.Controls
                 {
                     Changed(nameof(NavigationService), e);
                     (d as HamburgerMenu).NavigationServiceChanged?.Invoke(d, e.ToChangedEventArgs<INavigationService>());
+                    (d as HamburgerMenu).InternalNavigationServiceChanged(e.ToChangedEventArgs<INavigationService>());
                 }));
         public event EventHandler<ChangedEventArgs<INavigationService>> NavigationServiceChanged;
+        partial void InternalNavigationServiceChanged(ChangedEventArgs<INavigationService> e);
+
 
         /// <summary>
         /// This toggles if the navigation Pane is visible or hidden. This includes the Hamburger button, too.
@@ -477,8 +553,11 @@ namespace Template10.Controls
                 {
                     Changed(nameof(IsFullScreen), e);
                     (d as HamburgerMenu).IsFullScreenChanged?.Invoke(d, e.ToChangedEventArgs<bool>());
+                    (d as HamburgerMenu).InternalIsFullScreenChanged(e.ToChangedEventArgs<bool>());
                 }));
         public event EventHandler<ChangedEventArgs<bool>> IsFullScreenChanged;
+        partial void InternalIsFullScreenChanged(ChangedEventArgs<bool> e);
+
 
         /// <summary>
         /// PaneWidth indicates the width of the Pane when it is open. The width of the Pane
@@ -499,8 +578,11 @@ namespace Template10.Controls
                 {
                     Changed(nameof(PaneWidth), e);
                     (d as HamburgerMenu).PaneWidthChanged?.Invoke(d, e.ToChangedEventArgs<double>());
+                    (d as HamburgerMenu).InternalPaneWidthChanged(e.ToChangedEventArgs<double>());
                 }));
         public event EventHandler<ChangedEventArgs<double>> PaneWidthChanged;
+        partial void InternalPaneWidthChanged(ChangedEventArgs<double> e);
+
 
         /// <summary>
         /// HamburgerButtonGridWidth represents the width of a Grid containing 
@@ -529,8 +611,11 @@ namespace Template10.Controls
                {
                    Changed(nameof(HamburgerButtonGridWidth), e);
                    (d as HamburgerMenu).HamburgerButtonGridWidthChanged?.Invoke(d, e.ToChangedEventArgs<double>());
+                   (d as HamburgerMenu).InternalHamburgerButtonGridWidthChanged(e.ToChangedEventArgs<double>());
                }));
         public event EventHandler<ChangedEventArgs<double>> HamburgerButtonGridWidthChanged;
+        partial void InternalHamburgerButtonGridWidthChanged(ChangedEventArgs<double> e);
+
 
         [Flags]
         public enum OpenCloseModes { None = 1, Auto = 2, Tap = 4, Swipe = 5 }
@@ -555,8 +640,11 @@ namespace Template10.Controls
                 {
                     Changed(nameof(OpenCloseMode), e);
                     (d as HamburgerMenu).OpenCloseModeChanged?.Invoke(d, e.ToChangedEventArgs<OpenCloseModes>());
+                    (d as HamburgerMenu).InternalOpenCloseModeChanged(e.ToChangedEventArgs<OpenCloseModes>());
                 }));
         public event EventHandler<ChangedEventArgs<OpenCloseModes>> OpenCloseModeChanged;
+        partial void InternalOpenCloseModeChanged(ChangedEventArgs<OpenCloseModes> e);
+
 
 
         /// <summary>
@@ -575,8 +663,11 @@ namespace Template10.Controls
                 {
                     Changed(nameof(PaneBorderThickness), e);
                     (d as HamburgerMenu).PaneBorderThicknessChanged?.Invoke(d, e.ToChangedEventArgs<Thickness>());
+                    (d as HamburgerMenu).InternalPaneBorderThicknessChanged(e.ToChangedEventArgs<Thickness>());
                 }));
         public event EventHandler<ChangedEventArgs<Thickness>> PaneBorderThicknessChanged;
+        partial void InternalPaneBorderThicknessChanged(ChangedEventArgs<Thickness> e);
+
 
         /// <summary>
         /// TODO: deprecate this
@@ -592,8 +683,11 @@ namespace Template10.Controls
                 {
                     Changed(nameof(HeaderContent), e);
                     (d as HamburgerMenu).HeaderContentChanged?.Invoke(d, e.ToChangedEventArgs<UIElement>());
+                    (d as HamburgerMenu).InternalHeaderContentChanged(e.ToChangedEventArgs<UIElement>());
                 }));
         public event EventHandler<ChangedEventArgs<UIElement>> HeaderContentChanged;
+        partial void InternalHeaderContentChanged(ChangedEventArgs<UIElement> e);
+
 
         /// <summary>
         /// The Hamburger Menu is made up of two parts, the navigation Pane that holds the hamburger buttons
@@ -611,8 +705,11 @@ namespace Template10.Controls
                 {
                     Changed(nameof(IsOpen), e);
                     (d as HamburgerMenu).IsOpenChanged?.Invoke(d, e.ToChangedEventArgs<bool>());
+                    (d as HamburgerMenu).InternalIsOpenChanged(e.ToChangedEventArgs<bool>());
                 }));
         public event EventHandler<ChangedEventArgs<bool>> IsOpenChanged;
+        partial void InternalIsOpenChanged(ChangedEventArgs<bool> e);
+
 
         /// <summary>
         /// SecondaryButtons are the button at the top of the HamburgerMenu
