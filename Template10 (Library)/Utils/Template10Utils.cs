@@ -20,13 +20,13 @@ namespace Template10.Utils
         public static async Task<bool> NavigateAsyncEx<T>(this Frame frame, T key, object parameter = null, NavigationTransitionInfo infoOverride = null) where T : struct, IConvertible
             => await frame.GetNavigationService().NavigateAsync(key, parameter, infoOverride);
 
-        public static WindowWrapper GetWindowWrapper(this NavigationService service)
+        public static IWindowWrapper GetWindowWrapper(this INavigationService service)
             => WindowWrapper.ActiveWrappers.FirstOrDefault(x => x.NavigationServices.Contains(service));
 
-        public static DispatcherWrapper GetDispatcherWrapper(this NavigationService service)
+        public static IDispatcherWrapper GetDispatcherWrapper(this INavigationService service)
             => service.GetWindowWrapper().Dispatcher;
 
-        public static DispatcherWrapper GetDispatcherWrapper(this CoreDispatcher wrapper) 
+        public static IDispatcherWrapper GetDispatcherWrapper(this CoreDispatcher wrapper) 
             => new DispatcherWrapper(wrapper);
     }
 }
