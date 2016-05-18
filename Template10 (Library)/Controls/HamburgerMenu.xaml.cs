@@ -413,10 +413,6 @@ namespace Template10.Controls
         {
             DebugWrite($"Manual: {manualFullScreen}, IsFullScreen: {IsFullScreen} DisplayMode: {DisplayMode}");
 
-            if (!IsFullScreen)
-            {
-                UpdateVisualStates();
-            }
 
             UpdateFullScreen(manualFullScreen);
         }
@@ -469,7 +465,7 @@ namespace Template10.Controls
             {
                 DisplayMode = VisualStateWideDisplayMode;
             }
-            IsOpen = DisplayMode.ToString().Contains("Overlay") ? false : true;
+            IsOpen = (DisplayMode == SplitViewDisplayMode.CompactInline) ? true : false;
         }
 
         #endregion

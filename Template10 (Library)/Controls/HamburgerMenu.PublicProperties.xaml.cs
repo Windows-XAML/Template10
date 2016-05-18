@@ -288,6 +288,7 @@ namespace Template10.Controls
             DependencyProperty.Register(nameof(VisualStateNarrowDisplayMode), typeof(SplitViewDisplayMode),
                 typeof(HamburgerMenu), new PropertyMetadata(SplitViewDisplayMode.Overlay, (d, e) =>
                 {
+                    (d as HamburgerMenu).UpdateVisualStates();
                     Changed(nameof(VisualStateNarrowDisplayMode), e);
                     (d as HamburgerMenu).VisualStateNarrowDisplayModeChanged?.Invoke(d, e.ToChangedEventArgs<SplitViewDisplayMode>());
                 }));
@@ -302,6 +303,7 @@ namespace Template10.Controls
             DependencyProperty.Register(nameof(VisualStateNormalDisplayMode), typeof(SplitViewDisplayMode),
                 typeof(HamburgerMenu), new PropertyMetadata(SplitViewDisplayMode.CompactOverlay, (d, e) =>
                 {
+                    (d as HamburgerMenu).UpdateVisualStates();
                     Changed(nameof(VisualStateNormalDisplayMode), e);
                     (d as HamburgerMenu).VisualStateNormalDisplayModeChanged?.Invoke(d, e.ToChangedEventArgs<SplitViewDisplayMode>());
                 }));
@@ -316,6 +318,7 @@ namespace Template10.Controls
             DependencyProperty.Register(nameof(VisualStateWideDisplayMode), typeof(SplitViewDisplayMode),
                 typeof(HamburgerMenu), new PropertyMetadata(SplitViewDisplayMode.CompactInline, (d, e) =>
                 {
+                    (d as HamburgerMenu).UpdateVisualStates();
                     Changed(nameof(VisualStateWideDisplayMode), e);
                     (d as HamburgerMenu).VisualStateWideDisplayModeChanged?.Invoke(d, e.ToChangedEventArgs<SplitViewDisplayMode>());
                 }));
