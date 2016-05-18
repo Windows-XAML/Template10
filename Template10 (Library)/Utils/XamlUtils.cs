@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -67,6 +68,8 @@ namespace Template10.Utils
             }
             return null;
         }
+
+        public static T FirstChild<T>(DependencyObject parent) where T : DependencyObject => AllChildren<T>(parent).FirstOrDefault();
 
         public static List<DependencyObject> AllChildren(this DependencyObject parent)
         {
