@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -103,6 +104,37 @@ namespace Template10.Utils
                 case ApplicationTheme.Dark:
                 default:
                     return ElementTheme.Dark;
+            }
+        }
+
+        public static T FirstDescendant<T>(this DependencyObject control) where T : DependencyObject
+        {
+            return control.Descendants().OfType<T>().FirstOrDefault();
+        }
+
+        public static IEnumerable<DependencyObject> Descendants(this DependencyObject control)
+        {
+            var queue = new Queue<DependencyObject>();
+            var count = VisualTreeHelper.GetChildrenCount(control);
+
+            for (int i = 0; i < count; i++)
+            {
+                var child = VisualTreeHelper.GetChild(control, i);
+                yield return child;
+                queue.Enqueue(child);
+            }
+
+            while (queue.Count > 0)
+            {
+                var parent = queue.Dequeue();
+                var count2 = VisualTreeHelper.GetChildrenCount(parent);
+
+                for (int i = 0; i < count2; i++)
+                {
+                    var child = VisualTreeHelper.GetChild(parent, i);
+                    yield return child;
+                    queue.Enqueue(child);
+                }
             }
         }
 
