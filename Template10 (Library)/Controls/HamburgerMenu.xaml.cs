@@ -456,20 +456,36 @@ namespace Template10.Controls
         // intended to be marshalled by UpdateControl()
         private void UpdateVisualStates()
         {
+            var newDisplayMode = DisplayMode;
+
             var state = VisualStateGroup.CurrentState ?? VisualStateNormal;
             if (state == VisualStateNarrow)
             {
-                DisplayMode = VisualStateNarrowDisplayMode;
+                newDisplayMode = VisualStateNarrowDisplayMode;
             }
             else if (state == VisualStateNormal)
             {
-                DisplayMode = VisualStateNormalDisplayMode;
+                newDisplayMode = VisualStateNormalDisplayMode;
             }
             else if (state == VisualStateWide)
             {
-                DisplayMode = VisualStateWideDisplayMode;
+                newDisplayMode = VisualStateWideDisplayMode;
             }
-            IsOpen = DisplayMode.ToString().Contains("Overlay") ? false : true;
+
+            if (DisplayMode != newDisplayMode)
+            {
+                DisplayMode = newDisplayMode;
+                switch (newDisplayMode)
+                {
+                    case SplitViewDisplayMode.Overlay:
+                    case SplitViewDisplayMode.CompactOverlay:
+                        IsOpen = false;
+                        break;
+                    default:
+                        IsOpen = true;
+                        break;
+                }
+            }
         }
 
         #endregion
@@ -483,6 +499,7 @@ namespace Template10.Controls
 
         Mvvm.DelegateCommand _hamburgerCommand;
         internal Mvvm.DelegateCommand HamburgerCommand => _hamburgerCommand ?? (_hamburgerCommand = new Mvvm.DelegateCommand(ExecuteHamburger));
+
         void ExecuteHamburger()
         {
             DebugWrite();
@@ -492,6 +509,7 @@ namespace Template10.Controls
 
         Mvvm.DelegateCommand<HamburgerButtonInfo> _navCommand;
         public Mvvm.DelegateCommand<HamburgerButtonInfo> NavCommand => _navCommand ?? (_navCommand = new Mvvm.DelegateCommand<HamburgerButtonInfo>(ExecuteNav));
+
         void ExecuteNav(HamburgerButtonInfo commandInfo)
         {
             DebugWrite($"HamburgerButtonInfo: {commandInfo}");
@@ -528,6 +546,7 @@ namespace Template10.Controls
                 FrameworkElement = sender as FrameworkElement;
                 HamburgerButtonInfo = FrameworkElement?.DataContext as HamburgerButtonInfo;
             }
+
             public T GetElement<T>() where T : DependencyObject => FrameworkElement as T;
 
             public void RefreshVisualState()
@@ -695,8 +714,7 @@ namespace Template10.Controls
 
             var escape = new Func<bool>(() =>
             {
-                if (DisplayMode == SplitViewDisplayMode.CompactOverlay
-                    || DisplayMode == SplitViewDisplayMode.Overlay)
+                if (DisplayMode == SplitViewDisplayMode.CompactOverlay || DisplayMode == SplitViewDisplayMode.Overlay)
                     IsOpen = false;
                 if (Equals(ShellSplitView.PanePlacement, SplitViewPanePlacement.Left))
                 {
@@ -766,8 +784,7 @@ namespace Template10.Controls
 
                 case VirtualKey.Right:
                 case VirtualKey.GamepadDPadRight:
-                    if (SecondaryButtonContainer.Items.Contains(currentItem?.DataContext)
-                        && SecondaryButtonOrientation == Orientation.Horizontal)
+                    if (SecondaryButtonContainer.Items.Contains(currentItem?.DataContext) && SecondaryButtonOrientation == Orientation.Horizontal)
                     {
                         if (Equals(lastItem.FrameworkElement, currentItem))
                         {
@@ -787,8 +804,7 @@ namespace Template10.Controls
                 case VirtualKey.Left:
                 case VirtualKey.GamepadDPadLeft:
 
-                    if (SecondaryButtonContainer.Items.Contains(currentItem?.DataContext)
-                       && SecondaryButtonOrientation == Orientation.Horizontal)
+                    if (SecondaryButtonContainer.Items.Contains(currentItem?.DataContext) && SecondaryButtonOrientation == Orientation.Horizontal)
                     {
                         if (Equals(lastItem.FrameworkElement, currentItem))
                         {
