@@ -280,6 +280,9 @@ namespace Template10.Controls
         partial void InternalHeaderContentChanged(ChangedEventArgs<UIElement> e) => UpdatePaneMarginToShowHamburgerButton();
         partial void InternalAccentColorChanged(ChangedEventArgs<Color> e) => RefreshStyles(e.NewValue);
         partial void InternalIsFullScreenChanged(ChangedEventArgs<bool> e) => UpdateControl(e.NewValue);
+        partial void InternalVisualStateNarrowDisplayModeChanged(ChangedEventArgs<SplitViewDisplayMode> e) => UpdateControl();
+        partial void InternalVisualStateNormalDisplayModeChanged(ChangedEventArgs<SplitViewDisplayMode> e) => UpdateControl();
+        partial void InternalVisualStateWideDisplayModeChanged(ChangedEventArgs<SplitViewDisplayMode> e) => UpdateControl();
 
         partial void InternalIsOpenChanged(ChangedEventArgs<bool> e)
         {
@@ -566,11 +569,6 @@ namespace Template10.Controls
         private void UpdateControl(bool? manualFullScreen = null)
         {
             DebugWrite($"Manual: {manualFullScreen}, IsFullScreen: {IsFullScreen} DisplayMode: {DisplayMode}");
-
-            if (!IsFullScreen)
-            {
-                UpdateVisualStates();
-            }
 
             UpdateFullScreen(manualFullScreen);
         }
