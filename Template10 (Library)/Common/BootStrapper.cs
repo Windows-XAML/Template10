@@ -694,14 +694,15 @@ namespace Template10.Common
             {
                 try
                 {
-                    var services = WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices);
+                    //allow only main view NavigationService as others won't be able to use Dispatcher and processing will stuck
+                    var services = WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices).Where(x=>x.IsInMainView);
                     foreach (INavigationService nav in services)
                     {
                         // date the cache (which marks the date/time it was suspended)
                         nav.FrameFacade.SetFrameState(CacheDateKey, DateTime.Now.ToString());
                         // call view model suspend (OnNavigatedfrom)
                         DebugWrite($"Nav.FrameId:{nav.FrameFacade.FrameId}", caller: nameof(nav.SuspendingAsync));
-                        await (nav as INavigationService).Dispatcher.DispatchAsync(async () => await nav.SuspendingAsync());
+                        await (nav as INavigationService).GetDispatcherWrapper().DispatchAsync(async () => await nav.SuspendingAsync());
                     }
 
                     // call system-level suspend

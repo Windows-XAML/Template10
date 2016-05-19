@@ -29,8 +29,6 @@
             <Style TargetType="controls:PageHeader">
                 <Setter Property="Background" Value="{ThemeResource CustomColorBrush}" />
                 <Setter Property="Foreground" Value="{ThemeResource ContrastColorBrush}" />
-                <Setter Property="VisualStateNarrowMinWidth" Value="{StaticResource NarrowMinWidth}" />
-                <Setter Property="VisualStateNormalMinWidth" Value="{StaticResource NormalMinWidth}" />
             </Style>
 
             <Style TargetType="controls:Resizer">

@@ -11,6 +11,7 @@ using Template10.Services.KeyboardService;
 using Template10.Services.NavigationService;
 using Template10.Utils;
 using Windows.Devices.Input;
+using Windows.Foundation;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Xaml;
@@ -25,8 +26,7 @@ namespace Template10.Controls
     [ContentProperty(Name = nameof(PrimaryButtons))]
     public sealed partial class HamburgerMenu : UserControl
     {
-        private const int squareWidth = 48;
-        private const int squareHeight = 48;
+        readonly Size square = new Size(48, 48);
         private delegate void PropertyChangeHandlerDelegate(DependencyPropertyChangedEventArgs e);
 
         #region Debug
@@ -46,16 +46,6 @@ namespace Template10.Controls
             }
             else
             {
-                // hamburger menu property changes
-                IsFullScreenChanged += HamburgerMenu_IsFullScreenChanged;
-                SelectedChanged += HamburgerMenu_SelectedChanged;
-                DisplayModeChanged += HamburgerMenu_DisplayModeChanged;
-                HamburgerButtonVisibilityChanged += HamburgerMenu_HamburgerButtonVisibilityChanged;
-                IsOpenChanged += HamburgerMenu_IsOpenChanged;
-                NavigationServiceChanged += HamburgerMenu_NavigationServiceChanged;
-                AccentColorChanged += HamburgerMenu_AccentColorChanged;
-                HeaderContentChanged += HamburgerMenu_HeaderContentChanged;
-
                 // default values;
                 PrimaryButtons = new ObservableCollection<HamburgerButtonInfo>();
                 SecondaryButtons = new ObservableCollection<HamburgerButtonInfo>();
@@ -89,7 +79,7 @@ namespace Template10.Controls
 
         }
 
-        private async void HamburgerMenu_Loaded(object sender, RoutedEventArgs args)
+        private void HamburgerMenu_Loaded(object sender, RoutedEventArgs args)
         {
             DebugWrite();
 
@@ -125,17 +115,217 @@ namespace Template10.Controls
             UpdateControl();
         }
 
+        // handle keyboard navigation (tabs and gamepad)
+        private void HamburgerMenu_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            var currentItem = FocusManager.GetFocusedElement() as FrameworkElement;
+            var lastItem = LoadedNavButtons.FirstOrDefault(x => x.HamburgerButtonInfo == (SecondaryButtons.LastOrDefault(a => a != Selected) ?? PrimaryButtons.LastOrDefault(a => a != Selected)));
+
+            var focus = new Func<FocusNavigationDirection, bool>(d =>
+            {
+                if (d == FocusNavigationDirection.Next)
+                {
+                    return FocusManager.TryMoveFocus(d);
+                }
+                else if (d == FocusNavigationDirection.Previous)
+                {
+                    return FocusManager.TryMoveFocus(d);
+                }
+                else
+                {
+                    var control = FocusManager.FindNextFocusableElement(d) as Control;
+                    return control?.Focus(FocusState.Programmatic) ?? false;
+                }
+            });
+
+            var escape = new Func<bool>(() =>
+            {
+                if (DisplayMode == SplitViewDisplayMode.CompactOverlay
+                    || DisplayMode == SplitViewDisplayMode.Overlay)
+                    IsOpen = false;
+                if (Equals(ShellSplitView.PanePlacement, SplitViewPanePlacement.Left))
+                {
+                    ShellSplitView.Content.RenderTransform = new TranslateTransform { X = 48 + ShellSplitView.OpenPaneLength };
+                    focus(FocusNavigationDirection.Right);
+                    ShellSplitView.Content.RenderTransform = null;
+                }
+                else
+                {
+                    ShellSplitView.Content.RenderTransform = new TranslateTransform { X = -48 - ShellSplitView.OpenPaneLength };
+                    focus(FocusNavigationDirection.Left);
+                    ShellSplitView.Content.RenderTransform = null;
+                }
+                return true;
+            });
+
+            var previous = new Func<bool>(() =>
+            {
+                if (Equals(currentItem, HamburgerButton))
+                {
+                    return true;
+                }
+                else if (focus(FocusNavigationDirection.Previous) || focus(FocusNavigationDirection.Up))
+                {
+                    return true;
+                }
+                else
+                {
+                    return escape();
+                }
+            });
+
+            var next = new Func<bool>(() =>
+            {
+                if (Equals(currentItem, HamburgerButton))
+                {
+                    return focus(FocusNavigationDirection.Down);
+                }
+                else if (focus(FocusNavigationDirection.Next) || focus(FocusNavigationDirection.Down))
+                {
+                    return true;
+                }
+                else
+                {
+                    return escape();
+                }
+            });
+
+            if (IsFullScreen)
+            {
+                return;
+            }
+
+            switch (e.Key)
+            {
+                case VirtualKey.Up:
+                case VirtualKey.GamepadDPadUp:
+
+                    if (!(e.Handled = previous())) Debugger.Break();
+                    break;
+
+                case VirtualKey.Down:
+                case VirtualKey.GamepadDPadDown:
+
+                    if (!(e.Handled = next())) Debugger.Break();
+                    break;
+
+                case VirtualKey.Right:
+                case VirtualKey.GamepadDPadRight:
+                    if (SecondaryButtonContainer.Items.Contains(currentItem?.DataContext)
+                        && SecondaryButtonOrientation == Orientation.Horizontal)
+                    {
+                        if (Equals(lastItem.FrameworkElement, currentItem))
+                        {
+                            if (!(e.Handled = escape())) Debugger.Break();
+                        }
+                        else
+                        {
+                            if (!(e.Handled = next())) Debugger.Break();
+                        }
+                    }
+                    else
+                    {
+                        if (!(e.Handled = escape())) Debugger.Break();
+                    }
+                    break;
+
+                case VirtualKey.Left:
+                case VirtualKey.GamepadDPadLeft:
+
+                    if (SecondaryButtonContainer.Items.Contains(currentItem?.DataContext)
+                       && SecondaryButtonOrientation == Orientation.Horizontal)
+                    {
+                        if (Equals(lastItem.FrameworkElement, currentItem))
+                        {
+                            if (!(e.Handled = escape())) Debugger.Break();
+                        }
+                        else
+                        {
+                            if (!(e.Handled = previous())) Debugger.Break();
+                        }
+                    }
+                    else
+                    {
+                        if (!(e.Handled = escape())) Debugger.Break();
+                    }
+                    break;
+
+                case VirtualKey.Space:
+                case VirtualKey.Enter:
+                case VirtualKey.GamepadA:
+
+                    var info = new InfoElement(currentItem);
+                    NavCommand.Execute(info?.HamburgerButtonInfo);
+                    break;
+
+                case VirtualKey.Escape:
+                case VirtualKey.GamepadB:
+
+                    if (!(e.Handled = escape())) Debugger.Break();
+                    break;
+            }
+        }
+
+        private void VisualStateGroup_CurrentStateChanged(object sender, VisualStateChangedEventArgs e)
+        {
+            UpdateVisualStates();
+            if (IsFullScreen)
+            {
+                UpdateFullScreen();
+            }
+        }
+
         #region property changed handlers
 
-        private void HamburgerMenu_HeaderContentChanged(object sender, ChangedEventArgs<UIElement> e) => UpdatePaneMarginToShowHamburgerButton();
-        private void HamburgerMenu_AccentColorChanged(object sender, ChangedEventArgs<Color> e) => RefreshStyles(e.NewValue);
-        private void HamburgerMenu_IsFullScreenChanged(object sender, ChangedEventArgs<bool> e) => UpdateControl(e.NewValue);
+        partial void InternalHeaderContentChanged(ChangedEventArgs<UIElement> e) => UpdatePaneMarginToShowHamburgerButton();
+        partial void InternalAccentColorChanged(ChangedEventArgs<Color> e) => RefreshStyles(e.NewValue);
+        partial void InternalIsFullScreenChanged(ChangedEventArgs<bool> e) => UpdateControl(e.NewValue);
+        partial void InternalVisualStateNarrowDisplayModeChanged(ChangedEventArgs<SplitViewDisplayMode> e) => UpdateControl();
+        partial void InternalVisualStateNormalDisplayModeChanged(ChangedEventArgs<SplitViewDisplayMode> e) => UpdateControl();
+        partial void InternalVisualStateWideDisplayModeChanged(ChangedEventArgs<SplitViewDisplayMode> e) => UpdateControl();
 
-        private void HamburgerMenu_IsOpenChanged(object sender, ChangedEventArgs<bool> e)
+        partial void InternalIsOpenChanged(ChangedEventArgs<bool> e)
         {
             UpdateIsPaneOpen(e.NewValue);
             UpdateHamburgerButtonGridWidthToFillAnyGap();
             UpdateControl();
+        }
+
+        partial void InternalDisplayModeChanged(ChangedEventArgs<SplitViewDisplayMode> e)
+        {
+            UpdateControl();
+            UpdateHamburgerButtonGridWidthToFillAnyGap();
+        }
+
+        partial void InternalHamburgerButtonVisibilityChanged(ChangedEventArgs<Visibility> e)
+        {
+            HamburgerButton.Visibility = e.NewValue;
+            UpdatePaneMarginToShowHamburgerButton();
+        }
+
+        async partial void InternalSelectedChanged(ChangedEventArgs<HamburgerButtonInfo> e)
+        {
+            if ((e.NewValue?.Equals(e.OldValue) ?? false))
+            {
+                e.NewValue.IsChecked = (e.NewValue.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
+            }
+
+            try
+            {
+                await UpdateSelectedAsync(e.OldValue, e.NewValue);
+            }
+            catch (Exception ex)
+            {
+                DebugWrite($"Catch Ex.Message: {ex.Message}", caller: "SelectedPropertyChanged");
+            }
+        }
+
+        partial void InternalNavigationServiceChanged(ChangedEventArgs<INavigationService> e)
+        {
+            e.NewValue.AfterRestoreSavedNavigation += (s, args) => HighlightCorrectButton(NavigationService.CurrentPageType, NavigationService.CurrentPageParam);
+            e.NewValue.FrameFacade.Navigated += (s, args) => HighlightCorrectButton(args.PageType, args.Parameter);
+            ShellSplitView.Content = e.NewValue.Frame;
+            UpdateFullScreenForSplashScreen(e);
         }
 
         private void SplitView_DisplayModeChanged(DependencyObject sender, DependencyProperty dp)
@@ -144,12 +334,6 @@ namespace Template10.Controls
             {
                 DisplayMode = ShellSplitView.DisplayMode;
             }
-        }
-
-        private void HamburgerMenu_DisplayModeChanged(object sender, ChangedEventArgs<SplitViewDisplayMode> e)
-        {
-            UpdateControl();
-            UpdateHamburgerButtonGridWidthToFillAnyGap();
         }
 
         private void SplitView_IsPaneOpenChanged(DependencyObject sender, DependencyProperty dp)
@@ -172,35 +356,12 @@ namespace Template10.Controls
             UpdateHamburgerButtonGridWidthToFillAnyGap();
         }
 
-        private void HamburgerMenu_HamburgerButtonVisibilityChanged(object sender, ChangedEventArgs<Visibility> e)
+        #endregion
+
+        #region update methods
+
+        private void UpdateFullScreenForSplashScreen(ChangedEventArgs<INavigationService> e)
         {
-            HamburgerButton.Visibility = e.NewValue;
-            UpdatePaneMarginToShowHamburgerButton();
-        }
-
-        private async void HamburgerMenu_SelectedChanged(object sender, ChangedEventArgs<HamburgerButtonInfo> e)
-        {
-            if ((e.NewValue?.Equals(e.OldValue) ?? false))
-            {
-                e.NewValue.IsChecked = (e.NewValue.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
-            }
-
-            try
-            {
-                await UpdateSelectedAsync(e.OldValue, e.NewValue);
-            }
-            catch (Exception ex)
-            {
-                DebugWrite($"Catch Ex.Message: {ex.Message}", caller: "SelectedPropertyChanged");
-            }
-        }
-
-        private void HamburgerMenu_NavigationServiceChanged(object sender, ChangedEventArgs<INavigationService> e)
-        {
-            e.NewValue.AfterRestoreSavedNavigation += (s, args) => HighlightCorrectButton(NavigationService.CurrentPageType, NavigationService.CurrentPageParam);
-            e.NewValue.FrameFacade.Navigated += (s, args) => HighlightCorrectButton(args.PageType, args.Parameter);
-            ShellSplitView.Content = e.NewValue.Frame;
-
             // If splash screen then continue showing until navigated once
             if (e.NewValue.FrameFacade.BackStackDepth == 0
                 && e.NewValue.Frame.Content != null
@@ -222,10 +383,6 @@ namespace Template10.Controls
                 };
             }
         }
-
-        #endregion
-
-        #region update methods
 
         internal void HighlightCorrectButton(Type pageType, object pageParam)
         {
@@ -320,11 +477,11 @@ namespace Template10.Controls
         {
             if (DisplayMode == SplitViewDisplayMode.Inline || DisplayMode == SplitViewDisplayMode.CompactInline)
             {
-                HamburgerButtonGridWidth = (IsOpen) ? ShellSplitView.OpenPaneLength : squareWidth;
+                HamburgerButtonGridWidth = (IsOpen) ? ShellSplitView.OpenPaneLength : square.Width;
             }
             else
             {
-                HamburgerButtonGridWidth = squareWidth;
+                HamburgerButtonGridWidth = square.Width;
             }
         }
 
@@ -336,7 +493,7 @@ namespace Template10.Controls
             }
             else
             {
-                PaneContent.Margin = new Thickness(0, squareHeight, 0, 0);
+                PaneContent.Margin = new Thickness(0, square.Height, 0, 0);
             }
         }
 
@@ -413,11 +570,6 @@ namespace Template10.Controls
         {
             DebugWrite($"Manual: {manualFullScreen}, IsFullScreen: {IsFullScreen} DisplayMode: {DisplayMode}");
 
-            if (!IsFullScreen)
-            {
-                UpdateVisualStates();
-            }
-
             UpdateFullScreen(manualFullScreen);
         }
 
@@ -438,7 +590,7 @@ namespace Template10.Controls
                 }
                 else
                 {
-                    Margin = new Thickness(-squareWidth, 0, 0, 0);
+                    Margin = new Thickness(-square.Width, 0, 0, 0);
                 }
             }
             else
@@ -456,20 +608,34 @@ namespace Template10.Controls
         // intended to be marshalled by UpdateControl()
         private void UpdateVisualStates()
         {
+            var mode = DisplayMode;
             var state = VisualStateGroup.CurrentState ?? VisualStateNormal;
             if (state == VisualStateNarrow)
             {
-                DisplayMode = VisualStateNarrowDisplayMode;
+                mode = VisualStateNarrowDisplayMode;
             }
             else if (state == VisualStateNormal)
             {
-                DisplayMode = VisualStateNormalDisplayMode;
+                mode = VisualStateNormalDisplayMode;
             }
             else if (state == VisualStateWide)
             {
-                DisplayMode = VisualStateWideDisplayMode;
+                mode = VisualStateWideDisplayMode;
             }
-            IsOpen = DisplayMode.ToString().Contains("Overlay") ? false : true;
+            if (DisplayMode != mode)
+            {
+                DisplayMode = mode;
+            }
+            switch (mode)
+            {
+                case SplitViewDisplayMode.Overlay:
+                case SplitViewDisplayMode.CompactOverlay:
+                    IsOpen = false;
+                    break;
+                default:
+                    IsOpen = true;
+                    break;
+            }
         }
 
         #endregion
@@ -669,165 +835,5 @@ namespace Template10.Controls
         }
 
         #endregion
-
-        // handle keyboard navigation (tabs and gamepad)
-        private void HamburgerMenu_KeyDown(object sender, KeyRoutedEventArgs e)
-        {
-            var currentItem = FocusManager.GetFocusedElement() as FrameworkElement;
-            var lastItem = LoadedNavButtons.FirstOrDefault(x => x.HamburgerButtonInfo == (SecondaryButtons.LastOrDefault(a => a != Selected) ?? PrimaryButtons.LastOrDefault(a => a != Selected)));
-
-            var focus = new Func<FocusNavigationDirection, bool>(d =>
-            {
-                if (d == FocusNavigationDirection.Next)
-                {
-                    return FocusManager.TryMoveFocus(d);
-                }
-                else if (d == FocusNavigationDirection.Previous)
-                {
-                    return FocusManager.TryMoveFocus(d);
-                }
-                else
-                {
-                    var control = FocusManager.FindNextFocusableElement(d) as Control;
-                    return control?.Focus(FocusState.Programmatic) ?? false;
-                }
-            });
-
-            var escape = new Func<bool>(() =>
-            {
-                if (DisplayMode == SplitViewDisplayMode.CompactOverlay
-                    || DisplayMode == SplitViewDisplayMode.Overlay)
-                    IsOpen = false;
-                if (Equals(ShellSplitView.PanePlacement, SplitViewPanePlacement.Left))
-                {
-                    ShellSplitView.Content.RenderTransform = new TranslateTransform { X = 48 + ShellSplitView.OpenPaneLength };
-                    focus(FocusNavigationDirection.Right);
-                    ShellSplitView.Content.RenderTransform = null;
-                }
-                else
-                {
-                    ShellSplitView.Content.RenderTransform = new TranslateTransform { X = -48 - ShellSplitView.OpenPaneLength };
-                    focus(FocusNavigationDirection.Left);
-                    ShellSplitView.Content.RenderTransform = null;
-                }
-                return true;
-            });
-
-            var previous = new Func<bool>(() =>
-            {
-                if (Equals(currentItem, HamburgerButton))
-                {
-                    return true;
-                }
-                else if (focus(FocusNavigationDirection.Previous) || focus(FocusNavigationDirection.Up))
-                {
-                    return true;
-                }
-                else
-                {
-                    return escape();
-                }
-            });
-
-            var next = new Func<bool>(() =>
-            {
-                if (Equals(currentItem, HamburgerButton))
-                {
-                    return focus(FocusNavigationDirection.Down);
-                }
-                else if (focus(FocusNavigationDirection.Next) || focus(FocusNavigationDirection.Down))
-                {
-                    return true;
-                }
-                else
-                {
-                    return escape();
-                }
-            });
-
-            if (IsFullScreen)
-            {
-                return;
-            }
-
-            switch (e.Key)
-            {
-                case VirtualKey.Up:
-                case VirtualKey.GamepadDPadUp:
-
-                    if (!(e.Handled = previous())) Debugger.Break();
-                    break;
-
-                case VirtualKey.Down:
-                case VirtualKey.GamepadDPadDown:
-
-                    if (!(e.Handled = next())) Debugger.Break();
-                    break;
-
-                case VirtualKey.Right:
-                case VirtualKey.GamepadDPadRight:
-                    if (SecondaryButtonContainer.Items.Contains(currentItem?.DataContext)
-                        && SecondaryButtonOrientation == Orientation.Horizontal)
-                    {
-                        if (Equals(lastItem.FrameworkElement, currentItem))
-                        {
-                            if (!(e.Handled = escape())) Debugger.Break();
-                        }
-                        else
-                        {
-                            if (!(e.Handled = next())) Debugger.Break();
-                        }
-                    }
-                    else
-                    {
-                        if (!(e.Handled = escape())) Debugger.Break();
-                    }
-                    break;
-
-                case VirtualKey.Left:
-                case VirtualKey.GamepadDPadLeft:
-
-                    if (SecondaryButtonContainer.Items.Contains(currentItem?.DataContext)
-                       && SecondaryButtonOrientation == Orientation.Horizontal)
-                    {
-                        if (Equals(lastItem.FrameworkElement, currentItem))
-                        {
-                            if (!(e.Handled = escape())) Debugger.Break();
-                        }
-                        else
-                        {
-                            if (!(e.Handled = previous())) Debugger.Break();
-                        }
-                    }
-                    else
-                    {
-                        if (!(e.Handled = escape())) Debugger.Break();
-                    }
-                    break;
-
-                case VirtualKey.Space:
-                case VirtualKey.Enter:
-                case VirtualKey.GamepadA:
-
-                    var info = new InfoElement(currentItem);
-                    NavCommand.Execute(info?.HamburgerButtonInfo);
-                    break;
-
-                case VirtualKey.Escape:
-                case VirtualKey.GamepadB:
-
-                    if (!(e.Handled = escape())) Debugger.Break();
-                    break;
-            }
-        }
-
-        private void VisualStateGroup_CurrentStateChanged(object sender, VisualStateChangedEventArgs e)
-        {
-            UpdateVisualStates();
-            if (IsFullScreen)
-            {
-                UpdateFullScreen();
-            }
-        }
     }
 }

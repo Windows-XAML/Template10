@@ -844,19 +844,20 @@
                                     <VisualState.StateTriggers>
                                         <AdaptiveTrigger x:Name="VisualStateNarrowTrigger" MinWindowWidth="{Binding VisualStateNarrowMinWidth, RelativeSource={RelativeSource TemplatedParent}}" />
                                     </VisualState.StateTriggers>
-                                    <VisualState.Setters>
+                                    <!--<VisualState.Setters>
                                         <Setter Target="Spacer.(UIElement.Visibility)" Value="Visible" />
                                         <Setter Target="ClipGeometryTransform.X" Value="{ThemeResource AppBarExpandButtonThemeWidth}" />
-                                    </VisualState.Setters>
+                                    </VisualState.Setters>-->
                                 </VisualState>
                                 <VisualState x:Name="VisualStateNormal">
                                     <VisualState.StateTriggers>
                                         <AdaptiveTrigger x:Name="VisualStateNormalTrigger" MinWindowWidth="{Binding VisualStateNormalMinWidth, RelativeSource={RelativeSource TemplatedParent}}" />
                                     </VisualState.StateTriggers>
-                                    <VisualState.Setters>
+                                    <!--<VisualState.Setters>
                                         <Setter Target="Spacer.(UIElement.Visibility)" Value="Collapsed" />
-                                    </VisualState.Setters>
+                                    </VisualState.Setters>-->
                                 </VisualState>
+                                <VisualState x:Name="VisualStateWide" />
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
 
@@ -957,10 +958,10 @@
                             <Rectangle x:Name="HighContrastBorder"
                                        Grid.ColumnSpan="2"
                                        VerticalAlignment="Stretch"
+                                       x:DeferLoadStrategy="Lazy"
                                        Stroke="{ThemeResource SystemControlForegroundTransparentBrush}"
                                        StrokeThickness="1"
-                                       Visibility="Collapsed"
-                                       x:DeferLoadStrategy="Lazy" />
+                                       Visibility="Collapsed" />
                             <Rectangle x:Name="Spacer"
                                        Width="48"
                                        Visibility="Collapsed" />

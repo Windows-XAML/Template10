@@ -40,10 +40,15 @@ namespace Sample.ViewModels
             get { return _settings.IsFullScreen; }
             set
             {
-                _settings.IsFullScreen = value; base.RaisePropertyChanged();
+                _settings.IsFullScreen = value;
+                base.RaisePropertyChanged();
                 if (value)
                 {
                     ShowHamburgerButton = false;
+                }
+                else
+                {
+                    ShowHamburgerButton = true;
                 }
             }
         }

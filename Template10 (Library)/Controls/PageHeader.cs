@@ -23,8 +23,6 @@ namespace Template10.Controls
     [ContentProperty(Name = nameof(PrimaryCommands))]
     public sealed class PageHeader : CommandBar
     {
-        private static long? callBackIsOpenId;
-        private static long? callBackDisplayModeId;
         public PageHeader()
         {
             DefaultStyleKey = typeof(PageHeader);
@@ -42,56 +40,54 @@ namespace Template10.Controls
 
         private void PageHeader_Loaded(object sender, RoutedEventArgs e)
         {
+            RegisterHamburgerMenuChanges();
+            UpdateSpacingToFitHamburgerMenu();
+        }
+
+        private void RegisterHamburgerMenuChanges()
+        {
             var hamburgerMenu = ParentHamburgerMenu;
-            RegisterHamburgerMenuChanges(hamburgerMenu);
-            UpdateMarginToFitHamburgerMenu(hamburgerMenu);
+            if (hamburgerMenu != null)
+            {
+                hamburgerMenu.IsOpenChanged += (s, e) => UpdateSpacingToFitHamburgerMenu();
+                hamburgerMenu.DisplayModeChanged += (s, e) => UpdateSpacingToFitHamburgerMenu();
+                hamburgerMenu.HamburgerButtonVisibilityChanged += (s, e) => UpdateSpacingToFitHamburgerMenu();
+            }
         }
 
-        private void RegisterHamburgerMenuChanges(HamburgerMenu hamburgerMenu)
+        private void UpdateSpacingToFitHamburgerMenu()
         {
-            hamburgerMenu = hamburgerMenu ?? ParentHamburgerMenu;
-            if (hamburgerMenu == null)
+            if (EnableHamburgerMenuAutoLayout)
             {
-                return;
-            }
-
-            hamburgerMenu.UnregisterPropertyChangedCallback(HamburgerMenu.IsOpenProperty, callBackIsOpenId ?? 0);
-            callBackIsOpenId = hamburgerMenu.RegisterPropertyChangedCallback(HamburgerMenu.IsOpenProperty, (obj, dp) => OnHamburgerMenuIsOpenPropertyChanged(obj as HamburgerMenu));
-
-            hamburgerMenu.UnregisterPropertyChangedCallback(HamburgerMenu.DisplayModeProperty, callBackDisplayModeId ?? 0);
-            callBackDisplayModeId = hamburgerMenu.RegisterPropertyChangedCallback(HamburgerMenu.DisplayModeProperty, (obj, dp) => OnHamburgerMenuDisplayModePropertyChanged(obj as HamburgerMenu));
-        }
-
-        private void UpdateMarginToFitHamburgerMenu(HamburgerMenu hamburgerMenu = null)
-        {
-            hamburgerMenu = hamburgerMenu ?? ParentHamburgerMenu;
-            if (hamburgerMenu == null)
-            {
-                Margin = new Thickness(0);
-                return;
-            }
-            switch (hamburgerMenu.DisplayMode)
-            {
-                case SplitViewDisplayMode.Overlay:
+                var hamburgerMenu = ParentHamburgerMenu;
+                if (hamburgerMenu == null)
+                {
+                    spacer.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    switch (hamburgerMenu.DisplayMode)
                     {
-                        var buttonVisible = hamburgerMenu.HamburgerButtonVisibility == Visibility.Visible;
-                        Margin = buttonVisible ? new Thickness(0) : new Thickness(48, 0, 0, 0);
+                        case SplitViewDisplayMode.Overlay:
+                            {
+                                var buttonVisible = hamburgerMenu.HamburgerButtonVisibility == Visibility.Visible;
+                                spacer.Visibility = buttonVisible ? Visibility.Visible : Visibility.Collapsed;
+                            }
+                            break;
+                        case SplitViewDisplayMode.Inline:
+                        case SplitViewDisplayMode.CompactOverlay:
+                        case SplitViewDisplayMode.CompactInline:
+                            {
+                                spacer.Visibility = Visibility.Collapsed;
+                            }
+                            break;
                     }
-                    break;
-                case SplitViewDisplayMode.Inline:
-                case SplitViewDisplayMode.CompactOverlay:
-                case SplitViewDisplayMode.CompactInline:
-                    {
-                        Margin = new Thickness(0);
-                    }
-                    break;
+                }
             }
         }
 
         private Page ParentPage => this.FirstAncestor<Page>();
         private HamburgerMenu ParentHamburgerMenu => ParentPage?.Frame?.FirstAncestor<HamburgerMenu>();
-        private void OnHamburgerMenuDisplayModePropertyChanged(HamburgerMenu hamburgerMenu) => UpdateMarginToFitHamburgerMenu(hamburgerMenu);
-        private void OnHamburgerMenuIsOpenPropertyChanged(HamburgerMenu hamburgerMenu) => UpdateMarginToFitHamburgerMenu(hamburgerMenu);
 
         public Behaviors.EllipsisBehavior.Visibilities EllipsisVisibility
         {
@@ -142,6 +138,15 @@ namespace Template10.Controls
                 d.SetValue(BackButtonContentProperty, Symbol.Forward);
         }
 
+        public bool EnableHamburgerMenuAutoLayout
+        {
+            get { return (bool)GetValue(EnableHamburgerMenuAutoLayoutProperty); }
+            set { SetValue(EnableHamburgerMenuAutoLayoutProperty, value); }
+        }
+        public static readonly DependencyProperty EnableHamburgerMenuAutoLayoutProperty =
+            DependencyProperty.Register(nameof(EnableHamburgerMenuAutoLayout), typeof(bool),
+                typeof(PageHeader), new PropertyMetadata(true));
+
         public double VisualStateNarrowMinWidth
         {
             get { return (double)GetValue(VisualStateNarrowMinWidthProperty); }
@@ -175,10 +180,12 @@ namespace Template10.Controls
         protected override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
+            spacer = GetTemplateChild("Spacer") as Rectangle;
             moreButton = GetTemplateChild("MoreButton") as Button;
         }
 
         private Button moreButton;
+        private Rectangle spacer;
         internal Button GetMoreButton() => moreButton;
     }
 }
