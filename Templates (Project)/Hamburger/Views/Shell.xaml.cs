@@ -36,7 +36,5 @@ namespace Sample.Views
             HamburgerMenu.IsFullScreen = _settings.IsFullScreen;
             HamburgerMenu.HamburgerButtonVisibility = _settings.ShowHamburgerButton ? Visibility.Visible : Visibility.Collapsed;
         }
-
-        public Template10.Services.ProfileService.ProfileService User => new Template10.Services.ProfileService.ProfileService();
     }
 }

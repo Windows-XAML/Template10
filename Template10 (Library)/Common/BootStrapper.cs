@@ -333,7 +333,9 @@ namespace Template10.Common
                 (ShowShellBackButton && (NavigationService.CanGoBack || ForceShowShellBackButton))
                     ? AppViewBackButtonVisibility.Visible
                     : AppViewBackButtonVisibility.Collapsed;
+            ShellBackButtonUpdated?.Invoke(this, EventArgs.Empty);
         }
+        public event EventHandler ShellBackButtonUpdated;
 
         // this event precedes the in-frame event by the same name
         public static event EventHandler<HandledEventArgs> ForwardRequested;
@@ -693,7 +695,7 @@ namespace Template10.Common
                 try
                 {
                     //allow only main view NavigationService as others won't be able to use Dispatcher and processing will stuck
-                    var services = WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices).Where(x=>x.IsInMainView);
+                    var services = WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices).Where(x => x.IsInMainView);
                     foreach (INavigationService nav in services)
                     {
                         // date the cache (which marks the date/time it was suspended)

@@ -48,8 +48,11 @@ namespace Template10.Behaviors
                     DetachAction = (i, w) => element.Click -= w.Handler,
                 }.Handler;
                 CalculateThrottled();
+                BootStrapper.Current.ShellBackButtonUpdated += Current_ShellBackButtonUpdated;
             }
         }
+
+        private void Current_ShellBackButtonUpdated(object sender, EventArgs e) => Calculate();
 
         public void Detach()
         {
@@ -61,6 +64,7 @@ namespace Template10.Behaviors
             }
             UnregisterPropertyChangedCallback(Frame.CanGoBackProperty, _goBackReg);
             UnregisterPropertyChangedCallback(Frame.CanGoForwardProperty, _goForwardReg);
+            BootStrapper.Current.ShellBackButtonUpdated += Current_ShellBackButtonUpdated;
         }
 
         volatile bool _letLayoutUpdatedInvoke = false;
