@@ -411,17 +411,17 @@ namespace Template10.Controls
             Selected = button;
         }
 
-        //async Task ResetValueAsync(DependencyProperty prop, object tempValue, int wait = 10)
-        //{
-        //    if (GetValue(prop) == DependencyProperty.UnsetValue)
-        //    {
-        //        return;
-        //    }
-        //    var original = GetValue(prop);
-        //    SetValue(prop, tempValue);
-        //    await Task.Delay(wait);
-        //    SetValue(prop, original);
-        //}
+        async Task ResetValueAsync(DependencyProperty prop, object tempValue, int wait = 50)
+        {
+            if (GetValue(prop) == DependencyProperty.UnsetValue)
+            {
+                return;
+            }
+            var original = GetValue(prop);
+            SetValue(prop, tempValue);
+            await Task.Delay(wait);
+            SetValue(prop, original);
+        }
 
         private void UpdateIsPaneOpen(bool open)
         {

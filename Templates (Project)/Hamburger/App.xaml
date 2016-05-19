@@ -2,10 +2,26 @@
                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                      xmlns:common="using:Template10.Common"
+                     xmlns:converter="using:Template10.Converters"
                      RequestedTheme="Light">
 
     <Application.Resources>
-        <ResourceDictionary Source="Styles\Custom.xaml" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles\Custom.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <converter:ValueWhenConverter x:Name="FalseWhenTrueConverter">
+                <converter:ValueWhenConverter.When>
+                    <x:Boolean>True</x:Boolean>
+                </converter:ValueWhenConverter.When>
+                <converter:ValueWhenConverter.Value>
+                    <x:Boolean>False</x:Boolean>
+                </converter:ValueWhenConverter.Value>
+                <converter:ValueWhenConverter.Otherwise>
+                    <x:Boolean>True</x:Boolean>
+                </converter:ValueWhenConverter.Otherwise>
+            </converter:ValueWhenConverter>
+        </ResourceDictionary>
     </Application.Resources>
 
 </common:BootStrapper>

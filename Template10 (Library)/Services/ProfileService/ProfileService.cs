@@ -22,7 +22,8 @@ namespace Template10.Services.ProfileService
                 var current = users.FirstOrDefault();
                 FirstName = await current.GetPropertyAsync(Windows.System.KnownUserProperties.FirstName) as string;
                 LastName = await current.GetPropertyAsync(Windows.System.KnownUserProperties.LastName) as string;
-                DisplayName = $"{FirstName} {LastName}";
+                var display = await current.GetPropertyAsync(Windows.System.KnownUserProperties.DisplayName) as string;
+                DisplayName = string.IsNullOrEmpty(display) ? $"{FirstName} {LastName}" : display;
             }
             catch (Exception)
             {
