@@ -1,0 +1,25 @@
+﻿<Page x:Class="Sample.Views.SupportPage"
+      xmlns:local="using:Sample.Views"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:controls="using:Template10.Controls"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d">
+
+    <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <controls:PageHeader x:Name="pageHeader"
+                             RelativePanel.AlignLeftWithPanel="True"
+                             RelativePanel.AlignRightWithPanel="True"
+                             RelativePanel.AlignTopWithPanel="True"
+                             Style="{ThemeResource PageHeaderStyle}"
+                             Text="Support Page" />
+
+        <TextBlock Margin="12,100,0,0"
+                   FontSize="24"
+                   Text="Page intentionally blank. Its sole purpose is to demo the operation of this sample app." />
+
+    </RelativePanel>
+
+</Page>
