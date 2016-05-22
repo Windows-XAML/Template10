@@ -3,8 +3,8 @@
   <Identity Name="6906cf59-d9f6-4de4-90fb-cd8b07875b8e" Publisher="CN=daren" Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="6906cf59-d9f6-4de4-90fb-cd8b07875b8e" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>Sample</DisplayName>
-    <PublisherDisplayName>Sample</PublisherDisplayName>
+    <DisplayName>Set DisplayName in AppxManifest/Packaging</DisplayName>
+    <PublisherDisplayName>Set PublisherName in AppxManifest/Packaging</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>

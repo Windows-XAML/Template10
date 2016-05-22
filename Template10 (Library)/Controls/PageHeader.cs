@@ -28,14 +28,66 @@ namespace Template10.Controls
             DefaultStyleKey = typeof(PageHeader);
 
             // behaviors
-            var b = new Behaviors.EllipsisBehavior();
-            RegisterPropertyChangedCallback(EllipsisVisibilityProperty, (s, e) => b.Visibility = EllipsisVisibility);
-            var c = new Microsoft.Xaml.Interactivity.BehaviorCollection();
-            c.Add(b);
-            SetValue(Microsoft.Xaml.Interactivity.Interaction.BehaviorsProperty, c);
+            var behavior = new Behaviors.EllipsisBehavior();
+            RegisterPropertyChangedCallback(EllipsisVisibilityProperty, (s, e) => behavior.Visibility = EllipsisVisibility);
+            var collection = new Microsoft.Xaml.Interactivity.BehaviorCollection();
+            collection.Add(behavior);
+            SetValue(Microsoft.Xaml.Interactivity.Interaction.BehaviorsProperty, collection);
 
             TabIndex = 5000;
+            Loaded += PageHeader_Loaded;
         }
+
+        private void PageHeader_Loaded(object sender, RoutedEventArgs e)
+        {
+            RegisterHamburgerMenuChanges();
+            UpdateSpacingToFitHamburgerMenu();
+        }
+
+        private void RegisterHamburgerMenuChanges()
+        {
+            var hamburgerMenu = ParentHamburgerMenu;
+            if (hamburgerMenu != null)
+            {
+                hamburgerMenu.IsOpenChanged += (s, e) => UpdateSpacingToFitHamburgerMenu();
+                hamburgerMenu.DisplayModeChanged += (s, e) => UpdateSpacingToFitHamburgerMenu();
+                hamburgerMenu.HamburgerButtonVisibilityChanged += (s, e) => UpdateSpacingToFitHamburgerMenu();
+            }
+        }
+
+        private void UpdateSpacingToFitHamburgerMenu()
+        {
+            if (EnableHamburgerMenuAutoLayout)
+            {
+                var hamburgerMenu = ParentHamburgerMenu;
+                if (hamburgerMenu == null)
+                {
+                    spacer.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    switch (hamburgerMenu.DisplayMode)
+                    {
+                        case SplitViewDisplayMode.Overlay:
+                            {
+                                var buttonVisible = hamburgerMenu.HamburgerButtonVisibility == Visibility.Visible;
+                                spacer.Visibility = buttonVisible ? Visibility.Visible : Visibility.Collapsed;
+                            }
+                            break;
+                        case SplitViewDisplayMode.Inline:
+                        case SplitViewDisplayMode.CompactOverlay:
+                        case SplitViewDisplayMode.CompactInline:
+                            {
+                                spacer.Visibility = Visibility.Collapsed;
+                            }
+                            break;
+                    }
+                }
+            }
+        }
+
+        private Page ParentPage => this.FirstAncestor<Page>();
+        private HamburgerMenu ParentHamburgerMenu => ParentPage?.Frame?.FirstAncestor<HamburgerMenu>();
 
         public Behaviors.EllipsisBehavior.Visibilities EllipsisVisibility
         {
@@ -86,6 +138,15 @@ namespace Template10.Controls
                 d.SetValue(BackButtonContentProperty, Symbol.Forward);
         }
 
+        public bool EnableHamburgerMenuAutoLayout
+        {
+            get { return (bool)GetValue(EnableHamburgerMenuAutoLayoutProperty); }
+            set { SetValue(EnableHamburgerMenuAutoLayoutProperty, value); }
+        }
+        public static readonly DependencyProperty EnableHamburgerMenuAutoLayoutProperty =
+            DependencyProperty.Register(nameof(EnableHamburgerMenuAutoLayout), typeof(bool),
+                typeof(PageHeader), new PropertyMetadata(true));
+
         public double VisualStateNarrowMinWidth
         {
             get { return (double)GetValue(VisualStateNarrowMinWidthProperty); }
@@ -93,7 +154,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty VisualStateNarrowMinWidthProperty =
             DependencyProperty.Register(nameof(VisualStateNarrowMinWidth), typeof(double),
-                typeof(PageHeader), new PropertyMetadata(-1));
+                typeof(PageHeader), new PropertyMetadata((double)-1));
 
         public double VisualStateNormalMinWidth
         {
@@ -102,7 +163,7 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty VisualStateNormalMinWidthProperty =
             DependencyProperty.Register(nameof(VisualStateNormalMinWidth), typeof(double),
-                typeof(PageHeader), new PropertyMetadata(0));
+                typeof(PageHeader), new PropertyMetadata(0d));
 
         public string Text
         {
@@ -114,5 +175,27 @@ namespace Template10.Controls
             {
                 (d as PageHeader).Content = e.NewValue;
             }));
+
+
+        protected override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+            spacer = GetTemplateChild<Rectangle>("Spacer");
+            moreButton = GetTemplateChild<Button>("MoreButton");
+        }
+
+        private T GetTemplateChild<T>(string name) where T : DependencyObject
+        {
+            var child = GetTemplateChild(name) as T;
+            if (child == null)
+            {
+                throw new Common.TemplatePartNotFoundException($"Control part {name} not found in Template.");
+            }
+            return child;
+        }
+
+        private Button moreButton;
+        private Rectangle spacer;
+        internal Button GetMoreButton() => moreButton;
     }
 }

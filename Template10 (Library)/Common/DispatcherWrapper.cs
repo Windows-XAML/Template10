@@ -89,13 +89,13 @@ namespace Template10.Common
             }
         }
 
-        public T Dispatch<T>(Func<T> action, int delayms = 0, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal) where T : class
+        public T Dispatch<T>(Func<T> action, int delayms = 0, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal) 
         {
             Task.Delay(delayms).Wait();
             if (dispatcher.HasThreadAccess && priority == CoreDispatcherPriority.Normal) { return action(); }
             else
             {
-                T result = null;
+                T result = default(T);
                 dispatcher.RunAsync(priority, () => result = action()).AsTask().Wait();
                 return result;
             }

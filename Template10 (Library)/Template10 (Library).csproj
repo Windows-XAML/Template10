@@ -173,16 +173,21 @@
     <Compile Include="Controls\PiePiece.cs" />
     <Compile Include="Controls\Resizer.cs" />
     <Compile Include="Controls\RingSegment.cs" />
+    <Compile Include="Common\TemplatePartNotFoundException.cs" />
     <Compile Include="Converters\ChangeTypeConverter.cs" />
     <Compile Include="Converters\DateTimeOffsetConverter.cs" />
     <Compile Include="Converters\StringFormatConverter.cs" />
     <Compile Include="Mvvm\AwaitableDelegateCommand.cs" />
     <Compile Include="Common\WeakReference.cs" />
     <Compile Include="Mvvm\DependencyBindableBase.cs" />
+    <Compile Include="Services\FileService\FileHelper.cs" />
+    <Compile Include="Services\FileService\IFileService.cs" />
     <Compile Include="Services\LoggingService\LoggingService.cs" />
     <Compile Include="Services\NavigationService\AlternativeNavigationEventArgs.cs" />
     <Compile Include="Services\NavigationService\INavigationService.cs" />
     <Compile Include="Services\NavigationService\NavigationServiceList.cs" />
+    <Compile Include="Services\PopupService\PopupService.cs" />
+    <Compile Include="Services\ProfileService\ProfileService.cs" />
     <Compile Include="Services\SerializationService\ISerializationService.cs" />
     <Compile Include="Services\SerializationService\JsonSerializationService.cs" />
     <Compile Include="Services\SerializationService\SerializationService.cs" />
@@ -236,22 +241,18 @@
     <Page Include="Themes\HamburgerMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="Themes\ModalDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="Themes\PageHeader.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="Themes\Resizer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -267,7 +268,7 @@
     <RunPostBuildEvent>Always</RunPostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>..\template10.snk</AssemblyOriginatorKeyFile>
@@ -279,7 +280,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>call "$(ProjectDir)\Nuget\Build.cmd" "$(TargetDir)" "$(TargetName)" "$(ProjectDir)"
-call "$(SolutionDir)\Snippets\InstallSnippets.cmd"</PostBuildEvent>
+call "$(SolutionDir)\Template10 (Installer)\InstallSnippets.cmd"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

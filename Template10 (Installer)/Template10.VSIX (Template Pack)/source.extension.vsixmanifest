@@ -11,7 +11,7 @@
     <PreviewImage>NuGetLogo.png</PreviewImage>
     <Tags>T10, Template 10, UWP, UAP, Windows app, Windows 10, XAML, WinRT</Tags>
   </Metadata>
-  <Installation>
+  <Installation AllUsers="true">
     <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[14.0]" />
   </Installation>
   <Dependencies>

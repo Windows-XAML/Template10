@@ -9,16 +9,25 @@ namespace Template10.Behaviors
 {
     public class MessageDialogAction : DependencyObject, IAction
     {
-        public object Execute(object sender, object parameter)
+        public object Execute(object sender, object parameter) => ExecuteAsync(sender, parameter);
+
+        Boolean busy = false;
+        public async Task ExecuteAsync(object sender, object parameter)
         {
-            var d = new ContentDialog { Title = Title, Content = Content, PrimaryButtonText = OkText };
-
-            Task.Run(async () =>
+            if (busy)
             {
+                return;
+            }
+            busy = true;
+            try
+            {
+                var d = new ContentDialog { Title = Title, Content = Content, PrimaryButtonText = OkText };
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () => await d.ShowAsync());
-            });
-
-            return this;
+            }
+            finally
+            {
+                busy = false;
+            }
         }
 
         public string Content

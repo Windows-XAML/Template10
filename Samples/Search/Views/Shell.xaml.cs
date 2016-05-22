@@ -79,8 +79,12 @@ namespace Template10.Samples.SearchSample.Views
             MyHamburgerMenu.NavigationService.Navigate(typeof(Views.DetailPage), item);
         }
 
+
         #endregion
 
-
+        private void Gallery_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            e.Handled = true;
+        }
     }
 }

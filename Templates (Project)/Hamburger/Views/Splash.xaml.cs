@@ -12,6 +12,7 @@ namespace Sample.Views
             InitializeComponent();
             Window.Current.SizeChanged += (s, e) => Resize(splashScreen);
             Resize(splashScreen);
+            Opacity = 0;
         }
 
         private void Resize(SplashScreen splashScreen)
@@ -31,6 +32,11 @@ namespace Sample.Views
             splashImage.SetValue(Canvas.TopProperty, splashScreen.ImageLocation.Top);
             splashImage.SetValue(Canvas.LeftProperty, splashScreen.ImageLocation.Left);
             ProgressTransform.TranslateY = splashImage.Height / 2;
+        }
+
+        private void Image_Loaded(object sender, RoutedEventArgs e)
+        {
+            Opacity = 1;
         }
     }
 }

@@ -135,5 +135,33 @@ namespace Template10.Controls
         public static readonly DependencyProperty InactiveForegroundColorProperty =
             DependencyProperty.Register(nameof(InactiveForegroundColor), typeof(Color), typeof(CustomTitleBar), new PropertyMetadata(null, (d, e) =>
             { (d as CustomTitleBar).InactiveForegroundColor = (Color)e.NewValue; }));
+
+        public static void Setup()
+        {
+            // this "unused" bit is very important because of a quirk in ResourceThemes
+            try
+            {
+                if (Application.Current.Resources.ContainsKey("ExtendedSplashBackground"))
+                {
+                    var unused = Application.Current.Resources["ExtendedSplashBackground"];
+                }
+            }
+            catch { /* this is okay */ }
+
+            // this wonky style of loop is important due to a platform bug
+            int count = Application.Current.Resources.Count;
+            foreach (var resource in Application.Current.Resources)
+            {
+                var k = resource.Key;
+                if (k == typeof(Controls.CustomTitleBar))
+                {
+                    var s = resource.Value as Style;
+                    var t = new Controls.CustomTitleBar();
+                    t.Style = s;
+                }
+                count--;
+                if (count == 0) break;
+            }
+        }
     }
 }

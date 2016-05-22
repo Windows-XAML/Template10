@@ -6,54 +6,48 @@ using Template10.Controls;
 using Template10.Common;
 using System;
 using System.Linq;
+using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Controls;
 
 namespace Sample
 {
     /// Documentation on APIs used in this page:
     /// https://github.com/Windows-XAML/Template10/wiki
 
-    sealed partial class App : Template10.Common.BootStrapper
+    [Bindable]
+    sealed partial class App : BootStrapper
     {
         public App()
         {
             InitializeComponent();
             SplashFactory = (e) => new Views.Splash(e);
 
-            #region App settings
-
-            var _settings = SettingsService.Instance;
-            RequestedTheme = _settings.AppTheme;
-            CacheMaxDuration = _settings.CacheMaxDuration;
-            ShowShellBackButton = _settings.UseShellBackButton;
+            #region app settings
+            
+            // some settings must be set in app.constructor
+            var settings = SettingsService.Instance;
+            RequestedTheme = settings.AppTheme;
+            CacheMaxDuration = settings.CacheMaxDuration;
+            ShowShellBackButton = settings.UseShellBackButton;
 
             #endregion
         }
 
-        public override async Task OnInitializeAsync(IActivatedEventArgs args)
+        public override UIElement CreateRootElement(IActivatedEventArgs e)
         {
-            if (Window.Current.Content as ModalDialog == null)
+            var service = NavigationServiceFactory(BackButton.Attach, ExistingContent.Exclude);
+            return new ModalDialog
             {
-                // create a new frame 
-                var nav = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include);
-
-                // create modal root
-                Window.Current.Content = new ModalDialog
-                {
-                    DisableBackButtonWhenModal = true,
-                    Content = new Views.Shell(nav),
-                    ModalContent = new Views.Busy(),
-                };
-            }
-            await Task.CompletedTask;
+                DisableBackButtonWhenModal = true,
+                Content = new Views.Shell(service),
+                ModalContent = new Views.Busy(),
+            };
         }
 
         public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
-            // long-running startup tasks go here
-            await Task.Delay(1000);
-
-            NavigationService.Navigate(typeof(Views.MainPage));
-            await Task.CompletedTask;
-        }       
+            // TODO: add your long-running task here
+            await NavigationService.NavigateAsync(typeof(Views.MainPage));
+        }
     }
 }

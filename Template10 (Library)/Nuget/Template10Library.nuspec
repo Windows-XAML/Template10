@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/01/nuspec.xsd">
   <metadata minClientVersion="3.0">
 
-    <version>1.1.9</version>
+    <version>1.1.11-preview-160518</version>
 
     <id>Template10</id>
 
@@ -41,6 +41,8 @@
     <language />
 
     <releaseNotes>
+      Version 1.1.10
+      Improved keyboard navigation, et al.
       Version 1.1.9
       Build 2016 design guidelines update.
       Updated NetCore to v5.1.0

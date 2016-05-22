@@ -23,7 +23,7 @@ namespace Template10.Controls
             set { SetValue(ButtonTypeProperty, value); }
         }
         public static readonly DependencyProperty ButtonTypeProperty =
-            DependencyProperty.Register(nameof(ButtonType), typeof(ButtonTypes), 
+            DependencyProperty.Register(nameof(ButtonType), typeof(ButtonTypes),
                 typeof(HamburgerButtonInfo), new PropertyMetadata(ButtonTypes.Toggle));
 
         public NavigationTransitionInfo NavigationTransitionInfo
@@ -32,7 +32,7 @@ namespace Template10.Controls
             set { SetValue(NavigationTransitionInfoProperty, value); }
         }
         public static readonly DependencyProperty NavigationTransitionInfoProperty =
-            DependencyProperty.Register(nameof(NavigationTransitionInfo), typeof(NavigationTransitionInfo), 
+            DependencyProperty.Register(nameof(NavigationTransitionInfo), typeof(NavigationTransitionInfo),
                 typeof(HamburgerButtonInfo), new PropertyMetadata(null));
 
         /// <summary>  
@@ -46,6 +46,15 @@ namespace Template10.Controls
         public static readonly DependencyProperty CommandProperty =
              DependencyProperty.Register(nameof(Command), typeof(ICommand),
              typeof(HamburgerButtonInfo), new PropertyMetadata(null));
+
+        public object ToolTip
+        {
+            get { return (object)GetValue(ToolTipProperty); }
+            set { SetValue(ToolTipProperty, value); }
+        }
+        public static readonly DependencyProperty ToolTipProperty =
+            DependencyProperty.Register(nameof(ToolTip), typeof(object), 
+                typeof(HamburgerButtonInfo), new PropertyMetadata(null));
 
         /// <summary>  
         /// Sets and gets the CommandParameter property.  
@@ -68,7 +77,7 @@ namespace Template10.Controls
             set { SetValue(PageTypeProperty, value); }
         }
         public static readonly DependencyProperty PageTypeProperty =
-            DependencyProperty.Register(nameof(PageType), typeof(Type), 
+            DependencyProperty.Register(nameof(PageType), typeof(Type),
                 typeof(HamburgerButtonInfo), new PropertyMetadata(null));
 
         /// <summary>
@@ -93,7 +102,20 @@ namespace Template10.Controls
             set { SetValue(ClearHistoryProperty, value); }
         }
         public static readonly DependencyProperty ClearHistoryProperty =
-            DependencyProperty.Register(nameof(ClearHistory), typeof(bool), 
+            DependencyProperty.Register(nameof(ClearHistory), typeof(bool),
+                typeof(HamburgerButtonInfo), new PropertyMetadata(false));
+
+        /// <summary>
+        /// Sets and gets the ClearCache property.
+        /// If true, navigation page cache is cleared when navigating to this page
+        /// </summary>
+        public bool ClearCache
+        {
+            get { return (bool)GetValue(ClearCacheProperty); }
+            set { SetValue(ClearCacheProperty, value); }
+        }
+        public static readonly DependencyProperty ClearCacheProperty =
+            DependencyProperty.Register(nameof(ClearCache), typeof(bool),
                 typeof(HamburgerButtonInfo), new PropertyMetadata(false));
 
         /// <summary>
@@ -128,7 +150,7 @@ namespace Template10.Controls
             set { SetValue(IsCheckedProperty, value); }
         }
         public static readonly DependencyProperty IsCheckedProperty =
-            DependencyProperty.Register(nameof(IsChecked), typeof(bool?),
+            DependencyProperty.Register(nameof(IsChecked), typeof(object),
                 typeof(HamburgerButtonInfo), new PropertyMetadata(false));
 
         public UIElement Content
