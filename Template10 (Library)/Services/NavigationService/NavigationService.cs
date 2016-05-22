@@ -85,6 +85,8 @@ namespace Template10.Services.NavigationService
             };
         }
 
+       
+
         private INavigable ResolveForPage(Page page)
         {
             if (!(page.DataContext is INavigable) | page.DataContext == null)
@@ -346,6 +348,7 @@ namespace Template10.Services.NavigationService
         }
 
         public void Refresh() { FrameFacadeInternal.Refresh(); }
+        public void Refresh(object param) { FrameFacadeInternal.Refresh(param); }
 
         public void GoBack() { if (FrameFacadeInternal.CanGoBack) FrameFacadeInternal.GoBack(); }
 
