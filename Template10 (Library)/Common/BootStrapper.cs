@@ -668,7 +668,7 @@ namespace Template10.Common
             if (args?.PrelaunchActivated ?? true)
             {
                 OnResuming(sender, e, AppExecutionState.Prelaunch);
-                var kind = args.PreviousExecutionState == ApplicationExecutionState.Running ? StartKind.Activate : StartKind.Launch;
+                var kind = args?.PreviousExecutionState == ApplicationExecutionState.Running ? StartKind.Activate : StartKind.Launch;
                 await CallOnStartAsync(false, kind);
                 ActivateWindow(ActivateWindowSources.Resuming);
             }
