@@ -313,7 +313,7 @@ namespace Template10.Services.NavigationService
                 throw new InvalidOperationException("State container is unexpectedly null");
             }
 
-            state.Write<string>("CurrentPageType", CurrentPageType.ToString());
+            state.Write<string>("CurrentPageType", CurrentPageType.AssemblyQualifiedName);
             state.Write<object>("CurrentPageParam", CurrentPageParam);
             state.Write<string>("NavigateState", FrameFacadeInternal?.GetNavigationState());
             await Task.CompletedTask;
