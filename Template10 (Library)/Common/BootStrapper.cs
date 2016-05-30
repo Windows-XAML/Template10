@@ -213,11 +213,11 @@ namespace Template10.Common
                     {
                         OnResuming(this, null, AppExecutionState.Terminated);
 
-						/*
+                        /*
                             Restore state if you need to/can do.
                             Remember that only the primary tile or when user has
-							switched to the app (for instance via the task switcher)
-							should restore. (this includes toast with no data payload)
+                            switched to the app (for instance via the task switcher)
+                            should restore. (this includes toast with no data payload)
                             The rest are already providing a nav path.
 
                             In the event that the cache has expired, attempting to restore
@@ -226,16 +226,16 @@ namespace Template10.Common
                         */
 
 						
-						if (EnableAutoRestoreAfterTerminated)
-						{
-							var launchedEvent = e as ILaunchActivatedEventArgs;
+                        if (EnableAutoRestoreAfterTerminated)
+                        {
+                            var launchedEvent = e as ILaunchActivatedEventArgs;
 
-							if(DetermineStartCause(e) == AdditionalKinds.Primary || launchedEvent?.TileId == "")
-							{
-								restored = await NavigationService.RestoreSavedNavigationAsync();
-								DebugWrite($"{nameof(restored)}:{restored}", caller: nameof(NavigationService.RestoreSavedNavigationAsync));
-							}
-						}
+                            if(DetermineStartCause(e) == AdditionalKinds.Primary || launchedEvent?.TileId == "")
+                            {
+                                restored = await NavigationService.RestoreSavedNavigationAsync();
+                                DebugWrite($"{nameof(restored)}:{restored}", caller: nameof(NavigationService.RestoreSavedNavigationAsync));
+                            }
+                        }
                         break;
                     }
                 case ApplicationExecutionState.ClosedByUser:
@@ -749,7 +749,6 @@ namespace Template10.Common
                 return AdditionalKinds.Toast;
             }
             var e = args as ILaunchActivatedEventArgs;
-			
             if (e?.TileId == DefaultTileID && string.IsNullOrEmpty(e?.Arguments))
             {
                 return AdditionalKinds.Primary;
