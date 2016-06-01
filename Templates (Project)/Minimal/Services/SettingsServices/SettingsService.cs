@@ -24,7 +24,6 @@ namespace Sample.Services.SettingsServices
                 {
                     BootStrapper.Current.ShowShellBackButton = value;
                     BootStrapper.Current.UpdateShellBackButton();
-                    BootStrapper.Current.NavigationService.Refresh();
                 });
             }
         }

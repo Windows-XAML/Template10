@@ -193,6 +193,38 @@ namespace Template10.Services.NavigationService
             }
         }
 
+        public void Refresh(object param)
+        {
+            DebugWrite();
+
+            
+            
+            try
+            {
+                Windows.ApplicationModel.Resources.Core.ResourceContext.GetForCurrentView().Reset();
+                // navigates to the current page with new parameters.
+                Frame.Navigate(CurrentPageType, param, new SuppressNavigationTransitionInfo());
+
+              
+            }
+            catch (Exception)
+            {
+                if (Frame.CanGoBack)
+                {
+                    Frame.GoBack();
+                }
+                else if (Frame.CanGoForward)
+                {
+                    Frame.GoForward();
+                }
+                else
+                {
+                    // not much we can really do in this case
+                    (Frame.Content as Page)?.UpdateLayout();
+                }
+            }
+        }
+
         public bool CanGoForward => Frame.CanGoForward;
 
         public void GoForward()

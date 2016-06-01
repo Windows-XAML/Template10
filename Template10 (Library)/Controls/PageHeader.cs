@@ -68,13 +68,13 @@ namespace Template10.Controls
                 {
                     switch (hamburgerMenu.DisplayMode)
                     {
+                        case SplitViewDisplayMode.Inline:
                         case SplitViewDisplayMode.Overlay:
                             {
                                 var buttonVisible = hamburgerMenu.HamburgerButtonVisibility == Visibility.Visible;
                                 spacer.Visibility = buttonVisible ? Visibility.Visible : Visibility.Collapsed;
                             }
                             break;
-                        case SplitViewDisplayMode.Inline:
                         case SplitViewDisplayMode.CompactOverlay:
                         case SplitViewDisplayMode.CompactInline:
                             {
@@ -180,8 +180,18 @@ namespace Template10.Controls
         protected override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            spacer = GetTemplateChild("Spacer") as Rectangle;
-            moreButton = GetTemplateChild("MoreButton") as Button;
+            spacer = GetTemplateChild<Rectangle>("Spacer");
+            moreButton = GetTemplateChild<Button>("MoreButton");
+        }
+
+        private T GetTemplateChild<T>(string name) where T : DependencyObject
+        {
+            var child = GetTemplateChild(name) as T;
+            if (child == null)
+            {
+                throw new Common.TemplatePartNotFoundException($"Control part {name} not found in Template.");
+            }
+            return child;
         }
 
         private Button moreButton;

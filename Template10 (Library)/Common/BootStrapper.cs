@@ -217,8 +217,9 @@ namespace Template10.Common
 
                         /*
                             Restore state if you need to/can do.
-                            Remember that only the primary tile should restore.
-                            (this includes toast with no data payload)
+                            Remember that only the primary tile or when user has
+                            switched to the app (for instance via the task switcher)
+                            should restore. (this includes toast with no data payload)
                             The rest are already providing a nav path.
 
                             In the event that the cache has expired, attempting to restore
@@ -226,10 +227,16 @@ namespace Template10.Common
                             This is okay & by design.
                         */
 
-                        if (EnableAutoRestoreAfterTerminated && DetermineStartCause(e) == AdditionalKinds.Primary)
+						
+                        if (EnableAutoRestoreAfterTerminated)
                         {
-                            restored = await NavigationService.RestoreSavedNavigationAsync();
-                            DebugWrite($"{nameof(restored)}:{restored}", caller: nameof(NavigationService.RestoreSavedNavigationAsync));
+                            var launchedEvent = e as ILaunchActivatedEventArgs;
+
+                            if(DetermineStartCause(e) == AdditionalKinds.Primary || launchedEvent?.TileId == "")
+                            {
+                                restored = await NavigationService.RestoreSavedNavigationAsync();
+                                DebugWrite($"{nameof(restored)}:{restored}", caller: nameof(NavigationService.RestoreSavedNavigationAsync));
+                            }
                         }
                         break;
                     }
@@ -335,7 +342,9 @@ namespace Template10.Common
                 (ShowShellBackButton && (NavigationService.CanGoBack || ForceShowShellBackButton))
                     ? AppViewBackButtonVisibility.Visible
                     : AppViewBackButtonVisibility.Collapsed;
+            ShellBackButtonUpdated?.Invoke(this, EventArgs.Empty);
         }
+        public event EventHandler ShellBackButtonUpdated;
 
         // this event precedes the in-frame event by the same name
         public static event EventHandler<HandledEventArgs> ForwardRequested;
@@ -670,7 +679,7 @@ namespace Template10.Common
             if (args?.PrelaunchActivated ?? true)
             {
                 OnResuming(sender, e, AppExecutionState.Prelaunch);
-                var kind = args.PreviousExecutionState == ApplicationExecutionState.Running ? StartKind.Activate : StartKind.Launch;
+                var kind = args?.PreviousExecutionState == ApplicationExecutionState.Running ? StartKind.Activate : StartKind.Launch;
                 await CallOnStartAsync(false, kind);
                 ActivateWindow(ActivateWindowSources.Resuming);
             }
@@ -695,7 +704,7 @@ namespace Template10.Common
                 try
                 {
                     //allow only main view NavigationService as others won't be able to use Dispatcher and processing will stuck
-                    var services = WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices).Where(x=>x.IsInMainView);
+                    var services = WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices).Where(x => x.IsInMainView);
                     foreach (INavigationService nav in services)
                     {
                         // date the cache (which marks the date/time it was suspended)
@@ -750,7 +759,7 @@ namespace Template10.Common
             {
                 return AdditionalKinds.JumpListItem;
             }
-            else if (e?.TileId != null && e?.TileId != DefaultTileID)
+            else if (!string.IsNullOrEmpty(e?.TileId) && e?.TileId != DefaultTileID)
             {
                 return AdditionalKinds.SecondaryTile;
             }

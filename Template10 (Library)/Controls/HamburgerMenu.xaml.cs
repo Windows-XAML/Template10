@@ -280,9 +280,9 @@ namespace Template10.Controls
         partial void InternalHeaderContentChanged(ChangedEventArgs<UIElement> e) => UpdatePaneMarginToShowHamburgerButton();
         partial void InternalAccentColorChanged(ChangedEventArgs<Color> e) => RefreshStyles(e.NewValue);
         partial void InternalIsFullScreenChanged(ChangedEventArgs<bool> e) => UpdateControl(e.NewValue);
-        partial void InternalVisualStateNarrowDisplayModeChanged(ChangedEventArgs<SplitViewDisplayMode> e) => UpdateControl();
-        partial void InternalVisualStateNormalDisplayModeChanged(ChangedEventArgs<SplitViewDisplayMode> e) => UpdateControl();
-        partial void InternalVisualStateWideDisplayModeChanged(ChangedEventArgs<SplitViewDisplayMode> e) => UpdateControl();
+        partial void InternalVisualStateNarrowDisplayModeChanged(ChangedEventArgs<SplitViewDisplayMode> e) => UpdateVisualStates();
+        partial void InternalVisualStateNormalDisplayModeChanged(ChangedEventArgs<SplitViewDisplayMode> e) => UpdateVisualStates();
+        partial void InternalVisualStateWideDisplayModeChanged(ChangedEventArgs<SplitViewDisplayMode> e) => UpdateVisualStates();
 
         partial void InternalIsOpenChanged(ChangedEventArgs<bool> e)
         {
@@ -411,17 +411,17 @@ namespace Template10.Controls
             Selected = button;
         }
 
-        //async Task ResetValueAsync(DependencyProperty prop, object tempValue, int wait = 10)
-        //{
-        //    if (GetValue(prop) == DependencyProperty.UnsetValue)
-        //    {
-        //        return;
-        //    }
-        //    var original = GetValue(prop);
-        //    SetValue(prop, tempValue);
-        //    await Task.Delay(wait);
-        //    SetValue(prop, original);
-        //}
+        async Task ResetValueAsync(DependencyProperty prop, object tempValue, int wait = 50)
+        {
+            if (GetValue(prop) == DependencyProperty.UnsetValue)
+            {
+                return;
+            }
+            var original = GetValue(prop);
+            SetValue(prop, tempValue);
+            await Task.Delay(wait);
+            SetValue(prop, original);
+        }
 
         private void UpdateIsPaneOpen(bool open)
         {
@@ -628,12 +628,11 @@ namespace Template10.Controls
             }
             switch (mode)
             {
-                case SplitViewDisplayMode.Overlay:
-                case SplitViewDisplayMode.CompactOverlay:
-                    IsOpen = false;
+                case SplitViewDisplayMode.CompactInline:
+                    IsOpen = true;
                     break;
                 default:
-                    IsOpen = true;
+                    IsOpen = false;
                     break;
             }
         }

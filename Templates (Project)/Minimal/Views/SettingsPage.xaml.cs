@@ -11,6 +11,7 @@ namespace Sample.Views
         public SettingsPage()
         {
             InitializeComponent();
+            NavigationCacheMode = NavigationCacheMode.Required;
             _SerializationService = Template10.Services.SerializationService.SerializationService.Json;
         }
 

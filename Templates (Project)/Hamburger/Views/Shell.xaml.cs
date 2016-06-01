@@ -36,40 +36,5 @@ namespace Sample.Views
             HamburgerMenu.IsFullScreen = _settings.IsFullScreen;
             HamburgerMenu.HamburgerButtonVisibility = _settings.ShowHamburgerButton ? Visibility.Visible : Visibility.Collapsed;
         }
-
-        public UserService User => new UserService();
-    }
-
-    public class UserService : BindableBase
-    {
-        public UserService()
-        {
-            StartAsync();
-        }
-
-        async void StartAsync()
-        {
-            try
-            {
-                var users = await Windows.System.User.FindAllAsync();
-                var current = users.FirstOrDefault();
-                FirstName = await current.GetPropertyAsync(Windows.System.KnownUserProperties.FirstName) as string;
-                LastName = await current.GetPropertyAsync(Windows.System.KnownUserProperties.LastName) as string;
-                DisplayName = $"{FirstName} {LastName}";
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
-        string _FirstName = "None";
-        public string FirstName { get { return _FirstName; } set { Set(ref _FirstName, value); } }
-
-        string _LastName = "None";
-        public string LastName { get { return _LastName; } set { Set(ref _LastName, value); } }
-
-        string _DisplayName = "None";
-        public string DisplayName { get { return _DisplayName; } set { Set(ref _DisplayName, value); } }
     }
 }
