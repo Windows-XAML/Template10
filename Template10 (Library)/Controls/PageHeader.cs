@@ -68,13 +68,13 @@ namespace Template10.Controls
                 {
                     switch (hamburgerMenu.DisplayMode)
                     {
+                        case SplitViewDisplayMode.Inline:
                         case SplitViewDisplayMode.Overlay:
                             {
                                 var buttonVisible = hamburgerMenu.HamburgerButtonVisibility == Visibility.Visible;
                                 spacer.Visibility = buttonVisible ? Visibility.Visible : Visibility.Collapsed;
                             }
                             break;
-                        case SplitViewDisplayMode.Inline:
                         case SplitViewDisplayMode.CompactOverlay:
                         case SplitViewDisplayMode.CompactInline:
                             {
