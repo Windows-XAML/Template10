@@ -28,7 +28,7 @@ namespace Template10.Common
 
         public bool HasThreadAccess() => dispatcher.HasThreadAccess;
 
-        private CoreDispatcher dispatcher;
+        private readonly CoreDispatcher dispatcher;
 
         public async Task DispatchAsync(Action action, int delayms = 0, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal)
         {
@@ -42,7 +42,7 @@ namespace Template10.Common
                     try { action(); tcs.TrySetResult(null); }
                     catch (Exception ex) { tcs.TrySetException(ex); }
                 });
-                await tcs.Task;
+                await tcs.Task.ConfigureAwait(false);
             }
         }
 
@@ -58,7 +58,7 @@ namespace Template10.Common
                     try { await func(); tcs.TrySetResult(null); }
                     catch (Exception ex) { tcs.TrySetException(ex); }
                 });
-                await tcs.Task;
+                await tcs.Task.ConfigureAwait(false);
             }
         }
 
@@ -74,8 +74,7 @@ namespace Template10.Common
                     try { tcs.TrySetResult(func()); }
                     catch (Exception ex) { tcs.TrySetException(ex); }
                 });
-                await tcs.Task;
-                return tcs.Task.Result;
+                return await tcs.Task.ConfigureAwait(false);
             }
         }
 
@@ -85,18 +84,18 @@ namespace Template10.Common
             if (dispatcher.HasThreadAccess && priority == CoreDispatcherPriority.Normal) { action(); }
             else
             {
-                dispatcher.RunAsync(priority, () => action()).AsTask().Wait();
+                dispatcher.RunAsync(priority, () => action()).AsTask().ConfigureAwait(false).GetAwaiter().GetResult();
             }
         }
 
-        public T Dispatch<T>(Func<T> action, int delayms = 0, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal) 
+        public T Dispatch<T>(Func<T> action, int delayms = 0, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal)
         {
             Task.Delay(delayms).Wait();
             if (dispatcher.HasThreadAccess && priority == CoreDispatcherPriority.Normal) { return action(); }
             else
             {
                 T result = default(T);
-                dispatcher.RunAsync(priority, () => result = action()).AsTask().Wait();
+                dispatcher.RunAsync(priority, () => result = action()).AsTask().ConfigureAwait(false).GetAwaiter().GetResult();
                 return result;
             }
         }
@@ -111,7 +110,7 @@ namespace Template10.Common
                 try { action(); tcs.TrySetResult(null); }
                 catch (Exception ex) { tcs.TrySetException(ex); }
             });
-            await tcs.Task;
+            await tcs.Task.ConfigureAwait(false);
         }
 
         public async Task DispatchIdleAsync(Func<Task> func, int delayms = 0)
@@ -124,7 +123,7 @@ namespace Template10.Common
                 try { await func(); tcs.TrySetResult(null); }
                 catch (Exception ex) { tcs.TrySetException(ex); }
             });
-            await tcs.Task;
+            await tcs.Task.ConfigureAwait(false);
         }
 
         public async Task<T> DispatchIdleAsync<T>(Func<T> func, int delayms = 0)
@@ -137,15 +136,14 @@ namespace Template10.Common
                 try { tcs.TrySetResult(func()); }
                 catch (Exception ex) { tcs.TrySetException(ex); }
             });
-            await tcs.Task;
-            return tcs.Task.Result;
+            return await tcs.Task.ConfigureAwait(false);
         }
 
         public async void DispatchIdle(Action action, int delayms = 0)
         {
             await Task.Delay(delayms);
 
-            dispatcher.RunIdleAsync(delegate { action(); }).AsTask().Wait();
+            dispatcher.RunIdleAsync(delegate { action(); }).AsTask().ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         public T DispatchIdle<T>(Func<T> action, int delayms = 0) where T : class
@@ -153,7 +151,7 @@ namespace Template10.Common
             Task.Delay(delayms).Wait();
 
             T result = null;
-            dispatcher.RunIdleAsync(delegate { result = action(); }).AsTask().Wait();
+            dispatcher.RunIdleAsync(delegate { result = action(); }).AsTask().ConfigureAwait(false).GetAwaiter().GetResult();
             return result;
         }
     }
