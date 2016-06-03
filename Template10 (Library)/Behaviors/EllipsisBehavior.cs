@@ -30,7 +30,7 @@ namespace Template10.Behaviors
         public void Detach()
         {
             commandBar.Loaded -= CommandBar_Loaded;
-            commandBar.LayoutUpdated += CommandBar_LayoutUpdated;
+            commandBar.LayoutUpdated -= CommandBar_LayoutUpdated;
             commandBar.PrimaryCommands.VectorChanged -= Commands_VectorChanged;
             commandBar.SecondaryCommands.VectorChanged -= Commands_VectorChanged;
         }
