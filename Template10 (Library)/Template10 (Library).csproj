@@ -179,7 +179,9 @@
     <Compile Include="Converters\StringFormatConverter.cs" />
     <Compile Include="Mvvm\AwaitableDelegateCommand.cs" />
     <Compile Include="Common\WeakReference.cs" />
+    <Compile Include="Mvvm\ChangedCommandAdapter.cs" />
     <Compile Include="Mvvm\DependencyBindableBase.cs" />
+    <Compile Include="Mvvm\IChangedCommand.cs" />
     <Compile Include="Services\FileService\FileHelper.cs" />
     <Compile Include="Services\FileService\IFileService.cs" />
     <Compile Include="Services\LoggingService\LoggingService.cs" />

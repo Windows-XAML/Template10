@@ -28,6 +28,10 @@ namespace Template10.Services.NavigationService
 
         void Refresh();
 
+        void Refresh(object param);
+
+       
+
         Task OpenAsync(Type page, object parameter = null, string title = null, ViewSizePreference size = ViewSizePreference.UseHalf);
 
         object CurrentPageParam { get; }
