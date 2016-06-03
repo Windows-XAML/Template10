@@ -56,11 +56,23 @@ namespace Template10.Services.NavigationService
                 if (e.Suspending)
                     return;
 
-                // allow the viewmodel to cancel navigation
-                e.Cancel = !(await NavigatingFromAsync(false, e.NavigationMode));
-                if (!e.Cancel)
+                var page = FrameFacadeInternal.Content as Page;
+                if (page != null)
                 {
-                    await NavigateFromAsync(false);
+                    // force (x:bind) page bindings to update
+                    XamlUtils.UpdateBindings(page);
+
+                    // call navagable override (navigating)
+                    var dataContext = ResolveForPage(page);
+                    if (dataContext != null)
+                    {
+                        // allow the viewmodel to cancel navigation
+                        e.Cancel = !(await NavigatingFromAsync(page, dataContext, false, e.NavigationMode));
+                        if (!e.Cancel)
+                        {
+                            await NavigateFromAsync(page, dataContext, false);
+                        }
+                    }
                 }
             };
             FrameFacadeInternal.Navigated += async (s, e) =>
@@ -103,58 +115,38 @@ namespace Template10.Services.NavigationService
         }
 
         // before navigate (cancellable)
-        async Task<bool> NavigatingFromAsync(bool suspending, NavigationMode mode)
+        async Task<bool> NavigatingFromAsync(Page page, INavigable dataContext, bool suspending, NavigationMode mode)
         {
             DebugWrite($"Suspending: {suspending}");
 
-            var page = FrameFacadeInternal.Content as Page;
-            if (page != null)
-            {
-                // force (x:bind) page bindings to update
-                XamlUtils.UpdateBindings(page);
+            dataContext.NavigationService = this;
+            dataContext.Dispatcher = this.GetDispatcherWrapper();
+            dataContext.SessionState = BootStrapper.Current.SessionState;
 
-                // call navagable override (navigating)
-                var dataContext = ResolveForPage(page);
-                if (dataContext != null)
-                {
-                    dataContext.NavigationService = this;
-                    dataContext.Dispatcher = this.GetDispatcherWrapper();
-                    dataContext.SessionState = BootStrapper.Current.SessionState;
-                    var deferral = new DeferralManager();
-                    var args = new NavigatingEventArgs(deferral)
-                    {
-                        NavigationMode = mode,
-                        PageType = FrameFacadeInternal.CurrentPageType,
-                        Parameter = FrameFacadeInternal.CurrentPageParam,
-                        Suspending = suspending,
-                    };
-                    await deferral.WaitForDeferralsAsync();
-                    await dataContext.OnNavigatingFromAsync(args);
-                    return !args.Cancel;
-                }
-            }
-            return true;
+            var deferral = new DeferralManager();
+            var args = new NavigatingEventArgs(deferral)
+            {
+                NavigationMode = mode,
+                PageType = FrameFacadeInternal.CurrentPageType,
+                Parameter = FrameFacadeInternal.CurrentPageParam,
+                Suspending = suspending,
+            };
+            await deferral.WaitForDeferralsAsync();
+            await dataContext.OnNavigatingFromAsync(args);
+            return !args.Cancel;
         }
 
         // after navigate
-        async Task NavigateFromAsync(bool suspending)
+        async Task NavigateFromAsync(Page page, INavigable dataContext, bool suspending)
         {
             DebugWrite($"Suspending: {suspending}");
 
-            var page = FrameFacadeInternal.Content as Page;
-            if (page != null)
-            {
-                // call viewmodel
-                var dataContext = ResolveForPage(page);
-                if (dataContext != null)
-                {
-                    dataContext.NavigationService = this;
-                    dataContext.Dispatcher = this.GetDispatcherWrapper();
-                    dataContext.SessionState = BootStrapper.Current.SessionState;
-                    var pageState = FrameFacadeInternal.PageStateSettingsService(page.GetType()).Values;
-                    await dataContext.OnNavigatedFromAsync(pageState, suspending);
-                }
-            }
+            dataContext.NavigationService = this;
+            dataContext.Dispatcher = this.GetDispatcherWrapper();
+            dataContext.SessionState = BootStrapper.Current.SessionState;
+
+            var pageState = FrameFacadeInternal.PageStateSettingsService(page.GetType()).Values;
+            await dataContext.OnNavigatedFromAsync(pageState, suspending);
         }
 
         async Task NavigateToAsync(NavigationMode mode, object parameter, object frameContent = null)
@@ -176,7 +168,6 @@ namespace Template10.Services.NavigationService
                 }
 
                 var dataContext = ResolveForPage(page);
-
                 if (dataContext != null)
                 {
                     // prepare for state load
@@ -388,7 +379,16 @@ namespace Template10.Services.NavigationService
             DebugWrite($"Frame: {FrameFacadeInternal.FrameId}");
 
             await SaveNavigationAsync();
-            await NavigateFromAsync(true);
+
+            var page = FrameFacadeInternal.Content as Page;
+            if (page != null)
+            {
+                var dataContext = ResolveForPage(page);
+                if (dataContext != null)
+                {
+                    await NavigateFromAsync(page, dataContext, true);
+                }
+            }
         }
 
         public Type CurrentPageType => FrameFacadeInternal.CurrentPageType;
