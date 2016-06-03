@@ -1,0 +1,129 @@
+﻿<Page x:Class="Sample.Views.Shell"
+      xmlns:local="using:Sample.Views"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:Controls="using:Template10.Controls"
+      xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+      xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:views="using:Sample.Views"
+      mc:Ignorable="d">
+
+    <Controls:HamburgerMenu x:Name="MyHamburgerMenu"
+                            IsFullScreen="False"
+                            SecondaryButtonOrientation="Horizontal"
+                            Style="{ThemeResource HamburgerMenuStyle}">
+
+        <Controls:HamburgerMenu.PrimaryButtons>
+            <!--  mainpage button  -->
+            <Controls:HamburgerButtonInfo AutomationProperties.Name="Jerry"
+                                          ClearHistory="True"
+                                          PageType="views:MainPage">
+                <StackPanel Orientation="Horizontal">
+                    <SymbolIcon Width="48"
+                                Height="48"
+                                Symbol="Home" />
+                    <TextBlock Margin="12,0,0,0"
+                               VerticalAlignment="Center"
+                               Text="Home" />
+                </StackPanel>
+            </Controls:HamburgerButtonInfo>
+
+            <!--  mainpage button  -->
+            <Controls:HamburgerButtonInfo AutomationProperties.Name="Jerry"
+                                          ClearHistory="True"
+                                          PageType="views:DetailPage">
+                <StackPanel Orientation="Horizontal">
+                    <SymbolIcon Width="48"
+                                Height="48"
+                                Symbol="List" />
+                    <TextBlock Margin="12,0,0,0"
+                               VerticalAlignment="Center"
+                               Text="Detail Page" />
+                </StackPanel>
+            </Controls:HamburgerButtonInfo>
+
+        </Controls:HamburgerMenu.PrimaryButtons>
+
+        <Controls:HamburgerMenu.SecondaryButtons>
+
+            <Controls:HamburgerButtonInfo MaxWidth="{x:Bind SecondaryButtonsMaxWidth, Mode=OneWay}"
+                                          PageParameter="Contents"
+                                          PageType="views:HelpPage"
+                                          ToolTipService.ToolTip="Help">
+                <StackPanel Orientation="Horizontal">
+                    <SymbolIcon Width="48"
+                                Height="48"
+                                Symbol="Help" />
+
+                    <!--  the following line commented out for horizontal  -->
+                    <TextBlock Margin="12,0,0,0"
+                               VerticalAlignment="Center"
+                               Text="Help" />
+                </StackPanel>
+
+
+            </Controls:HamburgerButtonInfo>
+
+            <!--  feedback button  -->
+            <Controls:HamburgerButtonInfo MaxWidth="{x:Bind SecondaryButtonsMaxWidth, Mode=OneWay}"
+                                          PageParameter="0"
+                                          PageType="views:SupportPage"
+                                          ToolTipService.ToolTip="Support">
+
+                <Controls:HamburgerButtonInfo.NavigationTransitionInfo>
+                    <SuppressNavigationTransitionInfo />
+                </Controls:HamburgerButtonInfo.NavigationTransitionInfo>
+
+                <StackPanel Orientation="Horizontal">
+
+                    <SymbolIcon Width="48"
+                                Height="48"
+                                Symbol="People" />
+                    <TextBlock Margin="12,0,0,0"
+                               VerticalAlignment="Center"
+                               Text="Support" />
+                </StackPanel>
+            </Controls:HamburgerButtonInfo>
+
+            <!--  spacer dummy button  -->
+            <Controls:HamburgerButtonInfo MaxWidth="72" IsEnabled="False">
+
+                <StackPanel Opacity="0" Orientation="Horizontal">
+                    <SymbolIcon Width="48"
+                                Height="48"
+                                Symbol="Setting" />
+                    <TextBlock Margin="12,0,0,0"
+                               VerticalAlignment="Center"
+                               Text="" />
+                </StackPanel>
+
+            </Controls:HamburgerButtonInfo>
+
+            <!--  settingspage button  -->
+
+            <Controls:HamburgerButtonInfo x:Name="SettingsButton"
+                                          MaxWidth="{x:Bind SecondaryButtonsMaxWidth, Mode=OneWay}"
+                                          PageParameter="0"
+                                          PageType="views:SettingsPage"
+                                          ToolTipService.ToolTip="Settings">
+                <Controls:HamburgerButtonInfo.NavigationTransitionInfo>
+                    <SuppressNavigationTransitionInfo />
+                </Controls:HamburgerButtonInfo.NavigationTransitionInfo>
+
+                <StackPanel Orientation="Horizontal">
+                    <SymbolIcon Width="48"
+                                Height="48"
+                                Symbol="Setting" />
+                    <TextBlock Margin="12,0,0,0"
+                               VerticalAlignment="Center"
+                               Text="Settings" />
+                </StackPanel>
+
+            </Controls:HamburgerButtonInfo>
+        </Controls:HamburgerMenu.SecondaryButtons>
+
+    </Controls:HamburgerMenu>
+
+</Page>
