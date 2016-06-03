@@ -85,7 +85,7 @@
             <Run Text="Current theme setting will be saved and restored on next app session. " />
             <LineBreak />
             <LineBreak />
-            <Run Text="The 'Checked Button Indicator Line' (CBIL ?) also works as well with dynamic update. It's currently set to Transparent but you can change it in Custom.xaml. " />
+            <Run Text="The 'Checked Button Indicator Line' (CBIL ?) also updates dynamically as the rest of the menu components. In fact, you can choose CBIL as an option under settings menu. Try it!" />
         </TextBlock>
 
 
