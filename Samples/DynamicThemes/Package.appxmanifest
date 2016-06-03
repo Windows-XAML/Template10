@@ -4,7 +4,7 @@
   <mp:PhoneIdentity PhoneProductId="de8f2980-d6f2-4f42-9acf-37d7e9d30702" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Dynamic Themes</DisplayName>
-    <PublisherDisplayName>dg2k</PublisherDisplayName>
+    <PublisherDisplayName>Jerry</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>
