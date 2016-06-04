@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Template10.Utils;
 using Windows.ApplicationModel.Activation;
 
 namespace Template10.Samples.PageKeysSample
@@ -11,21 +12,19 @@ namespace Template10.Samples.PageKeysSample
             InitializeComponent();
         }
 
-        public enum Pages { MainPage, DetailPage, AboutPage }
+        public enum Pages
+        {
+            MainPage,
+            DetailPage,
+            AboutPage
+        }
 
         public override async Task OnInitializeAsync(IActivatedEventArgs args)
         {
             var keys = PageKeys<Pages>();
-            var add = new Action<Pages, Type>((p, t) =>
-            {
-                if (!keys.ContainsKey(p))
-                {
-                    keys.Add(p, t);
-                }
-            });
-            add(Pages.MainPage, null);
-            add(Pages.DetailPage, null);
-            add(Pages.AboutPage, null);
+            keys.TryAdd(Pages.MainPage, typeof(Views.MainPage));
+            keys.TryAdd(Pages.DetailPage, null);
+            keys.TryAdd(Pages.AboutPage, null);
             await Task.CompletedTask;
         }
 
