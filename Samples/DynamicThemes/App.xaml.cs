@@ -16,7 +16,6 @@ namespace Sample
         public App()
         {
             InitializeComponent();
-            SplashFactory = (e) => new Views.Splash(e);
 
             #region App settings
 
@@ -28,31 +27,20 @@ namespace Sample
             #endregion
         }
 
-        public override async Task OnInitializeAsync(IActivatedEventArgs args)
+        public override UIElement CreateRootElement(IActivatedEventArgs e)
         {
-            if (Window.Current.Content as ModalDialog == null)
+            var service = NavigationServiceFactory(BackButton.Attach, ExistingContent.Exclude);
+            return new ModalDialog
             {
-                // create a new frame 
-                var nav = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include);
-
-                // create modal root
-                Window.Current.Content = new ModalDialog
-                {
-                    DisableBackButtonWhenModal = true,
-                    Content = new Views.Shell(nav),
-                    ModalContent = new Views.Busy(),
-                };
-            }
-            await Task.CompletedTask;
+                DisableBackButtonWhenModal = true,
+                Content = new Views.Shell(service),
+                ModalContent = new Views.Busy(),
+            };
         }
 
         public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
-            // long-running startup tasks go here
-            await Task.Delay(500);
-
-            NavigationService.Navigate(typeof(Views.MainPage));
-            await Task.CompletedTask;
+            await NavigationService.NavigateAsync(typeof(Views.MainPage));
         }
     }
 }
