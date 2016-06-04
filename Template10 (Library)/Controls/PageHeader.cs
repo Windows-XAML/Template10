@@ -57,6 +57,10 @@ namespace Template10.Controls
 
         private void UpdateSpacingToFitHamburgerMenu()
         {
+            if (spacer == null)
+            {
+                return;
+            }
             if (EnableHamburgerMenuAutoLayout)
             {
                 var hamburgerMenu = ParentHamburgerMenu;
