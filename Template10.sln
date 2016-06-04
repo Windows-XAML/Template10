@@ -45,7 +45,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BottomAppBar", "Samples\Bot
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Behaviors", "Samples\BehaviorSample\Behaviors.csproj", "{9CF86270-F587-4828-BC6B-14BEAA4FB56E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusyIndicatorControl", "Samples\BusyIndicatorControl\BusyIndicatorControl.csproj", "{4ABC9BD1-DEFE-4092-9DCC-ADC0CB567338}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModalDialog", "Samples\BusyIndicatorControl\ModalDialog.csproj", "{4ABC9BD1-DEFE-4092-9DCC-ADC0CB567338}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Validation", "Samples\Validation\Validation.csproj", "{AAE53064-C591-43FB-A8BE-9FED2104B98F}"
 EndProject

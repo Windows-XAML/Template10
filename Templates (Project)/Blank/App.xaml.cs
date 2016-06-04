@@ -14,6 +14,7 @@ namespace Sample
         public App()
         {
             InitializeComponent();
+            RequestedTheme = Windows.UI.Xaml.ApplicationTheme.Light;
         }
 
         public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
