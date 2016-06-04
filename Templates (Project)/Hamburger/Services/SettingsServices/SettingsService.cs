@@ -20,11 +20,10 @@ namespace Sample.Services.SettingsServices
             set
             {
                 _helper.Write(nameof(UseShellBackButton), value);
-                BootStrapper.Current.NavigationService.Dispatcher.Dispatch(() =>
+                BootStrapper.Current.NavigationService.GetDispatcherWrapper().Dispatch(() =>
                 {
                     BootStrapper.Current.ShowShellBackButton = value;
                     BootStrapper.Current.UpdateShellBackButton();
-                    BootStrapper.Current.NavigationService.Refresh();
                 });
             }
         }
@@ -41,7 +40,7 @@ namespace Sample.Services.SettingsServices
             {
                 _helper.Write(nameof(AppTheme), value.ToString());
                 (Window.Current.Content as FrameworkElement).RequestedTheme = value.ToElementTheme();
-                Views.Shell.HamburgerMenu.RefreshStyles(value);
+                Views.Shell.HamburgerMenu.RefreshStyles(value, true);
             }
         }
 
@@ -52,6 +51,26 @@ namespace Sample.Services.SettingsServices
             {
                 _helper.Write(nameof(CacheMaxDuration), value);
                 BootStrapper.Current.CacheMaxDuration = value;
+            }
+        }
+
+        public bool ShowHamburgerButton
+        {
+            get { return _helper.Read<bool>(nameof(ShowHamburgerButton), true); }
+            set
+            {
+                _helper.Write(nameof(ShowHamburgerButton), value);
+                Views.Shell.HamburgerMenu.HamburgerButtonVisibility = value ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
+
+        public bool IsFullScreen
+        {
+            get { return _helper.Read<bool>(nameof(IsFullScreen), false); }
+            set
+            {
+                _helper.Write(nameof(IsFullScreen), value);
+                Views.Shell.HamburgerMenu.IsFullScreen = value;
             }
         }
     }

@@ -7,7 +7,8 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:Template10.Samples.FileActivationSample.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:vm="using:Template10.Samples.FileActivationSample.ViewModels" mc:Ignorable="d">
+      xmlns:vm="using:Template10.Samples.FileActivationSample.ViewModels"
+      mc:Ignorable="d">
 
     <Page.DataContext>
         <vm:MainPageViewModel x:Name="ViewModel" />
@@ -23,7 +24,13 @@
         <controls:PageHeader Content="File activation sample" />
 
         <Grid Grid.Row="1" Padding="12,4,0,0">
-            <TextBlock Text="{Binding Content}" />
+            <TextBlock>
+                <Run Text="{Binding Content}" />
+                <LineBreak />
+                <Run Foreground="Gainsboro" Text="Rename a file with the .myfiletype extension, and use Open With... to open with this app." />
+                <LineBreak />
+                <Run Foreground="Gainsboro" Text="There is a sample file in the root of this project." />
+            </TextBlock>
         </Grid>
 
     </Grid>

@@ -16,10 +16,15 @@
 
         <!--  non-modal content  -->
         <Controls:HamburgerMenu x:Name="MyHamburgerMenu"
+                                HamburgerButtonVisibility="Collapsed"
                                 SecondaryButtonOrientation="Horizontal"
                                 VisualStateNarrowMinWidth="-1"
                                 VisualStateNormalMinWidth="320"
                                 VisualStateWideMinWidth="1020">
+
+            <!--<Controls:HamburgerMenu.HeaderContent>
+                <TextBlock Text="Hamburger Content!" VerticalAlignment="Center" HorizontalAlignment="Left" />
+            </Controls:HamburgerMenu.HeaderContent>-->
 
             <Controls:HamburgerMenu.PrimaryButtons>
                 <!--  search button  -->
@@ -30,7 +35,7 @@
                                     Symbol="Find" />
                         <TextBlock Margin="12,0,0,0"
                                    VerticalAlignment="Center"
-                                   Text="Template10.Samples.SearchSample" />
+                                   Text="Search" />
                     </StackPanel>
                 </Controls:HamburgerButtonInfo>
 
@@ -47,6 +52,7 @@
                 </Controls:HamburgerButtonInfo>
 
                 <!--  gallery button  -->
+
                 <Controls:HamburgerButtonInfo ButtonType="Literal">
                     <RelativePanel>
                         <SymbolIcon x:Name="LeftIcon"

@@ -52,7 +52,7 @@ namespace Template10.Behaviors
             timer.Tick -= Timer_Tick;
             timer.Stop();
 
-            Interaction.ExecuteActions(this, Actions, null);
+            Interaction.ExecuteActions(sender, Actions, null);
         }
     }
 }

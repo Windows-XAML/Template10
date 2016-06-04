@@ -47,6 +47,15 @@ namespace Template10.Controls
              DependencyProperty.Register(nameof(Command), typeof(ICommand),
              typeof(HamburgerButtonInfo), new PropertyMetadata(null));
 
+        public object ToolTip
+        {
+            get { return (object)GetValue(ToolTipProperty); }
+            set { SetValue(ToolTipProperty, value); }
+        }
+        public static readonly DependencyProperty ToolTipProperty =
+            DependencyProperty.Register(nameof(ToolTip), typeof(object), 
+                typeof(HamburgerButtonInfo), new PropertyMetadata(null));
+
         /// <summary>  
         /// Sets and gets the CommandParameter property.  
         /// </summary>  
@@ -97,6 +106,19 @@ namespace Template10.Controls
                 typeof(HamburgerButtonInfo), new PropertyMetadata(false));
 
         /// <summary>
+        /// Sets and gets the ClearCache property.
+        /// If true, navigation page cache is cleared when navigating to this page
+        /// </summary>
+        public bool ClearCache
+        {
+            get { return (bool)GetValue(ClearCacheProperty); }
+            set { SetValue(ClearCacheProperty, value); }
+        }
+        public static readonly DependencyProperty ClearCacheProperty =
+            DependencyProperty.Register(nameof(ClearCache), typeof(bool),
+                typeof(HamburgerButtonInfo), new PropertyMetadata(false));
+
+        /// <summary>
         /// Sets and gets the Visibility property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
@@ -128,7 +150,7 @@ namespace Template10.Controls
             set { SetValue(IsCheckedProperty, value); }
         }
         public static readonly DependencyProperty IsCheckedProperty =
-            DependencyProperty.Register(nameof(IsChecked), typeof(bool?),
+            DependencyProperty.Register(nameof(IsChecked), typeof(object),
                 typeof(HamburgerButtonInfo), new PropertyMetadata(false));
 
         public UIElement Content

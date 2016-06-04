@@ -30,7 +30,9 @@ namespace Template10.Samples.ShareTargetSample
             }
             else
             {
-                NavigationService.Navigate(typeof(Views.MainPage));
+                var nav = NavigationService ?? NavigationServiceFactory(BackButton.Attach, ExistingContent.Include);
+                Window.Current.Content = nav.Frame;
+                nav.Navigate(typeof(Views.MainPage));
             }
             return Task.CompletedTask;
         }

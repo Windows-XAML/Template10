@@ -92,6 +92,11 @@ namespace Template10.Services.NavigationService
             return FrameStateSettingsService().Open(GetPageStateKey(FrameId, type, BackStackDepth), true);
         }
 
+        public ISettingsService PageStateSettingsService(string key)
+        {
+            return FrameStateSettingsService().Open(key, true);
+        }
+
         public void ClearPageState(Type type)
         {
             this.FrameStateSettingsService().Remove(GetPageStateKey(FrameId, type, BackStackDepth));
@@ -125,6 +130,7 @@ namespace Template10.Services.NavigationService
 
         internal ISerializationService SerializationService => NavigationService.SerializationService;
 
+        [Obsolete("Use NavigationService.NavigationState instead")]
         public void SetNavigationState(string state)
         {
             DebugWrite($"State {state}");
@@ -132,6 +138,7 @@ namespace Template10.Services.NavigationService
             Frame.SetNavigationState(state);
         }
 
+        [Obsolete("Use NavigationService.NavigationState instead")]
         public string GetNavigationState()
         {
             DebugWrite();
@@ -177,6 +184,38 @@ namespace Template10.Services.NavigationService
                 {
                     Frame.GoForward();
                     Frame.GoBack();
+                }
+                else
+                {
+                    // not much we can really do in this case
+                    (Frame.Content as Page)?.UpdateLayout();
+                }
+            }
+        }
+
+        public void Refresh(object param)
+        {
+            DebugWrite();
+
+            
+            
+            try
+            {
+                Windows.ApplicationModel.Resources.Core.ResourceContext.GetForCurrentView().Reset();
+                // navigates to the current page with new parameters.
+                Frame.Navigate(CurrentPageType, param, new SuppressNavigationTransitionInfo());
+
+              
+            }
+            catch (Exception)
+            {
+                if (Frame.CanGoBack)
+                {
+                    Frame.GoBack();
+                }
+                else if (Frame.CanGoForward)
+                {
+                    Frame.GoForward();
                 }
                 else
                 {

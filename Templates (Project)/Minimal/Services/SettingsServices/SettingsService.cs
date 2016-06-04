@@ -5,7 +5,7 @@ using Windows.UI.Xaml;
 
 namespace Sample.Services.SettingsServices
 {
-    public class SettingsService 
+    public class SettingsService
     {
         public static SettingsService Instance { get; } = new SettingsService();
         Template10.Services.SettingsService.ISettingsHelper _helper;
@@ -20,11 +20,10 @@ namespace Sample.Services.SettingsServices
             set
             {
                 _helper.Write(nameof(UseShellBackButton), value);
-                BootStrapper.Current.NavigationService.Dispatcher.Dispatch(() =>
+                BootStrapper.Current.NavigationService.GetDispatcherWrapper().Dispatch(() =>
                 {
                     BootStrapper.Current.ShowShellBackButton = value;
                     BootStrapper.Current.UpdateShellBackButton();
-                    BootStrapper.Current.NavigationService.Refresh();
                 });
             }
         }
