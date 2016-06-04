@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 
 namespace Template10.Samples.PageKeysSample
 {
-    sealed partial class App : Template10.Common.BootStrapper
+    sealed partial class App : Common.BootStrapper
     {
         public App()
         {
@@ -12,22 +13,25 @@ namespace Template10.Samples.PageKeysSample
 
         public enum Pages { MainPage, DetailPage, AboutPage }
 
-        public override Task OnInitializeAsync(IActivatedEventArgs args)
+        public override async Task OnInitializeAsync(IActivatedEventArgs args)
         {
             var keys = PageKeys<Pages>();
-            if (!keys.ContainsKey(Pages.MainPage))
-                keys.Add(Pages.MainPage, typeof(Views.MainPage));
-            if (!keys.ContainsKey(Pages.DetailPage))
-                keys.Add(Pages.DetailPage, null); // TODO
-            if (!keys.ContainsKey(Pages.AboutPage))
-                keys.Add(Pages.AboutPage, null); // TODO
-            return Task.CompletedTask;
+            var add = new Action<Pages, Type>((p, t) =>
+            {
+                if (!keys.ContainsKey(p))
+                {
+                    keys.Add(p, t);
+                }
+            });
+            add(Pages.MainPage, null);
+            add(Pages.DetailPage, null);
+            add(Pages.AboutPage, null);
+            await Task.CompletedTask;
         }
 
-        public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
+        public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
-            NavigationService.Navigate(Pages.MainPage, 2);
-            return Task.CompletedTask;
+            await NavigationService.NavigateAsync(Pages.MainPage, 2);
         }
     }
 }
