@@ -34,7 +34,11 @@ namespace Sample.Views
             MyHamburgerMenu.NavigationService = navigationService;
             if (_settings.SetManuallyThemeCheckBox)
             {
-                //HamburgerMenu.RefreshStyles(_settings.AppTheme, true);
+                HamburgerMenu.RefreshStyles(_settings.AppTheme, true);
+            }
+            else
+            {
+                HamburgerMenu.RefreshStyles(_settings.OriginalAppTheme, true);
             }
             HamburgerMenu.IsFullScreen = _settings.IsFullScreen;
             HamburgerMenu.HamburgerButtonVisibility = _settings.ShowHamburgerButton ? Visibility.Visible : Visibility.Collapsed;
