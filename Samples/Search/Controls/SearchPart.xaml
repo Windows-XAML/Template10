@@ -52,7 +52,7 @@
                     <TextBox Width="216">
                         <Interactivity:Interaction.Behaviors>
                             <Behaviors:TextBoxEnterKeyBehavior>
-                                <Core:CallMethodAction MethodName="Template10.Samples.SearchSample" TargetObject="{Binding ElementName=userControl}" />
+                                <Core:CallMethodAction MethodName="Search" TargetObject="{Binding ElementName=userControl}" />
                             </Behaviors:TextBoxEnterKeyBehavior>
                         </Interactivity:Interaction.Behaviors>
                     </TextBox>
