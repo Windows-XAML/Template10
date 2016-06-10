@@ -4,15 +4,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Windows.ApplicationModel;
+
 namespace Template10.Services.MarketplaceService
 {
     public class MarketplaceService : IMarketplaceService
     {
-        MarketplaceHelper _helper = new MarketplaceHelper();
+        readonly MarketplaceHelper _helper = new MarketplaceHelper();
 
-        public void LaunchAppInStore()
+        public async Task LaunchAppInStore()
         {
-            _helper.LaunchAppInStore();
+            await _helper.LaunchAppInStoreByProductFamilyName(Package.Current.Id.FamilyName);
+        }
+
+        public async Task LaunchAppReviewInStore()
+        {
+            await _helper.LaunchAppReviewInStoreByProductFamilyName(Package.Current.Id.FamilyName);
+        }
+
+        public async Task LaunchPublisherPageInStore()
+        {
+            await _helper.LaunchPublisherPageInStore(Package.Current.Id.Publisher);
         }
     }
 }

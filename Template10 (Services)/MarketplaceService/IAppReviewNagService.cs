@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Template10.Services.MarketplaceService
 {
-    public interface IMarketplaceService
+    interface IAppReviewNagService
     {
-        Task LaunchAppInStore();
+        void NagAfterLaunches(int launches);
+        void NagAfterTimeSpan(TimeSpan timespan);
+        void ShowNag();
 
-        Task LaunchAppReviewInStore();
 
-        Task LaunchPublisherPageInStore();
     }
 }
