@@ -12,19 +12,13 @@ namespace Template10.Services.MarketplaceService
     {
         readonly MarketplaceHelper _helper = new MarketplaceHelper();
 
-        public async Task LaunchAppInStore()
-        {
-            await _helper.LaunchAppInStoreByProductFamilyName(Package.Current.Id.FamilyName);
-        }
+        public async Task LaunchAppInStore() => 
+            await _helper.LaunchAppInStoreByProductFamilyName(Package.Current.Id.FamilyName);        
 
-        public async Task LaunchAppReviewInStore()
-        {
-            await _helper.LaunchAppReviewInStoreByProductFamilyName(Package.Current.Id.FamilyName);
-        }
+        public async Task LaunchAppReviewInStore() => 
+            await _helper.LaunchAppReviewInStoreByProductFamilyName(Package.Current.Id.FamilyName);        
 
-        public async Task LaunchPublisherPageInStore()
-        {
-            await _helper.LaunchPublisherPageInStore(Package.Current.Id.Publisher);
-        }
+        public async Task LaunchPublisherPageInStore() =>
+            await _helper.LaunchPublisherPageInStore(Package.Current.Id.Publisher);        
     }
 }

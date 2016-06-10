@@ -149,7 +149,6 @@
     <Compile Include="MapService\IMapService.cs" />
     <Compile Include="MapService\MapHelper.cs" />
     <Compile Include="MapService\MapService.cs" />
-    <Compile Include="MarketplaceService\IAppReviewNagService.cs" />
     <Compile Include="MarketplaceService\IMarketplaceService.cs" />
     <Compile Include="MarketplaceService\MarketplaceHelper.cs" />
     <Compile Include="MarketplaceService\MarketplaceService.cs" />
