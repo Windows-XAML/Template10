@@ -156,10 +156,10 @@ namespace Template10.Utils
 
         public double DiagonalSize(Units units = Units.Inches)
         {
-            var di = DisplayInformation.GetForCurrentView();
-            var inches = 7;
+            var di = WindowWrapper.DisplayInformation();
+            double inches = 7;
             if (ApiInformation.IsPropertyPresent(typeof(DisplayInformation).ToString(), nameof(di.DiagonalSizeInInches)))
-                return di.DiagonalSizeInInches.Value;
+                inches = di.DiagonalSizeInInches.GetValueOrDefault(inches);
             switch (units)
             {
                 case Units.Centimeters:
