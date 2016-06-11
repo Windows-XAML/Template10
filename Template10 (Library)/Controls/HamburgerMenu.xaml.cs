@@ -449,6 +449,8 @@ namespace Template10.Controls
 
         private void UpdateSecondaryButtonOrientation()
         {
+            if (_SecondaryButtonStackPanel == null) return;
+
             // secondary layout
             if (SecondaryButtonOrientation.Equals(Orientation.Horizontal) && IsOpen)
             {
@@ -640,8 +642,11 @@ namespace Template10.Controls
         #endregion
 
         private StackPanel _SecondaryButtonStackPanel;
-        private void SecondaryButtonStackPanel_Loaded(object sender, RoutedEventArgs e) => _SecondaryButtonStackPanel = sender as StackPanel;
-
+        private void SecondaryButtonStackPanel_Loaded(object sender, RoutedEventArgs e)
+        {
+            _SecondaryButtonStackPanel = sender as StackPanel;
+            UpdateSecondaryButtonOrientation();
+        }
         #region Nav Buttons
 
         #region commands

@@ -459,6 +459,7 @@ namespace Template10.Controls
             DependencyProperty.Register(nameof(SecondaryButtonOrientation), typeof(Orientation),
                 typeof(HamburgerMenu), new PropertyMetadata(Orientation.Vertical, (d, e) =>
                 {
+                    (d as HamburgerMenu).UpdateSecondaryButtonOrientation();
                     WriteDebug(nameof(SecondaryButtonOrientation), e);
                     (d as HamburgerMenu).SecondaryButtonOrientationChanged?.Invoke(d, e.ToChangedEventArgs<Orientation>());
                     (d as HamburgerMenu).InternalSecondaryButtonOrientationChanged(e.ToChangedEventArgs<Orientation>());
