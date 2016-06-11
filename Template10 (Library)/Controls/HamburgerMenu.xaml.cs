@@ -254,8 +254,12 @@ namespace Template10.Controls
                 case VirtualKey.Enter:
                 case VirtualKey.GamepadA:
 
-                    var info = new InfoElement(currentItem);
-                    NavCommand.Execute(info?.HamburgerButtonInfo);
+                    if (currentItem != null)
+                    {
+                        var info = new InfoElement(currentItem);
+                        NavCommand.Execute(info.HamburgerButtonInfo);
+                    }
+
                     break;
 
                 case VirtualKey.Escape:
