@@ -640,7 +640,13 @@ namespace Template10.Controls
         #endregion
 
         private StackPanel _SecondaryButtonStackPanel;
-        private void SecondaryButtonStackPanel_Loaded(object sender, RoutedEventArgs e) => _SecondaryButtonStackPanel = sender as StackPanel;
+        private void SecondaryButtonStackPanel_Loaded(object sender, RoutedEventArgs e)
+        {
+            _SecondaryButtonStackPanel = sender as StackPanel;
+
+            UpdateSecondaryButtonOrientation();
+
+        }
 
         #region Nav Buttons
 
