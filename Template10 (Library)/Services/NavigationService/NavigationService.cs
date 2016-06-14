@@ -303,7 +303,7 @@ namespace Template10.Services.NavigationService
 
             state.Write<string>("CurrentPageType", CurrentPageType.AssemblyQualifiedName);
             state.Write<object>("CurrentPageParam", CurrentPageParam);
-            state.Write<string>("NavigateState", FrameFacadeInternal?.GetNavigationState());
+            state.Write<string>("NavigateState", FrameFacadeInternal?.NavigationService.NavigationState);
             await Task.CompletedTask;
         }
 
@@ -322,7 +322,7 @@ namespace Template10.Services.NavigationService
 
                 FrameFacadeInternal.CurrentPageType = Type.GetType(state.Read<string>("CurrentPageType"));
                 FrameFacadeInternal.CurrentPageParam = state.Read<object>("CurrentPageParam");
-                FrameFacadeInternal.SetNavigationState(state.Read<string>("NavigateState"));
+                FrameFacadeInternal.NavigationService.NavigationState = state.Read<string>("NavigateState");
 
                 await NavigateToAsync(NavigationMode.Refresh, FrameFacadeInternal.CurrentPageParam);
                 while (FrameFacadeInternal.Frame.Content == null)
