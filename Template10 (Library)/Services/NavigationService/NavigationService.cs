@@ -327,7 +327,7 @@ namespace Template10.Services.NavigationService
                 await NavigateToAsync(NavigationMode.Refresh, FrameFacadeInternal.CurrentPageParam);
                 while (FrameFacadeInternal.Frame.Content == null)
                 {
-                    Task.Yield().GetAwaiter().GetResult();
+                    await Task.Delay(1);
                 }
                 AfterRestoreSavedNavigation?.Invoke(this, FrameFacadeInternal.CurrentPageType);
                 return true;
