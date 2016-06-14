@@ -97,8 +97,6 @@ namespace Template10.Services.NavigationService
             };
         }
 
-       
-
         private INavigable ResolveForPage(Page page)
         {
             if (!(page.DataContext is INavigable) | page.DataContext == null)
@@ -176,11 +174,10 @@ namespace Template10.Services.NavigationService
                     dataContext.SessionState = BootStrapper.Current.SessionState;
                     var pageState = FrameFacadeInternal.PageStateSettingsService(page.GetType()).Values;
                     await dataContext.OnNavigatedToAsync(parameter, mode, pageState);
-                    {
-                        // update bindings after NavTo initializes data
-                        XamlUtils.InitializeBindings(page);
-                        XamlUtils.UpdateBindings(page);
-                    }
+
+                    // update bindings after NavTo initializes data
+                    XamlUtils.InitializeBindings(page);
+                    XamlUtils.UpdateBindings(page);
                 }
             }
         }
