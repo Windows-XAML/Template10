@@ -70,7 +70,7 @@ namespace Template10.Services.NavigationService
                         e.Cancel = !(await NavigatingFromAsync(page, dataContext, false, e.NavigationMode));
                         if (!e.Cancel)
                         {
-                            await NavigateFromAsync(page, dataContext, false);
+                            await NavigateFromAsync(page, dataContext, false).ConfigureAwait(false);
                         }
                     }
                 }
@@ -86,14 +86,14 @@ namespace Template10.Services.NavigationService
                     try
                     {
                         if (currentContent == FrameFacadeInternal.Frame.Content)
-                            await NavigateToAsync(e.NavigationMode, parameter, FrameFacadeInternal.Frame.Content);
+                            await NavigateToAsync(e.NavigationMode, parameter, FrameFacadeInternal.Frame.Content).ConfigureAwait(false);
                     }
                     catch (Exception ex)
                     {
                         DebugWrite($"DispatchAsync/NavigateToAsync {ex.Message}");
                         throw;
                     }
-                }, 1);
+                }, 1).ConfigureAwait(false);
             };
         }
 
@@ -130,7 +130,7 @@ namespace Template10.Services.NavigationService
                 Suspending = suspending,
             };
             await deferral.WaitForDeferralsAsync();
-            await dataContext.OnNavigatingFromAsync(args);
+            await dataContext.OnNavigatingFromAsync(args).ConfigureAwait(false);
             return !args.Cancel;
         }
 
@@ -144,7 +144,7 @@ namespace Template10.Services.NavigationService
             dataContext.SessionState = BootStrapper.Current.SessionState;
 
             var pageState = FrameFacadeInternal.PageStateSettingsService(page.GetType()).Values;
-            await dataContext.OnNavigatedFromAsync(pageState, suspending);
+            await dataContext.OnNavigatedFromAsync(pageState, suspending).ConfigureAwait(false);
         }
 
         async Task NavigateToAsync(NavigationMode mode, object parameter, object frameContent = null)
@@ -204,7 +204,7 @@ namespace Template10.Services.NavigationService
 
                 await ApplicationViewSwitcher
                     .TryShowAsStandaloneAsync(newAppView.Id, ViewSizePreference.Default, currentView.Id, size);
-            });
+            }).ConfigureAwait(false);
         }
 
         public async Task<bool> NavigateAsync(Type page, object parameter = null, NavigationTransitionInfo infoOverride = null)
@@ -233,7 +233,7 @@ namespace Template10.Services.NavigationService
         {
             DebugWrite($"Page: {page}, Parameter: {parameter}, NavigationTransitionInfo: {infoOverride}");
 
-            await NavigateAsync(page, parameter, infoOverride);
+            await NavigateAsync(page, parameter, infoOverride).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -270,7 +270,7 @@ namespace Template10.Services.NavigationService
 
             var page = keys[key];
 
-            return await NavigateAsync(page, parameter, infoOverride);
+            return await NavigateAsync(page, parameter, infoOverride).ConfigureAwait(false);
         }
 
         public async void Navigate<T>(T key, object parameter = null, NavigationTransitionInfo infoOverride = null)
@@ -278,7 +278,7 @@ namespace Template10.Services.NavigationService
         {
             DebugWrite($"Key: {key}, Parameter: {parameter}, NavigationTransitionInfo: {infoOverride}");
 
-            await NavigateAsync(key, parameter, infoOverride);
+            await NavigateAsync(key, parameter, infoOverride).ConfigureAwait(false);
         }
 
         public ISerializationService SerializationService { get; set; }
@@ -383,7 +383,7 @@ namespace Template10.Services.NavigationService
                 var dataContext = ResolveForPage(page);
                 if (dataContext != null)
                 {
-                    await NavigateFromAsync(page, dataContext, true);
+                    await NavigateFromAsync(page, dataContext, true).ConfigureAwait(false);
                 }
             }
         }

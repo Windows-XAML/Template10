@@ -70,7 +70,7 @@ namespace Template10.Common
             }
             try
             {
-                await DelayAction(eventData);
+                await DelayAction(eventData).ConfigureAwait(false);
             }
             catch
             {
@@ -88,7 +88,7 @@ namespace Template10.Common
             {
                 try
                 {
-                    await DelayAction(eventData);
+                    await DelayAction(eventData).ConfigureAwait(false);
                 }
                 catch
                 {
@@ -126,7 +126,7 @@ namespace Template10.Common
                     var toWait = (stamp.AddMilliseconds(Throttle) - DateTime.Now);
                     if (toWait.Ticks > 0)
                     {
-                        await Task.Delay(toWait);
+                        await Task.Delay(toWait).ConfigureAwait(false);
                     }
                 }
             }
