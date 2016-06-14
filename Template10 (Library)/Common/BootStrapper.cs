@@ -225,7 +225,7 @@ namespace Template10.Common
                             This is okay & by design.
                         */
 
-						
+                        
                         if (EnableAutoRestoreAfterTerminated)
                         {
                             var launchedEvent = e as ILaunchActivatedEventArgs;
