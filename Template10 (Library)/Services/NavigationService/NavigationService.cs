@@ -225,7 +225,6 @@ namespace Template10.Services.NavigationService
 
             parameter = SerializationService.Serialize(parameter);
 
-            await Task.CompletedTask;
             return FrameFacadeInternal.Navigate(page, parameter, infoOverride);
         }
 
@@ -304,7 +303,6 @@ namespace Template10.Services.NavigationService
             state.Write<string>("CurrentPageType", CurrentPageType.AssemblyQualifiedName);
             state.Write<object>("CurrentPageParam", CurrentPageParam);
             state.Write<string>("NavigateState", FrameFacadeInternal?.NavigationService.NavigationState);
-            await Task.CompletedTask;
         }
 
         public event TypedEventHandler<Type> AfterRestoreSavedNavigation;
