@@ -193,7 +193,7 @@ namespace Template10.Services.NavigationService
             var dispatcher = new DispatcherWrapper(newView.Dispatcher);
             await dispatcher.DispatchAsync(async () =>
             {
-                var newWindow = this.GetWindowWrapper().Window;
+                var newWindow = WindowWrapper.Current().Window;
                 var newAppView = ApplicationView.GetForCurrentView();
                 newAppView.Title = title;
 
