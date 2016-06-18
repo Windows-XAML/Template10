@@ -149,9 +149,13 @@
     <Compile Include="MapService\IMapService.cs" />
     <Compile Include="MapService\MapHelper.cs" />
     <Compile Include="MapService\MapService.cs" />
+    <Compile Include="MarketplaceService\AppNagService.cs" />
+    <Compile Include="MarketplaceService\AppNagServiceHelper.cs" />
+    <Compile Include="MarketplaceService\IAppNagService.cs" />
     <Compile Include="MarketplaceService\IMarketplaceService.cs" />
     <Compile Include="MarketplaceService\MarketplaceHelper.cs" />
     <Compile Include="MarketplaceService\MarketplaceService.cs" />
+    <Compile Include="MarketplaceService\NagInfo.cs" />
     <Compile Include="NetworkAvailableService\INetworkAvailableService.cs" />
     <Compile Include="NetworkAvailableService\NetworkAvailableHelper.cs" />
     <Compile Include="NetworkAvailableService\NetworkAvailableService.cs" />
