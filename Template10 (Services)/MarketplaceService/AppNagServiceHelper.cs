@@ -66,7 +66,7 @@ namespace Template10.Services.MarketplaceService
 
         public bool ShouldNag(TimeSpan duration)
         {
-            return duration <= TimeSpan.Zero || DateTimeOffset.UtcNow > _nagInfo.FirstRegistered + duration;
+            return duration <= TimeSpan.Zero || DateTimeOffset.UtcNow + duration > _nagInfo.FirstRegistered;
         }
 
         public async Task PersistState()
