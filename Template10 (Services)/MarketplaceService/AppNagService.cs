@@ -20,13 +20,21 @@ namespace Template10.Services.MarketplaceService
             _helper = new AppNagServiceHelper(dialogService, fileService, marketplaceService);
         }
 
+        public string MessageTemplate { get; set; } = "Would you mind reviewing {0}?";
+
+        public string NoButtonText { get; set; } = "No, thanks";
+
+        public string TitleTemplate { get; set; } = "Review {0}";
+
+        public string YesButtonText { get; set; } = "Rate";
+
         public async Task RegisterAppReviewNag(TimeSpan duration)
         {
             if (await _helper.Initialize())
             {
                 if (_helper.ShouldNag(duration))
                 {
-                    await _helper.ShowNag();
+                    await _helper.ShowNag(MessageTemplate, TitleTemplate, YesButtonText, NoButtonText);
                     await _helper.PersistState();
                 }
             }
@@ -38,7 +46,7 @@ namespace Template10.Services.MarketplaceService
             {
                 if (_helper.ShouldNag(launches))
                 {
-                    await _helper.ShowNag();
+                    await _helper.ShowNag(MessageTemplate, TitleTemplate, YesButtonText, NoButtonText);
                 }
 
                 await _helper.PersistState();
@@ -51,7 +59,7 @@ namespace Template10.Services.MarketplaceService
             {
                 if (_helper.ShouldNag(launches) && _helper.ShouldNag(duration))
                 {
-                    await _helper.ShowNag();
+                    await _helper.ShowNag(MessageTemplate, TitleTemplate, YesButtonText, NoButtonText);
                 }
 
                 await _helper.PersistState();

@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 
 using Windows.UI.Popups;
+using Windows.ApplicationModel;
 
 using Template10.Services.DialogService;
 using Template10.Services.FileService;
@@ -47,11 +48,12 @@ namespace Template10.Services.MarketplaceService
             return !_nagInfo.Suppress;
         }
 
-        public async Task ShowNag()
+        public async Task ShowNag(string messageTemplate, string titleTemplate, string yesButtonText, string noButtonText)
         {
-            await _dialogService.ShowAsync("Would you mind reviewing this app?", "Review App?",
-                new UICommand("Yes", command => _marketplaceService.LaunchAppReviewInStore()),
-                new UICommand("No thanks")
+            string name = Package.Current.DisplayName;
+            await _dialogService.ShowAsync(string.Format(messageTemplate, name), string.Format(titleTemplate, name),
+                new UICommand(yesButtonText, command => _marketplaceService.LaunchAppReviewInStore()),
+                new UICommand(noButtonText)
                 );
 
             _nagInfo.Suppress = true;
