@@ -10,11 +10,6 @@ namespace Template10.Services.MarketplaceService
     {
         readonly AppNagServiceHelper _helper;
 
-        public AppNagService()
-            : this(new DialogService.DialogService(), new FileService.FileService(), new MarketplaceService())
-        {
-        }
-
         public AppNagService(IDialogService dialogService, IFileService fileService, IMarketplaceService marketplaceService)
         {
             _helper = new AppNagServiceHelper(dialogService, fileService, marketplaceService);
