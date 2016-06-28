@@ -57,11 +57,7 @@ namespace Template10.Controls
 
         private void UpdateSpacingToFitHamburgerMenu()
         {
-            if (spacer == null)
-            {
-                return;
-            }
-            if (EnableHamburgerMenuAutoLayout)
+            if (EnableHamburgerMenuAutoLayout && spacer != null)
             {
                 var hamburgerMenu = ParentHamburgerMenu;
                 if (hamburgerMenu == null)
@@ -186,6 +182,7 @@ namespace Template10.Controls
             base.OnApplyTemplate();
             spacer = GetTemplateChild<Rectangle>("Spacer");
             moreButton = GetTemplateChild<Button>("MoreButton");
+            UpdateSpacingToFitHamburgerMenu();
         }
 
         private T GetTemplateChild<T>(string name) where T : DependencyObject

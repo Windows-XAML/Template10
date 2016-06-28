@@ -8,6 +8,10 @@ namespace Template10.Services.MarketplaceService
 {
     public interface IMarketplaceService
     {
-        void LaunchAppInStore();
+        Task LaunchAppInStore();
+
+        Task LaunchAppReviewInStore();
+
+        Task LaunchPublisherPageInStore();
     }
 }

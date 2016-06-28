@@ -35,9 +35,9 @@
                      Margin="0" Header="Parameter to pass to this page"
                      Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <Interactivity:Interaction.Behaviors>
-                    <Behaviors:TextBoxEnterKeyBehavior>
+                    <Behaviors:KeyBehavior Key="Enter">
                         <Core:InvokeCommandAction Command="{x:Bind ViewModel.GotoDetailsPageCommand, Mode=OneTime}" />
-                    </Behaviors:TextBoxEnterKeyBehavior>
+                    </Behaviors:KeyBehavior>
                 </Interactivity:Interaction.Behaviors>
             </TextBox>
             <Button Margin="4,0"
