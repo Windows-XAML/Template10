@@ -651,7 +651,7 @@ namespace Template10.Common
         internal Popup SplashScreenPopup = null;
         private void ShowSplashScreen(IActivatedEventArgs e)
         {
-            if (SplashFactory != null && e.PreviousExecutionState != ApplicationExecutionState.Suspended)
+            if (SplashFactory != null)
             {
                 CurrentState = States.Splashing;
                 var splash = SplashFactory(e.SplashScreen);

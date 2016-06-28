@@ -13,11 +13,10 @@ namespace Template10.Samples.BehaviorsSample
             InitializeComponent();
         }
 
-        public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
+        public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
-            NavigationService.Navigate(typeof(Views.MainPage));
-			return Task.CompletedTask;
-		}
+            await NavigationService.NavigateAsync(typeof(Views.MainPage));
+        }
     }
 }
 
