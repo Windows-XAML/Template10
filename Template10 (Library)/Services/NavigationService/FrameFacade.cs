@@ -158,6 +158,14 @@ namespace Template10.Services.NavigationService
             if (CanGoBack) Frame.GoBack();
         }
 
+        public void GoBack(NavigationTransitionInfo info)
+        {
+            DebugWrite($"CanGoBack {CanGoBack}");
+
+            NavigationModeHint = NavigationMode.Back;
+            if (CanGoBack) Frame.GoBack(info);
+        }
+
         public void Refresh()
         {
             DebugWrite();
@@ -232,7 +240,7 @@ namespace Template10.Services.NavigationService
             NavigationModeHint = NavigationMode.Forward;
             if (CanGoForward) Frame.GoForward();
         }
-
+        
         public object Content => Frame.Content;
 
         public Type CurrentPageType { get; internal set; }
