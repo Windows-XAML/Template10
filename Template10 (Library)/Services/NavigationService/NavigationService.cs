@@ -338,6 +338,8 @@ namespace Template10.Services.NavigationService
 
         public void GoBack() { if (FrameFacadeInternal.CanGoBack) FrameFacadeInternal.GoBack(); }
 
+        public void GoBack(NavigationTransitionInfo info) { if (FrameFacadeInternal.CanGoBack) FrameFacadeInternal.GoBack(info); }
+
         public bool CanGoBack => FrameFacadeInternal.CanGoBack;
 
         public void GoForward() { FrameFacadeInternal.GoForward(); }
