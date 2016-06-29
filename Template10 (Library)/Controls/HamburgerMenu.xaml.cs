@@ -55,7 +55,6 @@ namespace Template10.Controls
 
                 // control event handlers
                 Loaded += HamburgerMenu_Loaded;
-                LayoutUpdated += HamburgerMenu_LayoutUpdated;
 
                 // xbox controller menu button support
                 KeyboardService.Instance.AfterMenuGesture += () =>
@@ -97,6 +96,11 @@ namespace Template10.Controls
             UpdateHamburgerButtonGridWidthToFillAnyGap();
             RefreshStyles(RequestedTheme);
             UpdatePaneMarginToShowHamburgerButton();
+
+            // Moved here from HamburgerMenu_LayoutUpdated because it was one-time event handler.
+            // LayoutUpdated handler is not needed, Loaded is called after template applying anyway.
+            UpdateVisualStates();
+            UpdateControl();
         }
 
         private void HamburgerMenu_RequestedThemeChanged(DependencyObject sender, DependencyProperty dp)
@@ -104,15 +108,6 @@ namespace Template10.Controls
             DebugWrite();
 
             RefreshStyles(RequestedTheme);
-        }
-
-        private void HamburgerMenu_LayoutUpdated(object sender, object e)
-        {
-            DebugWrite();
-
-            LayoutUpdated -= HamburgerMenu_LayoutUpdated;
-            UpdateVisualStates();
-            UpdateControl();
         }
 
         // handle keyboard navigation (tabs and gamepad)
