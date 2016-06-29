@@ -336,7 +336,10 @@ namespace Template10.Services.NavigationService
         public void Refresh() { FrameFacadeInternal.Refresh(); }
         public void Refresh(object param) { FrameFacadeInternal.Refresh(param); }
 
-        public void GoBack() { if (FrameFacadeInternal.CanGoBack) FrameFacadeInternal.GoBack(); }
+        public void GoBack(NavigationTransitionInfo infoOverride = null)
+        {
+            if (FrameFacadeInternal.CanGoBack) FrameFacadeInternal.GoBack(infoOverride);
+        }
 
         public bool CanGoBack => FrameFacadeInternal.CanGoBack;
 
