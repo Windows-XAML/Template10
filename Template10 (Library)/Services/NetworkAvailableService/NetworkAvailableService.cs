@@ -9,7 +9,9 @@ namespace Template10.Services.NetworkAvailableService
 
         public async Task<bool> IsInternetAvailable() => await _helper.IsInternetAvailable();
 
-        public Action<bool> AvailabilityChanged
+        public async Task<bool> IsNetworkAvailable() => await _helper.IsNetworkAvailable();
+
+        public Action<ConnectionTypes> AvailabilityChanged
         {
             get
             {

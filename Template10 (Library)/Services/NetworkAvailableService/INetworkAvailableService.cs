@@ -5,7 +5,8 @@ namespace Template10.Services.NetworkAvailableService
 {
     public interface INetworkAvailableService
     {
-        Action<bool> AvailabilityChanged { get; set; }
         Task<bool> IsInternetAvailable();
+        Task<bool> IsNetworkAvailable();
+        Action<ConnectionTypes> AvailabilityChanged { get; set; }
     }
 }
