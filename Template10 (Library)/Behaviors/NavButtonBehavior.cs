@@ -28,14 +28,18 @@ namespace Template10.Behaviors
         public NavButtonBehavior()
         {
             _dispatcher = Common.DispatcherWrapper.Current();
-            _throttleHelper = new EventThrottleHelper();
-            _throttleHelper.ThrottledEvent += delegate { Calculate(); };
-            _throttleHelper.Throttle = 1000;
+            _throttleHelper = new EventThrottleHelper { Throttle = 1000 };
+        }
+
+        private void ThrottleHelperOnThrottledEvent(object sender, object o)
+        {
+            Calculate();
         }
 
         public void Attach(DependencyObject associatedObject)
         {
             AssociatedObject = associatedObject;
+            _throttleHelper.ThrottledEvent += ThrottleHelperOnThrottledEvent;
 
             // process start
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
@@ -64,6 +68,7 @@ namespace Template10.Behaviors
 
         public void Detach()
         {
+            _throttleHelper.ThrottledEvent -= ThrottleHelperOnThrottledEvent;
             DetachFrameEvents(this, Frame);
             if (BootStrapper.Current != null) BootStrapper.Current.ShellBackButtonUpdated -= Current_ShellBackButtonUpdated;
             if (_deviceUtils != null) _deviceUtils.Changed -= DispositionChanged;
