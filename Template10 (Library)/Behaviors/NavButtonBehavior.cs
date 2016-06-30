@@ -73,6 +73,8 @@ namespace Template10.Behaviors
 
         private void OnNavigated(object sender, NavigationEventArgs navigationEventArgs) => CalculateThrottled();
 
+        private void FrameOnLoaded(object sender, RoutedEventArgs routedEventArgs) => CalculateThrottled();
+
         private void CalculateThrottled()
         {
             _throttleHelper?.DispatchTriggerEvent(null);
@@ -179,6 +181,7 @@ namespace Template10.Behaviors
             eventReg.GoBackReg = frame.RegisterPropertyChangedCallback(Frame.CanGoBackProperty, (s, e) => behavior.CalculateThrottled());
             eventReg.GoForwardReg = frame.RegisterPropertyChangedCallback(Frame.CanGoForwardProperty, (s, e) => behavior.CalculateThrottled());
             frame.Navigated += behavior.OnNavigated;
+            frame.Loaded += behavior.FrameOnLoaded;
         }
 
         private static void DetachFrameEvents(NavButtonBehavior behavior, Frame frame)
@@ -197,6 +200,7 @@ namespace Template10.Behaviors
             frame.UnregisterPropertyChangedCallback(Frame.CanGoBackProperty, eventReg.GoBackReg);
             frame.UnregisterPropertyChangedCallback(Frame.CanGoForwardProperty, eventReg.GoForwardReg);
             frame.Navigated -= behavior.OnNavigated;
+            frame.Loaded -= behavior.FrameOnLoaded;
         }
 
         private class FrameEventRegistration
