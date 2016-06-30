@@ -18,12 +18,19 @@ namespace Template10.Behaviors
     public class NavButtonBehavior : DependencyObject, IBehavior
     {
         private IDispatcherWrapper _dispatcher;
-        private EventThrottleHelper _throttleHelper;
+        private readonly EventThrottleHelper _throttleHelper;
         private DeviceUtils _deviceUtils;
 
         Button element => AssociatedObject as Button;
 
         public DependencyObject AssociatedObject { get; set; }
+
+        public NavButtonBehavior()
+        {
+            _throttleHelper = new EventThrottleHelper();
+            _throttleHelper.ThrottledEvent += delegate { Calculate(); };
+            _throttleHelper.Throttle = 1000;
+        }
 
         public void Attach(DependencyObject associatedObject)
         {
@@ -37,11 +44,6 @@ namespace Template10.Behaviors
             else
             {
                 _dispatcher = Common.DispatcherWrapper.Current();
-
-                // throttled calculate event
-                _throttleHelper = new EventThrottleHelper();
-                _throttleHelper.ThrottledEvent += delegate { Calculate(); };
-                _throttleHelper.Throttle = 1000;
 
                 // handle click
                 element.Click += new Common.WeakReference<NavButtonBehavior, object, RoutedEventArgs>(this)
@@ -63,7 +65,6 @@ namespace Template10.Behaviors
 
         public void Detach()
         {
-            _throttleHelper = null;
             DetachFrameEvents(this, Frame);
             if (BootStrapper.Current != null) BootStrapper.Current.ShellBackButtonUpdated -= Current_ShellBackButtonUpdated;
             if (_deviceUtils != null) _deviceUtils.Changed -= DispositionChanged;
