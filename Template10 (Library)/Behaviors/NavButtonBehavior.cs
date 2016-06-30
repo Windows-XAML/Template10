@@ -17,7 +17,7 @@ namespace Template10.Behaviors
     [Microsoft.Xaml.Interactivity.TypeConstraint(typeof(Button))]
     public class NavButtonBehavior : DependencyObject, IBehavior
     {
-        private IDispatcherWrapper _dispatcher;
+        private readonly IDispatcherWrapper _dispatcher;
         private readonly EventThrottleHelper _throttleHelper;
         private DeviceUtils _deviceUtils;
 
@@ -27,6 +27,7 @@ namespace Template10.Behaviors
 
         public NavButtonBehavior()
         {
+            _dispatcher = Common.DispatcherWrapper.Current();
             _throttleHelper = new EventThrottleHelper();
             _throttleHelper.ThrottledEvent += delegate { Calculate(); };
             _throttleHelper.Throttle = 1000;
@@ -43,8 +44,6 @@ namespace Template10.Behaviors
             }
             else
             {
-                _dispatcher = Common.DispatcherWrapper.Current();
-
                 // handle click
                 element.Click += new Common.WeakReference<NavButtonBehavior, object, RoutedEventArgs>(this)
                 {
@@ -125,7 +124,7 @@ namespace Template10.Behaviors
                 return;
 
             // make changes on UI thread
-            _dispatcher.Dispatch(() =>
+            _dispatcher?.Dispatch(() =>
             {
                 switch (Direction)
                 {
