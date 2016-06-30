@@ -7,6 +7,8 @@ using Windows.UI.Xaml.Controls;
 using Microsoft.Xaml.Interactivity;
 using Template10.Utils;
 using System;
+using System.Runtime.CompilerServices;
+using Windows.UI.Xaml.Navigation;
 using Template10.Common;
 
 namespace Template10.Behaviors
@@ -15,12 +17,12 @@ namespace Template10.Behaviors
     [Microsoft.Xaml.Interactivity.TypeConstraint(typeof(Button))]
     public class NavButtonBehavior : DependencyObject, IBehavior
     {
-        private long _goBackReg;
-        private long _goForwardReg;
         private IDispatcherWrapper _dispatcher;
         private EventThrottleHelper _throttleHelper;
+        private DeviceUtils _deviceUtils;
 
         Button element => AssociatedObject as Button;
+
         public DependencyObject AssociatedObject { get; set; }
 
         public void Attach(DependencyObject associatedObject)
@@ -48,35 +50,28 @@ namespace Template10.Behaviors
                     DetachAction = (i, w) => element.Click -= w.Handler,
                 }.Handler;
                 CalculateThrottled();
-                BootStrapper.Current.ShellBackButtonUpdated += Current_ShellBackButtonUpdated;
+                if (BootStrapper.Current != null) BootStrapper.Current.ShellBackButtonUpdated += Current_ShellBackButtonUpdated;
+                _deviceUtils = DeviceUtils.Current();
+                if (_deviceUtils != null) _deviceUtils.Changed += DispositionChanged;
             }
         }
 
-        private void Current_ShellBackButtonUpdated(object sender, EventArgs e) => Calculate();
+        private void DispositionChanged(object sender, EventArgs eventArgs)
+        {
+            CalculateThrottled();
+        }
 
         public void Detach()
         {
             _throttleHelper = null;
-            if (Frame != null)
-            {
-                Frame.SizeChanged -= SizeChanged;
-                Frame.LayoutUpdated -= LayoutUpdated;
-            }
-            UnregisterPropertyChangedCallback(Frame.CanGoBackProperty, _goBackReg);
-            UnregisterPropertyChangedCallback(Frame.CanGoForwardProperty, _goForwardReg);
-            BootStrapper.Current.ShellBackButtonUpdated += Current_ShellBackButtonUpdated;
+            DetachFrameEvents(this, Frame);
+            if (BootStrapper.Current != null) BootStrapper.Current.ShellBackButtonUpdated -= Current_ShellBackButtonUpdated;
+            if (_deviceUtils != null) _deviceUtils.Changed -= DispositionChanged;
         }
 
-        volatile bool _letLayoutUpdatedInvoke = false;
-        private void SizeChanged(object sender, SizeChangedEventArgs e) { _letLayoutUpdatedInvoke = true; }
-        private void LayoutUpdated(object sender, object e)
-        {
-            if (_letLayoutUpdatedInvoke)
-            {
-                _letLayoutUpdatedInvoke = false;
-                CalculateThrottled();
-            }
-        }
+        private void Current_ShellBackButtonUpdated(object sender, EventArgs e) => Calculate();
+
+        private void OnNavigated(object sender, NavigationEventArgs navigationEventArgs) => CalculateThrottled();
 
         private void CalculateThrottled()
         {
@@ -133,12 +128,12 @@ namespace Template10.Behaviors
                 {
                     case Directions.Back:
                         {
-                            element.Visibility = CalculateBackVisibility(Frame);
+                            element.Visibility = NavButtonsHelper.CalculateBackVisibility(Frame);
                             break;
                         }
                     case Directions.Forward:
                         {
-                            element.Visibility = CalculateForwardVisibility(Frame);
+                            element.Visibility = NavButtonsHelper.CalculateForwardVisibility(Frame);
                             break;
                         }
                 }
@@ -146,96 +141,67 @@ namespace Template10.Behaviors
         }
 
         public enum Directions { Back, Forward }
+
         public Directions Direction { get { return (Directions)GetValue(DirectionProperty); } set { SetValue(DirectionProperty, value); } }
+
         public static readonly DependencyProperty DirectionProperty = DependencyProperty.Register(nameof(Direction),
             typeof(Directions), typeof(NavButtonBehavior), new PropertyMetadata(Directions.Back));
 
         public Frame Frame { get { return (Frame)GetValue(FrameProperty); } set { SetValue(FrameProperty, value); } }
+
         public static readonly DependencyProperty FrameProperty = DependencyProperty.Register(nameof(Frame),
             typeof(Frame), typeof(NavButtonBehavior), new PropertyMetadata(null, FrameChanged));
+
         private static void FrameChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
         {
-            var behavior = (d as NavButtonBehavior);
-            var frame = args.NewValue as Frame;
-            if (frame != null)
-            {
-                behavior._goBackReg = frame.RegisterPropertyChangedCallback(Frame.CanGoBackProperty, (s, e) => behavior.CalculateThrottled());
-                behavior._goForwardReg = frame.RegisterPropertyChangedCallback(Frame.CanGoForwardProperty, (s, e) => behavior.CalculateThrottled());
-                frame.SizeChanged += behavior.SizeChanged;
-                frame.LayoutUpdated += behavior.LayoutUpdated;
-            }
+            var behavior = (NavButtonBehavior)d;
+            AttachFrameEvents(behavior, args.NewValue as Frame);
             behavior.CalculateThrottled();
         }
 
-        public static Visibility CalculateForwardVisibility(Frame frame)
+        private readonly ConditionalWeakTable<Frame, FrameEventRegistration> _eventRegistrationInfo = new ConditionalWeakTable<Frame, FrameEventRegistration>();
+
+        private static void AttachFrameEvents(NavButtonBehavior behavior, Frame frame)
         {
-            // in some cases frame may be null, esp. race conditions
-            if (frame == null)
-                return Visibility.Collapsed;
-
-            // by design it is not visible when not applicable
-            var cangoforward = frame.CanGoForward;
-            if (!cangoforward)
-                return Visibility.Collapsed;
-
-            // at this point, we show the on-canvas button
-            return Visibility.Visible;
+            if (behavior == null || frame == null)
+            {
+                return;
+            }
+            FrameEventRegistration eventReg;
+            if (behavior._eventRegistrationInfo.TryGetValue(frame, out eventReg))
+            {
+                // events already attached
+                return;
+            }
+            eventReg = new FrameEventRegistration();
+            behavior._eventRegistrationInfo.Add(frame, eventReg);
+            eventReg.GoBackReg = frame.RegisterPropertyChangedCallback(Frame.CanGoBackProperty, (s, e) => behavior.CalculateThrottled());
+            eventReg.GoForwardReg = frame.RegisterPropertyChangedCallback(Frame.CanGoForwardProperty, (s, e) => behavior.CalculateThrottled());
+            frame.Navigated += behavior.OnNavigated;
         }
 
-        public static Visibility CalculateBackVisibility(Frame frame)
+        private static void DetachFrameEvents(NavButtonBehavior behavior, Frame frame)
         {
-            // in some cases frame may be null, esp. race conditions
-            if (frame == null)
-                return Visibility.Collapsed;
-
-            // by design it is not visible when not applicable
-            var cangoback = frame.CanGoBack;
-            if (!cangoback)
-                return Visibility.Collapsed;
-
-            // continuum mode
-            var touchmode = UIViewSettings.GetForCurrentView().UserInteractionMode == UserInteractionMode.Touch;
-
-            // store value locally to avoid multiple WinRT interop calls
-            var deviceFamily = Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily;
-
-            // mobile always has a visible back button
-            var mobilefam = "Windows.Mobile".Equals(deviceFamily, StringComparison.OrdinalIgnoreCase);
-            if (mobilefam && touchmode)
-                // this means phone, not continuum, which uses hardware (or steering wheel) back button
-                return Visibility.Collapsed;
-
-            // handle iot
-            var iotfam = "Windows.IoT".Equals(deviceFamily, StringComparison.OrdinalIgnoreCase);
-            if (!iotfam)
+            if (behavior == null || frame == null)
             {
-                // simply don't know what to do with else
-                var desktopfam = "Windows.Desktop".Equals(deviceFamily, StringComparison.OrdinalIgnoreCase);
-                if (!desktopfam)
-                    return Visibility.Collapsed;
+                return;
             }
-
-            // touch always has a visible back button (continuum)
-            if (!iotfam && touchmode)
-                return Visibility.Collapsed;
-
-            // full screen back button is only visible when mouse reveals title (prefered behavior is on-canvas visible)
-            var fullscreen = ApplicationView.GetForCurrentView().IsFullScreenMode; // don't confuse with IsFullScreen
-            if (fullscreen)
-                return Visibility.Visible;
-
-            // hide the button if the shell button is visible
-            var optinback = SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility.Equals(AppViewBackButtonVisibility.Visible);
-            if (optinback)
+            FrameEventRegistration eventReg;
+            if (!behavior._eventRegistrationInfo.TryGetValue(frame, out eventReg))
             {
-                // shell button will not be visible if there is no title bar
-                var hastitle = !CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar;
-                if (hastitle)
-                    return Visibility.Collapsed;
+                // events already detached
+                return;
             }
+            behavior._eventRegistrationInfo.Remove(frame);
+            frame.UnregisterPropertyChangedCallback(Frame.CanGoBackProperty, eventReg.GoBackReg);
+            frame.UnregisterPropertyChangedCallback(Frame.CanGoForwardProperty, eventReg.GoForwardReg);
+            frame.Navigated -= behavior.OnNavigated;
+        }
 
-            // at this point, we show the on-canvas button
-            return Visibility.Visible;
+        private class FrameEventRegistration
+        {
+            public long GoBackReg;
+            public long GoForwardReg;
         }
     }
 }
