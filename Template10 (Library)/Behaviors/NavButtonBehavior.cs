@@ -44,7 +44,7 @@ namespace Template10.Behaviors
                 // handle click
                 element.Click += new Common.WeakReference<NavButtonBehavior, object, RoutedEventArgs>(this)
                 {
-                    EventAction = (i, s, e) => Element_Click(s, e),
+                    EventAction = (i, s, e) => i.Element_Click(s, e),
                     DetachAction = (i, w) => element.Click -= w.Handler,
                 }.Handler;
                 CalculateThrottled();
