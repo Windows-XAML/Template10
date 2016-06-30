@@ -155,6 +155,7 @@ namespace Template10.Behaviors
         private static void FrameChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
         {
             var behavior = (NavButtonBehavior)d;
+            DetachFrameEvents(behavior, args.OldValue as Frame);
             AttachFrameEvents(behavior, args.NewValue as Frame);
             behavior.CalculateThrottled();
         }
