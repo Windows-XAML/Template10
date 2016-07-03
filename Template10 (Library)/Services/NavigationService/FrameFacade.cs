@@ -150,12 +150,16 @@ namespace Template10.Services.NavigationService
 
         public NavigationMode NavigationModeHint = NavigationMode.New;
 
-        public void GoBack()
+        public void GoBack(NavigationTransitionInfo infoOverride = null)
         {
             DebugWrite($"CanGoBack {CanGoBack}");
 
             NavigationModeHint = NavigationMode.Back;
-            if (CanGoBack) Frame.GoBack();
+            if (CanGoBack)
+            {
+                if (infoOverride == null) Frame.GoBack();
+                else Frame.GoBack(infoOverride);
+            }
         }
 
         public void Refresh()
