@@ -179,14 +179,14 @@ namespace Template10.Common
 
         // it is the intent of Template 10 to no longer require Launched/Activated overrides, only OnStartAsync()
 
-        protected override sealed void OnLaunched(LaunchActivatedEventArgs e) { DebugWrite(); InternalLaunchAsync(e); }
+        protected sealed override async void OnLaunched(LaunchActivatedEventArgs e) { DebugWrite(); await InternalLaunchAsync(e).ConfigureAwait(false); }
 
         /// <summary>
         /// This handles all the preliminary stuff unique to Launched before calling OnStartAsync().
         /// This is private because it is a specialized prelude to OnStartAsync().
         /// OnStartAsync will not be called if state restore is determined
         /// </summary>
-        private async void InternalLaunchAsync(ILaunchActivatedEventArgs e)
+        private async Task InternalLaunchAsync(ILaunchActivatedEventArgs e)
         {
             DebugWrite($"Previous:{e.PreviousExecutionState.ToString()}");
 
