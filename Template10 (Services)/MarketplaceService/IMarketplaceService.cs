@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+
+using Template10.Services.NagService;
 
 namespace Template10.Services.MarketplaceService
 {
@@ -13,5 +11,9 @@ namespace Template10.Services.MarketplaceService
         Task LaunchAppReviewInStore();
 
         Task LaunchPublisherPageInStore();
+
+        Nag CreateAppReviewNag();
+
+        Nag CreateAppReviewNag(string message);
     }
 }
