@@ -8,7 +8,7 @@ using Windows.ApplicationModel;
 
 namespace Template10.Services.MarketplaceService
 {
-    public class MarketplaceService : IMarketplaceService
+    public sealed class MarketplaceService : IMarketplaceService
     {
         readonly MarketplaceHelper _helper = new MarketplaceHelper();
 
