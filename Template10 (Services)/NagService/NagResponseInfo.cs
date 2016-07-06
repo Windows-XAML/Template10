@@ -24,6 +24,11 @@ namespace Template10.Services.NagService
 
         public DateTimeOffset LastNag { get; set; } = DateTimeOffset.MaxValue;
 
+        public bool IsAwaitingResponse
+        {
+            get { return LastResponse != NagResponse.Accept && LastResponse != NagResponse.Decline; }
+            
+        }
         public bool ShouldNag(int launches)
         {
             return (!Suppress && LastResponse != NagResponse.Accept && LastResponse != NagResponse.Decline)

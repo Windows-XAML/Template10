@@ -78,7 +78,7 @@ namespace Template10.Services.NagService
             {
                 await ProcessNag(nag, responseInfo);
             }
-            else if (responseInfo.LastResponse == NagResponse.NoResponse)
+            else if (responseInfo.IsAwaitingResponse)
             {
                 await Persist(responseInfo, nag.Id);
             }
@@ -95,7 +95,7 @@ namespace Template10.Services.NagService
             {
                 await ProcessNag(nag, responseInfo);
             }
-            else if (responseInfo.LastResponse == NagResponse.NoResponse)
+            else if (responseInfo.IsAwaitingResponse)
             {
                 await Persist(responseInfo, nag.Id);
             }
@@ -112,7 +112,7 @@ namespace Template10.Services.NagService
             {
                 await ProcessNag(nag, responseInfo);
             }
-            else if (responseInfo.LastResponse == NagResponse.NoResponse)
+            else if (responseInfo.IsAwaitingResponse)
             {
                 await Persist(responseInfo, nag.Id);
             }
