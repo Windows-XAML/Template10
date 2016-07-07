@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 
+using Template10.Services.FileService;
+
 namespace Template10.Services.NagService
 {
     /// <summary>
@@ -40,20 +42,20 @@ namespace Template10.Services.NagService
         /// </summary>
         /// <param name="nagId">The if of the <see cref="Nag"/></param>
         /// <returns>True if a <see cref="NagResponseInfo"/> exists for the nagId</returns>
-        Task<bool> ResponseExists(string nagId);
+        Task<bool> ResponseExists(string nagId, StorageStrategies location = StorageStrategies.Local);
 
         /// <summary>
         /// Gets the <see cref="NagResponseInfo"/> for the given id
         /// </summary>
         /// <param name="nagId">The if of the <see cref="Nag"/> to find</param>
         /// <returns>A <see cref="NagResponseInfo"/> or null if it doesn't exist</returns>
-        Task<NagResponseInfo> GetResponse(string nagId);
+        Task<NagResponseInfo> GetResponse(string nagId, StorageStrategies location = StorageStrategies.Local);
 
         /// <summary>
         /// Deletes persisted <see cref="NagResponseInfo"/>
         /// </summary>
         /// <param name="nagId">The id of the <see cref="Nag"/> to delete</param>
         /// <returns><see cref="Task"/></returns>
-        Task DeleteResponse(string nagId);
+        Task DeleteResponse(string nagId, StorageStrategies location = StorageStrategies.Local);
     }
 }

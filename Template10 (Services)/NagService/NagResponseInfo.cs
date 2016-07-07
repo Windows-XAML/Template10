@@ -69,8 +69,7 @@ namespace Template10.Services.NagService
         /// </summary>
         public bool IsAwaitingResponse
         {
-            get { return LastResponse != NagResponse.Accept && LastResponse != NagResponse.Decline; }
-            
+            get { return LastResponse != NagResponse.Accept && LastResponse != NagResponse.Decline; }            
         }
 
         /// <summary>

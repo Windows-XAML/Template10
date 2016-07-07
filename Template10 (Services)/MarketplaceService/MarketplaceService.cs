@@ -3,6 +3,7 @@
 using Windows.ApplicationModel;
 
 using Template10.Services.NagService;
+using Template10.Services.FileService;
 
 namespace Template10.Services.MarketplaceService
 {
@@ -26,7 +27,8 @@ namespace Template10.Services.MarketplaceService
             return new Nag("AppReviewNag", message, async () => await this.LaunchAppReviewInStore())
             {
                 Title = $"Review {Package.Current.DisplayName}",
-                AcceptText = "Review app"
+                AcceptText = "Review app",
+                Location = StorageStrategies.Roaming
             };
         }
     }

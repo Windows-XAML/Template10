@@ -18,11 +18,11 @@ namespace Template10.Services.NagService
             _nagHelper = new NagServiceHelper(dialogService, fileService);
         }
 
-        public async Task DeleteResponse(string nagId) => await _nagHelper.Delete(nagId);
+        public async Task DeleteResponse(string nagId, StorageStrategies location = StorageStrategies.Local) => await _nagHelper.Delete(nagId, location);
 
-        public async Task<bool> ResponseExists(string nagId) => await _nagHelper.Exists(nagId);
+        public async Task<bool> ResponseExists(string nagId, StorageStrategies location = StorageStrategies.Local) => await _nagHelper.Exists(nagId, location);
 
-        public async Task<NagResponseInfo> GetResponse(string nagId) => await _nagHelper.Load(nagId);
+        public async Task<NagResponseInfo> GetResponse(string nagId, StorageStrategies location = StorageStrategies.Local) => await _nagHelper.Load(nagId, location);
 
         public async Task Register(Nag nag, TimeSpan duration) => await _nagHelper.Register(nag, duration);
 

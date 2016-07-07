@@ -1,5 +1,7 @@
 ﻿using System;
 
+using Template10.Services.FileService;
+
 namespace Template10.Services.NagService
 {
     /// <summary>
@@ -64,5 +66,10 @@ namespace Template10.Services.NagService
         /// The text to display on the defer button
         /// </summary>
         public string DeferText { get; set; } = "Not now";
+
+        /// <summary>
+        /// Flag indicating whether the user response is local to the deivce or roams with the app
+        /// </summary>
+        public StorageStrategies Location { get; set; }
     }
 }
