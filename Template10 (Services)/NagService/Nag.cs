@@ -70,6 +70,6 @@ namespace Template10.Services.NagService
         /// <summary>
         /// Flag indicating whether the user response is local to the deivce or roams with the app
         /// </summary>
-        public StorageStrategies Location { get; set; }
+        public StorageStrategies Location { get; set; } = StorageStrategies.Local;
     }
 }
