@@ -707,6 +707,7 @@ namespace Template10.Controls
             public void RefreshVisualState()
             {
                 var children = FrameworkElement.AllChildren();
+                if (children.Count == 0) return;
                 var child = children.OfType<Grid>().First(x => x.Name == "RootGrid");
                 var groups = VisualStateManager.GetVisualStateGroups(child);
                 var group = groups.First(x => x.Name == "CommonStates");
