@@ -23,15 +23,22 @@ namespace Template10.Behaviors
             _deviceUtils = Utils.DeviceUtils.Current();
             if (_deviceUtils != null) _deviceUtils.Changed += DeviceDispositionBehavior_Changed;
             Update();
+            _ready = true;
         }
+
+        bool _ready = false;
 
         public void Detach()
         {
             if (_deviceUtils != null) _deviceUtils.Changed -= DeviceDispositionBehavior_Changed;
         }
-        
+
         private void DeviceDispositionBehavior_Changed(object sender, EventArgs e) => Update();
-        private void Run() => Interaction.ExecuteActions(AssociatedObject, Actions, null);
+        private void Run()
+        {
+            if (_ready)
+                Interaction.ExecuteActions(AssociatedObject, Actions, null);
+        }
 
         private void Update()
         {
