@@ -83,20 +83,23 @@
 
         <CommandBar Grid.ColumnSpan="2" Background="LightGray">
             <CommandBar.Content>
-                <AppBarButton
+                <StackPanel Orientation="Horizontal">
+                    <AppBarButton
                     x:Name="BackButton"
                     Icon="Back"
                     IsEnabled="False"
                     Visibility="Collapsed">
-                    <Interactivity:Interaction.Behaviors>
-                        <Core:EventTriggerBehavior EventName="Click">
-                            <Core:GoToStateAction StateName="ListVisualState" />
-                        </Core:EventTriggerBehavior>
-                        <Behaviors:BackButtonBehavior Handled="{Binding IsEnabled, ElementName=BackButton}">
-                            <Core:GoToStateAction StateName="ListVisualState" />
-                        </Behaviors:BackButtonBehavior>
-                    </Interactivity:Interaction.Behaviors>
-                </AppBarButton>
+                        <Interactivity:Interaction.Behaviors>
+                            <Core:EventTriggerBehavior EventName="Click">
+                                <Core:GoToStateAction StateName="ListVisualState" />
+                            </Core:EventTriggerBehavior>
+                            <Behaviors:BackButtonBehavior Handled="{Binding IsEnabled, ElementName=BackButton}">
+                                <Core:GoToStateAction StateName="ListVisualState" />
+                            </Behaviors:BackButtonBehavior>
+                        </Interactivity:Interaction.Behaviors>
+                    </AppBarButton>
+                    <TextBlock Text="XAML Behavior-based example" Style="{StaticResource TitleTextBlockStyle}" Margin="8,8,0,0" />
+                </StackPanel>
             </CommandBar.Content>
             <CommandBar.PrimaryCommands>
                 <AppBarButton
