@@ -32,7 +32,7 @@ namespace Template10.Behaviors
         private void BootStrapper_BackRequested(object sender, HandledEventArgs e)
         {
             e.Handled = Handled;
-            Interaction.ExecuteActions(sender, Actions, null);
+            Interaction.ExecuteActions(AssociatedObject, Actions, null);
         }
 
         public bool Handled
