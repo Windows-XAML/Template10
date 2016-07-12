@@ -15,13 +15,13 @@ namespace Template10.Behaviors
     public class EllipsisBehavior : DependencyObject, IBehavior
     {
         private CommandBar commandBar => AssociatedObject as CommandBar;
+
         public DependencyObject AssociatedObject { get; private set; }
 
         public void Attach(DependencyObject associatedObject)
         {
             AssociatedObject = associatedObject;
             commandBar.Loaded += CommandBar_Loaded;
-            commandBar.LayoutUpdated += CommandBar_LayoutUpdated;
             commandBar.PrimaryCommands.VectorChanged += Commands_VectorChanged;
             commandBar.SecondaryCommands.VectorChanged += Commands_VectorChanged;
             Update();
@@ -30,13 +30,12 @@ namespace Template10.Behaviors
         public void Detach()
         {
             commandBar.Loaded -= CommandBar_Loaded;
-            commandBar.LayoutUpdated -= CommandBar_LayoutUpdated;
             commandBar.PrimaryCommands.VectorChanged -= Commands_VectorChanged;
             commandBar.SecondaryCommands.VectorChanged -= Commands_VectorChanged;
         }
 
         private void CommandBar_Loaded(object sender, RoutedEventArgs e) => Update();
-        private void CommandBar_LayoutUpdated(object sender, object e) => Update();
+
         private void Commands_VectorChanged(IObservableVector<ICommandBarElement> sender, IVectorChangedEventArgs @event) => Update();
 
         public enum Visibilities { Visible, Collapsed, Auto }

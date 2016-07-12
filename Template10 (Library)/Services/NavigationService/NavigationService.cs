@@ -228,11 +228,11 @@ namespace Template10.Services.NavigationService
             return FrameFacadeInternal.Navigate(page, parameter, infoOverride);
         }
 
-        public async void Navigate(Type page, object parameter = null, NavigationTransitionInfo infoOverride = null)
+        public void Navigate(Type page, object parameter = null, NavigationTransitionInfo infoOverride = null)
         {
             DebugWrite($"Page: {page}, Parameter: {parameter}, NavigationTransitionInfo: {infoOverride}");
 
-            await NavigateAsync(page, parameter, infoOverride).ConfigureAwait(false);
+            NavigateAsync(page, parameter, infoOverride).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -272,12 +272,12 @@ namespace Template10.Services.NavigationService
             return await NavigateAsync(page, parameter, infoOverride).ConfigureAwait(false);
         }
 
-        public async void Navigate<T>(T key, object parameter = null, NavigationTransitionInfo infoOverride = null)
+        public void Navigate<T>(T key, object parameter = null, NavigationTransitionInfo infoOverride = null)
             where T : struct, IConvertible
         {
             DebugWrite($"Key: {key}, Parameter: {parameter}, NavigationTransitionInfo: {infoOverride}");
 
-            await NavigateAsync(key, parameter, infoOverride).ConfigureAwait(false);
+            NavigateAsync(key, parameter, infoOverride).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         public ISerializationService SerializationService { get; set; }
@@ -336,7 +336,10 @@ namespace Template10.Services.NavigationService
         public void Refresh() { FrameFacadeInternal.Refresh(); }
         public void Refresh(object param) { FrameFacadeInternal.Refresh(param); }
 
-        public void GoBack() { if (FrameFacadeInternal.CanGoBack) FrameFacadeInternal.GoBack(); }
+        public void GoBack(NavigationTransitionInfo infoOverride = null)
+        {
+            if (FrameFacadeInternal.CanGoBack) FrameFacadeInternal.GoBack(infoOverride);
+        }
 
         public bool CanGoBack => FrameFacadeInternal.CanGoBack;
 

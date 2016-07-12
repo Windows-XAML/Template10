@@ -10,7 +10,7 @@ namespace Template10.Services.NavigationService
 {
     public interface INavigationService
     {
-        void GoBack();
+        void GoBack(NavigationTransitionInfo infoOverride = null);
         void GoForward();
 
         object Content { get; }

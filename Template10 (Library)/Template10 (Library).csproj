@@ -152,6 +152,7 @@
     <Compile Include="Common\IStateItems.cs" />
     <Compile Include="Common\ItemPropertyChangedEventArgs.cs" />
     <Compile Include="Common\Mdl2.cs" />
+    <Compile Include="Common\NavButtonsHelper.cs" />
     <Compile Include="Common\ObservableDictionary.cs" />
     <Compile Include="Common\StateItems.cs" />
     <Compile Include="Common\StateKey.cs" />
@@ -188,6 +189,10 @@
     <Compile Include="Services\NavigationService\AlternativeNavigationEventArgs.cs" />
     <Compile Include="Services\NavigationService\INavigationService.cs" />
     <Compile Include="Services\NavigationService\NavigationServiceList.cs" />
+    <Compile Include="Services\NetworkAvailableService\ConnectionTypes.cs" />
+    <Compile Include="Services\NetworkAvailableService\INetworkAvailableService.cs" />
+    <Compile Include="Services\NetworkAvailableService\NetworkAvailableHelper.cs" />
+    <Compile Include="Services\NetworkAvailableService\NetworkAvailableService.cs" />
     <Compile Include="Services\PopupService\PopupService.cs" />
     <Compile Include="Services\ProfileService\ProfileService.cs" />
     <Compile Include="Services\SerializationService\ISerializationService.cs" />
