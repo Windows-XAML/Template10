@@ -152,6 +152,7 @@
     <Compile Include="Common\IStateItems.cs" />
     <Compile Include="Common\ItemPropertyChangedEventArgs.cs" />
     <Compile Include="Common\Mdl2.cs" />
+    <Compile Include="Common\NavButtonsHelper.cs" />
     <Compile Include="Common\ObservableDictionary.cs" />
     <Compile Include="Common\StateItems.cs" />
     <Compile Include="Common\StateKey.cs" />
