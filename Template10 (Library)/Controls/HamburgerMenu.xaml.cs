@@ -649,7 +649,6 @@ namespace Template10.Controls
         #region Nav Buttons
 
         #region commands
-        public event EventHandler CommandButttonTapped;
         Mvvm.DelegateCommand _hamburgerCommand;
         internal Mvvm.DelegateCommand HamburgerCommand => _hamburgerCommand ?? (_hamburgerCommand = new Mvvm.DelegateCommand(ExecuteHamburger));
         void ExecuteHamburger()
@@ -678,7 +677,6 @@ namespace Template10.Controls
             {
                 ExecuteNavButtonICommand(commandInfo);
                 commandInfo.RaiseTapped(new RoutedEventArgs());
-                CommandButttonTapped?.Invoke(commandInfo, null);
             }
         }
         #endregion
