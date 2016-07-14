@@ -5,6 +5,7 @@ using System.Reflection;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using Template10.Controls;
 
 namespace Template10.Utils
 {
@@ -132,6 +133,22 @@ namespace Template10.Utils
         {
             if (o.ReadLocalValue(dp) == DependencyProperty.UnsetValue)
                 o.SetValue(dp, value);
+        }
+
+        public static List<HamburgerButtonInfo> ItemsInGroup(this HamburgerButtonInfo button, bool IncludeSecondaryButtons = false)
+        {
+            string groupName = button.GroupName?.ToString();
+            if (string.IsNullOrWhiteSpace(groupName)) return null;
+
+            FrameworkElement fe = button.Content as FrameworkElement;
+            HamburgerMenu hamMenu = fe.FirstAncestor<HamburgerMenu>();
+
+            List<HamburgerButtonInfo> NavButtons = hamMenu.PrimaryButtons.ToList();
+            if (IncludeSecondaryButtons) NavButtons.InsertRange(NavButtons.Count, hamMenu.SecondaryButtons.ToList());
+
+            List<HamburgerButtonInfo> groupItems = NavButtons.Where(x => !x.Equals(button) && x.GroupName?.ToString() == groupName).ToList();
+
+            return groupItems;
         }
     }
 }
