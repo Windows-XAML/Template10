@@ -26,15 +26,7 @@ namespace Template10.Behaviors
             if (nav == null)
                 throw new NullReferenceException($"Cannot find NavigationService for {Frame.ToString()}.");
 
-            var metadataProvider = Application.Current as IXamlMetadataProvider;
-            if (metadataProvider == null)
-                return false;
-
-            var pagetype = metadataProvider.GetXamlType(Page as Type);
-            if (pagetype == null)
-                throw new NullReferenceException($"Cannot find TargetPage:{Page}");
-
-            nav.Navigate(pagetype as Type, Parameter, InfoOverride);
+            nav.Navigate(Page as Type, Parameter, InfoOverride);
             return null;
         }
 

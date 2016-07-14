@@ -55,7 +55,6 @@ namespace Template10.Controls
 
                 // control event handlers
                 Loaded += HamburgerMenu_Loaded;
-                LayoutUpdated += HamburgerMenu_LayoutUpdated;
 
                 // xbox controller menu button support
                 KeyboardService.Instance.AfterMenuGesture += () =>
@@ -97,6 +96,11 @@ namespace Template10.Controls
             UpdateHamburgerButtonGridWidthToFillAnyGap();
             RefreshStyles(RequestedTheme);
             UpdatePaneMarginToShowHamburgerButton();
+
+            // Moved here from HamburgerMenu_LayoutUpdated because it was one-time event handler.
+            // LayoutUpdated handler is not needed, Loaded is called after template applying anyway.
+            UpdateVisualStates();
+            UpdateControl();
         }
 
         private void HamburgerMenu_RequestedThemeChanged(DependencyObject sender, DependencyProperty dp)
@@ -104,15 +108,6 @@ namespace Template10.Controls
             DebugWrite();
 
             RefreshStyles(RequestedTheme);
-        }
-
-        private void HamburgerMenu_LayoutUpdated(object sender, object e)
-        {
-            DebugWrite();
-
-            LayoutUpdated -= HamburgerMenu_LayoutUpdated;
-            UpdateVisualStates();
-            UpdateControl();
         }
 
         // handle keyboard navigation (tabs and gamepad)
@@ -254,8 +249,12 @@ namespace Template10.Controls
                 case VirtualKey.Enter:
                 case VirtualKey.GamepadA:
 
-                    var info = new InfoElement(currentItem);
-                    NavCommand.Execute(info?.HamburgerButtonInfo);
+                    if (currentItem != null)
+                    {
+                        var info = new InfoElement(currentItem);
+                        NavCommand.Execute(info.HamburgerButtonInfo);
+                    }
+
                     break;
 
                 case VirtualKey.Escape:
@@ -449,6 +448,8 @@ namespace Template10.Controls
 
         private void UpdateSecondaryButtonOrientation()
         {
+            if (_SecondaryButtonStackPanel == null) return;
+
             // secondary layout
             if (SecondaryButtonOrientation.Equals(Orientation.Horizontal) && IsOpen)
             {
@@ -640,8 +641,11 @@ namespace Template10.Controls
         #endregion
 
         private StackPanel _SecondaryButtonStackPanel;
-        private void SecondaryButtonStackPanel_Loaded(object sender, RoutedEventArgs e) => _SecondaryButtonStackPanel = sender as StackPanel;
-
+        private void SecondaryButtonStackPanel_Loaded(object sender, RoutedEventArgs e)
+        {
+            _SecondaryButtonStackPanel = sender as StackPanel;
+            UpdateSecondaryButtonOrientation();
+        }
         #region Nav Buttons
 
         #region commands
@@ -698,6 +702,7 @@ namespace Template10.Controls
             public void RefreshVisualState()
             {
                 var children = FrameworkElement.AllChildren();
+                if (children.Count == 0) return;
                 var child = children.OfType<Grid>().First(x => x.Name == "RootGrid");
                 var groups = VisualStateManager.GetVisualStateGroups(child);
                 var group = groups.First(x => x.Name == "CommonStates");

@@ -58,11 +58,23 @@ namespace Template10.Services.NavigationService
                 if (e.Suspending)
                     return;
 
-                // allow the viewmodel to cancel navigation
-                e.Cancel = !(await NavigatingFromAsync(false, e.NavigationMode));
-                if (!e.Cancel)
+                var page = FrameFacadeInternal.Content as Page;
+                if (page != null)
                 {
-                    await NavigateFromAsync(false);
+                    // force (x:bind) page bindings to update
+                    XamlUtils.UpdateBindings(page);
+
+                    // call navagable override (navigating)
+                    var dataContext = ResolveForPage(page);
+                    if (dataContext != null)
+                    {
+                        // allow the viewmodel to cancel navigation
+                        e.Cancel = !(await NavigatingFromAsync(page, dataContext, false, e.NavigationMode));
+                        if (!e.Cancel)
+                        {
+                            await NavigateFromAsync(page, dataContext, false).ConfigureAwait(false);
+                        }
+                    }
                 }
             };
             FrameFacadeInternal.Navigated += async (s, e) =>
@@ -76,18 +88,16 @@ namespace Template10.Services.NavigationService
                     try
                     {
                         if (currentContent == FrameFacadeInternal.Frame.Content)
-                            await NavigateToAsync(e.NavigationMode, parameter, FrameFacadeInternal.Frame.Content);
+                            await NavigateToAsync(e.NavigationMode, parameter, FrameFacadeInternal.Frame.Content).ConfigureAwait(false);
                     }
                     catch (Exception ex)
                     {
                         DebugWrite($"DispatchAsync/NavigateToAsync {ex.Message}");
                         throw;
                     }
-                }, 1);
+                }, 1).ConfigureAwait(false);
             };
         }
-
-       
 
         private INavigable ResolveForPage(Page page)
         {
@@ -105,58 +115,38 @@ namespace Template10.Services.NavigationService
         }
 
         // before navigate (cancellable)
-        async Task<bool> NavigatingFromAsync(bool suspending, NavigationMode mode)
+        async Task<bool> NavigatingFromAsync(Page page, INavigable dataContext, bool suspending, NavigationMode mode)
         {
             DebugWrite($"Suspending: {suspending}");
 
-            var page = FrameFacadeInternal.Content as Page;
-            if (page != null)
-            {
-                // force (x:bind) page bindings to update
-                XamlUtils.UpdateBindings(page);
+            dataContext.NavigationService = this;
+            dataContext.Dispatcher = this.GetDispatcherWrapper();
+            dataContext.SessionState = BootStrapper.Current.SessionState;
 
-                // call navagable override (navigating)
-                var dataContext = ResolveForPage(page);
-                if (dataContext != null)
-                {
-                    dataContext.NavigationService = this;
-                    dataContext.Dispatcher = this.GetDispatcherWrapper();
-                    dataContext.SessionState = BootStrapper.Current.SessionState;
-                    var deferral = new DeferralManager();
-                    var args = new NavigatingEventArgs(deferral)
-                    {
-                        NavigationMode = mode,
-                        PageType = FrameFacadeInternal.CurrentPageType,
-                        Parameter = FrameFacadeInternal.CurrentPageParam,
-                        Suspending = suspending,
-                    };
-                    await deferral.WaitForDeferralsAsync();
-                    await dataContext.OnNavigatingFromAsync(args);
-                    return !args.Cancel;
-                }
-            }
-            return true;
+            var deferral = new DeferralManager();
+            var args = new NavigatingEventArgs(deferral)
+            {
+                NavigationMode = mode,
+                PageType = FrameFacadeInternal.CurrentPageType,
+                Parameter = FrameFacadeInternal.CurrentPageParam,
+                Suspending = suspending,
+            };
+            await deferral.WaitForDeferralsAsync();
+            await dataContext.OnNavigatingFromAsync(args).ConfigureAwait(false);
+            return !args.Cancel;
         }
 
         // after navigate
-        async Task NavigateFromAsync(bool suspending)
+        async Task NavigateFromAsync(Page page, INavigable dataContext, bool suspending)
         {
             DebugWrite($"Suspending: {suspending}");
 
-            var page = FrameFacadeInternal.Content as Page;
-            if (page != null)
-            {
-                // call viewmodel
-                var dataContext = ResolveForPage(page);
-                if (dataContext != null)
-                {
-                    dataContext.NavigationService = this;
-                    dataContext.Dispatcher = this.GetDispatcherWrapper();
-                    dataContext.SessionState = BootStrapper.Current.SessionState;
-                    var pageState = FrameFacadeInternal.PageStateSettingsService(page.GetType()).Values;
-                    await dataContext.OnNavigatedFromAsync(pageState, suspending);
-                }
-            }
+            dataContext.NavigationService = this;
+            dataContext.Dispatcher = this.GetDispatcherWrapper();
+            dataContext.SessionState = BootStrapper.Current.SessionState;
+
+            var pageState = FrameFacadeInternal.PageStateSettingsService(page.GetType()).Values;
+            await dataContext.OnNavigatedFromAsync(pageState, suspending).ConfigureAwait(false);
         }
 
         async Task NavigateToAsync(NavigationMode mode, object parameter, object frameContent = null)
@@ -178,7 +168,6 @@ namespace Template10.Services.NavigationService
                 }
 
                 var dataContext = ResolveForPage(page);
-
                 if (dataContext != null)
                 {
                     // prepare for state load
@@ -187,11 +176,10 @@ namespace Template10.Services.NavigationService
                     dataContext.SessionState = BootStrapper.Current.SessionState;
                     var pageState = FrameFacadeInternal.PageStateSettingsService(page.GetType()).Values;
                     await dataContext.OnNavigatedToAsync(parameter, mode, pageState);
-                    {
-                        // update bindings after NavTo initializes data
-                        XamlUtils.InitializeBindings(page);
-                        XamlUtils.UpdateBindings(page);
-                    }
+
+                    // update bindings after NavTo initializes data
+                    XamlUtils.InitializeBindings(page);
+                    XamlUtils.UpdateBindings(page);
                 }
             }
         }
@@ -220,15 +208,14 @@ namespace Template10.Services.NavigationService
 
             parameter = SerializationService.Serialize(parameter);
 
-            await Task.CompletedTask;
             return FrameFacadeInternal.Navigate(page, parameter, infoOverride);
         }
 
-        public async void Navigate(Type page, object parameter = null, NavigationTransitionInfo infoOverride = null)
+        public void Navigate(Type page, object parameter = null, NavigationTransitionInfo infoOverride = null)
         {
             DebugWrite($"Page: {page}, Parameter: {parameter}, NavigationTransitionInfo: {infoOverride}");
 
-            await NavigateAsync(page, parameter, infoOverride);
+            NavigateAsync(page, parameter, infoOverride).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -265,15 +252,15 @@ namespace Template10.Services.NavigationService
 
             var page = keys[key];
 
-            return await NavigateAsync(page, parameter, infoOverride);
+            return await NavigateAsync(page, parameter, infoOverride).ConfigureAwait(false);
         }
 
-        public async void Navigate<T>(T key, object parameter = null, NavigationTransitionInfo infoOverride = null)
+        public void Navigate<T>(T key, object parameter = null, NavigationTransitionInfo infoOverride = null)
             where T : struct, IConvertible
         {
             DebugWrite($"Key: {key}, Parameter: {parameter}, NavigationTransitionInfo: {infoOverride}");
 
-            await NavigateAsync(key, parameter, infoOverride);
+            NavigateAsync(key, parameter, infoOverride).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         public ISerializationService SerializationService { get; set; }
@@ -298,8 +285,7 @@ namespace Template10.Services.NavigationService
 
             state.Write<string>("CurrentPageType", CurrentPageType.AssemblyQualifiedName);
             state.Write<object>("CurrentPageParam", CurrentPageParam);
-            state.Write<string>("NavigateState", FrameFacadeInternal?.GetNavigationState());
-            await Task.CompletedTask;
+            state.Write<string>("NavigateState", FrameFacadeInternal?.NavigationService.NavigationState);
         }
 
         public event TypedEventHandler<Type> AfterRestoreSavedNavigation;
@@ -317,12 +303,12 @@ namespace Template10.Services.NavigationService
 
                 FrameFacadeInternal.CurrentPageType = Type.GetType(state.Read<string>("CurrentPageType"));
                 FrameFacadeInternal.CurrentPageParam = state.Read<object>("CurrentPageParam");
-                FrameFacadeInternal.SetNavigationState(state.Read<string>("NavigateState"));
+                FrameFacadeInternal.NavigationService.NavigationState = state.Read<string>("NavigateState");
 
                 await NavigateToAsync(NavigationMode.Refresh, FrameFacadeInternal.CurrentPageParam);
                 while (FrameFacadeInternal.Frame.Content == null)
                 {
-                    Task.Yield().GetAwaiter().GetResult();
+                    await Task.Delay(1);
                 }
                 AfterRestoreSavedNavigation?.Invoke(this, FrameFacadeInternal.CurrentPageType);
                 return true;
@@ -333,7 +319,10 @@ namespace Template10.Services.NavigationService
         public void Refresh() { FrameFacadeInternal.Refresh(); }
         public void Refresh(object param) { FrameFacadeInternal.Refresh(param); }
 
-        public void GoBack() { if (FrameFacadeInternal.CanGoBack) FrameFacadeInternal.GoBack(); }
+        public void GoBack(NavigationTransitionInfo infoOverride = null)
+        {
+            if (FrameFacadeInternal.CanGoBack) FrameFacadeInternal.GoBack(infoOverride);
+        }
 
         public bool CanGoBack => FrameFacadeInternal.CanGoBack;
 
@@ -371,7 +360,16 @@ namespace Template10.Services.NavigationService
             DebugWrite($"Frame: {FrameFacadeInternal.FrameId}");
 
             await SaveNavigationAsync();
-            await NavigateFromAsync(true);
+
+            var page = FrameFacadeInternal.Content as Page;
+            if (page != null)
+            {
+                var dataContext = ResolveForPage(page);
+                if (dataContext != null)
+                {
+                    await NavigateFromAsync(page, dataContext, true).ConfigureAwait(false);
+                }
+            }
         }
 
         public Type CurrentPageType => FrameFacadeInternal.CurrentPageType;

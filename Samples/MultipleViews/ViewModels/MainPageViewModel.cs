@@ -48,7 +48,8 @@ namespace Sample.ViewModels
 
         private void PostMessage(GenericMessage<string> message)
         {
-            wrapper.Dispatcher.Dispatch(() => Messages.Add(message.Content));
+            wrapper.Dispatcher.DispatchAsync(() => Messages.Add(message.Content)); //after changes to DispatcherWrapper, if called Dispatch() here -- secondary UI thread will fail 
+                                                                                   //as it will try to use SynchronizationContext and it's already considered to be disposed                                                                                   
         }
     }
 }

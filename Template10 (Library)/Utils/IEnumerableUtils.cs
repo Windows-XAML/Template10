@@ -11,6 +11,26 @@ namespace Template10.Utils
     {
         public static ObservableCollection<T> ToObservableCollection<T>(this IEnumerable<T> list) => new ObservableCollection<T>(list);
 
+        public static bool TryAdd<K, V>(this IDictionary<K, V> dictionary, K key, V value)
+        {
+            if (dictionary.ContainsKey(key))
+            {
+                return false;
+            }
+            else
+            {
+                try
+                {
+                    dictionary.Add(key, value);
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
+
         public static int AddRange<T>(this ObservableCollection<T> list, IEnumerable<T> items, bool clearFirst = false)
         {
             if (clearFirst)

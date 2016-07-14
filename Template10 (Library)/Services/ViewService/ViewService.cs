@@ -12,7 +12,7 @@ using static Template10.Services.LoggingService.LoggingService;
 
 namespace Template10.Services.ViewService
 {
-    public class ViewService:IViewService
+    public sealed class ViewService:IViewService
     {
         internal static void OnWindowCreated()
         {
@@ -53,7 +53,7 @@ namespace Template10.Services.ViewService
                 await ApplicationViewSwitcher
                     .TryShowAsStandaloneAsync(newAppView.Id, ViewSizePreference.Default, currentView.Id, size);
                 return control;
-            });
+            }).ConfigureAwait(false);
             return newControl;
         }
     }

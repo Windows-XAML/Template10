@@ -40,10 +40,8 @@ namespace Template10.Services.NavigationService
         public event EventHandler<HandledEventArgs> BackRequested;
         public void RaiseBackRequested(HandledEventArgs args)
         {
-            if (BackRequested != null)
-            {
-                BackRequested.Invoke(this, args);
-            }
+            BackRequested?.Invoke(this, args);
+
             if (BackButtonHandling == BootStrapper.BackButton.Attach && !args.Handled && (args.Handled = Frame.BackStackDepth > 0))
             {
                 GoBack();
@@ -152,12 +150,16 @@ namespace Template10.Services.NavigationService
 
         public NavigationMode NavigationModeHint = NavigationMode.New;
 
-        public void GoBack()
+        public void GoBack(NavigationTransitionInfo infoOverride = null)
         {
             DebugWrite($"CanGoBack {CanGoBack}");
 
             NavigationModeHint = NavigationMode.Back;
-            if (CanGoBack) Frame.GoBack();
+            if (CanGoBack)
+            {
+                if (infoOverride == null) Frame.GoBack();
+                else Frame.GoBack(infoOverride);
+            }
         }
 
         public void Refresh()
@@ -296,7 +298,7 @@ namespace Template10.Services.NavigationService
                 args.NavigationMode = NavigationModeHint;
             NavigationModeHint = NavigationMode.New;
             _navigatingEventHandlers.ForEach(x => x(this, args));
-            await deferral.WaitForDeferralsAsync();
+            await deferral.WaitForDeferralsAsync().ConfigureAwait(false);
             e.Cancel = args.Cancel;
         }
     }

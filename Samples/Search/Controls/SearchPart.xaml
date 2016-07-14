@@ -51,9 +51,9 @@
                             Orientation="Horizontal">
                     <TextBox Width="216">
                         <Interactivity:Interaction.Behaviors>
-                            <Behaviors:TextBoxEnterKeyBehavior>
-                                <Core:CallMethodAction MethodName="Template10.Samples.SearchSample" TargetObject="{Binding ElementName=userControl}" />
-                            </Behaviors:TextBoxEnterKeyBehavior>
+                            <Behaviors:KeyBehavior Key="Enter">
+                                <Core:CallMethodAction MethodName="Search" TargetObject="{Binding ElementName=userControl}" />
+                            </Behaviors:KeyBehavior>
                         </Interactivity:Interaction.Behaviors>
                     </TextBox>
                     <Button Margin="4,0,0,0"

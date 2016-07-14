@@ -140,13 +140,13 @@ namespace Template10.Common
 
         // it is the intent of Template 10 to no longer require Launched/Activated overrides, only OnStartAsync()
 
-        protected override sealed async void OnActivated(IActivatedEventArgs e) { DebugWrite(); await InternalActivatedAsync(e); }
-        protected override sealed async void OnCachedFileUpdaterActivated(CachedFileUpdaterActivatedEventArgs args) { DebugWrite(); await InternalActivatedAsync(args); }
-        protected override sealed async void OnFileActivated(FileActivatedEventArgs args) { DebugWrite(); await InternalActivatedAsync(args); }
-        protected override sealed async void OnFileOpenPickerActivated(FileOpenPickerActivatedEventArgs args) { DebugWrite(); await InternalActivatedAsync(args); }
-        protected override sealed async void OnFileSavePickerActivated(FileSavePickerActivatedEventArgs args) { DebugWrite(); await InternalActivatedAsync(args); }
-        protected override sealed async void OnSearchActivated(SearchActivatedEventArgs args) { DebugWrite(); await InternalActivatedAsync(args); }
-        protected override sealed async void OnShareTargetActivated(ShareTargetActivatedEventArgs args) { DebugWrite(); await InternalActivatedAsync(args); }
+        protected override sealed async void OnActivated(IActivatedEventArgs e) { DebugWrite(); await InternalActivatedAsync(e).ConfigureAwait(false); }
+        protected override sealed async void OnCachedFileUpdaterActivated(CachedFileUpdaterActivatedEventArgs args) { DebugWrite(); await InternalActivatedAsync(args).ConfigureAwait(false); }
+        protected override sealed async void OnFileActivated(FileActivatedEventArgs args) { DebugWrite(); await InternalActivatedAsync(args).ConfigureAwait(false); }
+        protected override sealed async void OnFileOpenPickerActivated(FileOpenPickerActivatedEventArgs args) { DebugWrite(); await InternalActivatedAsync(args).ConfigureAwait(false); }
+        protected override sealed async void OnFileSavePickerActivated(FileSavePickerActivatedEventArgs args) { DebugWrite(); await InternalActivatedAsync(args).ConfigureAwait(false); }
+        protected override sealed async void OnSearchActivated(SearchActivatedEventArgs args) { DebugWrite(); await InternalActivatedAsync(args).ConfigureAwait(false); }
+        protected override sealed async void OnShareTargetActivated(ShareTargetActivatedEventArgs args) { DebugWrite(); await InternalActivatedAsync(args).ConfigureAwait(false); }
 
         public IActivatedEventArgs OriginalActivatedArgs { get; private set; }
 
@@ -181,14 +181,14 @@ namespace Template10.Common
 
         // it is the intent of Template 10 to no longer require Launched/Activated overrides, only OnStartAsync()
 
-        protected override sealed void OnLaunched(LaunchActivatedEventArgs e) { DebugWrite(); InternalLaunchAsync(e); }
+        protected sealed override async void OnLaunched(LaunchActivatedEventArgs e) { DebugWrite(); await InternalLaunchAsync(e).ConfigureAwait(false); }
 
         /// <summary>
         /// This handles all the preliminary stuff unique to Launched before calling OnStartAsync().
         /// This is private because it is a specialized prelude to OnStartAsync().
         /// OnStartAsync will not be called if state restore is determined
         /// </summary>
-        private async void InternalLaunchAsync(ILaunchActivatedEventArgs e)
+        private async Task InternalLaunchAsync(ILaunchActivatedEventArgs e)
         {
             DebugWrite($"Previous:{e.PreviousExecutionState.ToString()}");
 
@@ -227,7 +227,7 @@ namespace Template10.Common
                             This is okay & by design.
                         */
 
-						
+                        
                         if (EnableAutoRestoreAfterTerminated)
                         {
                             var launchedEvent = e as ILaunchActivatedEventArgs;
@@ -653,7 +653,7 @@ namespace Template10.Common
         internal Popup SplashScreenPopup = null;
         private void ShowSplashScreen(IActivatedEventArgs e)
         {
-            if (SplashFactory != null && e.PreviousExecutionState != ApplicationExecutionState.Suspended)
+            if (SplashFactory != null)
             {
                 CurrentState = States.Splashing;
                 var splash = SplashFactory(e.SplashScreen);

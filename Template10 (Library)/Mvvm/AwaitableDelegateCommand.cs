@@ -8,8 +8,8 @@ namespace Template10.Mvvm
     using System.Windows.Input;
     using Windows.UI.Xaml;
 
-	public class AwaitableDelegateCommand : System.Windows.Input.ICommand
-	{
+	public class AwaitableDelegateCommand : IChangedCommand
+    {
 		private readonly Func<AwaitableDelegateCommandParameter, Task> _execute;
 		private readonly Func<AwaitableDelegateCommandParameter, bool> _canExecute;
 		public event EventHandler CanExecuteChanged;

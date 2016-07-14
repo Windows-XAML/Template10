@@ -4,42 +4,46 @@ namespace Template10.Common
 {
     public class WeakReference<TInstance, TSource, TEventArgs> where TInstance : class
     {
-        public WeakReference Reference { get; protected set; }
+        public WeakReference<TInstance> Reference { get; protected set; }
         public Action<TInstance, TSource, TEventArgs> EventAction { get; set; }
         public Action<TInstance, WeakReference<TInstance, TSource, TEventArgs>> DetachAction { get; set; }
-        public WeakReference(TInstance instance) { Reference = new WeakReference(instance); }
+        public WeakReference(TInstance instance) { Reference = new WeakReference<TInstance>(instance); }
 
         public virtual void Handler(TSource source, TEventArgs eventArgs)
         {
-            try
+            TInstance instance;
+            if (Reference != null && Reference.TryGetTarget(out instance))
             {
-                EventAction(Reference?.Target as TInstance, source, eventArgs);
+                EventAction?.Invoke(instance, source, eventArgs);
             }
-            catch
+            else
             {
-                DetachAction?.Invoke(Reference?.Target as TInstance, this);
-                DetachAction = null;
+                // Instance surely doesn't survive garbage collections, so passing null for it
+                // Don't removed unnecessary delegate parameter for backward compatibility
+                DetachAction?.Invoke(null, this);
             }
         }
     }
 
     public class WeakReference<TInstance, TSource> where TInstance : class
     {
-        public WeakReference Reference { get; protected set; }
+        public WeakReference<TInstance> Reference { get; protected set; }
         public Action<TInstance, TSource> EventAction { get; set; }
         public Action<TInstance, WeakReference<TInstance, TSource>> DetachAction { get; set; }
-        public WeakReference(TInstance instance) { Reference = new WeakReference(instance); }
+        public WeakReference(TInstance instance) { Reference = new WeakReference<TInstance>(instance); }
 
         public virtual void Handler(TSource source)
         {
-            try
+            TInstance instance;
+            if (Reference != null && Reference.TryGetTarget(out instance))
             {
-                EventAction(Reference?.Target as TInstance, source);
+                EventAction?.Invoke(instance, source);
             }
-            catch
+            else
             {
-                DetachAction?.Invoke(Reference?.Target as TInstance, this);
-                DetachAction = null;
+                // Instance surely doesn't survive garbage collections, so passing null for it
+                // Don't removed unnecessary delegate parameter for backward compatibility
+                DetachAction?.Invoke(null, this);
             }
         }
     }
