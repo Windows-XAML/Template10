@@ -73,8 +73,7 @@ namespace Template10.Controls
         /// In simplest form, a NavButton acting as a parent menu handles its Tapped event with the remaining group 
         /// members as submenu children. This parent can then act upon its children, such as toggling their visibility.
         /// You can, no doubt, find other more advanced uses for this though haven't figured out one yet ...
-        /// 
-        /// </summary>  
+        /// </summary>
         public object GroupName
         {
             get { return GetValue(GroupNameProperty); }
