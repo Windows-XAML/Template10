@@ -139,6 +139,7 @@ namespace Template10.Utils
         /// Returns a list of submenu buttons with the same GroupName attribute as the command button upon which this
         /// extension is invoked (which is treated as Parent command button).
         /// </summary>
+        /// <returns>List &lt; HamburgerButtonInfo &gt. List will be 0 if nothing found. </returns>
         /// <remarks>
         /// For added convenience, the GroupName attribute is detected with string.StartWith(groupName) rather than
         /// the straightforward string.Equals(groupName). That way we can tag submenu buttons as groupName1, groupName2, 
@@ -146,11 +147,12 @@ namespace Template10.Utils
         /// which in this case is groupName.
         /// You don't have to use this scheme in which case you just stick to a single groupName for all buttons.
         /// </remarks>
-        /// 
+
         public static List<HamburgerButtonInfo> ItemsInGroup(this HamburgerButtonInfo button, bool IncludeSecondaryButtons = false)
         {
             string groupName = button.GroupName?.ToString();
-            if (string.IsNullOrWhiteSpace(groupName)) return null;
+            // Return 0 count List rather than null
+            if (string.IsNullOrWhiteSpace(groupName)) return new List<HamburgerButtonInfo>();
 
             FrameworkElement fe = button.Content as FrameworkElement;
             HamburgerMenu hamMenu = fe.FirstAncestor<HamburgerMenu>();
