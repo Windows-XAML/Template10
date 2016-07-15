@@ -69,6 +69,22 @@ namespace Template10.Controls
           typeof(HamburgerButtonInfo), new PropertyMetadata(null));
 
         /// <summary>
+        /// Sets and gets the MenuGroup property.
+        /// In simplest form, a Command Button acting as a parent menu can handle its Tapped event in such a way that 
+        /// the remaining group members are submenu children. This parent can then act upon its children, such as toggling
+        /// their visibility. You can, no doubt, find other more advanced uses for this though haven't figured out one yet ...
+        /// 
+        /// </summary>  
+        public object MenuGroup
+        {
+            get { return GetValue(MenuGroupProperty); }
+            set { SetValue(MenuGroupProperty, value); }
+        }
+        public static readonly DependencyProperty MenuGroupProperty =
+          DependencyProperty.Register(nameof(CommandParameter), typeof(object),
+          typeof(HamburgerButtonInfo), new PropertyMetadata(null));
+
+        /// <summary>
         /// Sets and gets the PageType property.
         /// </summary>
         public Type PageType
