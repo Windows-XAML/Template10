@@ -32,7 +32,6 @@ namespace Template10.Utils
         public static IDispatcherWrapper GetDispatcherWrapper(this CoreDispatcher wrapper) 
             => new DispatcherWrapper(wrapper);
 
-
         /// <summary>
         /// Returns a list of submenu buttons with the same GroupName attribute as the command button upon which this
         /// extension is invoked (which is treated as Parent command button).
