@@ -5,12 +5,13 @@ using Template10.Common;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
+using Template10.Services.ViewService;
 
 namespace Template10.Services.NavigationService
 {
     public interface INavigationService
     {
-        void GoBack();
+        void GoBack(NavigationTransitionInfo infoOverride = null);
         void GoForward();
 
         object Content { get; }
@@ -32,7 +33,7 @@ namespace Template10.Services.NavigationService
 
        
 
-        Task OpenAsync(Type page, object parameter = null, string title = null, ViewSizePreference size = ViewSizePreference.UseHalf);
+        Task<ViewLifetimeControl> OpenAsync(Type page, object parameter = null, string title = null, ViewSizePreference size = ViewSizePreference.UseHalf);
 
         object CurrentPageParam { get; }
         Type CurrentPageType { get; }

@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using Template10.Services.SerializationService;
+using Template10.Services.ViewService;
 using Template10.Utils;
 
 namespace Template10.Services.NavigationService
@@ -19,6 +20,7 @@ namespace Template10.Services.NavigationService
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-NavigationService
     public partial class NavigationService : INavigationService
     {
+        private readonly IViewService viewService = new ViewService.ViewService();
         FrameFacade FrameFacadeInternal { get; }
         public FrameFacade FrameFacade => FrameFacadeInternal;
         public bool IsInMainView { get; }
@@ -182,29 +184,10 @@ namespace Template10.Services.NavigationService
             }
         }
 
-        public async Task OpenAsync(Type page, object parameter = null, string title = null, ViewSizePreference size = ViewSizePreference.UseHalf)
+        public Task<ViewLifetimeControl> OpenAsync(Type page, object parameter = null, string title = null, ViewSizePreference size = ViewSizePreference.UseHalf)
         {
             DebugWrite($"Page: {page}, Parameter: {parameter}, Title: {title}, Size: {size}");
-
-            var currentView = ApplicationView.GetForCurrentView();
-            title = title ?? currentView.Title;
-
-            var newView = CoreApplication.CreateNewView();
-            var dispatcher = new DispatcherWrapper(newView.Dispatcher);
-            await dispatcher.DispatchAsync(async () =>
-            {
-                var newWindow = WindowWrapper.Current().Window;
-                var newAppView = ApplicationView.GetForCurrentView();
-                newAppView.Title = title;
-
-                var nav = BootStrapper.Current.NavigationServiceFactory(BootStrapper.BackButton.Ignore, BootStrapper.ExistingContent.Exclude);
-                nav.Navigate(page, parameter);
-                newWindow.Content = nav.Frame;
-                newWindow.Activate();
-
-                await ApplicationViewSwitcher
-                    .TryShowAsStandaloneAsync(newAppView.Id, ViewSizePreference.Default, currentView.Id, size);
-            }).ConfigureAwait(false);
+            return viewService.OpenAsync(page, parameter, title, size);
         }
 
         public async Task<bool> NavigateAsync(Type page, object parameter = null, NavigationTransitionInfo infoOverride = null)
@@ -228,11 +211,11 @@ namespace Template10.Services.NavigationService
             return FrameFacadeInternal.Navigate(page, parameter, infoOverride);
         }
 
-        public async void Navigate(Type page, object parameter = null, NavigationTransitionInfo infoOverride = null)
+        public void Navigate(Type page, object parameter = null, NavigationTransitionInfo infoOverride = null)
         {
             DebugWrite($"Page: {page}, Parameter: {parameter}, NavigationTransitionInfo: {infoOverride}");
 
-            await NavigateAsync(page, parameter, infoOverride).ConfigureAwait(false);
+            NavigateAsync(page, parameter, infoOverride).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -272,12 +255,12 @@ namespace Template10.Services.NavigationService
             return await NavigateAsync(page, parameter, infoOverride).ConfigureAwait(false);
         }
 
-        public async void Navigate<T>(T key, object parameter = null, NavigationTransitionInfo infoOverride = null)
+        public void Navigate<T>(T key, object parameter = null, NavigationTransitionInfo infoOverride = null)
             where T : struct, IConvertible
         {
             DebugWrite($"Key: {key}, Parameter: {parameter}, NavigationTransitionInfo: {infoOverride}");
 
-            await NavigateAsync(key, parameter, infoOverride).ConfigureAwait(false);
+            NavigateAsync(key, parameter, infoOverride).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         public ISerializationService SerializationService { get; set; }
@@ -336,7 +319,10 @@ namespace Template10.Services.NavigationService
         public void Refresh() { FrameFacadeInternal.Refresh(); }
         public void Refresh(object param) { FrameFacadeInternal.Refresh(param); }
 
-        public void GoBack() { if (FrameFacadeInternal.CanGoBack) FrameFacadeInternal.GoBack(); }
+        public void GoBack(NavigationTransitionInfo infoOverride = null)
+        {
+            if (FrameFacadeInternal.CanGoBack) FrameFacadeInternal.GoBack(infoOverride);
+        }
 
         public bool CanGoBack => FrameFacadeInternal.CanGoBack;
 

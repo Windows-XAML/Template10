@@ -152,6 +152,7 @@
     <Compile Include="Common\IStateItems.cs" />
     <Compile Include="Common\ItemPropertyChangedEventArgs.cs" />
     <Compile Include="Common\Mdl2.cs" />
+    <Compile Include="Common\NavButtonsHelper.cs" />
     <Compile Include="Common\ObservableDictionary.cs" />
     <Compile Include="Common\StateItems.cs" />
     <Compile Include="Common\StateKey.cs" />
@@ -205,6 +206,10 @@
     <Compile Include="Services\SettingsService\JsonMapping.cs" />
     <Compile Include="Services\SettingsService\SettingsService.cs" />
     <Compile Include="Services\SettingsService\SettingsStrategy.cs" />
+    <Compile Include="Services\ViewService\IViewService.cs" />
+    <Compile Include="Services\ViewService\SecondaryViewSynchronizationContextDecorator.cs" />
+    <Compile Include="Services\ViewService\ViewLifetimeControl.cs" />
+    <Compile Include="Services\ViewService\ViewService.cs" />
     <Compile Include="Utils\ApiUtils.cs" />
     <Compile Include="Utils\AudioUtils.cs" />
     <Compile Include="Utils\ColorUtils.cs" />

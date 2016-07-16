@@ -4,7 +4,14 @@
                      xmlns:common="using:Template10.Common">
 
     <Application.Resources>
-        <ResourceDictionary Source="Styles\Custom.xaml" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles\Custom.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <!--  custom resources  -->
+
+        </ResourceDictionary>
     </Application.Resources>
 
 </common:BootStrapper>

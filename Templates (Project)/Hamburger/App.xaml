@@ -9,17 +9,9 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles\Custom.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <converter:ValueWhenConverter x:Name="FalseWhenTrueConverter">
-                <converter:ValueWhenConverter.When>
-                    <x:Boolean>True</x:Boolean>
-                </converter:ValueWhenConverter.When>
-                <converter:ValueWhenConverter.Value>
-                    <x:Boolean>False</x:Boolean>
-                </converter:ValueWhenConverter.Value>
-                <converter:ValueWhenConverter.Otherwise>
-                    <x:Boolean>True</x:Boolean>
-                </converter:ValueWhenConverter.Otherwise>
-            </converter:ValueWhenConverter>
+
+            <!--  custom resources  -->
+
         </ResourceDictionary>
     </Application.Resources>
 

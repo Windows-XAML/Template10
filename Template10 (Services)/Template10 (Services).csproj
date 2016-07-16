@@ -152,6 +152,11 @@
     <Compile Include="MarketplaceService\IMarketplaceService.cs" />
     <Compile Include="MarketplaceService\MarketplaceHelper.cs" />
     <Compile Include="MarketplaceService\MarketplaceService.cs" />
+    <Compile Include="NagService\INagService.cs" />
+    <Compile Include="NagService\Nag.cs" />
+    <Compile Include="NagService\NagResponseInfo.cs" />
+    <Compile Include="NagService\NagService.cs" />
+    <Compile Include="NagService\NagServiceHelper.cs" />
     <Compile Include="NetworkAvailableService\INetworkAvailableService.cs" />
     <Compile Include="NetworkAvailableService\NetworkAvailableHelper.cs" />
     <Compile Include="NetworkAvailableService\NetworkAvailableService.cs" />
