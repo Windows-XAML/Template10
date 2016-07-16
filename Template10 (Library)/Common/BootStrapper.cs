@@ -96,12 +96,11 @@ namespace Template10.Common
         {
             DebugWrite();
             //should be called to initialize and set new SynchronizationContext
-            ViewService.OnWindowCreated();
             if (!WindowWrapper.ActiveWrappers.Any())
                 Loaded();
-
             // handle window
             var window = new WindowWrapper(args.Window);
+            ViewService.OnWindowCreated();
             WindowCreated?.Invoke(this, args);
             base.OnWindowCreated(args);           
         }
