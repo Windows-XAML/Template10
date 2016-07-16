@@ -24,20 +24,20 @@ namespace Template10.Services.NagService
             _fileService = fileService;
         }
 
-        public async Task<bool> Exists(string nagId, StorageStrategies location = StorageStrategies.Local)
+        public async Task<bool> Exists(string nagId, StorageStrategies location)
         {
             if (string.IsNullOrEmpty(nagId)) throw new ArgumentException("nagId cannot be null or empty", "nagId");
 
             return await _fileService.FileExistsAsync(string.Format(StateFileNameTemplate, nagId), location);
         }
 
-        public async Task<NagResponseInfo> Load(string nagId, StorageStrategies location = StorageStrategies.Local)
+        public async Task<NagResponseInfo> Load(string nagId, StorageStrategies location)
         {
             if (string.IsNullOrEmpty(nagId)) throw new ArgumentException("nagId cannot be null or empty", "nagId");
 
             try
             {
-                if (await Exists(nagId))
+                if (await Exists(nagId, location))
                 {
                     return await _fileService.ReadFileAsync<NagResponseInfo>(GetFileName(nagId), location);
                 }
@@ -52,14 +52,14 @@ namespace Template10.Services.NagService
             }
         }
 
-        public async Task Delete(string nagId, StorageStrategies location = StorageStrategies.Local)
+        public async Task Delete(string nagId, StorageStrategies location)
         {
             if (string.IsNullOrEmpty(nagId)) throw new ArgumentException("nagId cannot be null or empty", "nagId");
 
             await _fileService.DeleteFileAsync(GetFileName(nagId), location);
         }
 
-        public async Task Persist(NagResponseInfo state, string nagId, StorageStrategies location = StorageStrategies.Local)
+        public async Task Persist(NagResponseInfo state, string nagId, StorageStrategies location)
         {
             if (state == null) throw new ArgumentNullException("state");
             if (string.IsNullOrEmpty(nagId)) throw new ArgumentException("nagId cannot be null or empty", "nagId");
@@ -71,7 +71,7 @@ namespace Template10.Services.NagService
         {
             if (nag == null) throw new ArgumentNullException("nag");
 
-            var responseInfo = await Load(nag.Id);
+            var responseInfo = await Load(nag.Id, nag.Location);
             responseInfo.LaunchCount++;
 
             if (responseInfo.ShouldNag(launches))
@@ -88,7 +88,7 @@ namespace Template10.Services.NagService
         {
             if (nag == null) throw new ArgumentNullException("nag");
 
-            var responseInfo = await Load(nag.Id);
+            var responseInfo = await Load(nag.Id, nag.Location);
             responseInfo.LaunchCount++;
 
             if (responseInfo.ShouldNag(duration))
@@ -105,7 +105,7 @@ namespace Template10.Services.NagService
         {
             if (nag == null) throw new ArgumentNullException("nag");
 
-            var responseInfo = await Load(nag.Id);
+            var responseInfo = await Load(nag.Id, nag.Location);
             responseInfo.LaunchCount++;
 
             if (responseInfo.ShouldNag(launches) && responseInfo.ShouldNag(duration))
