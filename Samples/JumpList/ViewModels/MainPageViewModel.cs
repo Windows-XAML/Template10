@@ -50,6 +50,11 @@ namespace Template10.Samples.JumpListSample.ViewModels
 
         public async void Save()
         {
+            if (File == null)
+            {
+                await new Windows.UI.Popups.MessageDialog("No file selected.").ShowAsync();
+                return;
+            }
             try
             {
                 await _DataService.SaveFileInfoAsync(File);
