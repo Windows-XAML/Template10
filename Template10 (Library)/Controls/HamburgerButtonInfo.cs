@@ -69,6 +69,21 @@ namespace Template10.Controls
           typeof(HamburgerButtonInfo), new PropertyMetadata(null));
 
         /// <summary>
+        /// Sets and gets the GroupName property.
+        /// In simplest form, a NavButton acting as a parent menu handles its Tapped event with the remaining group 
+        /// members as submenu children. This parent can then act upon its children, such as toggling their visibility.
+        /// You can, no doubt, find other more advanced uses for this though haven't figured out one yet ...
+        /// </summary>
+        public object GroupName
+        {
+            get { return GetValue(GroupNameProperty); }
+            set { SetValue(GroupNameProperty, value); }
+        }
+        public static readonly DependencyProperty GroupNameProperty =
+          DependencyProperty.Register(nameof(CommandParameter), typeof(object),
+          typeof(HamburgerButtonInfo), new PropertyMetadata(null));
+
+        /// <summary>
         /// Sets and gets the PageType property.
         /// </summary>
         public Type PageType
