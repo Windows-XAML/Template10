@@ -13,14 +13,24 @@ namespace Template10.Converters
                 Debugger.Break();
             try
             {
-                if (object.Equals(value,parameter ?? When))
-                    return Value;
-                return Otherwise;
+                if (value is String && String.IsNullOrEmpty((String)When))
+                {
+                    if (String.IsNullOrEmpty((String)value))
+                        return Value;
+                }
+                else
+                {
+                    if (object.Equals(value, parameter ?? When))
+                        return Value;
+                }
+
+                return Otherwise ?? value;
             }
             catch
             {
-                return Otherwise;
+                return Otherwise ?? value;
             }
+
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

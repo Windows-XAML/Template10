@@ -195,3 +195,4 @@ Templates (Project)/Blank/null
 /packages/Microsoft.VSSDK.BuildTools.14.1.24720
 
 *.zip
+/Template10 (Installer)/Template10.Installer/ProjectTemplates/Windows/Universal/Template10/Temp
