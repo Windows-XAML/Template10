@@ -9,9 +9,9 @@ using Windows.Foundation.Collections;
 
 namespace Template10.Validation
 {
-    public abstract class ModelBase : BindableBase, IModel
+    public abstract class ValidatableViewModelBase : BindableBase, IModel
     {
-        public ModelBase()
+        public ValidatableViewModelBase()
         {
             Properties.MapChanged += (s, e) =>
             {
@@ -19,6 +19,7 @@ namespace Template10.Validation
                     Properties[e.Key].ValueChanged += (sender, args) =>
                     {
                         RaisePropertyChanged(e.Key);
+                        Validate();
                         RaisePropertyChanged(nameof(IsDirty));
                         RaisePropertyChanged(nameof(IsValid));
                     };
