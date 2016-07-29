@@ -293,7 +293,7 @@ namespace Template10.Services.NavigationService
                 throw new Exception("Your parameter must be serializable. If it isn't, then use SessionState.", ex);
             }
             var deferral = new DeferralManager();
-            var args = new NavigatingEventArgs(deferral, e, Content as Page, e.SourcePageType, parameter);
+            var args = new NavigatingEventArgs(deferral, e, Content as Page, e.SourcePageType, parameter, e.Parameter);
             if (NavigationModeHint != NavigationMode.New)
                 args.NavigationMode = NavigationModeHint;
             NavigationModeHint = NavigationMode.New;

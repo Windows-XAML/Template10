@@ -69,7 +69,7 @@ namespace Template10.Services.NavigationService
                     if (dataContext != null)
                     {
                         // allow the viewmodel to cancel navigation
-                        e.Cancel = !(await NavigatingFromAsync(page, e.PageType, dataContext, false, e.NavigationMode));
+                        e.Cancel = !(await NavigatingFromAsync(page, e.PageType, e.Parameter, dataContext, false, e.NavigationMode));
                         if (!e.Cancel)
                         {
                             await NavigateFromAsync(page, dataContext, false).ConfigureAwait(false);
@@ -115,7 +115,6 @@ namespace Template10.Services.NavigationService
         }
 
         // before navigate (cancellable)
-        async Task<bool> NavigatingFromAsync(Page page, Type forwardPageType, INavigable dataContext, bool suspending, NavigationMode mode)
         {
             DebugWrite($"Suspending: {suspending}");
 
@@ -130,7 +129,7 @@ namespace Template10.Services.NavigationService
                 PageType = FrameFacadeInternal.CurrentPageType,
                 Parameter = FrameFacadeInternal.CurrentPageParam,
                 Suspending = suspending,
-                ForwardPageType = forwardPageType
+                TargetPageType = targetPageType,
             };
             await deferral.WaitForDeferralsAsync();
             await dataContext.OnNavigatingFromAsync(args).ConfigureAwait(false);

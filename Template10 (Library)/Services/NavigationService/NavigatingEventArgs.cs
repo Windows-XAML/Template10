@@ -16,17 +16,16 @@ namespace Template10.Services.NavigationService
             Manager = manager;
         }
 
-        public NavigatingEventArgs(DeferralManager manager, NavigatingCancelEventArgs e, Page page, Type forwardPageType, object parameter) : this(manager)
         {
             NavigationMode = e.NavigationMode;
             PageType = e.SourcePageType;
             Page = page;
             Parameter = parameter;
-            ForwardPageType = forwardPageType;
+            TargetPageType = targetPageType;
         }
 
         public bool Cancel { get; set; } = false;
         public bool Suspending { get; set; } = false;
-        public Type ForwardPageType { get; set; }
+        public Type TargetPageType { get; set; }
     }
 }
