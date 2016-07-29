@@ -115,6 +115,7 @@ namespace Template10.Services.NavigationService
         }
 
         // before navigate (cancellable)
+        async Task<bool> NavigatingFromAsync(Page page, Type targetPageType, object targetPageParameter, INavigable dataContext, bool suspending, NavigationMode mode)
         {
             DebugWrite($"Suspending: {suspending}");
 
@@ -130,6 +131,7 @@ namespace Template10.Services.NavigationService
                 Parameter = FrameFacadeInternal.CurrentPageParam,
                 Suspending = suspending,
                 TargetPageType = targetPageType,
+                TargetPageParameter = targetPageParameter
             };
             await deferral.WaitForDeferralsAsync();
             await dataContext.OnNavigatingFromAsync(args).ConfigureAwait(false);
