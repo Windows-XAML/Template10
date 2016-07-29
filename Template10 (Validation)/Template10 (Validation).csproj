@@ -111,16 +111,10 @@
     <Compile Include="Validation\ControlWrapper.cs" />
     <Compile Include="Validation\IModel.cs" />
     <Compile Include="Validation\IProperty.cs" />
-    <Compile Include="Validation\ModelBase.cs" />
+    <Compile Include="Validation\ValidatableViewModelBase.cs" />
     <Compile Include="Validation\ObservableDictionary.cs" />
     <Compile Include="Validation\Property.cs" />
     <EmbeddedResource Include="Properties\Template10.Validation.rd.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Template10 %28Library%29\Template10 %28Library%29.csproj">
-      <Project>{ac3e4f10-6615-4e16-bb0f-104760c92b95}</Project>
-      <Name>Template10 %28Library%29</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Themes\Generic.xaml">
