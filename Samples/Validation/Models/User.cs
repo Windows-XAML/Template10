@@ -3,7 +3,7 @@ using Template10.Validation;
 
 namespace Template10.Samples.ValidationSample.Models
 {
-    public class User : ValidatableViewModelBase
+    public class User : ModelBase
     {
         public int Id { get; set; }
         public string FirstName { get { return Read<string>(); } set { Write(value); } }
