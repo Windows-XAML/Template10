@@ -400,9 +400,9 @@ namespace Template10.Controls
                 pageParam = NavigationService.CurrentPageParam;
             }
             else if (pageParam.ToString().StartsWith("{"))
+            {
+                try
                 {
-                    try
-                    {
                     pageParam = NavigationService.FrameFacade.SerializationService.Deserialize(pageParam.ToString());
                 }
                 catch { }
