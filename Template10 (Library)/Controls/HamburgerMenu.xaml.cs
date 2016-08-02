@@ -252,7 +252,11 @@ namespace Template10.Controls
                     if (currentItem != null)
                     {
                         var info = new InfoElement(currentItem);
-                        NavCommand.Execute(info.HamburgerButtonInfo);
+                        var hamburgerButtonInfo = info.HamburgerButtonInfo;
+                        if (hamburgerButtonInfo != null)
+                        {
+                            NavCommand.Execute(hamburgerButtonInfo);
+                        }
                     }
 
                     break;
@@ -396,9 +400,9 @@ namespace Template10.Controls
                 pageParam = NavigationService.CurrentPageParam;
             }
             else if (pageParam.ToString().StartsWith("{"))
-            {
-                try
                 {
+                    try
+                    {
                     pageParam = NavigationService.FrameFacade.SerializationService.Deserialize(pageParam.ToString());
                 }
                 catch { }
