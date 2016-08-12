@@ -32,7 +32,7 @@ namespace Sample.Services.SettingsServices
         {
             get
             {
-                var theme = ApplicationTheme.Light;
+                var theme = Application.Current.RequestedTheme;
                 var value = _helper.Read<string>(nameof(AppTheme), theme.ToString());
                 return Enum.TryParse<ApplicationTheme>(value, out theme) ? theme : ApplicationTheme.Dark;
             }
