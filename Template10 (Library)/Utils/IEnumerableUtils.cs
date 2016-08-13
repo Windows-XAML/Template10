@@ -31,6 +31,14 @@ namespace Template10.Utils
             }
         }
 
+        /// <summary>
+        /// Adds the items from an existing <see cref=""/> to this ObservableCollection.
+        /// </summary>
+        /// <param name="items">The set of objects to be added.</param>
+        /// <param name="clearFirst">Specifies whether or not this ObservableCollection will be cleared before the items are added.</param>
+        /// <remarks>
+        /// NOTE: This method will fire the OnCollectionChanged event one time for each item added.
+        /// </remarks>
         public static int AddRange<T>(this ObservableCollection<T> list, IEnumerable<T> items, bool clearFirst = false)
         {
             if (clearFirst)
