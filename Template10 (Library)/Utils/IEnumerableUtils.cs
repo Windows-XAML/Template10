@@ -32,7 +32,7 @@ namespace Template10.Utils
         }
 
         /// <summary>
-        /// Adds the items from an existing <see cref=""/> to this ObservableCollection.
+        /// Adds the items from an existing <see cref="IEnumerable{T}"/> to this ObservableCollection.
         /// </summary>
         /// <param name="items">The set of objects to be added.</param>
         /// <param name="clearFirst">Specifies whether or not this ObservableCollection will be cleared before the items are added.</param>
