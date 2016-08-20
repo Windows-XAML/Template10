@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using Template10.Mvvm;
@@ -15,6 +16,7 @@ namespace Template10.Validation
 
         ObservableCollection<string> Errors { get; }
 
+        [JsonIgnore]
         bool IsValid { get; }
 
         bool IsDirty { get; }

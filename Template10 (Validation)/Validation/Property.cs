@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -22,11 +23,14 @@ namespace Template10.Validation
 
         public override string ToString() => Value?.ToString();
 
+        [JsonIgnore]
         public ObservableCollection<string> Errors { get; }
             = new ObservableCollection<string>();
 
+        [JsonIgnore]
         public bool IsValid => !Errors.Any();
 
+        [JsonIgnore]
         public bool IsDirty
         {
             get
