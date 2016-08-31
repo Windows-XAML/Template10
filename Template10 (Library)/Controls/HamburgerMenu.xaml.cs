@@ -327,7 +327,9 @@ namespace Template10.Controls
         {
             e.NewValue.AfterRestoreSavedNavigation += (s, args) => HighlightCorrectButton(NavigationService.CurrentPageType, NavigationService.CurrentPageParam);
             e.NewValue.FrameFacade.Navigated += (s, args) => HighlightCorrectButton(args.PageType, args.Parameter);
-            ShellSplitView.Content = e.NewValue.Frame;
+            var frame = e.NewValue.Frame;
+            frame.VerticalContentAlignment = VerticalAlignment.Top;
+            ShellSplitView.Content = frame;
             UpdateFullScreenForSplashScreen(e);
         }
 
