@@ -252,7 +252,11 @@ namespace Template10.Controls
                     if (currentItem != null)
                     {
                         var info = new InfoElement(currentItem);
-                        NavCommand.Execute(info.HamburgerButtonInfo);
+                        var hamburgerButtonInfo = info.HamburgerButtonInfo;
+                        if (hamburgerButtonInfo != null)
+                        {
+                            NavCommand.Execute(hamburgerButtonInfo);
+                        }
                     }
 
                     break;
@@ -593,10 +597,12 @@ namespace Template10.Controls
                 {
                     Margin = new Thickness(-square.Width, 0, 0, 0);
                 }
+                HamburgerButton.Margin = new Thickness(-HamburgerButton.ActualWidth, 0, 0, 0);
             }
             else
             {
                 Margin = new Thickness(0);
+                HamburgerButton.Margin = new Thickness(0);
             }
 
             // hiding these elements prevents flicker

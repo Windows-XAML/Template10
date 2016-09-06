@@ -25,8 +25,8 @@ namespace Template10.Converters
             if (value == null && targetType.GetTypeInfo().IsValueType)
                 return Activator.CreateInstance(targetType);
 
-            if (targetType == typeof(object))
-                return (object)value;
+            if (targetType.IsInstanceOfType(value))
+                return value;
 
             return System.Convert.ChangeType(value, targetType);
         }
