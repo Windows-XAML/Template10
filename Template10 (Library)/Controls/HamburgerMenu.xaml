@@ -264,7 +264,12 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <RelativePanel x:Name="RootGrid">
+    <!--
+    Margin definition was added to correct PageHeader not aligning with the top on AU Platform.
+    So far, it is not clear what is causing this (nor whom to attribute to between AU and T10!).
+    Top offset value <= -0.4 works and -1 picked as shown below.
+    -->
+    <RelativePanel x:Name="RootGrid" Margin="0,-1,0,0">
 
         <VisualStateManager.VisualStateGroups>
 
