@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -9,9 +10,9 @@ using Windows.Foundation.Collections;
 
 namespace Template10.Validation
 {
-    public abstract class ModelBase : BindableBase, IModel
+    public abstract class ValidatableViewModelBase : ViewModelBase, IModel
     {
-        public ModelBase()
+        public ValidatableViewModelBase()
         {
             Properties.MapChanged += (s, e) =>
             {
@@ -19,6 +20,7 @@ namespace Template10.Validation
                     Properties[e.Key].ValueChanged += (sender, args) =>
                     {
                         RaisePropertyChanged(e.Key);
+                        Validate();
                         RaisePropertyChanged(nameof(IsDirty));
                         RaisePropertyChanged(nameof(IsValid));
                     };
@@ -66,16 +68,21 @@ namespace Template10.Validation
             Validate();
         }
 
+        [JsonIgnore]
         public ObservableDictionary<string, IProperty> Properties { get; }
             = new ObservableDictionary<string, IProperty>();
 
+        [JsonIgnore]
         public ObservableCollection<string> Errors { get; }
             = new ObservableCollection<string>();
 
+        [JsonIgnore]
         public Action<IModel> Validator { set; get; }
 
+        [JsonIgnore]
         public bool IsValid => !Errors.Any();
 
+        [JsonIgnore]
         public bool IsDirty { get; }
     }
 }
