@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Template10.Utils;
 using Windows.Foundation.Collections;
+using Template10.Utils;
 
 namespace Template10.Common
 {
