@@ -33,7 +33,7 @@
                              RelativePanel.Below="pageHeader"
                              Text="Detail Page" />
         <controls:PageHeader x:Name="pageHeader3"
-                             Background="Green"
+                             Background="Green" Visibility="Collapsed"
                              Frame="{x:Bind Frame}"
                              RelativePanel.AlignLeftWithPanel="True"
                              RelativePanel.AlignRightWithPanel="True"
