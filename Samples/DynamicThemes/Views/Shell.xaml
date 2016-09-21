@@ -1,5 +1,4 @@
 ﻿<Page x:Class="Sample.Views.Shell"
-      xmlns:local="using:Sample.Views"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:Controls="using:Template10.Controls"
@@ -13,10 +12,12 @@
     <Controls:HamburgerMenu x:Name="MyHamburgerMenu"
                             IsFullScreen="False"
                             SecondaryButtonOrientation="Horizontal"
-                            Style="{ThemeResource HamburgerMenuStyle}">
+                            Style="{ThemeResource HamburgerMenuStyle}"
+                            VisualStateNormalDisplayMode="CompactOverlay"
+                            VisualStateWideDisplayMode="CompactInline">
 
         <Controls:HamburgerMenu.PrimaryButtons>
-            <!--  mainpage button  -->
+            <!--  MainPage button  -->
             <Controls:HamburgerButtonInfo AutomationProperties.Name="Jerry"
                                           ClearHistory="True"
                                           PageType="views:MainPage">
@@ -30,7 +31,7 @@
                 </StackPanel>
             </Controls:HamburgerButtonInfo>
 
-            <!--  mainpage button  -->
+            <!--  DetailPage button  -->
             <Controls:HamburgerButtonInfo AutomationProperties.Name="Jerry"
                                           ClearHistory="True"
                                           PageType="views:DetailPage">

@@ -1,5 +1,4 @@
 ﻿<Page x:Class="Sample.Views.MainPage"
-      xmlns:local="using:Sample.Views"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:Behaviors="using:Template10.Behaviors"
@@ -7,6 +6,7 @@
       xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
       xmlns:controls="using:Template10.Controls"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="using:Sample.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:vm="using:Sample.ViewModels"
       mc:Ignorable="d">
@@ -65,29 +65,30 @@
 
         </controls:PageHeader>
 
-        <TextBlock Margin="16,100,0,0"
-                   FontSize="24"
-                   RelativePanel.AlignLeftWithPanel="True"
-                   RelativePanel.Below="pageHeader">
+        <ScrollViewer Margin="12,72,12,12" VerticalScrollBarVisibility="Hidden">
+            <TextBlock FontSize="18"
+                       RelativePanel.AlignLeftWithPanel="True"
+                       RelativePanel.Below="pageHeader"
+                       TextWrapping="WrapWholeWords">
 
-            <Run Text="This sample app is intended to demo runtime setting of display themes. " />
-            <LineBreak />
-            <LineBreak />
-            <Run Text="Tap on the Settings menu button to set Light or Dark theme. " />
-            <LineBreak />
-            <LineBreak />
-            <Run Text="For each theme, navigate to different pages to check out. Do this for menu pane open and closed." />
-            <LineBreak />
-            <LineBreak />
-            <Run Text="The Dark and Light color settings are as per Custom.xaml style definition. " />
-            <LineBreak />
-            <LineBreak />
-            <Run Text="Current theme setting will be saved and restored on next app session. " />
-            <LineBreak />
-            <LineBreak />
-            <Run Text="The 'Checked Button Indicator Line' (CBIL ?) also updates dynamically as the rest of the menu components. In fact, you can choose CBIL as an option under settings menu. Try it!" />
-        </TextBlock>
-
+                <Run Text="This sample app is intended to demo runtime setting of display themes. " />
+                <LineBreak />
+                <LineBreak />
+                <Run Text="Tap on the Settings menu button to set Light or Dark theme. " />
+                <LineBreak />
+                <LineBreak />
+                <Run Text="For each theme, navigate to different pages to check out. Do this for menu pane open and closed." />
+                <LineBreak />
+                <LineBreak />
+                <Run Text="The Dark and Light color settings are as per Custom.xaml style definition. " />
+                <LineBreak />
+                <LineBreak />
+                <Run Text="Current theme setting will be saved and restored on next app session. " />
+                <LineBreak />
+                <LineBreak />
+                <Run Text="The 'Checked Button Indicator Line' (CBIL ?) also updates dynamically as the rest of the menu components. In fact, you can choose CBIL as an option under settings menu. Try it!" />
+            </TextBlock>
+        </ScrollViewer>
 
     </RelativePanel>
 </Page>

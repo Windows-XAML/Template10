@@ -96,6 +96,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Services\SettingsServices\SettingsService.cs" />
+    <Compile Include="ViewModels\DetailPageViewModel.cs" />
     <Compile Include="Views\Busy.xaml.cs">
       <DependentUpon>Busy.xaml</DependentUpon>
     </Compile>
