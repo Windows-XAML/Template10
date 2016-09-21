@@ -63,7 +63,8 @@
 
         </controls:PageHeader>
 
-        <TextBlock MaxWidth="300"
+        <TextBlock x:Name="Text"
+                   MaxWidth="300"
                    Margin="0,16"
                    RelativePanel.AlignHorizontalCenterWithPanel="True"
                    RelativePanel.AlignLeftWithPanel="True"
@@ -74,6 +75,11 @@
             indicates two PageHeaders cannot exist in the same view. Other than proving the fix,
             this sample won't have any value to you, a normal developer.
         </TextBlock>
+
+        <Button Click="{x:Bind ViewModel.Test}"
+                Content="Test"
+                RelativePanel.AlignHorizontalCenterWithPanel="True"
+                RelativePanel.Below="Text" />
 
     </RelativePanel>
 

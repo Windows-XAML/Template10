@@ -11,6 +11,11 @@ namespace MultiplePageHeaders.Views
             InitializeComponent();
             NavigationCacheMode = NavigationCacheMode.Disabled;
         }
+
+        private void Frame_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+        }
     }
 }
 
