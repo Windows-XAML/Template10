@@ -12,14 +12,6 @@ namespace MultiplePageHeaders.ViewModels
 {
     public class DetailPageViewModel : ViewModelBase
     {
-        public DetailPageViewModel()
-        {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-            {
-                Value = "Designtime value";
-            }
-        }
-
         private string _Value = "Default";
         public string Value { get { return _Value; } set { Set(ref _Value, value); } }
 
@@ -29,19 +21,9 @@ namespace MultiplePageHeaders.ViewModels
             await Task.CompletedTask;
         }
 
-        public override async Task OnNavigatedFromAsync(IDictionary<string, object> suspensionState, bool suspending)
+        public async void Test()
         {
-            if (suspending)
-            {
-                suspensionState[nameof(Value)] = Value;
-            }
-            await Task.CompletedTask;
-        }
-
-        public override async Task OnNavigatingFromAsync(NavigatingEventArgs args)
-        {
-            args.Cancel = false;
-            await Task.CompletedTask;
+            await NavigationService.NavigateAsync(typeof(Views.DetailPage), Value + " +");
         }
     }
 }

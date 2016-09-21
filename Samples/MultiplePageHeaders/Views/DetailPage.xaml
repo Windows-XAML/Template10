@@ -50,6 +50,7 @@
             <StackPanel>
                 <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="You passed:" />
                 <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="{x:Bind ViewModel.Value, Mode=OneWay, FallbackValue=DesigntimeValue}" />
+                <Button Click="{x:Bind ViewModel.Test}">Test</Button>
             </StackPanel>
         </ScrollViewer>
 
