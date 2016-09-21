@@ -52,10 +52,7 @@ namespace Sample.Views
 		{
 			PopulateDefaultColors();
 			SetRequestedTheme(settings.AppTheme, settings.UseBackgroundChecked);
-
 			SecondaryButtonsMaxWidth = ((HamburgerMenu.SecondaryButtonOrientation == Orientation.Horizontal)) ? 48 : HamburgerMenu.PaneWidth;
-			HamburgerMenu.DisplayMode = settings.CompactDisplayMode;
-			HamburgerMenu.VisualStateNormalDisplayMode = HamburgerMenu.VisualStateWideDisplayMode = settings.CompactDisplayMode;
 		}
 
 		public void SetNavigationService(INavigationService navigationService)
