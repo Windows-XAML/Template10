@@ -82,7 +82,8 @@
                 RelativePanel.Below="Text">
             <Interactivity:Interaction.Behaviors>
                 <Core:EventTriggerBehavior EventName="Click">
-                    <b:NavToPageAction Frame="{x:Bind Frame}" Page="MultiplePageHeaders.Views.ContainerPage" />
+                    <b:NavToPageAction Frame="{x:Bind Frame}" 
+                                       Page="MultiplePageHeaders.Views.ContainerPage" />
                 </Core:EventTriggerBehavior>
             </Interactivity:Interaction.Behaviors>
         </Button>
