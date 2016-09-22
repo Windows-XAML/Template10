@@ -688,7 +688,7 @@ namespace Template10.Common
             }
         }
 
-        [Obsolete("Use RootElementFactory.")]
+        [Obsolete("Use RootElementFactory.", true)]
         protected virtual Frame CreateRootFrame(IActivatedEventArgs e)
         {
             DebugWrite($"{nameof(IActivatedEventArgs)}:{e}");
