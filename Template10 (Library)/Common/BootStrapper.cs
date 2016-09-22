@@ -559,18 +559,13 @@ namespace Template10.Common
             await CallOnInitializeAsync(true, e);
             SetupCustomTitleBar();
 
-            // if there's custom content then there's nothing to do
-            if (_SplashLogic.Splashing)
-            {
-                Window.Current.Content = CreateRootElement(e);
-            }
-            else if (Window.Current.Content == null)
+            if (_SplashLogic.Splashing || Window.Current.Content == null)
             {
                 Window.Current.Content = CreateRootElement(e);
             }
             else
             {
-                // nothing: custom content
+                // if there's custom content then do nothing
             }
         }
 
