@@ -670,15 +670,16 @@ namespace Template10.Common
         {
             DebugWrite();
 
-            if (SplashFactory != null)
-            {
-                CurrentState = States.Splashing;
-                var splash = SplashFactory(e.SplashScreen);
-                var service = new PopupService();
-                SplashScreenPopup = service.Show(PopupService.PopupSize.FullScreen, splash);
-                CallActivateWindow(WindowLogic.ActivateWindowSources.SplashScreen);
-            }
+            if (SplashFactory == null)
+                return;
+
+            CurrentState = States.Splashing;
+            var splash = SplashFactory(e.SplashScreen);
+            var service = new PopupService();
+            SplashScreenPopup = service.Show(PopupService.PopupSize.FullScreen, splash);
+            CallActivateWindow(WindowLogic.ActivateWindowSources.SplashScreen);
         }
+
 
         [Obsolete("Use RootElementFactory.", true)]
         protected virtual Frame CreateRootFrame(IActivatedEventArgs e)
