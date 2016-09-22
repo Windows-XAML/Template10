@@ -76,17 +76,34 @@
             this sample won't have any value to you, a normal developer.
         </TextBlock>
 
-        <Button Content="Begin Test" 
-                xmlns:b="using:Template10.Behaviors"
+        <Button xmlns:b="using:Template10.Behaviors"
+                x:Name="button"
+                Content="Begin Test"
                 RelativePanel.AlignHorizontalCenterWithPanel="True"
                 RelativePanel.Below="Text">
             <Interactivity:Interaction.Behaviors>
                 <Core:EventTriggerBehavior EventName="Click">
-                    <b:NavToPageAction Frame="{x:Bind Frame}" 
-                                       Page="MultiplePageHeaders.Views.ContainerPage" />
+                    <b:NavToPageAction Frame="{x:Bind Frame}" Page="MultiplePageHeaders.Views.ContainerPage" />
                 </Core:EventTriggerBehavior>
             </Interactivity:Interaction.Behaviors>
         </Button>
+
+        <ListView ItemsSource="{Binding Items}" RelativePanel.Below="button">
+            <ListView.Header>
+                <TextBlock Margin="16">
+                    This is testing ObservableItemCollection eventing.
+                </TextBlock>
+            </ListView.Header>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock>
+                        <Run Text="{Binding Text}" />
+                        <LineBreak />
+                        <Run Text="{Binding Special}" />
+                    </TextBlock>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
     </RelativePanel>
 
