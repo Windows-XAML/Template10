@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -139,15 +138,22 @@ namespace Template10.Common
 
         // it is the intent of Template 10 to no longer require Launched/Activated overrides, only OnStartAsync()
 
-        protected override sealed async void OnActivated(IActivatedEventArgs e) { DebugWrite(); await InternalActivatedAsync(e).ConfigureAwait(false); }
-        protected override sealed async void OnCachedFileUpdaterActivated(CachedFileUpdaterActivatedEventArgs args) { DebugWrite(); await InternalActivatedAsync(args).ConfigureAwait(false); }
-        protected override sealed async void OnFileActivated(FileActivatedEventArgs args) { DebugWrite(); await InternalActivatedAsync(args).ConfigureAwait(false); }
-        protected override sealed async void OnFileOpenPickerActivated(FileOpenPickerActivatedEventArgs args) { DebugWrite(); await InternalActivatedAsync(args).ConfigureAwait(false); }
-        protected override sealed async void OnFileSavePickerActivated(FileSavePickerActivatedEventArgs args) { DebugWrite(); await InternalActivatedAsync(args).ConfigureAwait(false); }
-        protected override sealed async void OnSearchActivated(SearchActivatedEventArgs args) { DebugWrite(); await InternalActivatedAsync(args).ConfigureAwait(false); }
-        protected override sealed async void OnShareTargetActivated(ShareTargetActivatedEventArgs args) { DebugWrite(); await InternalActivatedAsync(args).ConfigureAwait(false); }
+        protected override sealed void OnActivated(IActivatedEventArgs e) { DebugWrite(); CallInternalActivatedAsync(e); }
+        protected override sealed void OnCachedFileUpdaterActivated(CachedFileUpdaterActivatedEventArgs args) { DebugWrite(); CallInternalActivatedAsync(args); }
+        protected override sealed void OnFileActivated(FileActivatedEventArgs args) { DebugWrite(); CallInternalActivatedAsync(args); }
+        protected override sealed void OnFileOpenPickerActivated(FileOpenPickerActivatedEventArgs args) { DebugWrite(); CallInternalActivatedAsync(args); }
+        protected override sealed void OnFileSavePickerActivated(FileSavePickerActivatedEventArgs args) { DebugWrite(); CallInternalActivatedAsync(args); }
+        protected override sealed void OnSearchActivated(SearchActivatedEventArgs args) { DebugWrite(); CallInternalActivatedAsync(args); }
+        protected override sealed void OnShareTargetActivated(ShareTargetActivatedEventArgs args) { DebugWrite(); CallInternalActivatedAsync(args); }
 
         public IActivatedEventArgs OriginalActivatedArgs { get; private set; }
+
+        private async void CallInternalActivatedAsync(IActivatedEventArgs e)
+        {
+            CurrentState = States.BeforeActivate;
+            await InternalActivatedAsync(e);
+            CurrentState = States.AfterActivate;
+        }
 
         /// <summary>
         /// This handles all the prelimimary stuff unique to Activated before calling OnStartAsync()
@@ -180,7 +186,14 @@ namespace Template10.Common
 
         // it is the intent of Template 10 to no longer require Launched/Activated overrides, only OnStartAsync()
 
-        protected sealed override async void OnLaunched(LaunchActivatedEventArgs e) { DebugWrite(); await InternalLaunchAsync(e).ConfigureAwait(false); }
+        protected sealed override void OnLaunched(LaunchActivatedEventArgs e) { DebugWrite(); CallInternalLaunchAsync(e); }
+
+        async void CallInternalLaunchAsync(ILaunchActivatedEventArgs e)
+        {
+            CurrentState = States.BeforeLaunch;
+            await InternalLaunchAsync(e);
+            CurrentState = States.AfterLaunch;
+        }
 
         /// <summary>
         /// This handles all the preliminary stuff unique to Launched before calling OnStartAsync().
@@ -527,8 +540,26 @@ namespace Template10.Common
             return navigationService;
         }
 
-        public enum States { Starting, Splashing, ShowingContent }
-        public States CurrentState { get; set; } = States.Starting;
+        public enum States
+        {
+            None, BeforeInit, AfterInit, BeforeLaunch, AfterLaunch, Splashing, Running,
+            BeforeActivate,
+            AfterActivate,
+            BeforeStart,
+            AfterStart
+        }
+        private States _currentState = States.None;
+        public States CurrentState
+        {
+            get { return _currentState; }
+            set
+            {
+                DebugWrite($"CurrenstState changed to {value}");
+                CurrentStateHistory.Add(DateTime.Now, value);
+                _currentState = value;
+            }
+        }
+        Dictionary<DateTime, States> CurrentStateHistory = new Dictionary<DateTime, States>();
 
         private async Task InitializeFrameAsync(IActivatedEventArgs e)
         {
@@ -576,7 +607,7 @@ namespace Template10.Common
             {
                 if (CurrentState == States.Splashing)
                     SplashScreenPopup?.Hide();
-                CurrentState = States.ShowingContent;
+                CurrentState = States.Running;
             }
 
             Window.Current.Activate();
@@ -636,7 +667,10 @@ namespace Template10.Common
             if (!canRepeat && _HasOnInitializeAsync)
                 return;
             _HasOnInitializeAsync = true;
+
+            CurrentState = States.BeforeInit;
             await OnInitializeAsync(e);
+            CurrentState = States.AfterInit;
         }
 
         private async Task CallOnStartAsync(bool canRepeat, StartKind startKind)
@@ -646,7 +680,10 @@ namespace Template10.Common
             if (!canRepeat && _HasOnStartAsync)
                 return;
             _HasOnStartAsync = true;
+
+            CurrentState = States.BeforeStart;
             await OnStartAsync(startKind, OriginalActivatedArgs);
+            CurrentState = States.AfterStart;
         }
 
         internal Popup SplashScreenPopup = null;
