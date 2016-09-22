@@ -27,8 +27,11 @@ namespace Template10.Behaviors
 
         public NavButtonBehavior()
         {
-            _dispatcher = Common.DispatcherWrapper.Current();
-            _throttleHelper = new EventThrottleHelper { Throttle = 1000 };
+            if (!Windows.ApplicationModel.DesignMode.DesignModeEnabled)
+            {
+                _dispatcher = Common.DispatcherWrapper.Current();
+                _throttleHelper = new EventThrottleHelper { Throttle = 1000 };
+            }
         }
 
         private void ThrottleHelperOnThrottledEvent(object sender, object o)
