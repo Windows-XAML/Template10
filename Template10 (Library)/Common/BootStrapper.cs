@@ -647,6 +647,11 @@ namespace Template10.Common
                 return;
 
             CurrentState = States.BeforeStart;
+            while (!CurrentStateHistory.ContainsValue(States.AfterInit))
+            {
+                // this could happen if app is activated before previous init completes
+                await Task.Delay(500);
+            }
             await OnStartAsync(startKind, OriginalActivatedArgs);
             CurrentState = States.AfterStart;
         }
