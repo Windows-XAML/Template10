@@ -76,10 +76,16 @@
             this sample won't have any value to you, a normal developer.
         </TextBlock>
 
-        <Button Click="{x:Bind ViewModel.Test}"
-                Content="Test"
+        <Button Content="Begin Test" 
+                xmlns:b="using:Template10.Behaviors"
                 RelativePanel.AlignHorizontalCenterWithPanel="True"
-                RelativePanel.Below="Text" />
+                RelativePanel.Below="Text">
+            <Interactivity:Interaction.Behaviors>
+                <Core:EventTriggerBehavior EventName="Click">
+                    <b:NavToPageAction Frame="{x:Bind Frame}" Page="MultiplePageHeaders.Views.ContainerPage" />
+                </Core:EventTriggerBehavior>
+            </Interactivity:Interaction.Behaviors>
+        </Button>
 
     </RelativePanel>
 

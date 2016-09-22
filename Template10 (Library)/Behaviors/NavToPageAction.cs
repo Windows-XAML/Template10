@@ -26,7 +26,22 @@ namespace Template10.Behaviors
             if (nav == null)
                 throw new NullReferenceException($"Cannot find NavigationService for {Frame.ToString()}.");
 
-            nav.Navigate(Page as Type, Parameter, InfoOverride);
+            IXamlMetadataProvider metadataProvider = Application.Current as IXamlMetadataProvider;
+            if (metadataProvider == null)
+            {
+                throw new Exception($"1 Cannot find type {Page}");
+            }
+            IXamlType xamlType = metadataProvider.GetXamlType(Page);
+            if (xamlType == null)
+            {
+                throw new Exception($"2 Cannot find type {Page}");
+            }
+            Type type = xamlType.UnderlyingType;
+            if (type == null)
+            {
+                throw new Exception($"3 Cannot find type {Page}");
+            }
+            nav.Navigate(type, Parameter, InfoOverride);
             return null;
         }
 
@@ -39,22 +54,22 @@ namespace Template10.Behaviors
             DependencyProperty.Register(nameof(Frame), typeof(Frame),
                 typeof(NavToPageAction), new PropertyMetadata(null));
 
-        public object Page
+        public string Page
         {
-            get { return (object)GetValue(PageProperty); }
+            get { return (string)GetValue(PageProperty); }
             set { SetValue(PageProperty, value); }
         }
         public static readonly DependencyProperty PageProperty =
-            DependencyProperty.Register(nameof(Page), typeof(object),
+            DependencyProperty.Register(nameof(Page), typeof(string),
                 typeof(NavToPageAction), new PropertyMetadata(null));
 
-        public object Parameter
+        public string Parameter
         {
-            get { return (object)GetValue(ParameterProperty); }
+            get { return (string)GetValue(ParameterProperty); }
             set { SetValue(ParameterProperty, value); }
         }
         public static readonly DependencyProperty ParameterProperty =
-            DependencyProperty.Register(nameof(Parameter), typeof(object),
+            DependencyProperty.Register(nameof(Parameter), typeof(string),
                 typeof(NavToPageAction), new PropertyMetadata(null));
 
         public NavigationTransitionInfo InfoOverride
