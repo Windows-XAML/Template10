@@ -102,7 +102,7 @@ namespace Template10.Common
             var window = new WindowWrapper(args.Window);
             ViewService.OnWindowCreated();
             WindowCreated?.Invoke(this, args);
-            base.OnWindowCreated(args);           
+            base.OnWindowCreated(args);
         }
 
         #region properties
@@ -226,12 +226,12 @@ namespace Template10.Common
                             This is okay & by design.
                         */
 
-                        
+
                         if (EnableAutoRestoreAfterTerminated)
                         {
                             var launchedEvent = e as ILaunchActivatedEventArgs;
 
-                            if(DetermineStartCause(e) == AdditionalKinds.Primary || launchedEvent?.TileId == "")
+                            if (DetermineStartCause(e) == AdditionalKinds.Primary || launchedEvent?.TileId == "")
                             {
                                 restored = await NavigationService.RestoreSavedNavigationAsync();
                                 DebugWrite($"{nameof(restored)}:{restored}", caller: nameof(NavigationService.RestoreSavedNavigationAsync));
@@ -688,17 +688,16 @@ namespace Template10.Common
             }
         }
 
-        private async void HandleSuspending(object sender, SuspendingEventArgs e)
+        public bool AutoExtendExecutionSession { get; set; } = true;
+
+        private void HandleSuspending(object sender, SuspendingEventArgs e)
         {
             DebugWrite();
 
             // one, global deferral
             var deferral = e.SuspendingOperation.GetDeferral();
-            using (var session = new Windows.ApplicationModel.ExtendedExecution.ExtendedExecutionSession
-            {
-                Description = this.GetType().ToString(),
-                Reason = Windows.ApplicationModel.ExtendedExecution.ExtendedExecutionReason.SavingData
-            })
+
+            var suspend = new Action(async () =>
             {
                 try
                 {
@@ -717,8 +716,27 @@ namespace Template10.Common
                     DebugWrite($"Calling. OnSuspendingAsync {(OriginalActivatedArgs as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false}", caller: nameof(OnSuspendingAsync));
                     await OnSuspendingAsync(sender, e, (OriginalActivatedArgs as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false);
                 }
-                catch { /* do nothing */ }
+                catch (Exception ex)
+                {
+                    DebugWrite($"While suspending {ex} {ex.Message}", caller: nameof(HandleSuspending));
+                }
                 finally { deferral.Complete(); }
+            });
+
+            if (AutoExtendExecutionSession)
+            {
+                using (var session = new Windows.ApplicationModel.ExtendedExecution.ExtendedExecutionSession
+                {
+                    Description = this.GetType().ToString(),
+                    Reason = Windows.ApplicationModel.ExtendedExecution.ExtendedExecutionReason.SavingData
+                })
+                {
+                    suspend();
+                }
+            }
+            else
+            {
+                suspend();
             }
         }
 
