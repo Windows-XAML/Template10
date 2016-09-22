@@ -397,11 +397,6 @@ namespace Template10.Common
         public abstract Task OnStartAsync(StartKind startKind, IActivatedEventArgs args);
 
         /// <summary>
-        /// This indicates if OnStartAsync has EVER been called
-        /// </summary>
-        bool _HasOnStartAsync = false;
-
-        /// <summary>
         /// OnInitializeAsync is where your app will do must-have up-front operations
         /// OnInitializeAsync will be called even if the application is restoring from state.
         /// An app restores from state when the app was suspended and then terminated (PreviousExecutionState terminated).
@@ -412,11 +407,6 @@ namespace Template10.Common
 
             return Task.CompletedTask;
         }
-
-        /// <summary>
-        /// This indicates if OnInitAsync has EVER been called
-        /// </summary>
-        bool _HasOnInitializeAsync = false;
 
         /// <summary>
         /// OnSuspendingAsync will be called when the application is suspending, but this override
@@ -653,9 +643,10 @@ namespace Template10.Common
 
         private async Task CallOnInitializeAsync(bool canRepeat, IActivatedEventArgs e)
         {
-            if (!canRepeat && _HasOnInitializeAsync)
+            DebugWrite();
+
+            if (!canRepeat && CurrentStateHistory.ContainsValue(States.BeforeInit))
                 return;
-            _HasOnInitializeAsync = true;
 
             CurrentState = States.BeforeInit;
             await OnInitializeAsync(e);
@@ -666,9 +657,8 @@ namespace Template10.Common
         {
             DebugWrite();
 
-            if (!canRepeat && _HasOnStartAsync)
+            if (!canRepeat && CurrentStateHistory.ContainsValue(States.BeforeStart))
                 return;
-            _HasOnStartAsync = true;
 
             CurrentState = States.BeforeStart;
             await OnStartAsync(startKind, OriginalActivatedArgs);
@@ -678,6 +668,8 @@ namespace Template10.Common
         internal Popup SplashScreenPopup = null;
         private void ShowSplashScreen(IActivatedEventArgs e)
         {
+            DebugWrite();
+
             if (SplashFactory != null)
             {
                 CurrentState = States.Splashing;
