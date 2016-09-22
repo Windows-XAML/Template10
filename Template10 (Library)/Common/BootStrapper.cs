@@ -177,7 +177,7 @@ namespace Template10.Common
             await CallOnStartAsync(true, StartKind.Activate);
 
             // ensure active (this will hide any custom splashscreen)
-            ActivateWindow(ActivateWindowSources.Activating);
+            CallActivateWindow(WindowLogic.ActivateWindowSources.Activating);
         }
 
         #endregion
@@ -274,7 +274,7 @@ namespace Template10.Common
                 await CallOnStartAsync(true, kind);
             }
 
-            ActivateWindow(ActivateWindowSources.Launching);
+            CallActivateWindow(WindowLogic.ActivateWindowSources.Launching);
         }
 
         public bool EnableAutoRestoreAfterTerminated { get; set; } = true;
@@ -542,11 +542,17 @@ namespace Template10.Common
 
         public enum States
         {
-            None, BeforeInit, AfterInit, BeforeLaunch, AfterLaunch, Splashing, Running,
+            None,
+            Splashing,
+            Running,
+            BeforeInit,
+            AfterInit,
+            BeforeLaunch,
+            AfterLaunch,
             BeforeActivate,
             AfterActivate,
             BeforeStart,
-            AfterStart
+            AfterStart,
         }
         private States _currentState = States.None;
         public States CurrentState
@@ -592,25 +598,11 @@ namespace Template10.Common
 
         #endregion
 
-        public enum ActivateWindowSources { Launching, Activating, SplashScreen, Resuming }
-        /// <summary>
-        /// Override this method only if you (the developer) wants to programmatically
-        /// control the means by which and when the Core Window is activated by Template 10.
-        /// One scenario might be a delayed activation for Splash Screen.
-        /// </summary>
-        /// <param name="source">Reason for the call from Template 10</param>
-        private void ActivateWindow(ActivateWindowSources source)
+        WindowLogic _WindowLogic = new WindowLogic();
+        void CallActivateWindow(WindowLogic.ActivateWindowSources source)
         {
-            DebugWrite($"source:{source}");
-
-            if (source != ActivateWindowSources.SplashScreen)
-            {
-                if (CurrentState == States.Splashing)
-                    SplashScreenPopup?.Hide();
-                CurrentState = States.Running;
-            }
-
-            Window.Current.Activate();
+            _WindowLogic.ActivateWindow(source, CurrentState, SplashScreenPopup);
+            CurrentState = States.Running;
         }
 
         #region Workers
@@ -633,10 +625,7 @@ namespace Template10.Common
 
         private void SetupCustomTitleBar()
         {
-            /*
-                this "unused" bit is very important because of a quirk in ResourceThemes
-            */
-
+            // this "unused" bit is very important because of a quirk in ResourceThemes
             try
             {
                 if (Application.Current.Resources.ContainsKey("ExtendedSplashBackground"))
@@ -695,7 +684,7 @@ namespace Template10.Common
                 var splash = SplashFactory(e.SplashScreen);
                 var service = new PopupService();
                 SplashScreenPopup = service.Show(PopupService.PopupSize.FullScreen, splash);
-                ActivateWindow(ActivateWindowSources.SplashScreen);
+                CallActivateWindow(WindowLogic.ActivateWindowSources.SplashScreen);
             }
         }
 
@@ -717,7 +706,7 @@ namespace Template10.Common
                 OnResuming(sender, e, AppExecutionState.Prelaunch);
                 var kind = args?.PreviousExecutionState == ApplicationExecutionState.Running ? StartKind.Activate : StartKind.Launch;
                 await CallOnStartAsync(false, kind);
-                ActivateWindow(ActivateWindowSources.Resuming);
+                CallActivateWindow(WindowLogic.ActivateWindowSources.Resuming);
             }
             else
             {
@@ -837,6 +826,29 @@ namespace Template10.Common
                 return _PageKeys as Dictionary<T, Type>;
             }
             return (_PageKeys = new Dictionary<T, Type>()) as Dictionary<T, Type>;
+        }
+
+        public class WindowLogic
+        {
+            public enum ActivateWindowSources { Launching, Activating, SplashScreen, Resuming }
+            /// <summary>
+            /// Override this method only if you (the developer) wants to programmatically
+            /// control the means by which and when the Core Window is activated by Template 10.
+            /// One scenario might be a delayed activation for Splash Screen.
+            /// </summary>
+            /// <param name="source">Reason for the call from Template 10</param>
+            public void ActivateWindow(ActivateWindowSources source, States state, Popup splashScreenPopup)
+            {
+                DebugWrite($"source:{source}");
+
+                if (source != ActivateWindowSources.SplashScreen)
+                {
+                    if (state == States.Splashing)
+                        splashScreenPopup?.Hide();
+                }
+
+                Window.Current.Activate();
+            }
         }
     }
 }
