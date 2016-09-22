@@ -596,7 +596,7 @@ namespace Template10.Common
 
         private void SetupCustomTitleBar()
         {
-            SpinUpResources();
+            InitResourceDueToPlatformBug();
 
             // this wonky style of loop is important due to a platform bug
             int count = Application.Current.Resources.Count;
@@ -614,7 +614,7 @@ namespace Template10.Common
             }
         }
 
-        private static void SpinUpResources()
+        private static void InitResourceDueToPlatformBug()
         {
             // this "unused" bit is very important because of a quirk in ResourceThemes
             try
