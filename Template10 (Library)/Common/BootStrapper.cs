@@ -61,8 +61,8 @@ namespace Template10.Common
             DebugWrite("base.Constructor");
 
             Current = this;
-            Resuming += HandleResuming;
-            Suspending += HandleSuspending;
+            Resuming += CallResuming;
+            Suspending += CallHandleSuspendingAsync;
         }
 
         private void Loaded()
@@ -240,16 +240,7 @@ namespace Template10.Common
                         */
 
 
-                        if (EnableAutoRestoreAfterTerminated)
-                        {
-                            var launchedEvent = e as ILaunchActivatedEventArgs;
-
-                            if (DetermineStartCause(e) == AdditionalKinds.Primary || launchedEvent?.TileId == "")
-                            {
-                                restored = await NavigationService.RestoreSavedNavigationAsync();
-                                DebugWrite($"{nameof(restored)}:{restored}", caller: nameof(NavigationService.RestoreSavedNavigationAsync));
-                            }
-                        }
+                        restored = await CallAutoRestoreAsync(e, restored);
                         break;
                     }
                 case ApplicationExecutionState.ClosedByUser:
@@ -276,8 +267,6 @@ namespace Template10.Common
 
             CallActivateWindow(WindowLogic.ActivateWindowSources.Launching);
         }
-
-        public bool EnableAutoRestoreAfterTerminated { get; set; } = true;
 
         private void BackHandler(object sender, BackRequestedEventArgs args)
         {
@@ -694,7 +683,7 @@ namespace Template10.Common
             return new Frame();
         }
 
-        private async void HandleResuming(object sender, object e)
+        private async void CallResuming(object sender, object e)
         {
             DebugWrite(caller: nameof(Resuming));
 
@@ -712,55 +701,91 @@ namespace Template10.Common
             }
         }
 
+        [Obsolete("Use AutoRestoreAfterTerminated")]
+        public bool EnableAutoRestoreAfterTerminated { get; set; } = true;
+        public bool AutoRestoreAfterTerminated { get; set; } = true;
         public bool AutoExtendExecutionSession { get; set; } = true;
+        public bool AutoSuspendAllFrames { get; set; } = true;
 
-        private void HandleSuspending(object sender, SuspendingEventArgs e)
+        private async Task<bool> CallAutoRestoreAsync(ILaunchActivatedEventArgs e, bool restored)
         {
-            DebugWrite();
+            if (!EnableAutoRestoreAfterTerminated || !AutoRestoreAfterTerminated)
+                return false;
+            return await AutoRestoreAsync(e);
+        }
 
-            // one, global deferral
+        async void CallHandleSuspendingAsync(object sender, SuspendingEventArgs e)
+        {
             var deferral = e.SuspendingOperation.GetDeferral();
-
-            var suspend = new Action(async () =>
+            try
             {
-                try
-                {
-                    //allow only main view NavigationService as others won't be able to use Dispatcher and processing will stuck
-                    var services = WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices).Where(x => x.IsInMainView);
-                    foreach (INavigationService nav in services)
-                    {
-                        // date the cache (which marks the date/time it was suspended)
-                        nav.FrameFacade.SetFrameState(CacheDateKey, DateTime.Now.ToString());
-                        // call view model suspend (OnNavigatedfrom)
-                        DebugWrite($"Nav.FrameId:{nav.FrameFacade.FrameId}", caller: nameof(nav.SuspendingAsync));
-                        await (nav as INavigationService).GetDispatcherWrapper().DispatchAsync(async () => await nav.SuspendingAsync());
-                    }
+                await AutoSuspendAllFramesAsync(sender, e, AutoSuspendAllFrames, AutoExtendExecutionSession);
+                await OnSuspendingAsync(sender, e, (OriginalActivatedArgs as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false);
+            }
+            finally
+            {
+                deferral.Complete();
+            }
+        }
 
-                    // call system-level suspend
-                    DebugWrite($"Calling. OnSuspendingAsync {(OriginalActivatedArgs as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false}", caller: nameof(OnSuspendingAsync));
-                    await OnSuspendingAsync(sender, e, (OriginalActivatedArgs as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false);
-                }
-                catch (Exception ex)
-                {
-                    DebugWrite($"While suspending {ex} {ex.Message}", caller: nameof(HandleSuspending));
-                }
-                finally { deferral.Complete(); }
-            });
+        private async Task<bool> AutoRestoreAsync(ILaunchActivatedEventArgs e)
+        {
+            var restored = false;
+            var launchedEvent = e as ILaunchActivatedEventArgs;
+            if (DetermineStartCause(e) == AdditionalKinds.Primary || launchedEvent?.TileId == "")
+            {
+                restored = await NavigationService.RestoreSavedNavigationAsync();
+                DebugWrite($"{nameof(restored)}:{restored}", caller: nameof(NavigationService.RestoreSavedNavigationAsync));
+            }
+            return restored;
+        }
 
-            if (AutoExtendExecutionSession)
+        private async Task AutoSuspendAllFramesAsync(object sender, SuspendingEventArgs e, bool autoSuspendAllFrames, bool autoExtendExecutionSession)
+        {
+            DebugWrite($"autoSuspendAllFrames: {autoSuspendAllFrames}, autoExtendExecutionSession: {autoExtendExecutionSession}");
+
+            if (!autoSuspendAllFrames)
+            {
+                return;
+            }
+
+            if (autoExtendExecutionSession)
             {
                 using (var session = new Windows.ApplicationModel.ExtendedExecution.ExtendedExecutionSession
                 {
-                    Description = this.GetType().ToString(),
+                    Description = GetType().ToString(),
                     Reason = Windows.ApplicationModel.ExtendedExecution.ExtendedExecutionReason.SavingData
                 })
                 {
-                    suspend();
+                    await SuspendAllFramesAsync();
                 }
             }
             else
             {
-                suspend();
+                await SuspendAllFramesAsync();
+            }
+        }
+
+        private async Task SuspendAllFramesAsync()
+        {
+            DebugWrite();
+
+            //allow only main view NavigationService as others won't be able to use Dispatcher and processing will stuck
+            var services = WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices).Where(x => x.IsInMainView);
+            foreach (INavigationService nav in services)
+            {
+                try
+                {
+                    // call view model suspend (OnNavigatedfrom)
+                    // date the cache (which marks the date/time it was suspended)
+                    nav.FrameFacade.SetFrameState(CacheDateKey, DateTime.Now.ToString());
+                    DebugWrite($"Nav.FrameId:{nav.FrameFacade.FrameId}");
+                    await (nav as INavigationService).GetDispatcherWrapper().DispatchAsync(async () => await nav.SuspendingAsync());
+                }
+                catch (Exception ex)
+                {
+                    DebugWrite($"FrameId: [{nav.FrameFacade.FrameId}] {ex} {ex.Message}", caller: nameof(AutoSuspendAllFramesAsync));
+                }
             }
         }
 
@@ -841,8 +866,7 @@ namespace Template10.Common
 
                 if (source != ActivateWindowSources.SplashScreen)
                 {
-                    if (state == States.Splashing)
-                        splashScreenPopup?.Hide();
+                    splashScreenPopup?.Hide();
                 }
 
                 Window.Current.Activate();
