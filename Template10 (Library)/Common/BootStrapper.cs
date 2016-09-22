@@ -577,7 +577,7 @@ namespace Template10.Common
         #endregion
 
         WindowLogic _WindowLogic = new WindowLogic();
-        void CallActivateWindow(WindowLogic.ActivateWindowSources source)
+        private void CallActivateWindow(WindowLogic.ActivateWindowSources source)
         {
             _WindowLogic.ActivateWindow(source, _SplashLogic);
             CurrentState = States.Running;
@@ -591,13 +591,11 @@ namespace Template10.Common
         /// </summary>
         public virtual UIElement CreateRootElement(IActivatedEventArgs e)
         {
-            var bootstrapper = Current;
-            var frame = new Frame();
-            var nav = bootstrapper.NavigationServiceFactory(BackButton.Attach, ExistingContent.Include, frame);
+            var navigationService = Current.NavigationServiceFactory(BackButton.Attach, ExistingContent.Include, new Frame());
             return new Controls.ModalDialog
             {
                 DisableBackButtonWhenModal = true,
-                Content = nav.Frame
+                Content = navigationService.Frame
             };
         }
 
