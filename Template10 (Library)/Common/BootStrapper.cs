@@ -603,9 +603,9 @@ namespace Template10.Common
         /// </summary>
         public virtual UIElement CreateRootElement(IActivatedEventArgs e)
         {
-            var b = Current;
+            var bootstrapper = Current;
             var frame = new Frame();
-            var nav = b.NavigationServiceFactory(BackButton.Attach, ExistingContent.Include, frame);
+            var nav = bootstrapper.NavigationServiceFactory(BackButton.Attach, ExistingContent.Include, frame);
             return new Controls.ModalDialog
             {
                 DisableBackButtonWhenModal = true,
@@ -614,6 +614,26 @@ namespace Template10.Common
         }
 
         private void SetupCustomTitleBar()
+        {
+            SpinUpResources();
+
+            // this wonky style of loop is important due to a platform bug
+            int count = Application.Current.Resources.Count;
+            foreach (var resource in Application.Current.Resources)
+            {
+                var key = resource.Key;
+                if (key == typeof(Controls.CustomTitleBar))
+                {
+                    var style = resource.Value as Style;
+                    var title = new Controls.CustomTitleBar();
+                    title.Style = style;
+                }
+                count--;
+                if (count == 0) break;
+            }
+        }
+
+        private static void SpinUpResources()
         {
             // this "unused" bit is very important because of a quirk in ResourceThemes
             try
@@ -624,21 +644,6 @@ namespace Template10.Common
                 }
             }
             catch { /* this is okay */ }
-
-            // this wonky style of loop is important due to a platform bug
-            int count = Application.Current.Resources.Count;
-            foreach (var resource in Application.Current.Resources)
-            {
-                var k = resource.Key;
-                if (k == typeof(Controls.CustomTitleBar))
-                {
-                    var s = resource.Value as Style;
-                    var t = new Controls.CustomTitleBar();
-                    t.Style = s;
-                }
-                count--;
-                if (count == 0) break;
-            }
         }
 
         private async Task CallOnInitializeAsync(bool canRepeat, IActivatedEventArgs e)
