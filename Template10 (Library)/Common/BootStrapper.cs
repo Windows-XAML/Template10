@@ -683,6 +683,17 @@ namespace Template10.Common
             return new Frame();
         }
 
+        #endregion
+
+        #region lifecycle logic
+
+        [Obsolete("Use AutoRestoreAfterTerminated")]
+        public bool EnableAutoRestoreAfterTerminated { get; set; } = true;
+        public bool AutoRestoreAfterTerminated { get; set; } = true;
+        public bool AutoExtendExecutionSession { get; set; } = true;
+        public bool AutoSuspendAllFrames { get; set; } = true;
+        LifecycleLogic _LifecycleLogic = new LifecycleLogic();
+
         private async void CallResuming(object sender, object e)
         {
             DebugWrite(caller: nameof(Resuming));
@@ -701,17 +712,11 @@ namespace Template10.Common
             }
         }
 
-        [Obsolete("Use AutoRestoreAfterTerminated")]
-        public bool EnableAutoRestoreAfterTerminated { get; set; } = true;
-        public bool AutoRestoreAfterTerminated { get; set; } = true;
-        public bool AutoExtendExecutionSession { get; set; } = true;
-        public bool AutoSuspendAllFrames { get; set; } = true;
-
         private async Task<bool> CallAutoRestoreAsync(ILaunchActivatedEventArgs e, bool restored)
         {
             if (!EnableAutoRestoreAfterTerminated || !AutoRestoreAfterTerminated)
                 return false;
-            return await AutoRestoreAsync(e);
+            return await _LifecycleLogic.AutoRestoreAsync(e, NavigationService);
         }
 
         async void CallHandleSuspendingAsync(object sender, SuspendingEventArgs e)
@@ -719,73 +724,15 @@ namespace Template10.Common
             var deferral = e.SuspendingOperation.GetDeferral();
             try
             {
-                await AutoSuspendAllFramesAsync(sender, e, AutoSuspendAllFrames, AutoExtendExecutionSession);
+                if (AutoSuspendAllFrames)
+                {
+                    await _LifecycleLogic.AutoSuspendAllFramesAsync(sender, e, AutoExtendExecutionSession);
+                }
                 await OnSuspendingAsync(sender, e, (OriginalActivatedArgs as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false);
             }
             finally
             {
                 deferral.Complete();
-            }
-        }
-
-        private async Task<bool> AutoRestoreAsync(ILaunchActivatedEventArgs e)
-        {
-            var restored = false;
-            var launchedEvent = e as ILaunchActivatedEventArgs;
-            if (DetermineStartCause(e) == AdditionalKinds.Primary || launchedEvent?.TileId == "")
-            {
-                restored = await NavigationService.RestoreSavedNavigationAsync();
-                DebugWrite($"{nameof(restored)}:{restored}", caller: nameof(NavigationService.RestoreSavedNavigationAsync));
-            }
-            return restored;
-        }
-
-        private async Task AutoSuspendAllFramesAsync(object sender, SuspendingEventArgs e, bool autoSuspendAllFrames, bool autoExtendExecutionSession)
-        {
-            DebugWrite($"autoSuspendAllFrames: {autoSuspendAllFrames}, autoExtendExecutionSession: {autoExtendExecutionSession}");
-
-            if (!autoSuspendAllFrames)
-            {
-                return;
-            }
-
-            if (autoExtendExecutionSession)
-            {
-                using (var session = new Windows.ApplicationModel.ExtendedExecution.ExtendedExecutionSession
-                {
-                    Description = GetType().ToString(),
-                    Reason = Windows.ApplicationModel.ExtendedExecution.ExtendedExecutionReason.SavingData
-                })
-                {
-                    await SuspendAllFramesAsync();
-                }
-            }
-            else
-            {
-                await SuspendAllFramesAsync();
-            }
-        }
-
-        private async Task SuspendAllFramesAsync()
-        {
-            DebugWrite();
-
-            //allow only main view NavigationService as others won't be able to use Dispatcher and processing will stuck
-            var services = WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices).Where(x => x.IsInMainView);
-            foreach (INavigationService nav in services)
-            {
-                try
-                {
-                    // call view model suspend (OnNavigatedfrom)
-                    // date the cache (which marks the date/time it was suspended)
-                    nav.FrameFacade.SetFrameState(CacheDateKey, DateTime.Now.ToString());
-                    DebugWrite($"Nav.FrameId:{nav.FrameFacade.FrameId}");
-                    await (nav as INavigationService).GetDispatcherWrapper().DispatchAsync(async () => await nav.SuspendingAsync());
-                }
-                catch (Exception ex)
-                {
-                    DebugWrite($"FrameId: [{nav.FrameFacade.FrameId}] {ex} {ex.Message}", caller: nameof(AutoSuspendAllFramesAsync));
-                }
             }
         }
 
@@ -849,6 +796,65 @@ namespace Template10.Common
                 return _PageKeys as Dictionary<T, Type>;
             }
             return (_PageKeys = new Dictionary<T, Type>()) as Dictionary<T, Type>;
+        }
+
+        public class LifecycleLogic
+        {
+            public async Task<bool> AutoRestoreAsync(ILaunchActivatedEventArgs e, INavigationService nav)
+            {
+                var restored = false;
+                var launchedEvent = e as ILaunchActivatedEventArgs;
+                if (DetermineStartCause(e) == AdditionalKinds.Primary || launchedEvent?.TileId == "")
+                {
+                    restored = await nav.RestoreSavedNavigationAsync();
+                    DebugWrite($"{nameof(restored)}:{restored}", caller: nameof(nav.RestoreSavedNavigationAsync));
+                }
+                return restored;
+            }
+
+            public async Task AutoSuspendAllFramesAsync(object sender, SuspendingEventArgs e, bool autoExtendExecutionSession)
+            {
+                DebugWrite($"autoExtendExecutionSession: {autoExtendExecutionSession}");
+
+                if (autoExtendExecutionSession)
+                {
+                    using (var session = new Windows.ApplicationModel.ExtendedExecution.ExtendedExecutionSession
+                    {
+                        Description = GetType().ToString(),
+                        Reason = Windows.ApplicationModel.ExtendedExecution.ExtendedExecutionReason.SavingData
+                    })
+                    {
+                        await SuspendAllFramesAsync();
+                    }
+                }
+                else
+                {
+                    await SuspendAllFramesAsync();
+                }
+            }
+
+            private async Task SuspendAllFramesAsync()
+            {
+                DebugWrite();
+
+                //allow only main view NavigationService as others won't be able to use Dispatcher and processing will stuck
+                var services = WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices).Where(x => x.IsInMainView);
+                foreach (INavigationService nav in services)
+                {
+                    try
+                    {
+                        // call view model suspend (OnNavigatedfrom)
+                        // date the cache (which marks the date/time it was suspended)
+                        nav.FrameFacade.SetFrameState(CacheDateKey, DateTime.Now.ToString());
+                        DebugWrite($"Nav.FrameId:{nav.FrameFacade.FrameId}");
+                        await (nav as INavigationService).GetDispatcherWrapper().DispatchAsync(async () => await nav.SuspendingAsync());
+                    }
+                    catch (Exception ex)
+                    {
+                        DebugWrite($"FrameId: [{nav.FrameFacade.FrameId}] {ex} {ex.Message}", caller: nameof(AutoSuspendAllFramesAsync));
+                    }
+                }
+            }
         }
 
         public class WindowLogic
