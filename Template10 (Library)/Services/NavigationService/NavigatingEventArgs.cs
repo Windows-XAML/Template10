@@ -1,4 +1,5 @@
-﻿using Template10.Common;
+﻿using System;
+using Template10.Common;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -15,15 +16,19 @@ namespace Template10.Services.NavigationService
             Manager = manager;
         }
 
-        public NavigatingEventArgs(DeferralManager manager, NavigatingCancelEventArgs e, Page page, object parameter) : this(manager)
+        public NavigatingEventArgs(DeferralManager manager, NavigatingCancelEventArgs e, Page page, Type targetPageType, object parameter, object targetPageParameter) : this(manager)
         {
             NavigationMode = e.NavigationMode;
             PageType = e.SourcePageType;
             Page = page;
             Parameter = parameter;
+            TargetPageType = targetPageType;
+            TargetPageParameter = targetPageParameter;
         }
 
         public bool Cancel { get; set; } = false;
         public bool Suspending { get; set; } = false;
+        public Type TargetPageType { get; set; }
+        public object TargetPageParameter { get; set; }
     }
 }
