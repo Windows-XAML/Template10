@@ -522,7 +522,6 @@ namespace Template10.Common
         public enum States
         {
             None,
-            Splashing,
             Running,
             BeforeInit,
             AfterInit,
@@ -556,12 +555,12 @@ namespace Template10.Common
 
             DebugWrite($"{nameof(IActivatedEventArgs)}:{e.Kind}");
 
-            ShowSplashScreen(e);
+            CallShowSplashScreen(e);
             await CallOnInitializeAsync(true, e);
             SetupCustomTitleBar();
 
             // if there's custom content then there's nothing to do
-            if (CurrentState == States.Splashing)
+            if (_SplashLogic.Splashing)
             {
                 Window.Current.Content = CreateRootElement(e);
             }
@@ -580,7 +579,7 @@ namespace Template10.Common
         WindowLogic _WindowLogic = new WindowLogic();
         void CallActivateWindow(WindowLogic.ActivateWindowSources source)
         {
-            _WindowLogic.ActivateWindow(source, CurrentState, SplashScreenPopup);
+            _WindowLogic.ActivateWindow(source, _SplashLogic);
             CurrentState = States.Running;
         }
 
@@ -659,21 +658,13 @@ namespace Template10.Common
             CurrentState = States.AfterStart;
         }
 
-        internal Popup SplashScreenPopup = null;
-        private void ShowSplashScreen(IActivatedEventArgs e)
+        SplashLogic _SplashLogic = new SplashLogic();
+        private void CallShowSplashScreen(IActivatedEventArgs e)
         {
             DebugWrite();
 
-            if (SplashFactory == null)
-                return;
-
-            CurrentState = States.Splashing;
-            var splash = SplashFactory(e.SplashScreen);
-            var service = new PopupService();
-            SplashScreenPopup = service.Show(PopupService.PopupSize.FullScreen, splash);
-            CallActivateWindow(WindowLogic.ActivateWindowSources.SplashScreen);
+            _SplashLogic.Show(e.SplashScreen, SplashFactory, _WindowLogic);
         }
-
 
         [Obsolete("Use RootElementFactory.", true)]
         protected virtual Frame CreateRootFrame(IActivatedEventArgs e)
@@ -857,7 +848,7 @@ namespace Template10.Common
             }
         }
 
-        public class WindowLogic
+        private class WindowLogic
         {
             public enum ActivateWindowSources { Launching, Activating, SplashScreen, Resuming }
             /// <summary>
@@ -866,17 +857,39 @@ namespace Template10.Common
             /// One scenario might be a delayed activation for Splash Screen.
             /// </summary>
             /// <param name="source">Reason for the call from Template 10</param>
-            public void ActivateWindow(ActivateWindowSources source, States state, Popup splashScreenPopup)
+            public void ActivateWindow(ActivateWindowSources source, SplashLogic splashLogic)
             {
                 DebugWrite($"source:{source}");
 
                 if (source != ActivateWindowSources.SplashScreen)
                 {
-                    splashScreenPopup?.Hide();
+                    splashLogic.Hide();
                 }
 
                 Window.Current.Activate();
             }
+        }
+
+        private class SplashLogic
+        {
+            private Popup popup;
+
+            public void Show(SplashScreen splashScreen, Func<SplashScreen, UserControl> splashFactory, WindowLogic windowLogic)
+            {
+                if (splashFactory == null)
+                    return;
+                var splash = splashFactory(splashScreen);
+                var service = new PopupService();
+                popup = service.Show(PopupService.PopupSize.FullScreen, splash);
+                windowLogic.ActivateWindow(WindowLogic.ActivateWindowSources.SplashScreen, this);
+            }
+
+            public void Hide()
+            {
+                popup?.Hide();
+            }
+
+            public bool Splashing => popup?.IsOpen ?? false;
         }
     }
 }
