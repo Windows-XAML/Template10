@@ -170,10 +170,12 @@ namespace Template10.Services.NavigationService
 
             try
             {
+                object context = (Frame as FrameworkElement).DataContext;
                 Windows.ApplicationModel.Resources.Core.ResourceContext.GetForCurrentView().Reset();
                 // this only works for apps using serializable types
                 var state = Frame.GetNavigationState();
                 Frame.SetNavigationState(state);
+                (Frame as FrameworkElement).DataContext = context;
             }
             catch (Exception)
             {
@@ -203,10 +205,11 @@ namespace Template10.Services.NavigationService
             
             try
             {
+                object context = (Frame as FrameworkElement).DataContext;
                 Windows.ApplicationModel.Resources.Core.ResourceContext.GetForCurrentView().Reset();
                 // navigates to the current page with new parameters.
                 Frame.Navigate(CurrentPageType, param, new SuppressNavigationTransitionInfo());
-
+                (Frame as FrameworkElement).DataContext = context;
               
             }
             catch (Exception)
