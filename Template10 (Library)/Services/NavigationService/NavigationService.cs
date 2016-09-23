@@ -268,11 +268,7 @@ namespace Template10.Services.NavigationService
         public ISerializationService SerializationService { get; set; }
 
         public event EventHandler<CancelEventArgs<Type>> BeforeSavingNavigation;
-
-        
-
-
-        public async Task SaveAsync()
+        public async Task SaveNavigationAsync()
         {
             DebugWrite($"Frame: {FrameFacadeInternal.FrameId}");
 
@@ -295,8 +291,7 @@ namespace Template10.Services.NavigationService
         }
 
         public event TypedEventHandler<Type> AfterRestoreSavedNavigation;
-
-        public async Task<bool> LoadAsync()
+        public async Task<bool> RestoreSavedNavigationAsync()
         {
             DebugWrite($"Frame: {FrameFacadeInternal.FrameId}");
 
@@ -366,7 +361,7 @@ namespace Template10.Services.NavigationService
         {
             DebugWrite($"Frame: {FrameFacadeInternal.FrameId}");
 
-            await SaveAsync();
+            await SaveNavigationAsync();
 
             var page = FrameFacadeInternal.Content as Page;
             if (page != null)
