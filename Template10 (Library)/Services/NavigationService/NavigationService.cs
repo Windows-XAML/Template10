@@ -269,15 +269,10 @@ namespace Template10.Services.NavigationService
 
         public event EventHandler<CancelEventArgs<Type>> BeforeSavingNavigation;
 
-        private Func<Task> _saveAsync;
-        public Func<Task> SaveAsync
-        {
-            get { return _saveAsync ?? DefaultSaveAsyncImplementation; }
-            set { _saveAsync = value; }
-        }
+        
 
 
-        private async Task DefaultSaveAsyncImplementation()
+        public async Task SaveAsync()
         {
             DebugWrite($"Frame: {FrameFacadeInternal.FrameId}");
 
@@ -301,14 +296,7 @@ namespace Template10.Services.NavigationService
 
         public event TypedEventHandler<Type> OnNavigationStateLoaded;
 
-        private Func<Task<bool>> _loadAsync;
-
-        public Func<Task<bool>> LoadAsync
-        {
-            get { return _loadAsync ?? DefaultLoadAsyncImplementation; }
-            set { _loadAsync = value; }
-        }
-        private async Task<bool> DefaultLoadAsyncImplementation()
+        public async Task<bool> LoadAsync()
         {
             DebugWrite($"Frame: {FrameFacadeInternal.FrameId}");
 
