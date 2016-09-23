@@ -40,8 +40,9 @@ namespace Template10.Services.NavigationService
 
         DispatcherWrapper Dispatcher { get; }
 
-        Task SaveNavigationAsync();
-        Task<bool> RestoreSavedNavigationAsync();
+        Task SaveAsync();
+        Task<bool> LoadAsync();
+
         event TypedEventHandler<Type> AfterRestoreSavedNavigation;
 
         void ClearHistory();

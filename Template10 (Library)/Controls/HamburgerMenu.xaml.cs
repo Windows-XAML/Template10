@@ -325,7 +325,7 @@ namespace Template10.Controls
 
         partial void InternalNavigationServiceChanged(ChangedEventArgs<INavigationService> e)
         {
-            e.NewValue.AfterRestoreSavedNavigation += (s, args) => HighlightCorrectButton(NavigationService.CurrentPageType, NavigationService.CurrentPageParam);
+            e.NewValue.AfterRestoreSavedNavigation; += (s, args) => HighlightCorrectButton(NavigationService.CurrentPageType, NavigationService.CurrentPageParam);
             e.NewValue.FrameFacade.Navigated += (s, args) => HighlightCorrectButton(args.PageType, args.Parameter);
             ShellSplitView.Content = e.NewValue.Frame;
             UpdateFullScreenForSplashScreen(e);
