@@ -40,9 +40,9 @@ namespace Template10.Services.NavigationService
 
         DispatcherWrapper Dispatcher { get; }
 
-        Task SaveNavigationAsync();
-        Task<bool> RestoreSavedNavigationAsync();
-        event TypedEventHandler<Type> AfterRestoreSavedNavigation;
+        Func<Task> SaveAsync { get; set; }
+        Func<Task<bool>> LoadAsync { get; set; }
+        event TypedEventHandler<Type> OnNavigationStateLoaded;
 
         void ClearHistory();
         void ClearCache(bool removeCachedPagesInBackStack = false);

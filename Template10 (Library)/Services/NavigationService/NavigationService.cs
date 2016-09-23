@@ -268,7 +268,16 @@ namespace Template10.Services.NavigationService
         public ISerializationService SerializationService { get; set; }
 
         public event EventHandler<CancelEventArgs<Type>> BeforeSavingNavigation;
-        public async Task SaveNavigationAsync()
+
+        private Func<Task> _saveAsync;
+        public Func<Task> SaveAsync
+        {
+            get { return _saveAsync ?? DefaultSaveAsyncImplementation; }
+            set { _saveAsync = value; }
+        }
+
+
+        private async Task DefaultSaveAsyncImplementation()
         {
             DebugWrite($"Frame: {FrameFacadeInternal.FrameId}");
 
@@ -290,8 +299,16 @@ namespace Template10.Services.NavigationService
             state.Write<string>("NavigateState", FrameFacadeInternal?.NavigationService.NavigationState);
         }
 
-        public event TypedEventHandler<Type> AfterRestoreSavedNavigation;
-        public async Task<bool> RestoreSavedNavigationAsync()
+        public event TypedEventHandler<Type> OnNavigationStateLoaded;
+
+        private Func<Task<bool>> _loadAsync;
+
+        public Func<Task<bool>> LoadAsync
+        {
+            get { return _loadAsync ?? DefaultLoadAsyncImplementation; }
+            set { _loadAsync = value; }
+        }
+        private async Task<bool> DefaultLoadAsyncImplementation()
         {
             DebugWrite($"Frame: {FrameFacadeInternal.FrameId}");
 
@@ -312,7 +329,7 @@ namespace Template10.Services.NavigationService
                 {
                     await Task.Delay(1);
                 }
-                AfterRestoreSavedNavigation?.Invoke(this, FrameFacadeInternal.CurrentPageType);
+                OnNavigationStateLoaded?.Invoke(this, FrameFacadeInternal.CurrentPageType);
                 return true;
             }
             catch { return false; }
@@ -361,7 +378,7 @@ namespace Template10.Services.NavigationService
         {
             DebugWrite($"Frame: {FrameFacadeInternal.FrameId}");
 
-            await SaveNavigationAsync();
+            await SaveAsync();
 
             var page = FrameFacadeInternal.Content as Page;
             if (page != null)
