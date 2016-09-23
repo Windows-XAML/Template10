@@ -539,11 +539,11 @@ namespace Template10.Common
             set
             {
                 DebugWrite($"CurrenstState changed to {value}");
-                CurrentStateHistory.Add(DateTime.Now, value);
+                CurrentStateHistory.Add($"{DateTime.Now.Ticks} - {value}", value);
                 _currentState = value;
             }
         }
-        Dictionary<DateTime, States> CurrentStateHistory = new Dictionary<DateTime, States>();
+        Dictionary<string, States> CurrentStateHistory = new Dictionary<string, States>();
 
         private async Task InitializeFrameAsync(IActivatedEventArgs e)
         {
