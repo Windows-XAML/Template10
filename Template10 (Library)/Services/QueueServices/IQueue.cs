@@ -7,7 +7,7 @@ using Template10.Common;
 
 namespace Template10.Services.QueueServices
 {
-    public interface IQueue<T>
+    public interface IQueue<T> : IEnumerable<T>
     {
         event TypedEventHandler<T> Enqueued;
         void Enqueue(T item);

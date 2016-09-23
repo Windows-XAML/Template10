@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,6 +36,18 @@ namespace Template10.Services.QueueServices
             Dequeued?.Invoke(null, item);
             return item;
         }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return _queue.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+
             
     }
 }
