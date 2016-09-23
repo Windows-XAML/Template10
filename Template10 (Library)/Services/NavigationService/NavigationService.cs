@@ -294,7 +294,7 @@ namespace Template10.Services.NavigationService
             state.Write<string>("NavigateState", FrameFacadeInternal?.NavigationService.NavigationState);
         }
 
-        public event TypedEventHandler<Type> OnNavigationStateLoaded;
+        public event TypedEventHandler<Type> AfterRestoreSavedNavigation;
 
         public async Task<bool> LoadAsync()
         {
@@ -317,7 +317,7 @@ namespace Template10.Services.NavigationService
                 {
                     await Task.Delay(1);
                 }
-                OnNavigationStateLoaded?.Invoke(this, FrameFacadeInternal.CurrentPageType);
+                AfterRestoreSavedNavigation?.Invoke(this, FrameFacadeInternal.CurrentPageType);
                 return true;
             }
             catch { return false; }

@@ -43,7 +43,7 @@ namespace Template10.Services.NavigationService
         Task SaveAsync();
         Task<bool> LoadAsync();
 
-        event TypedEventHandler<Type> OnNavigationStateLoaded;
+        event TypedEventHandler<Type> AfterRestoreSavedNavigation;
 
         void ClearHistory();
         void ClearCache(bool removeCachedPagesInBackStack = false);
