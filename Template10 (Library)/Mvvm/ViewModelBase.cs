@@ -34,6 +34,7 @@ namespace Template10.Mvvm
         [JsonIgnore]
         public virtual IStateItems SessionState { get; set; }
 
+        [JsonIgnore]
         public virtual Task<bool> PageCanNavigateAwayAsync ()
         {
             return Task.FromResult(true);
