@@ -305,7 +305,7 @@ namespace Template10.Services.NavigationService
             _navigatingEventHandlers.ForEach(x => x(this, args));
             await deferral.WaitForDeferralsAsync().ConfigureAwait(false);
             var pageNavigable = (Content as Page)?.DataContext as INavigable;
-            e.Cancel = args.Cancel || ((pageNavigable != null) && !await pageNavigable.PageCanNavigateAway());
+            e.Cancel = args.Cancel || ((pageNavigable != null) && !await pageNavigable.PageCanNavigateAwayAsync());
         }
     }
 
