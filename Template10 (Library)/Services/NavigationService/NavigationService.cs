@@ -269,8 +269,6 @@ namespace Template10.Services.NavigationService
 
         public event EventHandler<CancelEventArgs<Type>> BeforeSavingNavigation;
 
-        
-
 
         public async Task SaveAsync()
         {
@@ -292,9 +290,18 @@ namespace Template10.Services.NavigationService
             state.Write<string>("CurrentPageType", CurrentPageType.AssemblyQualifiedName);
             state.Write<object>("CurrentPageParam", CurrentPageParam);
             state.Write<string>("NavigateState", FrameFacadeInternal?.NavigationService.NavigationState);
+
+            await Task.CompletedTask;
+        }
+
+        [Obsolete("SaveNavigationAsync() is obsolete - please use SaveAsync() instead.")]
+        public async Task SaveNavigationAsync()
+        {
+            await SaveAsync();
         }
 
         public event TypedEventHandler<Type> AfterRestoreSavedNavigation;
+
 
         public async Task<bool> LoadAsync()
         {
@@ -321,6 +328,12 @@ namespace Template10.Services.NavigationService
                 return true;
             }
             catch { return false; }
+        }
+
+        [Obsolete("RestoreSavedNavigationAsync is obsolete - please use LoadAsync() instead.")]
+        public async Task<bool> RestoreSavedNavigationAsync()
+        {
+            return await LoadAsync();
         }
 
         public void Refresh() { FrameFacadeInternal.Refresh(); }
@@ -366,7 +379,7 @@ namespace Template10.Services.NavigationService
         {
             DebugWrite($"Frame: {FrameFacadeInternal.FrameId}");
 
-            await SaveAsync();
+            await SaveNavigationAsync();
 
             var page = FrameFacadeInternal.Content as Page;
             if (page != null)
