@@ -14,6 +14,6 @@ namespace Template10.Services.NavigationService
         INavigationService NavigationService { get; set; }
         IDispatcherWrapper Dispatcher { get; set; }
         IStateItems SessionState { get; set; }
-        Task<bool> PageCanNavigateAway();
+        Task<bool> PageCanNavigateAwayAsync();
     }
 }
