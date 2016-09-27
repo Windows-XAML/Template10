@@ -539,11 +539,11 @@ namespace Template10.Common
             set
             {
                 DebugWrite($"CurrenstState changed to {value}");
-                CurrentStateHistory.Add(DateTime.Now, value);
+                CurrentStateHistory.Add($"{DateTime.Now}-{Guid.NewGuid()}", value);
                 _currentState = value;
             }
         }
-        Dictionary<DateTime, States> CurrentStateHistory = new Dictionary<DateTime, States>();
+        Dictionary<string, States> CurrentStateHistory = new Dictionary<string, States>();
 
         private async Task InitializeFrameAsync(IActivatedEventArgs e)
         {
@@ -596,7 +596,7 @@ namespace Template10.Common
 
         private void SetupCustomTitleBar()
         {
-            SpinUpResources();
+            InitResourceDueToPlatformBug();
 
             // this wonky style of loop is important due to a platform bug
             int count = Application.Current.Resources.Count;
@@ -614,7 +614,7 @@ namespace Template10.Common
             }
         }
 
-        private static void SpinUpResources()
+        private static void InitResourceDueToPlatformBug()
         {
             // this "unused" bit is very important because of a quirk in ResourceThemes
             try
