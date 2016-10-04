@@ -556,7 +556,7 @@ namespace Template10.Common
             DebugWrite($"{nameof(IActivatedEventArgs)}:{e.Kind}");
 
             CallShowSplashScreen(e);
-            await CallOnInitializeAsync(true, e);
+            await CallOnInitializeAsync(false, e);
             SetupCustomTitleBar();
 
             if (_SplashLogic.Splashing || Window.Current.Content == null)
