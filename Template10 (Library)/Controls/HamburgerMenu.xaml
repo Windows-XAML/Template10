@@ -456,12 +456,13 @@
 
         <ContentControl x:Name="Header"
                         Height="48"
-                        HorizontalContentAlignment="Left"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Stretch"
                         VerticalContentAlignment="Center"
                         Canvas.ZIndex="2"
                         Content="{Binding HeaderContent, ElementName=ThisPage}"
                         IsTabStop="False"
-                        RelativePanel.AlignRightWith="HeaderBackground"
+                        RelativePanel.AlignRightWithPanel="True"
                         RelativePanel.AlignTopWith="HamburgerButton"
                         RelativePanel.RightOf="HamburgerButton" />
 
