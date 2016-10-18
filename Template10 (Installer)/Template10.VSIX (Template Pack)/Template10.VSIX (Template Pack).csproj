@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\..\packages\Microsoft.VSSDK.BuildTools.14.1.24720\build\Microsoft.VSSDK.BuildTools.props" Condition="Exists('..\..\packages\Microsoft.VSSDK.BuildTools.14.1.24720\build\Microsoft.VSSDK.BuildTools.props')" />
   <UsingTask AssemblyFile="$(SolutionDir)Lib\Template10.MSBUILD.dll" TaskName="VSTemplateBuildTask">
@@ -18,8 +18,8 @@
     <ProjectGuid>{FD63EF06-F97C-4113-B5AC-2A4D7DBEA6EB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Template10.Installer</RootNamespace>
-    <AssemblyName>Template10.Installer</AssemblyName>
+    <RootNamespace>Template10.VSIX (Template Pack)</RootNamespace>
+    <AssemblyName>Template10.VSIX (Template Pack)</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <GeneratePkgDefFile>false</GeneratePkgDefFile>
     <IncludeAssemblyInVSIXContainer>false</IncludeAssemblyInVSIXContainer>
@@ -109,12 +109,12 @@
             -->
   <!--custom build task to convert projects to project templates-->
   <Target Name="BeforeBuild">
-    <VSTemplateBuildTask ProjectDescription="A rich library of helpers, services, and base classes for new and existing Windows UWP apps to maximize awesomeness and minimize boilerplate garbage. " ProjectFriendlyName="Blank (Template 10)" SourceDir="$(SolutionDir)Templates (Project)\Blank\" CsprojFile="$(SolutionDir)Templates (Project)\Blank\Blank.csproj" TargetDir="$(SolutionDir)Template10 (Installer)\Template10.Installer\ProjectTemplates\Windows\Universal\Template10" ZipName="1 Template10Blank.zip" PreviewImagePath="__PreviewImageBlank.png" HelpUrl="http://aka.ms/T10-Blank" />
-    <VSTemplateBuildTask ProjectDescription="A rich library of helpers, services, and base classes for new and existing Windows UWP apps to maximize awesomeness and minimize boilerplate garbage. " ProjectFriendlyName="Minimal (Template 10)" SourceDir="$(SolutionDir)Templates (Project)\Minimal\" CsprojFile="$(SolutionDir)Templates (Project)\Minimal\Minimal.csproj" TargetDir="$(SolutionDir)Template10 (Installer)\Template10.Installer\ProjectTemplates\Windows\Universal\Template10" ZipName="2 Template10Minimal.zip" PreviewImagePath="__PreviewImageMinimal.png" HelpUrl="http://aka.ms/T10-Minimal" />
-    <VSTemplateBuildTask ProjectDescription="A rich library of helpers, services, and base classes for new and existing Windows UWP apps to maximize awesomeness and minimize boilerplate garbage. " ProjectFriendlyName="Hamburger (Template 10)" SourceDir="$(SolutionDir)Templates (Project)\Hamburger\" CsprojFile="$(SolutionDir)Templates (Project)\Hamburger\Hamburger.csproj" TargetDir="$(SolutionDir)Template10 (Installer)\Template10.Installer\ProjectTemplates\Windows\Universal\Template10" ZipName="3 Template10Hamburger.zip" PreviewImagePath="__PreviewImageHamburger.png" HelpUrl="http://aka.ms/T10-Hamburger" />
-    <Copy SourceFiles="$(SolutionDir)Template10 (Installer)\Template10.Installer\ProjectTemplates\Windows\Universal\Template10\1 Template10Blank.zip" DestinationFolder="$(SolutionDir)Template10 (Installer)\Template10.Installer\ProjectTemplates\Windows\Universal\" />
-    <Copy SourceFiles="$(SolutionDir)Template10 (Installer)\Template10.Installer\ProjectTemplates\Windows\Universal\Template10\2 Template10Minimal.zip" DestinationFolder="$(SolutionDir)Template10 (Installer)\Template10.Installer\ProjectTemplates\Windows\Universal\" />
-    <Copy SourceFiles="$(SolutionDir)Template10 (Installer)\Template10.Installer\ProjectTemplates\Windows\Universal\Template10\3 Template10Hamburger.zip" DestinationFolder="$(SolutionDir)Template10 (Installer)\Template10.Installer\ProjectTemplates\Windows\Universal\" />
+    <VSTemplateBuildTask ProjectDescription="A rich library of helpers, services, and base classes for new and existing Windows UWP apps to maximize awesomeness and minimize boilerplate garbage. " ProjectFriendlyName="Blank (Template 10)" SourceDir="$(SolutionDir)Templates (Project)\Blank\" CsprojFile="$(SolutionDir)Templates (Project)\Blank\Blank.csproj" TargetDir="$(SolutionDir)Template10 (Installer)\Template10.VSIX (Template Pack)\ProjectTemplates\Windows\Universal\Template10" ZipName="1 Template10Blank.zip" PreviewImagePath="__PreviewImageBlank.png" HelpUrl="http://aka.ms/T10-Blank" />
+    <VSTemplateBuildTask ProjectDescription="A rich library of helpers, services, and base classes for new and existing Windows UWP apps to maximize awesomeness and minimize boilerplate garbage. " ProjectFriendlyName="Minimal (Template 10)" SourceDir="$(SolutionDir)Templates (Project)\Minimal\" CsprojFile="$(SolutionDir)Templates (Project)\Minimal\Minimal.csproj" TargetDir="$(SolutionDir)Template10 (Installer)\Template10.VSIX (Template Pack)\ProjectTemplates\Windows\Universal\Template10" ZipName="2 Template10Minimal.zip" PreviewImagePath="__PreviewImageMinimal.png" HelpUrl="http://aka.ms/T10-Minimal" />
+    <VSTemplateBuildTask ProjectDescription="A rich library of helpers, services, and base classes for new and existing Windows UWP apps to maximize awesomeness and minimize boilerplate garbage. " ProjectFriendlyName="Hamburger (Template 10)" SourceDir="$(SolutionDir)Templates (Project)\Hamburger\" CsprojFile="$(SolutionDir)Templates (Project)\Hamburger\Hamburger.csproj" TargetDir="$(SolutionDir)Template10 (Installer)\Template10.VSIX (Template Pack)\ProjectTemplates\Windows\Universal\Template10" ZipName="3 Template10Hamburger.zip" PreviewImagePath="__PreviewImageHamburger.png" HelpUrl="http://aka.ms/T10-Hamburger" />
+    <Copy SourceFiles="$(SolutionDir)Template10 (Installer)\Template10.VSIX (Template Pack)\ProjectTemplates\Windows\Universal\Template10\1 Template10Blank.zip" DestinationFolder="$(SolutionDir)Template10 (Installer)\Template10.VSIX (Template Pack)\ProjectTemplates\Windows\Universal\" />
+    <Copy SourceFiles="$(SolutionDir)Template10 (Installer)\Template10.VSIX (Template Pack)\ProjectTemplates\Windows\Universal\Template10\2 Template10Minimal.zip" DestinationFolder="$(SolutionDir)Template10 (Installer)\Template10.VSIX (Template Pack)\ProjectTemplates\Windows\Universal\" />
+    <Copy SourceFiles="$(SolutionDir)Template10 (Installer)\Template10.VSIX (Template Pack)\ProjectTemplates\Windows\Universal\Template10\3 Template10Hamburger.zip" DestinationFolder="$(SolutionDir)Template10 (Installer)\Template10.VSIX (Template Pack)\ProjectTemplates\Windows\Universal\" />
   </Target>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
