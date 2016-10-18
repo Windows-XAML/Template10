@@ -32,6 +32,19 @@ namespace Sample
             #endregion
         }
 
+        private bool OnInitializeAsyncRunning = false;
+        public override async Task OnInitializeAsync(IActivatedEventArgs args)
+        {
+            if (OnInitializeAsyncRunning)
+            {
+                throw new Exception("OnInitializeAsync already running!");
+            }
+            OnInitializeAsyncRunning = true;
+            await Task.Delay(30 * 1000);
+            await base.OnInitializeAsync(args);
+            OnInitializeAsyncRunning = false;
+        }
+
         public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
             // TODO: add your long-running task here
