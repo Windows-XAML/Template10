@@ -607,6 +607,8 @@ namespace Template10.Controls
 
             // hiding these elements prevents flicker
             Header.Opacity = opacity;
+            Header.Visibility = opacity == 1 ? Visibility.Visible : Visibility.Collapsed;
+
             HamburgerButton.Opacity = opacity;
             HamburgerBackground.Opacity = opacity;
             PaneContent.Opacity = opacity;
