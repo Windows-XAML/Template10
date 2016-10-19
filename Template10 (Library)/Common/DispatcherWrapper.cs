@@ -113,7 +113,7 @@ namespace Template10.Common
             }
         }
 
-        public async void Dispatch(Action action, int delayms = 0, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal)
+        public void Dispatch(Action action, int delayms = 0, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal)
         {
             if (delayms > 0)
                 await Task.Delay(delayms).ConfigureAwait(false);
