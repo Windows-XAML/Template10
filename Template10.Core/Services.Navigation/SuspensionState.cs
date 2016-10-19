@@ -1,15 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Template10.Interfaces.Services.Navigation;
 
-namespace Template10.Suspension
+namespace Template10.Navigation
 {
 
     public class SuspensionState : Dictionary<string, object>, ISuspensionState
     {
-        Navigation.INavigationService _navigationService;
+        INavigationService _navigationService;
 
-        public SuspensionState(Navigation.INavigationService navigationService)
+        public SuspensionState(INavigationService navigationService)
         {
             _navigationService = navigationService;
         }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Template10.Navigation
+namespace Template10.Interfaces.Services.Navigation
 {
     class IFrameFacade
     {

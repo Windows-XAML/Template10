@@ -52,34 +52,39 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App\Bootstrapper.cs" />
+    <Compile Include="App\StateLogic.cs" />
+    <Compile Include="App\WindowLogic.cs" />
+    <Compile Include="Bootstrapper.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="App\Extensions.cs" />
-    <Compile Include="App\LifecycleLogic.cs" />
-    <Compile Include="App\StartKind.cs" />
-    <Compile Include="App\LoadStates.cs" />
-    <Compile Include="Helpers\ActivationKinds.cs" />
-    <Compile Include="Helpers\ActivationHelper.cs" />
-    <Compile Include="Navigation\FrameFacade.cs" />
-    <Compile Include="Navigation\IFrameFacade.cs" />
-    <Compile Include="Navigation\INavigationAware.cs" />
-    <Compile Include="Navigation\INavigatingFrom.cs" />
-    <Compile Include="Navigation\INavigationItem.cs" />
-    <Compile Include="Navigation\INavigationItems.cs" />
-    <Compile Include="Navigation\INavigationService.cs" />
-    <Compile Include="Navigation\INavigationState.cs" />
-    <Compile Include="Suspension\ISuspensionAware.cs" />
-    <Compile Include="Suspension\ISuspensionState.cs" />
-    <Compile Include="View\ILifetimeService.cs" />
-    <Compile Include="View\IViewService.cs" />
-    <Compile Include="Navigation\NavigationModes.cs" />
-    <Compile Include="Navigation\NavigationService.cs" />
-    <Compile Include="Navigation\NavigationState.cs" />
-    <Compile Include="Suspension\SuspensionState.cs" />
-    <Compile Include="View\LifetimeService.cs" />
-    <Compile Include="View\ViewService.cs" />
+    <Compile Include="App\SuspensionLogic.cs" />
+    <Compile Include="App\Enums\StartKinds.cs" />
+    <Compile Include="App\Enums\BootstrapperStates.cs" />
+    <Compile Include="App\Enums\ActivationKinds.cs" />
+    <Compile Include="Services.Navigation\FrameFacade.cs" />
+    <Compile Include="Interfaces.Services\Navigation.IFrameFacade.cs" />
+    <Compile Include="Interfaces.Services\Navigation.INavigationAware.cs" />
+    <Compile Include="Interfaces.Services\Navigation.INavigatingFrom.cs" />
+    <Compile Include="Interfaces.Services\Navigation.IStackItem.cs" />
+    <Compile Include="Interfaces.Services\Navigation.IStackItems.cs" />
+    <Compile Include="Interfaces.Services\Navigation.INavigationService.cs" />
+    <Compile Include="Interfaces.Services\Navigation.INavigationState.cs" />
+    <Compile Include="Interfaces.Services\Navigation.ISuspensionAware.cs" />
+    <Compile Include="Interfaces.Services\Navigation.ISuspensionState.cs" />
+    <Compile Include="Interfaces.Services\View.ILifetimeService.cs" />
+    <Compile Include="Interfaces.Services\View.IViewService.cs" />
+    <Compile Include="Services.Navigation\Enums\NavigationModes.cs" />
+    <Compile Include="Services.Navigation\NavigationService.cs" />
+    <Compile Include="Services.Navigation\NavigationState.cs" />
+    <Compile Include="Services.Navigation\SuspensionState.cs" />
+    <Compile Include="Services.Dispatcher\DispatcherService.cs" />
+    <Compile Include="Interfaces.Services\Dispatcher.IDispatcherService.cs" />
+    <Compile Include="Services.View\LifetimeService.cs" />
+    <Compile Include="Services.View\ViewService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

@@ -5,7 +5,7 @@ using Windows.ApplicationModel.Activation;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Template10.Helpers
+namespace Template10.App
 {
 
     public enum ActivationKinds

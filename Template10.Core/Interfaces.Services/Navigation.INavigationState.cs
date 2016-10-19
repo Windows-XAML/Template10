@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Template10.Navigation
+namespace Template10.Interfaces.Services.Navigation
 {
 
     public interface INavigationState

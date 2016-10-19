@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Template10.View;
+using Template10.Interfaces.Services.View;
 using Windows.UI.Xaml.Media.Animation;
 
-namespace Template10.Navigation
+namespace Template10.Interfaces.Services.Navigation
 {
     public interface INavigationService
     {
@@ -21,11 +21,11 @@ namespace Template10.Navigation
         void GoForward();
 
         INavigationState NavigationState { get; }
-        Suspension.ISuspensionState SuspensionState { get; }
+        ISuspensionState SuspensionState { get; }
 
-        INavigationItem Current { get; }
-        INavigationItems BackStack { get; }
-        INavigationItems ForwardStack { get; }
+        IStackItem Current { get; }
+        IStackItems BackStack { get; }
+        IStackItems ForwardStack { get; }
 
         Windows.UI.Xaml.Controls.Page Page { get; }
         object ViewModel { get; }

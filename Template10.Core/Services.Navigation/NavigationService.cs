@@ -43,7 +43,7 @@ namespace Template10.Navigation
 
         public INavigationState NavigationState { get; }
 
-        public Suspension.ISuspensionState SuspensionState { get; }
+        public Navigation.ISuspensionState SuspensionState { get; }
 
         public void GoBack(NavigationTransitionInfo infoOverride = null)
         {

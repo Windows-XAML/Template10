@@ -1,36 +1,11 @@
 using System.Linq;
 using System.Collections.Generic;
-using System;
-using System.Threading.Tasks;
-using Windows.UI.Core;
+using Template10.Interfaces.Services.View;
+using Windows.UI.Xaml;
+using Template10.Services.Dispatcher;
 
-namespace Template10.View
+namespace Template10.Services.View
 {
-    public interface IDispatcherService
-    {
-        void Dispatch(Action action);
-        Task DispatchAsync(Action action);
-    }
-
-    public class DispatcherService : IDispatcherService
-    {
-        CoreDispatcher _dispatcher;
-        public DispatcherService(CoreDispatcher dispatcher)
-        {
-            _dispatcher = dispatcher;
-        }
-
-        public async void Dispatch(Action action)
-        {
-            await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(action));
-        }
-
-        public async Task DispatchAsync(Action action)
-        {
-            await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(action));
-        }
-    }
-
     internal class ViewService : IViewService
     {
         public ViewService(Window window)

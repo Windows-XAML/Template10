@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Template10.Interfaces.Services.Navigation;
 
 namespace Template10.Navigation
 {

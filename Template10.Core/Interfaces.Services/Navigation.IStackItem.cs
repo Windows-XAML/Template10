@@ -1,9 +1,9 @@
 using System;
 
-namespace Template10.Navigation
+namespace Template10.Interfaces.Services.Navigation
 {
 
-    public interface INavigationItem
+    public interface IStackItem
     {
         Type Page { get; set; }
         object Parameter { get; set; }

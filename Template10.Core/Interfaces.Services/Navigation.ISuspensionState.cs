@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Template10.Suspension
+namespace Template10.Interfaces.Services.Navigation
 {
     public interface ISuspensionState : IDictionary<string, object>
     {

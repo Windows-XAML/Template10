@@ -1,20 +1,17 @@
 using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Text;
-using Template10.Helpers;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Activation;
-using Template10.WindowService;
+using Template10.Services.View;
+using Template10.Interfaces.Services.Navigation;
 
 namespace Template10.App
 {
-    public class LifecycleLogic : ILifecycleLogic
+    public class SuspensionLogic 
     {
         public bool UseExtendExecution { get; set; } = true;
 
         internal async Task SuspendAsync()
         {
+            this.DebugWriteMessage($"UseExtendExecution: {UseExtendExecution}");
             if (UseExtendExecution)
             {
                 using (var session = CreateSession())
@@ -36,23 +33,24 @@ namespace Template10.App
 
         internal async Task RestoreAsync()
         {
+            this.DebugWriteMessage();
             foreach (var nav in ViewService.AllNavigationServices)
             {
                 await RestoreAsync(nav);
             }
         }
 
-        private async Task SuspendAsync(Navigation.INavigationService nav)
+        private async Task SuspendAsync(INavigationService nav)
         {
             this.DebugWriteMessage($"NavigationService {nav}");
-            var vm = nav.ViewModel as Suspension.ISuspensionAware;
+            var vm = nav.ViewModel as ISuspensionAware;
             await vm?.OnSuspendingAsync(nav.SuspensionState.Mark());
         }
 
-        private async Task RestoreAsync(Navigation.INavigationService nav)
+        private async Task RestoreAsync(INavigationService nav)
         {
             this.DebugWriteMessage($"NavigationService {nav}");
-            var vm = nav.ViewModel as Suspension.ISuspensionAware;
+            var vm = nav.ViewModel as ISuspensionAware;
             await vm?.OnResumingAsync(nav.SuspensionState);
         }
 
@@ -60,7 +58,7 @@ namespace Template10.App
         {
             return new Windows.ApplicationModel.ExtendedExecution.ExtendedExecutionSession
             {
-                Description = GetType().ToString(),
+                Description = this.GetType().ToString(),
                 Reason = Windows.ApplicationModel.ExtendedExecution.ExtendedExecutionReason.SavingData
             };
         }
