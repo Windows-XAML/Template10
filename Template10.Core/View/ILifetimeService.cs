@@ -1,6 +1,7 @@
-namespace Template10.LifetimeService
+namespace Template10.View
 {
     public interface ILifetimeService
     {
     }
+
 }

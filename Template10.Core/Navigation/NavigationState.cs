@@ -12,12 +12,12 @@ namespace Template10.Navigation
             _navigationService = navigationService;
         }
 
-        public Task LoadAsync(string name = null)
+        public Task<bool> LoadAsync(string name = null)
         {
             throw new NotImplementedException();
         }
 
-        public Task SaveAsync(string name = null)
+        public Task<bool> SaveAsync(string name = null)
         {
             throw new NotImplementedException();
         }

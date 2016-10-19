@@ -7,6 +7,13 @@ namespace Template10.Navigation
 {
     public class NavigationService : INavigationService
     {
+        private Windows.UI.Xaml.Controls.Frame Frame;
+
+        public NavigationService(Windows.UI.Xaml.Controls.Frame frame)
+        {
+            Frame = frame;
+        }
+
         public INavigationItems BackStack { get; }
 
         public bool CanGoBack { get; }
@@ -29,7 +36,14 @@ namespace Template10.Navigation
             }
         }
 
+        // private?
+        public Windows.UI.Xaml.Controls.Page Page => Frame.Content as Windows.UI.Xaml.Controls.Page;
+
+        public object ViewModel => Page?.DataContext;
+
         public INavigationState NavigationState { get; }
+
+        public Suspension.ISuspensionState SuspensionState { get; }
 
         public void GoBack(NavigationTransitionInfo infoOverride = null)
         {

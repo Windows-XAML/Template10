@@ -14,6 +14,12 @@ namespace Template10.Suspension
             _navigationService = navigationService;
         }
 
+        public ISuspensionState Mark()
+        {
+            // nav.FrameFacade.SetFrameState(CacheDateKey, DateTime.Now.ToString());
+            return null;
+        }
+
         public Task LoadAsync(string name = null)
         {
             throw new NotImplementedException();
@@ -22,6 +28,15 @@ namespace Template10.Suspension
         public Task SaveAsync(string name = null)
         {
             throw new NotImplementedException();
+        }
+
+        public void TrySet<T>(string key, T value)
+        {
+            if (ContainsKey(key))
+            {
+                Remove(key);
+            }
+            Add(key, value);
         }
 
         public T TryGet<T>(string key)

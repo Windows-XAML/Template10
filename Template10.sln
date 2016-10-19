@@ -96,7 +96,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiplePageHeaders", "Samp
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Template10.2", "Template10.2", "{6B8A7AA8-7746-4B64-B0A5-DD75B234B52A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Core", "Template10.Core\Template10.Core.csproj", "{53856BF9-CBED-4561-9F2C-2F74DAB34A1F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.2.Core", "Template10.Core\Template10.2.Core.csproj", "{53856BF9-CBED-4561-9F2C-2F74DAB34A1F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

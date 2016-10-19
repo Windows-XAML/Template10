@@ -5,7 +5,7 @@ namespace Template10.Navigation
 
     public interface INavigationState
     {
-        Task LoadAsync(string name = null);
-        Task SaveAsync(string name = null);
+        Task<bool> LoadAsync(string name = null);
+        Task<bool> SaveAsync(string name = null);
     }
 }
