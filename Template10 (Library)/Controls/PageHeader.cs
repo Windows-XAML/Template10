@@ -171,7 +171,7 @@ namespace Template10.Controls
             set { SetValue(TextProperty, value); }
         }
         public static readonly DependencyProperty TextProperty =
-            DependencyProperty.Register("Text", typeof(string), typeof(PageHeader), new PropertyMetadata(string.Empty, (d, e) =>
+            DependencyProperty.Register(nameof(Text), typeof(string), typeof(PageHeader), new PropertyMetadata(string.Empty, (d, e) =>
             {
                 (d as PageHeader).Content = e.NewValue;
             }));

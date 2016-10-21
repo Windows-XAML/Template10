@@ -16,7 +16,7 @@ namespace Template10.Samples.BehaviorsSample.Views
             set { SetValue(ThrottledEventCountProperty, value); }
         }
 
-        public static readonly DependencyProperty ThrottledEventCountProperty = DependencyProperty.Register("ThrottledEventCount", typeof (int), typeof (MainPage), new PropertyMetadata(0));
+        public static readonly DependencyProperty ThrottledEventCountProperty = DependencyProperty.Register(nameof(ThrottledEventCount), typeof (int), typeof (MainPage), new PropertyMetadata(0));
 
         public void IncreaseThrottledEventCount()
         {
