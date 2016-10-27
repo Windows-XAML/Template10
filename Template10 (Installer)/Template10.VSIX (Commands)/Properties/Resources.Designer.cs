@@ -79,6 +79,42 @@ namespace Template10.VSIX.Commands.Properties {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Model.
+        /// </summary>
+        internal static string PrompDialog_ShowModelCheckBoxContent {
+            get {
+                return ResourceManager.GetString("PrompDialog_ShowModelCheckBoxContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a View.
+        /// </summary>
+        internal static string PrompDialog_ShowViewCheckBoxContent {
+            get {
+                return ResourceManager.GetString("PrompDialog_ShowViewCheckBoxContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a ViewModel.
+        /// </summary>
+        internal static string PrompDialog_ShowViewModelCheckBoxContent {
+            get {
+                return ResourceManager.GetString("PrompDialog_ShowViewModelCheckBoxContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Open File.
+        /// </summary>
+        internal static string PromptDialog_OpenFileGroupHeader {
+            get {
+                return ResourceManager.GetString("PromptDialog_OpenFileGroupHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Page name.
         /// </summary>
         internal static string PromptDialog_PagaNameHeaderText {

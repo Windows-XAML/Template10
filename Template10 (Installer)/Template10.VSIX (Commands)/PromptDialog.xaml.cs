@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Media;
 using Template10.VSIX.Commands.Templates;
 
 namespace Template10.VSIX.Commands
@@ -22,20 +23,26 @@ namespace Template10.VSIX.Commands
         private readonly Guid guid_microsoft_csharp_editor = new Guid("{A6C744A8-0E4A-4FC6-886A-064283054674}");
         private readonly Guid guid_microsoft_csharp_editor_with_encoding = new Guid("{08467b34-b90f-4d91-bdca-eb8c8cf3033a}");
         private readonly Guid guid_microsoft_xaml_editor = new Guid("{32CC8DFA-2D70-49b2-94CD-22D57349B778}");
-    #endregion Fields
+        private IVsUIShell5 vsUiShell5;
+        #endregion Fields
 
-    #region Constructors
+        #region Constructors
 
-    public PromptDialog(IServiceProvider serviceProvider)
+        public PromptDialog(IServiceProvider serviceProvider)
         {
             InitializeComponent();
             this.serviceProvider = serviceProvider;
+            vsUiShell5 = serviceProvider.GetService(typeof(SVsUIShell)) as IVsUIShell5;
 
             Title = Properties.Resources.PromptDialogTitle;
             pageNameLabel.Text = Properties.Resources.PromptDialog_PagaNameHeaderText;
             useModel_checkBox.Content = Properties.Resources.PromptDialog_UseModelCheckBoxContent;
             generateButton.Content = Properties.Resources.PrompDialog_GenerateButtonContent;
             cancelButton.Content = Properties.Resources.PrompDialog_CancelButtonContent;
+            openView_checkBox.Content = Properties.Resources.PrompDialog_ShowViewCheckBoxContent;
+            openViewModel_checkbox.Content = Properties.Resources.PrompDialog_ShowViewModelCheckBoxContent;
+            openModel_checkbox.Content = Properties.Resources.PrompDialog_ShowModelCheckBoxContent;
+            openFileGroup.Header = Properties.Resources.PromptDialog_OpenFileGroupHeader;
             _project = GetSelectedProject();
         }
 
@@ -68,7 +75,11 @@ namespace Template10.VSIX.Commands
 
             var projectItem = GetProjectItemFor(items, "Models");
             var modelFile = projectItem.ProjectItems.AddFromFile(modelFileName);
-            OpenProjectItemInView(modelFile, guid_microsoft_csharp_editor, VSConstants.LOGVIEWID.Code_guid);
+
+            if (openModel_checkbox.IsChecked.Value)
+            {
+                OpenProjectItemInView(modelFile, guid_microsoft_csharp_editor, VSConstants.LOGVIEWID.Code_guid);
+            }
         }
 
         private void GenerateView(string projectPath, string pageName, Dictionary<string, object> dictOptions, List<ProjectItem> items)
@@ -94,11 +105,13 @@ namespace Template10.VSIX.Commands
 
             var projectItem = GetProjectItemFor(items, "Views");
             var pageXamlFile = projectItem.ProjectItems.AddFromFile(pageFileName);
-            OpenProjectItemInView(pageXamlFile, guid_microsoft_xaml_editor, VSConstants.LOGVIEWID.Designer_guid);
-
-
             var pageCsFile = projectItem.ProjectItems.AddFromFile(pageCsFileName);
-            OpenProjectItemInView(pageCsFile, guid_microsoft_csharp_editor, VSConstants.LOGVIEWID.Code_guid);
+
+            if (openViewModel_checkbox.IsChecked.Value)
+            {
+                OpenProjectItemInView(pageXamlFile, guid_microsoft_xaml_editor, VSConstants.LOGVIEWID.Designer_guid);
+                OpenProjectItemInView(pageCsFile, guid_microsoft_csharp_editor, VSConstants.LOGVIEWID.Code_guid);
+            }
         }
 
         private void GenerateViewModel(string projectPath, string pageName, Dictionary<string, object> dictOptions, List<ProjectItem> items)
@@ -116,7 +129,10 @@ namespace Template10.VSIX.Commands
 
             var projectItem = GetProjectItemFor(items, "ViewModels");
             var viewModelFile = projectItem.ProjectItems.AddFromFile(viewModelFileName);
-            OpenProjectItemInView(viewModelFile, guid_microsoft_csharp_editor, VSConstants.LOGVIEWID.Code_guid);
+            if (openViewModel_checkbox.IsChecked.Value)
+            {
+                OpenProjectItemInView(viewModelFile, guid_microsoft_csharp_editor, VSConstants.LOGVIEWID.Code_guid); 
+            }
 
         }
 
@@ -233,5 +249,24 @@ namespace Template10.VSIX.Commands
             }
         }
 
+        private void useModel_checkBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (openModel_checkbox != null)
+            {
+                openModel_checkbox.IsEnabled = true;
+                openModel_checkbox.Foreground = new SolidColorBrush(vsUiShell5.GetThemedWPFColor(EnvironmentColors.ToolWindowTextBrushKey));
+            }
+        }
+
+        private void useModel_checkBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (openModel_checkbox != null)
+            {
+                
+                openModel_checkbox.IsEnabled = false;
+                openModel_checkbox.IsChecked = false;
+                openModel_checkbox.Foreground = new SolidColorBrush(Colors.Gray);
+            }
+        }
     }
 }
