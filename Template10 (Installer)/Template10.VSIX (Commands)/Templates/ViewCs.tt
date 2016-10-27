@@ -1,0 +1,21 @@
+﻿<#@ template debug="true" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ output extension=".cs" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ parameter type="Template10.VSIX.Commands.Templates.BuildOptions" Name="Parameters" #>
+using System;
+using Windows.UI.Xaml.Controls;
+
+namespace <#= Parameters.SolutionNamespace #>.Views
+{
+    public sealed partial class <#= Parameters.PageName #> : Page
+    {
+        public <#= Parameters.PageName #>()
+        {
+            InitializeComponent();
+            NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
+        }
+    }
+}

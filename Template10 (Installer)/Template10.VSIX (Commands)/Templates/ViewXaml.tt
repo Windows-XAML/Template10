@@ -1,0 +1,33 @@
+﻿<#@ template debug="true" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ output extension=".xaml" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ parameter type="Template10.VSIX.Commands.Templates.BuildOptions" Name="Parameters" #>
+<Page x:Class="<#= Parameters.SolutionNamespace #>.Views.<#= Parameters.PageName #>"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+      xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+      xmlns:controls="using:Template10.Controls"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="using:<#= Parameters.SolutionNamespace #>.Views"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:vm="using:<#= Parameters.SolutionNamespace #>.ViewModels" mc:Ignorable="d">
+
+    <Page.DataContext>
+        <vm:<#= Parameters.PageName #>ViewModel x:Name="ViewModel" />
+    </Page.DataContext>
+
+    <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <TextBlock x:Name="mainTextBlock"
+                   RelativePanel.AlignHorizontalCenterWithPanel="True"
+                   RelativePanel.AlignVerticalCenterWithPanel="True"
+                   Margin="16,12,0,0"
+                   Text="Wellcome to the <#= Parameters.PageName #>" />
+
+    </RelativePanel>
+
+</Page>
