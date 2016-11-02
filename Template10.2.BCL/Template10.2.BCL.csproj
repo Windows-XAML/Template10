@@ -107,7 +107,7 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IInfrastructure.cs" />
+    <Compile Include="IServiceConsumer.cs" />
     <Compile Include="ObservableCollectionEx.cs" />
     <Compile Include="ObservableDictionary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

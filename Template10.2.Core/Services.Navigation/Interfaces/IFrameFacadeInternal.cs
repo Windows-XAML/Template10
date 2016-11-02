@@ -7,10 +7,6 @@ namespace Template10.Services.Navigation
 
     internal interface IFrameFacadeInternal : IFrameFacade
     {
-        string GetNavigationState();
-
-        void SetNavigationState(string state);
-
         bool Navigate(Type page);
 
         bool Navigate(Type page, object parameter);

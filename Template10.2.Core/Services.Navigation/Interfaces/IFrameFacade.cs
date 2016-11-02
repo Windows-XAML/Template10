@@ -21,5 +21,9 @@ namespace Template10.Services.Navigation
         void ClearBackStack();
 
         object Content { get; }
+
+        string GetNavigationState();
+
+        void SetNavigationState(string state);
     }
 }
