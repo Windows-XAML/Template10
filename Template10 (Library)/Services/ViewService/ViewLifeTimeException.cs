@@ -10,7 +10,7 @@ using Template10.Services.NavigationService;
 
 namespace Template10.Services.ViewService
 {
-    public sealed class ViewLifetimeControl
+    public sealed partial class ViewLifetimeControl
     {
 
         public class ViewLifeTimeException : Exception
