@@ -23,11 +23,15 @@
                              RelativePanel.AlignTopWithPanel="True" />
 
         <RelativePanel EntranceNavigationTransitionInfo.IsTargetElement="True"
+                       RelativePanel.AlignBottomWithPanel="True"
                        RelativePanel.AlignLeftWithPanel="True"
+                       RelativePanel.AlignRightWithPanel="True"
                        RelativePanel.Below="pageHeader">
 
             <!--  content  -->
-            <TextBlock x:Name="textBlock" Margin="16,12,0,0" Text="Hello World" />
+            <TextBlock x:Name="textBlock"
+                       Margin="16,12,0,0"
+                       Text="Hello World" />
 
         </RelativePanel>
 

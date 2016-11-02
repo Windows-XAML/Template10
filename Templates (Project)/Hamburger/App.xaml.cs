@@ -30,8 +30,8 @@ namespace Sample
             CacheMaxDuration = settings.CacheMaxDuration;
             ShowShellBackButton = settings.UseShellBackButton;
             AutoSuspendAllFrames = true;
-            AutoExtendExecutionSession = true;
             AutoRestoreAfterTerminated = true;
+            AutoExtendExecutionSession = true;
 
             #endregion
         }
