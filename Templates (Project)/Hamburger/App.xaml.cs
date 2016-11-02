@@ -23,12 +23,15 @@ namespace Sample
             SplashFactory = (e) => new Views.Splash(e);
 
             #region app settings
-            
+
             // some settings must be set in app.constructor
             var settings = SettingsService.Instance;
             RequestedTheme = settings.AppTheme;
             CacheMaxDuration = settings.CacheMaxDuration;
             ShowShellBackButton = settings.UseShellBackButton;
+            AutoSuspendAllFrames = true;
+            AutoExtendExecutionSession = true;
+            AutoRestoreAfterTerminated = true;
 
             #endregion
         }
