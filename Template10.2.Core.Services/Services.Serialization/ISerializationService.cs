@@ -2,7 +2,7 @@ using Template10.BCL;
 
 namespace Template10.Services.Serialization
 {
-    public interface ISerializationService: IService
+    public interface ISerializationService: ILogic
     {
         /// <summary>
         /// Serializes the parameter.
@@ -13,6 +13,11 @@ namespace Template10.Services.Serialization
         /// Attempts to serialize the parameter.
         /// </summary>
         bool TrySerialize<T>(T value, out string result);
+
+        /// <summary>
+        /// Attempts to serialize the parameter.
+        /// </summary>
+        bool CanSerialize<T>(T value);
 
         /// <summary>
         /// Deserializes the parameter.

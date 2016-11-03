@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Windows.Foundation.Collections;
 
@@ -122,16 +123,16 @@ namespace Template10.BCL
             }
         }
 
-        public bool TryGet(K key, out V value)
+        public bool TryGet<T>(K key, out T value)
         {
-            value = default(V);
+            value = default(T);
             if (!ContainsKey(key))
             {
                 return false;
             }
             try
             {
-                value = this[key];
+                value = (T)Convert.ChangeType(this[key], typeof(T));
                 return true;
             }
             catch

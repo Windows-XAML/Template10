@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Windows.Foundation.Collections;
 using Windows.UI.Xaml.Media.Animation;
 
 namespace Template10.Services.Navigation
@@ -9,9 +10,9 @@ namespace Template10.Services.Navigation
     {
         bool Navigate(Type page);
 
-        bool Navigate(Type page, object parameter);
+        bool Navigate(Type page, IPropertySet parameter);
 
-        bool Navigate(Type page, object parameter, NavigationTransitionInfo info);
+        bool Navigate(Type page, IPropertySet parameter, NavigationTransitionInfo info);
 
         bool CanGoBack { get; }
 

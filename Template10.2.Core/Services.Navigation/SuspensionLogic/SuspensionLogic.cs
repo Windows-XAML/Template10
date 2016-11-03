@@ -1,36 +1,17 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
-using Template10.BCL;
-using Template10.Services.Lifetime;
-using Template10.Services.Serialization;
 using Windows.Foundation.Collections;
 using Windows.Storage;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media.Animation;
 
 namespace Template10.Services.Navigation
 {
-    public class ViewModelService : IViewModelService
+    public class SuspensionLogic : ISuspensionLogic
     {
-        public static ViewModelService Instance { get; } = new ViewModelService();
-        private ViewModelService()
+        public static ISuspensionLogic Instance { get; set; } = new SuspensionLogic();
+        private SuspensionLogic()
         {
             // private constructor
-        }
-
-        public virtual object ResolveViewModel(Page page)
-        {
-            this.DebugWriteInfo();
-
-            return page?.DataContext;
-        }
-
-        public virtual object ResolveViewModel(Type page)
-        {
-            this.DebugWriteInfo();
-
-            return null;
         }
 
         public virtual async Task CallResumeAsync(ISuspensionAware viewmodel)
@@ -56,21 +37,11 @@ namespace Template10.Services.Navigation
             }
         }
 
-        public virtual async Task CallNavigatingAsync(INavigatingAware vm, string parameters, NavigationModes mode)
-        {
-            this.DebugWriteInfo();
-
-            if (vm != null)
-            {
-                await vm.OnNavigatingToAsync(parameters, mode);
-            }
-        }
-
         #region private methods
 
-        readonly string CacheDateKey = $"{nameof(SuspensionService)}.cache.date";
+        readonly string CacheDateKey = $"{nameof(SuspensionLogic)}.cache.date";
 
-        protected IPropertySet GetSuspensionState(ISuspensionAware viewmodel)
+        protected INavigationParameters GetSuspensionState(ISuspensionAware viewmodel)
         {
             var rootContainer = ApplicationData.Current.LocalSettings;
             var key = $"{viewmodel.GetType()}";
@@ -80,9 +51,10 @@ namespace Template10.Services.Navigation
                 DateTime age;
                 if (DateTime.TryParse(values[key]?.ToString(), out age))
                 {
-                    var expiry = App.Settings.SuspensionStateExpires;
-                    var expires = DateTime.Now.Subtract(expiry);
-                    if (expires < age)
+                    var setting = App.Settings.SuspensionStateExpires;
+                    var expires = DateTime.Now.Subtract(setting);
+                    var expired = expires <= age;
+                    if (expired)
                     {
                         values.Clear();
                         TimeStamp(values);
@@ -101,7 +73,7 @@ namespace Template10.Services.Navigation
             {
                 TimeStamp(values);
             }
-            return values;
+            return values as INavigationParameters;
         }
 
         private void TimeStamp(IPropertySet values)
