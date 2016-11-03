@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Template10.BCL;
-using Template10.Services.Serialization;
 using Template10.Utils;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
@@ -13,11 +12,9 @@ namespace Template10.Services.Navigation
     public class NavigationService : INavigationService,
         IServiceHost<INavigationStateService>,
         IServiceHost<ISuspensionService>,
-        IServiceHost<ISerializationService>,
         IServiceHost<IViewModelService>
     {
         INavigationStateService IServiceHost<INavigationStateService>.Instance { get; set; } = NavigationStateService.Instance;
-        ISerializationService IServiceHost<ISerializationService>.Instance { get; set; } = SerializationService.Instance;
         ISuspensionService IServiceHost<ISuspensionService>.Instance { get; set; } = SuspensionService.Instance;
         IViewModelService IServiceHost<IViewModelService>.Instance { get; set; } = ViewModelService.Instance;
 
@@ -86,9 +83,15 @@ namespace Template10.Services.Navigation
                 return false;
             }
 
-            // if navFrom supported, then call it
-            var navigationAware = CurrentViewModel as INavigationAware;
-            await navigationAware?.OnNavigatedFromAsync();
+            var viewModelService = this.GetService<IViewModelService>();
+            var oldViewModel = CurrentViewModel;
+
+            // call OnNavigatingFrom()
+            await viewModelService.CallNavigatingFromAsync(oldViewModel as INavigatingAware);
+
+            // call onNavigatingTo()
+            var newViewModel = viewModelService.ResolveViewModel(page);
+            await viewModelService.CallNavigatingAsync(newViewModel as INavigatingAware, parameter, mode);
 
             // navigate
             Navigating?.Invoke(this, page);
@@ -104,9 +107,28 @@ namespace Template10.Services.Navigation
                 return false;
             }
 
+            // call OnNavigatedFrom()
+            await viewModelService.CallNavigatedFromAsync(oldViewModel as INavigationAware);
+
+            if (CurrentViewModel == null)
+            {
+                if (newViewModel == null)
+                {
+                    CurrentPage.DataContext = viewModelService.ResolveViewModel(CurrentPage);
+                }
+                else
+                {
+                    CurrentPage.DataContext = newViewModel;
+                }
+            }
+
+            // call OnNavigatedTo()
+            newViewModel = newViewModel ?? viewModelService.ResolveViewModel(page);
+            await viewModelService.CallNavigatingAsync(newViewModel as INavigatingAware, parameter, mode);
+
+
             // if navTo supported, then call it
-            var viewModelService = this.GetService<IViewModelService>();
-            navigationAware = viewModelService.ResolveForPage(CurrentPage) as INavigationAware;
+            navigationAware = viewModelService.ResolveViewModel(CurrentPage) as INavigationAware;
             if (navigationAware != null)
             {
                 await navigationAware?.OnNavigatedToAsync(parameter, mode);

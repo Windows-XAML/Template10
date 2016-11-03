@@ -139,7 +139,7 @@
     <Compile Include="Services.Navigation\Interfaces\IStackEntry.cs" />
     <Compile Include="Services.Navigation\Interfaces\ISuspensionAware.cs" />
     <Compile Include="Services.Navigation\Interfaces\ISuspensionService.cs" />
-    <Compile Include="Services.Navigation\IViewModelService.cs" />
+    <Compile Include="Services.Navigation\Interfaces\IViewModelService.cs" />
     <Compile Include="Services.Navigation\NavigatedArgs.cs" />
     <Compile Include="Services.Navigation\NavigatingArgs.cs" />
     <Compile Include="Services.Navigation\NavigationService.cs" />
