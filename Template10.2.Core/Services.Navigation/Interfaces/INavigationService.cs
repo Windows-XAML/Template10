@@ -8,6 +8,13 @@ namespace Template10.Services.Navigation
 {
     public interface INavigationService
     {
+        event EventHandler Suspending;
+        event EventHandler Suspended;
+        event EventHandler Resuming;
+        event EventHandler Resumed;
+        event EventHandler<Type> Navigating;
+        event EventHandler<bool> Navigated;
+
         string Id { get; }
 
         Task SuspendAsync();
@@ -32,7 +39,7 @@ namespace Template10.Services.Navigation
 
         object CurrentViewModel { get; }
 
-        CurrentNavigationMode CurrentNavigationMode { get; }
+        NavigationModes CurrentNavigationMode { get; }
     }
 }
 

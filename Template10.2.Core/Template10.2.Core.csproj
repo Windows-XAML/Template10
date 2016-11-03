@@ -128,7 +128,6 @@
     <Compile Include="Services.Lifetime\ViewService.cs" />
     <Compile Include="Services.Navigation\Enums\NavigationModes.cs" />
     <Compile Include="Services.Navigation\FrameFacade.cs" />
-    <Compile Include="Services.Navigation\Interfaces\CurrentNavigationMode.cs" />
     <Compile Include="Services.Navigation\Interfaces\IConfirmNavigation.cs" />
     <Compile Include="Services.Navigation\Interfaces\IFrameFacade.cs" />
     <Compile Include="Services.Navigation\Interfaces\IFrameFacadeInternal.cs" />
@@ -139,17 +138,18 @@
     <Compile Include="Services.Navigation\Interfaces\INavigationStateService.cs" />
     <Compile Include="Services.Navigation\Interfaces\IStackEntry.cs" />
     <Compile Include="Services.Navigation\Interfaces\ISuspensionAware.cs" />
-    <Compile Include="Services.Navigation\Interfaces\ISuspensionState.cs" />
     <Compile Include="Services.Navigation\Interfaces\ISuspensionService.cs" />
-    <Compile Include="Services.Navigation\IViewModelService.cs" />
+    <Compile Include="Services.Navigation\Interfaces\IViewModelService.cs" />
     <Compile Include="Services.Navigation\NavigatedArgs.cs" />
     <Compile Include="Services.Navigation\NavigatingArgs.cs" />
     <Compile Include="Services.Navigation\NavigationService.cs" />
     <Compile Include="Services.Navigation\NavigationStateService.cs" />
     <Compile Include="Services.Navigation\StackEntry.cs" />
     <Compile Include="Services.Navigation\SuspensionService.cs" />
-    <Compile Include="Services.Navigation\SuspensionState.cs" />
     <Compile Include="Services.Navigation\ViewModelService.cs" />
+    <Compile Include="Utils\IEnumerableUtils.cs" />
+    <Compile Include="Utils\XamlUtils.cs" />
+    <Compile Include="Utils\XbindUtils.cs" />
     <EmbeddedResource Include="Properties\Template10._2.Core.rd.xml" />
   </ItemGroup>
   <ItemGroup>

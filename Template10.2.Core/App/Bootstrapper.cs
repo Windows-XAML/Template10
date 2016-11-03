@@ -9,9 +9,9 @@ using System;
 
 namespace Template10.App
 {
-    public abstract partial class Bootstrapper : Application, IInfrastructure<ISuspensionService>
+    public abstract partial class Bootstrapper : Application, IServiceHost<ISuspensionService>
     {
-        ISuspensionService IInfrastructure<ISuspensionService>.Instance { get; set; } = SuspensionService.Instance;
+        ISuspensionService IServiceHost<ISuspensionService>.Instance { get; set; } = SuspensionService.Instance;
 
         public Bootstrapper()
         {

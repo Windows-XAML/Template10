@@ -10,7 +10,7 @@ namespace Template10.App
         public static bool AutoExtendExecution { get; set; } = true;
         public static bool AutoSuspend { get; set; } = true;
         public static bool LogginEnabled { get; set; } = false;
-        public static TimeSpan RestoreExpires { get; set; } = TimeSpan.FromDays(3);
+        public static TimeSpan SuspensionStateExpires { get; set; } = TimeSpan.FromDays(3);
 
         private static object _PageKeys;
         public static Dictionary<T, Type> PageKeys<T>()
