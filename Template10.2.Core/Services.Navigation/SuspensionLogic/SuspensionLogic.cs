@@ -16,7 +16,7 @@ namespace Template10.Services.Navigation
 
         public virtual async Task CallResumeAsync(ISuspensionAware viewmodel)
         {
-            this.DebugWriteInfo();
+            this.LogInfo();
 
             if (viewmodel != null)
             {
@@ -27,7 +27,7 @@ namespace Template10.Services.Navigation
 
         public virtual async Task CallSuspendAsync(ISuspensionAware viewmodel)
         {
-            this.DebugWriteInfo();
+            this.LogInfo();
 
             if (viewmodel != null)
             {
@@ -41,11 +41,11 @@ namespace Template10.Services.Navigation
 
         readonly string CacheDateKey = $"{nameof(SuspensionLogic)}.cache.date";
 
-        protected INavigationParameters GetSuspensionState(ISuspensionAware viewmodel)
+        protected ISuspensionState GetSuspensionState(ISuspensionAware viewmodel)
         {
             var rootContainer = ApplicationData.Current.LocalSettings;
             var key = $"{viewmodel.GetType()}";
-            var values = rootContainer.CreateContainer(key, ApplicationDataCreateDisposition.Existing).Values;
+            var values = rootContainer.CreateContainer(key, ApplicationDataCreateDisposition.Existing).Values as ISuspensionState;
             if (values.ContainsKey(key))
             {
                 DateTime age;
@@ -73,10 +73,10 @@ namespace Template10.Services.Navigation
             {
                 TimeStamp(values);
             }
-            return values as INavigationParameters;
+            return values;
         }
 
-        private void TimeStamp(IPropertySet values)
+        private void TimeStamp(ISuspensionState values)
         {
             values[CacheDateKey] = DateTime.Now;
         }

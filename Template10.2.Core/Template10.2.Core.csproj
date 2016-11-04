@@ -108,14 +108,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App\Enums\ActivationKinds.cs" />
-    <Compile Include="App\Enums\BootstrapperStates.cs" />
+    <Compile Include="App\AppStateLogic\AppStates.cs" />
     <Compile Include="App\Enums\StartKinds.cs" />
+    <Compile Include="App\Enums\StartLogic.cs" />
     <Compile Include="App\Extensions.cs" />
-    <Compile Include="App\Interfaces\ISuspensionService.cs" />
+    <Compile Include="App\SuspensionLogic\ISuspensionLogic.cs" />
     <Compile Include="App\Settings.cs" />
     <Compile Include="App\SplashLogic.cs" />
-    <Compile Include="App\StateLogic.cs" />
-    <Compile Include="App\SuspensionService.cs" />
+    <Compile Include="App\AppStateLogic\AppStateLogic.cs" />
+    <Compile Include="App\SuspensionLogic\SuspensionLogic.cs" />
     <Compile Include="App\WindowLogic.cs" />
     <Compile Include="App\Bootstrapper.cs" />
     <Compile Include="GlobalSuppressions.cs" />
@@ -135,10 +136,11 @@
     <Compile Include="Services.Navigation\EventArgs\INavigatingArgs.cs" />
     <Compile Include="Services.Navigation\INavigationAware.cs" />
     <Compile Include="Services.Navigation\FrameLogic\IFrameLogic.cs" />
-    <Compile Include="Services.Navigation\NavigationParameters\INavigationParameters.cs" />
+    <Compile Include="Services.Navigation\NavigationParameter\INavigationParameter.cs" />
+    <Compile Include="Services.Navigation\NavigationParameter\NavigationParameter.cs" />
+    <Compile Include="Services.Navigation\SuspensionLogic\ISuspensionState.cs" />
     <Compile Include="Services.Navigation\NavigatedLogic\INavigatedLogic.cs" />
     <Compile Include="Services.Navigation\NavigatingLogic\INavigatingLogic.cs" />
-    <Compile Include="Services.Navigation\NavigationParameters\NavigationParameters.cs" />
     <Compile Include="Services.Navigation\SuspensionLogic\ISuspensionLogic.cs" />
     <Compile Include="Services.Navigation\ViewModelLogic\IViewModelLogic.cs" />
     <Compile Include="Services.Navigation\NavigationService\INavigationService.cs" />
@@ -168,7 +170,9 @@
       <Name>Template10.2.Core.Services</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App\Interfaces\" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

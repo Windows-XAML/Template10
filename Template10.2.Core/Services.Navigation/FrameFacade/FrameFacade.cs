@@ -36,9 +36,9 @@ namespace Template10.Services.Navigation
 
         bool IFrameFacadeInternal.Navigate(Type page) => xamlFrame.Navigate(page);
 
-        bool IFrameFacadeInternal.Navigate(Type page, IPropertySet parameter) => xamlFrame.Navigate(page, parameter);
+        bool IFrameFacadeInternal.Navigate(Type page, object parameter) => xamlFrame.Navigate(page, parameter);
 
-        bool IFrameFacadeInternal.Navigate(Type page, IPropertySet parameter, NavigationTransitionInfo info) => xamlFrame.Navigate(page, parameter, info);
+        bool IFrameFacadeInternal.Navigate(Type page, object parameter, NavigationTransitionInfo info) => xamlFrame.Navigate(page, parameter, info);
 
         #endregion
 

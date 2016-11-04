@@ -5,17 +5,17 @@ using Windows.ApplicationModel;
 
 namespace Template10.App
 {
-    public class SuspensionService: ISuspensionService
+    public class SuspensionLogic: ISuspensionLogic
     {
-        public static SuspensionService Instance { get; } = new SuspensionService();
-        private SuspensionService()
+        public static SuspensionLogic Instance { get; } = new SuspensionLogic();
+        private SuspensionLogic()
         {
             // private constructor
         }
 
         public async Task SuspendAsync(ISuspendingDeferral deferral)
         {
-            this.DebugWriteInfo($"Settings.AutoSuspend: {Settings.AutoSuspend} Settings.AutoExtendExecution: {Settings.AutoExtendExecution}");
+            this.LogInfo($"Settings.AutoSuspend: {Settings.AutoSuspend} Settings.AutoExtendExecution: {Settings.AutoExtendExecution}");
 
             try
             {
@@ -49,7 +49,7 @@ namespace Template10.App
 
         public async Task RestoreAsync()
         {
-            this.DebugWriteInfo($"Settings.AutoRestore: {Settings.AutoRestore}");
+            this.LogInfo($"Settings.AutoRestore: {Settings.AutoRestore}");
 
             if (!Settings.AutoRestore)
             {

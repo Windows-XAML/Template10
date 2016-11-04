@@ -13,14 +13,14 @@ namespace Template10.Services.Navigation
 
         public virtual object ResolveViewModel(Page page)
         {
-            this.DebugWriteInfo();
+            this.LogInfo();
 
             return page?.DataContext;
         }
 
         public virtual object ResolveViewModel(Type page)
         {
-            this.DebugWriteInfo();
+            this.LogInfo();
 
             return null;
         }

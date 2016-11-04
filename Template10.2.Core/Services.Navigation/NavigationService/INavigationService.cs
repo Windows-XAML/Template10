@@ -13,7 +13,7 @@ namespace Template10.Services.Navigation
         event EventHandler Resuming;
         event EventHandler Resumed;
         event EventHandler<Type> Navigating;
-        event EventHandler<bool> Navigated;
+        event EventHandler Navigated;
 
         string Id { get; }
 
@@ -21,13 +21,12 @@ namespace Template10.Services.Navigation
 
         Task ResumeAsync();
 
-        Task<bool> NavigateAsync(Type page, string parameter = null, NavigationTransitionInfo infoOverride = null);
+        Task<bool> NavigateAsync<P>(Type page, P parameter = default(P), NavigationTransitionInfo infoOverride = null) 
+            where P: struct, IConvertible;
 
-        Task<bool> NavigateAsync(Type page, IPropertySet parameter = null, NavigationTransitionInfo infoOverride = null);
-
-        Task<bool> NavigateAsync<T>(T key, string parameter = null, NavigationTransitionInfo infoOverride = null) where T : struct, IConvertible;
-
-        Task<bool> NavigateAsync<T>(T key, IPropertySet parameter = null, NavigationTransitionInfo infoOverride = null) where T : struct, IConvertible;
+        Task<bool> NavigateAsync<T, P>(T key, P parameter = default(P), NavigationTransitionInfo infoOverride = null) 
+            where T : struct, IConvertible 
+            where P : struct, IConvertible;
 
         bool CanGoBack { get; }
 

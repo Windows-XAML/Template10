@@ -9,23 +9,23 @@ namespace Template10.Services.Navigation
 
     public interface INavigatingAware
     {
-        Task OnNavigatingToAsync(INavigationParameters parameters, NavigationModes mode);
+        Task OnNavigatingToAsync(INavigationParameter parameters, NavigationModes mode);
 
         Task OnNavigatingFromAsync();
     }
 
     public interface INavigatedAware
     {
-        Task OnNavigatedToAsync(INavigationParameters parameters, NavigationModes mode);
+        Task OnNavigatedToAsync(INavigationParameter parameters, NavigationModes mode);
 
         Task OnNavigatedFromAsync();
     }
 
     public interface ISuspensionAware
     {
-        Task OnResumingAsync(INavigationParameters state);
+        Task OnResumingAsync(ISuspensionState state);
 
-        Task OnSuspendingAsync(INavigationParameters state);
+        Task OnSuspendingAsync(ISuspensionState state);
     }
 
     public interface IConfirmNavigation

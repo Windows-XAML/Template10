@@ -19,9 +19,9 @@ namespace Template10.Services.Navigation
             // private constructor
         }
 
-        public async virtual Task CallNavigatedToAsync(INavigatedAware vm, IPropertySet parameter, NavigationModes mode)
+        public async virtual Task CallNavigatedToAsync(INavigatedAware vm, INavigationParameter parameter, NavigationModes mode)
         {
-            this.DebugWriteInfo();
+            this.LogInfo();
 
             if (vm == null)
             {
@@ -34,7 +34,7 @@ namespace Template10.Services.Navigation
 
         public async virtual Task CallNavigatedFromAsync(INavigatedAware vm)
         {
-            this.DebugWriteInfo();
+            this.LogInfo();
 
             if (vm != null)
             {

@@ -11,7 +11,7 @@ namespace Template10.Services.Navigation
 
     public interface INavigatedLogic : ILogic
     {
-        Task CallNavigatedToAsync(INavigatedAware vm, IPropertySet parameter, NavigationModes mode);
+        Task CallNavigatedToAsync(INavigatedAware vm, INavigationParameter parameter, NavigationModes mode);
         Task CallNavigatedFromAsync(INavigatedAware vm);
     }
 

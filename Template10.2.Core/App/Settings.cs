@@ -19,7 +19,7 @@ namespace Template10.App
         {
             if (!typeof(T).GetTypeInfo().IsEnum)
             {
-                throw new ArgumentException("T must be an enumerated type");
+                throw new ArgumentException("Page key must be an ENUM. See App.Settings.PageKeys().");
             }
             if (_PageKeys != null && _PageKeys is Dictionary<T, Type>)
             {

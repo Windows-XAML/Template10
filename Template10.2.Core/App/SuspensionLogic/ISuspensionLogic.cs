@@ -10,7 +10,7 @@ using Template10.BCL;
 namespace Template10.App
 {
 
-    public interface ISuspensionService: ILogic
+    public interface ISuspensionLogic: ILogic
     {
         Task SuspendAsync(ISuspendingDeferral deferral);
         Task RestoreAsync();

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Template10.BCL;
 using Template10.Utils;
@@ -39,12 +40,12 @@ namespace Template10.Services.Navigation
         public event EventHandler Resuming;
         public event EventHandler Resumed;
         public event EventHandler<Type> Navigating;
-        public event EventHandler<bool> Navigated;
+        public event EventHandler Navigated;
 
         IFrameFacadeInternal _frame;
         public NavigationService(Frame frame, string id)
         {
-            this.DebugWriteInfo($"id: {id}");
+            this.LogInfo($"id: {id}");
 
             Id = id;
             _frame = new FrameFacade(frame);
@@ -72,7 +73,7 @@ namespace Template10.Services.Navigation
 
         public async Task SuspendAsync()
         {
-            this.DebugWriteInfo();
+            this.LogInfo();
 
             Suspending?.Invoke(this, EventArgs.Empty);
 
@@ -87,7 +88,7 @@ namespace Template10.Services.Navigation
 
         public async Task ResumeAsync()
         {
-            this.DebugWriteInfo();
+            this.LogInfo();
 
             Resuming?.Invoke(this, EventArgs.Empty);
 
@@ -102,7 +103,7 @@ namespace Template10.Services.Navigation
 
         public async Task<bool> GoBackAsync(NavigationTransitionInfo infoOverride = null)
         {
-            this.DebugWriteInfo();
+            this.LogInfo($"CanGoBack: {CanGoBack}");
 
             if (!CanGoBack)
             {
@@ -113,7 +114,7 @@ namespace Template10.Services.Navigation
 
         public async Task<bool> GoForwardAsync()
         {
-            this.DebugWriteInfo();
+            this.LogInfo($"CanGoForward: {CanGoForward}");
 
             if (!CanGoForward)
             {
@@ -122,16 +123,10 @@ namespace Template10.Services.Navigation
             return await InternalNavigateAsync(null, null, NavigationModes.Forward, () => _frame.GoForward());
         }
 
-        public async Task<bool> NavigateAsync(Type page, string parameter = null, NavigationTransitionInfo infoOverride = null)
+        public async Task<bool> NavigateAsync<P>(Type page, P parameter = default(P), NavigationTransitionInfo infoOverride = null)
+            where P : struct, IConvertible
         {
-            this.DebugWriteInfo();
-
-            return await NavigateAsync(page, parameter.ToPropertySet(), infoOverride);
-        }
-
-        public async Task<bool> NavigateAsync(Type page, IPropertySet parameter = null, NavigationTransitionInfo infoOverride = null)
-        {
-            this.DebugWriteInfo();
+            this.LogInfo();
 
             return await InternalNavigateAsync(page, parameter, NavigationModes.New, () =>
             {
@@ -139,43 +134,50 @@ namespace Template10.Services.Navigation
             });
         }
 
-        public async Task<bool> NavigateAsync<T>(T key, string parameter = null, NavigationTransitionInfo infoOverride = null) where T : struct, IConvertible
+        public async Task<bool> NavigateAsync<T, P>(T key, P parameter = default(P), NavigationTransitionInfo infoOverride = null)
+            where T : struct, IConvertible
+            where P : struct, IConvertible
         {
-            this.DebugWriteInfo();
-
-            return await NavigateAsync(key, parameter.ToPropertySet(), infoOverride);
-        }
-
-        public async Task<bool> NavigateAsync<T>(T key, IPropertySet parameter = null, NavigationTransitionInfo infoOverride = null) where T : struct, IConvertible
-        {
-            this.DebugWriteInfo();
+            this.LogInfo();
 
             var keys = App.Settings.PageKeys<T>();
-            if (!keys.ContainsKey(key))
+            Type page;
+            if (!keys.TryGetValue(key, out page))
             {
-                this.DebugWriteError($"KeyNotFound {nameof(key)}: {key}");
+                this.LogError($"KeyNotFound {nameof(key)}: {key}");
                 throw new KeyNotFoundException($"{nameof(key)}: {key}");
             }
-            return await NavigateAsync(keys[key], parameter, infoOverride).ConfigureAwait(false);
+            return await NavigateAsync(keys[key], parameter, infoOverride);
         }
 
         public async Task OpenAsync(Type page)
         {
-            this.DebugWriteInfo($"page: {page}");
+            this.LogInfo($"page: {page}");
 
             await Task.CompletedTask; // TODO
         }
 
         #region private methods
 
-        private async Task<bool> InternalNavigateAsync(Type page, IPropertySet parameter, NavigationModes mode, Func<bool> navigate)
+        private async Task<bool> InternalNavigateAsync(Type page, object parameter, NavigationModes mode, Func<bool> navigate)
         {
-            this.DebugWriteInfo($"page: {page} parameter: {parameter} mode: {mode}");
+            return await InternalNavigateAsync(page, new NavigationParameter(parameter), mode, navigate);
+        }
+
+        private async Task<bool> InternalNavigateAsync(Type page, INavigationParameter parameter, NavigationModes mode, Func<bool> navigate)
+        {
+            this.LogInfo($"page: {page} parameter: {parameter} mode: {mode}");
 
             // if the identical page+parameter, then don't go
             if ((page?.FullName == CurrentPage?.GetType().FullName) && (parameter?.Equals(CurrentParameter) ?? false))
             {
                 return false;
+            }
+
+            // test parameter
+            if (!parameter.GetType().GetTypeInfo().IsValueType)
+            {
+                throw new Exception("Page parameter is not a Value type. Only value types are supported.");
             }
 
             // if confirmation required, then ask
@@ -185,9 +187,8 @@ namespace Template10.Services.Navigation
                 return false;
             }
 
-            var oldViewModel = CurrentViewModel;
-
             // call OnNavigatingFrom()
+            var oldViewModel = CurrentViewModel;
             await NavigatingLogic.CallNavigatingFromAsync(oldViewModel as INavigatingAware);
 
             // call onNavigatingTo() if developer-supported
@@ -196,15 +197,14 @@ namespace Template10.Services.Navigation
 
             // navigate
             Navigating?.Invoke(this, page);
-            var result = navigate.Invoke();
-            Navigated?.Invoke(this, result);
-            if (result)
+            if (navigate.Invoke())
             {
                 CurrentNavigationMode = mode;
+                Navigated?.Invoke(this, EventArgs.Empty);
             }
             else
             {
-                this.DebugWriteError($"Navigation failed.");
+                this.LogError($"Navigation failed.");
                 return false;
             }
 
