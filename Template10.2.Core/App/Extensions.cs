@@ -6,12 +6,12 @@ namespace Template10
 {
     public static class Extensions
     {
-        internal static void DebugWriteInfo(this object item, string text = null, [System.Runtime.CompilerServices.CallerMemberName]string caller = null, [System.Runtime.CompilerServices.CallerLineNumber]int line = -1, [System.Runtime.CompilerServices.CallerFilePath]string path = null)
+        internal static void LogInfo(this object item, string text = null, [System.Runtime.CompilerServices.CallerMemberName]string caller = null, [System.Runtime.CompilerServices.CallerLineNumber]int line = -1, [System.Runtime.CompilerServices.CallerFilePath]string path = null)
         {
             Services.Logging.LoggingService.Instance.WriteLine($"INF {DateTime.Now} {text} caller: {caller} line: {line} path: {path}", Services.Logging.Severities.Info);
         }
 
-        internal static void DebugWriteError(this object item, string text = null, [System.Runtime.CompilerServices.CallerMemberName]string caller = null, [System.Runtime.CompilerServices.CallerLineNumber]int line = -1, [System.Runtime.CompilerServices.CallerFilePath]string path = null)
+        internal static void LogError(this object item, string text = null, [System.Runtime.CompilerServices.CallerMemberName]string caller = null, [System.Runtime.CompilerServices.CallerLineNumber]int line = -1, [System.Runtime.CompilerServices.CallerFilePath]string path = null)
         {
             System.Diagnostics.Debug.WriteLine($"ERR {DateTime.Now} {text} caller: {caller} line: {line} path: {path}");
         }

@@ -3,10 +3,11 @@ using Newtonsoft.Json;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization.Formatters;
 using Template10.Services.Logging;
+using System.Reflection;
 
 namespace Template10.Services.Serialization
 {
-    public sealed class SerializationService: ISerializationService
+    public sealed class SerializationService : ISerializationService
     {
         public static SerializationService Instance { get; } = new SerializationService();
 
@@ -69,6 +70,20 @@ namespace Template10.Services.Serialization
                 result = string.Empty;
                 return false;
             }
+        }
+
+        public bool CanSerialize<T>(T value)
+        {
+            if (value == null)
+            {
+                return true;
+            }
+            if (value?.GetType().GetTypeInfo().IsSerializable ?? true)
+            {
+                return true;
+            }
+            string result;
+            return TrySerialize(value, out result);
         }
 
         /// <summary>

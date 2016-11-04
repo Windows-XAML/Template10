@@ -9,9 +9,9 @@ using System;
 
 namespace Template10.App
 {
-    public abstract partial class Bootstrapper : Application, IServiceHost<ISuspensionService>
+    public abstract partial class Bootstrapper : Application, ILogicHost<ISuspensionLogic>
     {
-        ISuspensionService IServiceHost<ISuspensionService>.Instance { get; set; } = SuspensionService.Instance;
+        ISuspensionLogic ILogicHost<ISuspensionLogic>.Instance { get; set; } = SuspensionLogic.Instance;
 
         public Bootstrapper()
         {
@@ -29,7 +29,7 @@ namespace Template10.App
 
         protected sealed override void OnWindowCreated(WindowCreatedEventArgs args)
         {
-            this.DebugWriteInfo($"{args.Window}");
+            this.LogInfo($"{args.Window}");
             var viewService = WindowLogic.Register(args.Window);
         }
 
@@ -37,24 +37,24 @@ namespace Template10.App
 
         protected async Task InternalActivatedAsync(IActivatedEventArgs e)
         {
-            this.DebugWriteInfo($"{e}");
-            if (State.Exists(BootstrapperStates.BeforeInternalActivate))
+            this.LogInfo($"{e}");
+            if (State.Exists(AppStates.BeforeInternalActivate))
                 return;
             ActivatedEventArgs = e;
-            State.Add(BootstrapperStates.BeforeInternalActivate);
+            State.Add(AppStates.BeforeInternalActivate);
             await Task.CompletedTask;
-            State.Add(BootstrapperStates.AfterInternalActivate);
+            State.Add(AppStates.AfterInternalActivate);
         }
 
         protected async Task InternalLaunchedAsync(IActivatedEventArgs e)
         {
-            this.DebugWriteInfo($"{e}");
-            if (State.Exists(BootstrapperStates.BeforeInternalLaunch))
+            this.LogInfo($"{e}");
+            if (State.Exists(AppStates.BeforeInternalLaunch))
                 return;
             ActivatedEventArgs = e;
-            State.Add(BootstrapperStates.BeforeInternalLaunch);
+            State.Add(AppStates.BeforeInternalLaunch);
             await Task.CompletedTask;
-            State.Add(BootstrapperStates.AfterInternalLaunch);
+            State.Add(AppStates.AfterInternalLaunch);
         }
 
         public virtual async Task OnPrelaunchAsync(IActivatedEventArgs args)
@@ -71,14 +71,14 @@ namespace Template10.App
 
         #region Seals
 
-        protected sealed override async void OnActivated(IActivatedEventArgs e) { this.DebugWriteInfo(); await InternalActivatedAsync(e); }
-        protected sealed override async void OnCachedFileUpdaterActivated(CachedFileUpdaterActivatedEventArgs e) { this.DebugWriteInfo(); await InternalActivatedAsync(e); }
-        protected sealed override async void OnFileActivated(FileActivatedEventArgs e) { this.DebugWriteInfo(); await InternalActivatedAsync(e); }
-        protected sealed override async void OnFileOpenPickerActivated(FileOpenPickerActivatedEventArgs e) { this.DebugWriteInfo(); await InternalActivatedAsync(e); }
-        protected sealed override async void OnFileSavePickerActivated(FileSavePickerActivatedEventArgs e) { this.DebugWriteInfo(); await InternalActivatedAsync(e); }
-        protected sealed override async void OnSearchActivated(SearchActivatedEventArgs e) { this.DebugWriteInfo(); await InternalActivatedAsync(e); }
-        protected sealed override async void OnShareTargetActivated(ShareTargetActivatedEventArgs e) { this.DebugWriteInfo(); await InternalActivatedAsync(e); }
-        protected sealed override async void OnLaunched(LaunchActivatedEventArgs e) { this.DebugWriteInfo(); await InternalLaunchedAsync(e); }
+        protected sealed override async void OnActivated(IActivatedEventArgs e) { this.LogInfo(); await InternalActivatedAsync(e); }
+        protected sealed override async void OnCachedFileUpdaterActivated(CachedFileUpdaterActivatedEventArgs e) { this.LogInfo(); await InternalActivatedAsync(e); }
+        protected sealed override async void OnFileActivated(FileActivatedEventArgs e) { this.LogInfo(); await InternalActivatedAsync(e); }
+        protected sealed override async void OnFileOpenPickerActivated(FileOpenPickerActivatedEventArgs e) { this.LogInfo(); await InternalActivatedAsync(e); }
+        protected sealed override async void OnFileSavePickerActivated(FileSavePickerActivatedEventArgs e) { this.LogInfo(); await InternalActivatedAsync(e); }
+        protected sealed override async void OnSearchActivated(SearchActivatedEventArgs e) { this.LogInfo(); await InternalActivatedAsync(e); }
+        protected sealed override async void OnShareTargetActivated(ShareTargetActivatedEventArgs e) { this.LogInfo(); await InternalActivatedAsync(e); }
+        protected sealed override async void OnLaunched(LaunchActivatedEventArgs e) { this.LogInfo(); await InternalLaunchedAsync(e); }
 
         #endregion
     }

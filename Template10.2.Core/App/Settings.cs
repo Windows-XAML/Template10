@@ -11,6 +11,7 @@ namespace Template10.App
         public static bool AutoSuspend { get; set; } = true;
         public static bool LogginEnabled { get; set; } = false;
         public static TimeSpan SuspensionStateExpires { get; set; } = TimeSpan.FromDays(3);
+        public static bool RequireSerializableNavigationParameters { get; set; } = true;
 
         private static object _PageKeys;
         public static Dictionary<T, Type> PageKeys<T>()
@@ -18,7 +19,7 @@ namespace Template10.App
         {
             if (!typeof(T).GetTypeInfo().IsEnum)
             {
-                throw new ArgumentException("T must be an enumerated type");
+                throw new ArgumentException("Page key must be an ENUM. See App.Settings.PageKeys().");
             }
             if (_PageKeys != null && _PageKeys is Dictionary<T, Type>)
             {

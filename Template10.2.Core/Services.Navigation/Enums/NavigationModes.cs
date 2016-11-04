@@ -1,3 +1,5 @@
+using Windows.Foundation.Collections;
+
 namespace Template10.Services.Navigation
 {
     public enum NavigationModes
@@ -9,17 +11,4 @@ namespace Template10.Services.Navigation
         Restore = 4
     }
 
-    public static partial class Extensions
-    {
-        public static NavigationModes ToNavigationModes(this Windows.UI.Xaml.Navigation.NavigationMode mode)
-        {
-            switch (mode)
-            {
-                case Windows.UI.Xaml.Navigation.NavigationMode.Back: return NavigationModes.Back;
-                case Windows.UI.Xaml.Navigation.NavigationMode.Forward: return NavigationModes.Forward;
-                case Windows.UI.Xaml.Navigation.NavigationMode.Refresh: return NavigationModes.Refresh;
-                default: return NavigationModes.New;
-            }
-        }
-    }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Windows.Foundation.Collections;
 using Windows.UI.Xaml.Media.Animation;
 
 namespace Template10.Services.Navigation

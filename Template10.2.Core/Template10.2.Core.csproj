@@ -108,14 +108,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App\Enums\ActivationKinds.cs" />
-    <Compile Include="App\Enums\BootstrapperStates.cs" />
+    <Compile Include="App\AppStateLogic\AppStates.cs" />
     <Compile Include="App\Enums\StartKinds.cs" />
+    <Compile Include="App\Enums\StartLogic.cs" />
     <Compile Include="App\Extensions.cs" />
-    <Compile Include="App\Interfaces\ISuspensionService.cs" />
+    <Compile Include="App\SuspensionLogic\ISuspensionLogic.cs" />
     <Compile Include="App\Settings.cs" />
     <Compile Include="App\SplashLogic.cs" />
-    <Compile Include="App\StateLogic.cs" />
-    <Compile Include="App\SuspensionService.cs" />
+    <Compile Include="App\AppStateLogic\AppStateLogic.cs" />
+    <Compile Include="App\SuspensionLogic\SuspensionLogic.cs" />
     <Compile Include="App\WindowLogic.cs" />
     <Compile Include="App\Bootstrapper.cs" />
     <Compile Include="GlobalSuppressions.cs" />
@@ -126,28 +127,35 @@
     <Compile Include="Services.Lifetime\Interfaces\IViewService.cs" />
     <Compile Include="Services.Lifetime\LifetimeService.cs" />
     <Compile Include="Services.Lifetime\ViewService.cs" />
+    <Compile Include="Services.Navigation\Extensions.cs" />
     <Compile Include="Services.Navigation\Enums\NavigationModes.cs" />
-    <Compile Include="Services.Navigation\FrameFacade.cs" />
-    <Compile Include="Services.Navigation\Interfaces\IConfirmNavigation.cs" />
-    <Compile Include="Services.Navigation\Interfaces\IFrameFacade.cs" />
-    <Compile Include="Services.Navigation\Interfaces\IFrameFacadeInternal.cs" />
-    <Compile Include="Services.Navigation\Interfaces\INavigatedArgs.cs" />
-    <Compile Include="Services.Navigation\Interfaces\INavigatingArgs.cs" />
-    <Compile Include="Services.Navigation\Interfaces\INavigationAware.cs" />
-    <Compile Include="Services.Navigation\Interfaces\INavigationService.cs" />
-    <Compile Include="Services.Navigation\Interfaces\INavigationStateService.cs" />
-    <Compile Include="Services.Navigation\Interfaces\IStackEntry.cs" />
-    <Compile Include="Services.Navigation\Interfaces\ISuspensionAware.cs" />
-    <Compile Include="Services.Navigation\Interfaces\ISuspensionService.cs" />
-    <Compile Include="Services.Navigation\Interfaces\IViewModelService.cs" />
-    <Compile Include="Services.Navigation\NavigatedArgs.cs" />
-    <Compile Include="Services.Navigation\NavigatingArgs.cs" />
-    <Compile Include="Services.Navigation\NavigationService.cs" />
-    <Compile Include="Services.Navigation\NavigationStateService.cs" />
-    <Compile Include="Services.Navigation\StackEntry.cs" />
-    <Compile Include="Services.Navigation\SuspensionService.cs" />
-    <Compile Include="Services.Navigation\ViewModelService.cs" />
+    <Compile Include="Services.Navigation\FrameFacade\FrameFacade.cs" />
+    <Compile Include="Services.Navigation\FrameFacade\IFrameFacade.cs" />
+    <Compile Include="Services.Navigation\FrameFacade\IFrameFacadeInternal.cs" />
+    <Compile Include="Services.Navigation\EventArgs\INavigatedArgs.cs" />
+    <Compile Include="Services.Navigation\EventArgs\INavigatingArgs.cs" />
+    <Compile Include="Services.Navigation\INavigationAware.cs" />
+    <Compile Include="Services.Navigation\FrameLogic\IFrameLogic.cs" />
+    <Compile Include="Services.Navigation\NavigationParameter\INavigationParameter.cs" />
+    <Compile Include="Services.Navigation\NavigationParameter\NavigationParameter.cs" />
+    <Compile Include="Services.Navigation\SuspensionLogic\ISuspensionState.cs" />
+    <Compile Include="Services.Navigation\NavigatedLogic\INavigatedLogic.cs" />
+    <Compile Include="Services.Navigation\NavigatingLogic\INavigatingLogic.cs" />
+    <Compile Include="Services.Navigation\SuspensionLogic\ISuspensionLogic.cs" />
+    <Compile Include="Services.Navigation\ViewModelLogic\IViewModelLogic.cs" />
+    <Compile Include="Services.Navigation\NavigationService\INavigationService.cs" />
+    <Compile Include="Services.Navigation\StackEntry\IStackEntry.cs" />
+    <Compile Include="Services.Navigation\NavigatingLogic\NavigatingLogic.cs" />
+    <Compile Include="Services.Navigation\ViewModelLogic\ViewModelLogic.cs" />
+    <Compile Include="Services.Navigation\EventArgs\NavigatedArgs.cs" />
+    <Compile Include="Services.Navigation\EventArgs\NavigatingArgs.cs" />
+    <Compile Include="Services.Navigation\NavigationService\NavigationService.cs" />
+    <Compile Include="Services.Navigation\FrameLogic\FrameLogic.cs" />
+    <Compile Include="Services.Navigation\StackEntry\StackEntry.cs" />
+    <Compile Include="Services.Navigation\SuspensionLogic\SuspensionLogic.cs" />
+    <Compile Include="Services.Navigation\NavigatedLogic\NavigatedLogic.cs" />
     <Compile Include="Utils\IEnumerableUtils.cs" />
+    <Compile Include="Utils\UriUtils.cs" />
     <Compile Include="Utils\XamlUtils.cs" />
     <Compile Include="Utils\XbindUtils.cs" />
     <EmbeddedResource Include="Properties\Template10._2.Core.rd.xml" />
@@ -162,7 +170,9 @@
       <Name>Template10.2.Core.Services</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App\Interfaces\" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

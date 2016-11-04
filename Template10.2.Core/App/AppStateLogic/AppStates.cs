@@ -1,6 +1,6 @@
 namespace Template10.App
 {
-    public enum BootstrapperStates
+    public enum AppStates
     {
         None,
         Running,

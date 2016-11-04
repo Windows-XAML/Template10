@@ -19,7 +19,7 @@ namespace Template10.App
 
         public void Activate(ActivateSources source, SplashLogic splash = null)
         {
-            this.DebugWriteInfo($"source:{source}");
+            this.LogInfo($"source:{source}");
 
             if (source != ActivateSources.SplashScreen)
             {
