@@ -1,3 +1,6 @@
 ﻿// C# snippets
 [$RootKey$\Languages\CodeExpansions\CSharp\Paths]
 "Template10"="$PackageFolder$\Snippets\CSharp\Template10"
+// XAML snippets
+[$RootKey$\Languages\CodeExpansions\XAML\Paths]
+"Template10"="$PackageFolder$\Snippets\XAML\Template10"
