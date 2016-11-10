@@ -177,10 +177,14 @@ namespace Template10.Services.NavigationService
                     dataContext.Dispatcher = this.GetDispatcherWrapper();
                     dataContext.SessionState = BootStrapper.Current.SessionState;
                     var pageState = FrameFacadeInternal.PageStateSettingsService(page.GetType()).Values;
+
+                    // init and update compiled bindings before NavTo for OneWay notifications
+                    XamlUtils.InitializeBindings(page);
+                    XamlUtils.UpdateBindings(page);
+
                     await dataContext.OnNavigatedToAsync(parameter, mode, pageState);
 
-                    // update bindings after NavTo initializes data
-                    XamlUtils.InitializeBindings(page);
+                    // update OneTime compiled bindings after NavTo initializes data
                     XamlUtils.UpdateBindings(page);
                 }
             }
