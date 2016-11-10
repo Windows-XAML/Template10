@@ -11,7 +11,7 @@ using System.Runtime.CompilerServices;
 
 namespace Template10.Services.NavigationService
 {
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-NavigationService
+    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Navigation-Service
     public class FrameFacade
     {
         #region Debug

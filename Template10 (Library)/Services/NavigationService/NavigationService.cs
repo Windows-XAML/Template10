@@ -17,7 +17,7 @@ using Template10.Utils;
 
 namespace Template10.Services.NavigationService
 {
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-NavigationService
+    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Navigation-Service
     public partial class NavigationService : INavigationService
     {
         private readonly IViewService viewService = new ViewService.ViewService();

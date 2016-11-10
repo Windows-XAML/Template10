@@ -10,7 +10,7 @@ using Template10.Controls;
 
 namespace Template10.Behaviors
 {
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-XamlBehaviors
+    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Behaviors-and-Actions
     [TypeConstraint(typeof(CommandBar))]
     public class EllipsisBehavior : DependencyObject, IBehavior
     {

@@ -2,7 +2,7 @@
 
 This sample demonstrates the use of various Converters included in the Template10 library. There is a single **View** (MainPage.xaml) and a single **ViewModel** (MainPageViewModel.cs).
 
-To learn more about Converters you can check the [wiki documentation](https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-Converters).
+To learn more about Converters you can check the [wiki documentation](https://github.com/Windows-XAML/Template10/wiki/Converters).
 
 ![Converters Demo](img/sampleapp.png)
 
