@@ -62,6 +62,8 @@ namespace Template10.Common
 
         public UIViewSettings UIViewSettings() => Dispatcher.Dispatch(() => Windows.UI.ViewManagement.UIViewSettings.GetForCurrentView());
 
+        internal static void WindowCreated(Window window) => new WindowWrapper(window);
+
         internal WindowWrapper(Window window)
         {
             if (Current(window) != null)
@@ -85,5 +87,10 @@ namespace Template10.Common
         public Window Window { get; }
         public DispatcherWrapper Dispatcher { get; }
         public NavigationServiceList NavigationServices { get; } = new NavigationServiceList();
+
+        internal static void OnWindowCreated(Window window)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

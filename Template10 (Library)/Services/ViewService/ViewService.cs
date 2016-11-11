@@ -12,7 +12,7 @@ using static Template10.Services.LoggingService.LoggingService;
 
 namespace Template10.Services.ViewService
 {
-    public sealed class ViewService:IViewService
+    public sealed class ViewService : IViewService
     {
         internal static void OnWindowCreated()
         {
@@ -35,15 +35,15 @@ namespace Template10.Services.ViewService
 
             var currentView = ApplicationView.GetForCurrentView();
             title = title ?? currentView.Title;
-           
+
             var newView = CoreApplication.CreateNewView();
             var dispatcher = new DispatcherWrapper(newView.Dispatcher);
             var newControl = await dispatcher.Dispatch(async () =>
-            {                
-                var control=ViewLifetimeControl.GetForCurrentView();
+            {
+                var control = ViewLifetimeControl.GetForCurrentView();
                 var newWindow = Window.Current;
                 var newAppView = ApplicationView.GetForCurrentView();
-                newAppView.Title = title;                
+                newAppView.Title = title;
                 var nav = BootStrapper.Current.NavigationServiceFactory(BootStrapper.BackButton.Ignore, BootStrapper.ExistingContent.Exclude);
                 control.NavigationService = nav;
                 nav.Navigate(page, parameter);

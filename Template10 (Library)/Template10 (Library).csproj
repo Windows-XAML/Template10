@@ -131,6 +131,11 @@
     <Compile Include="Behaviors\BackButtonBehavior.cs" />
     <Compile Include="Behaviors\CloseFlyoutAction.cs" />
     <Compile Include="Behaviors\DeviceDispositionBehavior.cs" />
+    <Compile Include="Common\Bootstrapper\ActivateWindowSources.cs" />
+    <Compile Include="Common\Bootstrapper\Settings.cs" />
+    <Compile Include="Common\Bootstrapper\BootstrapperStates.cs" />
+    <Compile Include="Common\Bootstrapper\LifecycleLogic.cs" />
+    <Compile Include="Common\Bootstrapper\WindowLogic.cs" />
     <Compile Include="Common\Deferral.cs" />
     <Compile Include="Common\EventThrottleHelper.cs" />
     <Compile Include="Behaviors\EventTriggerBehaviorBase.cs" />
@@ -145,7 +150,7 @@
     <Compile Include="Behaviors\ConditionalAction.cs" />
     <Compile Include="Behaviors\ThrottledEventTriggerBehavior.cs" />
     <Compile Include="Behaviors\TimeoutAction.cs" />
-    <Compile Include="Common\BootStrapper.cs" />
+    <Compile Include="Common\Bootstrapper\BootStrapper.cs" />
     <Compile Include="Common\DispatcherWrapper.cs" />
     <Compile Include="Common\HandledEventArgs.cs" />
     <Compile Include="Common\IDispatcherWrapper.cs" />
@@ -154,6 +159,7 @@
     <Compile Include="Common\Mdl2.cs" />
     <Compile Include="Common\NavButtonsHelper.cs" />
     <Compile Include="Common\ObservableDictionary.cs" />
+    <Compile Include="Common\Bootstrapper\SplashLogic.cs" />
     <Compile Include="Common\StateItems.cs" />
     <Compile Include="Common\StateKey.cs" />
     <Compile Include="Common\TypedEventHandler.cs" />

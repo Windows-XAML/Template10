@@ -64,114 +64,114 @@ namespace Template10.Utils
             }
         }
 
-        public class InkBitmapRenderer
-        {
-            public async Task<SoftwareBitmap> RenderAsync(IEnumerable<InkStroke> inkStrokes, double width, double height)
-            {
-                var dpi = DisplayInformation.GetForCurrentView().LogicalDpi;
-                try
-                {
-                    var renderTarget = new CanvasRenderTarget(_canvasDevice, (float)width, (float)height, dpi); using (renderTarget)
-                    {
-                        using (var drawingSession = renderTarget.CreateDrawingSession())
-                        {
-                            drawingSession.DrawInk(inkStrokes);
-                        }
+        //public class InkBitmapRenderer
+        //{
+        //    public async Task<SoftwareBitmap> RenderAsync(IEnumerable<InkStroke> inkStrokes, double width, double height)
+        //    {
+        //        var dpi = DisplayInformation.GetForCurrentView().LogicalDpi;
+        //        try
+        //        {
+        //            var renderTarget = new CanvasRenderTarget(_canvasDevice, (float)width, (float)height, dpi); using (renderTarget)
+        //            {
+        //                using (var drawingSession = renderTarget.CreateDrawingSession())
+        //                {
+        //                    drawingSession.DrawInk(inkStrokes);
+        //                }
 
-                        return await SoftwareBitmap.CreateCopyFromSurfaceAsync(renderTarget);
-                    }
-                }
-                catch (Exception e) when (_canvasDevice.IsDeviceLost(e.HResult))
-                {
-                    _canvasDevice.RaiseDeviceLost();
-                }
+        //                return await SoftwareBitmap.CreateCopyFromSurfaceAsync(renderTarget);
+        //            }
+        //        }
+        //        catch (Exception e) when (_canvasDevice.IsDeviceLost(e.HResult))
+        //        {
+        //            _canvasDevice.RaiseDeviceLost();
+        //        }
 
-                return null;
-            }
+        //        return null;
+        //    }
 
-            private void HandleDeviceLost(CanvasDevice sender, object args)
-            {
-                if (sender == _canvasDevice)
-                {
-                    RecreateDevice();
-                }
-            }
+        //    private void HandleDeviceLost(CanvasDevice sender, object args)
+        //    {
+        //        if (sender == _canvasDevice)
+        //        {
+        //            RecreateDevice();
+        //        }
+        //    }
 
-            private void RecreateDevice()
-            {
-                _canvasDevice.DeviceLost -= HandleDeviceLost;
+        //    private void RecreateDevice()
+        //    {
+        //        _canvasDevice.DeviceLost -= HandleDeviceLost;
 
-                _canvasDevice = CanvasDevice.GetSharedDevice(_canvasDevice.ForceSoftwareRenderer); _canvasDevice.DeviceLost += HandleDeviceLost;
-            }
-        }
+        //        _canvasDevice = CanvasDevice.GetSharedDevice(_canvasDevice.ForceSoftwareRenderer); _canvasDevice.DeviceLost += HandleDeviceLost;
+        //    }
+        //}
 
-        private async Task RenderBitmap(this InkCanvas inkCanvas)
-        {
-            var strokes = inkCanvas.InkPresenter.StrokeContainer.GetStrokes();
+        //private async Task RenderBitmap(this InkCanvas inkCanvas)
+        //{
+        //    var strokes = inkCanvas.InkPresenter.StrokeContainer.GetStrokes();
 
-            var renderer = new RenderTargetBitmap();
+        //    var renderer = new RenderTargetBitmap();
 
-            var renderedImage = await _inkBitmapRenderer.RenderAsync(
-                strokes,
-                inkCanvas.ActualWidth,
-                inkCanvas.ActualHeight);
+        //    var renderedImage = await _inkBitmapRenderer.RenderAsync(
+        //        strokes,
+        //        inkCanvas.ActualWidth,
+        //        inkCanvas.ActualHeight);
 
-            var convertedImage = SoftwareBitmap
-                .Convert(renderedImage,
-                   BitmapPixelFormat.Bgra8,
-                   BitmapAlphaMode.Premultiplied);
+        //    var convertedImage = SoftwareBitmap
+        //        .Convert(renderedImage,
+        //           BitmapPixelFormat.Bgra8,
+        //           BitmapAlphaMode.Premultiplied);
 
-            if (renderedImage != null)
-            {
-                // Convert to a format appropriate for SoftwareBitmapSource.
-                var convertedImage = SoftwareBitmap.Convert(
-                    renderedImage,
-                    BitmapPixelFormat.Bgra8,
-                    BitmapAlphaMode.Premultiplied
-                    );
-                await InkImageSource.SetBitmapAsync(convertedImage);
+        //    if (renderedImage != null)
+        //    {
+        //        // Convert to a format appropriate for SoftwareBitmapSource.
+        //        var convertedImage = SoftwareBitmap.Convert(
+        //            renderedImage,
+        //            BitmapPixelFormat.Bgra8,
+        //            BitmapAlphaMode.Premultiplied
+        //            );
+        //        await InkImageSource.SetBitmapAsync(convertedImage);
 
-                var renderTargetBitmap = new RenderTargetBitmap();
-                var currentDpi = DisplayInformation.GetForCurrentView().LogicalDpi;
+        //        var renderTargetBitmap = new RenderTargetBitmap();
+        //        var currentDpi = DisplayInformation.GetForCurrentView().LogicalDpi;
 
-                // Prepare for RenderTargetBitmap by hiding the InkCanvas and displaying the                // rasterized strokes instead.
-                ImageInkCanvas.Visibility = Visibility.Collapsed;
-                InkImage.Visibility = Visibility.Visible;
+        //        // Prepare for RenderTargetBitmap by hiding the InkCanvas and displaying the                // rasterized strokes instead.
+        //        ImageInkCanvas.Visibility = Visibility.Collapsed;
+        //        InkImage.Visibility = Visibility.Visible;
 
-                await renderTargetBitmap.RenderAsync(InkingRoot);
-                var pixelData = await renderTargetBitmap.GetPixelsAsync();
+        //        await renderTargetBitmap.RenderAsync(InkingRoot);
+        //        var pixelData = await renderTargetBitmap.GetPixelsAsync();
 
-                // Restore the original layout now that we have created the RenderTargetBitmap image.
-                ImageInkCanvas.Visibility = Visibility.Visible;
-                InkImage.Visibility = Visibility.Collapsed;
+        //        // Restore the original layout now that we have created the RenderTargetBitmap image.
+        //        ImageInkCanvas.Visibility = Visibility.Visible;
+        //        InkImage.Visibility = Visibility.Collapsed;
 
-                // Create destination file for the new image
-                var destFolder = await SettingsService.GetStorageFolderForPhotoFile(ViewModel.CurrentPhoto.PhotoId);
-                var file = await destFolder.CreateFileAsync($"{Guid.NewGuid().ToString("D")}.png",
-                        CreationCollisionOption.GenerateUniqueName);
+        //        // Create destination file for the new image
+        //        var destFolder = await SettingsService.GetStorageFolderForPhotoFile(ViewModel.CurrentPhoto.PhotoId);
+        //        var file = await destFolder.CreateFileAsync($"{Guid.NewGuid().ToString("D")}.png",
+        //                CreationCollisionOption.GenerateUniqueName);
 
-                using (var stream = await file.OpenAsync(FileAccessMode.ReadWrite))
-                {
-                    var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId, stream);
-                    encoder.SetPixelData(
-                        BitmapPixelFormat.Bgra8,
-                        BitmapAlphaMode.Ignore,
-                        (uint)renderTargetBitmap.PixelWidth,
-                        (uint)renderTargetBitmap.PixelHeight,
-                        currentDpi,
-                        currentDpi,
-                        pixelData.ToArray()
-                        );
+        //        using (var stream = await file.OpenAsync(FileAccessMode.ReadWrite))
+        //        {
+        //            var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId, stream);
+        //            encoder.SetPixelData(
+        //                BitmapPixelFormat.Bgra8,
+        //                BitmapAlphaMode.Ignore,
+        //                (uint)renderTargetBitmap.PixelWidth,
+        //                (uint)renderTargetBitmap.PixelHeight,
+        //                currentDpi,
+        //                currentDpi,
+        //                pixelData.ToArray()
+        //                );
 
-                    await encoder.FlushAsync();
-                }
+        //            await encoder.FlushAsync();
+        //        }
 
-                // Update the SightFile in the database
-                await ViewModel.UpdatePhotoImageUriAsync(file.GetUri());
+        //        // Update the SightFile in the database
+        //        await ViewModel.UpdatePhotoImageUriAsync(file.GetUri());
 
-                // Erase all strokes.
-                ImageInkCanvas.InkPresenter.StrokeContainer.Clear();
-            }
-        }
+        //        // Erase all strokes.
+        //        ImageInkCanvas.InkPresenter.StrokeContainer.Clear();
+        //    }
+        //}
     }
 }
