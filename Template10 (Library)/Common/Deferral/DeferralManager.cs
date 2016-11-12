@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.Linq;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Template10.Common
 {
+
     public sealed class DeferralManager
     {
         int _count = 0;
@@ -30,16 +31,4 @@ namespace Template10.Common
         }
     }
 
-    public sealed class Deferral
-    {
-        private Action _callback;
-        public Deferral(Action callback)
-        {
-            _callback = callback;
-        }
-        public void Complete()
-        {
-            _callback.Invoke();
-        }
-    }
 }

@@ -3,6 +3,6 @@ namespace Template10.Common
 {
     public class HandledEventArgs : EventArgs
     {
-        public System.Boolean Handled { get; set; }
+        public bool Handled { get; set; }
     }
 }
