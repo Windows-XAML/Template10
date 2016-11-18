@@ -86,7 +86,7 @@
     <Content Include="Snippets\CSharp\Template10\T10_INotifyPropertyChanged.snippet">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Snippets\CSharp\Template10\T10_PageContent.snippet">
+    <Content Include="Snippets\XAML\Template10\T10_PageContent.snippet">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Snippets\CSharp\Template10\T10_Property.snippet">

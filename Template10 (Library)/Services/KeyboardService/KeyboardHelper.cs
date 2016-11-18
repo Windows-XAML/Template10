@@ -9,7 +9,7 @@ using Windows.UI.Xaml;
 
 namespace Template10.Services.KeyboardService
 {
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-KeyboardService
+    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Services#keyboardservice
     public class KeyboardHelper
     {
         CoreWindow win = Window.Current.CoreWindow;

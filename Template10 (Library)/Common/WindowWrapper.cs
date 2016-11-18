@@ -11,7 +11,7 @@ using Windows.UI.Xaml;
 
 namespace Template10.Common
 {
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-WindowWrapper
+    // DOCS: https://github.com/Windows-XAML/Template10/wiki/WindowWrapper
     public class WindowWrapper
     {
         #region Debug
