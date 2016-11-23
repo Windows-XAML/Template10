@@ -685,7 +685,7 @@ namespace Template10.Common
 
         private async void CallResuming(object sender, object e)
         {
-            DebugWrite(caller: nameof(Resuming));
+            DebugWrite();
 
             var args = OriginalActivatedArgs as LaunchActivatedEventArgs;
             if (args?.PrelaunchActivated ?? true)
