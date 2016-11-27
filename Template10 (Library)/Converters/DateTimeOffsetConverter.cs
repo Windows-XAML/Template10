@@ -3,7 +3,7 @@ using Windows.UI.Xaml.Data;
 
 namespace Template10.Converters
 {
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-Converters
+    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Converters
     public class DateTimeOffsetConverter : IValueConverter
     {
 

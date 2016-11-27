@@ -8,7 +8,7 @@ using Windows.UI.Core;
 
 namespace Template10.Common
 {
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-DispatcherWrapper
+    // DOCS: https://github.com/Windows-XAML/Template10/wiki/DispatcherWrapper
     public class DispatcherWrapper : IDispatcherWrapper
     {
         #region Debug
@@ -33,7 +33,7 @@ namespace Template10.Common
         public async Task DispatchAsync(Action action, int delayms = 0, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal)
         {
             if (delayms > 0)
-                await Task.Delay(delayms).ConfigureAwait(false);
+                await Task.Delay(delayms).ConfigureAwait(dispatcher.HasThreadAccess);
 
             if (dispatcher.HasThreadAccess && priority == CoreDispatcherPriority.Normal)
             {
@@ -61,7 +61,7 @@ namespace Template10.Common
         public async Task DispatchAsync(Func<Task> func, int delayms = 0, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal)
         {
             if (delayms > 0)
-                await Task.Delay(delayms).ConfigureAwait(false);
+                await Task.Delay(delayms).ConfigureAwait(dispatcher.HasThreadAccess);
 
             if (dispatcher.HasThreadAccess && priority == CoreDispatcherPriority.Normal)
             {
@@ -89,7 +89,7 @@ namespace Template10.Common
         public async Task<T> DispatchAsync<T>(Func<T> func, int delayms = 0, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal)
         {
             if (delayms > 0)
-                await Task.Delay(delayms).ConfigureAwait(false);
+                await Task.Delay(delayms).ConfigureAwait(dispatcher.HasThreadAccess);
 
             if (dispatcher.HasThreadAccess && priority == CoreDispatcherPriority.Normal)
             {
@@ -113,10 +113,10 @@ namespace Template10.Common
             }
         }
 
-        public async void Dispatch(Action action, int delayms = 0, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal)
+        public void Dispatch(Action action, int delayms = 0, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal)
         {
             if (delayms > 0)
-                await Task.Delay(delayms).ConfigureAwait(false);
+                Task.Delay(delayms).ConfigureAwait(dispatcher.HasThreadAccess).GetAwaiter().GetResult();
 
             if (dispatcher.HasThreadAccess && priority == CoreDispatcherPriority.Normal)
             {
@@ -131,7 +131,7 @@ namespace Template10.Common
         public T Dispatch<T>(Func<T> action, int delayms = 0, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal)
         {
             if (delayms > 0)
-                Task.Delay(delayms).ConfigureAwait(false).GetAwaiter().GetResult();
+                Task.Delay(delayms).ConfigureAwait(dispatcher.HasThreadAccess).GetAwaiter().GetResult();
 
             if (dispatcher.HasThreadAccess && priority == CoreDispatcherPriority.Normal)
             {
@@ -217,10 +217,10 @@ namespace Template10.Common
             return await tcs.Task.ConfigureAwait(false);
         }
 
-        public async void DispatchIdle(Action action, int delayms = 0)
+        public void DispatchIdle(Action action, int delayms = 0)
         {
             if (delayms > 0)
-                await Task.Delay(delayms).ConfigureAwait(false);
+                Task.Delay(delayms).ConfigureAwait(false).GetAwaiter().GetResult();
 
             dispatcher.RunIdleAsync(args => action()).AsTask().ConfigureAwait(false).GetAwaiter().GetResult();
         }

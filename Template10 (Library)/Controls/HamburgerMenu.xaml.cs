@@ -55,7 +55,6 @@ namespace Template10.Controls
 
                 // control event handlers
                 Loaded += HamburgerMenu_Loaded;
-                LayoutUpdated += HamburgerMenu_LayoutUpdated;
 
                 // xbox controller menu button support
                 KeyboardService.Instance.AfterMenuGesture += () =>
@@ -97,6 +96,11 @@ namespace Template10.Controls
             UpdateHamburgerButtonGridWidthToFillAnyGap();
             RefreshStyles(RequestedTheme);
             UpdatePaneMarginToShowHamburgerButton();
+
+            // Moved here from HamburgerMenu_LayoutUpdated because it was one-time event handler.
+            // LayoutUpdated handler is not needed, Loaded is called after template applying anyway.
+            UpdateVisualStates();
+            UpdateControl();
         }
 
         private void HamburgerMenu_RequestedThemeChanged(DependencyObject sender, DependencyProperty dp)
@@ -104,15 +108,6 @@ namespace Template10.Controls
             DebugWrite();
 
             RefreshStyles(RequestedTheme);
-        }
-
-        private void HamburgerMenu_LayoutUpdated(object sender, object e)
-        {
-            DebugWrite();
-
-            LayoutUpdated -= HamburgerMenu_LayoutUpdated;
-            UpdateVisualStates();
-            UpdateControl();
         }
 
         // handle keyboard navigation (tabs and gamepad)
@@ -254,8 +249,16 @@ namespace Template10.Controls
                 case VirtualKey.Enter:
                 case VirtualKey.GamepadA:
 
-                    var info = new InfoElement(currentItem);
-                    NavCommand.Execute(info?.HamburgerButtonInfo);
+                    if (currentItem != null)
+                    {
+                        var info = new InfoElement(currentItem);
+                        var hamburgerButtonInfo = info.HamburgerButtonInfo;
+                        if (hamburgerButtonInfo != null)
+                        {
+                            NavCommand.Execute(hamburgerButtonInfo);
+                        }
+                    }
+
                     break;
 
                 case VirtualKey.Escape:
@@ -449,6 +452,8 @@ namespace Template10.Controls
 
         private void UpdateSecondaryButtonOrientation()
         {
+            if (_SecondaryButtonStackPanel == null) return;
+
             // secondary layout
             if (SecondaryButtonOrientation.Equals(Orientation.Horizontal) && IsOpen)
             {
@@ -592,14 +597,18 @@ namespace Template10.Controls
                 {
                     Margin = new Thickness(-square.Width, 0, 0, 0);
                 }
+                HamburgerButton.Margin = new Thickness(-HamburgerButton.ActualWidth, 0, 0, 0);
             }
             else
             {
                 Margin = new Thickness(0);
+                HamburgerButton.Margin = new Thickness(0);
             }
 
             // hiding these elements prevents flicker
             Header.Opacity = opacity;
+            Header.Visibility = opacity == 1 ? Visibility.Visible : Visibility.Collapsed;
+
             HamburgerButton.Opacity = opacity;
             HamburgerBackground.Opacity = opacity;
             PaneContent.Opacity = opacity;
@@ -640,12 +649,15 @@ namespace Template10.Controls
         #endregion
 
         private StackPanel _SecondaryButtonStackPanel;
-        private void SecondaryButtonStackPanel_Loaded(object sender, RoutedEventArgs e) => _SecondaryButtonStackPanel = sender as StackPanel;
-
+        private void SecondaryButtonStackPanel_Loaded(object sender, RoutedEventArgs e)
+        {
+            _SecondaryButtonStackPanel = sender as StackPanel;
+            UpdateSecondaryButtonOrientation();
+        }
         #region Nav Buttons
 
         #region commands
-
+        public event EventHandler CommandButttonTapped;
         Mvvm.DelegateCommand _hamburgerCommand;
         internal Mvvm.DelegateCommand HamburgerCommand => _hamburgerCommand ?? (_hamburgerCommand = new Mvvm.DelegateCommand(ExecuteHamburger));
         void ExecuteHamburger()
@@ -674,9 +686,9 @@ namespace Template10.Controls
             {
                 ExecuteNavButtonICommand(commandInfo);
                 commandInfo.RaiseTapped(new RoutedEventArgs());
+                CommandButttonTapped?.Invoke(commandInfo, null);
             }
         }
-
         #endregion
 
         int NavButtonCount => PrimaryButtons.Count + SecondaryButtons.Count;
@@ -698,6 +710,7 @@ namespace Template10.Controls
             public void RefreshVisualState()
             {
                 var children = FrameworkElement.AllChildren();
+                if (children.Count == 0) return;
                 var child = children.OfType<Grid>().First(x => x.Name == "RootGrid");
                 var groups = VisualStateManager.GetVisualStateGroups(child);
                 var group = groups.First(x => x.Name == "CommonStates");

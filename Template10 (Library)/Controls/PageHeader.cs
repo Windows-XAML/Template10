@@ -57,11 +57,7 @@ namespace Template10.Controls
 
         private void UpdateSpacingToFitHamburgerMenu()
         {
-            if (spacer == null)
-            {
-                return;
-            }
-            if (EnableHamburgerMenuAutoLayout)
+            if (EnableHamburgerMenuAutoLayout && spacer != null)
             {
                 var hamburgerMenu = ParentHamburgerMenu;
                 if (hamburgerMenu == null)
@@ -175,7 +171,7 @@ namespace Template10.Controls
             set { SetValue(TextProperty, value); }
         }
         public static readonly DependencyProperty TextProperty =
-            DependencyProperty.Register("Text", typeof(string), typeof(PageHeader), new PropertyMetadata(string.Empty, (d, e) =>
+            DependencyProperty.Register(nameof(Text), typeof(string), typeof(PageHeader), new PropertyMetadata(string.Empty, (d, e) =>
             {
                 (d as PageHeader).Content = e.NewValue;
             }));
@@ -186,6 +182,7 @@ namespace Template10.Controls
             base.OnApplyTemplate();
             spacer = GetTemplateChild<Rectangle>("Spacer");
             moreButton = GetTemplateChild<Button>("MoreButton");
+            UpdateSpacingToFitHamburgerMenu();
         }
 
         private T GetTemplateChild<T>(string name) where T : DependencyObject

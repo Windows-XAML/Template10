@@ -1,0 +1,59 @@
+<Page x:Class="MultiplePageHeaders.Views.DetailPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:Behaviors="using:Template10.Behaviors"
+      xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+      xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+      xmlns:controls="using:Template10.Controls"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="using:MultiplePageHeaders.Views"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:vm="using:MultiplePageHeaders.ViewModels"
+      x:Name="ThisPage"
+      mc:Ignorable="d">
+
+    <Page.DataContext>
+        <vm:DetailPageViewModel x:Name="ViewModel" />
+    </Page.DataContext>
+
+    <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <!--  header  -->
+        <controls:PageHeader x:Name="pageHeader"
+                             Frame="{x:Bind Frame}"
+                             RelativePanel.AlignLeftWithPanel="True"
+                             RelativePanel.AlignRightWithPanel="True"
+                             RelativePanel.AlignTopWithPanel="True"
+                             Text="Detail Page" />
+        <controls:PageHeader x:Name="pageHeader2"
+                             Background="Maroon"
+                             Frame="{x:Bind Frame}"
+                             RelativePanel.AlignLeftWithPanel="True"
+                             RelativePanel.AlignRightWithPanel="True"
+                             RelativePanel.Below="pageHeader"
+                             Text="Detail Page" />
+        <controls:PageHeader x:Name="pageHeader3"
+                             Background="Green" Visibility="Collapsed"
+                             Frame="{x:Bind Frame}"
+                             RelativePanel.AlignLeftWithPanel="True"
+                             RelativePanel.AlignRightWithPanel="True"
+                             RelativePanel.Below="pageHeader2"
+                             Text="Detail Page" />
+
+        <!--  content  -->
+        <ScrollViewer Padding="12,8,0,0"
+                      RelativePanel.AlignBottomWithPanel="True"
+                      RelativePanel.AlignLeftWithPanel="True"
+                      RelativePanel.AlignRightWithPanel="True"
+                      RelativePanel.Below="pageHeader3"
+                      VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="You passed:" />
+                <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="{x:Bind ViewModel.Value, Mode=OneWay, FallbackValue=DesigntimeValue}" />
+                <Button Click="{x:Bind ViewModel.Test}">Test</Button>
+            </StackPanel>
+        </ScrollViewer>
+
+    </RelativePanel>
+</Page>
+

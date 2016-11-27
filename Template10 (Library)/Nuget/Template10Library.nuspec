@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/01/nuspec.xsd">
   <metadata minClientVersion="3.0">
 
-    <version>1.1.11</version>
+    <version>1.1.12</version>
 
     <id>Template10</id>
 
@@ -10,7 +10,7 @@
 
     <authors>Windows developers</authors>
 
-    <owners>jerrynixon,darenmay</owners>
+    <owners>jerrynixon</owners>
 
     <licenseUrl>http://aka.ms/Template10-License</licenseUrl>
 
@@ -41,6 +41,8 @@
     <language />
 
     <releaseNotes>
+      Version 1.1.12
+      http://aka.ms/Template10.1.1.12
       Version 1.1.11
       http://aka.ms/Template10.1.1.11
       Version 1.1.10
@@ -81,7 +83,7 @@
     </releaseNotes>
 
     <dependencies>
-      <dependency id="Microsoft.NETCore.UniversalWindowsPlatform" version="5.1.0" />
+      <dependency id="Microsoft.NETCore.UniversalWindowsPlatform" version="5.2.2" />
       <dependency id="Microsoft.Xaml.Behaviors.Uwp.Managed" version="1.1.0" />
       <dependency id="Newtonsoft.Json" version="8.0.3" />
     </dependencies>

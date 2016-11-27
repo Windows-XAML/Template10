@@ -16,8 +16,8 @@
                              Style="{ThemeResource PageHeaderStyle}"
                              Text="Support Page" />
 
-        <TextBlock Margin="12,100,0,0"
-                   FontSize="24"
+        <TextBlock Margin="12,100"
+                   FontSize="18"
                    Text="Page intentionally blank. Its sole purpose is to demo the operation of this sample app." />
 
     </RelativePanel>

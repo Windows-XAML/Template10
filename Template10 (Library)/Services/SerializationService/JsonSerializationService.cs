@@ -94,6 +94,37 @@ namespace Template10.Services.SerializationService
             return default(T);
         }
 
+        /// <summary>
+        /// Attempts to deserialize the value by absorbing the InvalidCastException that may occur.
+        /// </summary>
+        /// <returns>
+        /// True if deserialization succeeded with non-null result, otherwise False.
+        /// </returns>
+        /// <remarks>
+        /// On success (or return True) deserialized result is copied to the 'out' variable.
+        /// On fail (or return False) default(T) is copied to the 'out' variable.
+        /// </remarks>
+        public bool TryDeserialize<T>(string value, out T result)
+        {
+            object r = this.Deserialize(value);
+            if (r == null)
+            {
+                result = default(T);
+                return false;
+            }
+
+            try
+            {
+                result = (T)r;
+                return true;
+            }
+            catch
+            {
+                result = default(T);
+                return false;
+            }
+        }
+
         #region Internal Container Class
 
         sealed class Container

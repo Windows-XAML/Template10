@@ -39,14 +39,14 @@ namespace Template10.Samples.DynamicFontSizeSample.Controls
         /// Identifies the <see cref="RichTextContent"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty RichTextContentProperty =
-            DependencyProperty.Register("RichTextContent", typeof(RichTextBlock),
+            DependencyProperty.Register(nameof(RichTextContent), typeof(RichTextBlock),
             typeof(RichTextColumns), new PropertyMetadata(null, ResetOverflowLayout));
 
         /// <summary>
         /// Identifies the <see cref="ColumnTemplate"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty ColumnTemplateProperty =
-            DependencyProperty.Register("ColumnTemplate", typeof(DataTemplate),
+            DependencyProperty.Register(nameof(ColumnTemplate), typeof(DataTemplate),
             typeof(RichTextColumns), new PropertyMetadata(null, ResetOverflowLayout));
 
         /// <summary>

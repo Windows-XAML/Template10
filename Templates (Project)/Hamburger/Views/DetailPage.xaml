@@ -8,7 +8,8 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:Sample.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:vm="using:Sample.ViewModels" x:Name="ThisPage"
+      xmlns:vm="using:Sample.ViewModels"
+      x:Name="ThisPage"
       mc:Ignorable="d">
 
     <Page.DataContext>
@@ -47,13 +48,17 @@
         </VisualStateManager.VisualStateGroups>
 
         <!--  header  -->
-        <controls:PageHeader x:Name="pageHeader" Frame="{x:Bind Frame}"
+        <controls:PageHeader x:Name="pageHeader"
+                             Frame="{x:Bind Frame}"
                              RelativePanel.AlignLeftWithPanel="True"
                              RelativePanel.AlignRightWithPanel="True"
-                             RelativePanel.AlignTopWithPanel="True" Text="Detail Page" />
+                             RelativePanel.AlignTopWithPanel="True"
+                             Text="Detail Page" />
 
         <!--  content  -->
-        <ScrollViewer Padding="12,8,0,0" RelativePanel.AlignBottomWithPanel="True"
+        <ScrollViewer EntranceNavigationTransitionInfo.IsTargetElement="True"
+                      Padding="12,8,0,0"
+                      RelativePanel.AlignBottomWithPanel="True"
                       RelativePanel.AlignLeftWithPanel="True"
                       RelativePanel.AlignRightWithPanel="True"
                       RelativePanel.Below="pageHeader"

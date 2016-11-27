@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Markup;
+using Template10.Utils;
 
 namespace Template10.Behaviors
 {
@@ -14,16 +15,30 @@ namespace Template10.Behaviors
     {
         public DependencyObject AssociatedObject { get; set; }
 
+        private DeviceUtils _deviceUtils;
+
         public void Attach(DependencyObject associatedObject)
         {
             AssociatedObject = associatedObject;
-            Utils.DeviceUtils.Current().Changed += DeviceDispositionBehavior_Changed;
+            _deviceUtils = Utils.DeviceUtils.Current();
+            if (_deviceUtils != null) _deviceUtils.Changed += DeviceDispositionBehavior_Changed;
             Update();
+            _ready = true;
         }
 
-        public void Detach() => Utils.DeviceUtils.Current().Changed -= DeviceDispositionBehavior_Changed;
+        bool _ready = false;
+
+        public void Detach()
+        {
+            if (_deviceUtils != null) _deviceUtils.Changed -= DeviceDispositionBehavior_Changed;
+        }
+
         private void DeviceDispositionBehavior_Changed(object sender, EventArgs e) => Update();
-        private void Run() => Interaction.ExecuteActions(AssociatedObject, Actions, null);
+        private void Run()
+        {
+            if (_ready)
+                Interaction.ExecuteActions(AssociatedObject, Actions, null);
+        }
 
         private void Update()
         {

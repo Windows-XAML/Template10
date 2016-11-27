@@ -5,7 +5,7 @@ namespace Template10.Mvvm
     // http://codepaste.net/jgxazh
     using System.Diagnostics;
 
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-MVVM
+    // DOCS: https://github.com/Windows-XAML/Template10/wiki/MVVM
     public class DelegateCommand : IChangedCommand
     {
         private readonly Action _execute;
@@ -41,7 +41,7 @@ namespace Template10.Mvvm
         }
     }
 
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-MVVM
+    // DOCS: https://github.com/Windows-XAML/Template10/wiki/MVVM
     public class DelegateCommand<T> : IChangedCommand
     {
         private readonly Action<T> _execute;

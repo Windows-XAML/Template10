@@ -8,7 +8,7 @@ using Windows.UI.Xaml.Markup;
 
 namespace Template10.Behaviors
 {
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-XamlBehaviors
+    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Behaviors-and-Actions
     [ContentProperty(Name = nameof(Actions))]
     [TypeConstraint(typeof(TextBox))]
     [Obsolete("Use KeyBehavior instead.")]

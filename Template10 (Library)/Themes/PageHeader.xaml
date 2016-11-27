@@ -917,6 +917,7 @@
                                     VerticalAlignment="Top"
                                     Foreground="{TemplateBinding Foreground}"
                                     Padding="16,23,16,0"
+                                    IsTabStop="True"
                                     Style="{StaticResource PageHeaderButton}">
                                 <FontIcon x:Name="EllipsisIcon"
                                           Height="{ThemeResource AppBarExpandButtonCircleDiameter}"

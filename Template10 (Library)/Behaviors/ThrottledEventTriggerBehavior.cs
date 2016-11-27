@@ -36,7 +36,7 @@ namespace Template10.Behaviors
         /// <summary>
         /// Throttle period (in milliseconds)
         /// </summary>
-        public static readonly DependencyProperty ThrottleProperty = DependencyProperty.Register("Throttle", typeof (int), typeof (ThrottledEventTriggerBehavior), new PropertyMetadata(1000, ThrottlePropertyChangedCallback));
+        public static readonly DependencyProperty ThrottleProperty = DependencyProperty.Register(nameof(Throttle), typeof (int), typeof (ThrottledEventTriggerBehavior), new PropertyMetadata(1000, ThrottlePropertyChangedCallback));
 
         private static void ThrottlePropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -56,7 +56,7 @@ namespace Template10.Behaviors
         /// <summary>
         /// Reset throttle timer after each event.
         /// </summary>
-        public static readonly DependencyProperty ResetTimerProperty = DependencyProperty.Register("ResetTimer", typeof (bool), typeof (ThrottledEventTriggerBehavior), new PropertyMetadata(false, ResetTimerPropertyChangedCallback));
+        public static readonly DependencyProperty ResetTimerProperty = DependencyProperty.Register(nameof(ResetTimer), typeof (bool), typeof (ThrottledEventTriggerBehavior), new PropertyMetadata(false, ResetTimerPropertyChangedCallback));
 
         private static void ResetTimerPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {

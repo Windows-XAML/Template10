@@ -8,7 +8,8 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:Sample.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:vm="using:Sample.ViewModels" mc:Ignorable="d">
+      xmlns:vm="using:Sample.ViewModels"
+      mc:Ignorable="d">
 
     <Page.DataContext>
         <vm:SettingsPageViewModel x:Name="ViewModel" />
@@ -47,14 +48,17 @@
         </VisualStateManager.VisualStateGroups>
 
         <!--  header  -->
-        <controls:PageHeader x:Name="pageHeader" Content="Settings Page"
+        <controls:PageHeader x:Name="pageHeader"
+                             Content="Settings Page"
                              Frame="{x:Bind Frame}"
                              RelativePanel.AlignLeftWithPanel="True"
                              RelativePanel.AlignRightWithPanel="True"
                              RelativePanel.AlignTopWithPanel="True" />
 
         <!--  content  -->
-        <Pivot x:Name="MyPivot" Grid.Row="1"
+        <Pivot x:Name="MyPivot"
+               Grid.Row="1"
+               EntranceNavigationTransitionInfo.IsTargetElement="True"
                RelativePanel.AlignBottomWithPanel="True"
                RelativePanel.AlignLeftWithPanel="True"
                RelativePanel.AlignRightWithPanel="True"
@@ -62,7 +66,8 @@
 
             <!--  settings  -->
             <PivotItem DataContext="{Binding SettingsPartViewModel}" Header="Settings">
-                <ScrollViewer Margin="0,12,-12,0" HorizontalContentAlignment="Left"
+                <ScrollViewer Margin="0,12,-12,0"
+                              HorizontalContentAlignment="Left"
                               VerticalScrollBarVisibility="Auto">
                     <RelativePanel HorizontalAlignment="Left">
 
@@ -74,15 +79,20 @@
                                       RelativePanel.AlignLeftWithPanel="True"
                                       RelativePanel.AlignTopWithPanel="True" />
 
-                        <ToggleSwitch x:Name="UseLightThemeToggleSwitch" Header="Use Light Theme"
+                        <ToggleSwitch x:Name="UseLightThemeToggleSwitch"
+                                      Header="Use Light Theme"
                                       IsOn="{Binding UseLightThemeButton, Mode=TwoWay}"
-                                      OffContent="Dark theme" OnContent="Light theme"
+                                      OffContent="Dark theme"
+                                      OnContent="Light theme"
                                       RelativePanel.AlignLeftWithPanel="True"
                                       RelativePanel.Below="UseShellDrawnBackButtonToggleSwtich" />
 
-                        <TextBox x:Name="BusyTextTextBox" Width="200"
-                                 Margin="0,12,0,0" HorizontalAlignment="Left"
-                                 Header="Busy text" RelativePanel.AlignLeftWithPanel="True"
+                        <TextBox x:Name="BusyTextTextBox"
+                                 Width="200"
+                                 Margin="0,12,0,0"
+                                 HorizontalAlignment="Left"
+                                 Header="Busy text"
+                                 RelativePanel.AlignLeftWithPanel="True"
                                  RelativePanel.Below="UseLightThemeToggleSwitch"
                                  Text="{Binding BusyText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
@@ -99,9 +109,11 @@
 
             <!--  privacy  -->
             <PivotItem DataContext="{Binding SettingsPartViewModel}"
-                       Header="Privacy statement" Padding="0">
+                       Header="Privacy statement"
+                       Padding="0">
                 <ScrollViewer Margin="0,0,-12,0" VerticalScrollBarVisibility="Auto">
-                    <TextBlock Margin="0,12,24,12" LineHeight="24"
+                    <TextBlock Margin="0,12,24,12"
+                               LineHeight="24"
                                TextWrapping="Wrap">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pharetra dictum nibh vel ornare. Donec sem urna, rhoncus sed cursus ac, aliquet at nisl. Pellentesque cursus et lacus vel porta. Morbi iaculis efficitur volutpat. Curabitur sit amet cursus nisl, ac suscipit mauris. Nulla a tellus a odio tincidunt maximus. Maecenas non eros lacus. Donec aliquam libero nec ex ullamcorper, in lobortis nibh dapibus. Mauris vehicula, tellus quis congue tincidunt, neque massa auctor ante, ut laoreet felis nisi id tellus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nunc sed dapibus quam, in viverra arcu. Vivamus ut metus non magna viverra porttitor a ultrices dui.
                         <LineBreak />
@@ -140,20 +152,26 @@
             <PivotItem Header="About">
                 <RelativePanel DataContext="{Binding AboutPartViewModel}">
 
-                    <Border x:Name="LogoImage" HorizontalAlignment="Right"
-                            VerticalAlignment="Top" BorderBrush="DimGray"
-                            BorderThickness="1" IsHitTestVisible="False"
+                    <Border x:Name="LogoImage"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            BorderBrush="DimGray"
+                            BorderThickness="1"
+                            IsHitTestVisible="False"
                             RelativePanel.AlignRightWithPanel="True"
                             RelativePanel.AlignTopWithPanel="True">
                         <Border.Background>
                             <SolidColorBrush Color="{ThemeResource SystemAccentColor}" />
                         </Border.Background>
-                        <Image Margin="12" Source="{Binding Logo}"
+                        <Image Margin="12"
+                               Source="{Binding Logo}"
                                Stretch="None" />
                     </Border>
 
-                    <TextBlock x:Name="DisplayNameTextBlock" Margin="0,0,0,12"
-                               FontSize="24" RelativePanel.AlignLeftWithPanel="True"
+                    <TextBlock x:Name="DisplayNameTextBlock"
+                               Margin="0,0,0,12"
+                               FontSize="24"
+                               RelativePanel.AlignLeftWithPanel="True"
                                RelativePanel.AlignRightWith="LogoImage"
                                RelativePanel.AlignTopWithPanel="True"
                                Text="{Binding DisplayName}" />

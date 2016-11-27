@@ -1,0 +1,11 @@
+<common:BootStrapper x:Class="MultiplePageHeaders.App"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:common="using:Template10.Common"
+                     RequestedTheme="Light">
+
+    <Application.Resources>
+        <ResourceDictionary Source="Styles\Custom.xaml" />
+    </Application.Resources>
+
+</common:BootStrapper>

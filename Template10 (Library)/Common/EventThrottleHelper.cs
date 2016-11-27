@@ -36,13 +36,13 @@ namespace Template10.Common
         /// <summary>
         /// Reset throttle timer after each event.
         /// </summary>
-        public static readonly DependencyProperty ResetTimerProperty = DependencyProperty.Register("ResetTimer", typeof (bool), typeof (EventThrottleHelper), new PropertyMetadata(false));
+        public static readonly DependencyProperty ResetTimerProperty = DependencyProperty.Register(nameof(ResetTimer), typeof (bool), typeof (EventThrottleHelper), new PropertyMetadata(false));
 
 
         /// <summary>
         /// Throttle time in milliseconds.
         /// </summary>
-        public static readonly DependencyProperty ThrottleProperty = DependencyProperty.Register("Throttle", typeof (int), typeof (EventThrottleHelper), new PropertyMetadata(1000));
+        public static readonly DependencyProperty ThrottleProperty = DependencyProperty.Register(nameof(Throttle), typeof (int), typeof (EventThrottleHelper), new PropertyMetadata(1000));
 
         private IDispatcherWrapper dispatcherObj;
 
@@ -70,7 +70,7 @@ namespace Template10.Common
             }
             try
             {
-                await DelayAction(eventData);
+                await DelayAction(eventData).ConfigureAwait(false);
             }
             catch
             {
@@ -88,7 +88,7 @@ namespace Template10.Common
             {
                 try
                 {
-                    await DelayAction(eventData);
+                    await DelayAction(eventData).ConfigureAwait(false);
                 }
                 catch
                 {
@@ -126,7 +126,7 @@ namespace Template10.Common
                     var toWait = (stamp.AddMilliseconds(Throttle) - DateTime.Now);
                     if (toWait.Ticks > 0)
                     {
-                        await Task.Delay(toWait);
+                        await Task.Delay(toWait).ConfigureAwait(false);
                     }
                 }
             }

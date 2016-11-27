@@ -8,7 +8,7 @@ using Windows.Storage;
 
 namespace Template10.Services.SettingsService
 {
-    // https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SettingsService
+    // https://github.com/Windows-XAML/Template10/wiki/Services#settingsservice
     public class SettingsService : ISettingsService
     {
         private static ISettingsService _local;

@@ -11,7 +11,7 @@ using System.Runtime.CompilerServices;
 
 namespace Template10.Services.NavigationService
 {
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-NavigationService
+    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Navigation-Service
     public class FrameFacade
     {
         #region Debug
@@ -40,10 +40,8 @@ namespace Template10.Services.NavigationService
         public event EventHandler<HandledEventArgs> BackRequested;
         public void RaiseBackRequested(HandledEventArgs args)
         {
-            if (BackRequested != null)
-            {
-                BackRequested.Invoke(this, args);
-            }
+            BackRequested?.Invoke(this, args);
+
             if (BackButtonHandling == BootStrapper.BackButton.Attach && !args.Handled && (args.Handled = Frame.BackStackDepth > 0))
             {
                 GoBack();
@@ -152,12 +150,16 @@ namespace Template10.Services.NavigationService
 
         public NavigationMode NavigationModeHint = NavigationMode.New;
 
-        public void GoBack()
+        public void GoBack(NavigationTransitionInfo infoOverride = null)
         {
             DebugWrite($"CanGoBack {CanGoBack}");
 
             NavigationModeHint = NavigationMode.Back;
-            if (CanGoBack) Frame.GoBack();
+            if (CanGoBack)
+            {
+                if (infoOverride == null) Frame.GoBack();
+                else Frame.GoBack(infoOverride);
+            }
         }
 
         public void Refresh()
@@ -168,10 +170,14 @@ namespace Template10.Services.NavigationService
 
             try
             {
+                object context = (Frame as FrameworkElement).DataContext;
+
                 Windows.ApplicationModel.Resources.Core.ResourceContext.GetForCurrentView().Reset();
                 // this only works for apps using serializable types
                 var state = Frame.GetNavigationState();
                 Frame.SetNavigationState(state);
+
+                (Frame as FrameworkElement).DataContext = context;
             }
             catch (Exception)
             {
@@ -201,10 +207,11 @@ namespace Template10.Services.NavigationService
             
             try
             {
+                object context = (Frame as FrameworkElement).DataContext;
                 Windows.ApplicationModel.Resources.Core.ResourceContext.GetForCurrentView().Reset();
                 // navigates to the current page with new parameters.
                 Frame.Navigate(CurrentPageType, param, new SuppressNavigationTransitionInfo());
-
+                (Frame as FrameworkElement).DataContext = context;
               
             }
             catch (Exception)
@@ -291,12 +298,12 @@ namespace Template10.Services.NavigationService
                 throw new Exception("Your parameter must be serializable. If it isn't, then use SessionState.", ex);
             }
             var deferral = new DeferralManager();
-            var args = new NavigatingEventArgs(deferral, e, Content as Page, parameter);
+            var args = new NavigatingEventArgs(deferral, e, Content as Page, e.SourcePageType, parameter, e.Parameter);
             if (NavigationModeHint != NavigationMode.New)
                 args.NavigationMode = NavigationModeHint;
             NavigationModeHint = NavigationMode.New;
             _navigatingEventHandlers.ForEach(x => x(this, args));
-            await deferral.WaitForDeferralsAsync();
+            await deferral.WaitForDeferralsAsync().ConfigureAwait(false);
             e.Cancel = args.Cancel;
         }
     }

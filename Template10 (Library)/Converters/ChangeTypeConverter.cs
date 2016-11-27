@@ -8,7 +8,7 @@ using System.Reflection;
 
 namespace Template10.Converters
 {
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-Converters
+    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Converters
     public class ChangeTypeConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
@@ -25,8 +25,8 @@ namespace Template10.Converters
             if (value == null && targetType.GetTypeInfo().IsValueType)
                 return Activator.CreateInstance(targetType);
 
-            if (targetType == typeof(object))
-                return (object)value;
+            if (targetType.IsInstanceOfType(value))
+                return value;
 
             return System.Convert.ChangeType(value, targetType);
         }
