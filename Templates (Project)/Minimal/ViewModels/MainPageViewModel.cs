@@ -54,6 +54,9 @@ namespace Sample.ViewModels
 
         public override async Task OnNavigatingFromAsync(NavigatingEventArgs args)
         {
+
+            // It will work if you remove this await (and never introduce one either!)
+            await Task.Delay(500);
             Debug.WriteLine($"OnNavigatingFromAsync {Dispatcher.HasThreadAccess()}");
 
 
