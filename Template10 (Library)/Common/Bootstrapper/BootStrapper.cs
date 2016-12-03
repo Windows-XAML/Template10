@@ -99,9 +99,12 @@ namespace Template10.Common
             {
                 Loaded();
             }
-            WindowWrapper.OnWindowCreated(args.Window);
+
+            // handle window
+            var window = new WindowWrapper(args.Window);
             ViewService.OnWindowCreated();
             WindowCreated?.Invoke(this, args);
+            base.OnWindowCreated(args);
         }
 
         #region properties

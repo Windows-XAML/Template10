@@ -87,10 +87,5 @@ namespace Template10.Common
         public Window Window { get; }
         public DispatcherWrapper Dispatcher { get; }
         public NavigationServiceList NavigationServices { get; } = new NavigationServiceList();
-
-        internal static void OnWindowCreated(Window window)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

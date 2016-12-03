@@ -26,7 +26,7 @@ namespace Template10.Common
             var splash = splashFactory(splashScreen);
             var service = new PopupService();
             popup = service.Show(PopupService.PopupSize.FullScreen, splash);
-            windowLogic.ActivateWindow(WindowLogic.ActivateWindowSources.SplashScreen, this);
+            windowLogic.ActivateWindow(ActivateWindowSources.SplashScreen, this);
         }
 
         public void Hide()

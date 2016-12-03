@@ -21,12 +21,11 @@ namespace Template10.Services.NavigationService
 
         #endregion
 
-        internal FrameFacade(NavigationService navigationService, Frame frame)
+        internal FrameFacade(Frame frame)
         {
-            NavigationService = navigationService;
             Frame = frame;
-            frame.Navigated += (s, e) => FacadeNavigatedEventHandler(s, e);
-            frame.Navigating += (s, e) => FacadeNavigatingCancelEventHandler(s, e);
+            //frame.Navigated += (s, e) => FacadeNavigatedEventHandler(s, e);
+            //frame.Navigating += (s, e) => FacadeNavigatingCancelEventHandler(s, e);
 
             // setup animations
             var t = new NavigationThemeTransition
@@ -38,26 +37,10 @@ namespace Template10.Services.NavigationService
         }
 
         public event EventHandler<HandledEventArgs> BackRequested;
-        public void RaiseBackRequested(HandledEventArgs args)
-        {
-            BackRequested?.Invoke(this, args);
-
-            if (BackButtonHandling == BootStrapper.BackButton.Attach && !args.Handled && (args.Handled = Frame.BackStackDepth > 0))
-            {
-                GoBack();
-            }
-        }
+        public void RaiseBackRequested(HandledEventArgs args) => BackRequested?.Invoke(this, args);
 
         public event EventHandler<HandledEventArgs> ForwardRequested;
-        public void RaiseForwardRequested(HandledEventArgs args)
-        {
-            ForwardRequested?.Invoke(this, args);
-
-            if (!args.Handled && Frame.ForwardStack.Count > 0)
-            {
-                GoForward();
-            }
-        }
+        public void RaiseForwardRequested(HandledEventArgs args) => ForwardRequested?.Invoke(this, args);
 
         #region state
 
@@ -104,149 +87,53 @@ namespace Template10.Services.NavigationService
 
         #region frame facade
 
+        [Obsolete("Use FrameFacade instead. This may be made private in a future version.", false)]
         public Frame Frame { get; }
 
         public BootStrapper.BackButton BackButtonHandling { get; internal set; }
 
         public string FrameId { get; set; } = string.Empty;
 
-        internal NavigationService NavigationService { get; set; }
+        [Obsolete("Use NavigationService.Navigate() instead", true)]
+        public bool Navigate(Type page, object parameter, NavigationTransitionInfo infoOverride) { throw new NotImplementedException(); }
 
-        public bool Navigate(Type page, object parameter, NavigationTransitionInfo infoOverride)
-        {
-            DebugWrite();
+        [Obsolete("Use NavigationService.NavigationState instead", true)]
+        public void SetNavigationState(string state) { throw new NotImplementedException(); }
 
-            if (Frame.Navigate(page, parameter, infoOverride))
-            {
-                return page.Equals(Frame.Content?.GetType());
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        internal ISerializationService SerializationService => NavigationService.SerializationService;
-
-        [Obsolete("Use NavigationService.NavigationState instead")]
-        public void SetNavigationState(string state)
-        {
-            DebugWrite($"State {state}");
-
-            Frame.SetNavigationState(state);
-        }
-
-        [Obsolete("Use NavigationService.NavigationState instead")]
-        public string GetNavigationState()
-        {
-            DebugWrite();
-
-            return Frame.GetNavigationState();
-        }
+        [Obsolete("Use NavigationService.NavigationState instead", true)]
+        public string GetNavigationState() { throw new NotImplementedException(); }
 
         public int BackStackDepth => Frame.BackStackDepth;
 
         public bool CanGoBack => Frame.CanGoBack;
 
+        [Obsolete("No longer valid.", true)]
         public NavigationMode NavigationModeHint = NavigationMode.New;
 
-        public void GoBack(NavigationTransitionInfo infoOverride = null)
-        {
-            DebugWrite($"CanGoBack {CanGoBack}");
+        [Obsolete("Use NavigationService.GoBack()", true)]
+        public void GoBack(NavigationTransitionInfo infoOverride = null) { throw new NotImplementedException(); }
 
-            NavigationModeHint = NavigationMode.Back;
-            if (CanGoBack)
-            {
-                if (infoOverride == null) Frame.GoBack();
-                else Frame.GoBack(infoOverride);
-            }
-        }
+        [Obsolete("Use NavigationService.Refresh()", true)]
+        public void Refresh() { throw new NotImplementedException(); }
 
-        public void Refresh()
-        {
-            DebugWrite();
-
-            NavigationModeHint = NavigationMode.Refresh;
-
-            try
-            {
-                object context = (Frame as FrameworkElement).DataContext;
-
-                Windows.ApplicationModel.Resources.Core.ResourceContext.GetForCurrentView().Reset();
-                // this only works for apps using serializable types
-                var state = Frame.GetNavigationState();
-                Frame.SetNavigationState(state);
-
-                (Frame as FrameworkElement).DataContext = context;
-            }
-            catch (Exception)
-            {
-                if (Frame.CanGoBack)
-                {
-                    Frame.GoBack();
-                    Frame.GoForward();
-                }
-                else if (Frame.CanGoForward)
-                {
-                    Frame.GoForward();
-                    Frame.GoBack();
-                }
-                else
-                {
-                    // not much we can really do in this case
-                    (Frame.Content as Page)?.UpdateLayout();
-                }
-            }
-        }
-
-        public void Refresh(object param)
-        {
-            DebugWrite();
-
-            
-            
-            try
-            {
-                object context = (Frame as FrameworkElement).DataContext;
-                Windows.ApplicationModel.Resources.Core.ResourceContext.GetForCurrentView().Reset();
-                // navigates to the current page with new parameters.
-                Frame.Navigate(CurrentPageType, param, new SuppressNavigationTransitionInfo());
-                (Frame as FrameworkElement).DataContext = context;
-              
-            }
-            catch (Exception)
-            {
-                if (Frame.CanGoBack)
-                {
-                    Frame.GoBack();
-                }
-                else if (Frame.CanGoForward)
-                {
-                    Frame.GoForward();
-                }
-                else
-                {
-                    // not much we can really do in this case
-                    (Frame.Content as Page)?.UpdateLayout();
-                }
-            }
-        }
+        [Obsolete("Use NavigationService.Refresh()", true)]
+        public void Refresh(object param) { throw new NotImplementedException(); }
 
         public bool CanGoForward => Frame.CanGoForward;
 
-        public void GoForward()
-        {
-            DebugWrite($"CanGoForward {CanGoForward}");
-
-            NavigationModeHint = NavigationMode.Forward;
-            if (CanGoForward) Frame.GoForward();
-        }
+        [Obsolete("Use NavigationService.GoForward()", true)]
+        public void GoForward() { throw new NotImplementedException(); }
 
         public object Content => Frame.Content;
 
+        [Obsolete("Use NavigationService.LastNavigationType", true)]
         public Type CurrentPageType { get; internal set; }
 
+        [Obsolete("Use NavigationService.LastNavigationParameter", true)]
         public object CurrentPageParam { get; internal set; }
+
+        [Obsolete("Use NavigationService.SerializationService", false)]
+        public ISerializationService SerializationService { get; set; } = Services.SerializationService.SerializationService.Json;
 
         public object GetValue(DependencyProperty dp) => Frame.GetValue(dp);
 
@@ -256,56 +143,11 @@ namespace Template10.Services.NavigationService
 
         #endregion
 
-        readonly List<EventHandler<NavigatedEventArgs>> _navigatedEventHandlers = new List<EventHandler<NavigatedEventArgs>>();
-        public event EventHandler<NavigatedEventArgs> Navigated
-        {
-            add { if (!_navigatedEventHandlers.Contains(value)) _navigatedEventHandlers.Add(value); }
-            remove { if (_navigatedEventHandlers.Contains(value)) _navigatedEventHandlers.Remove(value); }
-        }
-        void FacadeNavigatedEventHandler(object sender, Windows.UI.Xaml.Navigation.NavigationEventArgs e)
-        {
-            DebugWrite();
+        public event EventHandler<NavigatedEventArgs> Navigated;
+        internal void RaiseNavigated(NavigatedEventArgs e) => Navigated?.Invoke(this, e);
 
-            CurrentPageType = e.SourcePageType;
-            CurrentPageParam = SerializationService.Deserialize(e.Parameter?.ToString());
-            var args = new NavigatedEventArgs(e, Content as Page);
-            if (NavigationModeHint != NavigationMode.New)
-                args.NavigationMode = NavigationModeHint;
-            NavigationModeHint = NavigationMode.New;
-            foreach (var handler in _navigatedEventHandlers)
-            {
-                handler(this, args);
-            }
-        }
-
-        readonly List<EventHandler<NavigatingEventArgs>> _navigatingEventHandlers = new List<EventHandler<NavigatingEventArgs>>();
-        public event EventHandler<NavigatingEventArgs> Navigating
-        {
-            add { if (!_navigatingEventHandlers.Contains(value)) _navigatingEventHandlers.Add(value); }
-            remove { if (_navigatingEventHandlers.Contains(value)) _navigatingEventHandlers.Remove(value); }
-        }
-        private async void FacadeNavigatingCancelEventHandler(object sender, NavigatingCancelEventArgs e)
-        {
-            DebugWrite();
-
-            object parameter = null;
-            try
-            {
-                parameter = SerializationService.Deserialize(e.Parameter?.ToString());
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Your parameter must be serializable. If it isn't, then use SessionState.", ex);
-            }
-            var deferral = new DeferralManager();
-            var args = new NavigatingEventArgs(deferral, e, Content as Page, e.SourcePageType, parameter, e.Parameter);
-            if (NavigationModeHint != NavigationMode.New)
-                args.NavigationMode = NavigationModeHint;
-            NavigationModeHint = NavigationMode.New;
-            _navigatingEventHandlers.ForEach(x => x(this, args));
-            await deferral.WaitForDeferralsAsync().ConfigureAwait(false);
-            e.Cancel = args.Cancel;
-        }
+        public event EventHandler<NavigatingEventArgs> Navigating;
+        internal void RaiseNavigating(NavigatingEventArgs e) => Navigating?.Invoke(this, e);
     }
 
 }

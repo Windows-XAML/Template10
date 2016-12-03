@@ -6,13 +6,19 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Template10.Services.ViewService;
+using Template10.Services.SerializationService;
 
 namespace Template10.Services.NavigationService
 {
     public interface INavigationService
     {
         void GoBack(NavigationTransitionInfo infoOverride = null);
+        Task<bool> GoBackAsync(NavigationTransitionInfo infoOverride = null);
+
+        ISerializationService SerializationService { get; set; }
+
         void GoForward();
+        Task<bool> GoForwardAsync();
 
         object Content { get; }
 
@@ -29,16 +35,18 @@ namespace Template10.Services.NavigationService
 
         void Refresh();
 
+        [Obsolete("Use Refresh()", true)]
         void Refresh(object param);
 
-       
+        Task<bool> RefreshAsync();
+
 
         Task<ViewLifetimeControl> OpenAsync(Type page, object parameter = null, string title = null, ViewSizePreference size = ViewSizePreference.UseHalf);
 
         object CurrentPageParam { get; }
         Type CurrentPageType { get; }
 
-        DispatcherWrapper Dispatcher { get; }
+        IDispatcherWrapper Dispatcher { get; }
 
         [Obsolete]
         Task SaveNavigationAsync();
@@ -58,6 +66,7 @@ namespace Template10.Services.NavigationService
         Task SuspendingAsync();
         void Resuming();
 
+        [Obsolete("Use FrameFacade. This may be made private in future versions.", false)]
         Frame Frame { get; }
         FrameFacade FrameFacade { get; }
 

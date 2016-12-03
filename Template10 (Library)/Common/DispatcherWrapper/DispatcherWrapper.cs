@@ -30,6 +30,36 @@ namespace Template10.Common
 
         private readonly CoreDispatcher dispatcher;
 
+        public async Task<T> DispatchAsync<T>(Func<Task<T>> func, int delayms = 0, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal)
+        {
+            if (delayms > 0)
+            {
+                await Task.Delay(delayms).ConfigureAwait(dispatcher.HasThreadAccess);
+            }
+
+            if (dispatcher.HasThreadAccess && priority == CoreDispatcherPriority.Normal)
+            {
+                return await func().ConfigureAwait(false);
+            }
+            else
+            {
+                var tcs = new TaskCompletionSource<T>();
+                await dispatcher.RunAsync(priority, async () =>
+                {
+                    try
+                    {
+                        var result = await func().ConfigureAwait(false);
+                        tcs.TrySetResult(result);
+                    }
+                    catch (Exception ex)
+                    {
+                        tcs.TrySetException(ex);
+                    }
+                }).AsTask().ConfigureAwait(false);
+                return await tcs.Task.ConfigureAwait(false);
+            }
+        }
+
         public async Task DispatchAsync(Action action, int delayms = 0, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal)
         {
             if (delayms > 0)
