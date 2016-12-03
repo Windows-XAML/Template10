@@ -183,8 +183,6 @@
     <Compile Include="Mvvm\ChangedCommandAdapter.cs" />
     <Compile Include="Mvvm\DependencyBindableBase.cs" />
     <Compile Include="Mvvm\IChangedCommand.cs" />
-    <Compile Include="Services\FileService\FileHelper.cs" />
-    <Compile Include="Services\FileService\IFileService.cs" />
     <Compile Include="Services\LoggingService\LoggingService.cs" />
     <Compile Include="Services\NavigationService\AlternativeNavigationEventArgs.cs" />
     <Compile Include="Services\NavigationService\INavigationService.cs" />
