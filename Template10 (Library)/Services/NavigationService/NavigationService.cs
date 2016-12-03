@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Navigation;
 using Template10.Services.SerializationService;
 using Template10.Services.ViewService;
 using Template10.Utils;
+using System.Diagnostics;
 
 namespace Template10.Services.NavigationService
 {
@@ -483,8 +484,17 @@ namespace Template10.Services.NavigationService
 
             // HERE'S THE ERROR; IT HANGS RIGHT HERE (any await)
 
-            await viewmodel.OnNavigatingFromAsync(null);
-            await deferral.WaitForDeferralsAsync();
+            try
+            {
+                Debugger.Break();
+                await viewmodel.OnNavigatingFromAsync(null);
+                await deferral.WaitForDeferralsAsync();
+            }
+            catch (Exception ex)
+            {
+                Debugger.Break();
+            }
+
             return !navigatingEventArgs.Cancel;
         }
     }
