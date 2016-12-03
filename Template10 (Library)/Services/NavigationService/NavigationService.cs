@@ -93,7 +93,6 @@ namespace Template10.Services.NavigationService
             var oldNavigatingAwareAsync = oldViewModel as INavigatingAwareAsync;
             if (oldNavigatingAwareAsync != null)
             {
-                var t = Dispatcher.HasThreadAccess();
                 var canNavigate = await Nav.NavingFromAsync(oldNavigatingAwareAsync);
                 if (!canNavigate)
                 {
@@ -481,7 +480,10 @@ namespace Template10.Services.NavigationService
             }
             var deferral = new DeferralManager();
             var navigatingEventArgs = new NavigatingEventArgs(deferral);
-            await viewmodel.OnNavigatingFromAsync(navigatingEventArgs);
+
+            // HERE'S THE ERROR; IT HANGS RIGHT HERE (any await)
+
+            await viewmodel.OnNavigatingFromAsync(null);
             await deferral.WaitForDeferralsAsync();
             return !navigatingEventArgs.Cancel;
         }

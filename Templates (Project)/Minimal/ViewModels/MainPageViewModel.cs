@@ -33,6 +33,7 @@ namespace Sample.ViewModels
                 Value = suspensionState[nameof(Value)]?.ToString();
             }
 
+            await Task.Delay(500);
             Debug.WriteLine($"OnNavigatedToAsync {Dispatcher.HasThreadAccess()}");
 
             await Task.CompletedTask;
@@ -45,6 +46,7 @@ namespace Sample.ViewModels
                 suspensionState[nameof(Value)] = Value;
             }
 
+            await Task.Delay(500);
             Debug.WriteLine($"OnNavigatedFromAsync {Dispatcher.HasThreadAccess()}");
 
             await Task.CompletedTask;
