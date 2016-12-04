@@ -322,8 +322,7 @@ namespace Template10.Services.NavigationService
 
         public async Task<bool> RefreshAsync()
         {
-            var history = Frame.BackStack.Last();
-            return await InternalNavigateAsync(history.SourcePageType, history.Parameter, NavigationMode.Refresh, () =>
+            return await InternalNavigateAsync(CurrentPageType, CurrentPageParam, NavigationMode.Refresh, () =>
             {
                 Windows.ApplicationModel.Resources.Core.ResourceContext.GetForCurrentView().Reset();
                 Frame.SetNavigationState(Frame.GetNavigationState());
@@ -334,7 +333,7 @@ namespace Template10.Services.NavigationService
         public async Task<bool> RefreshAsync(object param)
         {
             var history = Frame.BackStack.Last();
-            return await InternalNavigateAsync(history.SourcePageType, param, NavigationMode.Refresh, () =>
+            return await InternalNavigateAsync(CurrentPageType, param, NavigationMode.Refresh, () =>
             {
                 Windows.ApplicationModel.Resources.Core.ResourceContext.GetForCurrentView().Reset();
                 Frame.SetNavigationState(Frame.GetNavigationState());
