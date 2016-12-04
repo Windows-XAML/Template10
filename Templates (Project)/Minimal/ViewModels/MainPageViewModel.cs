@@ -10,6 +10,8 @@ using System.Threading;
 using Template10.Common;
 using Windows.UI.Core;
 using System.Diagnostics;
+using Windows.UI.Popups;
+using Template10.Utils;
 
 namespace Sample.ViewModels
 {
@@ -32,10 +34,6 @@ namespace Sample.ViewModels
             {
                 Value = suspensionState[nameof(Value)]?.ToString();
             }
-
-            await Task.Delay(500);
-            Debug.WriteLine($"OnNavigatedToAsync {Dispatcher.HasThreadAccess()}");
-
             await Task.CompletedTask;
         }
 
@@ -45,30 +43,23 @@ namespace Sample.ViewModels
             {
                 suspensionState[nameof(Value)] = Value;
             }
-
-            await Task.Delay(500);
-            Debug.WriteLine($"OnNavigatedFromAsync {Dispatcher.HasThreadAccess()}");
-
             await Task.CompletedTask;
         }
 
         public override async Task OnNavigatingFromAsync(NavigatingEventArgs args)
         {
-
-            // It will work if you remove this await (and never introduce one either!)
-            await Task.Delay(500);
-            Debug.WriteLine($"OnNavigatingFromAsync {Dispatcher.HasThreadAccess()}");
-
-
-            //var dialog = new ContentDialogEx
-            //{
-            //    Title = "Confirmation",
-            //    Content = "Are you sure?",
-            //    PrimaryButtonText = "Continue",
-            //    SecondaryButtonText = "Cancel",
-            //};
-            //var result = await dialog.ShowAsync();
-            //args.Cancel = result == ContentDialogResult.Secondary;
+            if (args.TargetPageType == typeof(Views.DetailPage))
+            {
+                var dialog = new ContentDialog
+                {
+                    Title = "Confirmation",
+                    Content = "Are you sure?",
+                    PrimaryButtonText = "Continue",
+                    SecondaryButtonText = "Cancel",
+                };
+                var result = await dialog.ShowAsyncEx();
+                args.Cancel = result == ContentDialogResult.Secondary;
+            }
         }
 
         public void GotoDetailsPage() => NavigationService.Navigate(typeof(Views.DetailPage), Value);
@@ -78,31 +69,5 @@ namespace Sample.ViewModels
         public void GotoPrivacy() => NavigationService.Navigate(typeof(Views.SettingsPage), 1);
 
         public void GotoAbout() => NavigationService.Navigate(typeof(Views.SettingsPage), 2);
-    }
-
-    public class ContentDialogEx : ContentDialog
-    {
-        private class BooleanEx { public bool Value { get; set; } }
-        private readonly static BooleanEx _ShowingDialog = new BooleanEx { Value = false };
-        public new async Task<ContentDialogResult> ShowAsync() => await ShowAsync(null);
-        public async Task<ContentDialogResult> ShowAsync(IDispatcherWrapper dispatcher)
-        {
-            lock (_ShowingDialog)
-            {
-                while (_ShowingDialog.Value)
-                {
-                    Monitor.Wait(_ShowingDialog);
-                }
-                _ShowingDialog.Value = true;
-            }
-            dispatcher = dispatcher ?? DispatcherWrapper.Current();
-            var result = await dispatcher.DispatchAsync(async () => await base.ShowAsync());
-            lock (_ShowingDialog)
-            {
-                _ShowingDialog.Value = false;
-                Monitor.PulseAll(_ShowingDialog);
-            }
-            return result;
-        }
     }
 }

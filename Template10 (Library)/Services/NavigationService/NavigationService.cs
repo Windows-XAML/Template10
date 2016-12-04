@@ -181,7 +181,7 @@ namespace Template10.Services.NavigationService
         {
             DebugWrite($"Page: {page}, Parameter: {parameter}, NavigationTransitionInfo: {infoOverride}");
 
-            NavigateAsync(page, parameter, infoOverride).ConfigureAwait(false).GetAwaiter().GetResult();
+            NavigateAsync(page, parameter, infoOverride).ConfigureAwait(true);
         }
 
         /// <summary>
@@ -217,7 +217,7 @@ namespace Template10.Services.NavigationService
             {
                 throw new KeyNotFoundException(key.ToString());
             }
-            return await NavigateAsync(page, parameter, infoOverride).ConfigureAwait(false);
+            return await NavigateAsync(page, parameter, infoOverride).ConfigureAwait(true);
         }
 
         public void Navigate<T>(T key, object parameter = null, NavigationTransitionInfo infoOverride = null)
@@ -225,7 +225,7 @@ namespace Template10.Services.NavigationService
         {
             DebugWrite($"Key: {key}, Parameter: {parameter}, NavigationTransitionInfo: {infoOverride}");
 
-            NavigateAsync(key, parameter, infoOverride).ConfigureAwait(false).GetAwaiter().GetResult();
+            NavigateAsync(key, parameter, infoOverride).ConfigureAwait(true);
         }
 
         #endregion
@@ -335,7 +335,7 @@ namespace Template10.Services.NavigationService
 
         public void GoBack(NavigationTransitionInfo infoOverride = null)
         {
-            GoBackAsync(infoOverride).ConfigureAwait(false).GetAwaiter().GetResult();
+            GoBackAsync(infoOverride).ConfigureAwait(true);
         }
 
         public async Task<bool> GoBackAsync(NavigationTransitionInfo infoOverride = null)
@@ -360,7 +360,7 @@ namespace Template10.Services.NavigationService
 
         public void GoForward()
         {
-            GoForwardAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            GoForwardAsync().ConfigureAwait(true);
         }
 
         public async Task<bool> GoForwardAsync()
@@ -481,20 +481,15 @@ namespace Template10.Services.NavigationService
             }
             var deferral = new DeferralManager();
             var navigatingEventArgs = new NavigatingEventArgs(deferral);
-
-            // HERE'S THE ERROR; IT HANGS RIGHT HERE (any await)
-
             try
             {
-                Debugger.Break();
-                await viewmodel.OnNavigatingFromAsync(null);
+                await viewmodel.OnNavigatingFromAsync(navigatingEventArgs);
                 await deferral.WaitForDeferralsAsync();
             }
-            catch (Exception ex)
+            catch
             {
                 Debugger.Break();
             }
-
             return !navigatingEventArgs.Cancel;
         }
     }
