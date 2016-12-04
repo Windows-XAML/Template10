@@ -312,7 +312,12 @@ namespace Template10.Services.NavigationService
 
         public void Refresh()
         {
-            RefreshAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            RefreshAsync().ConfigureAwait(true);
+        }
+
+        public void Refresh(object param)
+        {
+            RefreshAsync(param).ConfigureAwait(true);
         }
 
         public async Task<bool> RefreshAsync()
@@ -326,8 +331,16 @@ namespace Template10.Services.NavigationService
             });
         }
 
-        [Obsolete("Use Refresh()", true)]
-        public void Refresh(object param) { }
+        public async Task<bool> RefreshAsync(object param)
+        {
+            var history = Frame.BackStack.Last();
+            return await InternalNavigateAsync(history.SourcePageType, param, NavigationMode.Refresh, () =>
+            {
+                Windows.ApplicationModel.Resources.Core.ResourceContext.GetForCurrentView().Reset();
+                Frame.SetNavigationState(Frame.GetNavigationState());
+                return true;
+            });
+        }
 
         #endregion
 
@@ -360,7 +373,7 @@ namespace Template10.Services.NavigationService
 
         public void GoForward()
         {
-            GoForwardAsync().ConfigureAwait(true);
+            GoForwardAsync().ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         public async Task<bool> GoForwardAsync()

@@ -34,11 +34,10 @@ namespace Template10.Services.NavigationService
         string NavigationState { get; set; }
 
         void Refresh();
-
-        [Obsolete("Use Refresh()", true)]
         void Refresh(object param);
 
         Task<bool> RefreshAsync();
+        Task<bool> RefreshAsync(object param);
 
 
         Task<ViewLifetimeControl> OpenAsync(Type page, object parameter = null, string title = null, ViewSizePreference size = ViewSizePreference.UseHalf);
