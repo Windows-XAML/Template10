@@ -116,7 +116,7 @@ namespace Template10.Services.NavigationService
             var oldNavigatedAwareAsync = oldViewModel as INavigatedAwareAsync;
             if (oldNavigatedAwareAsync != null)
             {
-                await Nav.NavedFromAsync(oldPage, oldNavigatedAwareAsync);
+                await Nav.NavedFromAsync(oldPage, oldNavigatedAwareAsync, false);
             }
 
             var newPage = Frame.Content as Page;
@@ -288,10 +288,20 @@ namespace Template10.Services.NavigationService
                 }
 
                 var newPage = Frame.Content as Page;
-                var newViewModel = newPage?.DataContext as INavigatedAwareAsync;
+                var newViewModel = newPage?.DataContext;
+
+                // newTemplate10ViewModel.Properties
+                var newTemplate10ViewModel = newViewModel as ITemplate10ViewModel;
+                if (newTemplate10ViewModel != null)
+                {
+                    Nav.SetupViewModel(this, newTemplate10ViewModel);
+                }
+
+                // newNavigatedAwareAsync.OnNavigatedTo
+                var newNavigatedAwareAsync = newPage?.DataContext as INavigatedAwareAsync;
                 if (newViewModel != null)
                 {
-                    await Nav.NavedToAsync(CurrentPageParam, NavigationMode.Refresh, newPage, newViewModel);
+                    await Nav.NavedToAsync(CurrentPageParam, NavigationMode.Refresh, newPage, newNavigatedAwareAsync);
                 }
 
                 AfterRestoreSavedNavigation?.Invoke(this, CurrentPageType);
@@ -428,7 +438,7 @@ namespace Template10.Services.NavigationService
             var viewmodel = page?.DataContext as INavigatedAwareAsync;
             if (viewmodel != null)
             {
-                await Nav.NavedFromAsync(page, viewmodel);
+                await Nav.NavedFromAsync(page, viewmodel, true);
             }
         }
     }
@@ -455,7 +465,7 @@ namespace Template10.Services.NavigationService
             viewmodel.SessionState = BootStrapper.Current.SessionState;
         }
 
-        public async Task NavedFromAsync(Page page, INavigatedAwareAsync viewmodel)
+        public async Task NavedFromAsync(Page page, INavigatedAwareAsync viewmodel, bool suspending)
         {
             NavigationService.DebugWrite();
 
@@ -463,7 +473,7 @@ namespace Template10.Services.NavigationService
             {
                 throw new ArgumentNullException(nameof(viewmodel));
             }
-            await viewmodel.OnNavigatedFromAsync(State(page), false);
+            await viewmodel.OnNavigatedFromAsync(State(page), suspending);
         }
 
         public async Task NavedToAsync(object parameter, NavigationMode mode, Page page, INavigatedAwareAsync viewmodel)
