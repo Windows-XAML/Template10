@@ -48,7 +48,7 @@ namespace Template10.Services.NavigationService
         protected internal NavigationService(Frame frame)
         {
             IsInMainView = CoreApplication.MainView == CoreApplication.GetCurrentView();
-            FrameFacade = Nav.FrameFacade = new FrameFacade(frame);
+            FrameFacade = Nav.FrameFacade = new FrameFacade(frame, this);
             FrameFacade.BackRequested += async (s, e) =>
             {
                 if (FrameFacade.BackButtonHandling == BootStrapper.BackButton.Attach && !e.Handled)

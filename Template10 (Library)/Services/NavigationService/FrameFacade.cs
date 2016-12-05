@@ -21,11 +21,10 @@ namespace Template10.Services.NavigationService
 
         #endregion
 
-        internal FrameFacade(Frame frame)
+        internal FrameFacade(Frame frame, INavigationService navigationService)
         {
             Frame = frame;
-            //frame.Navigated += (s, e) => FacadeNavigatedEventHandler(s, e);
-            //frame.Navigating += (s, e) => FacadeNavigatingCancelEventHandler(s, e);
+            this.NavigationService = navigationService;
 
             // setup animations
             var t = new NavigationThemeTransition
@@ -87,59 +86,64 @@ namespace Template10.Services.NavigationService
 
         #region frame facade
 
-        [Obsolete("Use FrameFacade instead. This may be made private in a future version.", false)]
-        public Frame Frame { get; }
-
         public BootStrapper.BackButton BackButtonHandling { get; internal set; }
 
         public string FrameId { get; set; } = string.Empty;
-
-        [Obsolete("Use NavigationService.Navigate() instead", true)]
-        public bool Navigate(Type page, object parameter, NavigationTransitionInfo infoOverride) { throw new NotImplementedException(); }
-
-        [Obsolete("Use NavigationService.NavigationState instead", true)]
-        public void SetNavigationState(string state) { throw new NotImplementedException(); }
-
-        [Obsolete("Use NavigationService.NavigationState instead", true)]
-        public string GetNavigationState() { throw new NotImplementedException(); }
 
         public int BackStackDepth => Frame.BackStackDepth;
 
         public bool CanGoBack => Frame.CanGoBack;
 
-        [Obsolete("No longer valid.", true)]
-        public NavigationMode NavigationModeHint = NavigationMode.New;
-
-        [Obsolete("Use NavigationService.GoBack()", true)]
-        public void GoBack(NavigationTransitionInfo infoOverride = null) { throw new NotImplementedException(); }
-
-        [Obsolete("Use NavigationService.Refresh()", true)]
-        public void Refresh() { throw new NotImplementedException(); }
-
-        [Obsolete("Use NavigationService.Refresh()", true)]
-        public void Refresh(object param) { throw new NotImplementedException(); }
-
         public bool CanGoForward => Frame.CanGoForward;
 
-        [Obsolete("Use NavigationService.GoForward()", true)]
-        public void GoForward() { throw new NotImplementedException(); }
-
         public object Content => Frame.Content;
-
-        [Obsolete("Use NavigationService.LastNavigationType", true)]
-        public Type CurrentPageType { get; internal set; }
-
-        [Obsolete("Use NavigationService.LastNavigationParameter", true)]
-        public object CurrentPageParam { get; internal set; }
-
-        [Obsolete("Use NavigationService.SerializationService", false)]
-        public ISerializationService SerializationService { get; set; } = Services.SerializationService.SerializationService.Json;
 
         public object GetValue(DependencyProperty dp) => Frame.GetValue(dp);
 
         public void SetValue(DependencyProperty dp, object value) { Frame.SetValue(dp, value); }
 
         public void ClearValue(DependencyProperty dp) { Frame.ClearValue(dp); }
+
+        // Obsolete properties/methods
+
+        [Obsolete("This may be made private in a future version.")]
+        public INavigationService NavigationService { get; }
+
+        [Obsolete("Use FrameFacade instead. This may be made private in a future version.", false)]
+        public Frame Frame { get; }
+
+        [Obsolete("Use NavigationService.Navigate() instead. This may be made private in a future version.", true)]
+        public bool Navigate(Type page, object parameter, NavigationTransitionInfo infoOverride) { throw new NotImplementedException("FrameFacade.Navigate is obsolete; use NavigationService.Navigate()."); }
+
+        [Obsolete("Use NavigationService.NavigationState instead. This may be made private in a future version.", true)]
+        public void SetNavigationState(string state) { throw new NotImplementedException(); }
+
+        [Obsolete("Use NavigationService.NavigationState instead. This may be made private in a future version.", true)]
+        public string GetNavigationState() { throw new NotImplementedException(); }
+
+        [Obsolete("This may be made private in a future version.", true)]
+        public NavigationMode NavigationModeHint = NavigationMode.New;
+
+        [Obsolete("Use NavigationService.GoBack(). This may be made private in a future version.", false)]
+        public void GoBack(NavigationTransitionInfo infoOverride = null) => NavigationService.GoBack();
+
+        [Obsolete("Use NavigationService.Refresh(). This may be made private in a future version.", false)]
+        public void Refresh() => NavigationService.Refresh();
+
+        [Obsolete("Use NavigationService.Refresh(). This may be made private in a future version.", false)]
+        public void Refresh(object param) => NavigationService.Refresh(param);
+
+        [Obsolete("Use NavigationService.GoForward(). This may be made private in a future version.", false)]
+        public void GoForward() => NavigationService.GoForward();
+
+        [Obsolete("Use NavigationService.LastNavigationType. This may be made private in a future version.", false)]
+        public Type CurrentPageType => NavigationService.CurrentPageType;
+
+        [Obsolete("Use NavigationService.LastNavigationParameter. This may be made private in a future version.", false)]
+        public object CurrentPageParam => NavigationService.CurrentPageParam;
+
+        [Obsolete("Use NavigationService.SerializationService. This may be made private in a future version.", false)]
+        public ISerializationService SerializationService => NavigationService.SerializationService;
 
         #endregion
 
