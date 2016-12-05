@@ -147,9 +147,11 @@ namespace Template10.Services.NavigationService
 
         #endregion
 
+        [Obsolete("Use NavigationService.Navigated. This may be made private in a future version.", false)]
         public event EventHandler<NavigatedEventArgs> Navigated;
         internal void RaiseNavigated(NavigatedEventArgs e) => Navigated?.Invoke(this, e);
 
+        [Obsolete("Use NavigationService.Navigating. This may be made private in a future version.", false)]
         public event EventHandler<NavigatingEventArgs> Navigating;
         internal void RaiseNavigating(NavigatingEventArgs e) => Navigating?.Invoke(this, e);
     }
