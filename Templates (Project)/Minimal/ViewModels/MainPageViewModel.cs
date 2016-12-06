@@ -48,7 +48,8 @@ namespace Sample.ViewModels
 
         public override async Task OnNavigatingFromAsync(NavigatingEventArgs args)
         {
-            if (args.TargetPageType == typeof(Views.DetailPage))
+            var goingToDetails = args.TargetPageType == typeof(Views.DetailPage);
+            if (goingToDetails)
             {
                 var dialog = new ContentDialog
                 {

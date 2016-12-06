@@ -21,7 +21,6 @@ namespace Sample.ViewModels
         }
 
         string _Value = "Gas";
-        private bool goingToDetails;
 
         public string Value { get { return _Value; } set { Set(ref _Value, value); } }
 
@@ -45,7 +44,7 @@ namespace Sample.ViewModels
 
         public override async Task OnNavigatingFromAsync(NavigatingEventArgs args)
         {
-            var groingToDetails = args.TargetPageType == typeof(Views.DetailPage);
+            var goingToDetails = args.TargetPageType == typeof(Views.DetailPage);
             if (goingToDetails)
             {
                 var dialog = new ContentDialog
