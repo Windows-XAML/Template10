@@ -308,9 +308,9 @@ namespace Template10.Common
             BackRequested?.Invoke(null, args);
             if (handled = args.Handled)
                 return;
-            foreach (var frame in WindowWrapper.Current().NavigationServices.Select(x => x.FrameFacade).Reverse())
+            foreach (var navigationService in WindowWrapper.Current().NavigationServices.Select(x => x).Reverse())
             {
-                frame.RaiseBackRequested(args);
+                navigationService.RaiseBackRequested(args);
                 if (handled = args.Handled)
                     return;
             }
@@ -328,9 +328,9 @@ namespace Template10.Common
             ForwardRequested?.Invoke(null, args);
             if (args.Handled)
                 return;
-            foreach (var frame in WindowWrapper.Current().NavigationServices.Select(x => x.FrameFacade))
+            foreach (var navigationService in WindowWrapper.Current().NavigationServices)
             {
-                frame.RaiseForwardRequested(args);
+                navigationService.RaiseForwardRequested(args);
                 if (args.Handled)
                     return;
             }

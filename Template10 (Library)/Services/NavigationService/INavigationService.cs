@@ -12,6 +12,18 @@ namespace Template10.Services.NavigationService
 {
     public interface INavigationService
     {
+        event EventHandler<NavigatedEventArgs> Navigated;
+        void RaiseNavigated(NavigatedEventArgs e);
+
+        event EventHandler<NavigatingEventArgs> Navigating;
+        void RaiseNavigating(NavigatingEventArgs e);
+
+        event EventHandler<HandledEventArgs> BackRequested;
+        void RaiseBackRequested(HandledEventArgs args);
+
+        event EventHandler<HandledEventArgs> ForwardRequested;
+        void RaiseForwardRequested(HandledEventArgs args);
+
         void GoBack(NavigationTransitionInfo infoOverride = null);
         Task<bool> GoBackAsync(NavigationTransitionInfo infoOverride = null);
 
@@ -39,6 +51,7 @@ namespace Template10.Services.NavigationService
         Task<bool> RefreshAsync();
         Task<bool> RefreshAsync(object param);
 
+        SuspensionStateLogic Suspension { get; }
 
         Task<ViewLifetimeControl> OpenAsync(Type page, object parameter = null, string title = null, ViewSizePreference size = ViewSizePreference.UseHalf);
 
@@ -47,15 +60,11 @@ namespace Template10.Services.NavigationService
 
         IDispatcherWrapper Dispatcher { get; }
 
-        [Obsolete]
-        Task SaveNavigationAsync();
-
-        [Obsolete]
-        Task<bool> RestoreSavedNavigationAsync();
-
         Task SaveAsync();
 
         Task<bool> LoadAsync();
+
+        BootStrapper.BackButton BackButtonHandling { get; set; }
 
         event TypedEventHandler<Type> AfterRestoreSavedNavigation;
 

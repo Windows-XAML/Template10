@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Template10.Services.ViewService;
 using static Template10.Common.BootStrapper;
+using System.Diagnostics;
 
 namespace Template10.Common
 {
@@ -30,7 +31,7 @@ namespace Template10.Common
             var launchedEvent = e as ILaunchActivatedEventArgs;
             if (BootStrapper.DetermineStartCause(e) == AdditionalKinds.Primary || launchedEvent?.TileId == "")
             {
-                restored = await nav.RestoreSavedNavigationAsync();
+                restored = await nav.LoadAsync();
             }
             return restored;
         }
@@ -64,11 +65,12 @@ namespace Template10.Common
                 {
                     // call view model suspend (OnNavigatedfrom)
                     // date the cache (which marks the date/time it was suspended)
-                    nav.FrameFacade.SetFrameState(CacheDateKey, DateTime.Now.ToString());
+                    nav.Suspension.GetFrameState().Write(CacheDateKey, DateTime.Now.ToString());
                     await (nav as INavigationService).GetDispatcherWrapper().DispatchAsync(async () => await nav.SuspendingAsync());
                 }
-                catch (Exception ex)
+                catch
                 {
+                    Debugger.Break();
                 }
             }
         }

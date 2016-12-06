@@ -35,66 +35,9 @@ namespace Template10.Services.NavigationService
             Frame.ContentTransitions.Add(t);
         }
 
-        public event EventHandler<HandledEventArgs> BackRequested;
-        public void RaiseBackRequested(HandledEventArgs args) => BackRequested?.Invoke(this, args);
-
-        public event EventHandler<HandledEventArgs> ForwardRequested;
-        public void RaiseForwardRequested(HandledEventArgs args) => ForwardRequested?.Invoke(this, args);
-
-        #region state
-
-        private string GetFrameStateKey() => string.Format("{0}-PageState", FrameId);
-
-        private ISettingsService FrameStateSettingsService()
-        {
-            return SettingsService.SettingsService.Create(SettingsStrategies.Local, GetFrameStateKey(), true);
-        }
-
-        public void SetFrameState(string key, string value)
-        {
-            FrameStateSettingsService().Write(key, value);
-        }
-
-        public string GetFrameState(string key, string otherwise)
-        {
-            return FrameStateSettingsService().Read(key, otherwise);
-        }
-
-        public void ClearFrameState()
-        {
-            FrameStateSettingsService().Clear();
-        }
-
-        private string GetPageStateKey(string frameId, Type type, int backStackDepth) => $"{frameId}-{type}-{backStackDepth}";
-
-        public ISettingsService PageStateSettingsService(Type type)
-        {
-            return FrameStateSettingsService().Open(GetPageStateKey(FrameId, type, BackStackDepth), true);
-        }
-
-        public ISettingsService PageStateSettingsService(string key)
-        {
-            return FrameStateSettingsService().Open(key, true);
-        }
-
-        public void ClearPageState(Type type)
-        {
-            this.FrameStateSettingsService().Remove(GetPageStateKey(FrameId, type, BackStackDepth));
-        }
-
-        #endregion
-
-        #region frame facade
-
-        public BootStrapper.BackButton BackButtonHandling { get; internal set; }
-
         public string FrameId { get; set; } = string.Empty;
 
         public int BackStackDepth => Frame.BackStackDepth;
-
-        public bool CanGoBack => Frame.CanGoBack;
-
-        public bool CanGoForward => Frame.CanGoForward;
 
         public object Content => Frame.Content;
 
@@ -104,37 +47,101 @@ namespace Template10.Services.NavigationService
 
         public void ClearValue(DependencyProperty dp) { Frame.ClearValue(dp); }
 
+        public void SetNavigationState(string state) => Frame.SetNavigationState(state);
+
+        public string GetNavigationState() => Frame.GetNavigationState();
+
+        public bool CanGoBack => Frame.CanGoBack;
+
+        public bool CanGoForward => Frame.CanGoForward;
+
+        public void GoBack(NavigationTransitionInfo infoOverride = null) => NavigationService.GoBack();
+
+        public void GoForward() => NavigationService.GoForward();
+
+        public void ClearCache(bool removeCachedPagesInBackStack = false)
+        {
+            DebugWrite($"Frame: {FrameId}");
+
+            int currentSize = Frame.CacheSize;
+
+            if (removeCachedPagesInBackStack)
+            {
+                Frame.CacheSize = 0;
+            }
+            else
+            {
+                if (Frame.BackStackDepth == 0)
+                {
+                    Frame.CacheSize = 1;
+                }
+                else
+                {
+                    Frame.CacheSize = Frame.BackStackDepth;
+                }
+            }
+
+            Frame.CacheSize = currentSize;
+        }
+
+        internal bool Navigate(Type page, object parameter, NavigationTransitionInfo info)
+        {
+            return Frame.Navigate(page, parameter, info);
+        }
+
+        internal bool Navigate(Type page, object parameter)
+        {
+            return Frame.Navigate(page, parameter);
+        }
+
+        internal IList<PageStackEntry> BackStack => Frame.BackStack;
+
+        internal IList<PageStackEntry> ForwardStack => Frame.ForwardStack;
+
         // Obsolete properties/methods
 
-        [Obsolete("This may be made private in a future version.")]
+        [Obsolete("Use NavigationService.BackButtonHandling This may be made private in a future version.", false)]
+        public BootStrapper.BackButton BackButtonHandling
+        {
+            get { return NavigationService.BackButtonHandling; }
+            internal set { NavigationService.BackButtonHandling = value; }
+        }
+
+        [Obsolete("Use NavigationService.Suspension.GetFrameState(). This may be made private in a future version.", false)]
+        private ISettingsService FrameStateSettingsService() => this.NavigationService.Suspension.GetFrameState();
+
+        [Obsolete("Use NavigationService.Suspension.GetFrameState().Write(). This may be made private in a future version.", false)]
+        public void SetFrameState(string key, string value) => this.NavigationService.Suspension.GetFrameState().Write(key, value);
+
+        [Obsolete("Use NavigationService.Suspension.GetFrameState().Read(). This may be made private in a future version.", false)]
+        public string GetFrameState(string key, string otherwise) => this.NavigationService.Suspension.GetFrameState().Read(key, otherwise);
+
+        [Obsolete("Use NavigationService.Suspension.ClearFrameState(). This may be made private in a future version.", false)]
+        public void ClearFrameState() => this.NavigationService.Suspension.ClearFrameState();
+
+        [Obsolete("Use NavigationService.Suspension.GetPageState(). This may be made private in a future version.", false)]
+        public ISettingsService PageStateSettingsService(Type type) => this.NavigationService.Suspension.GetPageState(type, BackStackDepth);
+
+        [Obsolete("Use NavigationService.Suspension.GetPageState(). This may be made private in a future version.", false)]
+        public ISettingsService PageStateSettingsService(string key) => this.NavigationService.Suspension.GetPageState(key);
+
+        [Obsolete("Use NavigationService.Suspension.ClearPageState(). This may be made private in a future version.", false)]
+        public void ClearPageState(Type type) => this.NavigationService.Suspension.ClearPageState(type, BackStackDepth);
+
+        [Obsolete("This may be made private in a future version.", false)]
         public INavigationService NavigationService { get; }
 
         [Obsolete("Use FrameFacade instead. This may be made private in a future version.", false)]
         public Frame Frame { get; }
 
-        [Obsolete("Use NavigationService.Navigate() instead. This may be made private in a future version.", true)]
-        public bool Navigate(Type page, object parameter, NavigationTransitionInfo infoOverride) { throw new NotImplementedException("FrameFacade.Navigate is obsolete; use NavigationService.Navigate()."); }
-
-        [Obsolete("Use NavigationService.NavigationState instead. This may be made private in a future version.", true)]
-        public void SetNavigationState(string state) { throw new NotImplementedException(); }
-
-        [Obsolete("Use NavigationService.NavigationState instead. This may be made private in a future version.", true)]
-        public string GetNavigationState() { throw new NotImplementedException(); }
-
         [Obsolete("This may be made private in a future version.", true)]
         public NavigationMode NavigationModeHint = NavigationMode.New;
-
-        [Obsolete("Use NavigationService.GoBack(). This may be made private in a future version.", false)]
-        public void GoBack(NavigationTransitionInfo infoOverride = null) => NavigationService.GoBack();
 
         [Obsolete("Use NavigationService.Refresh(). This may be made private in a future version.", false)]
         public void Refresh() => NavigationService.Refresh();
 
         [Obsolete("Use NavigationService.Refresh(). This may be made private in a future version.", false)]
         public void Refresh(object param) => NavigationService.Refresh(param);
-
-        [Obsolete("Use NavigationService.GoForward(). This may be made private in a future version.", false)]
-        public void GoForward() => NavigationService.GoForward();
 
         [Obsolete("Use NavigationService.LastNavigationType. This may be made private in a future version.", false)]
         public Type CurrentPageType => NavigationService.CurrentPageType;
@@ -145,15 +152,25 @@ namespace Template10.Services.NavigationService
         [Obsolete("Use NavigationService.SerializationService. This may be made private in a future version.", false)]
         public ISerializationService SerializationService => NavigationService.SerializationService;
 
-        #endregion
-
         [Obsolete("Use NavigationService.Navigated. This may be made private in a future version.", false)]
         public event EventHandler<NavigatedEventArgs> Navigated;
+        [Obsolete]
         internal void RaiseNavigated(NavigatedEventArgs e) => Navigated?.Invoke(this, e);
 
         [Obsolete("Use NavigationService.Navigating. This may be made private in a future version.", false)]
         public event EventHandler<NavigatingEventArgs> Navigating;
+        [Obsolete]
         internal void RaiseNavigating(NavigatingEventArgs e) => Navigating?.Invoke(this, e);
+
+        [Obsolete("Use NavigationService.BackRequested. This may be made private in a future version.", false)]
+        public event EventHandler<HandledEventArgs> BackRequested;
+        [Obsolete]
+        internal void RaiseBackRequested(HandledEventArgs args) => BackRequested?.Invoke(this, args);
+
+        [Obsolete("Use NavigationService.ForwardRequested. This may be made private in a future version.", false)]
+        public event EventHandler<HandledEventArgs> ForwardRequested;
+        [Obsolete]
+        internal void RaiseForwardRequested(HandledEventArgs args) => ForwardRequested?.Invoke(this, args);
     }
 
 }
