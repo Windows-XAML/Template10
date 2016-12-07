@@ -1,5 +1,3 @@
-using System;
-
 namespace Template10.Services.SettingsService
 {
     using Windows.Foundation.Collections;

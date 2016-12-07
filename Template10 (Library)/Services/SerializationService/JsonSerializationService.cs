@@ -4,7 +4,6 @@ using System.Runtime.CompilerServices;
 
 namespace Template10.Services.SerializationService
 {
-    using System.Diagnostics;
     using System.Runtime.Serialization.Formatters;
 
     public sealed class JsonSerializationService : ISerializationService

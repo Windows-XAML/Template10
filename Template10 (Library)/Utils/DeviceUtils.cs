@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Template10.Common;
 using Windows.Foundation.Metadata;
 using Windows.Graphics.Display;
 using Windows.UI.ViewManagement;
@@ -12,7 +13,7 @@ namespace Template10.Utils
 
         public MonitorUtils MonitorUtils { get; private set; }
 
-        public Common.WindowWrapper WindowWrapper { get; private set; }
+        public IWindowWrapper WindowWrapper { get; private set; }
 
         [Flags]
         public enum DeviceDispositions
@@ -41,7 +42,7 @@ namespace Template10.Utils
             Mobile = 1 << 5
         }
 
-        private DeviceUtils(Common.WindowWrapper windowWrapper)
+        private DeviceUtils(IWindowWrapper windowWrapper)
         {
             MonitorUtils = MonitorUtils.Current(windowWrapper);
             WindowWrapper = windowWrapper ?? Common.WindowWrapper.Current();
@@ -63,8 +64,8 @@ namespace Template10.Utils
 
         #region singleton
 
-        static Dictionary<Common.WindowWrapper, DeviceUtils> Cache = new Dictionary<Common.WindowWrapper, DeviceUtils>();
-        public static DeviceUtils Current(Common.WindowWrapper windowWrapper = null)
+        static Dictionary<IWindowWrapper, DeviceUtils> Cache = new Dictionary<IWindowWrapper, DeviceUtils>();
+        public static DeviceUtils Current(IWindowWrapper windowWrapper = null)
         {
             windowWrapper = windowWrapper ?? Common.WindowWrapper.Current();
             if (!Cache.ContainsKey(windowWrapper))

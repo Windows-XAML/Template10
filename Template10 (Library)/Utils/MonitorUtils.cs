@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Template10.Common;
 using Windows.Devices.Input;
 using Windows.Graphics.Display;
 using Windows.UI.ViewManagement;
@@ -11,21 +12,21 @@ namespace Template10.Utils
     {
         public event EventHandler Changed;
 
-        public InchesInfo Inches { get; private set; }
+        public InchesInfo Inches { get; }
 
-        public PixelsInfo Pixels { get; private set; }
+        public PixelsInfo Pixels { get; }
 
-        private MonitorUtils(Common.WindowWrapper windowWrapper)
+        private MonitorUtils(IWindowWrapper windowWrapper)
         {
             var di = windowWrapper.DisplayInformation();
-            di.OrientationChanged += new Common.WeakReference<MonitorUtils, DisplayInformation, object>(this)
+            di.OrientationChanged += new WeakReference<MonitorUtils, DisplayInformation, object>(this)
             {
                 EventAction = (i, s, e) => i.Changed?.Invoke(i, EventArgs.Empty),
                 DetachAction = (i, w) => di.OrientationChanged -= w.Handler
             }.Handler;
 
             var av = windowWrapper.ApplicationView();
-            av.VisibleBoundsChanged += new Common.WeakReference<MonitorUtils, ApplicationView, object>(this)
+            av.VisibleBoundsChanged += new WeakReference<MonitorUtils, ApplicationView, object>(this)
             {
                 EventAction = (i, s, e) => i.Changed?.Invoke(i, EventArgs.Empty),
                 DetachAction = (i, w) => av.VisibleBoundsChanged -= w.Handler
@@ -37,16 +38,16 @@ namespace Template10.Utils
 
         #region singleton
 
-        private static Dictionary<Common.WindowWrapper, MonitorUtils> Cache = new Dictionary<Common.WindowWrapper, MonitorUtils>();
+        private static Dictionary<IWindowWrapper, MonitorUtils> Cache = new Dictionary<IWindowWrapper, MonitorUtils>();
 
-        public static MonitorUtils Current(Common.WindowWrapper windowWrapper = null)
+        public static MonitorUtils Current(IWindowWrapper windowWrapper = null)
         {
-            windowWrapper = windowWrapper ?? Common.WindowWrapper.Current();
+            windowWrapper = windowWrapper ?? WindowWrapper.Current();
             if (!Cache.ContainsKey(windowWrapper))
             {
                 var item = new MonitorUtils(windowWrapper);
                 Cache.Add(windowWrapper, item);
-                windowWrapper.ApplicationView().Consolidated += new Common.WeakReference<MonitorUtils, ApplicationView, object>(item)
+                windowWrapper.ApplicationView().Consolidated += new WeakReference<MonitorUtils, ApplicationView, object>(item)
                 {
                     EventAction = (i, s, e) => Cache.Remove(windowWrapper),
                     DetachAction = (i, w) => windowWrapper.ApplicationView().Consolidated -= w.Handler
@@ -68,43 +69,25 @@ namespace Template10.Utils
 
         public class InchesInfo
         {
-            private Common.WindowWrapper WindowWrapper;
+            private IWindowWrapper WindowWrapper;
 
-            public InchesInfo(Common.WindowWrapper windowWrapper)
+            public InchesInfo(IWindowWrapper windowWrapper)
             {
                 WindowWrapper = windowWrapper;
             }
 
-            public double Height
-            {
-                get
-                {
-                    return Current().Pixels.Height / 96;
-                }
-            }
+            public double Height => Current().Pixels.Height / 96;
 
-            public double Width
-            {
-                get
-                {
-                    return Current().Pixels.Width / 96;
-                }
-            }
+            public double Width => Current().Pixels.Width / 96;
 
-            public double Diagonal
-            {
-                get
-                {
-                    return Math.Sqrt(Math.Pow(Height, 2) + Math.Pow(Width, 2));
-                }
-            }
+            public double Diagonal => Math.Sqrt(Math.Pow(Height, 2) + Math.Pow(Width, 2));
         }
 
         public class PixelsInfo
         {
-            private Common.WindowWrapper WindowWrapper;
+            private IWindowWrapper WindowWrapper;
 
-            public PixelsInfo(Common.WindowWrapper windowWrapper)
+            public PixelsInfo(IWindowWrapper windowWrapper)
             {
                 WindowWrapper = windowWrapper;
             }
@@ -133,13 +116,7 @@ namespace Template10.Utils
                 }
             }
 
-            public double Diagonal
-            {
-                get
-                {
-                    return Math.Sqrt(Math.Pow(Height, 2) + Math.Pow(Width, 2));
-                }
-            }
+            public double Diagonal => Math.Sqrt(Math.Pow(Height, 2) + Math.Pow(Width, 2));
         }
     }
 }

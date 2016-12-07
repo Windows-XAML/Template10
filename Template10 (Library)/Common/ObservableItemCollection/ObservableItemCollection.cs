@@ -4,14 +4,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Template10.Common;
 
 namespace Template10.Controls
 {
-    public class ObservableItemCollection<T> : ObservableCollection<T>, IDisposable where T : INotifyPropertyChanged
+    public class ObservableItemCollection<T> : ObservableCollection<T>, IObservableItemCollection<T> where T : INotifyPropertyChanged
     {
         private bool _enableCollectionChanged = true;
         public override event NotifyCollectionChangedEventHandler CollectionChanged;

@@ -20,7 +20,7 @@ namespace Template10.Common
 
         public static IDispatcherWrapper Current() => WindowWrapper.Current().Dispatcher;
 
-        internal DispatcherWrapper(CoreDispatcher dispatcher)
+        public DispatcherWrapper(CoreDispatcher dispatcher)
         {
             DebugWrite(caller: "Constructor");
             this.dispatcher = dispatcher;

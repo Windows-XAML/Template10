@@ -136,9 +136,6 @@
     <Compile Include="Common\Bootstrapper\BootstrapperStates.enum.cs" />
     <Compile Include="Common\Bootstrapper\LifecycleLogic.cs" />
     <Compile Include="Common\Bootstrapper\WindowLogic.cs" />
-    <Compile Include="Common\Deferral\Deferral.cs" />
-    <Compile Include="Common\Deferral\DeferralManager.cs" />
-    <Compile Include="Common\EventThrottleHelper.cs" />
     <Compile Include="Behaviors\EventTriggerBehaviorBase.cs" />
     <Compile Include="Behaviors\FocusAction.cs" />
     <Compile Include="Behaviors\MessageDialogAction.cs" />
@@ -152,21 +149,28 @@
     <Compile Include="Behaviors\ThrottledEventTriggerBehavior.cs" />
     <Compile Include="Behaviors\TimeoutAction.cs" />
     <Compile Include="Common\Bootstrapper\BootStrapper.cs" />
-    <Compile Include="Common\DispatcherWrapper\DispatcherWrapper.cs" />
-    <Compile Include="Common\EventArgs\HandledEventArgs.cs" />
-    <Compile Include="Common\DispatcherWrapper\IDispatcherWrapper.cs" />
-    <Compile Include="Common\StateItems\IStateItems.cs" />
-    <Compile Include="Common\EventArgs\ItemPropertyChangedEventArgs.cs" />
-    <Compile Include="Common\NavButtonsHelper.cs" />
-    <Compile Include="Common\Observables\ObservableDictionary.cs" />
     <Compile Include="Common\Bootstrapper\SplashLogic.cs" />
-    <Compile Include="Common\StateItems\StateItems.cs" />
-    <Compile Include="Common\StateItems\StateKey.cs" />
+    <Compile Include="Common\Deferral\Deferral.cs" />
+    <Compile Include="Common\Deferral\DeferralManager.cs" />
+    <Compile Include="Common\DispatcherWrapper\DispatcherWrapper.cs" />
+    <Compile Include="Common\DispatcherWrapper\IDispatcherWrapper.cs" />
     <Compile Include="Common\EventArgs\ChangedEventArgs.cs" />
+    <Compile Include="Common\EventArgs\HandledEventArgs.cs" />
+    <Compile Include="Common\EventArgs\ItemPropertyChangedEventArgs.cs" />
+    <Compile Include="Common\EventThrottleHelper\EventThrottleHelper.cs" />
+    <Compile Include="Common\Exceptions\TemplatePartNotFoundException.cs" />
+    <Compile Include="Common\NavButtonsHelper.cs" />
+    <Compile Include="Common\ObservableDictionary\IObservableDictionary.cs" />
+    <Compile Include="Common\ObservableDictionary\ObservableDictionary.cs" />
+    <Compile Include="Common\ObservableItemCollection\IObservableItemCollection.cs" />
+    <Compile Include="Common\ObservableItemCollection\ObservableItemCollection.cs" />
+    <Compile Include="Common\StateItems\IStateItems.cs" />
+    <Compile Include="Common\StateItems\StateItems.cs" />
     <Compile Include="Common\TypedEventHandler.cs" />
+    <Compile Include="Common\WeakReference\WeakReference.cs" />
     <Compile Include="Common\WeakReference\WeakReferenceT.cs" />
-    <Compile Include="Common\WindowWrapper.cs" />
-    <Compile Include="Common\Observables\ObservableItemCollection.cs" />
+    <Compile Include="Common\WindowWrapper\IWindowWrapper.cs" />
+    <Compile Include="Common\WindowWrapper\WindowWrapper.cs" />
     <Compile Include="Controls\HamburgerButtonTemplateSelected.cs" />
     <Compile Include="Controls\HamburgerMenu.PublicMethods.xaml.cs">
       <DependentUpon>HamburgerMenu.xaml</DependentUpon>
@@ -181,21 +185,29 @@
     <Compile Include="Controls\PiePiece.cs" />
     <Compile Include="Controls\Resizer.cs" />
     <Compile Include="Controls\RingSegment.cs" />
-    <Compile Include="Common\Exceptions\TemplatePartNotFoundException.cs" />
     <Compile Include="Converters\ChangeTypeConverter.cs" />
     <Compile Include="Converters\DateTimeOffsetConverter.cs" />
     <Compile Include="Converters\StringFormatConverter.cs" />
+    <Compile Include="Converters\ValueWhenConverter.cs" />
     <Compile Include="Mvvm\AwaitableDelegateCommand.cs" />
-    <Compile Include="Common\WeakReference\WeakReference.cs" />
+    <Compile Include="Mvvm\BindableBase.cs" />
     <Compile Include="Mvvm\ChangedCommandAdapter.cs" />
+    <Compile Include="Mvvm\DelegateCommand.cs" />
     <Compile Include="Mvvm\DependencyBindableBase.cs" />
+    <Compile Include="Mvvm\IBindable.cs" />
     <Compile Include="Mvvm\IChangedCommand.cs" />
+    <Compile Include="Mvvm\ViewModelBase.cs" />
     <Compile Include="Services\FileService\FileHelper.cs" />
     <Compile Include="Services\FileService\IFileService.cs" />
+    <Compile Include="Services\KeyboardService\KeyboardEventArgs.cs" />
+    <Compile Include="Services\KeyboardService\KeyboardHelper.cs" />
+    <Compile Include="Services\KeyboardService\KeyboardService.cs" />
     <Compile Include="Services\LoggingService\LoggingService.cs" />
     <Compile Include="Services\NavigationService\AlternativeNavigationEventArgs.cs" />
     <Compile Include="Services\NavigationService\INavigationService.cs" />
+    <Compile Include="Services\NavigationService\NavigationLogic.cs" />
     <Compile Include="Services\NavigationService\NavigationServiceList.cs" />
+    <Compile Include="Services\NavigationService\SuspensionStateLogic.cs" />
     <Compile Include="Services\NetworkAvailableService\ConnectionTypes.cs" />
     <Compile Include="Services\NetworkAvailableService\INetworkAvailableService.cs" />
     <Compile Include="Services\NetworkAvailableService\NetworkAvailableHelper.cs" />
@@ -213,6 +225,7 @@
     <Compile Include="Services\SettingsService\IStoreConverter.cs" />
     <Compile Include="Services\SettingsService\JsonConverter.cs" />
     <Compile Include="Services\SettingsService\JsonMapping.cs" />
+    <Compile Include="Services\SettingsService\SettingsHelper.cs" />
     <Compile Include="Services\SettingsService\SettingsService.cs" />
     <Compile Include="Services\SettingsService\SettingsStrategy.cs" />
     <Compile Include="Services\ViewService\IViewService.cs" />
@@ -222,35 +235,27 @@
     <Compile Include="Services\ViewService\ViewService.cs" />
     <Compile Include="Utils\ApiUtils.cs" />
     <Compile Include="Utils\AudioUtils.cs" />
-    <Compile Include="Utils\ColorUtils.cs" />
+    <Compile Include="Utils\ColorExtensions.cs" />
     <Compile Include="Utils\DeviceUtils.cs" />
     <Compile Include="Utils\DialogUtils.cs" />
     <Compile Include="Utils\ExpressionUtils.cs" />
-    <Compile Include="Utils\InkUtils.cs" />
+    <Compile Include="Utils\IEnumerableExtensions.cs" />
+    <Compile Include="Utils\InkExtensions.cs" />
     <Compile Include="Utils\MonitorUtils.cs" />
-    <Compile Include="Utils\IEnumerableUtils.cs" />
     <Compile Include="Utils\Template10Utils.cs" />
-    <Compile Include="Utils\UriUtils.cs" />
-    <Compile Include="Utils\XamlUtils.cs" />
     <Compile Include="Controls\HamburgerMenu.xaml.cs">
       <DependentUpon>HamburgerMenu.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Converters\ValueWhenConverter.cs" />
-    <Compile Include="Mvvm\BindableBase.cs" />
-    <Compile Include="Mvvm\DelegateCommand.cs" />
-    <Compile Include="Mvvm\IBindable.cs" />
-    <Compile Include="Mvvm\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\KeyboardService\KeyboardEventArgs.cs" />
-    <Compile Include="Services\KeyboardService\KeyboardHelper.cs" />
-    <Compile Include="Services\KeyboardService\KeyboardService.cs" />
     <Compile Include="Services\NavigationService\FrameFacade.cs" />
     <Compile Include="Services\NavigationService\INavigable.cs" />
     <Compile Include="Services\NavigationService\NavigatedEventArgs.cs" />
     <Compile Include="Services\NavigationService\NavigatingEventArgs.cs" />
     <Compile Include="Services\NavigationService\NavigationService.cs" />
-    <Compile Include="Services\SettingsService\SettingsHelper.cs" />
     <Compile Include="Utils\TypeUtils.cs" />
+    <Compile Include="Utils\UriExtensions.cs" />
+    <Compile Include="Utils\XamlExtensions.cs" />
+    <Compile Include="Utils\XamlUtils.cs" />
     <Content Include="Properties\Template10Library.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -284,7 +289,6 @@
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

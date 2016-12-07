@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Windows.Foundation.Collections;
-using Template10.Utils;
 
 namespace Template10.Common
 {
-    public class ObservableDictionary<K, V> : IObservableMap<K, V>
+    public class ObservableDictionary<K, V> : IObservableDictionary<K, V>
     {
         private class ObservableDictionaryChangedEventArgs : IMapChangedEventArgs<K>
         {
@@ -72,7 +71,10 @@ namespace Template10.Common
         {
             var priorKeys = _dictionary.Keys.ToArray();
             _dictionary.Clear();
-            priorKeys.ForEach(x => RaiseMapChanged(CollectionChange.ItemRemoved, x));
+            foreach (var item in priorKeys)
+            {
+                RaiseMapChanged(CollectionChange.ItemRemoved, item);
+            }
         }
 
         public ICollection<K> Keys => _dictionary.Keys;

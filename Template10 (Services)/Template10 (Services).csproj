@@ -110,10 +110,10 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <None Include="project.json" />
     <None Include="..\template10.snk">
       <Link>template10.snk</Link>
     </None>
+    <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdaptiveTiles\AdaptiveTileHelper.cs" />

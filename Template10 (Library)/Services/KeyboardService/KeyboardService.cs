@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
 namespace Template10.Services.KeyboardService
@@ -25,7 +24,7 @@ namespace Template10.Services.KeyboardService
                 e.Handled = true;
 
                 // use this to place focus in search box
-                 if (e.OnlyControl && e.Character.ToString().ToLower().Equals("e"))
+                if (e.OnlyControl && e.Character.ToString().ToLower().Equals("e"))
                 {
                     DebugWrite("Control+E", caller: nameof(AfterControlEGesture));
                     AfterControlEGesture?.Invoke();
@@ -93,18 +92,20 @@ namespace Template10.Services.KeyboardService
                 // about
                 else if (e.AltKey && e.ControlKey && e.ShiftKey && e.VirtualKey == Windows.System.VirtualKey.F12)
                 {
-                    var open = new Action(async () => { await Windows.System.Launcher.LaunchUriAsync(new Uri("http://aka.ms/template10")); });
                     var about = new Windows.UI.Xaml.Controls.ContentDialog
                     {
                         Title = "Template 10",
                         PrimaryButtonText = "Info",
-                        PrimaryButtonCommand = new Mvvm.DelegateCommand(open),
                         SecondaryButtonText = "Close"
                     };
 
                     try
                     {
-                        await about.ShowAsync();
+                        var result = await about.ShowAsync();
+                        if (result == Windows.UI.Xaml.Controls.ContentDialogResult.Primary)
+                        {
+                            await Windows.System.Launcher.LaunchUriAsync(new Uri("http://aka.ms/template10"));
+                        }
                     }
                     catch (System.Runtime.InteropServices.COMException)
                     {

@@ -12,7 +12,7 @@ using Windows.UI.Xaml;
 namespace Template10.Common
 {
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-WindowWrapper
-    public class WindowWrapper
+    public class WindowWrapper : IWindowWrapper
     {
         #region Debug
 
@@ -31,7 +31,7 @@ namespace Template10.Common
             DebugWrite(caller: "Constructor");
         }
 
-        public static WindowWrapper Default()
+        public static IWindowWrapper Default()
         {
             try
             {
@@ -48,13 +48,13 @@ namespace Template10.Common
 
         public object Content => Dispatcher.Dispatch(() => Window.Content);
 
-        public readonly static List<WindowWrapper> ActiveWrappers = new List<WindowWrapper>();
+        public readonly static List<IWindowWrapper> ActiveWrappers = new List<IWindowWrapper>();
 
-        public static WindowWrapper Current() => ActiveWrappers.FirstOrDefault(x => x.Window == Window.Current) ?? Default();
+        public static IWindowWrapper Current() => ActiveWrappers.FirstOrDefault(x => x.Window == Window.Current) ?? Default();
 
-        public static WindowWrapper Current(Window window) => ActiveWrappers.FirstOrDefault(x => x.Window == window);
+        public static IWindowWrapper Current(Window window) => ActiveWrappers.FirstOrDefault(x => x.Window == window);
 
-        public static WindowWrapper Current(INavigationService nav) => ActiveWrappers.FirstOrDefault(x => x.NavigationServices.Contains(nav));
+        public static IWindowWrapper Current(INavigationService nav) => ActiveWrappers.FirstOrDefault(x => x.NavigationServices.Contains(nav));
 
         public DisplayInformation DisplayInformation() => Dispatcher.Dispatch(() => Windows.Graphics.Display.DisplayInformation.GetForCurrentView());
 
