@@ -7,16 +7,18 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Template10.Services.ViewService;
 using Template10.Services.SerializationService;
+using Classic = Template10.Services.NavigationService;
+using Portable = Template10.Mobile.Services.NavigationService;
 
 namespace Template10.Services.NavigationService
 {
     public interface INavigationService
     {
-        event EventHandler<NavigatedEventArgs> Navigated;
-        void RaiseNavigated(NavigatedEventArgs e);
+        event EventHandler<Portable.NavigatedEventArgs> Navigated;
+        void RaiseNavigated(Portable.NavigatedEventArgs e);
 
-        event EventHandler<NavigatingEventArgs> Navigating;
-        void RaiseNavigating(NavigatingEventArgs e);
+        event EventHandler<Portable.NavigatingEventArgs> Navigating;
+        void RaiseNavigating(Portable.NavigatingEventArgs e);
 
         event EventHandler<HandledEventArgs> BackRequested;
         void RaiseBackRequested(HandledEventArgs args);

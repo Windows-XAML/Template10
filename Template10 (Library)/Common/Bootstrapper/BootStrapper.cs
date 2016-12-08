@@ -6,16 +6,15 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Template10.Services.NavigationService;
-using Template10.Services.PopupService;
-using Template10.Utils;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation.Metadata;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
 using Template10.Services.ViewService;
+using System.Threading;
+using Windows.ApplicationModel.ExtendedExecution;
 
 namespace Template10.Common
 {
@@ -25,29 +24,19 @@ namespace Template10.Common
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void Set<T>(ref T storage, T value, [CallerMemberName] String propertyName = null)
+        protected void Set<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
         {
-            if (!object.Equals(storage, value))
+            if (!Equals(storage, value))
             {
                 storage = value;
                 RaisePropertyChanged(propertyName);
             }
         }
 
-        protected void RaisePropertyChanged([CallerMemberName] String propertyName = null) =>
+        protected void RaisePropertyChanged([CallerMemberName] string propertyName = null) =>
            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         #endregion
-
-        /// <summary>
-        /// If a developer overrides this method, the developer can resolve DataContext or unwrap DataContext 
-        /// available for the Page object when using a MVVM pattern that relies on a wrapped/porxy around ViewModels
-        /// </summary>
-        public virtual INavigable ResolveForPage(Page page, NavigationService navigationService) => null;
-
-        public static new BootStrapper Current { get; private set; }
-
-        public IStateItems SessionState { get; set; } = new StateItems();
 
         #region Debug
 
@@ -56,59 +45,78 @@ namespace Template10.Common
 
         #endregion
 
-        public BootStrapper()
-        {
-            DebugWrite("base.Constructor");
+        #region Public Enums
 
-            Current = this;
-            Resuming += CallResuming;
-            Suspending += CallHandleSuspendingAsync;
+        public enum StartKind { Launch, Activate }
+
+        public enum AppExecutionState { Suspended, Terminated, Prelaunch }
+
+        public enum BackButton { Attach, Ignore }
+
+        public enum ExistingContent { Include, Exclude }
+
+        public enum AdditionalKinds { Primary, Toast, SecondaryTile, Other, JumpListItem }
+
+        #endregion
+
+        #region Public Properties
+
+        /// <summary>
+        /// There can be only one BootStrapper. This is a simple means to access it without
+        /// re-casting Application.Current to Bootstrapper.
+        /// </summary>
+        public static new BootStrapper Current => Application.Current as BootStrapper;
+
+        /// <summary>
+        /// This memory-only dictionary gives developers a place to store complex types while 
+        /// navigating, including non-serializable types that cannot be passed as parameters.
+        /// </summary>
+        public IStateItems SessionState { get; set; } = new StateItems();
+
+        /// <summary>
+        /// This property tells Template 10 if should automatically restore the NavitgationState
+        /// of Frames when the application is restored from suspension. 
+        /// </summary>
+        public bool AutoRestoreAfterTerminated { get; set; } = true;
+
+        /// <summary>
+        /// This setting tells Template 10 if it should automatically implement a SavingData 
+        /// ExtendedSession when Suspending. This extends the time limit for Suspension activity.
+        /// </summary>
+        public bool AutoExtendExecutionSession { get; set; } = true;
+
+        /// <summary>
+        /// This setting tells Template 10 if it should automatically save the NavigationState
+        /// of every NavigationService's Frame. This enables it to be restored on Resume. 
+        /// </summary>
+        public bool AutoSuspendAllFrames { get; set; } = true;
+
+        /// <summary>
+        /// There are many ways for an app to start and re-start, including activation.
+        /// This property retains the original (first-launch) activation arguments. 
+        /// </summary>
+        public IActivatedEventArgs OriginalActivatedArgs { get; private set; }
+
+        /// <summary>
+        /// Out of the box, Template 10 sets a ModalDialog as the root element of the app.
+        /// This enables a simple way to display a busy dialog by calling ModalDialog.IsModal = true;
+        /// </summary>
+        public Controls.ModalDialog ModalDialog => (Window.Current.Content as Controls.ModalDialog);
+
+        /// <summary>
+        /// Out of the box, Template 10 sets a ModalDialog as the root element of the app.
+        /// This property allows developers to set the content of the ModalDialog.
+        /// </summary>
+        public UIElement ModalContent
+        {
+            get { return ModalDialog?.ModalContent; }
+            set { if (ModalDialog != null) ModalDialog.ModalContent = value; }
         }
 
-        private void Loaded()
-        {
-            DebugWrite();
-
-            // Hook up keyboard and mouse Back handler
-            var KeyboardService = Services.KeyboardService.KeyboardService.Instance;
-            KeyboardService.AfterBackGesture = () =>
-            {
-                DebugWrite(caller: nameof(KeyboardService.AfterBackGesture));
-
-                var handled = false;
-                RaiseBackRequested(ref handled);
-            };
-            KeyboardService.AfterForwardGesture = () =>
-            {
-                DebugWrite(caller: nameof(KeyboardService.AfterForwardGesture));
-
-                RaiseForwardRequested();
-            };
-
-            // Hook up the default Back handler
-            SystemNavigationManager.GetForCurrentView().BackRequested += BackHandler;
-        }
-
-        public event EventHandler<WindowCreatedEventArgs> WindowCreated;
-        protected sealed override void OnWindowCreated(WindowCreatedEventArgs args)
-        {
-            DebugWrite();
-
-            //should be called to initialize and set new SynchronizationContext
-            if (!WindowWrapper.ActiveWrappers.Any())
-            {
-                Loaded();
-            }
-
-            // handle window
-            var window = new WindowWrapper(args.Window);
-            ViewService.OnWindowCreated();
-            WindowCreated?.Invoke(this, args);
-            base.OnWindowCreated(args);
-        }
-
-        #region properties
-
+        /// <summary>
+        /// Returns the first NavigationService from all available services.
+        /// Use the NaviagtionService to Navigate() from one page to another.
+        /// </summary>
         public INavigationService NavigationService => WindowWrapper.Current().NavigationServices.FirstOrDefault();
 
         /// <summary>
@@ -135,171 +143,29 @@ namespace Template10.Common
 
         public bool ForceShowShellBackButton { get; set; } = false;
 
+        [Obsolete("This will be made private in future versions.")]
+        public const string DefaultTileID = "App";
+
+        [Obsolete("Use AutoRestoreAfterTerminated")]
+        public bool EnableAutoRestoreAfterTerminated { get; set; } = true;
+
         #endregion
 
-        #region activated
+        #region Public Events
 
-        // it is the intent of Template 10 to no longer require Launched/Activated overrides, only OnStartAsync()
-
-        protected override sealed void OnActivated(IActivatedEventArgs e) { DebugWrite(); CallInternalActivatedAsync(e); }
-        protected override sealed void OnCachedFileUpdaterActivated(CachedFileUpdaterActivatedEventArgs args) { DebugWrite(); CallInternalActivatedAsync(args); }
-        protected override sealed void OnFileActivated(FileActivatedEventArgs args) { DebugWrite(); CallInternalActivatedAsync(args); }
-        protected override sealed void OnFileOpenPickerActivated(FileOpenPickerActivatedEventArgs args) { DebugWrite(); CallInternalActivatedAsync(args); }
-        protected override sealed void OnFileSavePickerActivated(FileSavePickerActivatedEventArgs args) { DebugWrite(); CallInternalActivatedAsync(args); }
-        protected override sealed void OnSearchActivated(SearchActivatedEventArgs args) { DebugWrite(); CallInternalActivatedAsync(args); }
-        protected override sealed void OnShareTargetActivated(ShareTargetActivatedEventArgs args) { DebugWrite(); CallInternalActivatedAsync(args); }
-
-        public IActivatedEventArgs OriginalActivatedArgs { get; private set; }
-
-        private async void CallInternalActivatedAsync(IActivatedEventArgs e)
-        {
-            CurrentState = BootstrapperStates.BeforeActivate;
-            await InternalActivatedAsync(e);
-            CurrentState = BootstrapperStates.AfterActivate;
-        }
-
-        /// <summary>
-        /// This handles all the prelimimary stuff unique to Activated before calling OnStartAsync()
-        /// This is private because it is a specialized prelude to OnStartAsync().
-        /// OnStartAsync will not be called if state restore is determined.
-        /// </summary>
-        private async Task InternalActivatedAsync(IActivatedEventArgs e)
+        public event EventHandler<WindowCreatedEventArgs> WindowCreated;
+        protected sealed override void OnWindowCreated(WindowCreatedEventArgs args)
         {
             DebugWrite();
 
-            OriginalActivatedArgs = e;
-
-            // sometimes activate requires a frame to be built
-            if (Window.Current.Content == null)
-            {
-                DebugWrite("Calling", caller: nameof(InternalActivatedAsync));
-                await InitializeFrameAsync(e);
-            }
-
-            // onstart is shared with activate and launch
-            await CallOnStartAsync(true, StartKind.Activate);
-
-            // ensure active (this will hide any custom splashscreen)
-            CallActivateWindow(ActivateWindowSources.Activating);
+            // setup window wrapper
+            new WindowWrapper(args.Window);
+            ViewService.OnWindowCreated();
+            WindowCreated?.Invoke(this, args);
+            base.OnWindowCreated(args);
         }
 
-        #endregion
-
-        #region launch
-
-        // it is the intent of Template 10 to no longer require Launched/Activated overrides, only OnStartAsync()
-
-        protected sealed override void OnLaunched(LaunchActivatedEventArgs e) { DebugWrite(); CallInternalLaunchAsync(e); }
-
-        async void CallInternalLaunchAsync(ILaunchActivatedEventArgs e)
-        {
-            CurrentState = BootstrapperStates.BeforeLaunch;
-            await InternalLaunchAsync(e);
-            CurrentState = BootstrapperStates.AfterLaunch;
-        }
-
-        /// <summary>
-        /// This handles all the preliminary stuff unique to Launched before calling OnStartAsync().
-        /// This is private because it is a specialized prelude to OnStartAsync().
-        /// OnStartAsync will not be called if state restore is determined
-        /// </summary>
-        private async Task InternalLaunchAsync(ILaunchActivatedEventArgs e)
-        {
-            DebugWrite($"Previous:{e.PreviousExecutionState.ToString()}");
-
-            OriginalActivatedArgs = e;
-
-            if (e.PreviousExecutionState != ApplicationExecutionState.Running)
-            {
-                try
-                {
-                    await InitializeFrameAsync(e);
-                }
-                catch (Exception)
-                {
-                    // nothing
-                }
-            }
-
-            // okay, now handle launch
-            bool restored = false;
-            switch (e.PreviousExecutionState)
-            {
-                case ApplicationExecutionState.Suspended:
-                case ApplicationExecutionState.Terminated:
-                    {
-                        OnResuming(this, null, AppExecutionState.Terminated);
-
-                        /*
-                            Restore state if you need to/can do.
-                            Remember that only the primary tile or when user has
-                            switched to the app (for instance via the task switcher)
-                            should restore. (this includes toast with no data payload)
-                            The rest are already providing a nav path.
-
-                            In the event that the cache has expired, attempting to restore
-                            from state will fail because of missing values. 
-                            This is okay & by design.
-                        */
-
-
-                        restored = await CallAutoRestoreAsync(e, restored);
-                        break;
-                    }
-                case ApplicationExecutionState.ClosedByUser:
-                case ApplicationExecutionState.NotRunning:
-                default:
-                    break;
-            }
-
-            // handle pre-launch
-            if ((e as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false)
-            {
-                var runOnStartAsync = false;
-                _HasOnPrelaunchAsync = true;
-                await OnPrelaunchAsync(e, out runOnStartAsync);
-                if (!runOnStartAsync)
-                    return;
-            }
-
-            if (!restored)
-            {
-                var kind = e.PreviousExecutionState == ApplicationExecutionState.Running ? StartKind.Activate : StartKind.Launch;
-                await CallOnStartAsync(true, kind);
-            }
-
-            CallActivateWindow(ActivateWindowSources.Launching);
-        }
-
-        private void BackHandler(object sender, BackRequestedEventArgs args)
-        {
-            DebugWrite();
-
-            var handled = false;
-            if (ApiInformation.IsApiContractPresent(nameof(Windows.Phone.PhoneContract), 1, 0))
-            {
-                if (NavigationService?.CanGoBack == true)
-                {
-                    handled = true;
-                }
-            }
-            else
-            {
-                handled = (NavigationService?.CanGoBack == false);
-            }
-
-            RaiseBackRequested(ref handled);
-            args.Handled = handled;
-        }
-
-        #endregion
-
-        /// <summary>
-        /// Default Hardware/Shell Back handler overrides standard Back behavior 
-        /// that navigates to previous app in the app stack to instead cause a backward page navigation.
-        /// Views or Viewodels can override this behavior by handling the BackRequested 
-        /// event and setting the Handled property of the BackRequestedEventArgs to true.
-        /// </summary>
+        public static event EventHandler<HandledEventArgs> BackRequested;
         private void RaiseBackRequested(ref bool handled)
         {
             DebugWrite();
@@ -307,19 +173,22 @@ namespace Template10.Common
             var args = new HandledEventArgs();
             BackRequested?.Invoke(null, args);
             if (handled = args.Handled)
+            {
                 return;
+            }
             foreach (var navigationService in WindowWrapper.Current().NavigationServices.Select(x => x).Reverse())
             {
                 navigationService.RaiseBackRequested(args);
                 if (handled = args.Handled)
+                {
                     return;
+                }
             }
             NavigationService.GoBack();
+            handled = true;
         }
 
-        // this event precedes the in-frame event by the same name
-        public static event EventHandler<HandledEventArgs> BackRequested;
-
+        public static event EventHandler<HandledEventArgs> ForwardRequested;
         private void RaiseForwardRequested()
         {
             DebugWrite();
@@ -327,15 +196,29 @@ namespace Template10.Common
             var args = new HandledEventArgs();
             ForwardRequested?.Invoke(null, args);
             if (args.Handled)
+            {
                 return;
+            }
             foreach (var navigationService in WindowWrapper.Current().NavigationServices)
             {
                 navigationService.RaiseForwardRequested(args);
                 if (args.Handled)
+                {
                     return;
+                }
             }
             NavigationService.GoForward();
         }
+
+        public event EventHandler ShellBackButtonUpdated;
+        private void RaiseShellBackButtonUpdated()
+        {
+            ShellBackButtonUpdated?.Invoke(this, EventArgs.Empty);
+        }
+
+        #endregion
+
+        #region Public Methods
 
         public void UpdateShellBackButton()
         {
@@ -346,95 +229,25 @@ namespace Template10.Common
                 (ShowShellBackButton && (NavigationService.CanGoBack || ForceShowShellBackButton))
                     ? AppViewBackButtonVisibility.Visible
                     : AppViewBackButtonVisibility.Collapsed;
-            ShellBackButtonUpdated?.Invoke(this, EventArgs.Empty);
+            RaiseShellBackButtonUpdated();
         }
-        public event EventHandler ShellBackButtonUpdated;
-
-        // this event precedes the in-frame event by the same name
-        public static event EventHandler<HandledEventArgs> ForwardRequested;
-
-        #region overrides
-
-        public enum StartKind { Launch, Activate }
 
         /// <summary>
-        /// Prelaunch may never occur. However, it's possible that it will. It is a Windows mechanism
-        /// to launch apps in the background and quickly suspend them. Because of this, developers need to
-        /// handle Prelaunch scenarios if their typical launch is expensive or requires user interaction.
+        ///  By default, Template 10 will setup the root element to be a Template 10
+        ///  Modal Dialog control. If you desire something different, you can set it here.
         /// </summary>
-        /// <param name="args">IActivatedEventArgs from startup</param>
-        /// <param name="runOnStartAsync">A developer can force the typical startup pipeline. Default should be false.</param>
-        /// <remarks>
-        /// For Prelaunch Template 10 does not continue the typical startup pipeline by default. 
-        /// OnActivated will occur if the application has been prelaunched.
-        /// </remarks>
-        public virtual Task OnPrelaunchAsync(IActivatedEventArgs args, out bool runOnStartAsync)
+        public virtual UIElement CreateRootElement(IActivatedEventArgs e)
         {
-            DebugWrite("Virtual");
+            DebugWrite();
 
-            runOnStartAsync = false;
-            return Task.CompletedTask;
+            var navigationFrame = new Frame();
+            var navigationService = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include, navigationFrame);
+            return new Controls.ModalDialog
+            {
+                DisableBackButtonWhenModal = true,
+                Content = navigationFrame
+            };
         }
-
-        /// <summary>
-        /// This indicates if OnPreLaunch has EVER been called.
-        /// </summary>
-        bool _HasOnPrelaunchAsync = false;
-
-        /// <summary>
-        /// OnStartAsync is the one-stop-show override to handle when your app starts
-        /// Template 10 will not call OnStartAsync if the app is restored from state.
-        /// An app restores from state when the app was suspended and then terminated (PreviousExecutionState terminated).
-        /// </summary>
-        public abstract Task OnStartAsync(StartKind startKind, IActivatedEventArgs args);
-
-        /// <summary>
-        /// OnInitializeAsync is where your app will do must-have up-front operations
-        /// OnInitializeAsync will be called even if the application is restoring from state.
-        /// An app restores from state when the app was suspended and then terminated (PreviousExecutionState terminated).
-        /// </summary>
-        public virtual Task OnInitializeAsync(IActivatedEventArgs args)
-        {
-            DebugWrite($"Virtual {nameof(IActivatedEventArgs)}:{args.Kind}");
-
-            return Task.CompletedTask;
-        }
-
-        /// <summary>
-        /// OnSuspendingAsync will be called when the application is suspending, but this override
-        /// should only be used by applications that have application-level operations that must
-        /// be completed during suspension. 
-        /// Using OnSuspendingAsync is a little better than handling the Suspending event manually
-        /// because the asunc operations are in a single, global deferral created when the suspension
-        /// begins and completed automatically when the last viewmodel has been called (including this method).
-        /// </summary>
-        public virtual Task OnSuspendingAsync(object s, SuspendingEventArgs e, bool prelaunchActivated)
-        {
-            DebugWrite($"Virtual {nameof(SuspendingEventArgs)}:{e.SuspendingOperation} {nameof(prelaunchActivated)}:{prelaunchActivated}");
-
-            return Task.CompletedTask;
-        }
-
-        public enum AppExecutionState { Suspended, Terminated, Prelaunch }
-
-        /// <summary>
-        /// The application is returning from a suspend state of some kind.
-        /// </summary>
-        /// <param name="s"></param>
-        /// <param name="e"></param>
-        /// <param name="previousExecutionState"></param>
-        /// <remarks>
-        /// previousExecutionState can be Terminated, which typically does not raise OnResume.
-        /// This is important because the resume model changes a little in Mobile.
-        /// </remarks>
-        public virtual void OnResuming(object s, object e, AppExecutionState previousExecutionState)
-        {
-            DebugWrite($"Virtual, {nameof(previousExecutionState)}:{previousExecutionState}");
-        }
-
-        #endregion
-
-        #region pipeline
 
         /// <summary>
         /// Creates a new NavigationService from the gived Frame to the 
@@ -457,7 +270,7 @@ namespace Template10.Common
             }
 
             var navigationService = new NavigationService(frame);
-            navigationService.FrameFacade.BackButtonHandling = backButton;
+            navigationService.BackButtonHandling = backButton;
             WindowWrapper.Current().NavigationServices.Add(navigationService);
 
             if (backButton == BackButton.Attach)
@@ -478,7 +291,7 @@ namespace Template10.Common
             DateTime cacheDate;
             // default the cache age to very fresh if not known
             var otherwise = DateTime.MinValue.ToString();
-            if (DateTime.TryParse(navigationService.FrameFacade.GetFrameState(CacheDateKey, otherwise), out cacheDate))
+            if (DateTime.TryParse(navigationService.Suspension.GetFrameState().Read(CacheDateKey, otherwise), out cacheDate))
             {
                 var cacheAge = DateTime.Now.Subtract(cacheDate);
                 if (cacheAge >= CacheMaxDuration)
@@ -486,7 +299,7 @@ namespace Template10.Common
                     // clear state in every nav service in every view
                     foreach (var nav in WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices))
                     {
-                        nav.FrameFacade.ClearFrameState();
+                        nav.Suspension.ClearFrameState();
                     }
                 }
             }
@@ -494,7 +307,6 @@ namespace Template10.Common
             {
                 // no date, that's okay
             }
-
             return navigationService;
         }
 
@@ -511,194 +323,6 @@ namespace Template10.Common
             }
         }
         Dictionary<string, BootstrapperStates> CurrentStateHistory = new Dictionary<string, BootstrapperStates>();
-
-        private async Task InitializeFrameAsync(IActivatedEventArgs e)
-        {
-            /*
-                InitializeFrameAsync creates a default Frame preceeded by the optional 
-                splash screen, then OnInitialzieAsync, then the new frame (if necessary).
-                This is private because there's no reason for the developer to call this.
-            */
-
-            DebugWrite($"{nameof(IActivatedEventArgs)}:{e.Kind}");
-
-            CallShowSplashScreen(e);
-            await CallOnInitializeAsync(false, e);
-            SetupCustomTitleBar();
-
-            if (SplashLogic.Splashing || Window.Current.Content == null)
-            {
-                Window.Current.Content = CreateRootElement(e);
-            }
-            else
-            {
-                // if there's custom content then do nothing
-            }
-        }
-
-        #endregion
-
-        WindowLogic WindowLogic = new WindowLogic();
-        private void CallActivateWindow(ActivateWindowSources source)
-        {
-            WindowLogic.ActivateWindow(source, SplashLogic);
-            CurrentState = BootstrapperStates.Running;
-        }
-
-        #region Workers
-
-        /// <summary>
-        ///  By default, Template 10 will setup the root element to be a Template 10
-        ///  Modal Dialog control. If you desire something different, you can set it here.
-        /// </summary>
-        public virtual UIElement CreateRootElement(IActivatedEventArgs e)
-        {
-            var navigationService = Current.NavigationServiceFactory(BackButton.Attach, ExistingContent.Include, new Frame());
-            return new Controls.ModalDialog
-            {
-                DisableBackButtonWhenModal = true,
-                Content = navigationService.Frame
-            };
-        }
-
-        private void SetupCustomTitleBar()
-        {
-            InitResourceDueToPlatformBug();
-
-            // this wonky style of loop is important due to a platform bug
-            int count = Application.Current.Resources.Count;
-            foreach (var resource in Application.Current.Resources)
-            {
-                var key = resource.Key;
-                if (key == typeof(Controls.CustomTitleBar))
-                {
-                    var style = resource.Value as Style;
-                    var title = new Controls.CustomTitleBar();
-                    title.Style = style;
-                }
-                count--;
-                if (count == 0) break;
-            }
-        }
-
-        private static void InitResourceDueToPlatformBug()
-        {
-            // this "unused" bit is very important because of a quirk in ResourceThemes
-            try
-            {
-                if (Application.Current.Resources.ContainsKey("ExtendedSplashBackground"))
-                {
-                    var unused = Application.Current.Resources["ExtendedSplashBackground"];
-                }
-            }
-            catch { /* this is okay */ }
-        }
-
-        private async Task CallOnInitializeAsync(bool canRepeat, IActivatedEventArgs e)
-        {
-            DebugWrite();
-
-            if (!canRepeat && CurrentStateHistory.ContainsValue(BootstrapperStates.BeforeInit))
-                return;
-
-            CurrentState = BootstrapperStates.BeforeInit;
-            await OnInitializeAsync(e);
-            CurrentState = BootstrapperStates.AfterInit;
-        }
-
-        private async Task CallOnStartAsync(bool canRepeat, StartKind startKind)
-        {
-            DebugWrite();
-
-            if (!canRepeat && CurrentStateHistory.ContainsValue(BootstrapperStates.BeforeStart))
-                return;
-
-            CurrentState = BootstrapperStates.BeforeStart;
-            while (!CurrentStateHistory.ContainsValue(BootstrapperStates.AfterInit))
-            {
-                // this could happen if app is activated before previous init completes
-                await Task.Delay(500);
-            }
-            await OnStartAsync(startKind, OriginalActivatedArgs);
-            CurrentState = BootstrapperStates.AfterStart;
-        }
-
-        SplashLogic SplashLogic = new SplashLogic();
-        private void CallShowSplashScreen(IActivatedEventArgs e)
-        {
-            DebugWrite();
-
-            SplashLogic.Show(e.SplashScreen, SplashFactory, WindowLogic);
-        }
-
-        #endregion
-
-        #region lifecycle logic
-
-        [Obsolete("Use AutoRestoreAfterTerminated")]
-        public bool EnableAutoRestoreAfterTerminated { get; set; } = true;
-        public bool AutoRestoreAfterTerminated { get; set; } = true;
-        public bool AutoExtendExecutionSession { get; set; } = true;
-        public bool AutoSuspendAllFrames { get; set; } = true;
-
-        BootstrapperLifecycleLogic LifecycleLogic = new BootstrapperLifecycleLogic();
-
-        private async void CallResuming(object sender, object e)
-        {
-            DebugWrite(caller: nameof(Resuming));
-
-            var args = OriginalActivatedArgs as LaunchActivatedEventArgs;
-            if (args?.PrelaunchActivated ?? true)
-            {
-                OnResuming(sender, e, AppExecutionState.Prelaunch);
-                var kind = args?.PreviousExecutionState == ApplicationExecutionState.Running ? StartKind.Activate : StartKind.Launch;
-                await CallOnStartAsync(false, kind);
-                CallActivateWindow(ActivateWindowSources.Resuming);
-            }
-            else
-            {
-                OnResuming(sender, e, AppExecutionState.Suspended);
-            }
-        }
-
-        private async Task<bool> CallAutoRestoreAsync(ILaunchActivatedEventArgs e, bool restored)
-        {
-            if (!AutoRestoreAfterTerminated)
-                return false;
-            return await LifecycleLogic.AutoRestoreAsync(e, NavigationService);
-        }
-
-        async void CallHandleSuspendingAsync(object sender, SuspendingEventArgs e)
-        {
-            var deferral = e.SuspendingOperation.GetDeferral();
-            try
-            {
-                if (AutoSuspendAllFrames)
-                {
-                    await LifecycleLogic.AutoSuspendAllFramesAsync(sender, e, AutoExtendExecutionSession);
-                }
-                await OnSuspendingAsync(sender, e, (OriginalActivatedArgs as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false);
-            }
-            finally
-            {
-                deferral.Complete();
-            }
-        }
-
-        #endregion
-
-        // The default frame is automatically wrapped in a modal dialog.
-        // this is how you access it to set ModalContent or the IsModal property. 
-        public Controls.ModalDialog ModalDialog { get { return (Window.Current.Content as Controls.ModalDialog); } }
-        public UIElement ModalContent { get { return ModalDialog?.ModalContent; } set { if (ModalDialog != null) ModalDialog.ModalContent = value; } }
-
-        public enum BackButton { Attach, Ignore }
-
-        public enum ExistingContent { Include, Exclude }
-
-        public const string DefaultTileID = "App";
-
-        public enum AdditionalKinds { Primary, Toast, SecondaryTile, Other, JumpListItem }
 
         /// <summary>
         /// This determines the simplest case for starting. This should handle 80% of common scenarios. 
@@ -732,7 +356,6 @@ namespace Template10.Common
         }
 
         private object _PageKeys;
-        // T must be a custom Enum
         public Dictionary<T, Type> PageKeys<T>()
             where T : struct, IConvertible
         {
@@ -747,9 +370,309 @@ namespace Template10.Common
             return (_PageKeys = new Dictionary<T, Type>()) as Dictionary<T, Type>;
         }
 
+        #endregion
 
+        #region Application overides that Template 10 seals
 
+        // it is the intent of Template 10 to no longer require Launched/Activated overrides, only OnStartAsync()
 
+        protected override sealed void OnActivated(IActivatedEventArgs e) { DebugWrite(); StartupOrchestratorAsync(e, StartKind.Activate); }
+        protected override sealed void OnCachedFileUpdaterActivated(CachedFileUpdaterActivatedEventArgs e) { DebugWrite(); StartupOrchestratorAsync(e, StartKind.Activate); }
+        protected override sealed void OnFileActivated(FileActivatedEventArgs e) { DebugWrite(); StartupOrchestratorAsync(e, StartKind.Activate); }
+        protected override sealed void OnFileOpenPickerActivated(FileOpenPickerActivatedEventArgs e) { DebugWrite(); StartupOrchestratorAsync(e, StartKind.Activate); }
+        protected override sealed void OnFileSavePickerActivated(FileSavePickerActivatedEventArgs e) { DebugWrite(); StartupOrchestratorAsync(e, StartKind.Activate); }
+        protected override sealed void OnSearchActivated(SearchActivatedEventArgs e) { DebugWrite(); StartupOrchestratorAsync(e, StartKind.Activate); }
+        protected override sealed void OnShareTargetActivated(ShareTargetActivatedEventArgs e) { DebugWrite(); StartupOrchestratorAsync(e, StartKind.Activate); }
+        protected sealed override void OnLaunched(LaunchActivatedEventArgs e) { DebugWrite(); StartupOrchestratorAsync(e, StartKind.Launch); }
 
+        #endregion
+
+        #region Template 10's new Application overrides
+
+        /// <summary>
+        /// If a developer overrides this method, the developer can resolve DataContext or unwrap DataContext 
+        /// available for the Page object when using a MVVM pattern that relies on a wrapped/proxy around ViewModels
+        /// </summary>
+        public virtual INavigable ResolveForPage(Page page, NavigationService navigationService) => null;
+
+        /// <summary>
+        /// Prelaunch may never occur. However, it's possible that it will. It is a Windows mechanism
+        /// to launch apps in the background and quickly suspend them. Because of this, developers need to
+        /// handle Prelaunch scenarios if their typical launch is expensive or requires user interaction.
+        /// </summary>
+        /// <param name="args">IActivatedEventArgs from startup</param>
+        /// <param name="runOnStartAsync">A developer can force the typical startup pipeline. Default should be false.</param>
+        /// <remarks>
+        /// For Prelaunch Template 10 does not continue the typical startup pipeline by default. 
+        /// OnActivated will occur if the application has been prelaunched.
+        /// </remarks>
+        public virtual Task OnPrelaunchAsync(IActivatedEventArgs args, out bool runOnStartAsync)
+        {
+            DebugWrite("Virtual");
+
+            runOnStartAsync = false;
+            return Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// OnStartAsync is the one-stop-show override to handle when your app starts
+        /// Template 10 will not call OnStartAsync if the app is restored from state.
+        /// An app restores from state when the app was suspended and then terminated (PreviousExecutionState terminated).
+        /// </summary>
+        public abstract Task OnStartAsync(StartKind startKind, IActivatedEventArgs args);
+
+        /// <summary>
+        /// OnInitializeAsync is where your app will do must-have up-front operations
+        /// OnInitializeAsync will be called even if the application is restoring from state.
+        /// An app restores from state when the app was suspended and then terminated (PreviousExecutionState terminated).
+        /// </summary>
+        public virtual Task OnInitializeAsync(IActivatedEventArgs args) => Task.CompletedTask;
+
+        /// <summary>
+        /// OnSuspendingAsync will be called when the application is suspending, but this override
+        /// should only be used by applications that have application-level operations that must
+        /// be completed during suspension. 
+        /// Using OnSuspendingAsync is a little better than handling the Suspending event manually
+        /// because the asunc operations are in a single, global deferral created when the suspension
+        /// begins and completed automatically when the last viewmodel has been called (including this method).
+        /// </summary>
+        /// <param name="prelaunchActivated">Indicates suspension during app prelaunch</param>
+        public virtual Task OnSuspendingAsync(object s, SuspendingEventArgs e, bool prelaunchActivated) => Task.CompletedTask;
+
+        /// <summary>
+        /// The application is returning from a suspend state of some kind.
+        /// </summary>
+        /// <param name="s">Sender</param>
+        /// <param name="e">EventArgs</param>
+        /// <param name="previousExecutionState"></param>
+        /// <remarks>
+        /// previousExecutionState can be Terminated, which typically does not raise OnResume.
+        /// This is important because the resume model changes a little in Mobile.
+        /// </remarks>
+        public virtual void OnResuming(object s, object e, AppExecutionState previousExecutionState) { }
+
+        #endregion
+
+        #region Private Properties
+
+        internal BootstrapperLifecycleLogic LifecycleLogic { get; } = new BootstrapperLifecycleLogic();
+
+        internal WindowLogic WindowLogic { get; } = new WindowLogic();
+
+        internal SplashLogic SplashLogic { get; } = new SplashLogic();
+
+        #endregion
+
+        private async void StartupOrchestratorAsync(IActivatedEventArgs e, StartKind kind)
+        {
+            DebugWrite($"kind:{kind} previous:{e.PreviousExecutionState}");
+
+            if (OriginalActivatedArgs == null)
+            {
+                OriginalActivatedArgs = e;
+
+                // if resume tries to launch, don't continue on
+                // StartupOrchestratorAsync will be called twice
+                if (OriginalActivatedArgs == null)
+                {
+                    OnResuming(this, null, AppExecutionState.Terminated);
+                    return;
+                }
+            }
+
+            // is the kind really right?
+            if (kind == StartKind.Launch && CurrentStateHistory.ContainsValue(BootstrapperStates.Launched))
+            {
+                kind = StartKind.Activate;
+            }
+            else if (kind == StartKind.Launch && e.PreviousExecutionState == ApplicationExecutionState.Running)
+            {
+                kind = StartKind.Activate;
+            }
+            else if (kind == StartKind.Activate && e.PreviousExecutionState != ApplicationExecutionState.Running)
+            {
+                kind = StartKind.Launch;
+            }
+
+            // handle activate
+            if (kind == StartKind.Activate)
+            {
+                // never activate until launch has completed
+                while (!CurrentStateHistory.ContainsValue(BootstrapperStates.Launched))
+                {
+                    await Task.Delay(10);
+                }
+                await OnStartAsync(kind, e);
+                CurrentState = BootstrapperStates.Started;
+
+                WindowLogic.ActivateWindow(ActivateWindowSources.Activating, SplashLogic);
+                CurrentState = BootstrapperStates.Activated;
+            }
+
+            // handle first-time launch
+            else if (kind == StartKind.Launch)
+            {
+                SplashLogic.Show(e.SplashScreen, this);
+
+                SetupKeyboardListeners();
+                SetupLifecycleListeners();
+                SetupSystemListeners();
+                SetupCustomTitleBar();
+                SetupExtendedSession();
+
+                await OnInitializeAsync(e);
+                CurrentState = BootstrapperStates.Initialized;
+
+                // if there no pre-existing root then generate root
+                if (SplashLogic.Splashing || Window.Current.Content == null)
+                {
+                    Window.Current.Content = CreateRootElement(e);
+                }
+
+                var IsPrelaunch = (e as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false;
+
+                // okay, now handle launch
+                bool restored = false;
+                switch (e.PreviousExecutionState)
+                {
+                    case ApplicationExecutionState.Suspended:
+                    case ApplicationExecutionState.Terminated:
+                        OnResuming(this, null, IsPrelaunch ? AppExecutionState.Prelaunch : AppExecutionState.Terminated);
+                        if (AutoRestoreAfterTerminated)
+                        {
+                            restored = await LifecycleLogic.AutoRestoreAsync(e as ILaunchActivatedEventArgs, NavigationService);
+                            CurrentState = BootstrapperStates.Restored;
+                        }
+                        break;
+                }
+
+                // handle if pre-launch (no UI)
+                if (IsPrelaunch)
+                {
+                    var runOnStartAsync = false;
+                    await OnPrelaunchAsync(e, out runOnStartAsync);
+                    CurrentState = BootstrapperStates.Prelaunched;
+                    if (!runOnStartAsync)
+                    {
+                        return;
+                    }
+                }
+
+                // handle if not restored (new launch)
+                if (!restored)
+                {
+                    await OnStartAsync(StartKind.Launch, e);
+                    CurrentState = BootstrapperStates.Started;
+                }
+
+                // this will also hide any showing splashscreen
+                WindowLogic.ActivateWindow(ActivateWindowSources.Launching, SplashLogic);
+                CurrentState = BootstrapperStates.Launched;
+            }
+        }
+
+        private async void SetupExtendedSession()
+        {
+            var session = new ExtendedExecutionSession
+            {
+                Reason = ExtendedExecutionReason.Unspecified,
+                Description = "Fewer suspensions"
+            };
+            var result = await session.RequestExtensionAsync();
+            if (result == ExtendedExecutionResult.Denied)
+            {
+                // do nothing
+            }
+        }
+
+        private void SetupSystemListeners()
+        {
+            SystemNavigationManager.GetForCurrentView().BackRequested += (s, e) =>
+            {
+                var handled = false;
+                if (ApiInformation.IsApiContractPresent(nameof(Windows.Phone.PhoneContract), 1, 0))
+                {
+                    if (NavigationService?.CanGoBack == true)
+                    {
+                        handled = true;
+                    }
+                }
+                else
+                {
+                    handled = (NavigationService?.CanGoBack == false);
+                }
+
+                RaiseBackRequested(ref handled);
+                e.Handled = handled;
+            };
+        }
+
+        private void SetupLifecycleListeners()
+        {
+            Resuming += (s, e) => StartupOrchestratorAsync(OriginalActivatedArgs, StartKind.Launch);
+            Suspending += async (s, e) =>
+            {
+                var deferral = e.SuspendingOperation.GetDeferral();
+                try
+                {
+                    if (AutoSuspendAllFrames)
+                    {
+                        await LifecycleLogic.AutoSuspendAllFramesAsync(this, e);
+                    }
+                    var isPrelaunch = (OriginalActivatedArgs as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false;
+                    await OnSuspendingAsync(this, e, isPrelaunch);
+                }
+                finally
+                {
+                    deferral.Complete();
+                }
+            };
+        }
+
+        private void SetupKeyboardListeners()
+        {
+            var KeyboardService = Services.KeyboardService.KeyboardService.Instance;
+            KeyboardService.AfterBackGesture = () =>
+            {
+                DebugWrite(caller: nameof(KeyboardService.AfterBackGesture));
+
+                var handled = false;
+                RaiseBackRequested(ref handled);
+            };
+            KeyboardService.AfterForwardGesture = () =>
+            {
+                DebugWrite(caller: nameof(KeyboardService.AfterForwardGesture));
+
+                RaiseForwardRequested();
+            };
+        }
+
+        private void SetupCustomTitleBar()
+        {
+            // this needless test is important due to a platform bug
+            try
+            {
+                if (Application.Current.Resources.ContainsKey("ExtendedSplashBackground"))
+                {
+                    var unused = Application.Current.Resources["ExtendedSplashBackground"];
+                }
+            }
+            catch { /* this is okay */ }
+
+            // this wonky style of loop is important due to a platform bug
+            int count = Application.Current.Resources.Count;
+            foreach (var resource in Application.Current.Resources)
+            {
+                var key = resource.Key;
+                if (key == typeof(Controls.CustomTitleBar))
+                {
+                    var style = resource.Value as Style;
+                    var title = new Controls.CustomTitleBar();
+                    title.Style = style;
+                }
+                count--;
+                if (count == 0) break;
+            }
+        }
     }
 }

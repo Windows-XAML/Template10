@@ -36,9 +36,13 @@ namespace Template10.Common
             return restored;
         }
 
-        public async Task AutoSuspendAllFramesAsync(object sender, SuspendingEventArgs e, bool autoExtendExecutionSession)
+        public async Task AutoSuspendAllFramesAsync(BootStrapper bootstrapper, SuspendingEventArgs e)
         {
-            if (autoExtendExecutionSession)
+            if (!bootstrapper.AutoSuspendAllFrames)
+            {
+                return;
+            }
+            if (bootstrapper.AutoExtendExecutionSession)
             {
                 using (var session = new Windows.ApplicationModel.ExtendedExecution.ExtendedExecutionSession
                 {

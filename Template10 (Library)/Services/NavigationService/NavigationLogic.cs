@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Template10.Common;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Classic = Template10.Services.NavigationService;
+using Portable = Template10.Mobile.Services.NavigationService;
 using Template10.Utils;
 using System.Diagnostics;
 
@@ -11,15 +13,13 @@ namespace Template10.Services.NavigationService
 
     public class NavigationLogic
     {
-        internal NavigationLogic()
+        public INavigationService NavigationService { get; }
+        public NavigationLogic(NavigationService navigationService)
         {
-
+            NavigationService = navigationService;
         }
 
-        public INavigationService NavigationService { get; set; }
-        public FrameFacade FrameFacade { get; set; }
-
-        private Windows.Foundation.Collections.IPropertySet State(Page page)
+        private Windows.Foundation.Collections.IPropertySet PageState(Page page)
         {
             if (page == null)
             {
@@ -34,29 +34,38 @@ namespace Template10.Services.NavigationService
 
             if (viewmodel == null)
             {
-                throw new ArgumentNullException(nameof(viewmodel));
+                return;
             }
             viewmodel.NavigationService = service;
             viewmodel.Dispatcher = service.GetDispatcherWrapper();
             viewmodel.SessionState = BootStrapper.Current.SessionState;
         }
 
-        public async Task NavedFromAsync(Page page, INavigatedAwareAsync viewmodel, bool suspending)
+        public async Task NavedFromAsync(object viewmodel, Page page, bool suspending)
         {
             Services.NavigationService.NavigationService.DebugWrite();
 
             if (page == null)
             {
-                throw new ArgumentNullException(nameof(page));
+                return;
             }
-            if (viewmodel == null)
+            else if (viewmodel == null)
             {
-                throw new ArgumentNullException(nameof(viewmodel));
+                return;
             }
-            await viewmodel.OnNavigatedFromAsync(State(page), suspending);
+            else if (viewmodel is Classic.INavigatingAwareAsync)
+            {
+                var vm = viewmodel as Classic.INavigatedAwareAsync;
+                await vm?.OnNavigatedFromAsync(PageState(page), suspending);
+            }
+            else if (viewmodel is Portable.INavigatingAwareAsync)
+            {
+                var vm = viewmodel as Portable.INavigatedAwareAsync;
+                await vm?.OnNavigatedFromAsync(PageState(page), suspending);
+            }
         }
 
-        public async Task NavedToAsync(object parameter, NavigationMode mode, Page page, INavigatedAwareAsync viewmodel)
+        public async Task NavedToAsync(object viewmodel, object parameter, NavigationMode mode, Page page)
         {
             Services.NavigationService.NavigationService.DebugWrite();
 
@@ -64,35 +73,65 @@ namespace Template10.Services.NavigationService
             {
                 throw new ArgumentNullException(nameof(page));
             }
-            if (viewmodel == null)
-            {
-                throw new ArgumentNullException(nameof(viewmodel));
-            }
+
             if (mode == NavigationMode.New)
             {
-                State(page).Clear();
+                PageState(page).Clear();
             }
 
-            await viewmodel.OnNavigatedToAsync(parameter, mode, State(page));
+            if (viewmodel == null)
+            {
+                return;
+            }
+            else if (viewmodel is Classic.INavigatedAwareAsync)
+            {
+                var vm = viewmodel as Classic.INavigatedAwareAsync;
+                await vm?.OnNavigatedToAsync(parameter, mode, PageState(page));
+            }
+            else if (viewmodel is Portable.INavigatedAwareAsync)
+            {
+                var vm = viewmodel as Portable.INavigatedAwareAsync;
+                await vm?.OnNavigatedToAsync(parameter, mode.ToTemplate10NavigationMode(), PageState(page));
+            }
 
             page.InitializeBindings();
             page.UpdateBindings();
         }
 
-        public async Task<bool> NavingFromAsync(INavigatingAwareAsync viewmodel, Page page, object currentParameter, bool suspending, NavigationMode navigationMode, Type targetPageType, object targetParameter)
+        #region INavigatingAwareAsync
+
+        public async Task<bool> NavingFromCancelsAsync(object viewmodel, Page page, object currentParameter, bool suspending, NavigationMode navigationMode, Type targetPageType, object targetParameter)
         {
             Services.NavigationService.NavigationService.DebugWrite();
 
             if (page == null)
             {
-                throw new ArgumentNullException(nameof(page));
+                return false;
             }
-            if (viewmodel == null)
+            else if (viewmodel == null)
             {
-                throw new ArgumentNullException(nameof(viewmodel));
+                return false;
             }
+            else if (viewmodel is Classic.INavigatingAwareAsync)
+            {
+                var vm = viewmodel as Classic.INavigatingAwareAsync;
+                return await NavingFromAsync(vm, page, currentParameter, suspending, navigationMode, targetPageType, targetParameter);
+            }
+            else if (viewmodel is Portable.INavigatingAwareAsync)
+            {
+                var vm = viewmodel as Portable.INavigatingAwareAsync;
+                return await NavingFromAsync(vm, page, currentParameter, suspending, navigationMode, targetPageType, targetParameter);
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        private async Task<bool> NavingFromAsync(Classic.INavigatingAwareAsync viewmodel, Page page, object currentParameter, bool suspending, NavigationMode navigationMode, Type targetPageType, object targetParameter)
+        {
             var deferral = new DeferralManager();
-            var navigatingEventArgs = new NavigatingEventArgs(deferral)
+            var navigatingEventArgs = new Classic.NavigatingEventArgs(deferral)
             {
                 Page = page,
                 Parameter = currentParameter,
@@ -110,8 +149,33 @@ namespace Template10.Services.NavigationService
             {
                 Debugger.Break();
             }
-            return !navigatingEventArgs.Cancel;
+            return navigatingEventArgs.Cancel;
         }
-    }
 
+        private async Task<bool> NavingFromAsync(Portable.INavigatingAwareAsync viewmodel, Page page, object currentParameter, bool suspending, NavigationMode navigationMode, Type targetPageType, object targetParameter)
+        {
+            var deferral = new Template10.Mobile.Common.DeferralManager();
+            var navigatingEventArgs = new Portable.NavigatingEventArgs(deferral)
+            {
+                Page = page,
+                Parameter = currentParameter,
+                Suspending = suspending,
+                NavigationMode = navigationMode.ToTemplate10NavigationMode(),
+                TargetPageType = targetPageType,
+                TargetPageParameter = targetParameter,
+            };
+            try
+            {
+                await viewmodel.OnNavigatingFromAsync(navigatingEventArgs);
+                await deferral.WaitForDeferralsAsync();
+            }
+            catch
+            {
+                Debugger.Break();
+            }
+            return navigatingEventArgs.Cancel;
+        }
+
+        #endregion
+    }
 }

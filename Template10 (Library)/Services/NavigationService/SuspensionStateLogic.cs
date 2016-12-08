@@ -6,19 +6,20 @@ namespace Template10.Services.NavigationService
 
     public class SuspensionStateLogic
     {
-        FrameFacade frame;
-        public INavigationService NavigationService { get; set; }
+        FrameFacade FrameFacade { get; }
+        public INavigationService NavigationService { get; }
 
-        internal SuspensionStateLogic(FrameFacade frame)
+        public SuspensionStateLogic(FrameFacade frame, NavigationService navigationService)
         {
-            this.frame = frame;
+            this.NavigationService = navigationService;
+            this.FrameFacade = frame;
         }
 
         public ISettingsService GetFrameState()
         {
             Services.NavigationService.NavigationService.DebugWrite();
 
-            var container = $"{frame.FrameId}-Frame-SuspensionState";
+            var container = $"{FrameFacade.FrameId}-Frame-SuspensionState";
             return SettingsService.SettingsService.Create(SettingsStrategies.Local, container, true);
         }
 

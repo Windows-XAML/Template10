@@ -44,7 +44,6 @@ namespace Template10.Utils
         /// which in this case is groupName.
         /// You don't have to use this scheme in which case you just stick to a single groupName for all buttons.
         /// </remarks>
-
         public static List<HamburgerButtonInfo> ItemsInGroup(this HamburgerButtonInfo button, bool IncludeSecondaryButtons = false)
         {
             string groupName = button.GroupName?.ToString();

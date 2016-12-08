@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Classic = Template10.Services.NavigationService;
+using Portable = Template10.Mobile.Services.NavigationService;
+using System;
 using System.Collections.Generic;
 using Template10.Common;
 using Windows.UI.Xaml;
@@ -82,15 +84,9 @@ namespace Template10.Services.NavigationService
             _Frame.CacheSize = currentSize;
         }
 
-        internal bool Navigate(Type page, object parameter, NavigationTransitionInfo info)
-        {
-            return _Frame.Navigate(page, parameter, info);
-        }
+        internal bool Navigate(Type page, object parameter, NavigationTransitionInfo info) => _Frame.Navigate(page, parameter, info);
 
-        internal bool Navigate(Type page, object parameter)
-        {
-            return _Frame.Navigate(page, parameter);
-        }
+        internal bool Navigate(Type page, object parameter) => _Frame.Navigate(page, parameter);
 
         internal IList<PageStackEntry> BackStack => _Frame.BackStack;
 
@@ -152,14 +148,14 @@ namespace Template10.Services.NavigationService
         public SerializationService.ISerializationService SerializationService => NavigationService.SerializationService;
 
         [Obsolete("Use NavigationService.Navigated. This may be made private in a future version.", false)]
-        public event EventHandler<NavigatedEventArgs> Navigated;
+        public event EventHandler<Portable.NavigatedEventArgs> Navigated;
         [Obsolete]
-        internal void RaiseNavigated(NavigatedEventArgs e) => Navigated?.Invoke(this, e);
+        internal void RaiseNavigated(Portable.NavigatedEventArgs e) => Navigated?.Invoke(this, e);
 
         [Obsolete("Use NavigationService.Navigating. This may be made private in a future version.", false)]
-        public event EventHandler<NavigatingEventArgs> Navigating;
+        public event EventHandler<Portable.NavigatingEventArgs> Navigating;
         [Obsolete]
-        internal void RaiseNavigating(NavigatingEventArgs e) => Navigating?.Invoke(this, e);
+        internal void RaiseNavigating(Portable.NavigatingEventArgs e) => Navigating?.Invoke(this, e);
 
         [Obsolete("Use NavigationService.BackRequested. This may be made private in a future version.", false)]
         public event EventHandler<HandledEventArgs> BackRequested;

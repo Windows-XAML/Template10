@@ -19,14 +19,14 @@ namespace Template10.Common
 
         private Popup popup;
 
-        public void Show(SplashScreen splashScreen, Func<SplashScreen, UserControl> splashFactory, WindowLogic windowLogic)
+        public void Show(SplashScreen splashScreen, BootStrapper bootstrapper)
         {
-            if (splashFactory == null)
+            if (bootstrapper.SplashFactory == null)
                 return;
-            var splash = splashFactory(splashScreen);
+            var splash = bootstrapper.SplashFactory(splashScreen);
             var service = new PopupService();
             popup = service.Show(PopupService.PopupSize.FullScreen, splash);
-            windowLogic.ActivateWindow(ActivateWindowSources.SplashScreen, this);
+            bootstrapper.WindowLogic.ActivateWindow(ActivateWindowSources.SplashScreen, this);
         }
 
         public void Hide()
