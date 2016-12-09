@@ -28,15 +28,26 @@ namespace Template10.Services.NavigationService
         public static INavigationService GetForFrame(Frame frame) =>
             WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices).FirstOrDefault(x => x.Frame.Equals(frame));
 
-        private NavigationLogic Navigation { get; }
+        Lazy<NavigationLogic> _Navigation;
+        private NavigationLogic Navigation => _Navigation.Value;
 
-        private IViewService viewService = null;
+        Lazy<IViewService> _ViewService;
+        private IViewService ViewService => _ViewService.Value;
+
+        Lazy<SuspensionStateLogic> _Suspension;
+        public SuspensionStateLogic Suspension => _Suspension.Value;
+
+        Lazy<ISerializationService> _SerializationService;
+        public ISerializationService SerializationService
+        {
+            get { return _SerializationService.Value; }
+            set { _SerializationService = new Lazy<ISerializationService>(() => value); }
+        }
+
+        Lazy<FrameFacade> _FrameFacade;
+        public FrameFacade FrameFacade => _FrameFacade.Value;
 
         public BootStrapper.BackButton BackButtonHandling { get; set; }
-
-        public SuspensionStateLogic Suspension { get; internal set; }
-
-        public FrameFacade FrameFacade { get; private set; }
 
         public bool IsInMainView { get; }
 
@@ -46,32 +57,34 @@ namespace Template10.Services.NavigationService
 
         public IDispatcherWrapper Dispatcher => this.GetDispatcherWrapper();
 
-        public ISerializationService SerializationService { get; set; } = Services.SerializationService.SerializationService.Json;
-
         [Obsolete("Use NavigationService.FrameFacade. This may be made private in future versions.", false)]
         public Frame Frame => FrameFacade.Frame;
 
-        [Obsolete("Use FrameFacade.Content", true)]
+        [Obsolete("Use FrameFacade.Content", false)]
         public object Content => FrameFacade.Content;
 
-        [Obsolete("Use FrameFacade.Get/SetNavigationState()", true)]
-        public string NavigationState { get { return FrameFacade.GetNavigationState(); } set { FrameFacade.SetNavigationState(value); } }
+        [Obsolete("Use FrameFacade.Get/SetNavigationState()", false)]
+        public string NavigationState
+        {
+            get { return FrameFacade.GetNavigationState(); }
+            set { FrameFacade.SetNavigationState(value); }
+        }
 
         protected internal NavigationService(Frame frame)
         {
             IsInMainView = CoreApplication.MainView == CoreApplication.GetCurrentView();
-            FrameFacade = new FrameFacade(frame, this);
-            Navigation = new NavigationLogic(this);
-            Suspension = new SuspensionStateLogic(FrameFacade, this);
+            _SerializationService = new Lazy<ISerializationService>(() => Services.SerializationService.SerializationService.Json);
+            _Navigation = new Lazy<NavigationLogic>(() => new NavigationLogic(this));
+            _Suspension = new Lazy<SuspensionStateLogic>(() => new SuspensionStateLogic(FrameFacade, this));
+            _FrameFacade = new Lazy<FrameFacade>(() => new FrameFacade(frame, this));
+            _ViewService = new Lazy<IViewService>(() => new ViewService.ViewService());
         }
 
         public Task<ViewLifetimeControl> OpenAsync(Type page, object parameter = null, string title = null, ViewSizePreference size = ViewSizePreference.UseHalf)
         {
             DebugWrite($"Page: {page}, Parameter: {parameter}, Title: {title}, Size: {size}");
 
-            if (viewService == null) viewService = new ViewService.ViewService();
-
-            return viewService.OpenAsync(page, parameter, title, size);
+            return ViewService.OpenAsync(page, parameter, title, size);
         }
 
         #region Navigate methods
