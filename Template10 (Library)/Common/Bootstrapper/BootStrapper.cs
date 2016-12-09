@@ -287,7 +287,9 @@ namespace Template10.Common
             foreach (var nav in WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices))
             {
                 if (nav.FrameFacade.Frame.Equals(frame))
+                {
                     return nav as INavigationService;
+                }
             }
 
             var navigationService = new NavigationService(frame);
@@ -525,12 +527,16 @@ namespace Template10.Common
             {
                 SplashLogic.Show(e.SplashScreen, this);
 
+                // do some one-time things
                 SetupKeyboardListeners();
                 SetupLifecycleListeners();
                 SetupSystemListeners();
                 SetupCustomTitleBar();
+
+                // default Unspecified extended session
                 await ExtendedSessionService.StartAsync();
 
+                // OnInitializeAsync
                 await OnInitializeAsync(e);
                 CurrentState = BootstrapperStates.Initialized;
 
@@ -540,10 +546,9 @@ namespace Template10.Common
                     Window.Current.Content = CreateRootElement(e);
                 }
 
-                var IsPrelaunch = (e as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false;
-
                 // okay, now handle launch
                 bool restored = false;
+                var IsPrelaunch = (e as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false;
                 switch (e.PreviousExecutionState)
                 {
                     case ApplicationExecutionState.Suspended:
