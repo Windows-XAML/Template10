@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Controls;
 using Template10.Services.ViewService;
 using System.Threading;
 using Windows.ApplicationModel.ExtendedExecution;
+using Template10.Services.ExtendedSessionService;
 
 namespace Template10.Common
 {
@@ -150,6 +151,37 @@ namespace Template10.Common
         public bool EnableAutoRestoreAfterTerminated { get; set; } = true;
 
         #endregion
+
+        Lazy<BootstrapperLifecycleLogic> _LifecycleLogic;
+        internal BootstrapperLifecycleLogic LifecycleLogic => _LifecycleLogic.Value;
+
+        Lazy<WindowLogic> _WindowLogic;
+        internal WindowLogic WindowLogic => _WindowLogic.Value;
+
+        Lazy<SplashLogic> _SplashLogic;
+        internal SplashLogic SplashLogic => _SplashLogic.Value;
+
+        Lazy<ExtendedSessionService> _ExtendedSessionService;
+        private ExtendedSessionService ExtendedSessionService => _ExtendedSessionService.Value;
+
+        private BootStrapper(
+            Lazy<BootstrapperLifecycleLogic> lifecycleLogic,
+            Lazy<WindowLogic> windowLogic,
+            Lazy<SplashLogic> splashLogic,
+            Lazy<ExtendedSessionService> extendedExecutionService)
+        {
+            _LifecycleLogic = lifecycleLogic;
+            _WindowLogic = windowLogic;
+            _SplashLogic = splashLogic;
+            _ExtendedSessionService = extendedExecutionService;
+        }
+
+        public BootStrapper() : this(
+            new Lazy<BootstrapperLifecycleLogic>(() => new BootstrapperLifecycleLogic()),
+            new Lazy<WindowLogic>(() => new WindowLogic()),
+            new Lazy<SplashLogic>(() => new SplashLogic()),
+            new Lazy<ExtendedSessionService>(() => new ExtendedSessionService()))
+        { /* empty */ }
 
         #region Public Events
 
@@ -453,16 +485,6 @@ namespace Template10.Common
 
         #endregion
 
-        #region Private Properties
-
-        internal BootstrapperLifecycleLogic LifecycleLogic { get; } = new BootstrapperLifecycleLogic();
-
-        internal WindowLogic WindowLogic { get; } = new WindowLogic();
-
-        internal SplashLogic SplashLogic { get; } = new SplashLogic();
-
-        #endregion
-
         private async void StartupOrchestratorAsync(IActivatedEventArgs e, StartKind kind)
         {
             DebugWrite($"kind:{kind} previous:{e.PreviousExecutionState}");
@@ -518,7 +540,7 @@ namespace Template10.Common
                 SetupLifecycleListeners();
                 SetupSystemListeners();
                 SetupCustomTitleBar();
-                SetupExtendedSession();
+                await ExtendedSessionService.StartAsync();
 
                 await OnInitializeAsync(e);
                 CurrentState = BootstrapperStates.Initialized;
@@ -568,20 +590,6 @@ namespace Template10.Common
                 // this will also hide any showing splashscreen
                 WindowLogic.ActivateWindow(ActivateWindowSources.Launching, SplashLogic);
                 CurrentState = BootstrapperStates.Launched;
-            }
-        }
-
-        private async void SetupExtendedSession()
-        {
-            var session = new ExtendedExecutionSession
-            {
-                Reason = ExtendedExecutionReason.Unspecified,
-                Description = "Fewer suspensions"
-            };
-            var result = await session.RequestExtensionAsync();
-            if (result == ExtendedExecutionResult.Denied)
-            {
-                // do nothing
             }
         }
 
