@@ -13,7 +13,7 @@ using Template10.Common;
 
 namespace Template10.Behaviors
 {
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-XamlBehaviors
+    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Behaviors-and-Actions
     [Microsoft.Xaml.Interactivity.TypeConstraint(typeof(Button))]
     public class NavButtonBehavior : DependencyObject, IBehavior
     {

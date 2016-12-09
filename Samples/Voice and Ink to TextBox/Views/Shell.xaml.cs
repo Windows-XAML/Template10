@@ -7,7 +7,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Template10.Samples.VoiceAndInkSample.Views
 {
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SplitView
+    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Controls#splitview
     public sealed partial class Shell : Page, INotifyPropertyChanged
     {
         public static Shell Instance { get; set; }

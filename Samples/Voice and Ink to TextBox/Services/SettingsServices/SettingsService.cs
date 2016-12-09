@@ -3,7 +3,7 @@ using Windows.UI.Xaml;
 
 namespace Template10.Samples.VoiceAndInkSample.Services.SettingsServices
 {
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-SettingsService
+    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Services#settingsservice
     public partial class SettingsService : ISettingsService
     {
         public static SettingsService Instance { get; }

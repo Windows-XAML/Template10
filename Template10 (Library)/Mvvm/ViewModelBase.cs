@@ -7,7 +7,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Mvvm
 {
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-MVVM
+    // DOCS: https://github.com/Windows-XAML/Template10/wiki/MVVM
     public abstract class ViewModelBase : BindableBase, INavigable
     {
         public virtual Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state) => Task.CompletedTask;

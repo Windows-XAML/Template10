@@ -5,7 +5,7 @@ using Windows.UI.Core;
 
 namespace Template10.Services.KeyboardService
 {
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-KeyboardService
+    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Services#keyboardservice
     public class KeyboardEventArgs : EventArgs
     {
         public bool Handled { get; set; } = false;  
