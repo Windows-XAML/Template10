@@ -197,6 +197,9 @@
     <Compile Include="Mvvm\IBindable.cs" />
     <Compile Include="Mvvm\IChangedCommand.cs" />
     <Compile Include="Mvvm\ViewModelBase.cs" />
+    <Compile Include="Services\ExtendedSessionService\ExtendedServiceHelper.cs" />
+    <Compile Include="Services\ExtendedSessionService\ExtendedSessionService.cs" />
+    <Compile Include="Services\ExtendedSessionService\IExtendedSessionService.cs" />
     <Compile Include="Services\FileService\FileHelper.cs" />
     <Compile Include="Services\FileService\IFileService.cs" />
     <Compile Include="Services\KeyboardService\KeyboardEventArgs.cs" />

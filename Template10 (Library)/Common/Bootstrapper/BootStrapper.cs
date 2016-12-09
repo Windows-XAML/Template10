@@ -164,24 +164,13 @@ namespace Template10.Common
         Lazy<ExtendedSessionService> _ExtendedSessionService;
         private ExtendedSessionService ExtendedSessionService => _ExtendedSessionService.Value;
 
-        private BootStrapper(
-            Lazy<BootstrapperLifecycleLogic> lifecycleLogic,
-            Lazy<WindowLogic> windowLogic,
-            Lazy<SplashLogic> splashLogic,
-            Lazy<ExtendedSessionService> extendedExecutionService)
+        public BootStrapper()
         {
-            _LifecycleLogic = lifecycleLogic;
-            _WindowLogic = windowLogic;
-            _SplashLogic = splashLogic;
-            _ExtendedSessionService = extendedExecutionService;
+            _LifecycleLogic = new Lazy<BootstrapperLifecycleLogic>(() => new BootstrapperLifecycleLogic());
+            _WindowLogic = new Lazy<WindowLogic>(() => new WindowLogic());
+            _SplashLogic = new Lazy<SplashLogic>(() => new SplashLogic());
+            _ExtendedSessionService = new Lazy<ExtendedSessionService>(() => new ExtendedSessionService());
         }
-
-        public BootStrapper() : this(
-            new Lazy<BootstrapperLifecycleLogic>(() => new BootstrapperLifecycleLogic()),
-            new Lazy<WindowLogic>(() => new WindowLogic()),
-            new Lazy<SplashLogic>(() => new SplashLogic()),
-            new Lazy<ExtendedSessionService>(() => new ExtendedSessionService()))
-        { /* empty */ }
 
         #region Public Events
 
