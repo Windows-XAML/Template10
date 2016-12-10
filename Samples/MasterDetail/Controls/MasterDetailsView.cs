@@ -54,6 +54,8 @@ namespace Template10.Samples.MasterDetailSample.Controls
 
         protected override void OnApplyTemplate()
         {
+            base.OnApplyTemplate();
+            
             // Visual States
             AdaptiveVisualStateGroupElement = GetTemplateChild(AdaptiveVisualStateGroupName) as VisualStateGroup;
             NarrowVisualStateElement = GetTemplateChild(NarrowVisualStateName) as VisualState;
