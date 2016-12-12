@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Template10.Mvvm;
 using Template10.Services.SettingsService;
 using Windows.UI.Xaml;
+using Template10.Utils;
 
 namespace Sample.ViewModels
 {
@@ -52,6 +53,11 @@ namespace Sample.ViewModels
                 }
             }
         }
+        public bool SetManuallyThemeCheckBox
+        {
+            get { return _settings.SetManuallyThemeCheckBox; }
+            set { _settings.SetManuallyThemeCheckBox = value; }
+        }
 
         public bool UseShellBackButton
         {
@@ -63,6 +69,18 @@ namespace Sample.ViewModels
         {
             get { return _settings.AppTheme.Equals(ApplicationTheme.Light); }
             set { _settings.AppTheme = value ? ApplicationTheme.Light : ApplicationTheme.Dark; base.RaisePropertyChanged(); }
+        }
+
+        public void ManuallyThemeCheckBoxUnchecked()
+        {
+            (Window.Current.Content as FrameworkElement).RequestedTheme = _settings.OriginalAppTheme.ToElementTheme();
+            Views.Shell.HamburgerMenu.RefreshStyles(_settings.OriginalAppTheme, true);
+        }
+        
+        public void ManuallyThemeCheckBoxChecked()
+        {
+            (Window.Current.Content as FrameworkElement).RequestedTheme = _settings.AppTheme.ToElementTheme();
+            Views.Shell.HamburgerMenu.RefreshStyles(_settings.AppTheme, true);
         }
 
         private string _BusyText = "Please wait...";

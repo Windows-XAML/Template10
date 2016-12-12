@@ -92,14 +92,25 @@
                                       OnContent="Back button in Title/TaskBar"
                                       RelativePanel.AlignLeftWithPanel="True"
                                       RelativePanel.AlignTopWithPanel="True" />
+                        
+                        <CheckBox
+                            x:Name="ManuallyThemeCheckBox"
+                            IsChecked="{Binding SetManuallyThemeCheckBox, Mode=TwoWay}"
+                            Checked="{x:Bind ViewModel.SettingsPartViewModel.ManuallyThemeCheckBoxChecked}"
+                            Unchecked="{x:Bind ViewModel.SettingsPartViewModel.ManuallyThemeCheckBoxUnchecked}"
+                            RelativePanel.AlignLeftWithPanel="True"
+                            RelativePanel.Below="UseShellDrawnBackButtonToggleSwtich"
+                            Content="Select background mode manually">
+                        </CheckBox>
 
                         <ToggleSwitch x:Name="UseLightThemeToggleSwitch"
                                       Header="Requested Application Theme"
                                       IsOn="{Binding UseLightThemeButton, Mode=TwoWay}"
                                       OffContent="Current theme is Dark"
                                       OnContent="Current theme is Light"
+                                      IsEnabled="{Binding Path=IsChecked,ElementName=ManuallyThemeCheckBox}"
                                       RelativePanel.AlignLeftWithPanel="True"
-                                      RelativePanel.Below="UseShellDrawnBackButtonToggleSwtich" />
+                                    RelativePanel.Below="ManuallyThemeCheckBox"/>
 
                         <ToggleSwitch x:Name="ShowHamburgerButtonToggleSwitch"
                                       Header="Hamburger Button Visibility"

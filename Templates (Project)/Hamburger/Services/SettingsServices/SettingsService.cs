@@ -43,6 +43,19 @@ namespace Sample.Services.SettingsServices
                 Views.Shell.HamburgerMenu.RefreshStyles(value, true);
             }
         }
+        public ApplicationTheme AppStartThemeChange(ApplicationTheme appTheme)
+        {
+            var value = _helper.Read<string>(nameof(AppTheme), appTheme.ToString());
+            if (SetManuallyThemeCheckBox)
+            {
+                OriginalAppTheme = appTheme;
+                return Enum.TryParse<ApplicationTheme>(value, out appTheme) ? appTheme : ApplicationTheme.Dark;
+            }
+            else
+            {
+                return appTheme;
+            }
+        }
 
         public TimeSpan CacheMaxDuration
         {
@@ -71,6 +84,28 @@ namespace Sample.Services.SettingsServices
             {
                 _helper.Write(nameof(IsFullScreen), value);
                 Views.Shell.HamburgerMenu.IsFullScreen = value;
+            }
+        }
+
+        public bool SetManuallyThemeCheckBox
+        {
+            get { return _helper.Read<bool>(nameof(SetManuallyThemeCheckBox), false); }
+            set
+            {
+                _helper.Write(nameof(SetManuallyThemeCheckBox), value);
+            }
+        }
+        public ApplicationTheme OriginalAppTheme
+        {
+            get
+            {
+                var theme = ApplicationTheme.Light;
+                var value = _helper.Read<string>(nameof(OriginalAppTheme), theme.ToString());
+                return Enum.TryParse<ApplicationTheme>(value, out theme) ? theme : ApplicationTheme.Dark;
+            }
+            set
+            {
+                _helper.Write(nameof(OriginalAppTheme), value.ToString());
             }
         }
     }
