@@ -19,6 +19,12 @@ namespace Template10.Controls
             Unloaded += ModalDialog_Unloaded;
         }
 
+        public ModalDialog(UIElement content, UIElement modalContent) : this()
+        {
+            Content = content;
+            ModalContent = modalContent;
+        }
+
         private void ModalDialog_Loaded(object sender, RoutedEventArgs e)
         {
             BootStrapper.BackRequested += BootStrapper_BackRequested;

@@ -16,6 +16,8 @@ using Template10.Services.ViewService;
 using System.Threading;
 using Windows.ApplicationModel.ExtendedExecution;
 using Template10.Services.ExtendedSessionService;
+using Template10.Utils;
+using System.Diagnostics;
 
 namespace Template10.Common
 {
@@ -152,9 +154,6 @@ namespace Template10.Common
 
         #endregion
 
-        Lazy<BootstrapperLifecycleLogic> _LifecycleLogic;
-        internal BootstrapperLifecycleLogic LifecycleLogic => _LifecycleLogic.Value;
-
         Lazy<WindowLogic> _WindowLogic;
         internal WindowLogic WindowLogic => _WindowLogic.Value;
 
@@ -166,7 +165,6 @@ namespace Template10.Common
 
         public BootStrapper()
         {
-            _LifecycleLogic = new Lazy<BootstrapperLifecycleLogic>(() => new BootstrapperLifecycleLogic());
             _WindowLogic = new Lazy<WindowLogic>(() => new WindowLogic());
             _SplashLogic = new Lazy<SplashLogic>(() => new SplashLogic());
             _ExtendedSessionService = new Lazy<ExtendedSessionService>(() => new ExtendedSessionService());
@@ -494,7 +492,7 @@ namespace Template10.Common
             }
 
             // is the kind really right?
-            if (kind == StartKind.Launch && CurrentStateHistory.ContainsValue(BootstrapperStates.Launched))
+            if (kind == StartKind.Launch && CurrentStateHistory.ContainsValue(BootstrapperStates.Launching))
             {
                 kind = StartKind.Activate;
             }
@@ -510,11 +508,14 @@ namespace Template10.Common
             // handle activate
             if (kind == StartKind.Activate)
             {
+                CurrentState = BootstrapperStates.Activating;
+
                 // never activate until launch has completed
                 while (!CurrentStateHistory.ContainsValue(BootstrapperStates.Launched))
                 {
                     await Task.Delay(10);
                 }
+
                 await OnStartAsync(kind, e);
                 CurrentState = BootstrapperStates.Started;
 
@@ -525,6 +526,8 @@ namespace Template10.Common
             // handle first-time launch
             else if (kind == StartKind.Launch)
             {
+                CurrentState = BootstrapperStates.Launching;
+
                 SplashLogic.Show(e.SplashScreen, this);
 
                 // do some one-time things
@@ -534,7 +537,10 @@ namespace Template10.Common
                 SetupCustomTitleBar();
 
                 // default Unspecified extended session
-                await ExtendedSessionService.StartAsync();
+                if (AutoExtendExecutionSession)
+                {
+                    await ExtendedSessionService.StartUnspecifiedAsync();
+                }
 
                 // OnInitializeAsync
                 await OnInitializeAsync(e);
@@ -554,9 +560,11 @@ namespace Template10.Common
                     case ApplicationExecutionState.Suspended:
                     case ApplicationExecutionState.Terminated:
                         OnResuming(this, null, IsPrelaunch ? AppExecutionState.Prelaunch : AppExecutionState.Terminated);
-                        if (AutoRestoreAfterTerminated)
+                        var launchedEventArgs = e as ILaunchActivatedEventArgs;
+                        if (AutoRestoreAfterTerminated
+                            && DetermineStartCause(e) == AdditionalKinds.Primary || launchedEventArgs?.TileId == string.Empty)
                         {
-                            restored = await LifecycleLogic.AutoRestoreAsync(e as ILaunchActivatedEventArgs, NavigationService);
+                            restored = await NavigationService.LoadAsync();
                             CurrentState = BootstrapperStates.Restored;
                         }
                         break;
@@ -613,22 +621,34 @@ namespace Template10.Common
         {
             Resuming += (s, e) => StartupOrchestratorAsync(OriginalActivatedArgs, StartKind.Launch);
             Suspending += async (s, e) =>
-            {
-                var deferral = e.SuspendingOperation.GetDeferral();
-                try
                 {
-                    if (AutoSuspendAllFrames)
+                    var deferral = e.SuspendingOperation.GetDeferral();
+                    try
                     {
-                        await LifecycleLogic.AutoSuspendAllFramesAsync(this, e);
+                        if (AutoExtendExecutionSession)
+                        {
+                            // unspecified will be revoked by suspension
+                            await ExtendedSessionService.StartSaveDataAsync();
+                        }
+
+                        var navs = WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices);
+                        foreach (INavigationService nav in navs)
+                        {
+                            // individual frame-level
+                            await nav.SuspendingAsync();
+                            if (AutoSuspendAllFrames) await nav.SaveAsync();
+                        }
+
+                        // application-level
+                        var isPrelaunch = (OriginalActivatedArgs as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false;
+                        await OnSuspendingAsync(this, e, isPrelaunch);
                     }
-                    var isPrelaunch = (OriginalActivatedArgs as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false;
-                    await OnSuspendingAsync(this, e, isPrelaunch);
-                }
-                finally
-                {
-                    deferral.Complete();
-                }
-            };
+                    finally
+                    {
+                        ExtendedSessionService.Dispose();
+                        deferral.Complete();
+                    }
+                };
         }
 
         private void SetupKeyboardListeners()

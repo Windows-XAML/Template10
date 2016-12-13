@@ -7,54 +7,88 @@ using Windows.ApplicationModel.ExtendedExecution;
 
 namespace Template10.Services.ExtendedSessionService
 {
-    internal class ExtendedServiceHelper
+    public class ExtendedServiceHelper: IDisposable
     {
-        static ExtendedExecutionSession _session;
-
-        public ExtendedServiceHelper()
+        public enum SessionKinds
         {
-            CreateUnspecified();
+            None = -1,
+            Unspecified = 0,
+            LocationTracking = 1,
+            SavingData = 2
         }
 
-        private void CreateUnspecified()
+        volatile static ExtendedExecutionSession _extendedExecutionSession;
+        volatile static SessionKinds _currentKind = SessionKinds.None;
+        volatile static bool _isStarted = false;
+        volatile static bool _isRevoked = false;
+
+        public SessionKinds CurrentKind => _currentKind;
+        public bool IsActive => _isStarted && !_isRevoked;
+        public bool IsStarted => _isStarted;
+        public bool IsRevoked => _isRevoked;
+
+        public int Progress
         {
-            if (_session != null)
+            get { return (int)_extendedExecutionSession.PercentProgress; }
+            set { if (IsStarted) _extendedExecutionSession.PercentProgress = (uint)value; }
+        }
+
+        static ExtendedServiceHelper()
+        {
+            Create();
+        }
+
+        static void Create()
+        {
+            _isStarted = _isRevoked = false;
+            _extendedExecutionSession?.Dispose();
+            _extendedExecutionSession = new ExtendedExecutionSession
             {
-                return;
-            }
-            _session = new ExtendedExecutionSession
-            {
-                Reason = ExtendedExecutionReason.Unspecified
+                Description = typeof(ExtendedServiceHelper).ToString(),
             };
-            _session.Revoked += (s, e) => WasRevoked = true;
-            AllowedToStart = null;
-            WasRevoked = null;
-        }
-
-        public async Task<bool> StartUnspecifiedAsync()
-        {
-            var result = await _session.RequestExtensionAsync();
-            if (result == ExtendedExecutionResult.Allowed)
+            _extendedExecutionSession.Revoked += (s, e) =>
             {
-                AllowedToStart = true;
-                WasRevoked = false;
-            }
-            else
-            {
-                AllowedToStart = false;
-                WasRevoked = true;
-            }
-            return AllowedToStart.Value;
+                _isStarted = false;
+                _isRevoked = true;
+            };
         }
 
-        public void StopUnspecified()
+        public async Task<bool> StartAsync(SessionKinds kind)
         {
-            _session.Dispose();
-            CreateUnspecified();
+            try
+            {
+                switch (kind)
+                {
+                    case SessionKinds.None:
+                        throw new NotSupportedException();
+                    case SessionKinds.Unspecified:
+                        _extendedExecutionSession.Reason = ExtendedExecutionReason.Unspecified;
+                        break;
+                    case SessionKinds.LocationTracking:
+                        _extendedExecutionSession.Reason = ExtendedExecutionReason.LocationTracking;
+                        break;
+                    case SessionKinds.SavingData:
+                        _extendedExecutionSession.Reason = ExtendedExecutionReason.SavingData;
+                        break;
+                }
+                var result = await _extendedExecutionSession.RequestExtensionAsync();
+                return result == ExtendedExecutionResult.Allowed;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
-        public bool? AllowedToStart { get; set; }
-        public bool? WasRevoked { get; set; }
+        public void Stop()
+        {
+            Create();
+        }
+
+        public void Dispose()
+        {
+            _extendedExecutionSession.Dispose();
+        }
     }
 
 }

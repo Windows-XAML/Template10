@@ -4,7 +4,7 @@ using Template10.Common;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Classic = Template10.Services.NavigationService;
-using Portable = Template10.Mobile.Services.NavigationService;
+using Portable = Prism.Navigation;
 using Template10.Utils;
 using System.Diagnostics;
 
@@ -41,11 +41,11 @@ namespace Template10.Services.NavigationService
             viewmodel.SessionState = BootStrapper.Current.SessionState;
         }
 
-        public async Task NavedFromAsync(object viewmodel, Page page, bool suspending)
+        public async Task NavedFromAsync(object viewmodel, NavigationMode mode, Page sourcePage, Type sourceType, object sourceParameter, Page targetPage, Type targetType, object targetParameter, bool suspending)
         {
             Services.NavigationService.NavigationService.DebugWrite();
 
-            if (page == null)
+            if (sourcePage == null)
             {
                 return;
             }
@@ -53,30 +53,37 @@ namespace Template10.Services.NavigationService
             {
                 return;
             }
-            else if (viewmodel is Classic.INavigatingAwareAsync)
+            else if (viewmodel is Classic.INavigatedAwareAsync)
             {
                 var vm = viewmodel as Classic.INavigatedAwareAsync;
-                await vm?.OnNavigatedFromAsync(PageState(page), suspending);
+                await vm?.OnNavigatedFromAsync(PageState(sourcePage), suspending);
             }
-            else if (viewmodel is Portable.INavigatingAwareAsync)
+            else if (viewmodel is Portable.INavigatedAware)
+            {
+                var vm = viewmodel as Portable.INavigatedAware;
+                var parameters = new Portable.NavigationParameters();
+                vm?.OnNavigatedFrom(parameters);
+            }
+            else if (viewmodel is Portable.INavigatedAwareAsync)
             {
                 var vm = viewmodel as Portable.INavigatedAwareAsync;
-                await vm?.OnNavigatedFromAsync(PageState(page), suspending);
+                var parameters = new Portable.NavigationParameters();
+                await vm?.OnNavigatedFromAsync(parameters);
             }
         }
 
-        public async Task NavedToAsync(object viewmodel, object parameter, NavigationMode mode, Page page)
+        public async Task NavedToAsync(object viewmodel, NavigationMode mode, Page sourcePage, Type sourceType, object sourceParameter, Page targetPage, Type targetType, object targetParameter)
         {
             Services.NavigationService.NavigationService.DebugWrite();
 
-            if (page == null)
+            if (targetPage == null)
             {
-                throw new ArgumentNullException(nameof(page));
+                throw new ArgumentNullException(nameof(targetPage));
             }
 
             if (mode == NavigationMode.New)
             {
-                PageState(page).Clear();
+                PageState(targetPage).Clear();
             }
 
             if (viewmodel == null)
@@ -86,25 +93,40 @@ namespace Template10.Services.NavigationService
             else if (viewmodel is Classic.INavigatedAwareAsync)
             {
                 var vm = viewmodel as Classic.INavigatedAwareAsync;
-                await vm?.OnNavigatedToAsync(parameter, mode, PageState(page));
+                await vm?.OnNavigatedToAsync(targetParameter, mode, PageState(targetPage));
+            }
+            else if (viewmodel is Portable.INavigatedAware)
+            {
+                var parameters = new Portable.NavigationParameters();
+                parameters.Add("NavigationMode", mode.ToPrismNavigationMode());
+                parameters.Add("SourceType", sourceType);
+                parameters.Add("SourceParameter", sourceParameter);
+                parameters.Add("TargetType", targetType);
+                parameters.Add("TargetParameter", targetParameter);
+                var vm = viewmodel as Portable.INavigatedAware;
+                vm?.OnNavigatedTo(parameters);
             }
             else if (viewmodel is Portable.INavigatedAwareAsync)
             {
+                var parameters = new Portable.NavigationParameters();
+                parameters.Add("NavigationMode", mode.ToPrismNavigationMode());
+                parameters.Add("SourceType", sourceType);
+                parameters.Add("SourceParameter", sourceParameter);
+                parameters.Add("TargetType", targetType);
+                parameters.Add("TargetParameter", targetParameter);
                 var vm = viewmodel as Portable.INavigatedAwareAsync;
-                await vm?.OnNavigatedToAsync(parameter, mode.ToTemplate10NavigationMode(), PageState(page));
+                await vm?.OnNavigatedToAsync(parameters);
             }
 
-            page.InitializeBindings();
-            page.UpdateBindings();
+            targetPage.InitializeBindings();
+            targetPage.UpdateBindings();
         }
 
-        #region INavigatingAwareAsync
-
-        public async Task<bool> NavingFromCancelsAsync(object viewmodel, Page page, object currentParameter, bool suspending, NavigationMode navigationMode, Type targetPageType, object targetParameter)
+        public async Task<bool> NavingFromCancelsAsync(object viewmodel, NavigationMode mode, Page sourcePage, Type sourceType, object sourceParameter, Page targetPage, Type targetType, object targetParameter, bool suspending)
         {
             Services.NavigationService.NavigationService.DebugWrite();
 
-            if (page == null)
+            if (sourcePage == null)
             {
                 return false;
             }
@@ -114,68 +136,45 @@ namespace Template10.Services.NavigationService
             }
             else if (viewmodel is Classic.INavigatingAwareAsync)
             {
-                var vm = viewmodel as Classic.INavigatingAwareAsync;
-                return await NavingFromAsync(vm, page, currentParameter, suspending, navigationMode, targetPageType, targetParameter);
+                var deferral = new DeferralManager();
+                var navigatingEventArgs = new Classic.NavigatingEventArgs(deferral)
+                {
+                    Page = sourcePage,
+                    PageType = sourcePage?.GetType(),
+                    Parameter = sourceParameter,
+                    NavigationMode = mode,
+                    TargetPageType = targetType,
+                    TargetPageParameter = targetParameter,
+                    Suspending = suspending,
+                };
+                try
+                {
+                    var vm = viewmodel as Classic.INavigatingAwareAsync;
+                    await vm?.OnNavigatingFromAsync(navigatingEventArgs);
+                    await deferral.WaitForDeferralsAsync();
+                }
+                catch
+                {
+                    Debugger.Break();
+                }
+                return navigatingEventArgs.Cancel;
             }
-            else if (viewmodel is Portable.INavigatingAwareAsync)
+            else if (viewmodel is Portable.IConfirmNavigationAsync)
             {
-                var vm = viewmodel as Portable.INavigatingAwareAsync;
-                return await NavingFromAsync(vm, page, currentParameter, suspending, navigationMode, targetPageType, targetParameter);
+                var parameters = new Portable.NavigationParameters();
+                parameters.Add("NavigationMode", mode.ToPrismNavigationMode());
+                parameters.Add("SourceType", sourceType);
+                parameters.Add("SourceParameter", sourceParameter);
+                parameters.Add("TargetType", targetType);
+                parameters.Add("TargetParameter", targetParameter);
+                parameters.Add("Suspending", suspending);
+                var vm = viewmodel as Portable.IConfirmNavigationAsync;
+                return !await vm?.CanNavigateAsync(parameters);
             }
             else
             {
                 return true;
             }
         }
-
-        private async Task<bool> NavingFromAsync(Classic.INavigatingAwareAsync viewmodel, Page page, object currentParameter, bool suspending, NavigationMode navigationMode, Type targetPageType, object targetParameter)
-        {
-            var deferral = new DeferralManager();
-            var navigatingEventArgs = new Classic.NavigatingEventArgs(deferral)
-            {
-                Page = page,
-                Parameter = currentParameter,
-                Suspending = suspending,
-                NavigationMode = navigationMode,
-                TargetPageType = targetPageType,
-                TargetPageParameter = targetParameter,
-            };
-            try
-            {
-                await viewmodel.OnNavigatingFromAsync(navigatingEventArgs);
-                await deferral.WaitForDeferralsAsync();
-            }
-            catch
-            {
-                Debugger.Break();
-            }
-            return navigatingEventArgs.Cancel;
-        }
-
-        private async Task<bool> NavingFromAsync(Portable.INavigatingAwareAsync viewmodel, Page page, object currentParameter, bool suspending, NavigationMode navigationMode, Type targetPageType, object targetParameter)
-        {
-            var deferral = new Template10.Mobile.Common.DeferralManager();
-            var navigatingEventArgs = new Portable.NavigatingEventArgs(deferral)
-            {
-                Page = page,
-                Parameter = currentParameter,
-                Suspending = suspending,
-                NavigationMode = navigationMode.ToTemplate10NavigationMode(),
-                TargetPageType = targetPageType,
-                TargetPageParameter = targetParameter,
-            };
-            try
-            {
-                await viewmodel.OnNavigatingFromAsync(navigatingEventArgs);
-                await deferral.WaitForDeferralsAsync();
-            }
-            catch
-            {
-                Debugger.Break();
-            }
-            return navigatingEventArgs.Cancel;
-        }
-
-        #endregion
     }
 }

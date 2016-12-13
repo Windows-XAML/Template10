@@ -1,12 +1,12 @@
 using System;
-using Portable = Template10.Mobile.Services.NavigationService;
+using Portable = Prism.Navigation;
 using UWP = Windows.UI.Xaml.Navigation;
 
 namespace Template10.Services.NavigationService
 {
     public static class Extensions
     {
-        public static Portable.NavigationMode ToTemplate10NavigationMode(this UWP.NavigationMode mode)
+        public static Portable.NavigationMode ToPrismNavigationMode(this UWP.NavigationMode mode)
         {
             switch (mode)
             {

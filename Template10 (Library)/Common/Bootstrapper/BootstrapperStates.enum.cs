@@ -15,6 +15,8 @@ namespace Template10.Common
         Restored,
         Started,
         Initialized,
+        Launching,
+        Activating,
 
         //BeforeInit,
         //AfterInit,

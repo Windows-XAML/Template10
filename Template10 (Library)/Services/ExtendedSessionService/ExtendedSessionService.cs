@@ -1,43 +1,49 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace Template10.Services.ExtendedSessionService
 {
-    public class ExtendedSessionService : IExtendedSessionService
+    public class ExtendedSessionService : IExtendedSessionService, IDisposable
     {
-        ExtendedServiceHelper _helper;
+        public ExtendedServiceHelper _helper { get; }
 
         public ExtendedSessionService()
         {
             _helper = new ExtendedServiceHelper();
         }
 
-        internal async Task StartAsync()
+        public async Task<bool> StartUnspecifiedAsync()
         {
-            await _helper.StartUnspecifiedAsync();
-        }
-
-        public enum ClosingStatuses
-        {
-            IsClosing, IsNotClosing, Unknown
-        }
-
-        public ClosingStatuses ApplicationClosingStatus
-        {
-            get
+            if (_helper.IsActive)
             {
-                if (!_helper.AllowedToStart ?? false)
+                if (_helper.CurrentKind == ExtendedServiceHelper.SessionKinds.Unspecified)
                 {
-                    return ClosingStatuses.Unknown;
+                    return true;
                 }
-                else if (_helper.WasRevoked ?? false)
-                {
-                    return ClosingStatuses.IsClosing;
-                }
-                else
-                {
-                    return ClosingStatuses.IsNotClosing;
-                }
+                return false;
             }
+            else
+            {
+                return await _helper.StartAsync(ExtendedServiceHelper.SessionKinds.Unspecified);
+            }
+        }
+
+        public async Task<bool> StartSaveDataAsync()
+        {
+            if (_helper.IsActive)
+            {
+                if (_helper.CurrentKind == ExtendedServiceHelper.SessionKinds.SavingData)
+                {
+                    return true;
+                }
+                _helper.Stop();
+            }
+            return await _helper.StartAsync(ExtendedServiceHelper.SessionKinds.SavingData);
+        }
+
+        public void Dispose()
+        {
+            _helper.Dispose();
         }
     }
 }

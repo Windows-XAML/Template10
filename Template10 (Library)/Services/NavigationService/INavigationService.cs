@@ -8,6 +8,7 @@ using Windows.UI.Xaml.Media.Animation;
 using Template10.Services.ViewService;
 using Template10.Services.SerializationService;
 using Classic = Template10.Services.NavigationService;
+using Prism = Prism.Navigation;
 using Portable = Template10.Mobile.Services.NavigationService;
 
 namespace Template10.Services.NavigationService

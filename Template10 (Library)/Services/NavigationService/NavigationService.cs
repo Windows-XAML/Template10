@@ -1,5 +1,4 @@
-﻿using Portable = Template10.Mobile.Services.NavigationService;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -13,6 +12,7 @@ using Windows.UI.Xaml.Navigation;
 using Template10.Services.SerializationService;
 using Template10.Services.ViewService;
 using Template10.Utils;
+using Portable = Template10.Mobile.Services.NavigationService;
 
 namespace Template10.Services.NavigationService
 {
@@ -175,17 +175,18 @@ namespace Template10.Services.NavigationService
 
             // fetch current (which will become old)
             var oldPage = FrameFacade.Content as Page;
+            var oldParameter = CurrentPageParam;
             var oldViewModel = oldPage?.DataContext;
 
             // call oldViewModel.OnNavigatingFromAsync()
-            var viewmodelCancels = await Navigation.NavingFromCancelsAsync(oldViewModel, oldPage, CurrentPageParam, false, mode, page, parameter);
+            var viewmodelCancels = await Navigation.NavingFromCancelsAsync(oldViewModel, mode, FrameFacade.Content as Page, CurrentPageType, CurrentPageParam, null, page, parameter, false);
             if (viewmodelCancels)
             {
                 return false;
             }
 
             // raise Navigating event
-            var eventCancels = RaiseNavigatingCancels(oldPage, parameter, false, mode.ToTemplate10NavigationMode(), page);
+            var eventCancels = RaiseNavigatingCancels(oldPage, parameter, false, mode.ToPrismNavigationMode(), page);
             if (eventCancels)
             {
                 return false;
@@ -207,10 +208,10 @@ namespace Template10.Services.NavigationService
             var newViewModel = newPage?.DataContext;
 
             // raise Navigated event
-            RaiseNavigated(newPage, parameter, mode.ToTemplate10NavigationMode());
+            RaiseNavigated(newPage, parameter, mode.ToPrismNavigationMode());
 
             // call oldViewModel.OnNavigatedFrom()
-            await Navigation.NavedFromAsync(oldViewModel, oldPage, false);
+            await Navigation.NavedFromAsync(oldViewModel, mode, oldPage, oldPage?.GetType(), oldParameter, newPage, page, parameter, false);
 
             // call newViewModel.ResolveForPage()
             if (newViewModel == null)
@@ -225,7 +226,7 @@ namespace Template10.Services.NavigationService
             }
 
             // call newViewModel.OnNavigatedToAsync()
-            await Navigation.NavedToAsync(newViewModel, parameter, mode, newPage);
+            await Navigation.NavedToAsync(newViewModel, mode, oldPage, oldPage?.GetType(), oldParameter, newPage, page, parameter);
 
             // finally 
             return true;
@@ -242,7 +243,7 @@ namespace Template10.Services.NavigationService
             // for backwards compat
             FrameFacade.RaiseNavigated(e);
         }
-        public void RaiseNavigated(object page, object parameter, Portable.NavigationMode mode)
+        public void RaiseNavigated(object page, object parameter, Prism.Navigation.NavigationMode mode)
         {
             var navigatedEventArgs = new Portable.NavigatedEventArgs()
             {
@@ -261,7 +262,8 @@ namespace Template10.Services.NavigationService
             // for backwards compat
             FrameFacade.RaiseNavigating(e);
         }
-        public bool RaiseNavigatingCancels(object page, object parameter, bool suspending, Portable.NavigationMode mode, Type targetType)
+
+        public bool RaiseNavigatingCancels(object page, object parameter, bool suspending, Prism.Navigation.NavigationMode mode, Type targetType)
         {
             var navigatingDeferral = new Template10.Mobile.Common.DeferralManager();
             var navigatingEventArgs = new Portable.NavigatingEventArgs(navigatingDeferral)
@@ -358,6 +360,12 @@ namespace Template10.Services.NavigationService
                 var newPage = FrameFacade.Content as Page;
                 var newViewModel = newPage?.DataContext;
 
+                if (newPage?.GetType() != CurrentPageType)
+                {
+                    // failed to load
+                    return false;
+                }
+
                 // newTemplate10ViewModel.Properties
                 if (newViewModel is ITemplate10ViewModel)
                 {
@@ -365,7 +373,7 @@ namespace Template10.Services.NavigationService
                 }
 
                 // newNavigatedAwareAsync.OnNavigatedTo
-                await Navigation.NavedToAsync(newPage?.DataContext, CurrentPageParam, NavigationMode.Refresh, newPage);
+                await Navigation.NavedToAsync(newPage?.DataContext, NavigationMode.New, null, null, null, newPage, CurrentPageType, CurrentPageParam);
 
                 RaiseAfterRestoreSavedNavigation();
                 return true;
@@ -461,10 +469,15 @@ namespace Template10.Services.NavigationService
         {
             DebugWrite($"Frame: {FrameFacade.FrameId}");
 
-            await SaveAsync();
+            string CacheDateKey = "Setting-Cache-Date";
+            Suspension.GetFrameState().Write(CacheDateKey, DateTime.Now.ToString());
 
-            var page = FrameFacade.Content as Page;
-            await Navigation.NavedFromAsync(page?.DataContext, page, true);
+            var dispatcher = this.GetDispatcherWrapper();
+            await dispatcher.DispatchAsync(async () =>
+            {
+                var page = FrameFacade.Content as Page;
+                await Navigation.NavedFromAsync(page?.DataContext, NavigationMode.New, null, null, null, page, CurrentPageType, CurrentPageParam, true);
+            });
         }
     }
 }

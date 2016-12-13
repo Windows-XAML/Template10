@@ -134,7 +134,6 @@
     <Compile Include="Common\Bootstrapper\ActivateWindowSources.enum.cs" />
     <Compile Include="Common\Bootstrapper\Settings.cs" />
     <Compile Include="Common\Bootstrapper\BootstrapperStates.enum.cs" />
-    <Compile Include="Common\Bootstrapper\LifecycleLogic.cs" />
     <Compile Include="Common\Bootstrapper\WindowLogic.cs" />
     <Compile Include="Behaviors\EventTriggerBehaviorBase.cs" />
     <Compile Include="Behaviors\FocusAction.cs" />

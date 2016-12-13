@@ -17,7 +17,7 @@ namespace Sample.Views
         public static HamburgerMenu HamburgerMenu => Instance.MyHamburgerMenu;
         Services.SettingsServices.SettingsService _settings;
 
-        public Shell()
+        private Shell()
         {
             Instance = this;
             InitializeComponent();
