@@ -84,13 +84,14 @@ namespace Template10.Services.NavigationService
             _Frame.CacheSize = currentSize;
         }
 
+        public IList<PageStackEntry> BackStack => _Frame.BackStack;
+
+        public IList<PageStackEntry> ForwardStack => _Frame.ForwardStack;
+
         internal bool Navigate(Type page, object parameter, NavigationTransitionInfo info) => _Frame.Navigate(page, parameter, info);
 
         internal bool Navigate(Type page, object parameter) => _Frame.Navigate(page, parameter);
 
-        internal IList<PageStackEntry> BackStack => _Frame.BackStack;
-
-        internal IList<PageStackEntry> ForwardStack => _Frame.ForwardStack;
 
         // Obsolete properties/methods
 
