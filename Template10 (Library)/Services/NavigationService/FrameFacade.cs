@@ -37,8 +37,6 @@ namespace Template10.Services.NavigationService
 
         public string FrameId { get; set; } = string.Empty;
 
-        public int BackStackDepth => _Frame.BackStackDepth;
-
         public object Content => _Frame.Content;
 
         public object GetValue(DependencyProperty dp) => _Frame.GetValue(dp);
@@ -47,17 +45,17 @@ namespace Template10.Services.NavigationService
 
         public void ClearValue(DependencyProperty dp) { _Frame.ClearValue(dp); }
 
-        public void SetNavigationState(string state) => _Frame.SetNavigationState(state);
+        internal void SetNavigationState(string state) => _Frame.SetNavigationState(state);
 
-        public string GetNavigationState() => _Frame.GetNavigationState();
+        internal string GetNavigationState() => _Frame.GetNavigationState();
 
         public bool CanGoBack => _Frame.CanGoBack;
 
         public bool CanGoForward => _Frame.CanGoForward;
 
-        public void GoBack(NavigationTransitionInfo infoOverride = null) => _Frame.GoBack();
+        internal void GoBack(NavigationTransitionInfo infoOverride = null) => _Frame.GoBack();
 
-        public void GoForward() => _Frame.GoForward();
+        internal void GoForward() => _Frame.GoForward();
 
         public void ClearCache(bool removeCachedPagesInBackStack = false)
         {
@@ -88,9 +86,12 @@ namespace Template10.Services.NavigationService
 
         internal bool Navigate(Type page, object parameter) => _Frame.Navigate(page, parameter);
 
-        internal IList<PageStackEntry> BackStack => _Frame.BackStack;
+        [Obsolete("Use FrameFacade.BackStack.Count. THis will be deleted in future versions.", false)]
+        public int BackStackDepth => _Frame.BackStack.Count;
 
-        internal IList<PageStackEntry> ForwardStack => _Frame.ForwardStack;
+        public IList<PageStackEntry> BackStack => _Frame.BackStack;
+
+        public IList<PageStackEntry> ForwardStack => _Frame.ForwardStack;
 
         // Obsolete properties/methods
 
@@ -114,13 +115,13 @@ namespace Template10.Services.NavigationService
         public void ClearFrameState() => this.NavigationService.Suspension.ClearFrameState();
 
         [Obsolete("Use NavigationService.Suspension.GetPageState(). This may be made private in a future version.", false)]
-        public SettingsService.ISettingsService PageStateSettingsService(Type type) => this.NavigationService.Suspension.GetPageState(type, BackStackDepth);
+        public SettingsService.ISettingsService PageStateSettingsService(Type type) => this.NavigationService.Suspension.GetPageState(type, BackStack.Count);
 
         [Obsolete("Use NavigationService.Suspension.GetPageState(). This may be made private in a future version.", false)]
         public SettingsService.ISettingsService PageStateSettingsService(string key) => this.NavigationService.Suspension.GetPageState(key);
 
         [Obsolete("Use NavigationService.Suspension.ClearPageState(). This may be made private in a future version.", false)]
-        public void ClearPageState(Type type) => this.NavigationService.Suspension.ClearPageState(type, BackStackDepth);
+        public void ClearPageState(Type type) => this.NavigationService.Suspension.ClearPageState(type, BackStack.Count);
 
         [Obsolete("This may be made private in a future version.", false)]
         public INavigationService NavigationService { get; }
