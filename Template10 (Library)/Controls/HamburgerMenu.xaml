@@ -82,41 +82,41 @@
 
             <DataTemplate x:Name="NavButtonLiteralTemplate" x:DataType="local:HamburgerButtonInfo">
                 <ContentPresenter x:Name="ContentPresenter"
-                                  Width="{Binding PaneWidth, ElementName=ThisPage}"
+                                  Width="{Binding PaneWidth, ElementName=ThisPage, Mode=OneWay}"
                                   MinWidth="48"
-                                  MaxWidth="{x:Bind MaxWidth, Mode=TwoWay}"
+                                  MaxWidth="{Binding MaxWidth, Mode=OneWay}"
                                   Background="{Binding NavButtonBackground, ElementName=ThisPage, FallbackValue=DarkRed, Mode=OneWay}"
-                                  Content="{Binding Content}"
+                                  Content="{Binding Content, Mode=OneWay}"
                                   Foreground="{Binding NavButtonForeground, ElementName=ThisPage, FallbackValue=White, Mode=OneWay}"
                                   Loaded="NavButton_Loaded"
-                                  ToolTipService.ToolTip="{Binding Path=(ToolTipService.ToolTip)}"
-                                  Visibility="{Binding Visibility, Mode=TwoWay}" />
+                                  ToolTipService.ToolTip="{Binding Path=(ToolTipService.ToolTip), Mode=OneWay}"
+                                  Visibility="{Binding Visibility, Mode=OneWay}" />
             </DataTemplate>
 
             <DataTemplate x:Name="NavToggleButtonTemplate" x:DataType="local:HamburgerButtonInfo">
                 <ToggleButton Width="{Binding PaneWidth, ElementName=ThisPage}"
                               MinWidth="48"
-                              MaxWidth="{x:Bind MaxWidth, Mode=TwoWay}"
+                              MaxWidth="{Binding MaxWidth, Mode=OneWay}"
                               AutomationProperties.Name="Hamburger Menu Item"
-                              Checked="NavButtonChecked"
-                              Command="{Binding NavCommand, ElementName=ThisPage}"
-                              CommandParameter="{Binding}"
-                              Content="{Binding Content}"
+                              Checked="NavButton_Checked"
+                              Command="{Binding NavCommand, ElementName=ThisPage, Mode=OneWay}"
+                              CommandParameter="{Binding Mode=OneWay}"
+                              Content="{Binding Content, Mode=OneWay}"
                               Holding="NavButton_Holding"
                               IsChecked="{Binding IsChecked, Mode=TwoWay}"
-                              IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
-                              IsTabStop="{Binding IsChecked, Converter={StaticResource ReverseBooleanConverter}}"
+                              IsEnabled="{Binding IsEnabled_InternalBinding, Mode=OneWay}"
+                              IsTabStop="{Binding IsTabStop_InternalBinding, Mode=OneWay}"
                               Loaded="NavButton_Loaded"
                               RightTapped="NavButton_RightTapped"
                               TabIndex="2"
                               Tapped="NavButton_Tapped"
-                              ToolTipService.ToolTip="{Binding Path=(ToolTipService.ToolTip)}"
-                              Unchecked="NavButtonUnchecked"
-                              Visibility="{Binding Visibility, Mode=TwoWay}">
+                              ToolTipService.ToolTip="{Binding Path=(ToolTipService.ToolTip), Mode=OneWay}"
+                              Unchecked="NavButton_Unchecked"
+                              Visibility="{Binding Visibility, Mode=OneWay}">
                     <ToggleButton.Template>
                         <ControlTemplate TargetType="ToggleButton">
                             <Grid x:Name="RootGrid"
-                                  Width="{Binding PaneWidth, ElementName=ThisPage}"
+                                  Width="{Binding PaneWidth, ElementName=ThisPage, Mode=OneWay}"
                                   Background="Transparent">
                                 <VisualStateManager.VisualStateGroups>
                                     <VisualStateGroup x:Name="CommonStates">
@@ -182,7 +182,7 @@
                                         <VisualState x:Name="IndeterminateDisabled" />
                                     </VisualStateGroup>
                                 </VisualStateManager.VisualStateGroups>
-                                <ContentPresenter x:Name="ContentPresenter" Content="{Binding Content}" />
+                                <ContentPresenter x:Name="ContentPresenter" Content="{Binding Content, Mode=OneWay}" />
                                 <Rectangle x:Name="Indicator"
                                            Width="4"
                                            HorizontalAlignment="Left"
@@ -195,27 +195,28 @@
             </DataTemplate>
 
             <DataTemplate x:Name="NavCommandButtonTemplate" x:DataType="local:HamburgerButtonInfo">
-                <Button Width="{Binding PaneWidth, ElementName=ThisPage}"
+                <Button Width="{Binding PaneWidth, ElementName=ThisPage, Mode=OneWay}"
                         MinWidth="48"
-                        MaxWidth="{x:Bind MaxWidth, Mode=OneWay}"
+                        MaxWidth="{Binding MaxWidth, Mode=OneWay}"
                         AutomationProperties.Name="Hamburger Menu Item"
                         BorderBrush="Red"
                         BorderThickness="1"
-                        Command="{Binding NavCommand, ElementName=ThisPage}"
-                        CommandParameter="{Binding}"
-                        Content="{x:Bind Content, Mode=OneWay}"
+                        Command="{Binding NavCommand, ElementName=ThisPage, Mode=OneWay}"
+                        CommandParameter="{Binding Mode=OneWay}"
+                        Content="{Binding Content, Mode=OneWay}"
                         Holding="NavButton_Holding"
-                        IsEnabled="{x:Bind IsEnabled, Mode=OneWay}"
+                        IsEnabled="{Binding IsEnabled_InternalBinding, Mode=OneWay}"
+                        IsTabStop="{Binding IsTabStop_InternalBinding, Mode=OneWay}"
                         Loaded="NavButton_Loaded"
                         RightTapped="NavButton_RightTapped"
                         TabIndex="2"
                         Tapped="NavButton_Tapped"
-                        ToolTipService.ToolTip="{x:Bind Path=(ToolTipService.ToolTip), Mode=OneWay}"
-                        Visibility="{x:Bind Visibility, Mode=OneWay}">
+                        ToolTipService.ToolTip="{Binding Path=(ToolTipService.ToolTip), Mode=OneWay}"
+                        Visibility="{Binding Visibility, Mode=OneWay}">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Grid x:Name="RootGrid"
-                                  Width="{Binding PaneWidth, ElementName=ThisPage}"
+                                  Width="{Binding PaneWidth, ElementName=ThisPage, Mode=OneWay}"
                                   Background="Transparent">
                                 <VisualStateManager.VisualStateGroups>
                                     <VisualStateGroup x:Name="CommonStates">
@@ -254,7 +255,7 @@
                                         </VisualState>
                                     </VisualStateGroup>
                                 </VisualStateManager.VisualStateGroups>
-                                <ContentPresenter x:Name="ContentPresenter" Content="{Binding Content}" />
+                                <ContentPresenter x:Name="ContentPresenter" Content="{Binding Content, Mode=OneWay}" />
                             </Grid>
                         </ControlTemplate>
                     </Button.Template>

@@ -581,9 +581,11 @@ namespace Template10.Controls
         // intended to be marshalled by UpdateControl()
         private void UpdateFullScreen(bool? manual = null)
         {
+            var isFullScreen = false;
             var opacity = 1;
             if (manual ?? IsFullScreen)
             {
+                isFullScreen = true;
                 opacity = 0;
                 if (DisplayMode == SplitViewDisplayMode.Overlay)
                 {
@@ -612,6 +614,18 @@ namespace Template10.Controls
             HamburgerButton.Opacity = opacity;
             HamburgerBackground.Opacity = opacity;
             PaneContent.Opacity = opacity;
+
+            // update tabstop settings
+            Header.IsTabStop = !isFullScreen;
+            HamburgerButton.IsTabStop = !isFullScreen;
+            foreach (var button in this.PrimaryButtons)
+            {
+                button.IsFullScreen = isFullScreen;
+            }
+            foreach (var button in this.SecondaryButtons)
+            {
+                button.IsFullScreen = isFullScreen;
+            }
         }
 
         // intended to be marshalled by UpdateControl()
@@ -673,20 +687,23 @@ namespace Template10.Controls
         {
             DebugWrite($"HamburgerButtonInfo: {commandInfo}");
 
-            if (commandInfo == null)
+            if (!IsFullScreen)
             {
-                throw new NullReferenceException("CommandParameter is not set");
-            }
+                if (commandInfo == null)
+                {
+                    throw new NullReferenceException("CommandParameter is not set");
+                }
 
-            if (commandInfo.PageType != null)
-            {
-                Selected = commandInfo;
-            }
-            else
-            {
-                ExecuteNavButtonICommand(commandInfo);
-                commandInfo.RaiseTapped(new RoutedEventArgs());
-                CommandButttonTapped?.Invoke(commandInfo, null);
+                if (commandInfo.PageType != null)
+                {
+                    Selected = commandInfo;
+                }
+                else
+                {
+                    ExecuteNavButtonICommand(commandInfo);
+                    commandInfo.RaiseTapped(new RoutedEventArgs());
+                    CommandButttonTapped?.Invoke(commandInfo, null);
+                }
             }
         }
         #endregion
@@ -743,7 +760,7 @@ namespace Template10.Controls
         private void ExecuteNavButtonICommand(HamburgerButtonInfo info)
         {
             ICommand command = info.Command;
-            if (command != null)
+            if (command != null && !this.IsFullScreen)
             {
                 var commandParameter = info.CommandParameter;
                 if (command.CanExecute(commandParameter))
@@ -771,7 +788,7 @@ namespace Template10.Controls
             e.Handled = true;
         }
 
-        private void NavButtonChecked(object sender, RoutedEventArgs e)
+        private void NavButton_Checked(object sender, RoutedEventArgs e)
         {
             DebugWrite();
 
@@ -785,7 +802,7 @@ namespace Template10.Controls
             }
         }
 
-        private void NavButtonUnchecked(object sender, RoutedEventArgs e)
+        private void NavButton_Unchecked(object sender, RoutedEventArgs e)
         {
             DebugWrite();
 
