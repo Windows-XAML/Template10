@@ -204,7 +204,6 @@ namespace Template10.Common
                 }
             }
             NavigationService.GoBack();
-            handled = true;
         }
 
         public static event EventHandler<HandledEventArgs> ForwardRequested;
