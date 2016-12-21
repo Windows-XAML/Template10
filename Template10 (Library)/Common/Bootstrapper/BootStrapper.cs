@@ -203,6 +203,7 @@ namespace Template10.Common
                     return;
                 }
             }
+            handled = (NavigationService.FrameFacade.BackStack.Count > 0);
             NavigationService.GoBack();
         }
 
