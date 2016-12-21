@@ -516,10 +516,19 @@ namespace Template10.Common
                     await Task.Delay(10);
                 }
 
+                while (CurrentStateHistory.Count(x => x.Value == BootstrapperStates.Starting) != CurrentStateHistory.Count(x => x.Value == BootstrapperStates.Started))
+                {
+                    await Task.Delay(10);
+                }
+
+                CurrentState = BootstrapperStates.Starting;
+
                 await OnStartAsync(kind, e);
+
                 CurrentState = BootstrapperStates.Started;
 
                 WindowLogic.ActivateWindow(ActivateWindowSources.Activating, SplashLogic);
+
                 CurrentState = BootstrapperStates.Activated;
             }
 
@@ -542,8 +551,11 @@ namespace Template10.Common
                     await ExtendedSessionService.StartUnspecifiedAsync();
                 }
 
+                CurrentState = BootstrapperStates.Initializing;
+
                 // OnInitializeAsync
                 await OnInitializeAsync(e);
+
                 CurrentState = BootstrapperStates.Initialized;
 
                 // if there no pre-existing root then generate root
@@ -564,7 +576,10 @@ namespace Template10.Common
                         if (AutoRestoreAfterTerminated
                             && DetermineStartCause(e) == AdditionalKinds.Primary || launchedEventArgs?.TileId == string.Empty)
                         {
+                            CurrentState = BootstrapperStates.Restoring;
+
                             restored = await NavigationService.LoadAsync();
+
                             CurrentState = BootstrapperStates.Restored;
                         }
                         break;
@@ -573,9 +588,13 @@ namespace Template10.Common
                 // handle if pre-launch (no UI)
                 if (IsPrelaunch)
                 {
+                    CurrentState = BootstrapperStates.Prelaunching;
+
                     var runOnStartAsync = false;
                     await OnPrelaunchAsync(e, out runOnStartAsync);
+
                     CurrentState = BootstrapperStates.Prelaunched;
+
                     if (!runOnStartAsync)
                     {
                         return;
@@ -585,13 +604,30 @@ namespace Template10.Common
                 // handle if not restored (new launch)
                 if (!restored)
                 {
+                    CurrentState = BootstrapperStates.Starting;
+
                     await OnStartAsync(StartKind.Launch, e);
+
                     CurrentState = BootstrapperStates.Started;
                 }
 
                 // this will also hide any showing splashscreen
                 WindowLogic.ActivateWindow(ActivateWindowSources.Launching, SplashLogic);
+
                 CurrentState = BootstrapperStates.Launched;
+            }
+        }
+
+        async Task TryWrap(BootstrapperStates before, Func<Task> action, BootstrapperStates after)
+        {
+            CurrentState = before;
+            try
+            {
+                await action();
+            }
+            finally
+            {
+
             }
         }
 

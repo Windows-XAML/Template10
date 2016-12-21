@@ -366,7 +366,7 @@ namespace Template10.Controls
         private void UpdateFullScreenForSplashScreen(ChangedEventArgs<INavigationService> e)
         {
             // If splash screen then continue showing until navigated once
-            if (e.NewValue.FrameFacade.BackStackDepth == 0
+            if (e.NewValue.FrameFacade.BackStack.Count == 0
                 && e.NewValue.Frame.Content != null
                 && BootStrapper.Current.SplashFactory != null
                 && BootStrapper.Current.OriginalActivatedArgs.PreviousExecutionState != Windows.ApplicationModel.Activation.ApplicationExecutionState.Terminated)

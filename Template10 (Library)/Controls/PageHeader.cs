@@ -188,7 +188,7 @@ namespace Template10.Controls
         private T GetTemplateChild<T>(string name) where T : DependencyObject
         {
             var child = GetTemplateChild(name) as T;
-            if (child == null)
+            if (child == null && !Windows.ApplicationModel.DesignMode.DesignModeEnabled)
             {
                 throw new Common.TemplatePartNotFoundException($"Control part {name} not found in Template.");
             }
