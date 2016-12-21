@@ -181,7 +181,6 @@
     <Compile Include="Controls\CustomTitleBar.cs" />
     <Compile Include="Controls\HamburgerButtonInfo.cs" />
     <Compile Include="Controls\PageHeader.cs" />
-    <Compile Include="Controls\PiePiece.cs" />
     <Compile Include="Controls\Resizer.cs" />
     <Compile Include="Controls\RingSegment.cs" />
     <Compile Include="Converters\ChangeTypeConverter.cs" />
