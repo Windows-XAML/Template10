@@ -157,7 +157,8 @@ namespace Template10.Controls
         }
         public static readonly DependencyProperty IsEnabledProperty =
             DependencyProperty.Register(nameof(IsEnabled), typeof(bool),
-                typeof(HamburgerButtonInfo), new PropertyMetadata(true));
+                typeof(HamburgerButtonInfo), new PropertyMetadata(true,
+                    (sender, args) => ((HamburgerButtonInfo) sender).UpdateInternalBindingValues()));
 
         public bool? IsChecked
         {
@@ -167,6 +168,16 @@ namespace Template10.Controls
         public static readonly DependencyProperty IsCheckedProperty =
             DependencyProperty.Register(nameof(IsChecked), typeof(object),
                 typeof(HamburgerButtonInfo), new PropertyMetadata(false));
+
+        public bool IsTabStop
+        {
+            get { return (bool)GetValue(IsTabStopProperty); }
+            set { SetValue(IsTabStopProperty, value); }
+        }
+        public static readonly DependencyProperty IsTabStopProperty =
+            DependencyProperty.Register(nameof(IsTabStop), typeof(object),
+                typeof(HamburgerButtonInfo), new PropertyMetadata(true,
+                    (sender, args) => ((HamburgerButtonInfo)sender).UpdateInternalBindingValues()));
 
         public UIElement Content
         {
@@ -188,36 +199,99 @@ namespace Template10.Controls
 
         public override string ToString() => string.Format($"IsChecked: {IsChecked} PageType: {PageType}, Parameter: {PageParameter}");
 
+        #region Internal binding properties
+
+        private void UpdateInternalBindingValues()
+        {
+            bool isFullScreen = this.IsFullScreen;
+            bool isEnabled = !isFullScreen && this.IsEnabled;
+            bool isTabStop = isEnabled && this.IsTabStop;
+
+            this.IsEnabled_InternalBinding = isEnabled;
+            this.IsTabStop_InternalBinding = isTabStop;
+        }
+
+        internal bool IsFullScreen
+        {
+            get { return (bool)this.GetValue(IsFullScreenProperty); }
+            set { this.SetValue(IsFullScreenProperty, value); }
+        }
+        internal static readonly DependencyProperty IsFullScreenProperty =
+            DependencyProperty.Register(nameof(IsFullScreenProperty), typeof(object),
+                typeof(HamburgerButtonInfo), new PropertyMetadata(false,
+                    (sender, args) => ((HamburgerButtonInfo)sender).UpdateInternalBindingValues()));
+
+        internal bool IsEnabled_InternalBinding
+        {
+            get { return (bool)this.GetValue(IsEnabled_InternalBindingProperty); }
+            set { this.SetValue(IsEnabled_InternalBindingProperty, value); }
+        }
+
+        internal static readonly DependencyProperty IsEnabled_InternalBindingProperty =
+            DependencyProperty.Register(nameof(IsEnabled_InternalBinding), typeof(object),
+                typeof(HamburgerButtonInfo), new PropertyMetadata(true));
+
+        internal bool IsTabStop_InternalBinding
+        {
+            get { return (bool)this.GetValue(IsTabStop_InternalBindingProperty); }
+            set { this.SetValue(IsTabStop_InternalBindingProperty, value); }
+        }
+        internal static readonly DependencyProperty IsTabStop_InternalBindingProperty =
+            DependencyProperty.Register(nameof(IsTabStop_InternalBinding), typeof(object),
+                typeof(HamburgerButtonInfo), new PropertyMetadata(true));
+
+        #endregion
+
         #region Events
 
         public event RoutedEventHandler Selected;
-        internal void RaiseSelected() => Selected?.Invoke(this, new RoutedEventArgs());
+        internal void RaiseSelected()
+        {
+            if (!IsFullScreen)
+                this.Selected?.Invoke(this, new RoutedEventArgs());
+        }
 
         public event RoutedEventHandler Unselected;
-        internal void RaiseUnselected() => Unselected?.Invoke(this, new RoutedEventArgs());
+        internal void RaiseUnselected()
+        {
+            if (!IsFullScreen)
+                this.Unselected?.Invoke(this, new RoutedEventArgs());
+        }
 
         public event RoutedEventHandler Checked;
         internal void RaiseChecked(RoutedEventArgs args)
         {
-            if (ButtonType == ButtonTypes.Toggle)
+            if ((ButtonType == ButtonTypes.Toggle) && !IsFullScreen)
                 Checked?.Invoke(this, args);
         }
 
         public event RoutedEventHandler Unchecked;
         internal void RaiseUnchecked(RoutedEventArgs args)
         {
-            if (ButtonType == ButtonTypes.Toggle)
+            if ((ButtonType == ButtonTypes.Toggle) && !IsFullScreen)
                 Unchecked?.Invoke(this, args);
         }
 
         public event RoutedEventHandler Tapped;
-        internal void RaiseTapped(RoutedEventArgs args) => Tapped?.Invoke(this, args);
+        internal void RaiseTapped(RoutedEventArgs args)
+        {
+            if (!IsFullScreen)
+                this.Tapped?.Invoke(this, args);
+        }
 
         public event RightTappedEventHandler RightTapped;
-        internal void RaiseRightTapped(Windows.UI.Xaml.Input.RightTappedRoutedEventArgs args) => RightTapped?.Invoke(this, args);
+        internal void RaiseRightTapped(Windows.UI.Xaml.Input.RightTappedRoutedEventArgs args)
+        {
+            if (!IsFullScreen)
+                this.RightTapped?.Invoke(this, args);
+        }
 
         public event HoldingEventHandler Holding;
-        internal void RaiseHolding(HoldingRoutedEventArgs args) => Holding?.Invoke(this, args);
+        internal void RaiseHolding(HoldingRoutedEventArgs args)
+        {
+            if (!IsFullScreen)
+                this.Holding?.Invoke(this, args);
+        }
 
         #endregion
     }
