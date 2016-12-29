@@ -62,24 +62,32 @@ namespace Template10.Services.NavigationService
             DebugWrite($"Frame: {FrameId}");
 
             int currentSize = _Frame.CacheSize;
-
-            if (removeCachedPagesInBackStack)
+            try
             {
-                _Frame.CacheSize = 0;
-            }
-            else
-            {
-                if (_Frame.BackStackDepth == 0)
+                if (removeCachedPagesInBackStack)
                 {
-                    _Frame.CacheSize = 1;
+                    Frame.CacheSize = 0;
                 }
                 else
                 {
-                    _Frame.CacheSize = _Frame.BackStackDepth;
+                    if (_Frame.BackStackDepth == 0)
+                    {
+                        _Frame.CacheSize = 1;
+                    }
+                    else
+                    {
+                        _Frame.CacheSize = _Frame.BackStackDepth;
+                    }
                 }
             }
-
-            _Frame.CacheSize = currentSize;
+            catch
+            {
+                // Ignore exceptions here
+            }
+            finally
+            {
+                _Frame.CacheSize = currentSize;
+            }
         }
 
         internal bool Navigate(Type page, object parameter, NavigationTransitionInfo info) => _Frame.Navigate(page, parameter, info);
@@ -168,5 +176,4 @@ namespace Template10.Services.NavigationService
         [Obsolete]
         internal void RaiseForwardRequested(HandledEventArgs args) => ForwardRequested?.Invoke(this, args);
     }
-
 }
