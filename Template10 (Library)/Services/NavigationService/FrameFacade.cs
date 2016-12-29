@@ -53,9 +53,9 @@ namespace Template10.Services.NavigationService
 
         public bool CanGoForward => _Frame.CanGoForward;
 
-        internal void GoBack(NavigationTransitionInfo infoOverride = null) => _Frame.GoBack();
+        public void GoBack(NavigationTransitionInfo infoOverride = null) => _Frame.GoBack();
 
-        internal void GoForward() => _Frame.GoForward();
+        public void GoForward() => _Frame.GoForward();
 
         public void ClearCache(bool removeCachedPagesInBackStack = false)
         {
