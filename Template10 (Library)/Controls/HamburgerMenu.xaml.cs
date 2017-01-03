@@ -315,7 +315,7 @@ namespace Template10.Controls
 
             try
             {
-                await UpdateSelectedAsync(e.OldValue, e.NewValue);
+               if(!IsCanceledNavigation) await UpdateSelectedAsync(e.OldValue, e.NewValue);
             }
             catch (Exception ex)
             {
@@ -502,6 +502,8 @@ namespace Template10.Controls
             }
         }
 
+        private bool IsCanceledNavigation;
+
         private async Task UpdateSelectedAsync(HamburgerButtonInfo previous, HamburgerButtonInfo value)
         {
             DebugWrite($"OldValue: {previous}, NewValue: {value}");
@@ -515,8 +517,6 @@ namespace Template10.Controls
             // signal previous
             if (previous != null && previous != value && previous.IsChecked.Value)
             {
-                previous.IsChecked = false;
-                previous.RaiseUnselected();
 
                 // Workaround for visual state of ToggleButton not reset correctly
                 if (value != null)
@@ -531,6 +531,12 @@ namespace Template10.Controls
             {
                 if (await NavigationService.NavigateAsync(value.PageType, value?.PageParameter, value?.NavigationTransitionInfo))
                 {
+                    previous.IsChecked = false;
+                    previous.RaiseUnselected();
+
+                    value.IsChecked = (value.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
+                    if (previous != value) value.RaiseSelected();
+
                     IsOpen = (DisplayMode == SplitViewDisplayMode.CompactInline && IsOpen);
                     if (value.ClearHistory)
                         NavigationService.ClearHistory();
@@ -551,6 +557,14 @@ namespace Template10.Controls
                 }
                 else
                 {
+                    // Re-instate Selected to previous page, but avoid calling this method (UpdateSelectedAsync) all over
+                    // again, and we use a flag to effect this. See InternalSelectedChanged() method where it's used.
+
+                    IsCanceledNavigation = true;
+                    Selected = previous;
+                    IsCanceledNavigation = false;
+                    value.IsChecked = false;
+                    value.RaiseUnselected();
                     return;
                 }
             }
@@ -559,14 +573,6 @@ namespace Template10.Controls
             if (value == null)
             {
                 return;
-            }
-            else
-            {
-                value.IsChecked = (value.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
-                if (previous != value)
-                {
-                    value.RaiseSelected();
-                }
             }
         }
 
