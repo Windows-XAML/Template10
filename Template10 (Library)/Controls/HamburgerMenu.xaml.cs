@@ -504,9 +504,9 @@ namespace Template10.Controls
 
         private bool IsCanceledNavigation;
 
-        private async Task UpdateSelectedAsync(HamburgerButtonInfo previous, HamburgerButtonInfo value)
+                private async Task UpdateSelectedAsync(HamburgerButtonInfo previous, HamburgerButtonInfo current)
         {
-            DebugWrite($"OldValue: {previous}, NewValue: {value}");
+            DebugWrite($"OldValue: {previous}, NewValue: {current}");
 
             // pls. do not remove this if statement. this is the fix for #410 (click twice)
             if (previous != null)
@@ -515,43 +515,41 @@ namespace Template10.Controls
             }
 
             // signal previous
-            if (previous != null && previous != value && previous.IsChecked.Value)
+            if (previous != null && previous != current && previous.IsChecked.Value)
             {
-
                 // Workaround for visual state of ToggleButton not reset correctly
-                if (value != null)
+                if (current != null)
                 {
-                    var control = LoadedNavButtons.First(x => x.HamburgerButtonInfo == value).GetElement<Control>();
+                    var control = LoadedNavButtons.First(x => x.HamburgerButtonInfo == current).GetElement<Control>();
                     VisualStateManager.GoToState(control, "Normal", true);
                 }
             }
 
             // navigate only when all navigation buttons have been loaded
-            if (AllNavButtonsAreLoaded && value?.PageType != null)
+            if (AllNavButtonsAreLoaded && current?.PageType != null)
             {
-                if (await NavigationService.NavigateAsync(value.PageType, value?.PageParameter, value?.NavigationTransitionInfo))
+                if (await NavigationService.NavigateAsync(current.PageType, current?.PageParameter, current?.NavigationTransitionInfo))
                 {
-                    previous.IsChecked = false;
-                    previous.RaiseUnselected();
-
-                    value.IsChecked = (value.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
-                    if (previous != value) value.RaiseSelected();
+                    SignalPreviousPage(previous, current);
+                    if (current != null) SignalCurrentPage(previous, current);
 
                     IsOpen = (DisplayMode == SplitViewDisplayMode.CompactInline && IsOpen);
-                    if (value.ClearHistory)
+                    if (current.ClearHistory)
                         NavigationService.ClearHistory();
-                    if (value.ClearCache)
+                    if (current.ClearCache)
                         NavigationService.ClearCache(true);
                 }
-                else if (NavigationService.CurrentPageType == value.PageType
-                     && (NavigationService.CurrentPageParam ?? string.Empty) == (value.PageParameter ?? string.Empty))
+                else if (NavigationService.CurrentPageType == current.PageType && (NavigationService.CurrentPageParam ?? string.Empty) == (current.PageParameter ?? string.Empty))
                 {
-                    if (value.ClearHistory)
+                    SignalPreviousPage(previous, current);
+                    if (current != null) SignalCurrentPage(previous, current);
+
+                    if (current.ClearHistory)
                         NavigationService.ClearHistory();
-                    if (value.ClearCache)
+                    if (current.ClearCache)
                         NavigationService.ClearCache(true);
                 }
-                else if (NavigationService.CurrentPageType == value.PageType)
+                else if (NavigationService.CurrentPageType == current.PageType)
                 {
                     // just check it
                 }
@@ -563,19 +561,35 @@ namespace Template10.Controls
                     IsCanceledNavigation = true;
                     Selected = previous;
                     IsCanceledNavigation = false;
-                    value.IsChecked = false;
-                    value.RaiseUnselected();
+                    current.IsChecked = false;
+                    current.RaiseUnselected();
                     return;
                 }
             }
-
-            // that's it if null
-            if (value == null)
+            else
             {
-                return;
+                SignalPreviousPage(previous, current);
+                if (current != null) SignalCurrentPage(previous, current);
             }
         }
 
+        private void SignalPreviousPage(HamburgerButtonInfo previous, HamburgerButtonInfo current)
+        {
+            if (previous != null && previous != current && previous.IsChecked.Value)
+            {
+                previous.IsChecked = false;
+                previous.RaiseUnselected();
+            }
+        }
+        
+        private void SignalCurrentPage(HamburgerButtonInfo previous, HamburgerButtonInfo current)
+        {
+            current.IsChecked = (current.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
+            if (previous != current)
+            {
+                current.RaiseSelected();
+            }
+        }
 
         private void UpdateControl(bool? manualFullScreen = null)
         {
