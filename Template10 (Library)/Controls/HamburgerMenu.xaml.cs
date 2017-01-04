@@ -504,7 +504,7 @@ namespace Template10.Controls
 
         private bool IsCanceledNavigation;
 
-                private async Task UpdateSelectedAsync(HamburgerButtonInfo previous, HamburgerButtonInfo current)
+        private async Task UpdateSelectedAsync(HamburgerButtonInfo previous, HamburgerButtonInfo current)
         {
             DebugWrite($"OldValue: {previous}, NewValue: {current}");
 
