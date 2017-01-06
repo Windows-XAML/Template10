@@ -410,8 +410,8 @@ namespace Template10.Controls
 
             // add parameter match
             buttons = buttons.Where(x => Equals(x.HamburgerButtonInfo.PageParameter, null) || Equals(x.HamburgerButtonInfo.PageParameter, pageParam));
-            var button = buttons.Select(x => x.HamburgerButtonInfo).FirstOrDefault();
-            Selected = button;
+            var button = buttons.OrderByDescending(x => x.HamburgerButtonInfo.PageParameter)
+                                .Select(x => x.HamburgerButtonInfo).FirstOrDefault();
         }
 
         async Task ResetValueAsync(DependencyProperty prop, object tempValue, int wait = 50)
