@@ -315,7 +315,7 @@ namespace Template10.Controls
 
             try
             {
-                await UpdateSelectedAsync(e.OldValue, e.NewValue);
+               if(!IsCanceledNavigation) await UpdateSelectedAsync(e.OldValue, e.NewValue);
             }
             catch (Exception ex)
             {
@@ -502,9 +502,11 @@ namespace Template10.Controls
             }
         }
 
-        private async Task UpdateSelectedAsync(HamburgerButtonInfo previous, HamburgerButtonInfo value)
+        private bool IsCanceledNavigation;
+
+        private async Task UpdateSelectedAsync(HamburgerButtonInfo previous, HamburgerButtonInfo current)
         {
-            DebugWrite($"OldValue: {previous}, NewValue: {value}");
+            DebugWrite($"OldValue: {previous}, NewValue: {current}");
 
             // pls. do not remove this if statement. this is the fix for #410 (click twice)
             if (previous != null)
@@ -513,63 +515,80 @@ namespace Template10.Controls
             }
 
             // signal previous
-            if (previous != null && previous != value && previous.IsChecked.Value)
+            if (previous != null && previous != current && previous.IsChecked.Value)
             {
-                previous.IsChecked = false;
-                previous.RaiseUnselected();
-
                 // Workaround for visual state of ToggleButton not reset correctly
-                if (value != null)
+                if (current != null)
                 {
-                    var control = LoadedNavButtons.First(x => x.HamburgerButtonInfo == value).GetElement<Control>();
+                    var control = LoadedNavButtons.First(x => x.HamburgerButtonInfo == current).GetElement<Control>();
                     VisualStateManager.GoToState(control, "Normal", true);
                 }
             }
 
             // navigate only when all navigation buttons have been loaded
-            if (AllNavButtonsAreLoaded && value?.PageType != null)
+            if (AllNavButtonsAreLoaded && current?.PageType != null)
             {
-                if (await NavigationService.NavigateAsync(value.PageType, value?.PageParameter, value?.NavigationTransitionInfo))
+                if (await NavigationService.NavigateAsync(current.PageType, current?.PageParameter, current?.NavigationTransitionInfo))
                 {
+                    SignalPreviousPage(previous, current);
+                    if (current != null) SignalCurrentPage(previous, current);
+
                     IsOpen = (DisplayMode == SplitViewDisplayMode.CompactInline && IsOpen);
-                    if (value.ClearHistory)
+                    if (current.ClearHistory)
                         NavigationService.ClearHistory();
-                    if (value.ClearCache)
+                    if (current.ClearCache)
                         NavigationService.ClearCache(true);
                 }
-                else if (NavigationService.CurrentPageType == value.PageType
-                     && (NavigationService.CurrentPageParam ?? string.Empty) == (value.PageParameter ?? string.Empty))
+                else if (NavigationService.CurrentPageType == current.PageType && (NavigationService.CurrentPageParam ?? string.Empty) == (current.PageParameter ?? string.Empty))
                 {
-                    if (value.ClearHistory)
+                    SignalPreviousPage(previous, current);
+                    if (current != null) SignalCurrentPage(previous, current);
+
+                    if (current.ClearHistory)
                         NavigationService.ClearHistory();
-                    if (value.ClearCache)
+                    if (current.ClearCache)
                         NavigationService.ClearCache(true);
                 }
-                else if (NavigationService.CurrentPageType == value.PageType)
+                else if (previous == null || NavigationService.CurrentPageType == current.PageType)
                 {
-                    // just check it
+                    if (current != null) SignalCurrentPage(previous, current);
                 }
                 else
                 {
+                    // Re-instate Selected to previous page, but avoid calling this method (UpdateSelectedAsync) all over
+                    // again, and we use a flag to effect this. See InternalSelectedChanged() method where it's used.
+
+                    IsCanceledNavigation = true;
+                    Selected = previous;
+                    IsCanceledNavigation = false;
+                    current.IsChecked = false;
+                    current.RaiseUnselected();
                     return;
                 }
             }
-
-            // that's it if null
-            if (value == null)
-            {
-                return;
-            }
             else
             {
-                value.IsChecked = (value.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
-                if (previous != value)
-                {
-                    value.RaiseSelected();
-                }
+                SignalPreviousPage(previous, current);
+                if (current != null) SignalCurrentPage(previous, current);
             }
         }
 
+        private void SignalPreviousPage(HamburgerButtonInfo previous, HamburgerButtonInfo current)
+        {
+            if (previous != null && previous != current && previous.IsChecked.Value)
+            {
+                previous.IsChecked = false;
+                previous.RaiseUnselected();
+            }
+        }
+        private void SignalCurrentPage(HamburgerButtonInfo previous, HamburgerButtonInfo current)
+        {
+            current.IsChecked = (current.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
+            if (previous != current)
+            {
+                current.RaiseSelected();
+            }
+        }
 
         private void UpdateControl(bool? manualFullScreen = null)
         {
