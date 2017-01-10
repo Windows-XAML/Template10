@@ -423,6 +423,16 @@ namespace Template10.Controls
                     if (oldButton != newButton)
                     {
                         Selected = newButton;
+                        oldButton?.UpdateInternalBindingValues();
+                        if (oldButton?.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle)
+                        {
+                            oldButton.IsChecked = false;
+                        }
+                    }
+                    newButton?.UpdateInternalBindingValues();
+                    if (newButton?.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle)
+                    {
+                        newButton.IsChecked = true;
                     }
                 }
             }
