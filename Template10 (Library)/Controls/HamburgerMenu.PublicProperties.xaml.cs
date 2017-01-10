@@ -504,9 +504,13 @@ namespace Template10.Controls
             DependencyProperty.Register(nameof(Selected), typeof(HamburgerButtonInfo),
                 typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) =>
                 {
-                    WriteDebug(nameof(Selected), e);
-                    (d as HamburgerMenu).SelectedChanged?.Invoke(d, e.ToChangedEventArgs<HamburgerButtonInfo>());
-                    (d as HamburgerMenu).InternalSelectedChanged(e.ToChangedEventArgs<HamburgerButtonInfo>());
+                    var hamburgerMenu = (d as HamburgerMenu);
+                    if (!hamburgerMenu._isHighlightCorrectButtonRunning)
+                    {
+                        WriteDebug(nameof(Selected), e);
+                        hamburgerMenu.SelectedChanged?.Invoke(d, e.ToChangedEventArgs<HamburgerButtonInfo>());
+                        hamburgerMenu.InternalSelectedChanged(e.ToChangedEventArgs<HamburgerButtonInfo>());
+                    }
                 }));
         public event EventHandler<ChangedEventArgs<HamburgerButtonInfo>> SelectedChanged;
         partial void InternalSelectedChanged(ChangedEventArgs<HamburgerButtonInfo> e);

@@ -387,31 +387,49 @@ namespace Template10.Controls
             }
         }
 
+        private bool _isHighlightCorrectButtonRunning;
         internal void HighlightCorrectButton(Type pageType, object pageParam)
         {
             DebugWrite($"PageType: {pageType} PageParam: {pageParam}");
-
-            // match type only
-            var buttons = LoadedNavButtons.Where(x => Equals(x.HamburgerButtonInfo.PageType, pageType));
-
-            // serialize parameter for matching
-            if (pageParam == null)
+            _isHighlightCorrectButtonRunning = true;
+            try
             {
-                pageParam = NavigationService.CurrentPageParam;
-            }
-            else if (pageParam.ToString().StartsWith("{"))
-            {
-                try
+                // match type only
+                var buttons = LoadedNavButtons.Where(x => Equals(x.HamburgerButtonInfo.PageType, pageType));
+                if (buttons.Any())
                 {
-                    pageParam = NavigationService.FrameFacade.SerializationService.Deserialize(pageParam.ToString());
-                }
-                catch { }
-            }
+                    // serialize parameter for matching
+                    if (pageParam == null)
+                    {
+                        pageParam = NavigationService.CurrentPageParam;
+                    }
+                    else if (pageParam.ToString().StartsWith("{"))
+                    {
+                        try
+                        {
+                            pageParam = NavigationService.FrameFacade.SerializationService.Deserialize(pageParam.ToString());
+                        }
+                        catch
+                        {
+                        }
+                    }
 
-            // add parameter match
-            buttons = buttons.Where(x => Equals(x.HamburgerButtonInfo.PageParameter, null) || Equals(x.HamburgerButtonInfo.PageParameter, pageParam));
-            var button = buttons.Select(x => x.HamburgerButtonInfo).FirstOrDefault();
-            Selected = button;
+                    // add parameter match
+                    buttons = buttons.Where(x => Equals(x.HamburgerButtonInfo.PageParameter, null) || Equals(x.HamburgerButtonInfo.PageParameter, pageParam));
+                    var newButton = buttons.Select(x => x.HamburgerButtonInfo).FirstOrDefault();
+
+                    // Update selected button
+                    var oldButton = Selected;
+                    if (oldButton != newButton)
+                    {
+                        Selected = newButton;
+                    }
+                }
+            }
+            finally
+            {
+                _isHighlightCorrectButtonRunning = false;
+            }
         }
 
         async Task ResetValueAsync(DependencyProperty prop, object tempValue, int wait = 50)
