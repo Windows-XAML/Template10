@@ -476,7 +476,7 @@ namespace Template10.Services.NavigationService
             await dispatcher.DispatchAsync(async () =>
             {
                 var page = FrameFacade.Content as Page;
-                await Navigation.NavedFromAsync(page?.DataContext, NavigationMode.New, null, null, null, page, CurrentPageType, CurrentPageParam, true);
+                await Navigation.NavedFromAsync(page?.DataContext, NavigationMode.New, page, CurrentPageType, CurrentPageParam, null, null, null, true);
             });
         }
     }

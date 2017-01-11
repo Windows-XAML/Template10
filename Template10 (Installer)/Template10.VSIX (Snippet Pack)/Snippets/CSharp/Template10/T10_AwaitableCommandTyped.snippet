@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>Typed awaitable delegate command</Title>
+      <Author>Yan Xiaodi</Author>
+      <Shortcut>T10_AwaitableCommandTyped</Shortcut>
+      <Description>
+        An awaitable delegate command, or relay command, implements ICommand and is used
+        by the XAML button to bind to a the command's Execute method. This command is like
+        typed delegate command.
+      </Description>
+    </Header>
+    <Snippet>
+      <Imports>
+        <Import>
+          <Namespace>Template10.Mvvm</Namespace>
+        </Import>
+      </Imports>
+      <Declarations>
+        <Literal Editable="true">
+          <ID>name</ID>
+          <Default>MyCommand</Default>
+        </Literal>
+        <Object Editable="true">
+          <ID>type</ID>
+          <Default>object</Default>
+        </Object>
+      </Declarations>
+      <Code Language="csharp">
+        <![CDATA[AwaitableDelegateCommand _$name$;
+        public AwaitableDelegateCommand $name$
+           => _$name$ ??  (_$name$ = new AwaitableDelegateCommand($name$Execute, $name$CanExecute));
+        bool $name$CanExecute(AwaitableDelegateCommandParameter param) => true;
+        async Task $name$Execute(AwaitableDelegateCommandParameter param)
+        {
+            // First you should bind the command param to the AwaitableDelegateCommandParameter like this:
+            // <mvvm:AwaitableDelegateCommandParameter x:Name="commandParam" InnerCommandExecutionParameter="{Binding}"></mvvm:AwaitableDelegateCommandParameter>
+            // Then call the command with the params like this:
+            // <Button Content="Test" Command="{Binding TestCommand}" CommandParameter="{Binding ElementName=commandParam}"  />
+            
+            // In this function, convert param to your type:
+            //SomeType typedParam = (SomeType)param.DataContext;
+            throw new NotImplementedException();
+        }]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

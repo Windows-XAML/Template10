@@ -201,7 +201,7 @@ namespace Template10.Controls
 
         #region Internal binding properties
 
-        private void UpdateInternalBindingValues()
+        internal void UpdateInternalBindingValues()
         {
             bool isFullScreen = this.IsFullScreen;
             bool isEnabled = !isFullScreen && this.IsEnabled;
