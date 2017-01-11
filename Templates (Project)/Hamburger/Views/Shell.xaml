@@ -53,9 +53,6 @@
             <!--  settingspage button  -->
             <Controls:HamburgerButtonInfo x:Name="SettingsButton"
                                           PageType="views:SettingsPage">
-                <Controls:HamburgerButtonInfo.PageParameter>
-                    <x:Int32>0</x:Int32>
-                </Controls:HamburgerButtonInfo.PageParameter>
                 <Controls:HamburgerButtonInfo.NavigationTransitionInfo>
                     <SuppressNavigationTransitionInfo />
                 </Controls:HamburgerButtonInfo.NavigationTransitionInfo>
