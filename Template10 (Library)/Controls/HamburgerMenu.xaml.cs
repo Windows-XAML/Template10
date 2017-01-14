@@ -416,7 +416,8 @@ namespace Template10.Controls
 
                     // add parameter match
                     buttons = buttons.Where(x => Equals(x.HamburgerButtonInfo.PageParameter, null) || Equals(x.HamburgerButtonInfo.PageParameter, pageParam));
-                    var newButton = buttons.Select(x => x.HamburgerButtonInfo).FirstOrDefault();
+                    var newButton = buttons.OrderByDescending(x => x.HamburgerButtonInfo.PageParameter)
+                                           .Select(x => x.HamburgerButtonInfo).FirstOrDefault();
 
                     // Update selected button
                     var oldButton = Selected;
