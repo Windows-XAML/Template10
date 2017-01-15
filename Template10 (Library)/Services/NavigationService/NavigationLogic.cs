@@ -171,6 +171,10 @@ namespace Template10.Services.NavigationService
                 var vm = viewmodel as Portable.IConfirmNavigationAsync;
                 return !await vm?.CanNavigateAsync(parameters);
             }
+            else if (viewmodel != null)
+            {
+                return false;
+            }
             else
             {
                 return true;
