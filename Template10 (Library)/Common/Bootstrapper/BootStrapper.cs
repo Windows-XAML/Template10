@@ -345,7 +345,7 @@ namespace Template10.Common
             get { return _currentState; }
             set
             {
-                DebugWrite($"CurrenstState changed to {value}");
+                DebugWrite($"CurrentState changed to {value}");
                 CurrentStateHistory.Add($"{DateTime.Now}-{Guid.NewGuid()}", value);
                 _currentState = value;
             }
