@@ -662,8 +662,11 @@ namespace Template10.Common
 
         private void SetupLifecycleListeners()
         {
-            Resuming += (s, e) => StartupOrchestratorAsync(OriginalActivatedArgs, StartKind.Launch);
-            Suspending += async (s, e) =>
+            Resuming += delegate(object s, object e)
+            {
+                OnResuming(this, e, AppExecutionState.Terminated);
+            };
+            Suspending += async delegate(object s, SuspendingEventArgs e)
                 {
                     var deferral = e.SuspendingOperation.GetDeferral();
                     try
