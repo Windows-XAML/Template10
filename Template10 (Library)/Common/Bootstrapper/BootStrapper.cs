@@ -71,34 +71,46 @@ namespace Template10.Common
         public static new BootStrapper Current => Application.Current as BootStrapper;
 
         /// <summary>
-        /// This memory-only dictionary gives developers a place to store complex types while 
+        /// This memory-only dictionary gives developers a place to store complex types while
         /// navigating, including non-serializable types that cannot be passed as parameters.
         /// </summary>
         public IStateItems SessionState { get; set; } = new StateItems();
 
         /// <summary>
         /// This property tells Template 10 if should automatically restore the NavitgationState
-        /// of Frames when the application is restored from suspension. 
+        /// of Frames when the application is restored from suspension.
         /// </summary>
         public bool AutoRestoreAfterTerminated { get; set; } = true;
 
         /// <summary>
-        /// This setting tells Template 10 if it should automatically implement a SavingData 
+        /// This setting tells Template 10 if it should automatically implement a SavingData
         /// ExtendedSession when Suspending. This extends the time limit for Suspension activity.
         /// </summary>
         public bool AutoExtendExecutionSession { get; set; } = true;
 
         /// <summary>
         /// This setting tells Template 10 if it should automatically save the NavigationState
-        /// of every NavigationService's Frame. This enables it to be restored on Resume. 
+        /// of every NavigationService's Frame. This enables it to be restored on Resume.
         /// </summary>
         public bool AutoSuspendAllFrames { get; set; } = true;
 
         /// <summary>
         /// There are many ways for an app to start and re-start, including activation.
-        /// This property retains the original (first-launch) activation arguments. 
+        /// This field retains the original (first-launch) activation arguments.
         /// </summary>
-        public IActivatedEventArgs OriginalActivatedArgs { get; private set; }
+        private IActivatedEventArgs _originalActivatedArgs;
+
+        /// <summary>
+        /// There are many ways for an app to start and re-start, including activation.
+        /// This property retains the previous execution state.
+        /// </summary>
+        public ApplicationExecutionState PreviousExecutionState { get; private set; }
+
+        /// <summary>
+        /// There are many ways for an app to start and re-start, including activation.
+        /// This property retains a fklag indicating whether Prelaunch is activated.
+        /// </summary>
+        public bool PrelaunchActivated { get; private set; }
 
         /// <summary>
         /// Out of the box, Template 10 sets a ModalDialog as the root element of the app.
@@ -269,8 +281,8 @@ namespace Template10.Common
         }
 
         /// <summary>
-        /// Creates a new NavigationService from the gived Frame to the 
-        /// WindowWrapper collection. In addition, it optionally will setup the 
+        /// Creates a new NavigationService from the gived Frame to the
+        /// WindowWrapper collection. In addition, it optionally will setup the
         /// shell back button to react to the nav of the Frame.
         /// A developer should call this when creating a new/secondary frame.
         /// The shell back button should only be setup one time.
@@ -353,7 +365,7 @@ namespace Template10.Common
         Dictionary<string, BootstrapperStates> CurrentStateHistory = new Dictionary<string, BootstrapperStates>();
 
         /// <summary>
-        /// This determines the simplest case for starting. This should handle 80% of common scenarios. 
+        /// This determines the simplest case for starting. This should handle 80% of common scenarios.
         /// When Other is returned the developer must determine start manually using IActivatedEventArgs.Kind
         /// </summary>
         public static AdditionalKinds DetermineStartCause(IActivatedEventArgs args)
@@ -418,7 +430,7 @@ namespace Template10.Common
         #region Template 10's new Application overrides
 
         /// <summary>
-        /// If a developer overrides this method, the developer can resolve DataContext or unwrap DataContext 
+        /// If a developer overrides this method, the developer can resolve DataContext or unwrap DataContext
         /// available for the Page object when using a MVVM pattern that relies on a wrapped/proxy around ViewModels
         /// </summary>
         public virtual INavigable ResolveForPage(Page page, NavigationService navigationService) => null;
@@ -431,7 +443,7 @@ namespace Template10.Common
         /// <param name="args">IActivatedEventArgs from startup</param>
         /// <param name="runOnStartAsync">A developer can force the typical startup pipeline. Default should be false.</param>
         /// <remarks>
-        /// For Prelaunch Template 10 does not continue the typical startup pipeline by default. 
+        /// For Prelaunch Template 10 does not continue the typical startup pipeline by default.
         /// OnActivated will occur if the application has been prelaunched.
         /// </remarks>
         public virtual Task OnPrelaunchAsync(IActivatedEventArgs args, out bool runOnStartAsync)
@@ -459,7 +471,7 @@ namespace Template10.Common
         /// <summary>
         /// OnSuspendingAsync will be called when the application is suspending, but this override
         /// should only be used by applications that have application-level operations that must
-        /// be completed during suspension. 
+        /// be completed during suspension.
         /// Using OnSuspendingAsync is a little better than handling the Suspending event manually
         /// because the asunc operations are in a single, global deferral created when the suspension
         /// begins and completed automatically when the last viewmodel has been called (including this method).
@@ -485,17 +497,20 @@ namespace Template10.Common
         {
             DebugWrite($"kind:{kind} previous:{e.PreviousExecutionState}");
 
-            if (OriginalActivatedArgs == null)
+            if (_originalActivatedArgs == null)
             {
-                OriginalActivatedArgs = e;
+                _originalActivatedArgs = e;
 
                 // if resume tries to launch, don't continue on
                 // StartupOrchestratorAsync will be called twice
-                if (OriginalActivatedArgs == null)
+                if (_originalActivatedArgs == null)
                 {
                     OnResuming(this, null, AppExecutionState.Terminated);
                     return;
                 }
+
+                PreviousExecutionState = e.PreviousExecutionState;
+                PrelaunchActivated = (e as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false;
             }
 
             // is the kind really right?
@@ -667,34 +682,33 @@ namespace Template10.Common
                 OnResuming(this, e, AppExecutionState.Terminated);
             };
             Suspending += async delegate(object s, SuspendingEventArgs e)
+            {
+                var deferral = e.SuspendingOperation.GetDeferral();
+                try
                 {
-                    var deferral = e.SuspendingOperation.GetDeferral();
-                    try
+                    if (AutoExtendExecutionSession)
                     {
-                        if (AutoExtendExecutionSession)
-                        {
-                            // unspecified will be revoked by suspension
-                            await ExtendedSessionService.StartSaveDataAsync();
-                        }
-
-                        var navs = WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices);
-                        foreach (INavigationService nav in navs)
-                        {
-                            // individual frame-level
-                            await nav.SuspendingAsync();
-                            if (AutoSuspendAllFrames) await nav.SaveAsync();
-                        }
-
-                        // application-level
-                        var isPrelaunch = (OriginalActivatedArgs as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false;
-                        await OnSuspendingAsync(this, e, isPrelaunch);
+                        // unspecified will be revoked by suspension
+                        await ExtendedSessionService.StartSaveDataAsync();
                     }
-                    finally
+
+                    var navs = WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices);
+                    foreach (INavigationService nav in navs)
                     {
-                        ExtendedSessionService.Dispose();
-                        deferral.Complete();
+                        // individual frame-level
+                        await nav.SuspendingAsync();
+                        if (AutoSuspendAllFrames) await nav.SaveAsync();
                     }
-                };
+
+                    // application-level
+                    await OnSuspendingAsync(this, e, PrelaunchActivated);
+                }
+                finally
+                {
+                    ExtendedSessionService.Dispose();
+                    deferral.Complete();
+                }
+            };
         }
 
         private void SetupKeyboardListeners()
