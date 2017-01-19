@@ -177,6 +177,10 @@
       <Project>{ac3e4f10-6615-4e16-bb0f-104760c92b95}</Project>
       <Name>Template10 %28Library%29</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Template10.Mobile\Template10.Mobile.csproj">
+      <Project>{09cc346c-2e17-4103-8fc6-47b116595d5f}</Project>
+      <Name>Template10.Mobile</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
