@@ -10,7 +10,7 @@ namespace Template10.Samples.SearchSample.Views
     public sealed partial class Shell : Page
     {
         public static Shell Instance { get; set; }
-        private static WindowWrapper Window { get; set; }
+        private static IWindowWrapper Window { get; set; }
         public Shell(INavigationService navigationService)
         {
             Instance = this;
