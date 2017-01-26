@@ -16,8 +16,11 @@ namespace MultiplePageHeaders.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            var index = int.Parse(_SerializationService.Deserialize(e.Parameter?.ToString()).ToString());
-            MyPivot.SelectedIndex = index;
-        }
-    }
+			if (e.Parameter != null)
+			{
+				var index = int.Parse(_SerializationService.Deserialize(e.Parameter.ToString())?.ToString() ?? "0");
+				MyPivot.SelectedIndex = index;
+			}
+		}
+	}
 }
