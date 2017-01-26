@@ -18,7 +18,7 @@ namespace Sample.ViewModels
 {
     public class MainPageViewModel : BaseViewModel
     {
-        private readonly WindowWrapper wrapper = WindowWrapper.Current();
+        private readonly IWindowWrapper wrapper = WindowWrapper.Current();
         public IList<string> Messages { get; }=new ObservableCollection<string>();
         public ICommand OpenViewCommand { get; }
 
