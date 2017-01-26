@@ -96,9 +96,9 @@ namespace Template10.Common
 
         /// <summary>
         /// There are many ways for an app to start and re-start, including activation.
-        /// This field retains the original (first-launch) activation arguments.
+        /// This field saves the state if the first activation was executed.
         /// </summary>
-        private IActivatedEventArgs _originalActivatedArgs;
+        private bool _firstActivationExecuted;
 
         /// <summary>
         /// There are many ways for an app to start and re-start, including activation.
@@ -497,10 +497,9 @@ namespace Template10.Common
         {
             DebugWrite($"kind:{kind} previous:{e.PreviousExecutionState}");
 
-            if (_originalActivatedArgs == null)
+            // check if this is the first activation at all, when we can save PreviousExecutionState and PrelaunchActivated
+            if (!_firstActivationExecuted)
             {
-                _originalActivatedArgs = e;
-
                 // if resume tries to launch, don't continue on
                 // StartupOrchestratorAsync will be called twice
                 if (_originalActivatedArgs == null)
@@ -509,6 +508,7 @@ namespace Template10.Common
                     return;
                 }
 
+                _firstActivationExecuted = true;
                 PreviousExecutionState = e.PreviousExecutionState;
                 PrelaunchActivated = (e as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false;
             }
