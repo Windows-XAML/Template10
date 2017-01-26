@@ -671,7 +671,17 @@ namespace Template10.Common
         {
             Resuming += delegate(object s, object e)
             {
-                OnResuming(this, e, AppExecutionState.Terminated);
+                if (_firstActivationExecuted)
+                {
+                    PreviousExecutionState = ApplicationExecutionState.Suspended;
+                    OnResuming(this, e, AppExecutionState.Suspended);
+                }
+                else
+                {
+                    PreviousExecutionState = ApplicationExecutionState.Terminated;
+                    OnResuming(this, e, AppExecutionState.Terminated);
+                }
+                _firstActivationExecuted = true;
             };
             Suspending += async delegate(object s, SuspendingEventArgs e)
             {
