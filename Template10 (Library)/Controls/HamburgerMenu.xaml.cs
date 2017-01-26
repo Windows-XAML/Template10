@@ -315,7 +315,8 @@ namespace Template10.Controls
 
             try
             {
-               if(!DoNotActuallyNavigate) await UpdateSelectedAsync(e.OldValue, e.NewValue);
+                if (!_isUpdateSelectedRunning)
+                    await UpdateSelectedAsync(e.OldValue, e.NewValue);
             }
             catch (Exception ex)
             {
@@ -531,8 +532,7 @@ namespace Template10.Controls
             }
         }
 
-        private bool DoNotActuallyNavigate;
-
+        private bool _isUpdateSelectedRunning;
         private async Task UpdateSelectedAsync(HamburgerButtonInfo previous, HamburgerButtonInfo current)
         {
             DebugWrite($"OldValue: {previous}, NewValue: {current}");
@@ -587,9 +587,15 @@ namespace Template10.Controls
                     // Re-instate Selected to previous page, but avoid calling this method (UpdateSelectedAsync) all over
                     // again, and we use a flag to effect this. See InternalSelectedChanged() method where it's used.
 
-                    DoNotActuallyNavigate = true;
-                    Selected = previous;
-                    DoNotActuallyNavigate = false;
+                    _isUpdateSelectedRunning = true;
+                    try
+                    {
+                        Selected = previous;
+                    }
+                    finally
+                    {
+                        _isUpdateSelectedRunning = false;
+                    }
                     current.IsChecked = false;
                     current.RaiseUnselected();
                     return;
