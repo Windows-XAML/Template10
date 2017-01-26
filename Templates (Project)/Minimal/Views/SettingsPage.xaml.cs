@@ -19,7 +19,7 @@ namespace Sample.Views
         {
             if (e.Parameter != null)
             {
-                var index = int.Parse(_SerializationService.Deserialize(e.Parameter.ToString()).ToString());
+                var index = int.Parse(_SerializationService.Deserialize(e.Parameter.ToString())?.ToString() ?? "0");
                 MyPivot.SelectedIndex = index;
             }
         }
