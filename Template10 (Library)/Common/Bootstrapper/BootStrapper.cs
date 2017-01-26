@@ -500,14 +500,6 @@ namespace Template10.Common
             // check if this is the first activation at all, when we can save PreviousExecutionState and PrelaunchActivated
             if (!_firstActivationExecuted)
             {
-                // if resume tries to launch, don't continue on
-                // StartupOrchestratorAsync will be called twice
-                if (_originalActivatedArgs == null)
-                {
-                    OnResuming(this, null, AppExecutionState.Terminated);
-                    return;
-                }
-
                 _firstActivationExecuted = true;
                 PreviousExecutionState = e.PreviousExecutionState;
                 PrelaunchActivated = (e as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false;
