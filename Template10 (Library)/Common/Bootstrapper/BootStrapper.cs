@@ -96,9 +96,9 @@ namespace Template10.Common
 
         /// <summary>
         /// There are many ways for an app to start and re-start, including activation.
-        /// This field retains the original (first-launch) activation arguments.
+        /// This field saves the state if the first activation was executed.
         /// </summary>
-        private IActivatedEventArgs _originalActivatedArgs;
+        private bool _firstActivationExecuted;
 
         /// <summary>
         /// There are many ways for an app to start and re-start, including activation.
@@ -497,18 +497,10 @@ namespace Template10.Common
         {
             DebugWrite($"kind:{kind} previous:{e.PreviousExecutionState}");
 
-            if (_originalActivatedArgs == null)
+            // check if this is the first activation at all, when we can save PreviousExecutionState and PrelaunchActivated
+            if (!_firstActivationExecuted)
             {
-                _originalActivatedArgs = e;
-
-                // if resume tries to launch, don't continue on
-                // StartupOrchestratorAsync will be called twice
-                if (_originalActivatedArgs == null)
-                {
-                    OnResuming(this, null, AppExecutionState.Terminated);
-                    return;
-                }
-
+                _firstActivationExecuted = true;
                 PreviousExecutionState = e.PreviousExecutionState;
                 PrelaunchActivated = (e as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false;
             }
@@ -679,7 +671,17 @@ namespace Template10.Common
         {
             Resuming += delegate(object s, object e)
             {
-                OnResuming(this, e, AppExecutionState.Terminated);
+                if (_firstActivationExecuted)
+                {
+                    PreviousExecutionState = ApplicationExecutionState.Suspended;
+                    OnResuming(this, e, AppExecutionState.Suspended);
+                }
+                else
+                {
+                    PreviousExecutionState = ApplicationExecutionState.Terminated;
+                    OnResuming(this, e, AppExecutionState.Terminated);
+                }
+                _firstActivationExecuted = true;
             };
             Suspending += async delegate(object s, SuspendingEventArgs e)
             {
