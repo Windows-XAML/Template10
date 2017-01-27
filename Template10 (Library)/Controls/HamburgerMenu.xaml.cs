@@ -315,7 +315,8 @@ namespace Template10.Controls
 
             try
             {
-               if(!DoNotActuallyNavigate) await UpdateSelectedAsync(e.OldValue, e.NewValue);
+                if (!_isUpdateSelectedRunning)
+                    await UpdateSelectedAsync(e.OldValue, e.NewValue);
             }
             catch (Exception ex)
             {
@@ -369,7 +370,7 @@ namespace Template10.Controls
             if (e.NewValue.FrameFacade.BackStack.Count == 0
                 && e.NewValue.Frame.Content != null
                 && BootStrapper.Current.SplashFactory != null
-                && BootStrapper.Current.OriginalActivatedArgs.PreviousExecutionState != Windows.ApplicationModel.Activation.ApplicationExecutionState.Terminated)
+                && BootStrapper.Current.PreviousExecutionState != Windows.ApplicationModel.Activation.ApplicationExecutionState.Terminated)
             {
                 var once = false;
                 UpdateControl(true);
@@ -394,6 +395,8 @@ namespace Template10.Controls
             _isHighlightCorrectButtonRunning = true;
             try
             {
+                HamburgerButtonInfo newButton = null;
+
                 // match type only
                 var buttons = LoadedNavButtons.Where(x => Equals(x.HamburgerButtonInfo.PageType, pageType));
                 if (buttons.Any())
@@ -416,26 +419,28 @@ namespace Template10.Controls
 
                     // add parameter match
                     buttons = buttons.Where(x => Equals(x.HamburgerButtonInfo.PageParameter, null) || Equals(x.HamburgerButtonInfo.PageParameter, pageParam));
-                    var newButton = buttons.OrderByDescending(x => x.HamburgerButtonInfo.PageParameter)
+                    newButton = buttons.OrderByDescending(x => x.HamburgerButtonInfo.PageParameter)
                                            .Select(x => x.HamburgerButtonInfo).FirstOrDefault();
+                }
 
-                    // Update selected button
-                    var oldButton = Selected;
-                    if (oldButton != newButton)
+                // Update selected button
+                var oldButton = Selected;
+                if (!ReferenceEquals(oldButton, newButton))
+                {
+                    Selected = newButton;
+                    if (oldButton?.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle)
                     {
-                        Selected = newButton;
-                        oldButton?.UpdateInternalBindingValues();
-                        if (oldButton?.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle)
-                        {
-                            oldButton.IsChecked = false;
-                        }
+                        oldButton.IsChecked = false;
                     }
-                    newButton?.UpdateInternalBindingValues();
                     if (newButton?.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle)
                     {
                         newButton.IsChecked = true;
                     }
                 }
+
+                // Update internal binding values for both buttons
+                oldButton?.UpdateInternalBindingValues();
+                newButton?.UpdateInternalBindingValues();
             }
             finally
             {
@@ -531,8 +536,7 @@ namespace Template10.Controls
             }
         }
 
-        private bool DoNotActuallyNavigate;
-
+        private bool _isUpdateSelectedRunning;
         private async Task UpdateSelectedAsync(HamburgerButtonInfo previous, HamburgerButtonInfo current)
         {
             DebugWrite($"OldValue: {previous}, NewValue: {current}");
@@ -587,9 +591,15 @@ namespace Template10.Controls
                     // Re-instate Selected to previous page, but avoid calling this method (UpdateSelectedAsync) all over
                     // again, and we use a flag to effect this. See InternalSelectedChanged() method where it's used.
 
-                    DoNotActuallyNavigate = true;
-                    Selected = previous;
-                    DoNotActuallyNavigate = false;
+                    _isUpdateSelectedRunning = true;
+                    try
+                    {
+                        Selected = previous;
+                    }
+                    finally
+                    {
+                        _isUpdateSelectedRunning = false;
+                    }
                     current.IsChecked = false;
                     current.RaiseUnselected();
                     return;
