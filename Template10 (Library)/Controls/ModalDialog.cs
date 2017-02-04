@@ -96,10 +96,12 @@ namespace Template10.Controls
             }
 
             var content = Content as UIElement;
-            content.IsHitTestVisible = !IsModal;
-            (content as Control).IsEnabled = !IsModal;
+            if (content != null)
+                content.IsHitTestVisible = !IsModal;
 
-            Debug.Write($"content.IsHitTestVisible:{content.IsHitTestVisible} IsModal:{IsModal}");
+            var control = content as Control;
+            if (control != null)
+                control.IsEnabled = !IsModal;
         }
 
         #region props
