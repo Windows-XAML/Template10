@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Template10.Common;
 using Template10.Utils;
 using Windows.Foundation;
@@ -89,10 +90,16 @@ namespace Template10.Controls
             // this switch ensures ModalTransitions plays every time.
             if (!IsModal)
             {
-                var content = ModalContent;
+                var modalContent = ModalContent;
                 ModalContent = null;
-                ModalContent = content;
+                ModalContent = modalContent;
             }
+
+            var content = Content as UIElement;
+            content.IsHitTestVisible = !IsModal;
+            (content as Control).IsEnabled = !IsModal;
+
+            Debug.Write($"content.IsHitTestVisible:{content.IsHitTestVisible} IsModal:{IsModal}");
         }
 
         #region props
