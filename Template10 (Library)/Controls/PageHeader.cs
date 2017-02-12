@@ -1,20 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation.Collections;
+﻿using Template10.Utils;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Documents;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Markup;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
-using Template10.Utils;
-using System.Collections.Specialized;
-using System.Collections;
 
 // The Templated Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234235
 
@@ -23,6 +11,8 @@ namespace Template10.Controls
     [ContentProperty(Name = nameof(PrimaryCommands))]
     public sealed class PageHeader : CommandBar
     {
+        private HamburgerMenu deRegHamburgerEvents; // Avoids unnecessary deregistration for pages without PageHeader
+
         public PageHeader()
         {
             DefaultStyleKey = typeof(PageHeader);
@@ -35,24 +25,52 @@ namespace Template10.Controls
             SetValue(Microsoft.Xaml.Interactivity.Interaction.BehaviorsProperty, collection);
 
             TabIndex = 5000;
-            Loaded += PageHeader_Loaded;
-        }
 
-        private void PageHeader_Loaded(object sender, RoutedEventArgs e)
+            Loaded += (s, e) =>
         {
             RegisterHamburgerMenuChanges();
             UpdateSpacingToFitHamburgerMenu();
+            };
+
+            Unloaded += (s, e) =>
+            {
+                if (deRegHamburgerEvents != null)
+                {
+                    deRegHamburgerEvents.IsOpenChanged -= HamburgerMenu_IsOpenChanged;
+                    deRegHamburgerEvents.DisplayModeChanged -= HamburgerMenu_DisplayModeChanged;
+                    deRegHamburgerEvents.HamburgerButtonVisibilityChanged -= HamburgerMenu_HamburgerButtonVisibilityChanged;
+                }
+            };
         }
 
         private void RegisterHamburgerMenuChanges()
         {
+            deRegHamburgerEvents = null; // default on PageHeader startup
+
             var hamburgerMenu = ParentHamburgerMenu;
+
             if (hamburgerMenu != null)
             {
-                hamburgerMenu.IsOpenChanged += (s, e) => UpdateSpacingToFitHamburgerMenu();
-                hamburgerMenu.DisplayModeChanged += (s, e) => UpdateSpacingToFitHamburgerMenu();
-                hamburgerMenu.HamburgerButtonVisibilityChanged += (s, e) => UpdateSpacingToFitHamburgerMenu();
+                deRegHamburgerEvents = hamburgerMenu; // remember to deregister on UnLoaded event
+                hamburgerMenu.IsOpenChanged += HamburgerMenu_IsOpenChanged;
+                hamburgerMenu.DisplayModeChanged += HamburgerMenu_DisplayModeChanged;
+                hamburgerMenu.HamburgerButtonVisibilityChanged += HamburgerMenu_HamburgerButtonVisibilityChanged;
             }
+        }
+
+        private void HamburgerMenu_IsOpenChanged(object sender, Common.ChangedEventArgs<bool> e)
+        {
+            UpdateSpacingToFitHamburgerMenu();
+        }
+
+        private void HamburgerMenu_DisplayModeChanged(object sender, Common.ChangedEventArgs<SplitViewDisplayMode> e)
+        {
+            UpdateSpacingToFitHamburgerMenu();
+        }
+
+        private void HamburgerMenu_HamburgerButtonVisibilityChanged(object sender, Common.ChangedEventArgs<Visibility> e)
+        {
+            UpdateSpacingToFitHamburgerMenu();
         }
 
         private void UpdateSpacingToFitHamburgerMenu()
