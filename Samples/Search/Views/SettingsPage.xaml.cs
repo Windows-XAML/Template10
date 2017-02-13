@@ -14,7 +14,7 @@ namespace Template10.Samples.SearchSample.Views
         private void ShowBusyClick(object sender, RoutedEventArgs e)
         {
             Shell.ShowBusy(true, "Please wait...");
-            WindowWrapper.Current().Dispatcher.Dispatch(() => Shell.ShowBusy(false, string.Empty), 5000);
+            WindowWrapper.Current().Dispatcher.DispatchAsync(() => Shell.ShowBusy(false, string.Empty), 5000);
         }
     }
 }
