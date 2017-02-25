@@ -699,7 +699,23 @@ namespace Template10.Common
                     {
                         // individual frame-level
                         await nav.SuspendingAsync();
-                        if (AutoSuspendAllFrames) await nav.SaveAsync();
+                        if (AutoSuspendAllFrames)
+                        {
+                            try
+                            {
+                                await nav.SaveAsync();
+                            }
+                            catch
+                            {
+                                var frameState = nav.Suspension.GetFrameState();
+                                if (frameState != null)
+                                {
+                                    frameState.Remove("CurrentPageType");
+                                    frameState.Remove("CurrentPageParam");
+                                    frameState.Remove("NavigateState");
+                                }
+                            }
+                        }
                     }
 
                     // application-level
