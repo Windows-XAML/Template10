@@ -368,7 +368,7 @@ namespace Template10.Controls
         {
             // If splash screen then continue showing until navigated once
             if (e.NewValue.FrameFacade.BackStack.Count == 0
-                && e.NewValue.Frame.Content != null
+                && e.NewValue.FrameFacade.Content != null
                 && BootStrapper.Current.SplashFactory != null
                 && BootStrapper.Current.PreviousExecutionState != Windows.ApplicationModel.Activation.ApplicationExecutionState.Terminated)
             {
@@ -410,7 +410,7 @@ namespace Template10.Controls
                     {
                         try
                         {
-                            pageParam = NavigationService.FrameFacade.SerializationService.Deserialize(pageParam.ToString());
+                            pageParam = NavigationService.SerializationService.Deserialize(pageParam.ToString());
                         }
                         catch
                         {

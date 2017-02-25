@@ -66,7 +66,7 @@ namespace Template10.Services.NavigationService
             {
                 if (removeCachedPagesInBackStack)
                 {
-                    Frame.CacheSize = 0;
+                    _Frame.CacheSize = 0;
                 }
                 else
                 {
