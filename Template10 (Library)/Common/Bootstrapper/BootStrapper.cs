@@ -21,6 +21,7 @@ using System.Diagnostics;
 
 namespace Template10.Common
 {
+
     public abstract class BootStrapper : Application, INotifyPropertyChanged
     {
         #region INotifyPropertyChanged
@@ -45,20 +46,6 @@ namespace Template10.Common
 
         static void DebugWrite(string text = null, Services.LoggingService.Severities severity = Services.LoggingService.Severities.Template10, [CallerMemberName]string caller = null) =>
             Services.LoggingService.LoggingService.WriteLine(text, severity, caller: $"BootStrapper.{caller}");
-
-        #endregion
-
-        #region Public Enums
-
-        public enum StartKind { Launch, Activate }
-
-        public enum AppExecutionState { Suspended, Terminated, Prelaunch }
-
-        public enum BackButton { Attach, Ignore }
-
-        public enum ExistingContent { Include, Exclude }
-
-        public enum AdditionalKinds { Primary, Toast, SecondaryTile, Other, JumpListItem }
 
         #endregion
 
@@ -296,7 +283,7 @@ namespace Template10.Common
             // if the service already exists for this frame, use the existing one.
             foreach (var nav in WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices))
             {
-                if (nav.FrameFacade.Frame.Equals(frame))
+                if ((nav.FrameFacade as IFrameFacadeInternal).Frame.Equals(frame))
                 {
                     return nav as INavigationService;
                 }

@@ -25,21 +25,17 @@ using System.Collections.Concurrent;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
-using Template10.Common;
 using Template10.Services.NavigationService;
+using Template10.Common;
 
 namespace Template10.Services.ViewService
 {
-    // A custom event that fires whenever the secondary view is ready to be closed. You should
-    // clean up any state (including deregistering for events) then close the window in this handler
-    public delegate void ViewReleasedHandler(object sender, EventArgs e);
-
     // A ViewLifetimeControl is instantiated for every secondary view. ViewLifetimeControl's reference count
     // keeps track of when the secondary view thinks it's in use and when the main view is interacting with the secondary view (about to show
     // it to the user, etc.) When the reference count drops to zero, the secondary view is closed.
-    public sealed partial class ViewLifetimeControl
+    public sealed partial class ViewLifetimeControl : IViewLifetimeControl
     {
-        private static readonly ConcurrentDictionary<int, ViewLifetimeControl> WindowControlsMap = new ConcurrentDictionary<int, ViewLifetimeControl>();
+        private static readonly ConcurrentDictionary<int, IViewLifetimeControl> WindowControlsMap = new ConcurrentDictionary<int, IViewLifetimeControl>();
 
         #region CoreDispatcher
         // Dispatcher for this view. Kept here for sending messages between this view and the main view.
@@ -135,7 +131,7 @@ namespace Template10.Services.ViewService
             {
                 UnregisterForEvents();
                 InternalReleased?.Invoke(this, new EventArgs());
-                ViewLifetimeControl removed;
+                IViewLifetimeControl removed;
                 WindowControlsMap.TryRemove(Id, out removed);
             }
         }
@@ -144,7 +140,7 @@ namespace Template10.Services.ViewService
         /// Retrieves existing or creates new instance of <see cref="ViewLifetimeControl"/> for current <see cref="CoreWindow"/>
         /// </summary>
         /// <returns>Instance of <see cref="ViewLifetimeControl"/> that is associated with current window</returns>
-        public static ViewLifetimeControl GetForCurrentView()
+        public static IViewLifetimeControl GetForCurrentView()
         {
             var wnd = Window.Current.CoreWindow;
             /*BUG: use this strange way to get Id as for ShareTarget hosted window on desktop version ApplicationView.GetForCurrentView() throws "Catastrofic failure" COMException.
@@ -157,9 +153,9 @@ namespace Template10.Services.ViewService
         /// </summary>
         /// <returns>Instance of <see cref="ViewLifetimeControl"/> that is associated with current window or <value>null</value> if no calls to <see cref="GetForCurrentView"/> were made
         /// before.</returns>
-        public static ViewLifetimeControl TryGetForCurrentView()
+        public static IViewLifetimeControl TryGetForCurrentView()
         {
-            ViewLifetimeControl res;            
+            IViewLifetimeControl res;            
             WindowControlsMap.TryGetValue(ApplicationView.GetApplicationViewIdForWindow(Window.Current.CoreWindow), out res);
             return res;
         }             

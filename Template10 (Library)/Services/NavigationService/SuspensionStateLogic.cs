@@ -4,7 +4,7 @@ using Template10.Services.SettingsService;
 namespace Template10.Services.NavigationService
 {
 
-    public class SuspensionStateLogic
+    public class SuspensionStateLogic : ISuspensionStateLogic
     {
         FrameFacade FrameFacade { get; }
         public INavigationService NavigationService { get; }

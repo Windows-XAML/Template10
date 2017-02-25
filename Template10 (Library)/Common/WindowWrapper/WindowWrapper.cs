@@ -85,7 +85,7 @@ namespace Template10.Common
 
         public void Close() { Window.Close(); }
         public Window Window { get; }
-        public DispatcherWrapper Dispatcher { get; }
+        public IDispatcherWrapper Dispatcher { get; }
         public NavigationServiceList NavigationServices { get; } = new NavigationServiceList();
     }
 }

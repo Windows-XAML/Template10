@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Template10.Mobile.Common
+namespace Template10.Portable.Common
 {
     public sealed class Deferral
     {

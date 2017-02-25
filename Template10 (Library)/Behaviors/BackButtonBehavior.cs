@@ -14,7 +14,7 @@ namespace Template10.Behaviors
     [ContentProperty(Name = nameof(Actions))]
     public class BackButtonBehavior : DependencyObject, IBehavior
     {
-        private DispatcherWrapper _dispatcher;
+        private IDispatcherWrapper _dispatcher;
         public DependencyObject AssociatedObject { get; set; }
 
         public void Attach(DependencyObject associatedObject)

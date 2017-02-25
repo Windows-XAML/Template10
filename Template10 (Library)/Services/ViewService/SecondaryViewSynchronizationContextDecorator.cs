@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using Logging=Template10.Services.LoggingService.LoggingService;
+using Logging = Template10.Services.LoggingService.LoggingService;
 
 namespace Template10.Services.ViewService
 {
     class SecondaryViewSynchronizationContextDecorator : SynchronizationContext
     {
-        private readonly ViewLifetimeControl control;
+        private readonly IViewLifetimeControl control;
         private readonly SynchronizationContext context;
 
-        public SecondaryViewSynchronizationContextDecorator(ViewLifetimeControl control, SynchronizationContext context)
+        public SecondaryViewSynchronizationContextDecorator(IViewLifetimeControl control, SynchronizationContext context)
         {
             if (context == null)
                 throw new ArgumentNullException(nameof(context));
@@ -33,7 +29,7 @@ namespace Template10.Services.ViewService
                 Logging.WriteLine("SecondaryViewSynchronizationContextDecorator : OperationStarted: " + count);
                 context.OperationStarted();
             }
-            catch (ViewLifetimeControl.ViewLifeTimeException)
+            catch (ViewLifeTimeException)
             {
                 //Don't need to do anything, operation can't be started
             }
@@ -58,7 +54,7 @@ namespace Template10.Services.ViewService
                 var count = control.StopViewInUse();
                 Logging.WriteLine("SecondaryViewSynchronizationContextDecorator : OperationCompleted: " + count);
             }
-            catch (ViewLifetimeControl.ViewLifeTimeException)
+            catch (ViewLifeTimeException)
             {
                 //Don't need to do anything, operation can't be completed
             }

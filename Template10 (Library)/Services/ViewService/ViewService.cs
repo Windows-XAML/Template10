@@ -1,20 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Template10.Common;
 using Windows.ApplicationModel.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
-using Template10.Common;
 using static Template10.Services.LoggingService.LoggingService;
 
 namespace Template10.Services.ViewService
 {
     public sealed class ViewService : IViewService
     {
-        internal static void OnWindowCreated()
+        public static void OnWindowCreated()
         {
             var view = CoreApplication.GetCurrentView();
             if (!view.IsMain && !view.IsHosted)
@@ -28,7 +25,7 @@ namespace Template10.Services.ViewService
             }
         }
 
-        public async Task<ViewLifetimeControl> OpenAsync(Type page, object parameter = null, string title = null,
+        public async Task<IViewLifetimeControl> OpenAsync(Type page, object parameter = null, string title = null,
             ViewSizePreference size = ViewSizePreference.UseHalf)
         {
             WriteLine($"Page: {page}, Parameter: {parameter}, Title: {title}, Size: {size}");
@@ -44,7 +41,7 @@ namespace Template10.Services.ViewService
                 var newWindow = Window.Current;
                 var newAppView = ApplicationView.GetForCurrentView();
                 newAppView.Title = title;
-                var nav = BootStrapper.Current.NavigationServiceFactory(BootStrapper.BackButton.Ignore, BootStrapper.ExistingContent.Exclude);
+                var nav = BootStrapper.Current.NavigationServiceFactory(Common.BackButton.Ignore, Common.ExistingContent.Exclude);
                 control.NavigationService = nav;
                 nav.Navigate(page, parameter);
                 newWindow.Content = nav.Frame;
