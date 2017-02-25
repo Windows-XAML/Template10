@@ -732,17 +732,17 @@ namespace Template10.Common
 
         private void SetupKeyboardListeners()
         {
-            var KeyboardService = Services.KeyboardService.KeyboardService.Instance;
-            KeyboardService.AfterBackGesture = () =>
+            var keyboardService = Services.KeyboardService.KeyboardService.Instance;
+            keyboardService.AfterBackGesture = () =>
             {
-                DebugWrite(caller: nameof(KeyboardService.AfterBackGesture));
+                DebugWrite(caller: nameof(keyboardService.AfterBackGesture));
 
                 var handled = false;
                 RaiseBackRequested(ref handled);
             };
-            KeyboardService.AfterForwardGesture = () =>
+            keyboardService.AfterForwardGesture = () =>
             {
-                DebugWrite(caller: nameof(KeyboardService.AfterForwardGesture));
+                DebugWrite(caller: nameof(keyboardService.AfterForwardGesture));
 
                 RaiseForwardRequested();
             };
