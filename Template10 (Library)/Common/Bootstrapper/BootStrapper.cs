@@ -714,6 +714,7 @@ namespace Template10.Common
                                     frameState.Remove("CurrentPageParam");
                                     frameState.Remove("NavigateState");
                                 }
+                                Exit();
                             }
                         }
                     }
