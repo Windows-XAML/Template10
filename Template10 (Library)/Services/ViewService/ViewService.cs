@@ -38,7 +38,7 @@ namespace Template10.Services.ViewService
 
             var newView = CoreApplication.CreateNewView();
             var dispatcher = new DispatcherWrapper(newView.Dispatcher);
-            var newControl = await dispatcher.Dispatch(async () =>
+            var newControl = await dispatcher.DispatchAsync(async () =>
             {
                 var control = ViewLifetimeControl.GetForCurrentView();
                 var newWindow = Window.Current;
