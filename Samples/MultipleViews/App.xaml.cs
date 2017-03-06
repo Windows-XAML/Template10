@@ -4,6 +4,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Xaml.Data;
 using Template10.Services.ViewService;
+using Template10.Common;
 
 namespace Sample
 {
@@ -11,7 +12,7 @@ namespace Sample
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
     [Bindable]
-    sealed partial class App : Template10.Common.BootStrapper
+    sealed partial class App : BootStrapper
     {
 
         public App()
