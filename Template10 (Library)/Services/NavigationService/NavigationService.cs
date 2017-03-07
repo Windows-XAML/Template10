@@ -43,8 +43,8 @@ namespace Template10.Services.NavigationService
             set { _SerializationService = new Lazy<ISerializationService>(() => value); }
         }
 
-        Lazy<FrameFacade> _FrameFacade;
-        public FrameFacade FrameFacade => _FrameFacade.Value;
+        Lazy<IFrameFacade> _FrameFacade;
+        public IFrameFacade FrameFacade => _FrameFacade.Value;
         IFrameFacadeInternal FrameFacadeInternal => _FrameFacade.Value as IFrameFacadeInternal;
 
         public Common.BackButton BackButtonHandling { get; set; }
@@ -58,7 +58,7 @@ namespace Template10.Services.NavigationService
         public IDispatcherWrapper Dispatcher => this.GetDispatcherWrapper();
 
         [Obsolete("Use NavigationService.FrameFacade. This may be made private in future versions.", false)]
-        public Frame Frame => FrameFacade.Frame;
+        public Frame Frame => FrameFacadeInternal.Frame;
 
         [Obsolete("Use FrameFacade.Content", false)]
         public object Content => FrameFacade.Content;
@@ -75,8 +75,8 @@ namespace Template10.Services.NavigationService
             IsInMainView = CoreApplication.MainView == CoreApplication.GetCurrentView();
             _SerializationService = new Lazy<ISerializationService>(() => Services.SerializationService.SerializationService.Json);
             _Navigation = new Lazy<NavigationLogic>(() => new NavigationLogic(this));
-            _Suspension = new Lazy<ISuspensionStateLogic>(() => new SuspensionStateLogic(FrameFacade, this));
-            _FrameFacade = new Lazy<FrameFacade>(() => new FrameFacade(frame, this));
+            _Suspension = new Lazy<ISuspensionStateLogic>(() => new SuspensionStateLogic(FrameFacadeInternal, this));
+            _FrameFacade = new Lazy<IFrameFacade>(() => new FrameFacade(frame, this));
             _ViewService = new Lazy<IViewService>(() => new ViewService.ViewService());
         }
 
@@ -141,7 +141,7 @@ namespace Template10.Services.NavigationService
             DebugWrite($"Key: {key}, Parameter: {parameter}, NavigationTransitionInfo: {infoOverride}");
 
             Type page;
-            var keys = BootStrapper.Current.PageKeys<T>();
+            var keys = Locator.BootStrapper.Instance.PageKeys<T>();
             if (!keys.TryGetValue(key, out page))
             {
                 throw new KeyNotFoundException(key.ToString());
@@ -216,7 +216,7 @@ namespace Template10.Services.NavigationService
             // call newViewModel.ResolveForPage()
             if (newViewModel == null)
             {
-                newViewModel = BootStrapper.Current.ResolveForPage(newPage, this);
+                newViewModel = Locator.BootStrapper.Instance.ResolveForPage(newPage, this);
                 newPage.DataContext = newViewModel;
             }
 
@@ -460,7 +460,7 @@ namespace Template10.Services.NavigationService
         #endregion
 
         [Obsolete("Call FrameFacade.ClearCache(). This may be private in future versions.", false)]
-        public void ClearCache(bool removeCachedPagesInBackStack = false) => FrameFacade.ClearCache(removeCachedPagesInBackStack);
+        public void ClearCache(bool removeCachedPagesInBackStack = false) => FrameFacadeInternal.ClearCache(removeCachedPagesInBackStack);
 
         public void ClearHistory() => FrameFacade.BackStack.Clear();
 

@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Template10.Common;
+using Template10.Services.NavigationService;
 using Windows.ApplicationModel.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -41,10 +42,10 @@ namespace Template10.Services.ViewService
                 var newWindow = Window.Current;
                 var newAppView = ApplicationView.GetForCurrentView();
                 newAppView.Title = title;
-                var nav = BootStrapper.Current.NavigationServiceFactory(Common.BackButton.Ignore, Common.ExistingContent.Exclude);
+                var nav = Locator.BootStrapper.Instance.NavigationServiceFactory(BackButton.Ignore, ExistingContent.Exclude);
                 control.NavigationService = nav;
                 nav.Navigate(page, parameter);
-                newWindow.Content = nav.Frame;
+                newWindow.Content = (nav.FrameFacade as IFrameFacadeInternal).Frame;
                 newWindow.Activate();
 
                 await ApplicationViewSwitcher

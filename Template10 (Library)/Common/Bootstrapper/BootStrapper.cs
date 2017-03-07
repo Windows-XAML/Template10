@@ -13,11 +13,8 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Template10.Services.ViewService;
-using System.Threading;
-using Windows.ApplicationModel.ExtendedExecution;
 using Template10.Services.ExtendedSessionService;
-using Template10.Utils;
-using System.Diagnostics;
+using Template10.Controls;
 
 namespace Template10.Common
 {
@@ -103,7 +100,7 @@ namespace Template10.Common
         /// Out of the box, Template 10 sets a ModalDialog as the root element of the app.
         /// This enables a simple way to display a busy dialog by calling ModalDialog.IsModal = true;
         /// </summary>
-        public Controls.ModalDialog ModalDialog => (Window.Current.Content as Controls.ModalDialog);
+        public ModalDialog ModalDialog => (Window.Current.Content as ModalDialog);
 
         /// <summary>
         /// Out of the box, Template 10 sets a ModalDialog as the root element of the app.
@@ -153,21 +150,21 @@ namespace Template10.Common
 
         #endregion
 
-        Lazy<WindowLogic> _WindowLogic;
-        internal WindowLogic WindowLogic => _WindowLogic.Value;
+        Lazy<IWindowLogic> _WindowLogic;
+        public IWindowLogic WindowLogic => _WindowLogic.Value;
 
-        Lazy<SplashLogic> _SplashLogic;
-        internal SplashLogic SplashLogic => _SplashLogic.Value;
+        Lazy<ISplashLogic> _SplashLogic;
+        public ISplashLogic SplashLogic => _SplashLogic.Value;
 
-        Lazy<ExtendedSessionService> _ExtendedSessionService;
-        private ExtendedSessionService ExtendedSessionService => _ExtendedSessionService.Value;
+        Lazy<IExtendedSessionService> _ExtendedSessionService;
+        public IExtendedSessionService ExtendedSessionService => _ExtendedSessionService.Value;
 
         public BootStrapper()
         {
-            _WindowLogic = new Lazy<WindowLogic>(() => new WindowLogic());
-            _SplashLogic = new Lazy<SplashLogic>(() => new SplashLogic());
-            _ExtendedSessionService = new Lazy<ExtendedSessionService>(() => new ExtendedSessionService());
-            Microsoft.Practices.ServiceLocation.ServiceLocator.SetLocatorProvider()
+            _WindowLogic = new Lazy<IWindowLogic>(() => new WindowLogic());
+            _SplashLogic = new Lazy<ISplashLogic>(() => new SplashLogic());
+            _ExtendedSessionService = new Lazy<IExtendedSessionService>(() => new ExtendedSessionService());
+            Locator.BootStrapper.Instance = this;
         }
 
         #region Public Events
@@ -261,7 +258,7 @@ namespace Template10.Common
 
             var navigationFrame = new Frame();
             var navigationService = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include, navigationFrame);
-            return new Controls.ModalDialog
+            return new ModalDialog
             {
                 DisableBackButtonWhenModal = true,
                 Content = navigationFrame
@@ -421,7 +418,7 @@ namespace Template10.Common
         /// If a developer overrides this method, the developer can resolve DataContext or unwrap DataContext
         /// available for the Page object when using a MVVM pattern that relies on a wrapped/proxy around ViewModels
         /// </summary>
-        public virtual INavigable ResolveForPage(Page page, NavigationService navigationService) => null;
+        public virtual INavigable ResolveForPage(Page page, INavigationService navigationService) => null;
 
         /// <summary>
         /// Prelaunch may never occur. However, it's possible that it will. It is a Windows mechanism
@@ -736,10 +733,10 @@ namespace Template10.Common
             foreach (var resource in Application.Current.Resources)
             {
                 var key = resource.Key;
-                if (key == typeof(Controls.CustomTitleBar))
+                if (key == typeof(CustomTitleBar))
                 {
                     var style = resource.Value as Style;
-                    var title = new Controls.CustomTitleBar();
+                    var title = new CustomTitleBar();
                     title.Style = style;
                 }
                 count--;

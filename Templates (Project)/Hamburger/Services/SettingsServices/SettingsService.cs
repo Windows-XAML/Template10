@@ -1,11 +1,12 @@
 ﻿using System;
+using Template10;
 using Template10.Common;
 using Template10.Utils;
 using Windows.UI.Xaml;
 
 namespace Sample.Services.SettingsServices
 {
-    public class SettingsService : Template10.Services.SettingsService.SettingsBase
+    public class SettingsService : Template10.Services.SettingsService.SettingsServiceBase
     {
         public static SettingsService Instance { get; } = new SettingsService();
         private SettingsService()
@@ -15,14 +16,14 @@ namespace Sample.Services.SettingsServices
 
         public bool UseShellBackButton
         {
-            get => SettingsHelper.Read<bool>(nameof(UseShellBackButton), true);
+            get => Read<bool>(nameof(UseShellBackButton), true);
             set
             {
-                SettingsHelper.Write(nameof(UseShellBackButton), value);
-                BootStrapper.Current.NavigationService.GetDispatcherWrapper().Dispatch(() =>
+                Write(nameof(UseShellBackButton), value);
+                Locator.WindowWrapper.Current().Dispatcher.Dispatch(() =>
                 {
-                    BootStrapper.Current.ShowShellBackButton = value;
-                    BootStrapper.Current.UpdateShellBackButton();
+                    Locator.BootStrapper.Instance.ShowShellBackButton = value;
+                    Locator.BootStrapper.Instance.UpdateShellBackButton();
                 });
             }
         }
@@ -32,12 +33,12 @@ namespace Sample.Services.SettingsServices
             get
             {
                 var theme = ApplicationTheme.Light;
-                var value = SettingsHelper.Read<string>(nameof(AppTheme), theme.ToString());
+                var value = Read<string>(nameof(AppTheme), theme.ToString());
                 return Enum.TryParse<ApplicationTheme>(value, out theme) ? theme : ApplicationTheme.Dark;
             }
             set
             {
-                SettingsHelper.Write(nameof(AppTheme), value.ToString());
+                Write(nameof(AppTheme), value.ToString());
                 (Window.Current.Content as FrameworkElement).RequestedTheme = value.ToElementTheme();
                 Views.Shell.HamburgerMenu.RefreshStyles(value, true);
             }
@@ -45,30 +46,30 @@ namespace Sample.Services.SettingsServices
 
         public TimeSpan CacheMaxDuration
         {
-            get => SettingsHelper.Read<TimeSpan>(nameof(CacheMaxDuration), TimeSpan.FromDays(2));
+            get => Read<TimeSpan>(nameof(CacheMaxDuration), TimeSpan.FromDays(2));
             set
             {
-                SettingsHelper.Write(nameof(CacheMaxDuration), value);
-                BootStrapper.Current.CacheMaxDuration = value;
+                Write(nameof(CacheMaxDuration), value);
+                Locator.BootStrapper.Instance.CacheMaxDuration = value;
             }
         }
 
         public bool ShowHamburgerButton
         {
-            get => SettingsHelper.Read<bool>(nameof(ShowHamburgerButton), true);
+            get => Read<bool>(nameof(ShowHamburgerButton), true);
             set
             {
-                SettingsHelper.Write(nameof(ShowHamburgerButton), value);
+                Write(nameof(ShowHamburgerButton), value);
                 Views.Shell.HamburgerMenu.HamburgerButtonVisibility = value ? Visibility.Visible : Visibility.Collapsed;
             }
         }
 
         public bool IsFullScreen
         {
-            get => SettingsHelper.Read<bool>(nameof(IsFullScreen), false);
+            get => Read<bool>(nameof(IsFullScreen), false);
             set
             {
-                SettingsHelper.Write(nameof(IsFullScreen), value);
+                Write(nameof(IsFullScreen), value);
                 Views.Shell.HamburgerMenu.IsFullScreen = value;
             }
         }

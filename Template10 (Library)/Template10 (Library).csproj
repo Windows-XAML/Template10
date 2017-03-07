@@ -128,112 +128,69 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Behaviors\BackButtonBehavior.cs" />
-    <Compile Include="Behaviors\CloseFlyoutAction.cs" />
-    <Compile Include="Behaviors\DeviceDispositionBehavior.cs" />
-    <Compile Include="Common\Bootstrapper\IBootStrapper.cs" />
     <Compile Include="Common\Bootstrapper\WindowLogic.cs" />
-    <Compile Include="Behaviors\EventTriggerBehaviorBase.cs" />
-    <Compile Include="Behaviors\FocusAction.cs" />
-    <Compile Include="Behaviors\MessageDialogAction.cs" />
-    <Compile Include="Behaviors\NavButtonBehavior.cs" />
-    <Compile Include="Behaviors\EllipsisBehavior.cs" />
-    <Compile Include="Behaviors\NavToPageAction.cs" />
-    <Compile Include="Behaviors\OpenFlyoutAction.cs" />
-    <Compile Include="Behaviors\KeyBehavior.cs" />
-    <Compile Include="Behaviors\TextBoxEnterKeyBehavior.cs" />
-    <Compile Include="Behaviors\ConditionalAction.cs" />
-    <Compile Include="Behaviors\ThrottledEventTriggerBehavior.cs" />
-    <Compile Include="Behaviors\TimeoutAction.cs" />
     <Compile Include="Common\Bootstrapper\BootStrapper.cs" />
     <Compile Include="Common\Bootstrapper\SplashLogic.cs" />
     <Compile Include="Common\DispatcherWrapper\DispatcherWrapper.cs" />
-    <Compile Include="Common\EventThrottleHelper\EventThrottleHelper.cs" />
     <Compile Include="Common\WindowWrapper\WindowWrapper.cs" />
-    <Compile Include="Controls\HamburgerButtonTemplateSelected.cs" />
-    <Compile Include="Controls\HamburgerMenu.PublicMethods.xaml.cs">
-      <DependentUpon>HamburgerMenu.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\HamburgerMenu.PublicProperties.xaml.cs">
-      <DependentUpon>HamburgerMenu.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ModalDialog.cs" />
-    <Compile Include="Controls\CustomTitleBar.cs" />
-    <Compile Include="Controls\HamburgerButtonInfo.cs" />
-    <Compile Include="Controls\PageHeader.cs" />
-    <Compile Include="Controls\Resizer.cs" />
-    <Compile Include="Controls\RingSegment.cs" />
-    <Compile Include="Converters\ChangeTypeConverter.cs" />
-    <Compile Include="Converters\DateTimeOffsetConverter.cs" />
-    <Compile Include="Converters\StringFormatConverter.cs" />
-    <Compile Include="Converters\ValueWhenConverter.cs" />
-    <Compile Include="Mvvm\AwaitableDelegateCommand.cs" />
-    <Compile Include="Mvvm\BindableBase.cs" />
-    <Compile Include="Mvvm\ChangedCommandAdapter.cs" />
-    <Compile Include="Mvvm\DelegateCommand.cs" />
-    <Compile Include="Mvvm\DependencyBindableBase.cs" />
-    <Compile Include="Mvvm\IBindable.cs" />
-    <Compile Include="Mvvm\IChangedCommand.cs" />
     <Compile Include="Mvvm\ViewModelBase.cs" />
-    <Compile Include="Controls\HamburgerMenu.xaml.cs">
-      <DependentUpon>HamburgerMenu.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\NavigationService\Extensions.cs" />
+    <Compile Include="Services\NavigationService\FrameFacade.cs" />
     <Compile Include="Services\NavigationService\NavigationLogic.cs" />
     <Compile Include="Services\NavigationService\NavigationService.cs" />
     <Compile Include="Services\NavigationService\Parameters.cs" />
     <Compile Include="Services\NavigationService\SuspensionStateLogic.cs" />
+    <Compile Include="Services\ExtendedSessionService\ExtendedServiceHelper.cs" />
+    <Compile Include="Services\ExtendedSessionService\ExtendedSessionService.cs" />
     <Compile Include="Services\ViewService\SecondaryViewSynchronizationContextDecorator.cs" />
     <Compile Include="Services\ViewService\ViewLifetimeControl.cs" />
     <Compile Include="Services\ViewService\ViewService.cs" />
-    <Compile Include="Utils\ColorExtensions.cs" />
-    <Compile Include="Utils\DeviceUtils.cs" />
-    <Compile Include="Utils\DialogUtils.cs" />
-    <Compile Include="Utils\MonitorUtils.cs" />
-    <Compile Include="Utils\Template10Extensions.cs" />
+    <Compile Include="Utils\NavigationExtensions.cs" />
     <Content Include="Properties\Template10Library.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Controls\HamburgerMenu.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\HamburgerMenu.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\ModalDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\PageHeader.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Resizer.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <SDKReference Include="WindowsMobile, Version=10.0.14393.0">
-      <Name>Windows Mobile Extensions for the UWP</Name>
-    </SDKReference>
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\Template10.Controls.CustomTitleBar\Template10.Controls.CustomTitleBar.csproj">
+      <Project>{196c912b-6513-49fb-a088-4b99ec0e371a}</Project>
+      <Name>Template10.Controls.CustomTitleBar</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Template10.Controls.ModalDialog\Template10.Controls.ModalDialog.csproj">
+      <Project>{16a0ffbd-8ec6-4e91-ad68-4614b86371f5}</Project>
+      <Name>Template10.Controls.ModalDialog</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Template10.Mobile\Template10.Portable.csproj">
       <Project>{09cc346c-2e17-4103-8fc6-47b116595d5f}</Project>
       <Name>Template10.Portable</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Template10.Mvvm\Template10.Mvvm.csproj">
+      <Project>{cdd1d7da-3c0c-404d-a5ba-057e377b529c}</Project>
+      <Name>Template10.Mvvm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Template10.Services.KeyboardService\Template10.Services.KeyboardService.csproj">
+      <Project>{88885f50-8176-4359-931d-34565a714e0e}</Project>
+      <Name>Template10.Services.KeyboardService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Template10.Services.SerializationService\Template10.Services.SerializationService.csproj">
+      <Project>{81d5e4f1-e4fb-4e53-ac80-962db8fa80dc}</Project>
+      <Name>Template10.Services.SerializationService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Template10.Services.SettingsService\Template10.Services.SettingsService.csproj">
+      <Project>{0cd92e03-516a-4f39-ae97-83cd33d12be3}</Project>
+      <Name>Template10.Services.SettingsService</Name>
     </ProjectReference>
     <ProjectReference Include="..\Template10.Services\Template10.Services.csproj">
       <Project>{e797b9dd-b25b-4531-b74f-40813800658a}</Project>
       <Name>Template10.Services</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Template10.Shared\Template10.Shared.csproj">
+      <Project>{17b01429-48b2-45de-a7c2-03c3cf2d60d3}</Project>
+      <Name>Template10.Shared</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="WindowsMobile, Version=10.0.10240.0">
+      <Name>Windows Mobile Extensions for the UWP</Name>
+    </SDKReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

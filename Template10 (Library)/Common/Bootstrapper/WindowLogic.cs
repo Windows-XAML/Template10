@@ -7,7 +7,7 @@ using Windows.UI.Xaml;
 
 namespace Template10.Common
 {
-    public class WindowLogic
+    public class WindowLogic : IWindowLogic
     {
         internal WindowLogic()
         {
@@ -20,7 +20,7 @@ namespace Template10.Common
         /// One scenario might be a delayed activation for Splash Screen.
         /// </summary>
         /// <param name="source">Reason for the call from Template 10</param>
-        public void ActivateWindow(ActivateWindowSources source, SplashLogic splashLogic)
+        public void ActivateWindow(ActivateWindowSources source, ISplashLogic splashLogic)
         {
             if (source != ActivateWindowSources.SplashScreen)
             {

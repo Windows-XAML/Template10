@@ -10,7 +10,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 
 namespace Template10.Common
 {
-    public class SplashLogic
+    public class SplashLogic : ISplashLogic
     {
         internal SplashLogic()
         {
@@ -19,7 +19,7 @@ namespace Template10.Common
 
         private Popup popup;
 
-        public void Show(SplashScreen splashScreen, BootStrapper bootstrapper)
+        public void Show(SplashScreen splashScreen, IBootStrapper bootstrapper)
         {
             if (bootstrapper.SplashFactory == null)
                 return;
