@@ -131,6 +131,7 @@
     <Compile Include="Behaviors\BackButtonBehavior.cs" />
     <Compile Include="Behaviors\CloseFlyoutAction.cs" />
     <Compile Include="Behaviors\DeviceDispositionBehavior.cs" />
+    <Compile Include="Common\Bootstrapper\IBootStrapper.cs" />
     <Compile Include="Common\Bootstrapper\WindowLogic.cs" />
     <Compile Include="Behaviors\EventTriggerBehaviorBase.cs" />
     <Compile Include="Behaviors\FocusAction.cs" />
@@ -190,7 +191,7 @@
     <Compile Include="Utils\DeviceUtils.cs" />
     <Compile Include="Utils\DialogUtils.cs" />
     <Compile Include="Utils\MonitorUtils.cs" />
-    <Compile Include="Utils\Template10Utils.cs" />
+    <Compile Include="Utils\Template10Extensions.cs" />
     <Content Include="Properties\Template10Library.rd.xml" />
   </ItemGroup>
   <ItemGroup>

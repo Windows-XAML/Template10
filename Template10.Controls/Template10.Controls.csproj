@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E797B9DD-B25B-4531-B74F-40813800658A}</ProjectGuid>
+    <ProjectGuid>{E075D75B-7F88-4C7F-AE11-71F0F529849E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Template10.Services</RootNamespace>
-    <AssemblyName>Template10.Services</AssemblyName>
+    <RootNamespace>Template10.Controls</RootNamespace>
+    <AssemblyName>Template10.Controls</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
@@ -107,85 +107,34 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\Bootstrapper\ActivateWindowSources.enum.cs" />
-    <Compile Include="Common\Bootstrapper\AdditionalKinds.enum.cs" />
-    <Compile Include="Common\Bootstrapper\AppExecutionState.enum.cs" />
-    <Compile Include="Common\Bootstrapper\BackButton.enum.cs" />
-    <Compile Include="Common\Bootstrapper\BootstrapperStates.enum.cs" />
-    <Compile Include="Common\Bootstrapper\ExistingContent.enum.cs" />
-    <Compile Include="Common\Bootstrapper\StartKind.enum.cs" />
-    <Compile Include="Common\Deferral\Deferral.cs" />
-    <Compile Include="Common\Deferral\DeferralManager.cs" />
-    <Compile Include="Common\DispatcherWrapper\IDispatcherWrapper.cs" />
-    <Compile Include="Common\NavButtonsHelper.cs" />
-    <Compile Include="Common\StateItems\IStateItems.cs" />
-    <Compile Include="Common\StateItems\StateItems.cs" />
-    <Compile Include="Common\TypedEventHandler.cs" />
-    <Compile Include="Common\WeakReference\WeakReference.cs" />
-    <Compile Include="Common\WeakReference\WeakReferenceT.cs" />
-    <Compile Include="Common\WindowWrapper\IWindowWrapper.cs" />
+    <Compile Include="Controls\CustomTitleBar.cs" />
+    <Compile Include="Controls\ModalDialog.cs" />
+    <Compile Include="Controls\Resizer.cs" />
+    <Compile Include="Controls\RingSegment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\ExtendedSessionService\ExtendedServiceHelper.cs" />
-    <Compile Include="Services\ExtendedSessionService\ExtendedSessionService.cs" />
-    <Compile Include="Services\ExtendedSessionService\IExtendedSessionService.cs" />
-    <Compile Include="Services\FileService\FileHelper.cs" />
-    <Compile Include="Services\FileService\IFileService.cs" />
-    <Compile Include="Services\KeyboardService\KeyboardEventArgs.cs" />
-    <Compile Include="Services\KeyboardService\KeyboardHelper.cs" />
-    <Compile Include="Services\KeyboardService\KeyboardService.cs" />
-    <Compile Include="Services\LoggingService\LoggingService.cs" />
-    <Compile Include="Services\NavigationService\event-args\AlternativeNavigationEventArgs.cs" />
-    <Compile Include="Services\NavigationService\event-args\NavigatedEventArgs.cs" />
-    <Compile Include="Services\NavigationService\event-args\NavigatingEventArgs.cs" />
-    <Compile Include="Services\NavigationService\FrameFacade.cs" />
-    <Compile Include="Services\NavigationService\IFrameFacadeInternal.cs" />
-    <Compile Include="Services\NavigationService\ISuspensionStateLogic.cs" />
-    <Compile Include="Services\NavigationService\view-model\INavigable.cs" />
-    <Compile Include="Services\NavigationService\view-model\INavigatedAwareAsync.cs" />
-    <Compile Include="Services\NavigationService\view-model\INavigatingAwareAsync.cs" />
-    <Compile Include="Services\NavigationService\INavigationService.cs" />
-    <Compile Include="Services\NavigationService\NavigationServiceList.cs" />
-    <Compile Include="Services\NetworkAvailableService\ConnectionTypes.cs" />
-    <Compile Include="Services\NetworkAvailableService\INetworkAvailableService.cs" />
-    <Compile Include="Services\NetworkAvailableService\NetworkAvailableHelper.cs" />
-    <Compile Include="Services\NetworkAvailableService\NetworkAvailableService.cs" />
-    <Compile Include="Services\PopupService\PopupService.cs" />
-    <Compile Include="Services\ProfileService\ProfileService.cs" />
-    <Compile Include="Services\QueueService\IQueue.cs" />
-    <Compile Include="Services\QueueService\Queue.cs" />
-    <Compile Include="Services\SecretService\ISecretService.cs" />
-    <Compile Include="Services\SecretService\SecretService.cs" />
-    <Compile Include="Services\SerializationService\ISerializationService.cs" />
-    <Compile Include="Services\SerializationService\JsonSerializationService.cs" />
-    <Compile Include="Services\SerializationService\SerializationService.cs" />
-    <Compile Include="Services\SettingsService\IPropertyMapping.cs" />
-    <Compile Include="Services\SettingsService\ISettingsHelper.cs" />
-    <Compile Include="Services\SettingsService\ISettingsService.cs" />
-    <Compile Include="Services\SettingsService\IStoreConverter.cs" />
-    <Compile Include="Services\SettingsService\JsonConverter.cs" />
-    <Compile Include="Services\SettingsService\JsonMapping.cs" />
-    <Compile Include="Services\SettingsService\SettingsHelper.cs" />
-    <Compile Include="Services\SettingsService\SettingsService.cs" />
-    <Compile Include="Services\SettingsService\SettingsStrategy.cs" />
-    <Compile Include="Services\ViewService\IViewLifetimeControl.cs" />
-    <Compile Include="Services\ViewService\IViewService.cs" />
-    <Compile Include="Services\ViewService\ViewLifeTimeException.cs" />
-    <Compile Include="Utils\ApiUtils.cs" />
-    <Compile Include="Utils\AudioUtils.cs" />
-    <Compile Include="Utils\ExpressionUtils.cs" />
-    <Compile Include="Utils\IEnumerableExtensions.cs" />
-    <Compile Include="Utils\InkExtensions.cs" />
-    <Compile Include="Utils\TypeUtils.cs" />
-    <Compile Include="Utils\UriExtensions.cs" />
-    <Compile Include="Utils\XamlExtensions.cs" />
-    <Compile Include="Utils\XamlUtils.cs" />
-    <EmbeddedResource Include="Properties\Template10.Services.rd.xml" />
+    <EmbeddedResource Include="Properties\Template10.Controls.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Template10.Mobile\Template10.Portable.csproj">
-      <Project>{09cc346c-2e17-4103-8fc6-47b116595d5f}</Project>
-      <Name>Template10.Portable</Name>
-    </ProjectReference>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\HamburgerMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\ModalDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\PageHeader.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Resizer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

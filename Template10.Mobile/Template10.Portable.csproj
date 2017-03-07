@@ -37,6 +37,15 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\EventArgs\ChangedEventArgs.cs" />
+    <Compile Include="Common\EventArgs\HandledEventArgs.cs" />
+    <Compile Include="Common\EventArgs\ItemPropertyChangedEventArgs.cs" />
+    <Compile Include="Common\Exceptions\TemplatePartNotFoundException.cs" />
+    <Compile Include="Common\IBootStrapper.cs" />
+    <Compile Include="Common\ObservableDictionary\IObservableDictionary.cs" />
+    <Compile Include="Common\ObservableDictionary\ObservableDictionary.cs" />
+    <Compile Include="Common\ObservableItemCollection\IObservableItemCollection.cs" />
+    <Compile Include="Common\ObservableItemCollection\ObservableItemCollection.cs" />
     <Compile Include="Navigation\IConfirmNavigationAsync.cs" />
     <Compile Include="Navigation\INavigatedFromAwareAsync.cs" />
     <Compile Include="Navigation\INavigatedToAwareAsync.cs" />

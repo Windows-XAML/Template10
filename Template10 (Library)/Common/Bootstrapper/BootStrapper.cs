@@ -22,7 +22,7 @@ using System.Diagnostics;
 namespace Template10.Common
 {
 
-    public abstract class BootStrapper : Application, INotifyPropertyChanged
+    public abstract class BootStrapper : Application, INotifyPropertyChanged, IBootStrapper
     {
         #region INotifyPropertyChanged
 
@@ -55,7 +55,7 @@ namespace Template10.Common
         /// There can be only one BootStrapper. This is a simple means to access it without
         /// re-casting Application.Current to Bootstrapper.
         /// </summary>
-        public static new BootStrapper Current => Application.Current as BootStrapper;
+        public static new IBootStrapper Current => Application.Current as IBootStrapper;
 
         /// <summary>
         /// This memory-only dictionary gives developers a place to store complex types while
@@ -167,6 +167,7 @@ namespace Template10.Common
             _WindowLogic = new Lazy<WindowLogic>(() => new WindowLogic());
             _SplashLogic = new Lazy<SplashLogic>(() => new SplashLogic());
             _ExtendedSessionService = new Lazy<ExtendedSessionService>(() => new ExtendedSessionService());
+            Microsoft.Practices.ServiceLocation.ServiceLocator.SetLocatorProvider()
         }
 
         #region Public Events
@@ -183,7 +184,7 @@ namespace Template10.Common
             base.OnWindowCreated(args);
         }
 
-        public static event EventHandler<HandledEventArgs> BackRequested;
+        public event EventHandler<HandledEventArgs> BackRequested;
         private void RaiseBackRequested(ref bool handled)
         {
             DebugWrite();
@@ -206,7 +207,7 @@ namespace Template10.Common
             NavigationService.GoBack();
         }
 
-        public static event EventHandler<HandledEventArgs> ForwardRequested;
+        public event EventHandler<HandledEventArgs> ForwardRequested;
         private void RaiseForwardRequested()
         {
             DebugWrite();

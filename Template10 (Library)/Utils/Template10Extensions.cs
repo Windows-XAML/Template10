@@ -12,7 +12,7 @@ using Windows.UI.Xaml.Media.Animation;
 
 namespace Template10.Utils
 {
-    public static class Template10Utils
+    public static class Template10Extensions
     {
         public static INavigationService GetNavigationService(this Frame frame)
             => NavigationService.GetForFrame(frame);
