@@ -773,7 +773,7 @@ namespace Template10.Controls
         public object PropertyChangedHandlers { get; private set; }
 
         readonly List<InfoElement> LoadedNavButtons = new List<InfoElement>();
-
+        public List<InfoElement> LoadedNavigationButtons { get { return LoadedNavButtons; } }
         public class InfoElement
         {
             public InfoElement(object sender)
