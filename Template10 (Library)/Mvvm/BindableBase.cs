@@ -13,6 +13,11 @@ namespace Template10.Mvvm
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        protected void ClearPropertyChanged()
+        {
+            PropertyChanged = null;
+        }
+
         public virtual bool Set<T>(ref T storage, T value, [CallerMemberName]string propertyName = null)
         {
             if (object.Equals(storage, value))
