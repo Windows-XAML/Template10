@@ -219,6 +219,21 @@
                         <Run Text="{Binding Version}" />
                     </TextBlock>
 
+                    <StackPanel
+                        x:Name="RateOurAppPanel" 
+                        Orientation="Horizontal" 
+                        RelativePanel.Below="VersionTextBlock">
+                        <TextBlock 
+                            Text="&#xE8E1;" 
+                            FontFamily="Segoe MDL2 Assets" 
+                            VerticalAlignment="Center"/>
+                        <HyperlinkButton 
+                            Margin="6,0,0,0" 
+                            Command="{Binding RateAppCommand}" 
+                            Content="Rate our app" 
+                            VerticalAlignment="Center"/>
+                    </StackPanel>
+
                 </RelativePanel>
             </PivotItem>
         </Pivot>

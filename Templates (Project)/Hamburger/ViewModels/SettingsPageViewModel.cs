@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Template10.Mvvm;
 using Template10.Services.SettingsService;
 using Windows.UI.Xaml;
+using Windows.System;
 
 namespace Sample.ViewModels
 {
@@ -104,5 +105,11 @@ namespace Sample.ViewModels
         }
 
         public Uri RateMe => new Uri("http://aka.ms/template10");
+
+        DelegateCommand _RateAppCommand;
+        public DelegateCommand RateAppCommand
+            => _RateAppCommand ?? (_RateAppCommand = new DelegateCommand(async () =>
+                await Launcher.LaunchUriAsync(new Uri($"ms-windows-store:REVIEW?PFN={Windows.ApplicationModel.Package.Current.Id.FamilyName}")),
+                () => !string.IsNullOrEmpty(Windows.ApplicationModel.Package.Current.Id.FamilyName)));
     }
 }
