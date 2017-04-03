@@ -108,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Behaviors\BackButtonBehavior.cs" />
+    <Compile Include="Behaviors\ChangeCursorAction.cs" />
     <Compile Include="Behaviors\CloseFlyoutAction.cs" />
     <Compile Include="Behaviors\ConditionalAction.cs" />
     <Compile Include="Behaviors\DeviceDispositionBehavior.cs" />
