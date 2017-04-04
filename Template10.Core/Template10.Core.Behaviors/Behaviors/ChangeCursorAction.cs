@@ -2,7 +2,7 @@
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 
-namespace Template10.Behaviors.Behaviors
+namespace Template10.Behaviors
 {
     public class CursorBehavior : DependencyObject, IAction
     {
