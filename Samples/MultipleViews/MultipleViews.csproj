@@ -129,17 +129,17 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Template10 %28Library%29\Template10 %28Library%29.csproj">
+    <ProjectReference Include="..\..\Template10 %28Library%29\Template10.Core.csproj">
       <Project>{ac3e4f10-6615-4e16-bb0f-104760c92b95}</Project>
-      <Name>Template10 %28Library%29</Name>
+      <Name>Template10.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Template10.Mobile\Template10.Portable.csproj">
       <Project>{09cc346c-2e17-4103-8fc6-47b116595d5f}</Project>
       <Name>Template10.Portable</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Template10.Services\Template10.Services.csproj">
+    <ProjectReference Include="..\..\Template10.Services\Template10.Services.Shared\Template10.Services.Shared.csproj">
       <Project>{e797b9dd-b25b-4531-b74f-40813800658a}</Project>
-      <Name>Template10.Services</Name>
+      <Name>Template10.Services.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

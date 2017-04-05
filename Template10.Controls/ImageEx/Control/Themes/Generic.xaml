@@ -1,0 +1,21 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Template10.Controls">
+
+    <Style TargetType="controls:ImageEx">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:ImageEx">
+                    <Grid>
+                        <Image
+                            x:Name="part_imageBackground"
+                            Source="{TemplateBinding Source}"
+                            Visibility="Collapsed" />
+                        <Image x:Name="part_imageForeground" Stretch="{TemplateBinding Stretch}" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
