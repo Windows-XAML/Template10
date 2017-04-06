@@ -139,12 +139,6 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Control\Template10.Controls.ImageEx.csproj">
-      <Project>{6db25e07-b9ee-4e75-8923-cd802cb9aff6}</Project>
-      <Name>Template10.Controls.ImageEx</Name>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

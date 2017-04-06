@@ -2,6 +2,13 @@
 
 **ImageEx** is a drop-in replacement for the XAML `<Image />` control for the special use case when the `Source` property is changed quickly. A known bug in the control is that the image will flash (revealing the background visual) as it changes sourcesto the new source. 
 
+![nuget syntax](_images/InstallPackage.png "Install package")
+
+### Example of the problem 
+The standard `<Image />` is on the left, the `<ImageEx />` is on the right. As the images cycle through the `ListView` on the top, the `<Image />` flickers as it changes, `<ImageEx />` does not.
+
+![the demo applicaton](_images/ImageExDemo.gif "The demo application")
+
 ### Syntax
 
 ````
