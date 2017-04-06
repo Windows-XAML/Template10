@@ -684,7 +684,24 @@ namespace Template10.Common
                     {
                         // individual frame-level
                         await nav.SuspendingAsync();
-                        if (AutoSuspendAllFrames) await nav.SaveAsync();
+                        if (AutoSuspendAllFrames)
+                        {
+                            try
+                            {
+                                await nav.SaveAsync();
+                            }
+                            catch
+                            {
+                                var frameState = nav.Suspension.GetFrameState();
+                                if (frameState != null)
+                                {
+                                    frameState.Remove("CurrentPageType");
+                                    frameState.Remove("CurrentPageParam");
+                                    frameState.Remove("NavigateState");
+                                }
+                                Exit();
+                            }
+                        }
                     }
 
                     // application-level
@@ -700,17 +717,17 @@ namespace Template10.Common
 
         private void SetupKeyboardListeners()
         {
-            var KeyboardService = Services.KeyboardService.KeyboardService.Instance;
-            KeyboardService.AfterBackGesture = () =>
+            var keyboardService = Services.KeyboardService.KeyboardService.Instance;
+            keyboardService.AfterBackGesture = () =>
             {
-                DebugWrite(caller: nameof(KeyboardService.AfterBackGesture));
+                DebugWrite(caller: nameof(keyboardService.AfterBackGesture));
 
                 var handled = false;
                 RaiseBackRequested(ref handled);
             };
-            KeyboardService.AfterForwardGesture = () =>
+            keyboardService.AfterForwardGesture = () =>
             {
-                DebugWrite(caller: nameof(KeyboardService.AfterForwardGesture));
+                DebugWrite(caller: nameof(keyboardService.AfterForwardGesture));
 
                 RaiseForwardRequested();
             };
