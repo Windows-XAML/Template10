@@ -5,6 +5,7 @@
 ### Nuget information
 
 ![nuget syntax](_images/InstallPackage.png "Install package")
+
 [Click here to visit the Nuget page for this control](https://www.nuget.org/packages/Template10.Controls.ImageEx/ "Nuget page")
 
 ### Example of the problem 
