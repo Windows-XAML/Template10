@@ -177,17 +177,61 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Template10 %28Library%29\Template10 %28Library%29.csproj">
+    <ProjectReference Include="..\..\Template10 %28Library%29\Template10.Core.csproj">
       <Project>{ac3e4f10-6615-4e16-bb0f-104760c92b95}</Project>
-      <Name>Template10 %28Library%29</Name>
+      <Name>Template10.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Template10.Mobile\Template10.Portable.csproj">
-      <Project>{09cc346c-2e17-4103-8fc6-47b116595d5f}</Project>
+    <ProjectReference Include="..\..\Template10.Controls\Template10.Controls.CustomTitleBar\Template10.Controls.CustomTitleBar.csproj">
+      <Project>{5cc9c9d2-2103-4e03-b425-7fd58a7a2a2e}</Project>
+      <Name>Template10.Controls.CustomTitleBar</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Template10.Controls\Template10.Controls.Hamburger\Template10.Controls.Hamburger.csproj">
+      <Project>{5144566e-80eb-4375-9fe2-415808e2051d}</Project>
+      <Name>Template10.Controls.Hamburger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Template10.Controls\Template10.Controls.ModalDialog\Template10.Controls.ModalDialog.csproj">
+      <Project>{8b565035-0b8f-41b0-a2a1-23793a58aa50}</Project>
+      <Name>Template10.Controls.ModalDialog</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Template10.Controls\Template10.Controls.Resizer\Template10.Controls.Resizer.csproj">
+      <Project>{4c95717c-b59c-4a2f-967a-79e74dd903cc}</Project>
+      <Name>Template10.Controls.Resizer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Template10.Core\Template10.Core.Behaviors\Template10.Behaviors.csproj">
+      <Project>{4cf686fa-6358-45bc-b430-7d877193905b}</Project>
+      <Name>Template10.Behaviors</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Template10.Core\Template10.Core.Converters\Template10.Converters.csproj">
+      <Project>{24387360-85ff-4bd5-b77f-40ba8006daf6}</Project>
+      <Name>Template10.Converters</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Template10.Core\Template10.Core.Mvvm\Template10.Mvvm.csproj">
+      <Project>{b23e19aa-1797-43f6-a0f1-fb2c13111aeb}</Project>
+      <Name>Template10.Mvvm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Template10.Core\Template10.Core.Portable\Template10.Portable.csproj">
+      <Project>{69aec09c-748d-485d-aa1f-9ff682be8163}</Project>
       <Name>Template10.Portable</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Template10.Services\Template10.Services.csproj">
-      <Project>{E797B9DD-B25B-4531-B74F-40813800658A}</Project>
-      <Name>Template10.Services</Name>
+    <ProjectReference Include="..\..\Template10.Core\Template10.Core.Shared\Template10.Shared.csproj">
+      <Project>{1f9a6976-d8f9-459b-8aee-770b53904ff3}</Project>
+      <Name>Template10.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Template10.Services\Template10.Services.KeyboardService\Template10.Services.KeyboardService.csproj">
+      <Project>{b540d0b5-3850-416f-aec7-7737870e9ca2}</Project>
+      <Name>Template10.Services.KeyboardService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Template10.Services\Template10.Services.Navigation\Template10.Services.Navigation.csproj">
+      <Project>{cd31d870-42f3-4379-b67a-2070c4b0a444}</Project>
+      <Name>Template10.Services.Navigation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Template10.Services\Template10.Services.SerializationService\Template10.Services.SerializationService.csproj">
+      <Project>{d3a94520-4cd4-4d56-b30b-7e54face64bb}</Project>
+      <Name>Template10.Services.SerializationService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Template10.Services\Template10.Services.SettingsService\Template10.Services.SettingsService.csproj">
+      <Project>{eba14736-2c70-4e33-a156-221b44ff43c1}</Project>
+      <Name>Template10.Services.SettingsService</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

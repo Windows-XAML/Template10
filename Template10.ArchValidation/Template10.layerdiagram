@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<layerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/SimpleShapesModel" dslVersion="1.0.0.0" Id="83ad7790-7d5e-44e7-8b1e-6553e587eab8" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/LayerDesigner">
+  <layers>
+    <layer Id="03325372-fee5-49ce-bf36-4a9470286da7" name="Template10 (Library)">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="329d615b-0823-471f-949e-b13ae7cc185f" direction="Forward">
+          <layerMoniker Id="61e1ceca-798a-4b12-b594-209bf6728ed0" />
+        </dependencyFromLayerToLayer>
+        <dependencyFromLayerToLayer Id="e16935bc-c217-41c5-853f-62fb98730a84" direction="Forward">
+          <layerMoniker Id="fcf39451-ff7d-4f3b-8eb7-299886b24314" />
+        </dependencyFromLayerToLayer>
+        <dependencyFromLayerToLayer Id="7b46aa9d-a51f-410b-90b4-311d0b2b3f82" direction="Forward">
+          <layerMoniker Id="c26ffcfd-15fa-4b3d-b616-f0633ddbc6a1" />
+        </dependencyFromLayerToLayer>
+        <dependencyFromLayerToLayer Id="50605273-28a6-4f0a-80b8-c6ceade3572b" direction="Forward">
+          <layerMoniker Id="c8dfddfd-196d-4fb2-8964-315b8c8bb6da" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+      <references>
+        <reference Id="088d5b71-026d-4be9-9b96-d9e2be86ae73" name="Template10 (Library)">
+          <ArtifactNode Label="Template10 (Library)" Category="CodeSchema_Project" Id="(Assembly=&quot;../Template10%2520(Library)/Template10%2520(Library).csproj&quot;)">
+            <Category Ref="File" />
+          </ArtifactNode>
+          <ExpandedNode Id="(Assembly=Template10Library)" Label="Template10Library.dll" Category="CodeSchema_Assembly">
+            <Category Ref="FileSystem.Category.FileOfType.dll" />
+            <LinkCategory Ref="Produces" />
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+        </reference>
+      </references>
+    </layer>
+    <layer Id="c26ffcfd-15fa-4b3d-b616-f0633ddbc6a1" name="Template10.Mvvm">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="75697ff5-daee-48ee-baf7-550f7fcd12a6" direction="Forward">
+          <layerMoniker Id="61e1ceca-798a-4b12-b594-209bf6728ed0" />
+        </dependencyFromLayerToLayer>
+        <dependencyFromLayerToLayer Id="d7f3bbf8-f9fc-4d18-8785-c23b2a3e2a82" direction="Forward">
+          <layerMoniker Id="fcf39451-ff7d-4f3b-8eb7-299886b24314" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+      <references>
+        <reference Id="44122842-4f15-4898-b281-6dae107807a8" name="Template10.Mvvm">
+          <ArtifactNode Label="Template10.Mvvm" Category="CodeSchema_Project" Id="(Assembly=../Template10.Mvvm/Template10.Mvvm.csproj)">
+            <Category Ref="File" />
+          </ArtifactNode>
+          <ExpandedNode Id="(Assembly=Template10.Mvvm)" Label="Template10.Mvvm.dll" Category="CodeSchema_Assembly">
+            <LinkCategory Ref="Produces" />
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+        </reference>
+      </references>
+    </layer>
+    <layer Id="fcf39451-ff7d-4f3b-8eb7-299886b24314" name="Template10.Shared">
+      <references>
+        <reference Id="bba36cdc-193a-4550-9430-72b3498a5ac9" name="Template10.Shared">
+          <ArtifactNode Label="Template10.Shared" Category="CodeSchema_Project" Id="(Assembly=../Template10.Shared/Template10.Shared.csproj)">
+            <Category Ref="File" />
+          </ArtifactNode>
+          <ExpandedNode Id="(Assembly=Template10.Shared)" Label="Template10.Shared.dll" Category="CodeSchema_Assembly">
+            <LinkCategory Ref="Produces" />
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+        </reference>
+      </references>
+    </layer>
+    <layer Id="c8dfddfd-196d-4fb2-8964-315b8c8bb6da" name="Template10.Services">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="ea4dc2c9-3691-4386-a29f-8148b10b1e00" direction="Forward">
+          <layerMoniker Id="fcf39451-ff7d-4f3b-8eb7-299886b24314" />
+        </dependencyFromLayerToLayer>
+        <dependencyFromLayerToLayer Id="37bf8d95-9218-4fcd-8b6f-a75151378b46" direction="Forward">
+          <layerMoniker Id="61e1ceca-798a-4b12-b594-209bf6728ed0" />
+        </dependencyFromLayerToLayer>
+        <dependencyFromLayerToLayer Id="55af9cc9-a449-4794-bcd2-5745cdbe35f3" direction="Forward">
+          <layerMoniker Id="c26ffcfd-15fa-4b3d-b616-f0633ddbc6a1" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+      <references>
+        <reference Id="e10d9ff2-5622-45b5-9e65-f2a9397a6396" name="Template10.Services">
+          <ArtifactNode Label="Template10.Services" Category="CodeSchema_Project" Id="(Assembly=../Template10.Services/Template10.Services.csproj)">
+            <Category Ref="File" />
+          </ArtifactNode>
+          <ExpandedNode Id="(Assembly=Template10.Services)" Label="Template10.Services.dll" Category="CodeSchema_Assembly">
+            <Category Ref="FileSystem.Category.FileOfType.dll" />
+            <LinkCategory Ref="Produces" />
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+        </reference>
+      </references>
+    </layer>
+    <layer Id="61e1ceca-798a-4b12-b594-209bf6728ed0" name="Template10.Portable">
+      <references>
+        <reference Id="d2e1baa9-27a4-4057-a380-1eca6773a81c" name="Template10.Portable">
+          <ArtifactNode Label="Template10.Portable" Category="CodeSchema_Project" Id="(Assembly=../Template10.Mobile/Template10.Portable.csproj)">
+            <Category Ref="File" />
+          </ArtifactNode>
+          <ExpandedNode Id="(Assembly=Template10.Mobile)" Label="Template10.Mobile.dll" Category="CodeSchema_Assembly">
+            <Category Ref="FileSystem.Category.FileOfType.dll" />
+            <LinkCategory Ref="Produces" />
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+        </reference>
+      </references>
+    </layer>
+  </layers>
+</layerModel>
