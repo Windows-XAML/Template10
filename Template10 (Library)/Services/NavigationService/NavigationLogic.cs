@@ -118,6 +118,10 @@ namespace Template10.Services.NavigationService
                 await CallPortableNavigatingFromAsync(viewmodel, mode, sourceType, sourceParameter, targetType, targetParameter, suspending);
                 return false;
             }
+            else if (viewmodel != null)
+            {
+                return false;
+            }
             else
             {
                 return true;
