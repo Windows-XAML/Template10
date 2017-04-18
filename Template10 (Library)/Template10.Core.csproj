@@ -128,11 +128,19 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Bootstrapper\ActivateWindowSources.enum.cs" />
+    <Compile Include="Common\Bootstrapper\AdditionalKinds.enum.cs" />
+    <Compile Include="Common\Bootstrapper\AppExecutionState.enum.cs" />
+    <Compile Include="Common\Bootstrapper\BackButton.enum.cs" />
+    <Compile Include="Common\Bootstrapper\BootstrapperStates.enum.cs" />
+    <Compile Include="Common\Bootstrapper\ExistingContent.enum.cs" />
+    <Compile Include="Common\Bootstrapper\IBootStrapper.cs" />
+    <Compile Include="Common\Bootstrapper\ISplashLogic.cs" />
+    <Compile Include="Common\Bootstrapper\IWindowLogic.cs" />
+    <Compile Include="Common\Bootstrapper\StartKind.enum.cs" />
     <Compile Include="Common\Bootstrapper\WindowLogic.cs" />
     <Compile Include="Common\Bootstrapper\BootStrapper.cs" />
     <Compile Include="Common\Bootstrapper\SplashLogic.cs" />
-    <Compile Include="Common\DispatcherWrapper\DispatcherWrapper.cs" />
-    <Compile Include="Common\WindowWrapper\WindowWrapper.cs" />
     <Compile Include="Mvvm\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\NavigationService\Extensions.cs" />
@@ -162,10 +170,6 @@
     <ProjectReference Include="..\Template10.Controls\Template10.Controls.ModalDialog\Template10.Controls.ModalDialog.csproj">
       <Project>{8b565035-0b8f-41b0-a2a1-23793a58aa50}</Project>
       <Name>Template10.Controls.ModalDialog</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Template10.Core\Template10.Core.Mvvm\Template10.Mvvm.csproj">
-      <Project>{b23e19aa-1797-43f6-a0f1-fb2c13111aeb}</Project>
-      <Name>Template10.Mvvm</Name>
     </ProjectReference>
     <ProjectReference Include="..\Template10.Core\Template10.Core.Portable\Template10.Portable.csproj">
       <Project>{69aec09c-748d-485d-aa1f-9ff682be8163}</Project>

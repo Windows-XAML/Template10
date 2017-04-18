@@ -3,7 +3,7 @@ using Windows.Graphics.Display;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 
-namespace Template10.Common
+namespace Template10.Services.WindowWrapper
 {
     public interface IWindowWrapper
     {

@@ -197,18 +197,6 @@
       <Project>{4c95717c-b59c-4a2f-967a-79e74dd903cc}</Project>
       <Name>Template10.Controls.Resizer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Template10.Core\Template10.Core.Behaviors\Template10.Behaviors.csproj">
-      <Project>{4cf686fa-6358-45bc-b430-7d877193905b}</Project>
-      <Name>Template10.Behaviors</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Template10.Core\Template10.Core.Converters\Template10.Converters.csproj">
-      <Project>{24387360-85ff-4bd5-b77f-40ba8006daf6}</Project>
-      <Name>Template10.Converters</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Template10.Core\Template10.Core.Mvvm\Template10.Mvvm.csproj">
-      <Project>{b23e19aa-1797-43f6-a0f1-fb2c13111aeb}</Project>
-      <Name>Template10.Mvvm</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Template10.Core\Template10.Core.Portable\Template10.Portable.csproj">
       <Project>{69aec09c-748d-485d-aa1f-9ff682be8163}</Project>
       <Name>Template10.Portable</Name>

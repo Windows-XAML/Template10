@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4CF686FA-6358-45BC-B430-7D877193905B}</ProjectGuid>
+    <ProjectGuid>{9CAD4451-5ADF-48D3-B690-8B341A95A228}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Template10.Behaviors</RootNamespace>
-    <AssemblyName>Template10.Behaviors</AssemblyName>
+    <RootNamespace>Template10.Services.WindowService</RootNamespace>
+    <AssemblyName>Template10.Services.WindowService</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
@@ -107,32 +107,15 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Behaviors\BackButtonBehavior.cs" />
-    <Compile Include="Behaviors\ChangeCursorAction.cs" />
-    <Compile Include="Behaviors\CloseFlyoutAction.cs" />
-    <Compile Include="Behaviors\ConditionalAction.cs" />
-    <Compile Include="Behaviors\DeviceDispositionBehavior.cs" />
-    <Compile Include="Behaviors\EllipsisBehavior.cs" />
-    <Compile Include="Behaviors\EventTriggerBehaviorBase.cs" />
-    <Compile Include="Behaviors\FocusAction.cs" />
-    <Compile Include="Behaviors\KeyBehavior.cs" />
-    <Compile Include="Behaviors\MessageDialogAction.cs" />
-    <Compile Include="Behaviors\NavButtonBehavior.cs" />
-    <Compile Include="Behaviors\NavToPageAction.cs" />
-    <Compile Include="Behaviors\OpenFlyoutAction.cs" />
-    <Compile Include="Behaviors\TextBoxEnterKeyBehavior.cs" />
-    <Compile Include="Behaviors\ThrottledEventTriggerBehavior.cs" />
-    <Compile Include="Behaviors\TimeoutAction.cs" />
-    <Compile Include="Common\EventThrottleHelper.cs" />
-    <Compile Include="Common\NavButtonsHelper.cs" />
+    <Compile Include="Common.DispatcherWrapper\DispatcherWrapper.cs" />
+    <Compile Include="Common.DispatcherWrapper\IDispatcherWrapper.cs" />
+    <Compile Include="Common.WindowWrapper\IWindowWrapper.cs" />
+    <Compile Include="Common.WindowWrapper\WindowWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\Template10.Behaviors.rd.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Template10.Core.Shared\Template10.Shared.csproj">
-      <Project>{1f9a6976-d8f9-459b-8aee-770b53904ff3}</Project>
-      <Name>Template10.Shared</Name>
-    </ProjectReference>
+    <Compile Include="Services.ViewService\IViewLifetimeControl.cs" />
+    <Compile Include="Services.ViewService\IViewService.cs" />
+    <Compile Include="Services.ViewService\ViewLifeTimeException.cs" />
+    <EmbeddedResource Include="Properties\Template10.Services.WindowService.rd.xml" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

@@ -7,7 +7,7 @@
     <ProjectGuid>{CD31D870-42F3-4379-B67A-2070C4B0A444}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Template10.Services.Navigation</RootNamespace>
+    <RootNamespace>Template10.Services</RootNamespace>
     <AssemblyName>Template10.Services.Navigation</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
@@ -107,8 +107,16 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BackButtonHelper.cs" />
+    <Compile Include="Behaviors\BackButtonBehavior.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Template10.Services.Navigation.rd.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Template10.Services.KeyboardService\Template10.Services.KeyboardService.csproj">
+      <Project>{b540d0b5-3850-416f-aec7-7737870e9ca2}</Project>
+      <Name>Template10.Services.KeyboardService</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

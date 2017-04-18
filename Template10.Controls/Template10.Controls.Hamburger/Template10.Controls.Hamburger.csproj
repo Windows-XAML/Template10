@@ -135,14 +135,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Template10.Core\Template10.Core.Behaviors\Template10.Behaviors.csproj">
-      <Project>{4cf686fa-6358-45bc-b430-7d877193905b}</Project>
-      <Name>Template10.Behaviors</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Template10.Core\Template10.Core.Mvvm\Template10.Mvvm.csproj">
-      <Project>{b23e19aa-1797-43f6-a0f1-fb2c13111aeb}</Project>
-      <Name>Template10.Mvvm</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Template10.Core\Template10.Core.Shared\Template10.Shared.csproj">
       <Project>{1f9a6976-d8f9-459b-8aee-770b53904ff3}</Project>
       <Name>Template10.Shared</Name>
