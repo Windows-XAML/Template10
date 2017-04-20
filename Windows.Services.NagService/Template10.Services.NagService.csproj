@@ -4,14 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4CF686FA-6358-45BC-B430-7D877193905B}</ProjectGuid>
+    <ProjectGuid>{A6DA4A45-4045-4598-B9FD-44A5010CA450}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Template10.Behaviors</RootNamespace>
-    <AssemblyName>Template10.Behaviors</AssemblyName>
+    <RootNamespace>Windows.Services.NagService</RootNamespace>
+    <AssemblyName>Windows.Services.NagService</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.10240.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
@@ -107,8 +107,22 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Services.DialogService\DialogHelper.cs" />
+    <Compile Include="Services.DialogService\DialogService.cs" />
+    <Compile Include="Services.DialogService\IDialogService.cs" />
+    <Compile Include="Services.NagService\INagService.cs" />
+    <Compile Include="Services.NagService\Nag.cs" />
+    <Compile Include="Services.NagService\NagResponseInfo.cs" />
+    <Compile Include="Services.NagService\NagService.cs" />
+    <Compile Include="Services.NagService\NagServiceHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\Template10.Behaviors.rd.xml" />
+    <EmbeddedResource Include="Properties\Windows.Services.NagService.rd.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Template10.Services\Template10.Services.FileService\Template10.Services.FileService.csproj">
+      <Project>{fd4892b4-4cf8-4c74-b28f-ad7623e405e6}</Project>
+      <Name>Template10.Services.FileService</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

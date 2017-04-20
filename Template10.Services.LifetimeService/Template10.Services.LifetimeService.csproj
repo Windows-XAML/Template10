@@ -4,14 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4CF686FA-6358-45BC-B430-7D877193905B}</ProjectGuid>
+    <ProjectGuid>{06E576B8-D472-4FE0-95A2-05968AD13A8F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Template10.Behaviors</RootNamespace>
-    <AssemblyName>Template10.Behaviors</AssemblyName>
+    <RootNamespace>Template10.Services.LifetimeService</RootNamespace>
+    <AssemblyName>Template10.Services.LifetimeService</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.14393.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
@@ -108,7 +108,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\Template10.Behaviors.rd.xml" />
+    <Compile Include="Services.ExtendedSessionService\ExtendedServiceHelper.cs" />
+    <Compile Include="Services.ExtendedSessionService\ExtendedSessionService.cs" />
+    <Compile Include="Services.ExtendedSessionService\IExtendedSessionService.cs" />
+    <EmbeddedResource Include="Properties\Template10.Services.LifetimeService.rd.xml" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

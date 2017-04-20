@@ -4,14 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4CF686FA-6358-45BC-B430-7D877193905B}</ProjectGuid>
+    <ProjectGuid>{80E5B1C6-DD8E-4B06-A693-DD2D11F9C32A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Template10.Behaviors</RootNamespace>
-    <AssemblyName>Template10.Behaviors</AssemblyName>
+    <RootNamespace>Template10.Services.MarketplaceService</RootNamespace>
+    <AssemblyName>Template10.Services.MarketplaceService</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.10240.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
@@ -107,8 +107,21 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Services.MarketplaceService\IMarketplaceService.cs" />
+    <Compile Include="Services.MarketplaceService\MarketplaceHelper.cs" />
+    <Compile Include="Services.MarketplaceService\MarketplaceService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\Template10.Behaviors.rd.xml" />
+    <EmbeddedResource Include="Properties\Template10.Services.MarketplaceService.rd.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Template10.Services\Template10.Services.Shared\Template10.Services.Shared.csproj">
+      <Project>{e797b9dd-b25b-4531-b74f-40813800658a}</Project>
+      <Name>Template10.Services.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Windows.Services.NagService\Template10.Services.NagService.csproj">
+      <Project>{a6da4a45-4045-4598-b9fd-44a5010ca450}</Project>
+      <Name>Template10.Services.NagService</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

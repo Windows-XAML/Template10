@@ -137,9 +137,6 @@
     <Compile Include="ColorService\ColorHelper.cs" />
     <Compile Include="ColorService\ColorService.cs" />
     <Compile Include="ColorService\IColorService.cs" />
-    <Compile Include="DialogService\DialogHelper.cs" />
-    <Compile Include="DialogService\DialogService.cs" />
-    <Compile Include="DialogService\IDialogService.cs" />
     <Compile Include="FileService\FileHelper.cs" />
     <Compile Include="FileService\FileService.cs" />
     <Compile Include="FileService\IFileService.cs" />
@@ -149,14 +146,6 @@
     <Compile Include="MapService\IMapService.cs" />
     <Compile Include="MapService\MapHelper.cs" />
     <Compile Include="MapService\MapService.cs" />
-    <Compile Include="MarketplaceService\IMarketplaceService.cs" />
-    <Compile Include="MarketplaceService\MarketplaceHelper.cs" />
-    <Compile Include="MarketplaceService\MarketplaceService.cs" />
-    <Compile Include="NagService\INagService.cs" />
-    <Compile Include="NagService\Nag.cs" />
-    <Compile Include="NagService\NagResponseInfo.cs" />
-    <Compile Include="NagService\NagService.cs" />
-    <Compile Include="NagService\NagServiceHelper.cs" />
     <Compile Include="NetworkAvailableService\INetworkAvailableService.cs" />
     <Compile Include="NetworkAvailableService\NetworkAvailableHelper.cs" />
     <Compile Include="NetworkAvailableService\NetworkAvailableService.cs" />

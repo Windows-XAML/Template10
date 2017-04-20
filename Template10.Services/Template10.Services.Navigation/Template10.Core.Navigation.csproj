@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4CF686FA-6358-45BC-B430-7D877193905B}</ProjectGuid>
+    <ProjectGuid>{CD31D870-42F3-4379-B67A-2070C4B0A444}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Template10.Behaviors</RootNamespace>
-    <AssemblyName>Template10.Behaviors</AssemblyName>
+    <RootNamespace>Template10.Services</RootNamespace>
+    <AssemblyName>Template10.Services.Navigation</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
@@ -107,8 +107,45 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Behaviors\BackButtonBehavior.cs" />
+    <Compile Include="Behaviors\NavButtonBehavior.cs" />
+    <Compile Include="Behaviors\NavToPageAction.cs" />
+    <Compile Include="Common.StateItems\IStateItems.cs" />
+    <Compile Include="Common.StateItems\StateItems.cs" />
+    <Compile Include="Common\NavButtonsHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\Template10.Behaviors.rd.xml" />
+    <Compile Include="Services.NavigationService\event-args\NavigatedEventArgs.cs" />
+    <Compile Include="Services.NavigationService\event-args\NavigatingEventArgs.cs" />
+    <Compile Include="Services.NavigationService\interfaces\IConfirmNavigationAsync.cs" />
+    <Compile Include="Services.NavigationService\interfaces\IFrameFacade.cs" />
+    <Compile Include="Services.NavigationService\interfaces\IFrameFacadeInternal.cs" />
+    <Compile Include="Services.NavigationService\interfaces\INavigatedFromAwareAsync.cs" />
+    <Compile Include="Services.NavigationService\interfaces\INavigatedToAwareAsync.cs" />
+    <Compile Include="Services.NavigationService\interfaces\INavigatingFromAwareAsync.cs" />
+    <Compile Include="Services.NavigationService\interfaces\INavigatingToAwareAsync.cs" />
+    <Compile Include="Services.NavigationService\interfaces\INavigationParameters.cs" />
+    <Compile Include="Services.NavigationService\interfaces\INavigationService.cs" />
+    <Compile Include="Services.NavigationService\interfaces\ISuspensionStateLogic.cs" />
+    <Compile Include="Services.NavigationService\NavigationMode.cs" />
+    <Compile Include="Services.NavigationService\NavigationParameters.cs" />
+    <Compile Include="Extensions\NavigationExtensions.cs" />
+    <Compile Include="Services.NavigationService\Extensions.cs" />
+    <Compile Include="Services.NavigationService\FrameFacade.cs" />
+    <Compile Include="Services.NavigationService\NavigationLogic.cs" />
+    <Compile Include="Services.NavigationService\NavigationService.cs" />
+    <Compile Include="Services.NavigationService\NavigationServiceList.cs" />
+    <Compile Include="Services.NavigationService\Parameters.cs" />
+    <Compile Include="Services.NavigationService\SuspensionStateLogic.cs" />
+    <Compile Include="Services.NavigationService\view-model\INavigable.cs" />
+    <Compile Include="Services.NavigationService\view-model\INavigatedAwareAsync.cs" />
+    <Compile Include="Services.NavigationService\view-model\INavigatingAwareAsync.cs" />
+    <EmbeddedResource Include="Properties\Template10.Services.Navigation.rd.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Template10.Services.KeyboardService\Template10.Services.KeyboardService.csproj">
+      <Project>{b540d0b5-3850-416f-aec7-7737870e9ca2}</Project>
+      <Name>Template10.Services.KeyboardService</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

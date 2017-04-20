@@ -107,55 +107,23 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\Deferral\Deferral.cs" />
-    <Compile Include="Common\Deferral\DeferralManager.cs" />
-    <Compile Include="Common\EventArgs\ChangedEventArgs.cs" />
-    <Compile Include="Common\EventArgs\HandledEventArgs.cs" />
-    <Compile Include="Common\EventArgs\ItemPropertyChangedEventArgs.cs" />
-    <Compile Include="Common\Exceptions\TemplatePartNotFoundException.cs" />
-    <Compile Include="Common\Manager\ServicesManager.cs" />
-    <Compile Include="Common\ObservableDictionary\IObservableDictionary.cs" />
-    <Compile Include="Common\ObservableDictionary\ObservableDictionary.cs" />
-    <Compile Include="Common\Manager\ServiceManager.cs" />
-    <Compile Include="Common\ObservableItemCollection\IObservableItemCollection.cs" />
-    <Compile Include="Common\ObservableItemCollection\ObservableItemCollection.cs" />
-    <Compile Include="Common\Queue\IQueue.cs" />
-    <Compile Include="Common\Queue\Queue.cs" />
-    <Compile Include="Common\StateItems\IStateItems.cs" />
-    <Compile Include="Common\StateItems\StateItems.cs" />
+    <Compile Include="Common.Deferral\Deferral.cs" />
+    <Compile Include="Common.Deferral\DeferralManager.cs" />
+    <Compile Include="Common.EventArgs\ChangedEventArgs.cs" />
+    <Compile Include="Common.EventArgs\HandledEventArgs.cs" />
+    <Compile Include="Common.EventArgs\ItemPropertyChangedEventArgs.cs" />
+    <Compile Include="Common.Exceptions\TemplatePartNotFoundException.cs" />
+    <Compile Include="Common.ObservableDictionary\IObservableDictionary.cs" />
+    <Compile Include="Common.ObservableDictionary\ObservableDictionary.cs" />
+    <Compile Include="Common.ObservableItemCollection\IObservableItemCollection.cs" />
+    <Compile Include="Common.ObservableItemCollection\ObservableItemCollection.cs" />
+    <Compile Include="Common.Queue\IQueue.cs" />
+    <Compile Include="Common.Queue\Queue.cs" />
     <Compile Include="Common\TypedEventHandler.cs" />
-    <Compile Include="Common\WeakReference\WeakReference.cs" />
-    <Compile Include="Common\WeakReference\WeakReferenceT.cs" />
-    <Compile Include="Locator.cs" />
+    <Compile Include="Common.WeakReference\WeakReference.cs" />
+    <Compile Include="Common.WeakReference\WeakReferenceT.cs" />
+    <Compile Include="Extensions\WindowExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\ExtendedSessionService\IExtendedSessionService.cs" />
-    <Compile Include="Services\LoggingService\LoggingService.cs" />
-    <Compile Include="Services\NavigationService\event-args\NavigatedEventArgs.cs" />
-    <Compile Include="Services\NavigationService\event-args\NavigatingEventArgs.cs" />
-    <Compile Include="Services\NavigationService\IFrameFacade.cs" />
-    <Compile Include="Services\NavigationService\IFrameFacadeInternal.cs" />
-    <Compile Include="Services\NavigationService\INavigationService.cs" />
-    <Compile Include="Services\NavigationService\ISuspensionStateLogic.cs" />
-    <Compile Include="Services\NavigationService\NavigationServiceList.cs" />
-    <Compile Include="Services\NavigationService\view-model\INavigable.cs" />
-    <Compile Include="Services\NavigationService\view-model\INavigatedAwareAsync.cs" />
-    <Compile Include="Services\NavigationService\view-model\INavigatingAwareAsync.cs" />
-    <Compile Include="Services\PopupService\PopupExtensions.cs" />
-    <Compile Include="Services\PopupService\PopupService.cs" />
-    <Compile Include="Services\ProfileService\ProfileService.cs" />
-    <Compile Include="Utils\ApiUtils.cs" />
-    <Compile Include="Utils\AudioUtils.cs" />
-    <Compile Include="Utils\DeviceUtils.cs" />
-    <Compile Include="Utils\DialogUtils.cs" />
-    <Compile Include="Utils\ExpressionUtils.cs" />
-    <Compile Include="Utils\IEnumerableExtensions.cs" />
-    <Compile Include="Utils\InkExtensions.cs" />
-    <Compile Include="Utils\MonitorUtils.cs" />
-    <Compile Include="Utils\Template10Extensions.cs" />
-    <Compile Include="Utils\TypeUtils.cs" />
-    <Compile Include="Utils\UriExtensions.cs" />
-    <Compile Include="Utils\XamlExtensions.cs" />
-    <Compile Include="Utils\XamlUtils.cs" />
     <EmbeddedResource Include="Properties\Template10.Shared.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -168,6 +136,7 @@
       <Name>Template10.Services.SettingsService</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

@@ -143,18 +143,6 @@
     <Compile Include="Common\Bootstrapper\SplashLogic.cs" />
     <Compile Include="Mvvm\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\NavigationService\Extensions.cs" />
-    <Compile Include="Services\NavigationService\FrameFacade.cs" />
-    <Compile Include="Services\NavigationService\NavigationLogic.cs" />
-    <Compile Include="Services\NavigationService\NavigationService.cs" />
-    <Compile Include="Services\NavigationService\Parameters.cs" />
-    <Compile Include="Services\NavigationService\SuspensionStateLogic.cs" />
-    <Compile Include="Services\ExtendedSessionService\ExtendedServiceHelper.cs" />
-    <Compile Include="Services\ExtendedSessionService\ExtendedSessionService.cs" />
-    <Compile Include="Services\ViewService\SecondaryViewSynchronizationContextDecorator.cs" />
-    <Compile Include="Services\ViewService\ViewLifetimeControl.cs" />
-    <Compile Include="Services\ViewService\ViewService.cs" />
-    <Compile Include="Utils\NavigationExtensions.cs" />
     <Content Include="Properties\Template10Library.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -183,9 +171,9 @@
       <Project>{b540d0b5-3850-416f-aec7-7737870e9ca2}</Project>
       <Name>Template10.Services.KeyboardService</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Template10.Services\Template10.Services.Navigation\Template10.Services.Navigation.csproj">
+    <ProjectReference Include="..\Template10.Services\Template10.Services.Navigation\Template10.Core.Navigation.csproj">
       <Project>{cd31d870-42f3-4379-b67a-2070c4b0a444}</Project>
-      <Name>Template10.Services.Navigation</Name>
+      <Name>Template10.Core.Navigation</Name>
     </ProjectReference>
     <ProjectReference Include="..\Template10.Services\Template10.Services.SerializationService\Template10.Services.SerializationService.csproj">
       <Project>{d3a94520-4cd4-4d56-b30b-7e54face64bb}</Project>
@@ -195,6 +183,9 @@
       <Project>{eba14736-2c70-4e33-a156-221b44ff43c1}</Project>
       <Name>Template10.Services.SettingsService</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\ViewService\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
