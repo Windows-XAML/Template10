@@ -163,9 +163,9 @@
       <Project>{69aec09c-748d-485d-aa1f-9ff682be8163}</Project>
       <Name>Template10.Portable</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Template10.Shared\Template10.Shared.csproj">
+    <ProjectReference Include="..\Template10.Shared\Template10.Common.csproj">
       <Project>{1f9a6976-d8f9-459b-8aee-770b53904ff3}</Project>
-      <Name>Template10.Shared</Name>
+      <Name>Template10.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Independent.Services\Template10.Services.KeyboardService\Service\Template10.Services.KeyboardService.csproj">
       <Project>{b540d0b5-3850-416f-aec7-7737870e9ca2}</Project>

@@ -110,8 +110,8 @@
     <Compile Include="Behaviors\BackButtonBehavior.cs" />
     <Compile Include="Behaviors\NavButtonBehavior.cs" />
     <Compile Include="Behaviors\NavToPageAction.cs" />
-    <Compile Include="Common.StateItems\IStateItems.cs" />
-    <Compile Include="Common.StateItems\StateItems.cs" />
+    <Compile Include="Common\IStateItems.cs" />
+    <Compile Include="Common\StateItems.cs" />
     <Compile Include="Common\NavButtonsHelper.cs" />
     <Compile Include="Extensions\WindowExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
