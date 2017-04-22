@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Template10.Common;
+using Template10.Services.WindowWrapper;
 using Windows.Graphics.Display;
 using Windows.UI.ViewManagement;
 
@@ -40,7 +41,7 @@ namespace Template10.Utils
 
         public static MonitorUtils Current(IWindowWrapper windowWrapper = null)
         {
-            windowWrapper = windowWrapper ?? Locator.WindowWrapper.Current();
+            windowWrapper = windowWrapper ?? throw new ArgumentNullException(nameof(windowWrapper));
             if (!Cache.ContainsKey(windowWrapper))
             {
                 var item = new MonitorUtils(windowWrapper);

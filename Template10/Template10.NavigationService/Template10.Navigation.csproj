@@ -147,6 +147,18 @@
       <Project>{b540d0b5-3850-416f-aec7-7737870e9ca2}</Project>
       <Name>Template10.Services.KeyboardService</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Independent.Services\Template10.Services.LoggingService\Service\Template10.Services.LoggingService.csproj">
+      <Project>{eadde808-bf0d-4ebc-b4ca-9fda63b53862}</Project>
+      <Name>Template10.Services.LoggingService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Independent.Services\Template10.Services.SerializationService\Service\Template10.Services.SerializationService.csproj">
+      <Project>{d3a94520-4cd4-4d56-b30b-7e54face64bb}</Project>
+      <Name>Template10.Services.SerializationService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Independent.Utilities\Template10.CodeBehind\Template10.CodeBehind.csproj">
+      <Project>{b3a4e50e-9dca-457e-bed5-b71d97b957f3}</Project>
+      <Name>Template10.CodeBehind</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

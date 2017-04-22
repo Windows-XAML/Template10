@@ -108,7 +108,7 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\ImageEx.cs" />
+    <Compile Include="Controls.ImageEx\ImageEx.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Template10.Controls.ImageEx.rd.xml" />
   </ItemGroup>

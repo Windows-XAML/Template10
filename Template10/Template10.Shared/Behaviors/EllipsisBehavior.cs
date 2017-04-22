@@ -14,24 +14,24 @@ namespace Template10.Behaviors
     [TypeConstraint(typeof(CommandBar))]
     public class EllipsisBehavior : DependencyObject, IBehavior
     {
-        private CommandBar commandBar => AssociatedObject as CommandBar;
+        private CommandBar _commandBar => AssociatedObject as CommandBar;
 
         public DependencyObject AssociatedObject { get; private set; }
 
         public void Attach(DependencyObject associatedObject)
         {
             AssociatedObject = associatedObject;
-            commandBar.Loaded += CommandBar_Loaded;
-            commandBar.PrimaryCommands.VectorChanged += Commands_VectorChanged;
-            commandBar.SecondaryCommands.VectorChanged += Commands_VectorChanged;
+            _commandBar.Loaded += CommandBar_Loaded;
+            _commandBar.PrimaryCommands.VectorChanged += Commands_VectorChanged;
+            _commandBar.SecondaryCommands.VectorChanged += Commands_VectorChanged;
             Update();
         }
 
         public void Detach()
         {
-            commandBar.Loaded -= CommandBar_Loaded;
-            commandBar.PrimaryCommands.VectorChanged -= Commands_VectorChanged;
-            commandBar.SecondaryCommands.VectorChanged -= Commands_VectorChanged;
+            _commandBar.Loaded -= CommandBar_Loaded;
+            _commandBar.PrimaryCommands.VectorChanged -= Commands_VectorChanged;
+            _commandBar.SecondaryCommands.VectorChanged -= Commands_VectorChanged;
         }
 
         private void CommandBar_Loaded(object sender, RoutedEventArgs e) => Update();
@@ -50,9 +50,9 @@ namespace Template10.Behaviors
 
         private Button FindButtonByName()
         {
-            if (VisualTreeHelper.GetChildrenCount(commandBar) > 0)
+            if (VisualTreeHelper.GetChildrenCount(_commandBar) > 0)
             {
-                var child = VisualTreeHelper.GetChild(commandBar, 0) as FrameworkElement; /* Templated root */
+                var child = VisualTreeHelper.GetChild(_commandBar, 0) as FrameworkElement; /* Templated root */
                 return child?.FindName("MoreButton") as Button;
             }
             return null;
@@ -60,13 +60,13 @@ namespace Template10.Behaviors
 
         private Button FindButtonByTreeEnum()
         {
-            var controls = commandBar.AllChildren().OfType<Control>();
+            var controls = _commandBar.AllChildren().OfType<Control>();
             return controls.OfType<Button>().FirstOrDefault(x => x.Name.Equals("MoreButton"));
         }
 
         private Button FindButton()
         {
-            if (commandBar == null)
+            if (_commandBar == null)
             {
                 return null;
             }
@@ -93,8 +93,8 @@ namespace Template10.Behaviors
                     button.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                     break;
                 case Visibilities.Auto:
-                    var count = commandBar.PrimaryCommands.OfType<Control>().Count(x => x.Visibility.Equals(Windows.UI.Xaml.Visibility.Visible));
-                    count += commandBar.SecondaryCommands.OfType<Control>().Count(x => x.Visibility.Equals(Windows.UI.Xaml.Visibility.Visible));
+                    var count = _commandBar.PrimaryCommands.OfType<Control>().Count(x => x.Visibility.Equals(Windows.UI.Xaml.Visibility.Visible));
+                    count += _commandBar.SecondaryCommands.OfType<Control>().Count(x => x.Visibility.Equals(Windows.UI.Xaml.Visibility.Visible));
                     button.Visibility = (count > 0) ? Windows.UI.Xaml.Visibility.Visible : Windows.UI.Xaml.Visibility.Collapsed;
                     break;
             }

@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Template10.Services.NagService;
 using Windows.ApplicationModel;
 
 namespace Template10.Services.MarketplaceService
@@ -29,7 +30,7 @@ namespace Template10.Services.MarketplaceService
             {
                 Title = $"Review {Package.Current.DisplayName}",
                 AcceptText = "Review app",
-                Location = StorageStrategies.Roaming
+                Location = Nag.StorageStrategies.Roaming
             };
         }
     }

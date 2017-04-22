@@ -107,7 +107,7 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\RingSegment.cs" />
+    <Compile Include="Controls.RingSegment\RingSegment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Template10.Controls.RingSegment.rd.xml" />
   </ItemGroup>

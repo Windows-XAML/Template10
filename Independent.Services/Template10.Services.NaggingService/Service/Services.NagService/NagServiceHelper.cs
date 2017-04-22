@@ -5,6 +5,7 @@ using Windows.UI.Popups;
 
 using Template10.Services.DialogService;
 using Template10.Services.FileService;
+using Windows.Services.NagService.Extensions;
 
 namespace Template10.Services.NagService
 {
@@ -17,11 +18,8 @@ namespace Template10.Services.NagService
 
         public NagServiceHelper(IDialogService dialogService, IFileService fileService)
         {
-            if (dialogService == null) throw new ArgumentNullException("dialogService");
-            if (fileService == null) throw new ArgumentNullException("fileService");
-
-            _dialogService = dialogService;
-            _fileService = fileService;
+            _dialogService = dialogService ?? throw new ArgumentNullException("dialogService");
+            _fileService = fileService ?? throw new ArgumentNullException("fileService");
         }
 
         public async Task<bool> Exists(string nagId, StorageStrategies location)
@@ -64,14 +62,14 @@ namespace Template10.Services.NagService
             if (state == null) throw new ArgumentNullException("state");
             if (string.IsNullOrEmpty(nagId)) throw new ArgumentException("nagId cannot be null or empty", "nagId");
 
-            await _fileService.WriteFileAsync<NagResponseInfo>(GetFileName(nagId), state, location);
+            await _fileService.WriteFileAsync<NagResponseInfo>(state, GetFileName(nagId), location);
         }
 
         public async Task Register(Nag nag, int launches)
         {
             if (nag == null) throw new ArgumentNullException("nag");
 
-            var responseInfo = await Load(nag.Id, nag.Location);
+            var responseInfo = await Load(nag.Id, nag.Location.ToFileServiceStrategy());
             responseInfo.LaunchCount++;
 
             if (responseInfo.ShouldNag(launches))
@@ -80,7 +78,7 @@ namespace Template10.Services.NagService
             }
             else if (responseInfo.IsAwaitingResponse)
             {
-                await Persist(responseInfo, nag.Id, nag.Location);
+                await Persist(responseInfo, nag.Id, nag.Location.ToFileServiceStrategy());
             }
         }
 
@@ -88,7 +86,7 @@ namespace Template10.Services.NagService
         {
             if (nag == null) throw new ArgumentNullException("nag");
 
-            var responseInfo = await Load(nag.Id, nag.Location);
+            var responseInfo = await Load(nag.Id, nag.Location.ToFileServiceStrategy());
             responseInfo.LaunchCount++;
 
             if (responseInfo.ShouldNag(duration))
@@ -97,7 +95,7 @@ namespace Template10.Services.NagService
             }
             else if (responseInfo.IsAwaitingResponse)
             {
-                await Persist(responseInfo, nag.Id, nag.Location);
+                await Persist(responseInfo, nag.Id, nag.Location.ToFileServiceStrategy());
             }
         }
 
@@ -105,7 +103,7 @@ namespace Template10.Services.NagService
         {
             if (nag == null) throw new ArgumentNullException("nag");
 
-            var responseInfo = await Load(nag.Id, nag.Location);
+            var responseInfo = await Load(nag.Id, nag.Location.ToFileServiceStrategy());
             responseInfo.LaunchCount++;
 
             if (responseInfo.ShouldNag(launches) && responseInfo.ShouldNag(duration))
@@ -114,7 +112,7 @@ namespace Template10.Services.NagService
             }
             else if (responseInfo.IsAwaitingResponse)
             {
-                await Persist(responseInfo, nag.Id, nag.Location);
+                await Persist(responseInfo, nag.Id, nag.Location.ToFileServiceStrategy());
             }
         }
 
@@ -135,7 +133,7 @@ namespace Template10.Services.NagService
             responseInfo.LastResponse = response;
             responseInfo.LastNag = DateTimeOffset.UtcNow;
 
-            await Persist(responseInfo, nag.Id, nag.Location);
+            await Persist(responseInfo, nag.Id, nag.Location.ToFileServiceStrategy());
         }
 
         private async Task<NagResponse> ShowNag(Nag nag)

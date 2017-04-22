@@ -107,6 +107,7 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="Services.DialogService\DialogHelper.cs" />
     <Compile Include="Services.DialogService\DialogService.cs" />
     <Compile Include="Services.DialogService\IDialogService.cs" />

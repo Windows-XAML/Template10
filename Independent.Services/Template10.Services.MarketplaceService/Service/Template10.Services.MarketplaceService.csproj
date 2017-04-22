@@ -114,10 +114,6 @@
     <EmbeddedResource Include="Properties\Template10.Services.MarketplaceService.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Template10.Services.Common\Template10.Services.Common.csproj">
-      <Project>{e797b9dd-b25b-4531-b74f-40813800658a}</Project>
-      <Name>Template10.Services.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Template10.Services.NaggingService\Service\Template10.Services.NaggingService.csproj">
       <Project>{a6da4a45-4045-4598-b9fd-44a5010ca450}</Project>
       <Name>Template10.Services.NaggingService</Name>

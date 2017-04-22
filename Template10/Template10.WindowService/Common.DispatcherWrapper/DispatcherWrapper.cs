@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Template10.Services.WindowWrapper;
 using Windows.UI.Core;
 
 namespace Template10.Common

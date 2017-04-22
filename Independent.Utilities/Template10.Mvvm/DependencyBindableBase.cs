@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using Windows.UI.Xaml;
-using Template10.Common;
 using Template10.Utils;
 
 namespace Template10.Mvvm
@@ -14,83 +13,39 @@ namespace Template10.Mvvm
 
         public virtual bool Set<T>(ref T storage, T value, [CallerMemberName]string propertyName = null)
         {
-            if (object.Equals(storage, value))
-                return false;
-
+            if (Equals(storage, value)) return false;
             storage = value;
-            this.RaisePropertyChanged(propertyName);
+            RaisePropertyChanged(propertyName);
+            return true;
+        }
+
+        public virtual bool Set<T>(Expression<Func<T>> propertyExpression, ref T storage, T value)
+        {
+            if (Equals(storage, value)) return false;
+            storage = value;
+            RaisePropertyChanged(propertyExpression);
             return true;
         }
 
         public virtual void RaisePropertyChanged([CallerMemberName]string propertyName = null)
         {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-                return;
-
+            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled) return;
             var handler = PropertyChanged;
-            if (!object.Equals(handler, null))
-            {
-                var args = new PropertyChangedEventArgs(propertyName);
-                var dispatcher = Locator.WindowWrapper.Current().Dispatcher;
-                if (dispatcher.HasThreadAccess())
-                {
-                    try
-                    {
-                        handler.Invoke(this, args);
-                    }
-                    catch
-                    {
-                        dispatcher.Dispatch(() => handler.Invoke(this, args));
-                    }
-                }
-                else
-                {
-                    dispatcher.Dispatch(() => handler.Invoke(this, args));
-                }
-            }
-        }
-
-        public virtual bool Set<T>(Expression<Func<T>> propertyExpression, ref T field, T newValue)
-        {
-            if (object.Equals(field, newValue))
-            {
-                return false;
-            }
-
-            field = newValue;
-            this.RaisePropertyChanged(propertyExpression);
-            return true;
+            if (Equals(handler, null)) return;
+            var args = new PropertyChangedEventArgs(propertyName);
+            handler.Invoke(this, args);
         }
 
         public virtual void RaisePropertyChanged<T>(Expression<Func<T>> propertyExpression)
         {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-                return;
-
-            var handler = this.PropertyChanged;
-            if (!object.Equals(handler, null))
+            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled) return;
+            var handler = PropertyChanged;
+            if (!Equals(handler, null))
             {
                 var propertyName = ExpressionUtils.GetPropertyName(propertyExpression);
-                if (!object.Equals(propertyName, null))
-                {
-                    var args = new PropertyChangedEventArgs(propertyName);
-                    var dispatcher = Locator.WindowWrapper.Current().Dispatcher;
-                    if (dispatcher.HasThreadAccess())
-                    {
-                        try
-                        {
-                            handler.Invoke(this, args);
-                        }
-                        catch
-                        {
-                            dispatcher.Dispatch(() => handler.Invoke(this, args));
-                        }
-                    }
-                    else
-                    {
-                        dispatcher.Dispatch(() => handler.Invoke(this, args));
-                    }
-                }
+                if (Equals(propertyName, null)) return;
+                var args = new PropertyChangedEventArgs(propertyName);
+                handler.Invoke(this, args);
             }
         }
     }

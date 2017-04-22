@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Template10.Common;
+using Template10.Services.WindowWrapper;
 using Windows.Foundation.Metadata;
 using Windows.Graphics.Display;
 using Windows.UI.ViewManagement;
@@ -45,7 +46,7 @@ namespace Template10.Utils
         private DeviceUtils(IWindowWrapper windowWrapper)
         {
             MonitorUtils = MonitorUtils.Current(windowWrapper);
-            WindowWrapper = windowWrapper ?? Locator.WindowWrapper.Current();
+            WindowWrapper = windowWrapper ?? throw new ArgumentNullException(nameof(windowWrapper));
 
             var di = windowWrapper.DisplayInformation();
             di.OrientationChanged += new Common.WeakReference<DeviceUtils, DisplayInformation, object>(this)
@@ -65,9 +66,9 @@ namespace Template10.Utils
         #region singleton
 
         static Dictionary<IWindowWrapper, DeviceUtils> Cache = new Dictionary<IWindowWrapper, DeviceUtils>();
-        public static DeviceUtils Current(IWindowWrapper windowWrapper = null)
+        public static DeviceUtils Current(IWindowWrapper windowWrapper)
         {
-            windowWrapper = windowWrapper ?? Locator.WindowWrapper.Current();
+            windowWrapper = windowWrapper ?? throw new ArgumentNullException(nameof(windowWrapper));
             if (!Cache.ContainsKey(windowWrapper))
             {
                 var item = new DeviceUtils(windowWrapper);

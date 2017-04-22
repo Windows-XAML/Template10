@@ -20,7 +20,7 @@ namespace Template10.Common
         /// </summary>
         public int Throttle
         {
-            get { return (int) GetValue(ThrottleProperty); }
+            get { return (int)GetValue(ThrottleProperty); }
             set { SetValue(ThrottleProperty, value); }
         }
 
@@ -29,34 +29,20 @@ namespace Template10.Common
         /// </summary>
         public bool ResetTimer
         {
-            get { return (bool) GetValue(ResetTimerProperty); }
+            get { return (bool)GetValue(ResetTimerProperty); }
             set { SetValue(ResetTimerProperty, value); }
         }
 
         /// <summary>
         /// Reset throttle timer after each event.
         /// </summary>
-        public static readonly DependencyProperty ResetTimerProperty = DependencyProperty.Register(nameof(ResetTimer), typeof (bool), typeof (EventThrottleHelper), new PropertyMetadata(false));
+        public static readonly DependencyProperty ResetTimerProperty = DependencyProperty.Register(nameof(ResetTimer), typeof(bool), typeof(EventThrottleHelper), new PropertyMetadata(false));
 
 
         /// <summary>
         /// Throttle time in milliseconds.
         /// </summary>
-        public static readonly DependencyProperty ThrottleProperty = DependencyProperty.Register(nameof(Throttle), typeof (int), typeof (EventThrottleHelper), new PropertyMetadata(1000));
-
-        private IDispatcherWrapper dispatcherObj;
-
-        private IDispatcherWrapper DispatcherObj
-        {
-            get
-            {
-                if (dispatcherObj == null)
-                {
-                    dispatcherObj = Locator.WindowWrapper.Current().Dispatcher;
-                }
-                return dispatcherObj;
-            }
-        }
+        public static readonly DependencyProperty ThrottleProperty = DependencyProperty.Register(nameof(Throttle), typeof(int), typeof(EventThrottleHelper), new PropertyMetadata(1000));
 
         /// <summary>
         /// Trigger a throttled event. Can only be called from the UI thread.
@@ -64,37 +50,18 @@ namespace Template10.Common
         /// <param name="eventData">Event data (only last event data will be transfered to event handler).</param>
         public async void TriggerEvent(object eventData)
         {
-            if (!DispatcherObj.HasThreadAccess())
-            {
-                throw new UnauthorizedAccessException("Method can only be executed from the UI thread");
-            }
-            try
-            {
-                await DelayAction(eventData).ConfigureAwait(false);
-            }
-            catch
-            {
-                // Ignore exceptions: throttle helper SHOULD NOT crash program even if something wrong is going inside a helper.
-            }
+            // TODO: (Jerry) dispatch?
+            await DelayAction(eventData).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Trigger a throttled event inside a dispatcher.
         /// </summary>
         /// <param name="eventData">Event data (only last event data will be transfered to event handler).</param>
-        public void DispatchTriggerEvent(object eventData)
+        public async void DispatchTriggerEvent(object eventData)
         {
-            DispatcherObj.Dispatch(async () =>
-            {
-                try
-                {
-                    await DelayAction(eventData).ConfigureAwait(false);
-                }
-                catch
-                {
-                    // Ignore exceptions: throttle helper SHOULD NOT crash program even if something wrong is going inside a helper.
-                }
-            });
+            // TODO: (Jerry) dispatch?
+            await DelayAction(eventData).ConfigureAwait(false);
         }
 
         private bool isWaiting;

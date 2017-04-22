@@ -14,9 +14,7 @@ namespace Template10.Mvvm
 
         public ChangedCommandAdapter(ICommand command, Action raiseCanExecuteChangedAction)
         {
-            if(command == null)
-                throw new ArgumentNullException(nameof(command));
-            this.command = command;
+            this.command = command ?? throw new ArgumentNullException(nameof(command));
             this.raiseCanExecuteChangedAction = raiseCanExecuteChangedAction;
         }
 

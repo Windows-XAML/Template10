@@ -1,5 +1,4 @@
 ﻿using System;
-using Template10.Common;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;

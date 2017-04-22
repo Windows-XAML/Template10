@@ -107,7 +107,7 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\ModalDialog.cs" />
+    <Compile Include="Controls.ModalDialog\ModalDialog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Template10.Controls.ModalDialog.rd.xml" />
   </ItemGroup>
@@ -116,12 +116,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Template10\Template10.Shared\Template10.Common.csproj">
-      <Project>{1f9a6976-d8f9-459b-8aee-770b53904ff3}</Project>
-      <Name>Template10.Shared</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

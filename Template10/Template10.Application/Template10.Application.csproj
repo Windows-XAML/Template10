@@ -159,10 +159,6 @@
       <Project>{8b565035-0b8f-41b0-a2a1-23793a58aa50}</Project>
       <Name>Template10.Controls.ModalDialog</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Template10.Core\Template10.Core.Portable\Template10.Portable.csproj">
-      <Project>{69aec09c-748d-485d-aa1f-9ff682be8163}</Project>
-      <Name>Template10.Portable</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Template10.Shared\Template10.Common.csproj">
       <Project>{1f9a6976-d8f9-459b-8aee-770b53904ff3}</Project>
       <Name>Template10.Common</Name>

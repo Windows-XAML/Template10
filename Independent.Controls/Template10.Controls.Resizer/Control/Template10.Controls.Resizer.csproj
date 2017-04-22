@@ -107,7 +107,7 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\Resizer.cs" />
+    <Compile Include="Controls.Resizer\Resizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Template10.Controls.Resizer.rd.xml" />
   </ItemGroup>

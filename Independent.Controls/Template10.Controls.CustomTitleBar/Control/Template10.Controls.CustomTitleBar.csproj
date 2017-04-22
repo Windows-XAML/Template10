@@ -107,7 +107,7 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\CustomTitleBar.cs" />
+    <Compile Include="Controls.CustomTitleBar\CustomTitleBar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Template10.CustomTitleBar.rd.xml" />
   </ItemGroup>

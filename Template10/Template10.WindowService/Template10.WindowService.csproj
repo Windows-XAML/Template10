@@ -4,15 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E797B9DD-B25B-4531-B74F-40813800658A}</ProjectGuid>
+    <ProjectGuid>{9CAD4451-5ADF-48D3-B690-8B341A95A228}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Template10.Services</RootNamespace>
-    <AssemblyName>Template10.Services</AssemblyName>
+    <RootNamespace>Template10.Services.WindowService</RootNamespace>
+    <AssemblyName>Template10.Services.WindowService</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -107,21 +107,30 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common.DispatcherWrapper\DispatcherWrapper.cs" />
+    <Compile Include="Common.DispatcherWrapper\IDispatcherWrapper.cs" />
+    <Compile Include="Common.WindowWrapper\IWindowWrapper.cs" />
+    <Compile Include="Common.WindowWrapper\WindowWrapper.cs" />
+    <Compile Include="Services.PopupService\PopupExtensions.cs" />
+    <Compile Include="Services.PopupService\PopupService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\Template10.Services.rd.xml" />
+    <Compile Include="Services.ViewService\IViewLifetimeControl.cs" />
+    <Compile Include="Services.ViewService\IViewService.cs" />
+    <Compile Include="Services.ViewService\SecondaryViewSynchronizationContextDecorator.cs" />
+    <Compile Include="Services.ViewService\ViewLifetimeControl.cs" />
+    <Compile Include="Services.ViewService\ViewLifeTimeException.cs" />
+    <Compile Include="Services.ViewService\ViewService.cs" />
+    <EmbeddedResource Include="Properties\Template10.Services.WindowService.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Template10.Mobile\Template10.Portable.csproj">
-      <Project>{09cc346c-2e17-4103-8fc6-47b116595d5f}</Project>
-      <Name>Template10.Portable</Name>
+    <ProjectReference Include="..\..\Independent.Services\Template10.Services.LoggingService\Service\Template10.Services.LoggingService.csproj">
+      <Project>{eadde808-bf0d-4ebc-b4ca-9fda63b53862}</Project>
+      <Name>Template10.Services.LoggingService</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Template10.Shared\Template10.Shared.csproj">
-      <Project>{17b01429-48b2-45de-a7c2-03c3cf2d60d3}</Project>
-      <Name>Template10.Shared</Name>
+    <ProjectReference Include="..\Template10.NavigationService\Template10.Navigation.csproj">
+      <Project>{cd31d870-42f3-4379-b67a-2070c4b0a444}</Project>
+      <Name>Template10.Navigation</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Common.Manager\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

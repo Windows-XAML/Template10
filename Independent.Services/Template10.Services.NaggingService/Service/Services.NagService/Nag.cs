@@ -19,11 +19,9 @@ namespace Template10.Services.NagService
         {
             if (string.IsNullOrEmpty(id)) throw new ArgumentException("id cannot be null or empty", "id");
             if (string.IsNullOrEmpty(message)) throw new ArgumentException("message cannot be null or empty", "message");
-            if (nagAction == null) throw new ArgumentNullException("nagAction");
-
             Id = id;
             Message = message;
-            NagAction = nagAction;
+            NagAction = nagAction ?? throw new ArgumentNullException("nagAction");
         }
 
         /// <summary>
@@ -66,6 +64,8 @@ namespace Template10.Services.NagService
         /// The text to display on the defer button
         /// </summary>
         public string DeferText { get; set; } = "Not now";
+
+        public enum StorageStrategies { Local, Roaming, Temporary }
 
         /// <summary>
         /// Flag indicating whether the user response is local to the deivce or roams with the app

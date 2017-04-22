@@ -31,7 +31,7 @@ namespace Template10.Utils
                 }
                 DialogState.Showing = true;
             }
-            dispatcher = dispatcher ?? Locator.WindowWrapper.Current().Dispatcher;
+            dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
             var result = await dispatcher.DispatchAsync(async () => await show());
             lock (DialogState)
             {

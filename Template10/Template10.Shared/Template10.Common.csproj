@@ -107,22 +107,12 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common.Deferral\Deferral.cs" />
-    <Compile Include="Common.Deferral\DeferralManager.cs" />
-    <Compile Include="Common.EventArgs\ChangedEventArgs.cs" />
-    <Compile Include="Common.EventArgs\HandledEventArgs.cs" />
-    <Compile Include="Common.EventArgs\ItemPropertyChangedEventArgs.cs" />
-    <Compile Include="Common.Exceptions\TemplatePartNotFoundException.cs" />
-    <Compile Include="Common.ObservableDictionary\IObservableDictionary.cs" />
-    <Compile Include="Common.ObservableDictionary\ObservableDictionary.cs" />
-    <Compile Include="Common.ObservableItemCollection\IObservableItemCollection.cs" />
-    <Compile Include="Common.ObservableItemCollection\ObservableItemCollection.cs" />
-    <Compile Include="Common.Queue\IQueue.cs" />
-    <Compile Include="Common.Queue\Queue.cs" />
-    <Compile Include="Common\TypedEventHandler.cs" />
-    <Compile Include="Common.WeakReference\WeakReference.cs" />
-    <Compile Include="Common.WeakReference\WeakReferenceT.cs" />
+    <Compile Include="Behaviors\DeviceDispositionBehavior.cs" />
+    <Compile Include="Behaviors\EllipsisBehavior.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\DeviceUtils.cs" />
+    <Compile Include="Utilities\DialogUtils.cs" />
+    <Compile Include="Utilities\MonitorUtils.cs" />
     <EmbeddedResource Include="Properties\Template10.Shared.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -133,6 +123,14 @@
     <ProjectReference Include="..\..\Independent.Services\Template10.Services.SettingsService\Service\Template10.Services.SettingsService.csproj">
       <Project>{eba14736-2c70-4e33-a156-221b44ff43c1}</Project>
       <Name>Template10.Services.SettingsService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Independent.Utilities\Template10.CodeBehind\Template10.CodeBehind.csproj">
+      <Project>{b3a4e50e-9dca-457e-bed5-b71d97b957f3}</Project>
+      <Name>Template10.CodeBehind</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Template10.WindowService\Template10.WindowService.csproj">
+      <Project>{9cad4451-5adf-48d3-b690-8b341a95a228}</Project>
+      <Name>Template10.WindowService</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

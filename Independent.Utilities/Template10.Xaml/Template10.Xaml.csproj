@@ -110,8 +110,6 @@
     <Compile Include="Behaviors\ChangeCursorAction.cs" />
     <Compile Include="Behaviors\CloseFlyoutAction.cs" />
     <Compile Include="Behaviors\ConditionalAction.cs" />
-    <Compile Include="Behaviors\DeviceDispositionBehavior.cs" />
-    <Compile Include="Behaviors\EllipsisBehavior.cs" />
     <Compile Include="Behaviors\EventTriggerBehaviorBase.cs" />
     <Compile Include="Behaviors\FocusAction.cs" />
     <Compile Include="Behaviors\KeyBehavior.cs" />
