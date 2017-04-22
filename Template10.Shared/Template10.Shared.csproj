@@ -4,15 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E07DE371-2DAB-42B0-8C11-DBBAAB9F5926}</ProjectGuid>
+    <ProjectGuid>{1F9A6976-D8F9-459B-8AEE-770B53904FF3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Template10.XAML</RootNamespace>
-    <AssemblyName>Template10.XAML</AssemblyName>
+    <RootNamespace>Template10</RootNamespace>
+    <AssemblyName>Template10.Shared</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.10240.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -107,27 +107,35 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Behaviors\ChangeCursorAction.cs" />
-    <Compile Include="Behaviors\CloseFlyoutAction.cs" />
-    <Compile Include="Behaviors\ConditionalAction.cs" />
-    <Compile Include="Behaviors\DeviceDispositionBehavior.cs" />
-    <Compile Include="Behaviors\EllipsisBehavior.cs" />
-    <Compile Include="Behaviors\EventTriggerBehaviorBase.cs" />
-    <Compile Include="Behaviors\FocusAction.cs" />
-    <Compile Include="Behaviors\KeyBehavior.cs" />
-    <Compile Include="Behaviors\MessageDialogAction.cs" />
-    <Compile Include="Behaviors\OpenFlyoutAction.cs" />
-    <Compile Include="Behaviors\TextBoxEnterKeyBehavior.cs" />
-    <Compile Include="Behaviors\ThrottledEventTriggerBehavior.cs" />
-    <Compile Include="Behaviors\TimeoutAction.cs" />
-    <Compile Include="Common\EventThrottleHelper.cs" />
-    <Compile Include="Converters\ChangeTypeConverter.cs" />
-    <Compile Include="Converters\DateTimeOffsetConverter.cs" />
-    <Compile Include="Converters\StringFormatConverter.cs" />
-    <Compile Include="Converters\ValueWhenConverter.cs" />
+    <Compile Include="Common.Deferral\Deferral.cs" />
+    <Compile Include="Common.Deferral\DeferralManager.cs" />
+    <Compile Include="Common.EventArgs\ChangedEventArgs.cs" />
+    <Compile Include="Common.EventArgs\HandledEventArgs.cs" />
+    <Compile Include="Common.EventArgs\ItemPropertyChangedEventArgs.cs" />
+    <Compile Include="Common.Exceptions\TemplatePartNotFoundException.cs" />
+    <Compile Include="Common.ObservableDictionary\IObservableDictionary.cs" />
+    <Compile Include="Common.ObservableDictionary\ObservableDictionary.cs" />
+    <Compile Include="Common.ObservableItemCollection\IObservableItemCollection.cs" />
+    <Compile Include="Common.ObservableItemCollection\ObservableItemCollection.cs" />
+    <Compile Include="Common.Queue\IQueue.cs" />
+    <Compile Include="Common.Queue\Queue.cs" />
+    <Compile Include="Common\TypedEventHandler.cs" />
+    <Compile Include="Common.WeakReference\WeakReference.cs" />
+    <Compile Include="Common.WeakReference\WeakReferenceT.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\Template10.XAML.rd.xml" />
+    <EmbeddedResource Include="Properties\Template10.Shared.rd.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Template10.Services\Template10.Services.SerializationService\Template10.Services.SerializationService.csproj">
+      <Project>{d3a94520-4cd4-4d56-b30b-7e54face64bb}</Project>
+      <Name>Template10.Services.SerializationService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Template10.Services\Template10.Services.SettingsService\Template10.Services.SettingsService.csproj">
+      <Project>{eba14736-2c70-4e33-a156-221b44ff43c1}</Project>
+      <Name>Template10.Services.SettingsService</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

@@ -4,15 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E07DE371-2DAB-42B0-8C11-DBBAAB9F5926}</ProjectGuid>
+    <ProjectGuid>{B23E19AA-1797-43F6-A0F1-FB2C13111AEB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Template10.XAML</RootNamespace>
-    <AssemblyName>Template10.XAML</AssemblyName>
+    <RootNamespace>Template10.Mvvm</RootNamespace>
+    <AssemblyName>Template10.Mvvm</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.10240.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -107,26 +107,21 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Behaviors\ChangeCursorAction.cs" />
-    <Compile Include="Behaviors\CloseFlyoutAction.cs" />
-    <Compile Include="Behaviors\ConditionalAction.cs" />
-    <Compile Include="Behaviors\DeviceDispositionBehavior.cs" />
-    <Compile Include="Behaviors\EllipsisBehavior.cs" />
-    <Compile Include="Behaviors\EventTriggerBehaviorBase.cs" />
-    <Compile Include="Behaviors\FocusAction.cs" />
-    <Compile Include="Behaviors\KeyBehavior.cs" />
-    <Compile Include="Behaviors\MessageDialogAction.cs" />
-    <Compile Include="Behaviors\OpenFlyoutAction.cs" />
-    <Compile Include="Behaviors\TextBoxEnterKeyBehavior.cs" />
-    <Compile Include="Behaviors\ThrottledEventTriggerBehavior.cs" />
-    <Compile Include="Behaviors\TimeoutAction.cs" />
-    <Compile Include="Common\EventThrottleHelper.cs" />
-    <Compile Include="Converters\ChangeTypeConverter.cs" />
-    <Compile Include="Converters\DateTimeOffsetConverter.cs" />
-    <Compile Include="Converters\StringFormatConverter.cs" />
-    <Compile Include="Converters\ValueWhenConverter.cs" />
+    <Compile Include="AwaitableDelegateCommand.cs" />
+    <Compile Include="BindableBase.cs" />
+    <Compile Include="ChangedCommandAdapter.cs" />
+    <Compile Include="DelegateCommand.cs" />
+    <Compile Include="DependencyBindableBase.cs" />
+    <Compile Include="IBindable.cs" />
+    <Compile Include="IChangedCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\Template10.XAML.rd.xml" />
+    <EmbeddedResource Include="Properties\Template10.Mvvm.rd.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Template10.Shared\Template10.Shared.csproj">
+      <Project>{1f9a6976-d8f9-459b-8aee-770b53904ff3}</Project>
+      <Name>Template10.Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

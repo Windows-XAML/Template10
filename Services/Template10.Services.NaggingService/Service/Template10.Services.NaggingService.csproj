@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E07DE371-2DAB-42B0-8C11-DBBAAB9F5926}</ProjectGuid>
+    <ProjectGuid>{A6DA4A45-4045-4598-B9FD-44A5010CA450}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Template10.XAML</RootNamespace>
-    <AssemblyName>Template10.XAML</AssemblyName>
+    <RootNamespace>Windows.Services.NagService</RootNamespace>
+    <AssemblyName>Windows.Services.NagService</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.10240.0</TargetPlatformVersion>
@@ -107,26 +107,22 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Behaviors\ChangeCursorAction.cs" />
-    <Compile Include="Behaviors\CloseFlyoutAction.cs" />
-    <Compile Include="Behaviors\ConditionalAction.cs" />
-    <Compile Include="Behaviors\DeviceDispositionBehavior.cs" />
-    <Compile Include="Behaviors\EllipsisBehavior.cs" />
-    <Compile Include="Behaviors\EventTriggerBehaviorBase.cs" />
-    <Compile Include="Behaviors\FocusAction.cs" />
-    <Compile Include="Behaviors\KeyBehavior.cs" />
-    <Compile Include="Behaviors\MessageDialogAction.cs" />
-    <Compile Include="Behaviors\OpenFlyoutAction.cs" />
-    <Compile Include="Behaviors\TextBoxEnterKeyBehavior.cs" />
-    <Compile Include="Behaviors\ThrottledEventTriggerBehavior.cs" />
-    <Compile Include="Behaviors\TimeoutAction.cs" />
-    <Compile Include="Common\EventThrottleHelper.cs" />
-    <Compile Include="Converters\ChangeTypeConverter.cs" />
-    <Compile Include="Converters\DateTimeOffsetConverter.cs" />
-    <Compile Include="Converters\StringFormatConverter.cs" />
-    <Compile Include="Converters\ValueWhenConverter.cs" />
+    <Compile Include="Services.DialogService\DialogHelper.cs" />
+    <Compile Include="Services.DialogService\DialogService.cs" />
+    <Compile Include="Services.DialogService\IDialogService.cs" />
+    <Compile Include="Services.NagService\INagService.cs" />
+    <Compile Include="Services.NagService\Nag.cs" />
+    <Compile Include="Services.NagService\NagResponseInfo.cs" />
+    <Compile Include="Services.NagService\NagService.cs" />
+    <Compile Include="Services.NagService\NagServiceHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\Template10.XAML.rd.xml" />
+    <EmbeddedResource Include="Properties\Windows.Services.NagService.rd.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Template10.Services.FileService\Service\Template10.Services.FileService.csproj">
+      <Project>{fd4892b4-4cf8-4c74-b28f-ad7623e405e6}</Project>
+      <Name>Template10.Services.FileService</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
