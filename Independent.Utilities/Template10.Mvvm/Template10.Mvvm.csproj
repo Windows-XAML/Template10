@@ -118,7 +118,7 @@
     <EmbeddedResource Include="Properties\Template10.Mvvm.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Template10.Shared\Template10.Shared.csproj">
+    <ProjectReference Include="..\..\Template10\Template10.Shared\Template10.Shared.csproj">
       <Project>{1f9a6976-d8f9-459b-8aee-770b53904ff3}</Project>
       <Name>Template10.Shared</Name>
     </ProjectReference>
