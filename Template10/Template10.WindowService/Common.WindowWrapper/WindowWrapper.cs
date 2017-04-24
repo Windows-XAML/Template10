@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Template10.Common;
 using Windows.ApplicationModel.Core;
 using Windows.Graphics.Display;
 using Windows.UI.ViewManagement;
@@ -35,25 +36,23 @@ namespace Template10.Services.WindowWrapper
             try
             {
                 var mainDispatcher = CoreApplication.MainView.Dispatcher;
-                return ActiveWrappers.FirstOrDefault(x => x.Window.Dispatcher == mainDispatcher) ??
-                        ActiveWrappers.FirstOrDefault();
+                return Instances.FirstOrDefault(x => x.Window.Dispatcher == mainDispatcher) ??
+                        Instances.FirstOrDefault();
             }
             catch (COMException)
             {
                 //MainView might exist but still be not accessible
-                return ActiveWrappers.FirstOrDefault();
+                return Instances.FirstOrDefault();
             }
         }
 
         public object Content => Dispatcher.Dispatch(() => Window.Content);
 
-        public readonly static List<IWindowWrapper> ActiveWrappers = new List<IWindowWrapper>();
+        public readonly static List<IWindowWrapper> Instances = new List<IWindowWrapper>();
 
-        public static IWindowWrapper Current() => ActiveWrappers.FirstOrDefault(x => x.Window == Window.Current) ?? Default();
+        public static IWindowWrapper Current() => Instances.FirstOrDefault(x => x.Window == Window.Current) ?? Default();
 
-        public static IWindowWrapper Current(Window window) => ActiveWrappers.FirstOrDefault(x => x.Window == window);
-
-        public static IWindowWrapper Current(INavigationService nav) => ActiveWrappers.FirstOrDefault(x => x.NavigationServices.Contains(nav));
+        public static IWindowWrapper Current(Window window) => Instances.FirstOrDefault(x => x.Window == window);
 
         public DisplayInformation DisplayInformation() => Dispatcher.Dispatch(() => Windows.Graphics.Display.DisplayInformation.GetForCurrentView());
 
@@ -70,21 +69,20 @@ namespace Template10.Services.WindowWrapper
                 throw new Exception("Windows already has a wrapper; use Current(window) to fetch.");
             }
             Window = window;
-            ActiveWrappers.Add(this);
+            Instances.Add(this);
             Dispatcher = new DispatcherWrapper(window.Dispatcher);
             window.CoreWindow.Closed += (s, e) =>
             {
-                ActiveWrappers.Remove(this);
+                Instances.Remove(this);
             };
             window.Closed += (s, e) =>
             {
-                ActiveWrappers.Remove(this);
+                Instances.Remove(this);
             };
         }
 
         public void Close() { Window.Close(); }
         public Window Window { get; }
         public IDispatcherWrapper Dispatcher { get; }
-        public NavigationServiceList NavigationServices { get; } = new NavigationServiceList();
     }
 }

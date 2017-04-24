@@ -12,6 +12,7 @@ using Template10.Services.SerializationService;
 using Template10.Services.ViewService;
 using Template10.Utils;
 using Template10.Common;
+using System.Reflection;
 
 namespace Template10.Services.NavigationService
 {
@@ -25,7 +26,7 @@ namespace Template10.Services.NavigationService
         #endregion
 
         public static INavigationService GetForFrame(Frame frame) =>
-            WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices).FirstOrDefault(x => (x.FrameFacade as IFrameFacadeInternal).Frame.Equals(frame));
+            WindowWrapper.WindowWrapper.Instances.SelectMany(x => x.NavigationServices).FirstOrDefault(x => (x.FrameFacade as IFrameFacadeInternal).Frame.Equals(frame));
 
         Lazy<NavigationLogic> _Navigation;
         private NavigationLogic Navigation => _Navigation.Value;
@@ -70,7 +71,9 @@ namespace Template10.Services.NavigationService
             set { FrameFacadeInternal.SetNavigationState(value); }
         }
 
-        protected internal NavigationService(Frame frame)
+        public static NavigationServiceList Instances { get; } = new NavigationServiceList();
+
+        public NavigationService(Frame frame)
         {
             IsInMainView = CoreApplication.MainView == CoreApplication.GetCurrentView();
             _SerializationService = new Lazy<ISerializationService>(() => Services.SerializationService.SerializationService.Json);
@@ -78,6 +81,7 @@ namespace Template10.Services.NavigationService
             _Suspension = new Lazy<ISuspensionStateLogic>(() => new SuspensionStateLogic(FrameFacadeInternal, this));
             _FrameFacade = new Lazy<IFrameFacade>(() => new FrameFacade(frame, this));
             _ViewService = new Lazy<IViewService>(() => new ViewService.ViewService());
+            Instances.Add(this);    
         }
 
         public Task<IViewLifetimeControl> OpenAsync(Type page, object parameter = null, string title = null, ViewSizePreference size = ViewSizePreference.UseHalf)
@@ -85,6 +89,11 @@ namespace Template10.Services.NavigationService
             DebugWrite($"Page: {page}, Parameter: {parameter}, Title: {title}, Size: {size}");
 
             return ViewService.OpenAsync(page, parameter, title, size);
+        }
+
+        internal static INavigationService Default()
+        {
+            throw new NotImplementedException();
         }
 
         #region Navigate methods
@@ -480,6 +489,22 @@ namespace Template10.Services.NavigationService
                 await Navigation.NavedFromAsync(page?.DataContext, NavigationMode.New, page, CurrentPageType, CurrentPageParam, null, null, null, true);
             });
         }
+
+        private static object _PageKeys;
+        public static Dictionary<T, Type> PageKeys<T>()
+            where T : struct, IConvertible
+        {
+            if (!typeof(T).GetTypeInfo().IsEnum)
+            {
+                throw new ArgumentException("T must be an enumerated type");
+            }
+            if (_PageKeys != null && _PageKeys is Dictionary<T, Type>)
+            {
+                return _PageKeys as Dictionary<T, Type>;
+            }
+            return (_PageKeys = new Dictionary<T, Type>()) as Dictionary<T, Type>;
+        }
+
     }
 }
 

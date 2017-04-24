@@ -143,6 +143,10 @@
     <EmbeddedResource Include="Properties\Template10.Services.Navigation.rd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Independent.Services\Template10.Services.BackService\Template10.Services.BackService.csproj">
+      <Project>{8564f764-99d9-4473-b5e4-ac62cda73977}</Project>
+      <Name>Template10.Services.BackService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Independent.Services\Template10.Services.KeyboardService\Service\Template10.Services.KeyboardService.csproj">
       <Project>{b540d0b5-3850-416f-aec7-7737870e9ca2}</Project>
       <Name>Template10.Services.KeyboardService</Name>
@@ -155,9 +159,21 @@
       <Project>{d3a94520-4cd4-4d56-b30b-7e54face64bb}</Project>
       <Name>Template10.Services.SerializationService</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Independent.Services\Template10.Services.SettingsService\Service\Template10.Services.SettingsService.csproj">
+      <Project>{eba14736-2c70-4e33-a156-221b44ff43c1}</Project>
+      <Name>Template10.Services.SettingsService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Independent.Utilities\Template10.CodeBehind\Template10.CodeBehind.csproj">
       <Project>{b3a4e50e-9dca-457e-bed5-b71d97b957f3}</Project>
       <Name>Template10.CodeBehind</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Template10.Shared\Template10.Common.csproj">
+      <Project>{1f9a6976-d8f9-459b-8aee-770b53904ff3}</Project>
+      <Name>Template10.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Template10.WindowService\Template10.WindowService.csproj">
+      <Project>{9cad4451-5adf-48d3-b690-8b341a95a228}</Project>
+      <Name>Template10.WindowService</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

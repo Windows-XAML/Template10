@@ -127,10 +127,6 @@
       <Project>{eadde808-bf0d-4ebc-b4ca-9fda63b53862}</Project>
       <Name>Template10.Services.LoggingService</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Template10.NavigationService\Template10.Navigation.csproj">
-      <Project>{cd31d870-42f3-4379-b67a-2070c4b0a444}</Project>
-      <Name>Template10.Navigation</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

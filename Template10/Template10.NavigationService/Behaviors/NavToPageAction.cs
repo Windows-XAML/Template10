@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Template10.Services.NavigationService;
+using Template10.Services.WindowWrapper;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
@@ -23,8 +24,7 @@ namespace Template10.Behaviors
                 throw new NullReferenceException($"{nameof(NavToPageAction)}.{nameof(Frame)} is required.");
 
 
-            var navs = Locator.WindowWrapper.Instances.SelectMany(x => x.NavigationServices);
-            var nav = navs.First(x => (x.FrameFacade as IFrameFacadeInternal).Frame == Frame);
+            var nav = NavigationService.GetForFrame(Frame);
             if (nav == null)
                 throw new NullReferenceException($"Cannot find NavigationService for {Frame.ToString()}.");
 

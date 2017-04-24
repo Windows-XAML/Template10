@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Controls;
 using Template10.Services.ViewService;
 using Template10.Services.ExtendedSessionService;
 using Template10.Controls;
+using Template10.Services.WindowWrapper;
 
 namespace Template10.Common
 {
@@ -279,7 +280,7 @@ namespace Template10.Common
             (frame = frame ?? new Frame()).Content = (existingContent == ExistingContent.Include) ? Window.Current.Content : null;
 
             // if the service already exists for this frame, use the existing one.
-            foreach (var nav in WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices))
+            foreach (var nav in Services.NavigationService.NavigationService.Instances)
             {
                 if ((nav.FrameFacade as IFrameFacadeInternal).Frame.Equals(frame))
                 {
@@ -315,7 +316,7 @@ namespace Template10.Common
                 if (cacheAge >= CacheMaxDuration)
                 {
                     // clear state in every nav service in every view
-                    foreach (var nav in WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices))
+                    foreach (var nav in Services.NavigationService.NavigationService.Instances)
                     {
                         nav.Suspension.ClearFrameState();
                     }
@@ -380,20 +381,8 @@ namespace Template10.Common
             }
         }
 
-        private object _PageKeys;
-        public Dictionary<T, Type> PageKeys<T>()
-            where T : struct, IConvertible
-        {
-            if (!typeof(T).GetTypeInfo().IsEnum)
-            {
-                throw new ArgumentException("T must be an enumerated type");
-            }
-            if (_PageKeys != null && _PageKeys is Dictionary<T, Type>)
-            {
-                return _PageKeys as Dictionary<T, Type>;
-            }
-            return (_PageKeys = new Dictionary<T, Type>()) as Dictionary<T, Type>;
-        }
+        [Obsolete("Use NavigationService.PageKeys()")]
+        public Dictionary<T, Type> PageKeys<T>() where T : struct, IConvertible => Services.NavigationService.NavigationService.PageKeys<T>();
 
         #endregion
 
@@ -654,7 +643,7 @@ namespace Template10.Common
 
         private void SetupLifecycleListeners()
         {
-            Resuming += delegate(object s, object e)
+            Resuming += delegate (object s, object e)
             {
                 if (_firstActivationExecuted)
                 {
@@ -668,7 +657,7 @@ namespace Template10.Common
                 }
                 _firstActivationExecuted = true;
             };
-            Suspending += async delegate(object s, SuspendingEventArgs e)
+            Suspending += async delegate (object s, SuspendingEventArgs e)
             {
                 var deferral = e.SuspendingOperation.GetDeferral();
                 try
@@ -679,7 +668,7 @@ namespace Template10.Common
                         await ExtendedSessionService.StartSaveDataAsync();
                     }
 
-                    var navs = WindowWrapper.ActiveWrappers.SelectMany(x => x.NavigationServices);
+                    var navs = WindowWrapper.Instances.SelectMany(x => x.NavigationServices);
                     foreach (INavigationService nav in navs)
                     {
                         // individual frame-level

@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Navigation;
 using Template10.Common;
 using System.Linq;
 using Template10.Services.NavigationService;
+using Template10.Services.WindowWrapper;
 
 namespace Template10.Behaviors
 {
@@ -31,7 +32,7 @@ namespace Template10.Behaviors
         {
             if (!Windows.ApplicationModel.DesignMode.DesignModeEnabled)
             {
-                _dispatcher = Locator.WindowWrapper.Current().Dispatcher;
+                _dispatcher = DispatcherWrapper.Current();
                 _throttleHelper = new EventThrottleHelper { Throttle = 1000 };
             }
         }
@@ -60,8 +61,13 @@ namespace Template10.Behaviors
                     DetachAction = (i, w) => element.Click -= w.Handler,
                 }.Handler;
                 CalculateThrottled();
-                if (Locator.BootStrapper.Instance != null) Locator.BootStrapper.Instance.ShellBackButtonUpdated += Current_ShellBackButtonUpdated;
-                _deviceUtils = DeviceUtils.Current();
+
+
+                // TODO: critical!
+                // if (Locator.BootStrapper.Instance != null) Locator.BootStrapper.Instance.ShellBackButtonUpdated += Current_ShellBackButtonUpdated;
+
+
+                _deviceUtils = DeviceUtils.Current(WindowWrapper.Current());
                 if (_deviceUtils != null) _deviceUtils.Changed += DispositionChanged;
             }
         }
@@ -75,7 +81,10 @@ namespace Template10.Behaviors
         {
             _throttleHelper.ThrottledEvent -= ThrottleHelperOnThrottledEvent;
             DetachFrameEvents(this, Frame);
-            if (Locator.BootStrapper.Instance != null) Locator.BootStrapper.Instance.ShellBackButtonUpdated -= Current_ShellBackButtonUpdated;
+
+            // TODO: critical
+            // if (Locator.BootStrapper.Instance != null) Locator.BootStrapper.Instance.ShellBackButtonUpdated -= Current_ShellBackButtonUpdated;
+
             if (_deviceUtils != null) _deviceUtils.Changed -= DispositionChanged;
         }
 
@@ -92,8 +101,8 @@ namespace Template10.Behaviors
 
         private void Element_Click(object sender, RoutedEventArgs e)
         {
-            var navs = Locator.WindowWrapper.Instances.SelectMany(x => x.NavigationServices);
-            var nav = navs.First(x => (x.FrameFacade as IFrameFacadeInternal).Frame == Frame);
+            var nav = NavigationService.Default();
+
             if (nav == null)
             {
                 switch (Direction)

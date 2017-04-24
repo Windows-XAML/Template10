@@ -112,7 +112,7 @@
     <EmbeddedResource Include="Properties\Template10.Services.BackButton.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Template10.Services.KeyboardService\Service\Template10.Services.KeyboardService.csproj">
+    <ProjectReference Include="..\Template10.Services.KeyboardService\Service\Template10.Services.KeyboardService.csproj">
       <Project>{b540d0b5-3850-416f-aec7-7737870e9ca2}</Project>
       <Name>Template10.Services.KeyboardService</Name>
     </ProjectReference>

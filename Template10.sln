@@ -92,6 +92,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Independent.Controls (Refer
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.WindowService", "Template10\Template10.WindowService\Template10.WindowService.csproj", "{9CAD4451-5ADF-48D3-B690-8B341A95A228}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.BackService", "Independent.Services\Template10.Services.BackService\Template10.Services.BackService.csproj", "{8564F764-99D9-4473-B5E4-AC62CDA73977}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -580,6 +582,22 @@ Global
 		{9CAD4451-5ADF-48D3-B690-8B341A95A228}.Release|x64.Build.0 = Release|x64
 		{9CAD4451-5ADF-48D3-B690-8B341A95A228}.Release|x86.ActiveCfg = Release|x86
 		{9CAD4451-5ADF-48D3-B690-8B341A95A228}.Release|x86.Build.0 = Release|x86
+		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Debug|ARM.ActiveCfg = Debug|ARM
+		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Debug|ARM.Build.0 = Debug|ARM
+		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Debug|x64.ActiveCfg = Debug|x64
+		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Debug|x64.Build.0 = Debug|x64
+		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Debug|x86.ActiveCfg = Debug|x86
+		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Debug|x86.Build.0 = Debug|x86
+		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Release|ARM.ActiveCfg = Release|ARM
+		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Release|ARM.Build.0 = Release|ARM
+		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Release|x64.ActiveCfg = Release|x64
+		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Release|x64.Build.0 = Release|x64
+		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Release|x86.ActiveCfg = Release|x86
+		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -614,5 +632,6 @@ Global
 		{84415006-A82C-40DC-A8B4-176AFC0CF517} = {E89AC2DA-3D4F-487F-B9E8-F77D61A793B3}
 		{5144566E-80EB-4375-9FE2-415808E2051D} = {BCA90A0F-E32C-478A-8DD9-54B73D52AEBC}
 		{9CAD4451-5ADF-48D3-B690-8B341A95A228} = {BCA90A0F-E32C-478A-8DD9-54B73D52AEBC}
+		{8564F764-99D9-4473-B5E4-AC62CDA73977} = {0609ACB9-BE5B-4785-AA7B-D38F14A1B580}
 	EndGlobalSection
 EndGlobal
