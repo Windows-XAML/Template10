@@ -1,6 +1,6 @@
 ﻿using System;
 using Template10.Common;
-using Template10.Services.NavigationService;
+using Template10.Services.WindowWrapper;
 using Windows.UI.Core;
 
 namespace Template10.Services.ViewService
@@ -13,7 +13,7 @@ namespace Template10.Services.ViewService
     {
         CoreDispatcher CoreDispatcher { get; }
         int Id { get; }
-        INavigationService NavigationService { get; set; }
+        // INavigationService NavigationService { get; set; }
         IWindowWrapper WindowWrapper { get; }
 
         event ViewReleasedHandler Released;

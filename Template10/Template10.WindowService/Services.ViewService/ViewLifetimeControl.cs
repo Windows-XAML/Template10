@@ -25,8 +25,8 @@ using System.Collections.Concurrent;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
-using Template10.Services.NavigationService;
 using Template10.Common;
+using Template10.Services.WindowWrapper;
 
 namespace Template10.Services.ViewService
 {
@@ -78,13 +78,13 @@ namespace Template10.Services.ViewService
         #endregion
 
         #region NavigationService
-        public INavigationService NavigationService { get; set; }
+        // public INavigationService NavigationService { get; set; }
         #endregion
 
         private ViewLifetimeControl(CoreWindow newWindow)
         {
             CoreDispatcher = newWindow.Dispatcher;
-            WindowWrapper = Common.WindowWrapper.Current(Window.Current);
+            WindowWrapper = Services.WindowWrapper.WindowWrapper.Current();
             Id = ApplicationView.GetApplicationViewIdForWindow(newWindow);
 
             // This class will automatically tell the view when its time to close
@@ -131,8 +131,7 @@ namespace Template10.Services.ViewService
             {
                 UnregisterForEvents();
                 InternalReleased?.Invoke(this, new EventArgs());
-                IViewLifetimeControl removed;
-                WindowControlsMap.TryRemove(Id, out removed);
+                WindowControlsMap.TryRemove(Id, out var removed);
             }
         }
 
@@ -155,8 +154,7 @@ namespace Template10.Services.ViewService
         /// before.</returns>
         public static IViewLifetimeControl TryGetForCurrentView()
         {
-            IViewLifetimeControl res;            
-            WindowControlsMap.TryGetValue(ApplicationView.GetApplicationViewIdForWindow(Window.Current.CoreWindow), out res);
+            WindowControlsMap.TryGetValue(ApplicationView.GetApplicationViewIdForWindow(Window.Current.CoreWindow), out var res);
             return res;
         }             
 

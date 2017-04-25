@@ -24,7 +24,7 @@ namespace Template10.Behaviors
         private readonly EventThrottleHelper _throttleHelper;
         private DeviceUtils _deviceUtils;
 
-        Button element => AssociatedObject as Button;
+        Button Element => AssociatedObject as Button;
 
         public DependencyObject AssociatedObject { get; set; }
 
@@ -50,15 +50,15 @@ namespace Template10.Behaviors
             // process start
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
             {
-                element.Visibility = Visibility.Visible;
+                Element.Visibility = Visibility.Visible;
             }
             else
             {
                 // handle click
-                element.Click += new Common.WeakReference<NavButtonBehavior, object, RoutedEventArgs>(this)
+                Element.Click += new Common.WeakReference<NavButtonBehavior, object, RoutedEventArgs>(this)
                 {
                     EventAction = (i, s, e) => i.Element_Click(s, e),
-                    DetachAction = (i, w) => element.Click -= w.Handler,
+                    DetachAction = (i, w) => Element.Click -= w.Handler,
                 }.Handler;
                 CalculateThrottled();
 
@@ -101,7 +101,7 @@ namespace Template10.Behaviors
 
         private void Element_Click(object sender, RoutedEventArgs e)
         {
-            var nav = NavigationService.Default();
+            var nav = NavigationService.Default;
 
             if (nav == null)
             {
@@ -140,7 +140,7 @@ namespace Template10.Behaviors
         private void Calculate()
         {
             // just in case
-            if (element == null)
+            if (Element == null)
                 return;
 
             // make changes on UI thread
@@ -150,12 +150,12 @@ namespace Template10.Behaviors
                 {
                     case Directions.Back:
                         {
-                            element.Visibility = NavButtonsHelper.CalculateBackVisibility(Frame);
+                            Element.Visibility = NavButtonsHelper.CalculateBackVisibility(Frame);
                             break;
                         }
                     case Directions.Forward:
                         {
-                            element.Visibility = NavButtonsHelper.CalculateForwardVisibility(Frame);
+                            Element.Visibility = NavButtonsHelper.CalculateForwardVisibility(Frame);
                             break;
                         }
                 }
@@ -190,8 +190,7 @@ namespace Template10.Behaviors
             {
                 return;
             }
-            FrameEventRegistration eventReg;
-            if (behavior._eventRegistrationInfo.TryGetValue(frame, out eventReg))
+            if (behavior._eventRegistrationInfo.TryGetValue(frame, out var eventReg))
             {
                 // events already attached
                 return;
@@ -210,8 +209,7 @@ namespace Template10.Behaviors
             {
                 return;
             }
-            FrameEventRegistration eventReg;
-            if (!behavior._eventRegistrationInfo.TryGetValue(frame, out eventReg))
+            if (!behavior._eventRegistrationInfo.TryGetValue(frame, out var eventReg))
             {
                 // events already detached
                 return;

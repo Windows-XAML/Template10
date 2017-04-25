@@ -117,7 +117,7 @@ namespace Template10.Common
         /// Returns the first NavigationService from all available services.
         /// Use the NaviagtionService to Navigate() from one page to another.
         /// </summary>
-        public INavigationService NavigationService => WindowWrapper.Current().NavigationServices.FirstOrDefault();
+        public INavigationService NavigationService => Services.NavigationService.NavigationService.Default;
 
         /// <summary>
         /// The SplashFactory is a Func that returns an instantiated Splash view.
@@ -165,7 +165,6 @@ namespace Template10.Common
             _WindowLogic = new Lazy<IWindowLogic>(() => new WindowLogic());
             _SplashLogic = new Lazy<ISplashLogic>(() => new SplashLogic());
             _ExtendedSessionService = new Lazy<IExtendedSessionService>(() => new ExtendedSessionService());
-            Locator.BootStrapper.Instance = this;
         }
 
         #region Public Events

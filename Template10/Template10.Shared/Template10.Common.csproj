@@ -109,6 +109,7 @@
   <ItemGroup>
     <Compile Include="Behaviors\DeviceDispositionBehavior.cs" />
     <Compile Include="Behaviors\EllipsisBehavior.cs" />
+    <Compile Include="Common\BackButton.enum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\DeviceUtils.cs" />
     <Compile Include="Utilities\DialogUtils.cs" />

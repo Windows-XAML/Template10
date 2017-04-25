@@ -62,7 +62,7 @@ namespace Template10.Services.WindowWrapper
 
         internal static void WindowCreated(Window window) => new WindowWrapper(window);
 
-        internal WindowWrapper(Window window)
+        public WindowWrapper(Window window) : this()
         {
             if (Current(window) != null)
             {

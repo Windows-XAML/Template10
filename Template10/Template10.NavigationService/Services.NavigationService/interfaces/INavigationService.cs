@@ -5,6 +5,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Template10.Services.ViewService;
 using Template10.Common;
+using Template10.Services.WindowWrapper;
 
 namespace Template10.Services.NavigationService
 {
@@ -26,6 +27,9 @@ namespace Template10.Services.NavigationService
         Task<bool> GoBackAsync(NavigationTransitionInfo infoOverride = null);
 
         SerializationService.ISerializationService SerializationService { get; set; }
+
+        IWindowWrapper Window { get; }
+
 
         void GoForward();
         Task<bool> GoForwardAsync();

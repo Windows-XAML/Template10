@@ -13,6 +13,7 @@ using Template10.Services.ViewService;
 using Template10.Utils;
 using Template10.Common;
 using System.Reflection;
+using Template10.Services.WindowWrapper;
 
 namespace Template10.Services.NavigationService
 {
@@ -25,8 +26,7 @@ namespace Template10.Services.NavigationService
 
         #endregion
 
-        public static INavigationService GetForFrame(Frame frame) =>
-            WindowWrapper.WindowWrapper.Instances.SelectMany(x => x.NavigationServices).FirstOrDefault(x => (x.FrameFacade as IFrameFacadeInternal).Frame.Equals(frame));
+        public static INavigationService GetForFrame(Frame frame) => frame.GetNavigationService();
 
         Lazy<NavigationLogic> _Navigation;
         private NavigationLogic Navigation => _Navigation.Value;
@@ -43,6 +43,8 @@ namespace Template10.Services.NavigationService
             get { return _SerializationService.Value; }
             set { _SerializationService = new Lazy<ISerializationService>(() => value); }
         }
+
+        public IWindowWrapper Window { get; private set; }
 
         Lazy<IFrameFacade> _FrameFacade;
         public IFrameFacade FrameFacade => _FrameFacade.Value;
@@ -73,7 +75,12 @@ namespace Template10.Services.NavigationService
 
         public static NavigationServiceList Instances { get; } = new NavigationServiceList();
 
-        public NavigationService(Frame frame)
+        public NavigationService()
+        {
+            Window = Services.WindowWrapper.WindowWrapper.Current();
+        }
+
+        public NavigationService(Frame frame) : this()
         {
             IsInMainView = CoreApplication.MainView == CoreApplication.GetCurrentView();
             _SerializationService = new Lazy<ISerializationService>(() => Services.SerializationService.SerializationService.Json);
@@ -81,20 +88,21 @@ namespace Template10.Services.NavigationService
             _Suspension = new Lazy<ISuspensionStateLogic>(() => new SuspensionStateLogic(FrameFacadeInternal, this));
             _FrameFacade = new Lazy<IFrameFacade>(() => new FrameFacade(frame, this));
             _ViewService = new Lazy<IViewService>(() => new ViewService.ViewService());
-            Instances.Add(this);    
+            Instances.Add(this);
         }
 
         public Task<IViewLifetimeControl> OpenAsync(Type page, object parameter = null, string title = null, ViewSizePreference size = ViewSizePreference.UseHalf)
         {
             DebugWrite($"Page: {page}, Parameter: {parameter}, Title: {title}, Size: {size}");
 
-            return ViewService.OpenAsync(page, parameter, title, size);
+            var frame = new Frame();
+            var nav = new NavigationService(frame);
+            nav.Navigate(page, parameter);
+
+            return ViewService.OpenAsync(frame, title, size);
         }
 
-        internal static INavigationService Default()
-        {
-            throw new NotImplementedException();
-        }
+        public static INavigationService Default { get; private set; }
 
         #region Navigate methods
 
@@ -149,9 +157,8 @@ namespace Template10.Services.NavigationService
         {
             DebugWrite($"Key: {key}, Parameter: {parameter}, NavigationTransitionInfo: {infoOverride}");
 
-            Type page;
-            var keys = Locator.BootStrapper.Instance.PageKeys<T>();
-            if (!keys.TryGetValue(key, out page))
+            var keys = NavigationService.PageKeys<T>();
+            if (!keys.TryGetValue(key, out var page))
             {
                 throw new KeyNotFoundException(key.ToString());
             }
@@ -165,14 +172,8 @@ namespace Template10.Services.NavigationService
         {
             DebugWrite($"Page: {page}, Parameter: {parameter}, NavigationMode: {mode}");
 
-            if (page == null)
-            {
-                throw new ArgumentNullException(nameof(page));
-            }
-            if (navigate == null)
-            {
-                throw new ArgumentNullException(nameof(navigate));
-            }
+            if (page == null) throw new ArgumentNullException(nameof(page));
+            if (navigate == null) throw new ArgumentNullException(nameof(navigate));
 
             // this cannot be used for duplicate navigation, except for refresh
             if ((mode != NavigationMode.Refresh)
@@ -225,7 +226,7 @@ namespace Template10.Services.NavigationService
             // call newViewModel.ResolveForPage()
             if (newViewModel == null)
             {
-                newViewModel = Locator.BootStrapper.Instance.ResolveForPage(newPage, this);
+                newViewModel = ResolveViewModelForPage.Invoke(newPage);
                 newPage.DataContext = newViewModel;
             }
 
@@ -241,6 +242,8 @@ namespace Template10.Services.NavigationService
             // finally 
             return true;
         }
+
+        public Func<Page, object> ResolveViewModelForPage { get; set; } = page => null;
 
         #endregion
 

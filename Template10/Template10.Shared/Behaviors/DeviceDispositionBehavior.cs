@@ -20,7 +20,7 @@ namespace Template10.Behaviors
         public void Attach(DependencyObject associatedObject)
         {
             AssociatedObject = associatedObject;
-            _deviceUtils = Utils.DeviceUtils.Current();
+            _deviceUtils = DeviceUtils.Current(Services.WindowWrapper.WindowWrapper.Current());
             if (_deviceUtils != null) _deviceUtils.Changed += DeviceDispositionBehavior_Changed;
             Update();
             _ready = true;
@@ -37,22 +37,26 @@ namespace Template10.Behaviors
         private void Run()
         {
             if (_ready)
+            {
                 Interaction.ExecuteActions(AssociatedObject, Actions, null);
+            }
         }
 
         private void Update()
         {
-            switch (Utils.DeviceUtils.Current().DeviceDisposition())
+            var w = Services.WindowWrapper.WindowWrapper.Current();
+            var d = DeviceUtils.Current(w);
+            switch (d.DeviceDisposition())
             {
-                case Utils.DeviceUtils.DeviceDispositions.IoT: if (IoT) Run(); break;
-                case Utils.DeviceUtils.DeviceDispositions.Xbox: if (Xbox) Run(); break;
-                case Utils.DeviceUtils.DeviceDispositions.Team: if (Team) Run(); break;
-                case Utils.DeviceUtils.DeviceDispositions.HoloLens: if (HoloLens) Run(); break;
-                case Utils.DeviceUtils.DeviceDispositions.Desktop: if (Desktop) Run(); break;
-                case Utils.DeviceUtils.DeviceDispositions.Mobile: if (Mobile) Run(); break;
-                case Utils.DeviceUtils.DeviceDispositions.Phone: if (Phone) Run(); break;
-                case Utils.DeviceUtils.DeviceDispositions.Continuum: if (Continuum) Run(); break;
-                case Utils.DeviceUtils.DeviceDispositions.Virtual: if (Virtual) Run(); break;
+                case DeviceUtils.DeviceDispositions.IoT: if (IoT) Run(); break;
+                case DeviceUtils.DeviceDispositions.Xbox: if (Xbox) Run(); break;
+                case DeviceUtils.DeviceDispositions.Team: if (Team) Run(); break;
+                case DeviceUtils.DeviceDispositions.HoloLens: if (HoloLens) Run(); break;
+                case DeviceUtils.DeviceDispositions.Desktop: if (Desktop) Run(); break;
+                case DeviceUtils.DeviceDispositions.Mobile: if (Mobile) Run(); break;
+                case DeviceUtils.DeviceDispositions.Phone: if (Phone) Run(); break;
+                case DeviceUtils.DeviceDispositions.Continuum: if (Continuum) Run(); break;
+                case DeviceUtils.DeviceDispositions.Virtual: if (Virtual) Run(); break;
             }
         }
 
