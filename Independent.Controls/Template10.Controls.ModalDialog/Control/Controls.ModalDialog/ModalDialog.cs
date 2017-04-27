@@ -23,12 +23,12 @@ namespace Template10.Controls
 
         private void ModalDialog_Loaded(object sender, RoutedEventArgs e)
         {
-            Services.BackButtonService.BackButtonService.NavigateBack += BackButtonService_NavigateBack;
+            Services.BackButtonService.BackButtonService.BackRequested += BackButtonService_NavigateBack;
         }
 
         private void ModalDialog_Unloaded(object sender, RoutedEventArgs e)
         {
-            Services.BackButtonService.BackButtonService.NavigateBack -= BackButtonService_NavigateBack;
+            Services.BackButtonService.BackButtonService.BackRequested -= BackButtonService_NavigateBack;
         }
 
         private void BackButtonService_NavigateBack(object sender, Common.HandledEventArgs e)

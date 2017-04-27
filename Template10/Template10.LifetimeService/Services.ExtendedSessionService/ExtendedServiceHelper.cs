@@ -4,7 +4,7 @@ using Windows.ApplicationModel.ExtendedExecution;
 
 namespace Template10.Services.ExtendedSessionService
 {
-    public class ExtendedServiceHelper: IDisposable
+    public class ExtendedServiceHelper : IDisposable
     {
         public enum SessionKinds
         {
@@ -15,13 +15,16 @@ namespace Template10.Services.ExtendedSessionService
         }
 
         volatile static ExtendedExecutionSession _extendedExecutionSession;
-        volatile static SessionKinds _currentKind = SessionKinds.None;
-        volatile static bool _isStarted = false;
-        volatile static bool _isRevoked = false;
 
+        volatile static SessionKinds _currentKind = SessionKinds.None;
         public SessionKinds CurrentKind => _currentKind;
+
         public bool IsActive => _isStarted && !_isRevoked;
+
+        volatile static bool _isStarted = false;
         public bool IsStarted => _isStarted;
+
+        volatile static bool _isRevoked = false;
         public bool IsRevoked => _isRevoked;
 
         public int Progress
@@ -30,10 +33,7 @@ namespace Template10.Services.ExtendedSessionService
             set { if (IsStarted) _extendedExecutionSession.PercentProgress = (uint)value; }
         }
 
-        static ExtendedServiceHelper()
-        {
-            Create();
-        }
+        static ExtendedServiceHelper() => Create();
 
         static void Create()
         {
@@ -56,8 +56,6 @@ namespace Template10.Services.ExtendedSessionService
             {
                 switch (kind)
                 {
-                    case SessionKinds.None:
-                        throw new NotSupportedException();
                     case SessionKinds.Unspecified:
                         _extendedExecutionSession.Reason = ExtendedExecutionReason.Unspecified;
                         break;
@@ -67,6 +65,8 @@ namespace Template10.Services.ExtendedSessionService
                     case SessionKinds.SavingData:
                         _extendedExecutionSession.Reason = ExtendedExecutionReason.SavingData;
                         break;
+                    default:
+                        throw new NotSupportedException(kind.ToString());
                 }
                 var result = await _extendedExecutionSession.RequestExtensionAsync();
                 return result == ExtendedExecutionResult.Allowed;

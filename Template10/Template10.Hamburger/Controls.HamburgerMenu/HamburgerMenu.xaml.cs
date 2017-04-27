@@ -354,9 +354,10 @@ namespace Template10.Controls
         {
             // If splash screen then continue showing until navigated once
             if (e.NewValue.FrameFacade.BackStack.Count == 0
-                && e.NewValue.FrameFacade.Content != null
-                && Locator.BootStrapper.Instance.SplashFactory != null
-                && Locator.BootStrapper.Instance.PreviousExecutionState != Windows.ApplicationModel.Activation.ApplicationExecutionState.Terminated)
+                && e.NewValue.FrameFacade.Content != null)
+                // TODO : JERRY!
+                // && Locator.BootStrapper.Instance.SplashFactory != null
+                // && Locator.BootStrapper.Instance.PreviousExecutionState != Windows.ApplicationModel.Activation.ApplicationExecutionState.Terminated)
             {
                 var once = false;
                 UpdateControl(true);

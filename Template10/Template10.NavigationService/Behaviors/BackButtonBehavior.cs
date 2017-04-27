@@ -22,12 +22,12 @@ namespace Template10.Behaviors
         {
             AssociatedObject = associatedObject;
             _dispatcher = Services.WindowWrapper.WindowWrapper.Current().Dispatcher;
-            Services.BackButtonService.BackButtonService.NavigateBack += BackButtonService_NavigateBack;
+            Services.BackButtonService.BackButtonService.BackRequested += BackButtonService_NavigateBack;
         }
 
         public void Detach()
         {
-            Services.BackButtonService.BackButtonService.NavigateBack += BackButtonService_NavigateBack;
+            Services.BackButtonService.BackButtonService.BackRequested += BackButtonService_NavigateBack;
         }
 
         private void BackButtonService_NavigateBack(object sender, HandledEventArgs e)

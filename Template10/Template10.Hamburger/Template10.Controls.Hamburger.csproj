@@ -135,6 +135,22 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Independent.Utilities\Template10.CodeBehind\Template10.CodeBehind.csproj">
+      <Project>{b3a4e50e-9dca-457e-bed5-b71d97b957f3}</Project>
+      <Name>Template10.CodeBehind</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Independent.Utilities\Template10.Mvvm\Template10.Mvvm.csproj">
+      <Project>{b23e19aa-1797-43f6-a0f1-fb2c13111aeb}</Project>
+      <Name>Template10.Mvvm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Independent.Utilities\Template10.Xaml\Template10.Xaml.csproj">
+      <Project>{e07de371-2dab-42b0-8c11-dbbaab9f5926}</Project>
+      <Name>Template10.Xaml</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Template10.NavigationService\Template10.Navigation.csproj">
+      <Project>{cd31d870-42f3-4379-b67a-2070c4b0a444}</Project>
+      <Name>Template10.Navigation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Template10.Shared\Template10.Common.csproj">
       <Project>{1f9a6976-d8f9-459b-8aee-770b53904ff3}</Project>
       <Name>Template10.Shared</Name>

@@ -16,6 +16,7 @@ using Template10.Services.ViewService;
 using Template10.Services.ExtendedSessionService;
 using Template10.Controls;
 using Template10.Services.WindowWrapper;
+using Template10.Services.StateService;
 
 namespace Template10.Common
 {
@@ -192,7 +193,7 @@ namespace Template10.Common
             {
                 return;
             }
-            foreach (var navigationService in WindowWrapper.Current().NavigationServices.Select(x => x).Reverse())
+            foreach (var navigationService in Services.NavigationService.NavigationService.Instances.Select(x => x).Reverse())
             {
                 navigationService.RaiseBackRequested(args);
                 if (handled = args.Handled)
@@ -215,7 +216,7 @@ namespace Template10.Common
             {
                 return;
             }
-            foreach (var navigationService in WindowWrapper.Current().NavigationServices)
+            foreach (var navigationService in Services.NavigationService.NavigationService.Instances.Select(x => x).Reverse())
             {
                 navigationService.RaiseForwardRequested(args);
                 if (args.Handled)
@@ -289,7 +290,6 @@ namespace Template10.Common
 
             var navigationService = CreateNavigationService(frame);
             navigationService.BackButtonHandling = backButton;
-            WindowWrapper.Current().NavigationServices.Add(navigationService);
 
             if (backButton == BackButton.Attach)
             {
@@ -527,9 +527,8 @@ namespace Template10.Common
                 SplashLogic.Show(e.SplashScreen, this);
 
                 // do some one-time things
-                SetupKeyboardListeners();
                 SetupLifecycleListeners();
-                SetupSystemListeners();
+                SetupBackListeners();
                 SetupCustomTitleBar();
 
                 // default Unspecified extended session
@@ -618,9 +617,9 @@ namespace Template10.Common
             }
         }
 
-        private void SetupSystemListeners()
+        private void SetupBackListeners()
         {
-            SystemNavigationManager.GetForCurrentView().BackRequested += (s, e) =>
+            Services.BackButtonService.BackButtonService.BackRequested += (s, e) =>
             {
                 var handled = false;
                 if (ApiInformation.IsApiContractPresent(nameof(Windows.Phone.PhoneContract), 1, 0))
@@ -642,7 +641,7 @@ namespace Template10.Common
 
         private void SetupLifecycleListeners()
         {
-            Resuming += delegate (object s, object e)
+            Resuming += (s, e) =>
             {
                 if (_firstActivationExecuted)
                 {
@@ -656,7 +655,7 @@ namespace Template10.Common
                 }
                 _firstActivationExecuted = true;
             };
-            Suspending += async delegate (object s, SuspendingEventArgs e)
+            Suspending += async (s, e) =>
             {
                 var deferral = e.SuspendingOperation.GetDeferral();
                 try
@@ -667,7 +666,7 @@ namespace Template10.Common
                         await ExtendedSessionService.StartSaveDataAsync();
                     }
 
-                    var navs = WindowWrapper.Instances.SelectMany(x => x.NavigationServices);
+                    var navs = Services.NavigationService.NavigationService.Instances.Select(x => x).Reverse();
                     foreach (INavigationService nav in navs)
                     {
                         // individual frame-level
@@ -700,24 +699,6 @@ namespace Template10.Common
                     ExtendedSessionService.Dispose();
                     deferral.Complete();
                 }
-            };
-        }
-
-        private void SetupKeyboardListeners()
-        {
-            var keyboardService = Services.KeyboardService.KeyboardService.Instance;
-            keyboardService.AfterBackGesture = () =>
-            {
-                DebugWrite(caller: nameof(keyboardService.AfterBackGesture));
-
-                var handled = false;
-                RaiseBackRequested(ref handled);
-            };
-            keyboardService.AfterForwardGesture = () =>
-            {
-                DebugWrite(caller: nameof(keyboardService.AfterForwardGesture));
-
-                RaiseForwardRequested();
             };
         }
 

@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Template10.Common;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Navigation;
+using Template10.Services.StateService;
 
 namespace Template10.Mvvm
 {

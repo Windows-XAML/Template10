@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Template10.Services.ExtendedSessionService;
 using Template10.Services.NavigationService;
+using Template10.Services.StateService;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml.Controls;
 

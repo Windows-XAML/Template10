@@ -77,7 +77,8 @@ namespace Template10.Services.NavigationService
 
         public NavigationService()
         {
-            Window = Services.WindowWrapper.WindowWrapper.Current();
+            Window = WindowWrapper.WindowWrapper.Current();
+            Instances.Add(this);
         }
 
         public NavigationService(Frame frame) : this()
@@ -88,7 +89,6 @@ namespace Template10.Services.NavigationService
             _Suspension = new Lazy<ISuspensionStateLogic>(() => new SuspensionStateLogic(FrameFacadeInternal, this));
             _FrameFacade = new Lazy<IFrameFacade>(() => new FrameFacade(frame, this));
             _ViewService = new Lazy<IViewService>(() => new ViewService.ViewService());
-            Instances.Add(this);
         }
 
         public Task<IViewLifetimeControl> OpenAsync(Type page, object parameter = null, string title = null, ViewSizePreference size = ViewSizePreference.UseHalf)
