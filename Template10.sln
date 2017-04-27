@@ -94,6 +94,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.WindowService", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.BackService", "Independent.Services\Template10.Services.BackService\Template10.Services.BackService.csproj", "{8564F764-99D9-4473-B5E4-AC62CDA73977}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.StateService", "Template10.StateService\Template10.StateService.csproj", "{C1DE89F4-9B5D-4755-835E-9FE2414AB30F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -598,6 +600,22 @@ Global
 		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Release|x64.Build.0 = Release|x64
 		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Release|x86.ActiveCfg = Release|x86
 		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Release|x86.Build.0 = Release|x86
+		{C1DE89F4-9B5D-4755-835E-9FE2414AB30F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1DE89F4-9B5D-4755-835E-9FE2414AB30F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1DE89F4-9B5D-4755-835E-9FE2414AB30F}.Debug|ARM.ActiveCfg = Debug|ARM
+		{C1DE89F4-9B5D-4755-835E-9FE2414AB30F}.Debug|ARM.Build.0 = Debug|ARM
+		{C1DE89F4-9B5D-4755-835E-9FE2414AB30F}.Debug|x64.ActiveCfg = Debug|x64
+		{C1DE89F4-9B5D-4755-835E-9FE2414AB30F}.Debug|x64.Build.0 = Debug|x64
+		{C1DE89F4-9B5D-4755-835E-9FE2414AB30F}.Debug|x86.ActiveCfg = Debug|x86
+		{C1DE89F4-9B5D-4755-835E-9FE2414AB30F}.Debug|x86.Build.0 = Debug|x86
+		{C1DE89F4-9B5D-4755-835E-9FE2414AB30F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1DE89F4-9B5D-4755-835E-9FE2414AB30F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1DE89F4-9B5D-4755-835E-9FE2414AB30F}.Release|ARM.ActiveCfg = Release|ARM
+		{C1DE89F4-9B5D-4755-835E-9FE2414AB30F}.Release|ARM.Build.0 = Release|ARM
+		{C1DE89F4-9B5D-4755-835E-9FE2414AB30F}.Release|x64.ActiveCfg = Release|x64
+		{C1DE89F4-9B5D-4755-835E-9FE2414AB30F}.Release|x64.Build.0 = Release|x64
+		{C1DE89F4-9B5D-4755-835E-9FE2414AB30F}.Release|x86.ActiveCfg = Release|x86
+		{C1DE89F4-9B5D-4755-835E-9FE2414AB30F}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

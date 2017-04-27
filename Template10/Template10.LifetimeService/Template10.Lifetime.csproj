@@ -113,6 +113,12 @@
     <Compile Include="Services.ExtendedSessionService\IExtendedSessionService.cs" />
     <EmbeddedResource Include="Properties\Template10.Services.LifetimeService.rd.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Template10.Shared\Template10.Common.csproj">
+      <Project>{1f9a6976-d8f9-459b-8aee-770b53904ff3}</Project>
+      <Name>Template10.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

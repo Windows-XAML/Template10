@@ -2,6 +2,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Markup;
 using Template10.Common;
+using System;
 
 namespace Template10.Behaviors
 {
@@ -20,16 +21,16 @@ namespace Template10.Behaviors
         public void Attach(DependencyObject associatedObject)
         {
             AssociatedObject = associatedObject;
-            _dispatcher = Locator.WindowWrapper.Current().Dispatcher;
-            Locator.BootStrapper.Instance.BackRequested += BootStrapper_BackRequested;
+            _dispatcher = Services.WindowWrapper.WindowWrapper.Current().Dispatcher;
+            Services.BackButtonService.BackButtonService.NavigateBack += BackButtonService_NavigateBack;
         }
 
         public void Detach()
         {
-            Locator.BootStrapper.Instance.BackRequested -= BootStrapper_BackRequested;
+            Services.BackButtonService.BackButtonService.NavigateBack += BackButtonService_NavigateBack;
         }
 
-        private void BootStrapper_BackRequested(object sender, HandledEventArgs e)
+        private void BackButtonService_NavigateBack(object sender, HandledEventArgs e)
         {
             e.Handled = Handled;
             Interaction.ExecuteActions(AssociatedObject, Actions, null);

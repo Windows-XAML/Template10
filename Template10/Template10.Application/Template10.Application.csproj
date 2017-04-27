@@ -166,6 +166,10 @@
       <Project>{b3a4e50e-9dca-457e-bed5-b71d97b957f3}</Project>
       <Name>Template10.CodeBehind</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Independent.Utilities\Template10.Mvvm\Template10.Mvvm.csproj">
+      <Project>{b23e19aa-1797-43f6-a0f1-fb2c13111aeb}</Project>
+      <Name>Template10.Mvvm</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Template10.LifetimeService\Template10.Lifetime.csproj">
       <Project>{06e576b8-d472-4fe0-95a2-05968ad13a8f}</Project>
       <Name>Template10.Lifetime</Name>
@@ -195,9 +199,7 @@
       <Name>Template10.WindowService</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\ViewService\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

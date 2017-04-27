@@ -23,15 +23,15 @@ namespace Template10.Controls
 
         private void ModalDialog_Loaded(object sender, RoutedEventArgs e)
         {
-            Locator.BootStrapper.Instance.BackRequested += BootStrapper_BackRequested;
+            Services.BackButtonService.BackButtonService.NavigateBack += BackButtonService_NavigateBack;
         }
 
         private void ModalDialog_Unloaded(object sender, RoutedEventArgs e)
         {
-            Locator.BootStrapper.Instance.BackRequested -= BootStrapper_BackRequested;
+            Services.BackButtonService.BackButtonService.NavigateBack -= BackButtonService_NavigateBack;
         }
 
-        private void BootStrapper_BackRequested(object sender, HandledEventArgs e)
+        private void BackButtonService_NavigateBack(object sender, Common.HandledEventArgs e)
         {
             if (!IsModal)
                 return;

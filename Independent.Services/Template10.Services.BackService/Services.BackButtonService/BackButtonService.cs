@@ -16,27 +16,37 @@ namespace Template10.Services.BackButtonService
                 e.Handled = true;
 
                 // use this to nav back
-                if (e.VirtualKey == Windows.System.VirtualKey.GoBack) RaiseNavigateBack();
-                else if (e.VirtualKey == Windows.System.VirtualKey.NavigationLeft) RaiseNavigateBack();
-                else if (e.VirtualKey == Windows.System.VirtualKey.GamepadMenu) RaiseNavigateBack();
-                else if (e.VirtualKey == Windows.System.VirtualKey.GamepadLeftShoulder) RaiseNavigateBack();
-                else if (e.OnlyAlt && e.VirtualKey == Windows.System.VirtualKey.Back) RaiseNavigateBack();
-                else if (e.OnlyAlt && e.VirtualKey == Windows.System.VirtualKey.Left) RaiseNavigateBack();
+                if (e.VirtualKey == Windows.System.VirtualKey.GoBack) e.Handled = RaiseNavigateBack().Handled;
+                else if (e.VirtualKey == Windows.System.VirtualKey.NavigationLeft) e.Handled = RaiseNavigateBack().Handled;
+                else if (e.VirtualKey == Windows.System.VirtualKey.GamepadMenu) e.Handled = RaiseNavigateBack().Handled;
+                else if (e.VirtualKey == Windows.System.VirtualKey.GamepadLeftShoulder) e.Handled = RaiseNavigateBack().Handled;
+                else if (e.OnlyAlt && e.VirtualKey == Windows.System.VirtualKey.Back) e.Handled = RaiseNavigateBack().Handled;
+                else if (e.OnlyAlt && e.VirtualKey == Windows.System.VirtualKey.Left) e.Handled = RaiseNavigateBack().Handled;
 
                 // use this to nav forward
-                else if (e.VirtualKey == Windows.System.VirtualKey.GoForward) RaiseNavigateForward();
-                else if (e.VirtualKey == Windows.System.VirtualKey.NavigationRight) RaiseNavigateForward();
-                else if (e.VirtualKey == Windows.System.VirtualKey.GamepadRightShoulder) RaiseNavigateForward();
-                else if (e.OnlyAlt && e.VirtualKey == Windows.System.VirtualKey.Right) RaiseNavigateForward();
+                else if (e.VirtualKey == Windows.System.VirtualKey.GoForward) e.Handled = RaiseNavigateForward().Handled;
+                else if (e.VirtualKey == Windows.System.VirtualKey.NavigationRight) e.Handled = RaiseNavigateForward().Handled;
+                else if (e.VirtualKey == Windows.System.VirtualKey.GamepadRightShoulder) e.Handled = RaiseNavigateForward().Handled;
+                else if (e.OnlyAlt && e.VirtualKey == Windows.System.VirtualKey.Right) e.Handled = RaiseNavigateForward().Handled;
             };
         }
 
-        Windows.UI.Core.CoreDispatcher Dispatcher { get; set; }
+        public static Common.HandledEventArgs RaiseNavigateBack()
+        {
+            var args = new Common.HandledEventArgs();
+            NavigateBack?.Invoke(null, args);
+            return args;
+        }
 
-        public static void RaiseNavigateBack() => NavigateBack?.Invoke(null, EventArgs.Empty);
-        public static event EventHandler NavigateBack;
+        public static event Common.TypedEventHandler<Common.HandledEventArgs> NavigateBack;
 
-        public static void RaiseNavigateForward() => NavigateForward?.Invoke(null, EventArgs.Empty);
-        public static event EventHandler NavigateForward;
+        public static Common.HandledEventArgs RaiseNavigateForward()
+        {
+            var args = new Common.HandledEventArgs();
+            NavigateForward?.Invoke(null, args);
+            return args;
+        }
+
+        public static event Common.TypedEventHandler<Common.HandledEventArgs> NavigateForward;
     }
 }

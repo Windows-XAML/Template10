@@ -1,6 +1,6 @@
 ﻿using Windows.Foundation.Collections;
 
-namespace Template10.Common
+namespace Template10.Services.StateService
 {
     public interface IStateItems : IPropertySet
     {

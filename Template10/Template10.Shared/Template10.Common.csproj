@@ -117,6 +117,10 @@
     <EmbeddedResource Include="Properties\Template10.Shared.rd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Independent.Services\Template10.Services.FileService\Service\Template10.Services.FileService.csproj">
+      <Project>{fd4892b4-4cf8-4c74-b28f-ad7623e405e6}</Project>
+      <Name>Template10.Services.FileService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Independent.Services\Template10.Services.SerializationService\Service\Template10.Services.SerializationService.csproj">
       <Project>{d3a94520-4cd4-4d56-b30b-7e54face64bb}</Project>
       <Name>Template10.Services.SerializationService</Name>

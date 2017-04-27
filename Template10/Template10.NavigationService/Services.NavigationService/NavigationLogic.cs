@@ -28,7 +28,7 @@ namespace Template10.Services.NavigationService
             return NavigationService.Suspension.GetPageState(page.GetType()).Values;
         }
 
-        public void SetupViewModel(INavigationService service, INavigable viewmodel)
+        public async Task SetupViewModelAsync(INavigationService service, INavigable viewmodel)
         {
             Services.NavigationService.NavigationService.DebugWrite();
 
@@ -38,7 +38,7 @@ namespace Template10.Services.NavigationService
             }
             viewmodel.NavigationService = service;
             viewmodel.Dispatcher = service.GetDispatcherWrapper();
-            viewmodel.SessionState = Locator.BootStrapper.Instance.SessionState;
+            viewmodel.SessionState = await Services.StateService.StateService.GetStateAsync(StateService.StateTypes.Session);
         }
 
         public async Task NavedFromAsync(object viewmodel, NavigationMode mode, Page sourcePage, Type sourceType, object sourceParameter, Page targetPage, Type targetType, object targetParameter, bool suspending)

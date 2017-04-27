@@ -233,7 +233,7 @@ namespace Template10.Services.NavigationService
             // call newTemplate10ViewModel.Properties
             if (newViewModel is INavigable)
             {
-                Navigation.SetupViewModel(this, newViewModel as INavigable);
+                await Navigation.SetupViewModelAsync(this, newViewModel as INavigable);
             }
 
             // call newViewModel.OnNavigatedToAsync()
@@ -382,7 +382,7 @@ namespace Template10.Services.NavigationService
                 // newTemplate10ViewModel.Properties
                 if (newViewModel is INavigable)
                 {
-                    Navigation.SetupViewModel(this, newViewModel as INavigable);
+                    await Navigation.SetupViewModelAsync(this, newViewModel as INavigable);
                 }
 
                 // newNavigatedAwareAsync.OnNavigatedTo
