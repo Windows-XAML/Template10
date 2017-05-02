@@ -79,6 +79,10 @@ namespace Template10.Services.NavigationService
         {
             Window = WindowWrapper.WindowWrapper.Current();
             Instances.Add(this);
+            if (Instances.Count == 1)
+            {
+                Default = this;
+            }
         }
 
         public NavigationService(Frame frame) : this()

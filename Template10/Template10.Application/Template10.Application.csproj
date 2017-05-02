@@ -174,10 +174,6 @@
       <Project>{b23e19aa-1797-43f6-a0f1-fb2c13111aeb}</Project>
       <Name>Template10.Mvvm</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Template10.StateService\Template10.StateService.csproj">
-      <Project>{c1de89f4-9b5d-4755-835e-9fe2414ab30f}</Project>
-      <Name>Template10.StateService</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Template10.LifetimeService\Template10.Lifetime.csproj">
       <Project>{06e576b8-d472-4fe0-95a2-05968ad13a8f}</Project>
       <Name>Template10.Lifetime</Name>
@@ -201,6 +197,10 @@
     <ProjectReference Include="..\..\Independent.Services\Template10.Services.SettingsService\Service\Template10.Services.SettingsService.csproj">
       <Project>{eba14736-2c70-4e33-a156-221b44ff43c1}</Project>
       <Name>Template10.Services.SettingsService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Template10.StateService\Template10.StateService.csproj">
+      <Project>{df5ddea9-9509-45bd-8f1f-dff10515ccd1}</Project>
+      <Name>Template10.StateService</Name>
     </ProjectReference>
     <ProjectReference Include="..\Template10.WindowService\Template10.WindowService.csproj">
       <Project>{9cad4451-5adf-48d3-b690-8b341a95a228}</Project>

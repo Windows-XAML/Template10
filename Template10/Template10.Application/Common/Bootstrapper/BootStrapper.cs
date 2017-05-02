@@ -288,7 +288,7 @@ namespace Template10.Common
                 }
             }
 
-            var navigationService = CreateNavigationService(frame);
+            var navigationService = new NavigationService(frame);
             navigationService.BackButtonHandling = backButton;
 
             if (backButton == BackButton.Attach)
@@ -304,12 +304,10 @@ namespace Template10.Common
                 frame.Navigated += (s, args) => UpdateShellBackButton();
             }
 
-            // this is always okay to check, default or not
-            // expire any state (based on expiry)
-            DateTime cacheDate;
+            // this is always okay to check, default or not, expire any state (based on expiry)
             // default the cache age to very fresh if not known
             var otherwise = DateTime.MinValue.ToString();
-            if (DateTime.TryParse(navigationService.Suspension.GetFrameState().Read(CacheDateKey, otherwise), out cacheDate))
+            if (DateTime.TryParse(navigationService.Suspension.GetFrameState().Read(CacheDateKey, otherwise), out var cacheDate))
             {
                 var cacheAge = DateTime.Now.Subtract(cacheDate);
                 if (cacheAge >= CacheMaxDuration)
@@ -326,14 +324,6 @@ namespace Template10.Common
                 // no date, that's okay
             }
             return navigationService;
-        }
-
-        /// <summary>
-        /// Creates the NavigationService instance for given Frame.
-        /// </summary>
-        protected virtual INavigationService CreateNavigationService(Frame frame)
-        {
-            return new NavigationService(frame);
         }
 
         private BootstrapperStates _currentState = BootstrapperStates.None;
@@ -478,52 +468,27 @@ namespace Template10.Common
                 PrelaunchActivated = (e as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false;
             }
 
-            // is the kind really right?
-            if (kind == StartKind.Launch && CurrentStateHistory.ContainsValue(BootstrapperStates.Launching))
-            {
-                kind = StartKind.Activate;
-            }
-            else if (kind == StartKind.Launch && e.PreviousExecutionState == ApplicationExecutionState.Running)
-            {
-                kind = StartKind.Activate;
-            }
-            else if (kind == StartKind.Activate && e.PreviousExecutionState != ApplicationExecutionState.Running)
-            {
-                kind = StartKind.Launch;
-            }
+            // is the kind really right? we can figure it out from here
+            if (kind == StartKind.Launch && CurrentStateHistory.ContainsValue(BootstrapperStates.Launching)) kind = StartKind.Activate;
+            else if (kind == StartKind.Launch && e.PreviousExecutionState == ApplicationExecutionState.Running) kind = StartKind.Activate;
+            else if (kind == StartKind.Activate && e.PreviousExecutionState != ApplicationExecutionState.Running) kind = StartKind.Launch;
 
             // handle activate
             if (kind == StartKind.Activate)
             {
-                CurrentState = BootstrapperStates.Activating;
-
-                // never activate until launch has completed
-                while (!CurrentStateHistory.ContainsValue(BootstrapperStates.Launched))
+                while (!CurrentStateHistory.ContainsValue(BootstrapperStates.Launched)) { /* only activate after launch */ await Task.Delay(10); }
+                while (CurrentStateHistory.Count(x => x.Value == BootstrapperStates.Starting) != CurrentStateHistory.Count(x => x.Value == BootstrapperStates.Started)) { await Task.Delay(10); }
+                await OperationWrapperAsync(BootstrapperStates.Starting, async () => await OnStartAsync(kind, e), BootstrapperStates.Starting);
+                OperationWrapper(BootstrapperStates.Activating, () =>
                 {
-                    await Task.Delay(10);
-                }
-
-                while (CurrentStateHistory.Count(x => x.Value == BootstrapperStates.Starting) != CurrentStateHistory.Count(x => x.Value == BootstrapperStates.Started))
-                {
-                    await Task.Delay(10);
-                }
-
-                CurrentState = BootstrapperStates.Starting;
-
-                await OnStartAsync(kind, e);
-
-                CurrentState = BootstrapperStates.Started;
-
-                WindowLogic.ActivateWindow(ActivateWindowSources.Activating, SplashLogic);
-
-                CurrentState = BootstrapperStates.Activated;
+                    WindowLogic.ActivateWindow(ActivateWindowSources.Activating, SplashLogic);
+                }, BootstrapperStates.Activated);
             }
 
             // handle first-time launch
             else if (kind == StartKind.Launch)
             {
                 CurrentState = BootstrapperStates.Launching;
-
                 SplashLogic.Show(e.SplashScreen, this);
 
                 // do some one-time things
@@ -532,17 +497,12 @@ namespace Template10.Common
                 SetupCustomTitleBar();
 
                 // default Unspecified extended session
-                if (AutoExtendExecutionSession)
-                {
-                    await ExtendedSessionService.StartUnspecifiedAsync();
-                }
+                if (AutoExtendExecutionSession) await ExtendedSessionService.StartUnspecifiedAsync();
 
-                CurrentState = BootstrapperStates.Initializing;
-
-                // OnInitializeAsync
-                await OnInitializeAsync(e);
-
-                CurrentState = BootstrapperStates.Initialized;
+                await OperationWrapperAsync(BootstrapperStates.Initializing, async () =>
+                    {
+                        await OnInitializeAsync(e);
+                    }, BootstrapperStates.Initialized);
 
                 // if there no pre-existing root then generate root
                 if (SplashLogic.Splashing || Window.Current.Content == null)
@@ -551,7 +511,7 @@ namespace Template10.Common
                 }
 
                 // okay, now handle launch
-                bool restored = false;
+                var restored = false;
                 var IsPrelaunch = (e as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false;
                 switch (e.PreviousExecutionState)
                 {
@@ -562,11 +522,10 @@ namespace Template10.Common
                         if (AutoRestoreAfterTerminated
                             && DetermineStartCause(e) == AdditionalKinds.Primary || launchedEventArgs?.TileId == string.Empty)
                         {
-                            CurrentState = BootstrapperStates.Restoring;
-
-                            restored = await NavigationService.LoadAsync();
-
-                            CurrentState = BootstrapperStates.Restored;
+                            await OperationWrapperAsync(BootstrapperStates.Restoring, async () =>
+                            {
+                                restored = await NavigationService.LoadAsync();
+                            }, BootstrapperStates.Restored);
                         }
                         break;
                 }
@@ -574,46 +533,26 @@ namespace Template10.Common
                 // handle if pre-launch (no UI)
                 if (IsPrelaunch)
                 {
-                    CurrentState = BootstrapperStates.Prelaunching;
-
                     var runOnStartAsync = false;
-                    await OnPrelaunchAsync(e, out runOnStartAsync);
-
-                    CurrentState = BootstrapperStates.Prelaunched;
-
-                    if (!runOnStartAsync)
+                    await OperationWrapperAsync(BootstrapperStates.Prelaunching, async () =>
                     {
-                        return;
-                    }
+                        await OnPrelaunchAsync(e, out runOnStartAsync);
+                    }, BootstrapperStates.Prelaunched);
+                    if (!runOnStartAsync) return;
                 }
 
                 // handle if not restored (new launch)
                 if (!restored)
                 {
-                    CurrentState = BootstrapperStates.Starting;
-
-                    await OnStartAsync(StartKind.Launch, e);
-
-                    CurrentState = BootstrapperStates.Started;
+                    await OperationWrapperAsync(BootstrapperStates.Starting, async () =>
+                    {
+                        await OnStartAsync(StartKind.Launch, e);
+                    }, BootstrapperStates.Started);
                 }
 
                 // this will also hide any showing splashscreen
                 WindowLogic.ActivateWindow(ActivateWindowSources.Launching, SplashLogic);
-
                 CurrentState = BootstrapperStates.Launched;
-            }
-        }
-
-        async Task TryWrap(BootstrapperStates before, Func<Task> action, BootstrapperStates after)
-        {
-            CurrentState = before;
-            try
-            {
-                await action();
-            }
-            finally
-            {
-
             }
         }
 
@@ -728,6 +667,20 @@ namespace Template10.Common
                 count--;
                 if (count == 0) break;
             }
+        }
+
+        void OperationWrapper(BootstrapperStates before, Action method, BootstrapperStates after)
+        {
+            CurrentState = before;
+            try { method(); }
+            finally { CurrentState = after; }
+        }
+
+        async Task OperationWrapperAsync(BootstrapperStates before, Func<Task> method, BootstrapperStates after)
+        {
+            CurrentState = before;
+            try { await method(); }
+            finally { CurrentState = after; }
         }
     }
 }
