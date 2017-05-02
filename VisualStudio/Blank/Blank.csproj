@@ -138,21 +138,10 @@
     <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Independent.Utilities\Template10.Mvvm\Template10.Mvvm.csproj">
-      <Project>{b23e19aa-1797-43f6-a0f1-fb2c13111aeb}</Project>
-      <Name>Template10.Mvvm</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Template10\Template10.Application\Template10.Application.csproj">
       <Project>{ac3e4f10-6615-4e16-bb0f-104760c92b95}</Project>
       <Name>Template10.Application</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Template10\Template10.LifetimeService\Template10.Lifetime.csproj">
-      <Project>{06e576b8-d472-4fe0-95a2-05968ad13a8f}</Project>
-      <Name>Template10.Lifetime</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
