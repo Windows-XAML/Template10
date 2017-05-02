@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 
 namespace Template10.Utils
 {
-    public static class IEnumerableUtils
+	public static class IEnumerableUtils
     {
         public static ObservableCollection<T> ToObservableCollection<T>(this IEnumerable<T> list) => new ObservableCollection<T>(list);
 

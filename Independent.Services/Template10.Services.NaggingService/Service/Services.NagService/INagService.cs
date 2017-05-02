@@ -5,12 +5,12 @@ using Template10.Services.FileService;
 
 namespace Template10.Services.NagService
 {
-    /// <summary>
-    /// Interface for service that will nag the user to perform some action
-    /// (such as reviewing an app) after a certain number of launches and/or time has
-    /// past since the first launch
-    /// </summary>
-    public interface INagService
+	/// <summary>
+	/// Interface for service that will nag the user to perform some action
+	/// (such as reviewing an app) after a certain number of launches and/or time has
+	/// past since the first launch
+	/// </summary>
+	public interface INagService
     {
         /// <summary>
         /// Registers and checks whether to display a nag

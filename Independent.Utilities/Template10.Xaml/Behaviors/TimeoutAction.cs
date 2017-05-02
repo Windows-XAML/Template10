@@ -1,13 +1,12 @@
-﻿using Microsoft.Xaml.Interactivity;
-using System;
+﻿using System;
+using Microsoft.Xaml.Interactivity;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
 
 namespace Template10.Behaviors
 {
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Behaviors-and-Actions
-    [ContentProperty(Name = nameof(Actions))]
+	// DOCS: https://github.com/Windows-XAML/Template10/wiki/Behaviors-and-Actions
+	[ContentProperty(Name = nameof(Actions))]
     public sealed class TimeoutAction : DependencyObject, IAction
     {
         public ActionCollection Actions

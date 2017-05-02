@@ -6,8 +6,8 @@ using Template10.Utils;
 
 namespace Template10.Mvvm
 {
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/MVVM
-    public abstract class BindableBase : IBindable
+	// DOCS: https://github.com/Windows-XAML/Template10/wiki/MVVM
+	public abstract class BindableBase : IBindable
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

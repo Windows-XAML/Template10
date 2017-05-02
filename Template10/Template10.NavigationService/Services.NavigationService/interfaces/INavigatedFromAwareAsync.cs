@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Template10.Portable.Navigation
 {
-    public interface INavigatedFromAwareAsync
+	public interface INavigatedFromAwareAsync
     {
         Task OnNavigatedFromAsync(INavigationParameters parameters);
     }

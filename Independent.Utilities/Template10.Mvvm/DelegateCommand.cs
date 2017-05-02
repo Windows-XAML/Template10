@@ -2,11 +2,11 @@
 
 namespace Template10.Mvvm
 {
-    // http://codepaste.net/jgxazh
-    using System.Diagnostics;
+	// http://codepaste.net/jgxazh
+	using System.Diagnostics;
 
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/MVVM
-    public class DelegateCommand : IChangedCommand
+	// DOCS: https://github.com/Windows-XAML/Template10/wiki/MVVM
+	public class DelegateCommand : IChangedCommand
     {
         private readonly Action _execute;
         private readonly Func<bool> _canExecute;

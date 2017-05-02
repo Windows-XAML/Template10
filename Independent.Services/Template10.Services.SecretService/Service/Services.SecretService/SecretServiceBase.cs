@@ -1,6 +1,6 @@
 ﻿namespace Template10.Services.SecretService
 {
-    public abstract class SecretServiceBase
+	public abstract class SecretServiceBase
     {
         public SecretServiceBase() => Helper = new SecretHelper();
 

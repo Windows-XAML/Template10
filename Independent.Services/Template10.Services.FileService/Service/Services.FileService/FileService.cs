@@ -1,9 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Template10.Services.FileService
 {
-    public class FileService : IFileService
+	public class FileService : IFileService
     {
         protected FileHelper Helper { get; private set; }
         protected StorageStrategies DefaultLocation { get; private set; } = StorageStrategies.Local;

@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Template10.Utils
 {
-    public static class ExpressionUtils
+	public static class ExpressionUtils
     {
         public static string GetPropertyName<T>(Expression<Func<T>> propertyExpression)
         {

@@ -3,11 +3,11 @@ using System.Windows.Input;
 
 namespace Template10.Mvvm
 {
-    /// <summary>
-    /// Use this to adapt any <see cref="ICommand"/> to <see cref="IChangedCommand"/> with posibility to manually initiate 
-    /// <see cref="CanExecuteChanged"/>
-    /// </summary>
-    public class ChangedCommandAdapter:IChangedCommand
+	/// <summary>
+	/// Use this to adapt any <see cref="ICommand"/> to <see cref="IChangedCommand"/> with posibility to manually initiate 
+	/// <see cref="CanExecuteChanged"/>
+	/// </summary>
+	public class ChangedCommandAdapter:IChangedCommand
     {
         private readonly ICommand command;
         private readonly Action raiseCanExecuteChangedAction;

@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Windows.Services.NagService.Extensions
 {
-    public static class Extensions
+	public static class Extensions
     {
         public static Template10.Services.FileService.StorageStrategies ToFileServiceStrategy(this Template10.Services.NagService.Nag.StorageStrategies strategy)
         {

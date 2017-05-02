@@ -6,10 +6,10 @@ using Template10.Services.FileService;
 
 namespace Template10.Services.NagService
 {
-    /// <summary>
-    /// <see cref="INagService"/>
-    /// </summary>
-    public sealed class NagService : INagService
+	/// <summary>
+	/// <see cref="INagService"/>
+	/// </summary>
+	public sealed class NagService : INagService
     {
         readonly NagServiceHelper _nagHelper;
 

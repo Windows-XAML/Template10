@@ -1,4 +1,4 @@
 ﻿namespace Template10.Common
 {
-    public enum AppExecutionState { Suspended, Terminated, Prelaunch }
+	public enum AppExecutionState { Suspended, Terminated, Prelaunch }
 }

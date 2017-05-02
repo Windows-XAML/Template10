@@ -9,7 +9,7 @@ using static Template10.Services.LoggingService.LoggingService;
 
 namespace Template10.Services.ViewService
 {
-    public sealed class ViewService : IViewService
+	public sealed class ViewService : IViewService
     {
         public static void OnWindowCreated()
         {

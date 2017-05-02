@@ -2,7 +2,7 @@
 
 namespace Template10.Common
 {
-    public class ChangedEventArgs<TValue> : EventArgs
+	public class ChangedEventArgs<TValue> : EventArgs
     {
         public ChangedEventArgs(TValue oldValue, TValue newValue)
         {

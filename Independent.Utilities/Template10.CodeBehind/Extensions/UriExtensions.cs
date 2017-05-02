@@ -4,7 +4,7 @@ using Windows.Foundation;
 
 namespace Template10.Utils
 {
-    public static class UriUtils
+	public static class UriUtils
     {
         public static Uri GetRoot(this Uri uri)
         {

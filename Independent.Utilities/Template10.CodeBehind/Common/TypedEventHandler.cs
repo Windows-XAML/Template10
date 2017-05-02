@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace Template10.Common
 {
-    public delegate void TypedEventHandler<T>(object sender, T e);
+	public delegate void TypedEventHandler<T>(object sender, T e);
 
     public class EventArgs<T> : EventArgs
     {

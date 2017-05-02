@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 
 namespace Template10.Services.KeyboardService
 {
-    public class KeyboardService : KeyboardServiceBase, IKeyboardService
+	public class KeyboardService : KeyboardServiceBase, IKeyboardService
     {
         public static KeyboardService Instance { get; private set; } = new KeyboardService();
 

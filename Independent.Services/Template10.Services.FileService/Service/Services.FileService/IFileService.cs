@@ -2,7 +2,7 @@
 
 namespace Template10.Services.FileService
 {
-    public interface IFileService
+	public interface IFileService
     {
         Task<T> ReadFileAsync<T>(string path, StorageStrategies? location = null);
         Task<T> ReadLocalFileAsync<T>(string path);

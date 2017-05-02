@@ -2,7 +2,7 @@ using System;
 
 namespace Template10.Services.ViewService
 {
-    public class ViewLifeTimeException : Exception
+	public class ViewLifeTimeException : Exception
     {
         public ViewLifeTimeException()
         {

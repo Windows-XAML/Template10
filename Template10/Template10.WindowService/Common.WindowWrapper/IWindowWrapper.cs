@@ -5,7 +5,7 @@ using Windows.UI.Xaml;
 
 namespace Template10.Services.WindowWrapper
 {
-    public interface IWindowWrapper
+	public interface IWindowWrapper
     {
         object Content { get; }
         IDispatcherWrapper Dispatcher { get; }

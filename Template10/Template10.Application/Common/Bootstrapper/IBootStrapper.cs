@@ -8,7 +8,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Template10.Common
 {
-    public interface IBootStrapper
+	public interface IBootStrapper
     {
         event EventHandler<HandledEventArgs> BackRequested;
 

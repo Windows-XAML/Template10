@@ -6,7 +6,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Template10.Controls
 {
-    public sealed partial class HamburgerMenu : UserControl
+	public sealed partial class HamburgerMenu : UserControl
     {
         public event EventHandler PaneOpened;
         public event EventHandler PaneClosed;

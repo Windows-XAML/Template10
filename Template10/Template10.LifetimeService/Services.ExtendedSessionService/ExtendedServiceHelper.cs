@@ -4,7 +4,7 @@ using Windows.ApplicationModel.ExtendedExecution;
 
 namespace Template10.Services.ExtendedSessionService
 {
-    public class ExtendedServiceHelper : IDisposable
+	public class ExtendedServiceHelper : IDisposable
     {
         public enum SessionKinds
         {

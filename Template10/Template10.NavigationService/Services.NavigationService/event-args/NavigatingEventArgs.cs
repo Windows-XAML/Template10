@@ -5,8 +5,8 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Services.NavigationService
 {
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Navigation-Service
-    public class NavigatingEventArgs : NavigatedEventArgs
+	// DOCS: https://github.com/Windows-XAML/Template10/wiki/Navigation-Service
+	public class NavigatingEventArgs : NavigatedEventArgs
     {
         DeferralManager Manager;
         public Deferral GetDeferral() => Manager.GetDeferral();

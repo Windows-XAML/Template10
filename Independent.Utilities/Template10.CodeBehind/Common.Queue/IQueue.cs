@@ -1,8 +1,6 @@
-﻿using Template10.Common;
-
-namespace Template10.Common
+﻿namespace Template10.Common
 {
-    public interface IQueue<T>
+	public interface IQueue<T>
     {
         #region Events
         event TypedEventHandler<T> Enqueued;

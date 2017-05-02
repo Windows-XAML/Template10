@@ -2,7 +2,7 @@
 
 namespace Template10.Common
 {
-    public class ItemPropertyChangedEventArgs
+	public class ItemPropertyChangedEventArgs
     {
         public ItemPropertyChangedEventArgs(object item, int changedIndex, PropertyChangedEventArgs e)
         {

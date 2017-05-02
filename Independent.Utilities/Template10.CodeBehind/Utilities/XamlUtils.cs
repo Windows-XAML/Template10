@@ -7,7 +7,7 @@ using Windows.UI.Xaml.Media;
 
 namespace Template10.Utils
 {
-    public static class XamlUtils
+	public static class XamlUtils
     {
         public static T GetResource<T>(string resourceName, T otherwise)
         {

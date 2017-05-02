@@ -7,7 +7,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Template10.Utils
 {
-    public static class InkUtils
+	public static class InkUtils
     {
         public async static Task SaveAsync(this InkCanvas inkCanvas, string fileName, StorageFolder folder = null)
         {

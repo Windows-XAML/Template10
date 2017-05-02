@@ -1,11 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 
 namespace Template10.Services.ViewService
 {
-    public interface IViewService
+	public interface IViewService
     {
         ///<summary>
         /// Creates and opens new secondary view        

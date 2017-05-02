@@ -2,7 +2,7 @@
 
 namespace Template10.Common
 {
-    public interface ISplashLogic
+	public interface ISplashLogic
     {
         bool Splashing { get; }
         void Hide();

@@ -1,17 +1,17 @@
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
+using Template10.Common;
+using Template10.Utils;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Classic = Template10.Services.NavigationService;
 using CrossPlat = Template10.Portable.Navigation;
-using Template10.Utils;
-using System.Diagnostics;
-using Template10.Common;
 
 namespace Template10.Services.NavigationService
 {
 
-    public class NavigationLogic
+	public class NavigationLogic
     {
         public INavigationService NavigationService { get; }
         public NavigationLogic(NavigationService navigationService)

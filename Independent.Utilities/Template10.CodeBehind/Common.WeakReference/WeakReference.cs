@@ -2,7 +2,7 @@
 
 namespace Template10.Common
 {
-    public class WeakReference<TInstance, TSource> where TInstance : class
+	public class WeakReference<TInstance, TSource> where TInstance : class
     {
         public WeakReference<TInstance> Reference { get; protected set; }
         public Action<TInstance, TSource> EventAction { get; set; }

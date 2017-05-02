@@ -5,8 +5,8 @@ using Windows.UI.Core;
 
 namespace Template10.Services.KeyboardService
 {
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Services#keyboardservice
-    public class KeyboardEventArgs : EventArgs
+	// DOCS: https://github.com/Windows-XAML/Template10/wiki/Services#keyboardservice
+	public class KeyboardEventArgs : EventArgs
     {
         public bool Handled { get; set; } = false;  
         public bool AltKey { get; set; }

@@ -1,13 +1,11 @@
 ﻿using System;
 
-using Template10.Services.FileService;
-
 namespace Template10.Services.NagService
 {
-    /// <summary>
-    /// Information about a nag
-    /// </summary>
-    public class Nag
+	/// <summary>
+	/// Information about a nag
+	/// </summary>
+	public class Nag
     {
         /// <summary>
         /// ctor

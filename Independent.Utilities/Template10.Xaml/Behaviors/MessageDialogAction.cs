@@ -1,13 +1,13 @@
-﻿using Microsoft.Xaml.Interactivity;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Microsoft.Xaml.Interactivity;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace Template10.Behaviors
 {
-    public class MessageDialogAction : DependencyObject, IAction
+	public class MessageDialogAction : DependencyObject, IAction
     {
         public object Execute(object sender, object parameter) => ExecuteAsync(sender, parameter);
 

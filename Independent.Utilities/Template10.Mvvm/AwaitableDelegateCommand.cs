@@ -2,12 +2,12 @@
 
 namespace Template10.Mvvm
 {
-    using System.Collections.Concurrent;
-    using System.Diagnostics;
-    using System.Threading.Tasks;
-    using Windows.UI.Xaml;
+	using System.Collections.Concurrent;
+	using System.Diagnostics;
+	using System.Threading.Tasks;
+	using Windows.UI.Xaml;
 
-    public class AwaitableDelegateCommand : IChangedCommand
+	public class AwaitableDelegateCommand : IChangedCommand
     {
         private readonly Func<AwaitableDelegateCommandParameter, Task> _execute;
         private readonly Func<AwaitableDelegateCommandParameter, bool> _canExecute;

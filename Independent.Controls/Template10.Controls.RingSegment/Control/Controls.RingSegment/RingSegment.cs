@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
@@ -10,7 +6,7 @@ using Windows.UI.Xaml.Shapes;
 
 namespace Template10.Controls
 {
-    public class RingSegment : Path
+	public class RingSegment : Path
     {
         private bool _isUpdating;
 

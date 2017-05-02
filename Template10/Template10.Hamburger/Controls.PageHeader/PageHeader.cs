@@ -8,7 +8,7 @@ using Windows.UI.Xaml.Shapes;
 
 namespace Template10.Controls
 {
-    [ContentProperty(Name = nameof(PrimaryCommands))]
+	[ContentProperty(Name = nameof(PrimaryCommands))]
     public sealed class PageHeader : CommandBar
     {
         private HamburgerMenu deRegHamburgerEvents; // Avoids unnecessary deregistration for pages without PageHeader

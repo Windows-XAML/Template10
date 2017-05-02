@@ -3,13 +3,13 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Template10.Common;
 using Template10.Services.NavigationService;
-using Windows.UI.Xaml.Navigation;
 using Template10.Services.StateService;
+using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Mvvm
 {
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/MVVM
-    public abstract class ViewModelBase : BindableBase, INavigable
+	// DOCS: https://github.com/Windows-XAML/Template10/wiki/MVVM
+	public abstract class ViewModelBase : BindableBase, INavigable
     {
         public virtual Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state) => Task.CompletedTask;
 

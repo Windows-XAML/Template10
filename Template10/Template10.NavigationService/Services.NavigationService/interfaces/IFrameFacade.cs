@@ -5,7 +5,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Services.NavigationService
 {
-    public interface IFrameFacade
+	public interface IFrameFacade
     {
         event EventHandler<HandledEventArgs> BackRequested;
         event EventHandler<HandledEventArgs> ForwardRequested;

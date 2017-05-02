@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
-
-using Windows.UI.Popups;
-
 using Template10.Services.DialogService;
 using Template10.Services.FileService;
 using Windows.Services.NagService.Extensions;
+using Windows.UI.Popups;
 
 namespace Template10.Services.NagService
 {
-    public class NagServiceHelper
+	public class NagServiceHelper
     {
         readonly IDialogService _dialogService;
         readonly IFileService _fileService;

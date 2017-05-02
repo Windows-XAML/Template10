@@ -1,18 +1,17 @@
 ﻿using Microsoft.Xaml.Interactivity;
+using Template10.Common;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Markup;
-using Template10.Common;
-using System;
 
 namespace Template10.Behaviors
 {
-    /// <summary>
-    /// Use this behavior to add actions when the user clicks the back button
-    /// Usually the shell back button. And, you are not necessarily wanting to 
-    /// navigate, but do something like close a dialog box.
-    /// </summary>
+	/// <summary>
+	/// Use this behavior to add actions when the user clicks the back button
+	/// Usually the shell back button. And, you are not necessarily wanting to 
+	/// navigate, but do something like close a dialog box.
+	/// </summary>
 
-    [ContentProperty(Name = nameof(Actions))]
+	[ContentProperty(Name = nameof(Actions))]
     public class BackButtonBehavior : DependencyObject, IBehavior
     {
         private IDispatcherWrapper _dispatcher;

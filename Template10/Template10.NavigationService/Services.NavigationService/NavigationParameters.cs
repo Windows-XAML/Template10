@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Template10.Portable.Navigation
 {
-    public class NavigationParameters : Dictionary<string, object>, INavigationParameters
+	public class NavigationParameters : Dictionary<string, object>, INavigationParameters
     {
         public NavigationParameters()
         {

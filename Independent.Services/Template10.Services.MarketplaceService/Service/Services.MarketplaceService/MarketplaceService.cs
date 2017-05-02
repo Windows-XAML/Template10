@@ -4,7 +4,7 @@ using Windows.ApplicationModel;
 
 namespace Template10.Services.MarketplaceService
 {
-    public sealed class MarketplaceService : IMarketplaceService
+	public sealed class MarketplaceService : IMarketplaceService
     {
         readonly static MarketplaceHelper _helper;
 

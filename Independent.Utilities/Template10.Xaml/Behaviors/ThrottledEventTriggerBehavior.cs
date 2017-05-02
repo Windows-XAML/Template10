@@ -1,14 +1,14 @@
-﻿using Windows.UI.Xaml;
-using Windows.UI.Xaml.Markup;
-using Microsoft.Xaml.Interactivity;
+﻿using Microsoft.Xaml.Interactivity;
 using Template10.Common;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Markup;
 
 namespace Template10.Behaviors
 {
-    /// <summary>
-    /// The Throttled Event Behavior attaches to a target's event, and executes child actions at a rate no faster than the throttle set (in milliseconds). 
-    /// </summary>
-    [ContentProperty(Name = "Actions")]
+	/// <summary>
+	/// The Throttled Event Behavior attaches to a target's event, and executes child actions at a rate no faster than the throttle set (in milliseconds). 
+	/// </summary>
+	[ContentProperty(Name = "Actions")]
     public sealed class ThrottledEventTriggerBehavior : EventTriggerBehaviorBase
     {
         private readonly EventThrottleHelper throttleHelper;

@@ -8,7 +8,7 @@ using Template10.Common;
 
 namespace Template10.Controls
 {
-    public class ObservableItemCollection<T> : ObservableCollection<T>, IObservableItemCollection<T> where T : INotifyPropertyChanged
+	public class ObservableItemCollection<T> : ObservableCollection<T>, IObservableItemCollection<T> where T : INotifyPropertyChanged
     {
         private bool _enableCollectionChanged = true;
         public override event NotifyCollectionChangedEventHandler CollectionChanged;

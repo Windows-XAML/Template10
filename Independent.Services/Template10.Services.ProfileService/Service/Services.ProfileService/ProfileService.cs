@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace Template10.Services.ProfileService
 {
-    public class ProfileService : INotifyPropertyChanged
+	public class ProfileService : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -1,6 +1,6 @@
 ﻿namespace Template10.Services.NetworkAvailableService
 {
-    public enum ConnectionTypes
+	public enum ConnectionTypes
     {
         None,
         LocalNetwork,

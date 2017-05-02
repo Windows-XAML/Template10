@@ -4,7 +4,7 @@ using Template10.Services.NagService;
 
 namespace Template10.Services.MarketplaceService
 {
-    public interface IMarketplaceService
+	public interface IMarketplaceService
     {
         Task LaunchAppInStore();
 

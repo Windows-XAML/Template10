@@ -1,10 +1,8 @@
-﻿using System;
-
-namespace Template10.Services.SettingsService
+﻿namespace Template10.Services.SettingsService
 {
-    using Newtonsoft.Json;
+	using Newtonsoft.Json;
 
-    public class DefaultConverter : ISettingConverter
+	public class DefaultConverter : ISettingConverter
     {
         StringHelper Helper = new StringHelper();
 

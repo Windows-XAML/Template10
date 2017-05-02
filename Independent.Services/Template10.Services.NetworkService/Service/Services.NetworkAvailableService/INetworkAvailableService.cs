@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Template10.Services.NetworkAvailableService
 {
-    public interface INetworkAvailableService
+	public interface INetworkAvailableService
     {
         Task<bool> IsInternetAvailable();
         Task<bool> IsNetworkAvailable();

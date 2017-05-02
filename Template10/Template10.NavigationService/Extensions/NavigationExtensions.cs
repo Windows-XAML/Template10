@@ -6,7 +6,7 @@ using Windows.UI.Xaml.Media.Animation;
 
 namespace Template10.Utils
 {
-    public static class NavigationExtensions
+	public static class NavigationExtensions
     {
         public static INavigationService GetNavigationService(this Frame frame)
             => NavigationService.GetForFrame(frame);

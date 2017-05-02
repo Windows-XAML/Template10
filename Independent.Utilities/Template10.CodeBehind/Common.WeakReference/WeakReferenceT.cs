@@ -3,7 +3,7 @@ using System;
 namespace Template10.Common
 {
 
-    public class WeakReference<TInstance, TSource, TEventArgs> where TInstance : class
+	public class WeakReference<TInstance, TSource, TEventArgs> where TInstance : class
     {
         public WeakReference<TInstance> Reference { get; protected set; }
         public Action<TInstance, TSource, TEventArgs> EventAction { get; set; }

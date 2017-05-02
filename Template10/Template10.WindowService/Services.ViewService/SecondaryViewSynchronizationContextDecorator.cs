@@ -4,7 +4,7 @@ using Logging = Template10.Services.LoggingService.LoggingService;
 
 namespace Template10.Services.ViewService
 {
-    class SecondaryViewSynchronizationContextDecorator : SynchronizationContext
+	class SecondaryViewSynchronizationContextDecorator : SynchronizationContext
     {
         private readonly IViewLifetimeControl control;
         private readonly SynchronizationContext context;

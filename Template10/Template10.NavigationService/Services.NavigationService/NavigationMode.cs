@@ -1,6 +1,6 @@
 namespace Template10.Portable.Navigation
 {
-    public enum NavigationMode
+	public enum NavigationMode
     {
         /// <summary>
         /// Mode is either not set or unknown in this context
