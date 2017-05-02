@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 using Windows.System;
 
 namespace Template10.Services.MarketplaceService
 {
-    //https://msdn.microsoft.com/en-us/windows/uwp/launch-resume/launch-store-app
-    public class MarketplaceHelper
+	//https://msdn.microsoft.com/en-us/windows/uwp/launch-resume/launch-store-app
+	public class MarketplaceHelper
     {
         public async Task LaunchAppInStoreByProductFamilyName(string pfn)
         {

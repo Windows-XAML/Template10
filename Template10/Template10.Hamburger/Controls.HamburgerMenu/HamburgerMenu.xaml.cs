@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Template10.Common;
@@ -23,7 +22,7 @@ using Windows.UI.Xaml.Media;
 
 namespace Template10.Controls
 {
-    [ContentProperty(Name = nameof(PrimaryButtons))]
+	[ContentProperty(Name = nameof(PrimaryButtons))]
     public sealed partial class HamburgerMenu : UserControl
     {
         readonly Size square = new Size(48, 48);

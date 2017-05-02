@@ -4,7 +4,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Template10.Behaviors
 {
-    public class FocusAction : DependencyObject, IAction
+	public class FocusAction : DependencyObject, IAction
     {
         public object Execute(object sender, object parameter)
         {

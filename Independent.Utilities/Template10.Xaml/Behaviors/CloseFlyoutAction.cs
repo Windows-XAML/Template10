@@ -6,7 +6,7 @@ using Windows.UI.Xaml.Media;
 
 namespace Template10.Behaviors
 {
-    public class CloseFlyoutAction : DependencyObject, IAction
+	public class CloseFlyoutAction : DependencyObject, IAction
     {
         public object Execute(object sender, object parameter)
         {

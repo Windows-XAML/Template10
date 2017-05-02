@@ -1,12 +1,12 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Template10.Common;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml.Data;
 
 namespace Sample
 {
-    [Bindable]
-    sealed partial class App : Template10.Common.BootStrapper
+	[Bindable]
+    sealed partial class App : BootStrapper
     {
         public App()
         {

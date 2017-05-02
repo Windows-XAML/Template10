@@ -4,7 +4,7 @@ using Windows.UI.Xaml.Data;
 
 namespace Template10.Converters
 {
-    public class StringFormatConverter : IValueConverter
+	public class StringFormatConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {

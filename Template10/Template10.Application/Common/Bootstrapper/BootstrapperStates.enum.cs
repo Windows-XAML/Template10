@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Template10.Common
+﻿namespace Template10.Common
 {
-    public enum BootstrapperStates
+	public enum BootstrapperStates
     {
         None,
         Launched,

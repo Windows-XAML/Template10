@@ -1,9 +1,8 @@
-﻿using System;
-using Windows.Foundation.Collections;
+﻿using Windows.Foundation.Collections;
 
 namespace Template10.Services.SettingsService
 {
-    public interface ISettingsService
+	public interface ISettingsService
     {
         IPropertySet Values { get; }
         T Read<T>(string key, T fallback = default(T));

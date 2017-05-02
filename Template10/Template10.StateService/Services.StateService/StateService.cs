@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Template10.Common;
-using Windows.Foundation.Collections;
-using Windows.Storage;
 
 namespace Template10.Services.StateService
 {
 
-    public static class StateService
+	public static class StateService
     {
         public static async Task<IStateItems> GetStateAsync(StateTypes type, string key = null)
         {

@@ -3,7 +3,7 @@ using UWP = Windows.UI.Xaml.Navigation;
 
 namespace Template10.Services.NavigationService
 {
-    public static class Extensions
+	public static class Extensions
     {
         public static Template10.Portable.Navigation.NavigationMode ToPortableNavigationMode(this UWP.NavigationMode mode)
         {

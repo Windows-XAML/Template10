@@ -5,7 +5,7 @@ using Windows.UI.Xaml.Media.Animation;
 
 namespace Template10.Services.NavigationService
 {
-    public interface IFrameFacadeInternal: IFrameFacade
+	public interface IFrameFacadeInternal: IFrameFacade
     {
         Frame Frame { get; set; }
         string GetNavigationState();

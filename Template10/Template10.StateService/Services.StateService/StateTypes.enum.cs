@@ -1,4 +1,4 @@
 ﻿namespace Template10.Services.StateService
 {
-    public enum StateTypes { Session, Frame, Page }
+	public enum StateTypes { Session, Frame, Page }
 }

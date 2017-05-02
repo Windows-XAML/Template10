@@ -4,7 +4,7 @@ using Windows.UI.Xaml.Media;
 
 namespace Template10.Controls
 {
-    public sealed class ImageEx : Control
+	public sealed class ImageEx : Control
     {
         public ImageEx()
         {

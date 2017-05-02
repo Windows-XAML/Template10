@@ -4,8 +4,8 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Services.NavigationService
 {
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Navigation-Service
-    public class NavigatedEventArgs : EventArgs
+	// DOCS: https://github.com/Windows-XAML/Template10/wiki/Navigation-Service
+	public class NavigatedEventArgs : EventArgs
     {
         public NavigatedEventArgs() { }
         public NavigatedEventArgs(NavigationEventArgs e, Page page)

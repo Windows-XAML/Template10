@@ -4,7 +4,7 @@ using Windows.Web.Http;
 
 namespace Template10.Services.WebApiService
 {
-    public interface IWebApiService
+	public interface IWebApiService
     {
         string Serialize<T>(T item);
         T Deserialize<T>(string json);

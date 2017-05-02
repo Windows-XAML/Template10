@@ -4,7 +4,7 @@ using Windows.Networking.Connectivity;
 
 namespace Template10.Services.NetworkAvailableService
 {
-    public class NetworkAvailableHelper
+	public class NetworkAvailableHelper
     {
         public NetworkAvailableHelper()
         {

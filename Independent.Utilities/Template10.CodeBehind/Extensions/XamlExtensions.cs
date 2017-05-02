@@ -6,7 +6,7 @@ using Windows.UI.Xaml.Media;
 
 namespace Template10.Utils
 {
-    public static class XamlExtensions
+	public static class XamlExtensions
     {
         public static void UpdateBindings(this Page page)
         {

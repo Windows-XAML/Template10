@@ -5,8 +5,8 @@ using Windows.Storage;
 
 namespace Template10.Services.SettingsService
 {
-    // this should not be made abstract
-    public class SettingsServiceBase : ISettingsService
+	// this should not be made abstract
+	public class SettingsServiceBase : ISettingsService
     {
         protected ApplicationDataContainer _container;
         protected SettingsStrategies _strategy;

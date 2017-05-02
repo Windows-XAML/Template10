@@ -1,11 +1,6 @@
-﻿using Microsoft.Xaml.Interactivity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using Microsoft.Xaml.Interactivity;
 using Template10.Services.NavigationService;
-using Template10.Services.WindowWrapper;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
@@ -13,7 +8,7 @@ using Windows.UI.Xaml.Media.Animation;
 
 namespace Template10.Behaviors
 {
-    public class NavToPageAction : DependencyObject, IAction
+	public class NavToPageAction : DependencyObject, IAction
     {
         public object Execute(object sender, object parameter)
         {

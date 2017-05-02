@@ -1,14 +1,12 @@
 ﻿using Microsoft.Xaml.Interactivity;
-using System;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
 
 namespace Template10.Behaviors
 {
-    [ContentProperty(Name = nameof(Actions))]
+	[ContentProperty(Name = nameof(Actions))]
     [TypeConstraint(typeof(UIElement))]
     public class KeyBehavior : DependencyObject, IBehavior
     {

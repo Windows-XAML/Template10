@@ -1,6 +1,6 @@
 ﻿namespace Template10.Common
 {
-    public interface IWindowLogic
+	public interface IWindowLogic
     {
         void ActivateWindow(ActivateWindowSources source, ISplashLogic splashLogic);
     }

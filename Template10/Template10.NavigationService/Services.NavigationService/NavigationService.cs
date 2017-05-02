@@ -1,23 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Template10.Common;
+using Template10.Services.SerializationService;
+using Template10.Services.ViewService;
+using Template10.Services.WindowWrapper;
+using Template10.Utils;
 using Windows.ApplicationModel.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
-using Template10.Services.SerializationService;
-using Template10.Services.ViewService;
-using Template10.Utils;
-using Template10.Common;
-using System.Reflection;
-using Template10.Services.WindowWrapper;
 
 namespace Template10.Services.NavigationService
 {
-    public partial class NavigationService : INavigationService
+	public partial class NavigationService : INavigationService
     {
         #region Debug
 

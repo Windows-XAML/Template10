@@ -22,18 +22,17 @@
 
 using System;
 using System.Collections.Concurrent;
+using Template10.Services.WindowWrapper;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
-using Template10.Common;
-using Template10.Services.WindowWrapper;
 
 namespace Template10.Services.ViewService
 {
-    // A ViewLifetimeControl is instantiated for every secondary view. ViewLifetimeControl's reference count
-    // keeps track of when the secondary view thinks it's in use and when the main view is interacting with the secondary view (about to show
-    // it to the user, etc.) When the reference count drops to zero, the secondary view is closed.
-    public sealed partial class ViewLifetimeControl : IViewLifetimeControl
+	// A ViewLifetimeControl is instantiated for every secondary view. ViewLifetimeControl's reference count
+	// keeps track of when the secondary view thinks it's in use and when the main view is interacting with the secondary view (about to show
+	// it to the user, etc.) When the reference count drops to zero, the secondary view is closed.
+	public sealed partial class ViewLifetimeControl : IViewLifetimeControl
     {
         private static readonly ConcurrentDictionary<int, IViewLifetimeControl> WindowControlsMap = new ConcurrentDictionary<int, IViewLifetimeControl>();
 

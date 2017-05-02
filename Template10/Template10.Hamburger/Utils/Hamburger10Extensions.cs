@@ -5,7 +5,7 @@ using Windows.UI.Xaml;
 
 namespace Template10.Utils
 {
-    public static class HamburgerExtensions
+	public static class HamburgerExtensions
     {
 
         /// <summary>

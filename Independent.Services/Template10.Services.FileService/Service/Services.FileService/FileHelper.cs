@@ -5,7 +5,7 @@ using Windows.Storage;
 
 namespace Template10.Services.FileService
 {
-    public  class FileHelper
+	public  class FileHelper
     {
         /// <summary>Returns if a file is found in the specified storage strategy</summary>
         /// <param name="key">Path of the file in storage</param>

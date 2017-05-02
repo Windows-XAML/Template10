@@ -1,6 +1,6 @@
 ﻿namespace Template10.Portable.Navigation
 {
-    public interface INavigationParameters
+	public interface INavigationParameters
     {
         object Parameter { get; set; }
     }

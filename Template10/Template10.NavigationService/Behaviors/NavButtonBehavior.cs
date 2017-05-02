@@ -1,23 +1,18 @@
-﻿using Windows.ApplicationModel.Core;
-using Windows.ApplicationModel.Resources.Core;
-using Windows.UI.Core;
-using Windows.UI.ViewManagement;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Microsoft.Xaml.Interactivity;
-using Template10.Utils;
-using System;
+﻿using System;
 using System.Runtime.CompilerServices;
-using Windows.UI.Xaml.Navigation;
+using Microsoft.Xaml.Interactivity;
 using Template10.Common;
-using System.Linq;
 using Template10.Services.NavigationService;
 using Template10.Services.WindowWrapper;
+using Template10.Utils;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Behaviors
 {
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Behaviors-and-Actions
-    [Microsoft.Xaml.Interactivity.TypeConstraint(typeof(Button))]
+	// DOCS: https://github.com/Windows-XAML/Template10/wiki/Behaviors-and-Actions
+	[Microsoft.Xaml.Interactivity.TypeConstraint(typeof(Button))]
     public class NavButtonBehavior : DependencyObject, IBehavior
     {
         private readonly IDispatcherWrapper _dispatcher;

@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Template10.Portable.Navigation;
 using Windows.Foundation.Collections;
 
 namespace Template10.Services.NavigationService
 {
-    public class NavigatedToParameters : NavigationParameters, INavigationParameters
+	public class NavigatedToParameters : NavigationParameters, INavigationParameters
     {
         public IPropertySet PageState { get; internal set; }
         public NavigationMode NavigationMode { get; internal set; }

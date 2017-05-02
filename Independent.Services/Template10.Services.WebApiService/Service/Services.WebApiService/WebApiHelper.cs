@@ -1,12 +1,12 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Windows.Web.Http;
 using Windows.Web.Http.Headers;
 
 namespace Template10.Services.WebApiService
 {
-    public class WebApiHelper
+	public class WebApiHelper
     {
         const string applicationJson = "application/json";
 

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 namespace Template10.Common
 {
 
-    public sealed class DeferralManager
+	public sealed class DeferralManager
     {
         int _count = 0;
         TaskCompletionSource<object> _completed = new TaskCompletionSource<object>();

@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Template10.Services.PopupService;
+﻿using Template10.Services.PopupService;
 using Windows.ApplicationModel.Activation;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 
 namespace Template10.Common
 {
-    public class SplashLogic : ISplashLogic
+	public class SplashLogic : ISplashLogic
     {
         internal SplashLogic()
         {

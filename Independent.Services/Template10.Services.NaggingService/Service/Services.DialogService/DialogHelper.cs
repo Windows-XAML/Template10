@@ -5,7 +5,7 @@ using Windows.UI.Popups;
 
 namespace Template10.Services.DialogService
 {
-    public class DialogHelper
+	public class DialogHelper
     {
         bool _open = false;
         public DialogHelper()

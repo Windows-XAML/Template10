@@ -5,7 +5,7 @@ using Template10.Common;
 
 namespace Template10.Controls
 {
-    public interface IObservableItemCollection<T> : INotifyCollectionChanged, IDisposable where T : INotifyPropertyChanged
+	public interface IObservableItemCollection<T> : INotifyCollectionChanged, IDisposable where T : INotifyPropertyChanged
     {
         event EventHandler<ItemPropertyChangedEventArgs> ItemPropertyChanged;
     }

@@ -8,7 +8,7 @@ using Windows.UI.Xaml.Media.Animation;
 
 namespace Template10.Controls
 {
-    [ContentProperty(Name = nameof(Content))]
+	[ContentProperty(Name = nameof(Content))]
     public class HamburgerButtonInfo : DependencyBindableBase
     {
         public enum ButtonTypes { Toggle, Command, Literal }

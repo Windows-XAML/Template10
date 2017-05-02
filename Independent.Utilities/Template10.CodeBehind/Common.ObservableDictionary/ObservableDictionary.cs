@@ -4,7 +4,7 @@ using Windows.Foundation.Collections;
 
 namespace Template10.Common
 {
-    public class ObservableDictionary<K, V> : IObservableDictionary<K, V>
+	public class ObservableDictionary<K, V> : IObservableDictionary<K, V>
     {
         private class ObservableDictionaryChangedEventArgs : IMapChangedEventArgs<K>
         {

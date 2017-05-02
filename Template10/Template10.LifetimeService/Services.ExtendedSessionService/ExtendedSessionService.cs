@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Template10.Services.ExtendedSessionService
 {
-    public class ExtendedSessionService : IExtendedSessionService, IDisposable
+	public class ExtendedSessionService : IExtendedSessionService, IDisposable
     {
         public ExtendedServiceHelper _helper { get; }
 

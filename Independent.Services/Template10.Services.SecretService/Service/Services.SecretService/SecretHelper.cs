@@ -3,7 +3,7 @@ using Windows.Security.Credentials;
 
 namespace Template10.Services.SecretService
 {
-    public class SecretHelper
+	public class SecretHelper
     {
         // https://msdn.microsoft.com/en-us/library/windows/apps/windows.security.credentials.passwordvault.aspx
 

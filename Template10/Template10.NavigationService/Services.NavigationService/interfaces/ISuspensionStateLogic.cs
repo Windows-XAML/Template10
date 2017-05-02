@@ -3,7 +3,7 @@ using Template10.Services.SettingsService;
 
 namespace Template10.Services.NavigationService
 {
-    public interface ISuspensionStateLogic
+	public interface ISuspensionStateLogic
     {
         INavigationService NavigationService { get; }
         void ClearFrameState();

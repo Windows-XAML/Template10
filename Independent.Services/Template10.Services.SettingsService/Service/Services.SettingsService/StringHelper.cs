@@ -2,12 +2,12 @@
 
 namespace Template10.Services.SettingsService
 {
-    using System.Collections.Generic;
-    using System.IO;
-    using System.IO.Compression;
-    using System.Linq;
-    using System.Text;
-    public class StringHelper
+	using System.Collections.Generic;
+	using System.IO;
+	using System.IO.Compression;
+	using System.Linq;
+	using System.Text;
+	public class StringHelper
     {
         public IEnumerable<string> BreakString(string value, int size = 8000)
         {

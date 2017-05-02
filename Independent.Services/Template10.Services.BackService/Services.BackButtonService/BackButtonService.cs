@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.Foundation.Metadata;
-using Windows.UI.Core;
+﻿using Windows.UI.Core;
 
 namespace Template10.Services.BackButtonService
 {
-    public class BackButtonService
+	public class BackButtonService
     {
         static BackButtonService()
         {

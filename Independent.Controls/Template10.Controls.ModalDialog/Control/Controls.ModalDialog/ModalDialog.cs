@@ -6,7 +6,7 @@ using Windows.UI.Xaml.Media.Animation;
 
 namespace Template10.Controls
 {
-    public sealed class ModalDialog : ContentControl
+	public sealed class ModalDialog : ContentControl
     {
         public ModalDialog()
         {

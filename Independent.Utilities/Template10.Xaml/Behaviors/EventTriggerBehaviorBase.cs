@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Microsoft.Xaml.Interactivity;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
-using Microsoft.Xaml.Interactivity;
 
 namespace Template10.Behaviors
 {
-    /// <summary>
-    /// A behavior that listens for a specified event on its source and executes its actions when that event is fired.
-    /// </summary>
-    [ContentPropertyAttribute(Name = "Actions")]
+	/// <summary>
+	/// A behavior that listens for a specified event on its source and executes its actions when that event is fired.
+	/// </summary>
+	[ContentPropertyAttribute(Name = "Actions")]
     public class EventTriggerBehaviorBase : Behavior
     {
         /// <summary>

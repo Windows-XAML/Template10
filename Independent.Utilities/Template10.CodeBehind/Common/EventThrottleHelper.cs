@@ -5,10 +5,10 @@ using Windows.UI.Xaml;
 
 namespace Template10.Common
 {
-    /// <summary>
-    /// Helper class for throttling events.
-    /// </summary>
-    public sealed class EventThrottleHelper : DependencyObject
+	/// <summary>
+	/// Helper class for throttling events.
+	/// </summary>
+	public sealed class EventThrottleHelper : DependencyObject
     {
         /// <summary>
         /// Throttled event.

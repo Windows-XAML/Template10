@@ -1,6 +1,6 @@
 ﻿namespace Template10.Services.KeyboardService
 {
-    public abstract class KeyboardServiceBase
+	public abstract class KeyboardServiceBase
     {
         public KeyboardServiceBase() => Helper = new KeyboardHelper();
 

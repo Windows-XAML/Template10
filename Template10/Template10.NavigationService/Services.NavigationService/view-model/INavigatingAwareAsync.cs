@@ -2,7 +2,7 @@
 
 namespace Template10.Services.NavigationService
 {
-    public interface INavigatingAwareAsync
+	public interface INavigatingAwareAsync
     {
         Task OnNavigatingFromAsync(NavigatingEventArgs args);
     }

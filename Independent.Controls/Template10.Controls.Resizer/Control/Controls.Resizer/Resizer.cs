@@ -9,7 +9,7 @@ using Windows.UI.Xaml.Media;
 
 namespace Template10.Controls
 {
-    [TemplatePart(Name = nameof(PART_ROOT), Type = typeof(Grid))]
+	[TemplatePart(Name = nameof(PART_ROOT), Type = typeof(Grid))]
     [TemplatePart(Name = nameof(PART_THUMB), Type = typeof(Thumb))]
     [TemplatePart(Name = nameof(PART_GRABBER), Type = typeof(Grid))]
     [TemplatePart(Name = nameof(PART_CONTENT), Type = typeof(ContentControl))]

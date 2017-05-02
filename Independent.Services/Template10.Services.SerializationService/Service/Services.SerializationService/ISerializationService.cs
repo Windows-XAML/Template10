@@ -1,6 +1,6 @@
 namespace Template10.Services.SerializationService
 {
-    public interface ISerializationService
+	public interface ISerializationService
     {
         /// <summary>
         /// Serializes the parameter.

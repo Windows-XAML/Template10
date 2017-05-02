@@ -2,10 +2,10 @@
 
 namespace Template10.Services.NagService
 {
-    /// <summary>
-    /// Indicator of how the user responded to a <see cref="Nag"/>
-    /// </summary>
-    public enum NagResponse
+	/// <summary>
+	/// Indicator of how the user responded to a <see cref="Nag"/>
+	/// </summary>
+	public enum NagResponse
     {
         /// <summary>
         /// No response has been given (usually means the nag hasn't been shown)

@@ -7,11 +7,11 @@ using Windows.UI.Xaml.Controls;
 
 namespace Template10.Common
 {
-    /// <summary>
-    /// Helper class for navigation buttons visibility logic.
-    /// </summary>
-    /// <remarks>Moved logic here from NavButtonBehavior because public static methods should be in a static class.</remarks>
-    public static class NavButtonsHelper
+	/// <summary>
+	/// Helper class for navigation buttons visibility logic.
+	/// </summary>
+	/// <remarks>Moved logic here from NavButtonBehavior because public static methods should be in a static class.</remarks>
+	public static class NavButtonsHelper
     {
         /// <summary>
         /// Calculate forward navigation button visibility for a frame.

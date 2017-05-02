@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 
 namespace Template10.Common
 {
-    using Windows.UI.Core;
+	using Windows.UI.Core;
 
-    public interface IDispatcherWrapper
+	public interface IDispatcherWrapper
     {
         void Dispatch(Action action, int delayms = 0, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal);
         T Dispatch<T>(Func<T> action, int delayms = 0, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal);

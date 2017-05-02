@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Template10.Services.NetworkAvailableService
 {
-    public abstract class NetworkAvailableServiceBase
+	public abstract class NetworkAvailableServiceBase
     {
         public NetworkAvailableServiceBase() => Helper = new NetworkAvailableHelper();
 

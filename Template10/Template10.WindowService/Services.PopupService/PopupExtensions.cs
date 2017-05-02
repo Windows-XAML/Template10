@@ -4,7 +4,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 
 namespace Template10.Services.PopupService
 {
-    public static class PopupExtensions
+	public static class PopupExtensions
     {
         public static UIElement GetContent(this Popup popup) => (popup.Child as ContentControl).Content as UIElement;
         public static void SetContent(this Popup popup, UIElement newContent)

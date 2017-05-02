@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Template10.Common;
-using Template10.Services.StateService;
 
 namespace Template10.Services.StateService
 {
-    public class StateItems : ObservableDictionary<string, object>, IStateItems
+	public class StateItems : ObservableDictionary<string, object>, IStateItems
     {
         private static Services.FileService.FileService FileService { get; } = new Services.FileService.FileService();
 

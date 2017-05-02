@@ -4,7 +4,7 @@ using Windows.Media.Capture;
 
 namespace Template10.Utils
 {
-    public static class AudioUtils
+	public static class AudioUtils
     {
         public async static Task<bool> RequestMicrophonePermission()
         {

@@ -7,7 +7,7 @@ using Windows.UI.ViewManagement;
 
 namespace Template10.Utils
 {
-    public class MonitorUtils
+	public class MonitorUtils
     {
         public event EventHandler Changed;
 

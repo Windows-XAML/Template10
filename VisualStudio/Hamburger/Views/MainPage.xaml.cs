@@ -1,13 +1,8 @@
-﻿using System;
-using Sample.ViewModels;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
-using System.Collections.ObjectModel;
+﻿using Windows.UI.Xaml.Controls;
 
 namespace Sample.Views
 {
-    public sealed partial class MainPage : Page
+	public sealed partial class MainPage : Page
     {
         public MainPage()
         {

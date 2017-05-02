@@ -4,7 +4,7 @@ using Windows.Web.Http;
 
 namespace Template10.Services.WebApiService
 {
-    public class WebApiService : IWebApiService
+	public class WebApiService : IWebApiService
     {
         WebApiHelper _helper = new WebApiHelper();
 

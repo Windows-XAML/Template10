@@ -1,12 +1,12 @@
 ﻿using System;
-using Template10;
 using Template10.Common;
+using Template10.Services.WindowWrapper;
 using Template10.Utils;
 using Windows.UI.Xaml;
 
 namespace Sample.Services.SettingsServices
 {
-    public class SettingsService : Template10.Services.SettingsService.SettingsServiceBase
+	public class SettingsService : Template10.Services.SettingsService.SettingsServiceBase
     {
         public static SettingsService Instance { get; } = new SettingsService();
         private SettingsService()
@@ -20,10 +20,10 @@ namespace Sample.Services.SettingsServices
             set
             {
                 Write(nameof(UseShellBackButton), value);
-                Locator.WindowWrapper.Current().Dispatcher.Dispatch(() =>
+                WindowWrapper.Current().Dispatcher.Dispatch(() =>
                 {
-                    Locator.BootStrapper.Instance.ShowShellBackButton = value;
-                    Locator.BootStrapper.Instance.UpdateShellBackButton();
+                    BootStrapper.Current.ShowShellBackButton = value;
+                    BootStrapper.Current.UpdateShellBackButton();
                 });
             }
         }
@@ -50,7 +50,7 @@ namespace Sample.Services.SettingsServices
             set
             {
                 Write(nameof(CacheMaxDuration), value);
-                Locator.BootStrapper.Instance.CacheMaxDuration = value;
+                BootStrapper.Current.CacheMaxDuration = value;
             }
         }
 

@@ -4,7 +4,7 @@ using Windows.UI.Xaml;
 
 namespace Template10.Behaviors
 {
-    public class CursorBehavior : DependencyObject, IAction
+	public class CursorBehavior : DependencyObject, IAction
     {
         public CoreCursorType Cursor { get; set; } = CoreCursorType.Arrow;
 

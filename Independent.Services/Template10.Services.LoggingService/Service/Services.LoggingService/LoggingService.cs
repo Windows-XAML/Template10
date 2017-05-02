@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace Template10.Services.LoggingService
 {
-    public delegate void DebugWriteDelegate(string text = null, Severities severity = Severities.Info, Targets target = Targets.Debug, [CallerMemberName]string caller = null);
+	public delegate void DebugWriteDelegate(string text = null, Severities severity = Severities.Info, Targets target = Targets.Debug, [CallerMemberName]string caller = null);
 
     public enum Severities { Template10, Info, Warning, Error, Critical }
 

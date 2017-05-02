@@ -3,7 +3,7 @@ using Windows.UI.Xaml.Media;
 
 namespace Template10.Utils
 {
-    public static class ColorUtils
+	public static class ColorUtils
     {
         public static SolidColorBrush ToSolidColorBrush(this Color color) => new SolidColorBrush(color);
 

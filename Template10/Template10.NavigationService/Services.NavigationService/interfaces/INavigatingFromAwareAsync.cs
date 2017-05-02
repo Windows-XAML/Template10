@@ -2,7 +2,7 @@
 
 namespace Template10.Portable.Navigation
 {
-    public interface INavigatingFromAwareAsync
+	public interface INavigatingFromAwareAsync
     {
         Task OnNavigatingFromAsync(INavigationParameters args);
     }

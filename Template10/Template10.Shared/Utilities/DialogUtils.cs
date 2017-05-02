@@ -7,7 +7,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Template10.Utils
 {
-    public static class DialogExtensions
+	public static class DialogExtensions
     {
         /*
          * Safely show dialogs without overlapping them, which is not allowed in WinRT
