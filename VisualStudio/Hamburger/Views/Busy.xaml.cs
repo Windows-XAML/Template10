@@ -1,8 +1,5 @@
-﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using Template10.Common;
-using Template10.Controls;
+﻿using Template10.Controls;
+using Template10.Services.WindowWrapper;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 

@@ -1,8 +1,6 @@
-﻿using System.Linq;
-using Template10.Common;
+﻿using Template10.Common;
 using Template10.Services.NavigationService;
 using Template10.Services.WindowWrapper;
-using Windows.UI.Core;
 
 namespace Template10.Utils
 {

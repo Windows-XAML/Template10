@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Template10.Services.SettingsService
+﻿namespace Template10.Services.SettingsService
 {
     public interface ISettingConverter
     {

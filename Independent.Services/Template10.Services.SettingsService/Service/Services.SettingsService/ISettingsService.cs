@@ -1,5 +1,4 @@
-﻿using System;
-using Windows.Foundation.Collections;
+﻿using Windows.Foundation.Collections;
 
 namespace Template10.Services.SettingsService
 {

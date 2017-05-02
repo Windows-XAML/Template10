@@ -1,7 +1,5 @@
-﻿using Microsoft.Xaml.Interactivity;
-using System;
-using Windows.System;
-using Windows.UI.Core;
+﻿using System;
+using Microsoft.Xaml.Interactivity;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
