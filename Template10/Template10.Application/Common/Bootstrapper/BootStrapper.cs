@@ -2,21 +2,20 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Template10.Controls;
+using Template10.Services.ExtendedSessionService;
 using Template10.Services.NavigationService;
+using Template10.Services.StateService;
+using Template10.Services.ViewService;
+using Template10.Services.WindowWrapper;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation.Metadata;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Template10.Services.ViewService;
-using Template10.Services.ExtendedSessionService;
-using Template10.Controls;
-using Template10.Services.WindowWrapper;
-using Template10.Services.StateService;
 
 namespace Template10.Common
 {

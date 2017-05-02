@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Windows.Foundation.Collections;
 using Windows.Storage;
-using static Template10.Services.SettingsService.SettingsService;
 
 namespace Template10.Services.SettingsService
 {

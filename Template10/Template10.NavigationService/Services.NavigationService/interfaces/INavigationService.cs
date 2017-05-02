@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Template10.Common;
+using Template10.Services.ViewService;
+using Template10.Services.WindowWrapper;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
-using Template10.Services.ViewService;
-using Template10.Common;
-using Template10.Services.WindowWrapper;
 
 namespace Template10.Services.NavigationService
 {
