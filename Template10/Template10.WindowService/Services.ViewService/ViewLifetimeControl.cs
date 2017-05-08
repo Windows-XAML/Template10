@@ -22,11 +22,10 @@
 
 using System;
 using System.Collections.Concurrent;
+using Template10.Services.WindowWrapper;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
-using Template10.Common;
-using Template10.Services.WindowWrapper;
 
 namespace Template10.Services.ViewService
 {

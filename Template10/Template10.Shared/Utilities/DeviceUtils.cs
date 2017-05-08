@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Template10.Common;
 using Template10.Services.WindowWrapper;
 using Windows.Foundation.Metadata;
 using Windows.Graphics.Display;

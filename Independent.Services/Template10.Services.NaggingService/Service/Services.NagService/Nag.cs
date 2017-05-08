@@ -1,7 +1,5 @@
 ﻿using System;
 
-using Template10.Services.FileService;
-
 namespace Template10.Services.NagService
 {
     /// <summary>

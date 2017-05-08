@@ -1,13 +1,10 @@
-﻿using Windows.UI.Xaml;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Sample.Services.SettingsServices;
-using Windows.ApplicationModel.Activation;
-using Template10.Controls;
 using Template10.Common;
-using System;
-using System.Linq;
+using Template10.Controls;
+using Windows.ApplicationModel.Activation;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Controls;
 
 namespace Sample
 {

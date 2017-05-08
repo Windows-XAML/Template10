@@ -1,6 +1,4 @@
-﻿using Template10.Common;
-
-namespace Template10.Common
+﻿namespace Template10.Common
 {
     public class Queue<T> :
         IQueue<T>
