@@ -1,18 +1,18 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5144566E-80EB-4375-9FE2-415808E2051D}</ProjectGuid>
+    <ProjectGuid>{509386d0-711e-4345-83ad-f71998efbdd7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Template10.Controls</RootNamespace>
-    <AssemblyName>Template10.Controls.Hamburger</AssemblyName>
+    <RootNamespace>Template10.Controls.PageHeader</RootNamespace>
+    <AssemblyName>Template10.Controls.PageHeader</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.10240.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -102,67 +102,16 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
+
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <None Include="project.json" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="Controls.HamburgerMenu\HamburgerButtonInfo.cs" />
-    <Compile Include="Controls.HamburgerMenu\HamburgerButtonTemplateSelected.cs" />
-    <Compile Include="Controls.HamburgerMenu\HamburgerMenu.PublicMethods.xaml.cs">
-      <DependentUpon>HamburgerMenu.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls.HamburgerMenu\HamburgerMenu.PublicProperties.xaml.cs">
-      <DependentUpon>HamburgerMenu.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls.HamburgerMenu\HamburgerMenu.xaml.cs">
-      <DependentUpon>HamburgerMenu.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls.PageHeader\PageHeader.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utils\ColorExtensions.cs" />
-    <Compile Include="Utils\Hamburger10Extensions.cs" />
-    <EmbeddedResource Include="Properties\Template10.Controls.Hamburger.rd.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Controls.HamburgerMenu\HamburgerMenu.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Independent.Utilities\Template10.CodeBehind\Template10.CodeBehind.csproj">
-      <Project>{b3a4e50e-9dca-457e-bed5-b71d97b957f3}</Project>
-      <Name>Template10.CodeBehind</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Independent.Utilities\Template10.Mvvm\Template10.Mvvm.csproj">
-      <Project>{b23e19aa-1797-43f6-a0f1-fb2c13111aeb}</Project>
-      <Name>Template10.Mvvm</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Independent.Utilities\Template10.Xaml\Template10.Xaml.csproj">
-      <Project>{e07de371-2dab-42b0-8c11-dbbaab9f5926}</Project>
-      <Name>Template10.Xaml</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Template10.NavigationService\Template10.Navigation.csproj">
-      <Project>{cd31d870-42f3-4379-b67a-2070c4b0a444}</Project>
-      <Name>Template10.Navigation</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Template10.Shared\Template10.Common.csproj">
-      <Project>{1f9a6976-d8f9-459b-8aee-770b53904ff3}</Project>
-      <Name>Template10.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Independent.Services\Template10.Services.KeyboardService\Service\Template10.Services.KeyboardService.csproj">
-      <Project>{b540d0b5-3850-416f-aec7-7737870e9ca2}</Project>
-      <Name>Template10.Services.KeyboardService</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Independent.Services\Template10.Services.SerializationService\Service\Template10.Services.SerializationService.csproj">
-      <Project>{d3a94520-4cd4-4d56-b30b-7e54face64bb}</Project>
-      <Name>Template10.Services.SerializationService</Name>
-    </ProjectReference>
+    <EmbeddedResource Include="Properties\Template10.Controls.PageHeader.rd.xml" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

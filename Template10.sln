@@ -54,7 +54,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.Setting
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.WebApiService", "Independent.Services\Template10.Services.WebApiService\Service\Template10.Services.WebApiService.csproj", "{6068AA09-C486-46C3-8E4F-0BEC33E7936F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Independent.Services (Extra)", "Independent.Services (Extra)", "{6DAA3E39-28E4-45F9-B1D9-759303F0C7B3}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Outside.Services", "Outside.Services", "{6DAA3E39-28E4-45F9-B1D9-759303F0C7B3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Application", "Template10\Template10.Application\Template10.Application.csproj", "{AC3E4F10-6615-4E16-BB0F-104760C92B95}"
 EndProject
@@ -64,7 +64,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Navigation", "Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Common", "Template10\Template10.Shared\Template10.Common.csproj", "{1F9A6976-D8F9-459B-8AEE-770B53904FF3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Independent.Utilities", "Independent.Utilities", "{68F83FCC-4EB3-485F-B13B-94EFE4BCA6DC}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Outside.Utilities", "Outside.Utilities", "{68F83FCC-4EB3-485F-B13B-94EFE4BCA6DC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Mvvm", "Independent.Utilities\Template10.Mvvm\Template10.Mvvm.csproj", "{B23E19AA-1797-43F6-A0F1-FB2C13111AEB}"
 EndProject
@@ -72,7 +72,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Xaml", "Independ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.CodeBehind", "Independent.Utilities\Template10.CodeBehind\Template10.CodeBehind.csproj", "{B3A4E50E-9DCA-457E-BED5-B71D97B957F3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Independent.Controls (Extra)", "Independent.Controls (Extra)", "{E89AC2DA-3D4F-487F-B9E8-F77D61A793B3}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Outside.Controls", "Outside.Controls", "{E89AC2DA-3D4F-487F-B9E8-F77D61A793B3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Controls.CustomTitleBar", "Independent.Controls\Template10.Controls.CustomTitleBar\Control\Template10.Controls.CustomTitleBar.csproj", "{5CC9C9D2-2103-4E03-B425-7FD58A7A2A2E}"
 EndProject
@@ -86,9 +86,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Controls.RingSeg
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Controls.Hamburger", "Template10\Template10.Hamburger\Template10.Controls.Hamburger.csproj", "{5144566E-80EB-4375-9FE2-415808E2051D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Independent.Services (Referenced)", "Independent.Services (Referenced)", "{0609ACB9-BE5B-4785-AA7B-D38F14A1B580}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Inside.Services", "Inside.Services", "{0609ACB9-BE5B-4785-AA7B-D38F14A1B580}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Independent.Controls (Referenced)", "Independent.Controls (Referenced)", "{F640BC3F-3F66-4995-BBDC-8A633DD69274}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Inside.Controls", "Inside.Controls", "{F640BC3F-3F66-4995-BBDC-8A633DD69274}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.WindowService", "Template10\Template10.WindowService\Template10.WindowService.csproj", "{9CAD4451-5ADF-48D3-B690-8B341A95A228}"
 EndProject
@@ -97,6 +97,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.StateService", "Template10\Template10.StateService\Template10.StateService.csproj", "{DF5DDEA9-9509-45BD-8F1F-DFF10515CCD1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template.Blank", "VisualStudio\Template.Blank\Template.Blank.csproj", "{8560342F-4F61-49AB-9679-1941DB551025}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Controls.PageHeader", "Template10.Controls.PageHeader\Template10.Controls.PageHeader.csproj", "{509386D0-711E-4345-83AD-F71998EFBDD7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -641,6 +643,22 @@ Global
 		{8560342F-4F61-49AB-9679-1941DB551025}.Release|x86.ActiveCfg = Release|x86
 		{8560342F-4F61-49AB-9679-1941DB551025}.Release|x86.Build.0 = Release|x86
 		{8560342F-4F61-49AB-9679-1941DB551025}.Release|x86.Deploy.0 = Release|x86
+		{509386D0-711E-4345-83AD-F71998EFBDD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{509386D0-711E-4345-83AD-F71998EFBDD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{509386D0-711E-4345-83AD-F71998EFBDD7}.Debug|ARM.ActiveCfg = Debug|ARM
+		{509386D0-711E-4345-83AD-F71998EFBDD7}.Debug|ARM.Build.0 = Debug|ARM
+		{509386D0-711E-4345-83AD-F71998EFBDD7}.Debug|x64.ActiveCfg = Debug|x64
+		{509386D0-711E-4345-83AD-F71998EFBDD7}.Debug|x64.Build.0 = Debug|x64
+		{509386D0-711E-4345-83AD-F71998EFBDD7}.Debug|x86.ActiveCfg = Debug|x86
+		{509386D0-711E-4345-83AD-F71998EFBDD7}.Debug|x86.Build.0 = Debug|x86
+		{509386D0-711E-4345-83AD-F71998EFBDD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{509386D0-711E-4345-83AD-F71998EFBDD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{509386D0-711E-4345-83AD-F71998EFBDD7}.Release|ARM.ActiveCfg = Release|ARM
+		{509386D0-711E-4345-83AD-F71998EFBDD7}.Release|ARM.Build.0 = Release|ARM
+		{509386D0-711E-4345-83AD-F71998EFBDD7}.Release|x64.ActiveCfg = Release|x64
+		{509386D0-711E-4345-83AD-F71998EFBDD7}.Release|x64.Build.0 = Release|x64
+		{509386D0-711E-4345-83AD-F71998EFBDD7}.Release|x86.ActiveCfg = Release|x86
+		{509386D0-711E-4345-83AD-F71998EFBDD7}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
