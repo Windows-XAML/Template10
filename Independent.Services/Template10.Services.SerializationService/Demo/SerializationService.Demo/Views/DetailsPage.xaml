@@ -1,0 +1,60 @@
+﻿<Page
+    x:Class="SerializationService.Demo.Views.DetailsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SerializationService.Demo.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:SerializationService.Demo.Models"
+    mc:Ignorable="d">
+
+    <Page.DataContext>
+        <models:Person x:Name="Person" />
+    </Page.DataContext>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Vertical"
+                    Margin="0,10,0,0"
+                    >
+            <TextBox x:Name="SerializedText"
+                     Margin="10,10,10,10"
+                 Header="Serialized person:"
+                 Grid.Row="0"
+                 IsReadOnly="True"
+                 VerticalAlignment="Stretch"
+                 HorizontalAlignment="Stretch"
+                 TextWrapping="Wrap" />
+            <Button Content="Deserialize"
+                    Margin="0,10,0,0"
+                    Click="OnDeserializeRequested"
+                    HorizontalAlignment="Center" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="1"
+                    Orientation="Vertical"
+                    Margin="0,10,0,0"
+                    Visibility="Collapsed"
+                    x:Name="PersonPanel">
+            <TextBox x:Name="IDText" Header="Person ID:"
+                     Margin="10,10,10,10"
+                     Text=""
+                     IsReadOnly="True"/>
+            <TextBox x:Name="NameText" Header="Person name:"
+                     Margin="10,10,10,10"
+                     Text=""
+                     IsReadOnly="True" />
+            <TextBox x:Name="AgeText" Header="Person age:"
+                     Margin="10,10,10,10"
+                     Text=""
+                     IsReadOnly="True" />
+        </StackPanel>
+
+
+
+    </Grid>
+</Page>
