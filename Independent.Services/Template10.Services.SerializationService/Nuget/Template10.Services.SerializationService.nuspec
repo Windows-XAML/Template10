@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Template10.Services.SerializationService</id>
+    <version>1.0</version>
+    <title>Template 10 Serialization Service</title>
+    <author>Template 10 community</authors>
+    <owners>JerryNixon,darenmay</owners>
+    <licenseUrl>http://aka.ms/Template10-License</licenseUrl>
+    <projectUrl>https://github.com/Windows-XAML/Template10/tree/master/Independent.Services/Template10.Services.SerializationService</projectUrl>
+    <iconUrl>https://github.com/Windows-XAML/Template10/blob/master/Assets/NuGetLogo.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Services providing JSON serialization/deserialization, developed by the Template 10 community!</description>
+    <releaseNotes>Initial release</releaseNotes>
+    <copyright>Copyright 2017</copyright>
+    <tags>Template10 T10 JSON Serialization service</tags>
+  </metadata>
+</package>
