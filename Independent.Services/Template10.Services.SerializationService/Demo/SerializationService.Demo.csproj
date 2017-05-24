@@ -137,12 +137,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Service\Template10.Services.SerializationService.csproj">
-      <Project>{d3a94520-4cd4-4d56-b30b-7e54face64bb}</Project>
-      <Name>Template10.Services.SerializationService</Name>
-    </ProjectReference>
-  </ItemGroup>
   <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
