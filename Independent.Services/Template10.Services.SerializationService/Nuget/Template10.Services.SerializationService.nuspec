@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Template10.Services.SerializationService</id>
-    <version>1.0.0-preview-20170523</version>
+    <version>1.0.0-preview-20170523-r1</version>
     <title>Template10 Serialization Service</title>
     <authors>Windows developer community</authors>
     <owners>JerryNixon,darenmay</owners>
@@ -14,6 +14,8 @@
     <releaseNotes>
 	1.0.0-preview-20170523:
 		Initial release
+	1.0.0-preview-20170524:
+		Initial release (w/o the local build paths)
     </releaseNotes>
     <copyright>Copyright 2017</copyright>
     <tags>T10 Template10 JSON serialization</tags>

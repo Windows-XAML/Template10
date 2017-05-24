@@ -1,6 +1,7 @@
 ﻿{
   "dependencies": {
-    "Microsoft.NETCore.UniversalWindowsPlatform": "5.3.3"
+    "Microsoft.NETCore.UniversalWindowsPlatform": "5.3.3",
+    "Template10.Services.SerializationService": "1.0.0-preview-20170523"
   },
   "frameworks": {
     "uap10.0": {}
