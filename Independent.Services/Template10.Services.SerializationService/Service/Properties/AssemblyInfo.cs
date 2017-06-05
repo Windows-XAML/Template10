@@ -5,9 +5,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Template10.Services.SerializationService")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("JSON serialization service, developed by the T10 developer community!")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Template 10 developer community")]
 [assembly: AssemblyProduct("Template10.Services.SerializationService")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
