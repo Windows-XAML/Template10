@@ -63,10 +63,10 @@ namespace Template10.Services.NetworkService.Demo
                 var isLocalNetAvail = await nas.IsNetworkAvailable();
                 
                 // use the above bool flags to update status by setting UI Properties, etc
-				
+			
             });
         }
-	}
+    }
 }
 
 ````
