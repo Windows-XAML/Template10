@@ -6,14 +6,6 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-/*
- * If you can't find 'Template10.Services.NetworkService' package on Nuget, you can install it locally.
- * Open Nuget Package Manager Console:   Tools -> Nuget Package Manager -> Package Manager Console
- * and with the Default Project set to this demo project, type in and Enter at the prompt:
- *
- *  Install-Package Template10.Services.NetworkService.1.0.0.nupkg -Source ..\Nuget
-*/
-
 namespace Template10.Services.NetworkService.Demo
 {
     public sealed partial class MainPage : Page
