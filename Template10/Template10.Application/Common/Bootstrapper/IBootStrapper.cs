@@ -10,56 +10,90 @@ using Windows.UI.Xaml.Controls;
 
 namespace Template10.Common
 {
-    public interface IBootStrapper2
-    {
-        ISettings Settings { get; }
-        IStateItems SessionState { get; }
+    //public interface IBootStrapper2
+    //{
+    //    //static?
+    //    ISettings Settings { get; }
+    //    IStrategies Strategies { get; }
+    //    IStateItems SessionState { get; }
 
-        IView[] Views { get; }
-        Func<SplashScreen, UserControl> SplashFactory { get; set; }
+    //    IView[] Views { get; }
 
-        Task OnInitializeAsync();
-        Task OnStartAsync();
-    }
+    //    Func<SplashScreen, UserControl> SplashFactory { get; set; }
 
-    public interface IView
-    {
-        AppViewBackButtonVisibility ShellBackButtonVisibility { get; set; }
-        INavigationService[] NavigationServices { get; }
-    }
+    //    Task OnInitializeAsync();
+    //    Task OnStartAsync();
+    //    void OnStop();
+        
+    //    // OnBackstart
+    //}
 
-    public enum ButtonLocations { Shell, App }
+    //public interface IStrategies
+    //{
+    //    object LifecycleStrategy { get; }
+    //}
 
-    public interface ISettings
-    {
-        ButtonLocations ButtonLocation { get; set; }
-        TimeSpan CacheMaxDuration { get; set; }
-        bool AutoRestore { get; set; }
-    }
+    //public class BootstrapperX
+    //{
+    //    public void OnStart()
+    //    {
+    //    }
+
+    //    public void OnStop()
+    //    {
+    //        // if closed
+    //        // if suspending
+    //    }
+
+    //    public void OnResume(e)
+    //    {
+    //        RestoreNavigation(TimeSpan.FromDays(2), e);
+    //    }
+
+    //    public void OnSuspend(e)
+    //    {
+    //        SaveNavigation(e);
+    //    }
+    //}
+
+    //public interface IView
+    //{
+    //    AppViewBackButtonVisibility ShellBackButtonVisibility { get; set; }
+    //    INavigationService[] NavigationServices { get; }
+    //}
+
+    //public enum ButtonLocations { Shell, App }
+
+    //public interface ISettings
+    //{
+    //    ButtonLocations ButtonLocation { get; set; }
+    //    TimeSpan CacheMaxDuration { get; set; }
+    //    bool AutoRestore { get; set; }
+    //}
 
     public interface IBootStrapper
     {
+        // don't belong in bootstrapper
         event EventHandler<HandledEventArgs> BackRequested;
-
         event EventHandler<HandledEventArgs> ForwardRequested;
-
         event EventHandler ShellBackButtonUpdated;
+        bool ShowShellBackButton { get; set; }
+        void UpdateShellBackButton();
 
-        Func<SplashScreen, UserControl> SplashFactory { get; }
+        // move to nav service
+        Dictionary<T, Type> PageKeys<T>() where T : struct, IConvertible;
+        INavigationService NavigationServiceFactory(BackButton ignore, ExistingContent exclude, Frame frame = null);
+        INavigable ResolveForPage(Page newPage, INavigationService navigationService);
 
+        // strategy
         IWindowLogic WindowLogic { get; }
-
         ISplashLogic SplashLogic { get; }
-
         IExtendedSessionService ExtendedSessionService { get; }
+
+        // really is bootstrapper :)
+        Func<SplashScreen, UserControl> SplashFactory { get; }
         ApplicationExecutionState PreviousExecutionState { get; }
         IStateItems SessionState { get; }
-        bool ShowShellBackButton { get; set; }
         TimeSpan CacheMaxDuration { get; set; }
-
-        void UpdateShellBackButton();
-        Dictionary<T, Type> PageKeys<T>() where T : struct, IConvertible;
-        INavigable ResolveForPage(Page newPage, INavigationService navigationService);
-        INavigationService NavigationServiceFactory(BackButton ignore, ExistingContent exclude, Frame frame = null);
     }
 }
