@@ -115,11 +115,11 @@
     <EmbeddedResource Include="Properties\Template10.StateService.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Independent.Services\Template10.Services.FileService\Service\Template10.Services.FileService.csproj">
+    <ProjectReference Include="..\..\Services\Template10.Services.FileService\Service\Template10.Services.FileService.csproj">
       <Project>{fd4892b4-4cf8-4c74-b28f-ad7623e405e6}</Project>
       <Name>Template10.Services.FileService</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Independent.Utilities\Template10.CodeBehind\Template10.CodeBehind.csproj">
+    <ProjectReference Include="..\..\Helpers\Template10.CodeBehind\Template10.CodeBehind.csproj">
       <Project>{b3a4e50e-9dca-457e-bed5-b71d97b957f3}</Project>
       <Name>Template10.CodeBehind</Name>
     </ProjectReference>

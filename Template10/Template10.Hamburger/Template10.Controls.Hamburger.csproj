@@ -135,31 +135,31 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Independent.Utilities\Template10.CodeBehind\Template10.CodeBehind.csproj">
+    <ProjectReference Include="..\..\Helpers\Template10.Behaviors\Template10.Behaviors.csproj">
+      <Project>{045661d1-85e7-4968-b3b1-9334abda261f}</Project>
+      <Name>Template10.Behaviors</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Helpers\Template10.CodeBehind\Template10.CodeBehind.csproj">
       <Project>{b3a4e50e-9dca-457e-bed5-b71d97b957f3}</Project>
       <Name>Template10.CodeBehind</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Independent.Utilities\Template10.Mvvm\Template10.Mvvm.csproj">
+    <ProjectReference Include="..\..\Helpers\Template10.Converters\Template10.Converters.csproj">
+      <Project>{9669bd42-59d0-4fbd-a180-11419bd007d6}</Project>
+      <Name>Template10.Converters</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Helpers\Template10.Mvvm\Template10.Mvvm.csproj">
       <Project>{b23e19aa-1797-43f6-a0f1-fb2c13111aeb}</Project>
       <Name>Template10.Mvvm</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Independent.Utilities\Template10.Xaml\Template10.Xaml.csproj">
-      <Project>{e07de371-2dab-42b0-8c11-dbbaab9f5926}</Project>
-      <Name>Template10.Xaml</Name>
     </ProjectReference>
     <ProjectReference Include="..\Template10.NavigationService\Template10.Navigation.csproj">
       <Project>{cd31d870-42f3-4379-b67a-2070c4b0a444}</Project>
       <Name>Template10.Navigation</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Template10.Shared\Template10.Common.csproj">
-      <Project>{1f9a6976-d8f9-459b-8aee-770b53904ff3}</Project>
-      <Name>Template10.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Independent.Services\Template10.Services.KeyboardService\Service\Template10.Services.KeyboardService.csproj">
+    <ProjectReference Include="..\..\Services\Template10.Services.KeyboardService\Service\Template10.Services.KeyboardService.csproj">
       <Project>{b540d0b5-3850-416f-aec7-7737870e9ca2}</Project>
       <Name>Template10.Services.KeyboardService</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Independent.Services\Template10.Services.SerializationService\Service\Template10.Services.SerializationService.csproj">
+    <ProjectReference Include="..\..\Services\Template10.Services.SerializationService\Service\Template10.Services.SerializationService.csproj">
       <Project>{d3a94520-4cd4-4d56-b30b-7e54face64bb}</Project>
       <Name>Template10.Services.SerializationService</Name>
     </ProjectReference>

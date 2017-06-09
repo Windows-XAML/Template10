@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9CAD4451-5ADF-48D3-B690-8B341A95A228}</ProjectGuid>
+    <ProjectGuid>{8B565035-0B8F-41B0-A2A1-23793A58AA50}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Template10.Services.WindowService</RootNamespace>
-    <AssemblyName>Template10.Services.WindowService</AssemblyName>
+    <RootNamespace>Template10.Controls</RootNamespace>
+    <AssemblyName>Template10.Controls.ModalDialog</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
@@ -107,25 +107,24 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common.DispatcherWrapper\DispatcherWrapper.cs" />
-    <Compile Include="Common.DispatcherWrapper\IDispatcherWrapper.cs" />
-    <Compile Include="Common.WindowWrapper\IWindowWrapper.cs" />
-    <Compile Include="Common.WindowWrapper\WindowWrapper.cs" />
-    <Compile Include="Services.PopupService\PopupExtensions.cs" />
-    <Compile Include="Services.PopupService\PopupService.cs" />
+    <Compile Include="Controls.ModalDialog\ModalDialog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services.ViewService\IViewLifetimeControl.cs" />
-    <Compile Include="Services.ViewService\IViewService.cs" />
-    <Compile Include="Services.ViewService\SecondaryViewSynchronizationContextDecorator.cs" />
-    <Compile Include="Services.ViewService\ViewLifetimeControl.cs" />
-    <Compile Include="Services.ViewService\ViewLifeTimeException.cs" />
-    <Compile Include="Services.ViewService\ViewService.cs" />
-    <EmbeddedResource Include="Properties\Template10.Services.WindowService.rd.xml" />
+    <EmbeddedResource Include="Properties\Template10.Controls.ModalDialog.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Services\Template10.Services.LoggingService\Service\Template10.Services.LoggingService.csproj">
-      <Project>{eadde808-bf0d-4ebc-b4ca-9fda63b53862}</Project>
-      <Name>Template10.Services.LoggingService</Name>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Services\Template10.Services.BackService\Template10.Services.BackService.csproj">
+      <Project>{8564f764-99d9-4473-b5e4-ac62cda73977}</Project>
+      <Name>Template10.Services.BackService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Helpers\Template10.CodeBehind\Template10.CodeBehind.csproj">
+      <Project>{b3a4e50e-9dca-457e-bed5-b71d97b957f3}</Project>
+      <Name>Template10.CodeBehind</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
