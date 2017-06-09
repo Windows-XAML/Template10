@@ -26,6 +26,7 @@
     <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <GenerateLibraryLayout>true</GenerateLibraryLayout>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -118,7 +119,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Independent.Services\Template10.Services.BackService\Template10.Services.BackService.csproj">
+    <ProjectReference Include="..\..\..\Independent.Services\Template10.Services.BackService\Service\Template10.Services.BackService.csproj">
       <Project>{8564f764-99d9-4473-b5e4-ac62cda73977}</Project>
       <Name>Template10.Services.BackService</Name>
     </ProjectReference>

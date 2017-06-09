@@ -141,14 +141,6 @@
     <EmbeddedResource Include="Properties\Template10.Services.Navigation.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Independent.Services\Template10.Services.BackService\Template10.Services.BackService.csproj">
-      <Project>{8564f764-99d9-4473-b5e4-ac62cda73977}</Project>
-      <Name>Template10.Services.BackService</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Independent.Services\Template10.Services.KeyboardService\Service\Template10.Services.KeyboardService.csproj">
-      <Project>{b540d0b5-3850-416f-aec7-7737870e9ca2}</Project>
-      <Name>Template10.Services.KeyboardService</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Independent.Services\Template10.Services.LoggingService\Service\Template10.Services.LoggingService.csproj">
       <Project>{eadde808-bf0d-4ebc-b4ca-9fda63b53862}</Project>
       <Name>Template10.Services.LoggingService</Name>
