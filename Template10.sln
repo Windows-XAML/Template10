@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.12
+VisualStudioVersion = 15.0.26510.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{F8B66765-EFAD-45EE-911F-8815B9C9E297}"
 	ProjectSection(SolutionItems) = preProject
@@ -90,6 +90,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Inside.Controls", "Inside.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.WindowService", "Template10\Template10.WindowService\Template10.WindowService.csproj", "{9CAD4451-5ADF-48D3-B690-8B341A95A228}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.BackService", "Independent.Services\Template10.Services.BackService\Template10.Services.BackService.csproj", "{8564F764-99D9-4473-B5E4-AC62CDA73977}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.StateService", "Template10\Template10.StateService\Template10.StateService.csproj", "{DF5DDEA9-9509-45BD-8F1F-DFF10515CCD1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template.Blank", "VisualStudio\Template.Blank\Template.Blank.csproj", "{8560342F-4F61-49AB-9679-1941DB551025}"
@@ -97,8 +99,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Controls.CustomTitleBar", "Independent.Controls\Template10.Controls.CustomTitleBar\Control\Template10.Controls.CustomTitleBar.csproj", "{5CC9C9D2-2103-4E03-B425-7FD58A7A2A2E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Controls.PageHeader", "Independent.Controls\Template10.Controls.PageHeader\Template10.Controls.PageHeader.csproj", "{509386D0-711E-4345-83AD-F71998EFBDD7}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.BackService", "Independent.Services\Template10.Services.BackService\Service\Template10.Services.BackService.csproj", "{8564F764-99D9-4473-B5E4-AC62CDA73977}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -574,6 +574,22 @@ Global
 		{9CAD4451-5ADF-48D3-B690-8B341A95A228}.Release|x64.Build.0 = Release|x64
 		{9CAD4451-5ADF-48D3-B690-8B341A95A228}.Release|x86.ActiveCfg = Release|x86
 		{9CAD4451-5ADF-48D3-B690-8B341A95A228}.Release|x86.Build.0 = Release|x86
+		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Debug|ARM.ActiveCfg = Debug|ARM
+		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Debug|ARM.Build.0 = Debug|ARM
+		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Debug|x64.ActiveCfg = Debug|x64
+		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Debug|x64.Build.0 = Debug|x64
+		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Debug|x86.ActiveCfg = Debug|x86
+		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Debug|x86.Build.0 = Debug|x86
+		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Release|ARM.ActiveCfg = Release|ARM
+		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Release|ARM.Build.0 = Release|ARM
+		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Release|x64.ActiveCfg = Release|x64
+		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Release|x64.Build.0 = Release|x64
+		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Release|x86.ActiveCfg = Release|x86
+		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Release|x86.Build.0 = Release|x86
 		{DF5DDEA9-9509-45BD-8F1F-DFF10515CCD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DF5DDEA9-9509-45BD-8F1F-DFF10515CCD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF5DDEA9-9509-45BD-8F1F-DFF10515CCD1}.Debug|ARM.ActiveCfg = Debug|ARM
@@ -643,22 +659,6 @@ Global
 		{509386D0-711E-4345-83AD-F71998EFBDD7}.Release|x64.Build.0 = Release|x64
 		{509386D0-711E-4345-83AD-F71998EFBDD7}.Release|x86.ActiveCfg = Release|x86
 		{509386D0-711E-4345-83AD-F71998EFBDD7}.Release|x86.Build.0 = Release|x86
-		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Debug|ARM.ActiveCfg = Debug|ARM
-		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Debug|ARM.Build.0 = Debug|ARM
-		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Debug|x64.ActiveCfg = Debug|x64
-		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Debug|x64.Build.0 = Debug|x64
-		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Debug|x86.ActiveCfg = Debug|x86
-		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Debug|x86.Build.0 = Debug|x86
-		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Release|ARM.ActiveCfg = Release|ARM
-		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Release|ARM.Build.0 = Release|ARM
-		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Release|x64.ActiveCfg = Release|x64
-		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Release|x64.Build.0 = Release|x64
-		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Release|x86.ActiveCfg = Release|x86
-		{8564F764-99D9-4473-B5E4-AC62CDA73977}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -692,10 +692,10 @@ Global
 		{84415006-A82C-40DC-A8B4-176AFC0CF517} = {E89AC2DA-3D4F-487F-B9E8-F77D61A793B3}
 		{5144566E-80EB-4375-9FE2-415808E2051D} = {F640BC3F-3F66-4995-BBDC-8A633DD69274}
 		{9CAD4451-5ADF-48D3-B690-8B341A95A228} = {BCA90A0F-E32C-478A-8DD9-54B73D52AEBC}
+		{8564F764-99D9-4473-B5E4-AC62CDA73977} = {0609ACB9-BE5B-4785-AA7B-D38F14A1B580}
 		{DF5DDEA9-9509-45BD-8F1F-DFF10515CCD1} = {BCA90A0F-E32C-478A-8DD9-54B73D52AEBC}
 		{8560342F-4F61-49AB-9679-1941DB551025} = {24A5D7B0-1F6D-45DB-A69A-AB61D16FD289}
 		{5CC9C9D2-2103-4E03-B425-7FD58A7A2A2E} = {F640BC3F-3F66-4995-BBDC-8A633DD69274}
 		{509386D0-711E-4345-83AD-F71998EFBDD7} = {F640BC3F-3F66-4995-BBDC-8A633DD69274}
-		{8564F764-99D9-4473-B5E4-AC62CDA73977} = {0609ACB9-BE5B-4785-AA7B-D38F14A1B580}
 	EndGlobalSection
 EndGlobal
