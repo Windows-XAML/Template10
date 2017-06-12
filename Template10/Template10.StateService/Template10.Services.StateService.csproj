@@ -107,11 +107,13 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="StateService\StateContainerBase.cs" />
+    <Compile Include="Strategies\FoldersStateContainer.cs" />
+    <Compile Include="Strategies\SettingsStateContainer.cs" />
+    <Compile Include="StateService\IStateService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services.StateService\IStateItems.cs" />
-    <Compile Include="Services.StateService\StateItems.cs" />
-    <Compile Include="Services.StateService\StateService.cs" />
-    <Compile Include="Services.StateService\StateTypes.enum.cs" />
+    <Compile Include="StateService\IStateItems.cs" />
+    <Compile Include="StateService\StateService.cs" />
     <EmbeddedResource Include="Properties\Template10.StateService.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -123,7 +125,12 @@
       <Project>{b3a4e50e-9dca-457e-bed5-b71d97b957f3}</Project>
       <Name>Template10.CodeBehind</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.SerializationService\Service\Template10.Services.SerializationService.csproj">
+      <Project>{d3a94520-4cd4-4d56-b30b-7e54face64bb}</Project>
+      <Name>Template10.Services.SerializationService</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
