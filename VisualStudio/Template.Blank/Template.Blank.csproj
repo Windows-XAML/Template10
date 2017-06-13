@@ -180,13 +180,13 @@
       <Project>{cd31d870-42f3-4379-b67a-2070c4b0a444}</Project>
       <Name>Template10.Navigation</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Template10\Template10.StateService\Template10.StateService.csproj">
+    <ProjectReference Include="..\..\Template10\Template10.StateService\Template10.Services.StateService.csproj">
       <Project>{df5ddea9-9509-45bd-8f1f-dff10515ccd1}</Project>
-      <Name>Template10.StateService</Name>
+      <Name>Template10.Services.StateService</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Template10\Template10.WindowService\Template10.WindowService.csproj">
+    <ProjectReference Include="..\..\Template10\Template10.WindowService\Template10.Windowing.csproj">
       <Project>{9cad4451-5adf-48d3-b690-8b341a95a228}</Project>
-      <Name>Template10.WindowService</Name>
+      <Name>Template10.Windowing</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

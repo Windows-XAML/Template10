@@ -122,6 +122,7 @@
     <Compile Include="Common.WeakReference\WeakReference.cs" />
     <Compile Include="Common.WeakReference\WeakReferenceT.cs" />
     <Compile Include="Common\EventThrottleHelper.cs" />
+    <Compile Include="Common\LockAsync.cs" />
     <Compile Include="Common\TypedEventHandler.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\InkExtensions.cs" />

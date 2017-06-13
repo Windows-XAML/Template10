@@ -74,11 +74,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Controls.RingSeg
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Controls.Hamburger", "Template10\Template10.Hamburger\Template10.Controls.Hamburger.csproj", "{5144566E-80EB-4375-9FE2-415808E2051D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.WindowService", "Template10\Template10.WindowService\Template10.WindowService.csproj", "{9CAD4451-5ADF-48D3-B690-8B341A95A228}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Windowing", "Template10\Template10.WindowService\Template10.Windowing.csproj", "{9CAD4451-5ADF-48D3-B690-8B341A95A228}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.BackService", "Services\Template10.Services.BackService\Template10.Services.BackService.csproj", "{8564F764-99D9-4473-B5E4-AC62CDA73977}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.StateService", "Template10\Template10.StateService\Template10.StateService.csproj", "{DF5DDEA9-9509-45BD-8F1F-DFF10515CCD1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.StateService", "Template10\Template10.StateService\Template10.Services.StateService.csproj", "{DF5DDEA9-9509-45BD-8F1F-DFF10515CCD1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template.Blank", "VisualStudio\Template.Blank\Template.Blank.csproj", "{8560342F-4F61-49AB-9679-1941DB551025}"
 EndProject
@@ -107,6 +107,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Shared", "Template10\Template10.Shared\Template10.Shared.csproj", "{1F9A6976-D8F9-459B-8AEE-770B53904FF3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template.Minimal", "VisualStudio\Template.Minimal\Template.Minimal.csproj", "{2945EF59-92B1-4E86-9F1A-AB6352152A5A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Template10.Portable", "Template10\Template10.Portable\Template10.Portable.csproj", "{2B6903DF-396A-4D97-BF29-45BC6DD72DBE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -703,6 +705,22 @@ Global
 		{2945EF59-92B1-4E86-9F1A-AB6352152A5A}.Release|x86.ActiveCfg = Release|x86
 		{2945EF59-92B1-4E86-9F1A-AB6352152A5A}.Release|x86.Build.0 = Release|x86
 		{2945EF59-92B1-4E86-9F1A-AB6352152A5A}.Release|x86.Deploy.0 = Release|x86
+		{2B6903DF-396A-4D97-BF29-45BC6DD72DBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B6903DF-396A-4D97-BF29-45BC6DD72DBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B6903DF-396A-4D97-BF29-45BC6DD72DBE}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{2B6903DF-396A-4D97-BF29-45BC6DD72DBE}.Debug|ARM.Build.0 = Debug|Any CPU
+		{2B6903DF-396A-4D97-BF29-45BC6DD72DBE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2B6903DF-396A-4D97-BF29-45BC6DD72DBE}.Debug|x64.Build.0 = Debug|Any CPU
+		{2B6903DF-396A-4D97-BF29-45BC6DD72DBE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2B6903DF-396A-4D97-BF29-45BC6DD72DBE}.Debug|x86.Build.0 = Debug|Any CPU
+		{2B6903DF-396A-4D97-BF29-45BC6DD72DBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B6903DF-396A-4D97-BF29-45BC6DD72DBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B6903DF-396A-4D97-BF29-45BC6DD72DBE}.Release|ARM.ActiveCfg = Release|Any CPU
+		{2B6903DF-396A-4D97-BF29-45BC6DD72DBE}.Release|ARM.Build.0 = Release|Any CPU
+		{2B6903DF-396A-4D97-BF29-45BC6DD72DBE}.Release|x64.ActiveCfg = Release|Any CPU
+		{2B6903DF-396A-4D97-BF29-45BC6DD72DBE}.Release|x64.Build.0 = Release|Any CPU
+		{2B6903DF-396A-4D97-BF29-45BC6DD72DBE}.Release|x86.ActiveCfg = Release|Any CPU
+		{2B6903DF-396A-4D97-BF29-45BC6DD72DBE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -747,5 +765,6 @@ Global
 		{91C62580-DFB6-40FC-9015-932B124FC753} = {D1B54308-4CA7-4E2F-8707-98D27060612E}
 		{1F9A6976-D8F9-459B-8AEE-770B53904FF3} = {BCA90A0F-E32C-478A-8DD9-54B73D52AEBC}
 		{2945EF59-92B1-4E86-9F1A-AB6352152A5A} = {24A5D7B0-1F6D-45DB-A69A-AB61D16FD289}
+		{2B6903DF-396A-4D97-BF29-45BC6DD72DBE} = {BCA90A0F-E32C-478A-8DD9-54B73D52AEBC}
 	EndGlobalSection
 EndGlobal

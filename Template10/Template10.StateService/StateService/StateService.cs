@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Template10.Portable.State;
 
 namespace Template10.Services.StateService
 {
@@ -7,16 +8,18 @@ namespace Template10.Services.StateService
 
     public static class StateService
     {
-        public static async Task<IStateContainer> GetAsync(string key, StateServiceContainerTypes strategy = StateServiceContainerTypes.FileSystem)
+        public static SerializationService.ISerializationService DefaultSerializationStrategy { get; set; } = SerializationService.SerializationService.Json;
+
+        public static async Task<IPersistedStateContainer> GetAsync(string key, string container = null, StateServiceContainerTypes type = StateServiceContainerTypes.FileSystem)
         {
-            switch (strategy)
+            switch (type)
             {
                 case StateServiceContainerTypes.Settings:
-                    return await SettingsStateContainer.CreateAsync(SettingsStateLocations.Local, key);
+                    return await SettingsStateContainer.CreateAsync(SettingsStateLocations.Local, container, key);
                 case StateServiceContainerTypes.FileSystem:
-                    return await FoldersStateContainer.CreateAsync(FoldersStateLocations.Local, key);
+                    return await FoldersStateContainer.CreateAsync(FoldersStateLocations.Local, container, key);
                 default:
-                    throw new NotSupportedException(strategy.ToString());
+                    throw new NotSupportedException(type.ToString());
             }
         }
     }

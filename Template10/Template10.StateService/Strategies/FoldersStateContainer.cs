@@ -10,7 +10,7 @@ namespace Template10.Services.StateService
 
     public class FoldersStateContainer : StateContainerBase
     {
-        public static async Task<FoldersStateContainer> CreateAsync(FoldersStateLocations location, string key = null)
+        public static async Task<FoldersStateContainer> CreateAsync(FoldersStateLocations location, string container = null, string key = null)
         {
             key = key ?? nameof(FoldersStateContainer);
             var root = default(StorageFolder);
@@ -23,13 +23,26 @@ namespace Template10.Services.StateService
                     root = ApplicationData.Current.RoamingFolder;
                     break;
             }
+            root = await root.CreateFolderAsync("App-State", CreationCollisionOption.OpenIfExists);
+            if (!string.IsNullOrEmpty(container))
+            {
+                root = await root.CreateFolderAsync(container, CreationCollisionOption.OpenIfExists);
+            }
             var folder = await root.CreateFolderAsync(key, CreationCollisionOption.OpenIfExists);
             return new FoldersStateContainer(folder);
         }
 
         private StorageFolder folder;
 
-        private FoldersStateContainer(StorageFolder folder) 
+        public async override Task ClearAsync()
+        {
+            var name = folder.Name;
+            var parent = await folder.GetParentAsync();
+            await folder.DeleteAsync();
+            folder = await parent.CreateFolderAsync(name, CreationCollisionOption.OpenIfExists);
+        }
+
+        private FoldersStateContainer(StorageFolder folder) : base(folder.Name)
             => this.folder = folder;
 
         public override async Task<string[]> AllKeysAsync()

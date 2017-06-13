@@ -21,6 +21,8 @@ namespace Template10.Utils
         public static async Task<ContentDialogResult> ShowAsyncEx(this ContentDialog contentDialog, IDispatcherWrapper dispatcher = null)
             => await ShowAsync(async () => await contentDialog.ShowAsync(), dispatcher);
 
+        private static readonly object showLockPoint = new object();
+
         private static async Task<T> ShowAsync<T>(Func<Task<T>> show, IDispatcherWrapper dispatcher)
         {
             lock (DialogState)
@@ -31,7 +33,12 @@ namespace Template10.Utils
                 }
                 DialogState.Showing = true;
             }
+
+            // this next line creates a dependecy on the WindowService
+            dispatcher = dispatcher ?? Services.WindowWrapper.WindowWrapper.Current().Dispatcher;
+
             dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
+
             var result = await dispatcher.DispatchAsync(async () => await show());
             lock (DialogState)
             {

@@ -1,14 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Windows.Storage;
+using Template10.Portable.State;
 
 namespace Template10.Services.StateService
 {
-    public abstract class StateContainerBase : IStateContainer
+    public abstract class StateContainerBase : IPersistedStateContainer
     {
+        public string Name { get; }
+
+        public StateContainerBase(string name)
+        {
+            Name = name;
+        }
+
         public abstract Task<string[]> AllKeysAsync();
+
+        public abstract Task ClearAsync();
 
         public virtual async Task<bool> ContainsKeyAsync(string key)
         {
@@ -19,7 +27,7 @@ namespace Template10.Services.StateService
         public virtual async Task<T> GetValueAsync<T>(string key)
         {
             var setting = await GetValueAsync(key);
-            var serializer = SerializationService.SerializationService.Json;
+            var serializer = StateService.DefaultSerializationStrategy;
             var deserialized = serializer.Deserialize<T>(setting);
             return deserialized;
         }
@@ -28,11 +36,37 @@ namespace Template10.Services.StateService
 
         public async Task SetValueAsync<T>(string key, T value)
         {
-            var serializer = SerializationService.SerializationService.Json;
+            var serializer = StateService.DefaultSerializationStrategy;
             var serialized = serializer.Serialize(value);
             await SetValueAsync(key, serialized);
         }
 
         public abstract Task SetValueAsync(string key, string value);
+
+        public async Task<(bool Success, object Value)> TryGetValueAsync(string key)
+        {
+            try
+            {
+                var value = await GetValueAsync(key);
+                return (true, value);
+            }
+            catch
+            {
+                return (false, null);
+            }
+        }
+
+        public async Task<(bool Success, T Value)> TryGetValueAsync<T>(string key)
+        {
+            try
+            {
+                var value = await GetValueAsync<T>(key);
+                return (true, value);
+            }
+            catch
+            {
+                return (false, default(T));
+            }
+        }
     }
 }

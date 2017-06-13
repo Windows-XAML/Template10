@@ -1,18 +1,10 @@
 ﻿namespace Template10.Common
 {
-    public class Queue<T> :
-        IQueue<T>
+    public class Queue<T> : IQueue<T>
     {
-        public static Queue<T> Instance { get; } =
-            new Queue<T>();
+        public static Queue<T> Instance { get; } = new Queue<T>();
 
-        private Queue()
-        {
-
-        }
-
-        System.Collections.Generic.Queue<T> queue =
-            new System.Collections.Generic.Queue<T>();
+        System.Collections.Generic.Queue<T> queue = new System.Collections.Generic.Queue<T>();
 
         public event TypedEventHandler<T> Enqueued;
 

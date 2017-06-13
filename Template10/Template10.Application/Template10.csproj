@@ -129,18 +129,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Behaviors\DeviceDispositionBehavior.cs" />
-    <Compile Include="Common\Bootstrapper\ActivateWindowSources.enum.cs" />
-    <Compile Include="Common\Bootstrapper\AdditionalKinds.enum.cs" />
-    <Compile Include="Common\Bootstrapper\AppExecutionState.enum.cs" />
-    <Compile Include="Common\Bootstrapper\BootstrapperStates.enum.cs" />
-    <Compile Include="Common\Bootstrapper\ExistingContent.enum.cs" />
-    <Compile Include="Common\Bootstrapper\IBootStrapper.cs" />
-    <Compile Include="Common\Bootstrapper\ISplashLogic.cs" />
-    <Compile Include="Common\Bootstrapper\IWindowLogic.cs" />
-    <Compile Include="Common\Bootstrapper\StartKind.enum.cs" />
-    <Compile Include="Common\Bootstrapper\WindowLogic.cs" />
-    <Compile Include="Common\Bootstrapper\BootStrapper.cs" />
-    <Compile Include="Common\Bootstrapper\SplashLogic.cs" />
+    <Compile Include="Bootstrapper\ActivateWindowSources.enum.cs" />
+    <Compile Include="Bootstrapper\AdditionalKinds.enum.cs" />
+    <Compile Include="Bootstrapper\AppExecutionState.enum.cs" />
+    <Compile Include="Bootstrapper\BootstrapperStates.enum.cs" />
+    <Compile Include="Bootstrapper\ExistingContent.enum.cs" />
+    <Compile Include="Bootstrapper\Extensions.cs" />
+    <Compile Include="Bootstrapper\IBootStrapper.cs" />
+    <Compile Include="Bootstrapper\ISplashLogic.cs" />
+    <Compile Include="Bootstrapper\IWindowLogic.cs" />
+    <Compile Include="Bootstrapper\StartKind.enum.cs" />
+    <Compile Include="Bootstrapper\WindowLogic.cs" />
+    <Compile Include="Bootstrapper\BootStrapper.cs" />
+    <Compile Include="Bootstrapper\SplashLogic.cs" />
     <Compile Include="Mvvm\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Properties\Template10Library.rd.xml" />
@@ -187,17 +188,21 @@
       <Project>{cd31d870-42f3-4379-b67a-2070c4b0a444}</Project>
       <Name>Template10.Navigation</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Template10.Portable\Template10.Portable.csproj">
+      <Project>{2B6903DF-396A-4D97-BF29-45BC6DD72DBE}</Project>
+      <Name>Template10.Portable</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Template10.Shared\Template10.Shared.csproj">
       <Project>{1f9a6976-d8f9-459b-8aee-770b53904ff3}</Project>
       <Name>Template10.Shared</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Template10.StateService\Template10.StateService.csproj">
+    <ProjectReference Include="..\Template10.StateService\Template10.Services.StateService.csproj">
       <Project>{df5ddea9-9509-45bd-8f1f-dff10515ccd1}</Project>
-      <Name>Template10.StateService</Name>
+      <Name>Template10.Services.StateService</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Template10.WindowService\Template10.WindowService.csproj">
+    <ProjectReference Include="..\Template10.WindowService\Template10.Windowing.csproj">
       <Project>{9cad4451-5adf-48d3-b690-8b341a95a228}</Project>
-      <Name>Template10.WindowService</Name>
+      <Name>Template10.Windowing</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

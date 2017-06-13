@@ -9,27 +9,34 @@ namespace Template10.Services.StateService
 
     public class SettingsStateContainer : StateContainerBase
     {
-        public static async Task<SettingsStateContainer> CreateAsync(SettingsStateLocations location, string key = null)
+        public static async Task<SettingsStateContainer> CreateAsync(SettingsStateLocations location, string container = null, string key = null)
         {
             key = key ?? nameof(SettingsStateContainer);
-            var container = default(ApplicationDataContainer);
+            var data = default(ApplicationDataContainer);
             switch (location)
             {
                 case SettingsStateLocations.Local:
-                    container = ApplicationData.Current.LocalSettings.CreateContainer(key, ApplicationDataCreateDisposition.Existing);
+                    data = ApplicationData.Current.LocalSettings.CreateContainer(key, ApplicationDataCreateDisposition.Existing);
                     break;
                 case SettingsStateLocations.Roam:
-                    container = ApplicationData.Current.RoamingSettings.CreateContainer(key, ApplicationDataCreateDisposition.Existing);
+                    data = ApplicationData.Current.RoamingSettings.CreateContainer(key, ApplicationDataCreateDisposition.Existing);
                     break;
                 default:
                     throw new NotSupportedException(location.ToString());
             }
-            return new SettingsStateContainer(container);
+            if (!string.IsNullOrEmpty(container))
+            {
+                data = data.CreateContainer(container, ApplicationDataCreateDisposition.Existing);
+            }
+            return new SettingsStateContainer(data);
         }
 
         private ApplicationDataContainer container;
 
-        private SettingsStateContainer(ApplicationDataContainer container)
+        public async override Task ClearAsync()
+            => container.Values.Clear();
+
+        private SettingsStateContainer(ApplicationDataContainer container) : base(container.Name)
             => this.container = container;
 
         public override async Task<string[]> AllKeysAsync()
