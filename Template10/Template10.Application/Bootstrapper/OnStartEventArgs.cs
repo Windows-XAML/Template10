@@ -21,7 +21,12 @@ namespace Template10.Common
             StartCause = DetermineStartCause(arg);
 
             Starts++;
-            PrelaunchOccurred = PrelaunchOccurred ? true : OnLaunchedEventArgs?.PrelaunchActivated ?? false;
+
+            ThisIsPrelaunch = OnLaunchedEventArgs?.PrelaunchActivated ?? false;
+            if (!PrelaunchOccurred && ThisIsPrelaunch)
+            {
+                PrelaunchOccurred = true;
+            }
 
             StartCauses DetermineStartCause(object args)
             {
@@ -67,6 +72,7 @@ namespace Template10.Common
         public object RawEventArgs { get; }
         public StartKinds StartKind { get; }
         public StartCauses StartCause { get; }
+        public bool ThisIsPrelaunch { get; }
         public ApplicationExecutionState PreviousExecutionState
         {
             get

@@ -145,7 +145,7 @@ namespace Template10.Common
         ///  By default, Template 10 will setup the root element to be a Template 10
         ///  Modal Dialog control. If you desire something different, you can set it here.
         /// </summary>
-        public async virtual Task<UIElement> CreateRootElementAsync(IActivatedEventArgs e)
+        public async virtual Task<UIElement> CreateRootElementAsync(OnStartEventArgs e)
         {
             DebugWrite();
 
@@ -169,7 +169,7 @@ namespace Template10.Common
         /// For Prelaunch Template 10 does not continue the typical startup pipeline by default.
         /// OnActivated will occur if the application has been prelaunched.
         /// </remarks>
-        public virtual Task OnPrelaunchAsync(IActivatedEventArgs args, out bool continueStarting)
+        public virtual Task OnPrelaunchAsync(OnStartEventArgs e, out bool continueStarting)
         {
             DebugWrite("Virtual");
 
@@ -182,14 +182,14 @@ namespace Template10.Common
         /// Template 10 will not call OnStartAsync if the app is restored from state.
         /// An app restores from state when the app was suspended and then terminated (PreviousExecutionState terminated).
         /// </summary>
-        public abstract Task OnStartAsync(StartKinds startKind, IActivatedEventArgs args);
+        public abstract Task OnStartAsync(OnStartEventArgs e);
 
         /// <summary>
         /// OnInitializeAsync is where your app will do must-have up-front operations
         /// OnInitializeAsync will be called even if the application is restoring from state.
         /// An app restores from state when the app was suspended and then terminated (PreviousExecutionState terminated).
         /// </summary>
-        public virtual Task OnInitializeAsync(IActivatedEventArgs args) => Task.CompletedTask;
+        public virtual Task OnInitializeAsync(OnStartEventArgs e) => Task.CompletedTask;
 
         /// <summary>
         /// OnSuspendingAsync will be called when the application is suspending, but this override
@@ -212,103 +212,96 @@ namespace Template10.Common
         /// previousExecutionState can be Terminated, which typically does not raise OnResume.
         /// This is important because the resume model changes a little in Mobile.
         /// </remarks>
-        public virtual void OnResuming(object s, object e, AppExecutionState previousExecutionState) { }
+        public virtual Task OnResumingAsync(OnStartEventArgs e)
+        {
+            return Task.CompletedTask;
+        }
 
         #endregion
+
+        object startupLocker = new object();
 
         // private async void StartupOrchestratorAsync(IActivatedEventArgs e, StartKind kind)
         private async void StartupOrchestratorAsync(OnStartEventArgs e)
         {
             DebugWrite(e.ToString());
 
-            // is the kind really right? we can figure it out from here
-            if (kind == StartKinds.Launch && CurrentStateHistory.ContainsValue(BootstrapperStates.Launching)) kind = StartKinds.Activate;
-            else if (kind == StartKinds.Launch && e.PreviousExecutionState == ApplicationExecutionState.Running) kind = StartKinds.Activate;
-            else if (kind == StartKinds.Activate && e.PreviousExecutionState != ApplicationExecutionState.Running) kind = StartKinds.Launch;
-
-            // handle activate
-            if (kind == StartKinds.Activate)
+            using (var locker = await LockAsync.Create(startupLocker))
             {
-                while (!CurrentStateHistory.ContainsValue(BootstrapperStates.Launched)) { /* only activate after launch */ await Task.Delay(10); }
-                while (CurrentStateHistory.Count(x => x.Value == BootstrapperStates.Starting) != CurrentStateHistory.Count(x => x.Value == BootstrapperStates.Started)) { await Task.Delay(10); }
-                await OperationWrapperAsync(BootstrapperStates.Starting, async () => await OnStartAsync(kind, e), BootstrapperStates.Starting);
-                OperationWrapper(BootstrapperStates.Activating, () =>
+                // handle launch
+                if (e.FirstTime)
                 {
-                    DefaultWindowStrategy.ActivateWindow(ActivateWindowSources.Activating, DefaultSplashStrategy);
-                }, BootstrapperStates.Activated);
-            }
-
-            // handle first-time launch
-            else if (kind == StartKinds.Launch)
-            {
-                CurrentState = BootstrapperStates.Launching;
-                DefaultSplashStrategy.Show(e.SplashScreen, this);
-
-                // do some one-time things
-                SetupLifecycleListeners();
-                SetupBackListeners();
-                SetupCustomTitleBar();
-
-                // default Unspecified extended session
-                if (AutoExtendExecutionSession) await ExtendedSessionService.StartUnspecifiedAsync();
-
-                await OperationWrapperAsync(BootstrapperStates.Initializing, async () =>
+                    await OperationWrapperAsync(BootstrapperStates.Launching, async () =>
                     {
-                        await OnInitializeAsync(e);
-                    }, BootstrapperStates.Initialized);
+                        Settings.SplashStrategy.Show(e.OnLaunchedEventArgs.SplashScreen);
 
-                // if there no pre-existing root then generate root
-                if (DefaultSplashStrategy.IsSplashVisible || Window.Current.Content == null)
-                {
-                    Window.Current.Content = await CreateRootElementAsync(e);
-                }
+                        // do some one-time things
+                        SetupLifecycleListeners();
+                        SetupBackListeners();
+                        SetupCustomTitleBar();
 
-                // okay, now handle launch
-                var restored = false;
-                var IsPrelaunch = (e as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false;
-                switch (e.PreviousExecutionState)
-                {
-                    case ApplicationExecutionState.Suspended:
-                    case ApplicationExecutionState.Terminated:
-                    case ApplicationExecutionState.NotRunning: // this is new UWP behavior, suspended apps report NotRunning!
-                                                               // test
-                        OnResuming(this, null, IsPrelaunch ? AppExecutionState.Prelaunch : AppExecutionState.Terminated);
-                        if (AutoRestoreAfterTerminated && DetermineStartCause(e) == AdditionalKinds.Primary
-                            || (e is ILaunchActivatedEventArgs args && args?.TileId == string.Empty))
+                        if (Settings.AutoExtendExecutionSession)
                         {
-                            await OperationWrapperAsync(BootstrapperStates.Restoring, async () =>
-                            {
-                                restored = await NavigationService.LoadAsync();
-                            }, BootstrapperStates.Restored);
+                            await Settings.SessionStrategy.StartUnspecifiedAsync();
+                            // DebutWrite()
                         }
-                        break;
-                    default:
-                        break;
-                }
 
-                // handle if pre-launch (no UI)
-                if (IsPrelaunch)
-                {
-                    var runOnStartAsync = false;
-                    await OperationWrapperAsync(BootstrapperStates.Prelaunching, async () =>
-                    {
-                        await OnPrelaunchAsync(e, out runOnStartAsync);
-                    }, BootstrapperStates.Prelaunched);
-                    if (!runOnStartAsync) return;
-                }
+                        await OperationWrapperAsync(BootstrapperStates.Initializing, async () =>
+                        {
+                            await OnInitializeAsync(e);
+                            DebugWrite($"After OnInitializeAsync. Window.Current.Content: {Window.Current.Content}");
+                        }, BootstrapperStates.Initialized);
 
-                // handle if not restored (new launch)
-                if (!restored)
-                {
-                    await OperationWrapperAsync(BootstrapperStates.Starting, async () =>
-                    {
-                        await OnStartAsync(StartKinds.Launch, e);
-                    }, BootstrapperStates.Started);
-                }
+                        // don't check window.content: splash uses popup && init is wrong place
+                        await OperationWrapperAsync(BootstrapperStates.CreatingRootElement, async () =>
+                        {
+                            Window.Current.Content = await CreateRootElementAsync(e);
+                            DebugWrite($"After CreateRootElementAsync. Window.Current.Content: {Window.Current.Content}");
+                        }, BootstrapperStates.CreatedRootElement);
 
-                // this will also hide any showing splashscreen
-                DefaultWindowStrategy.ActivateWindow(ActivateWindowSources.Launching, DefaultSplashStrategy);
-                CurrentState = BootstrapperStates.Launched;
+                        var restored = false;
+                        if (Settings.LifecycleStrategy.Resuming(e))
+                        {
+                            await OperationWrapperAsync(BootstrapperStates.Resuming, async () =>
+                            {
+                                if (Settings.LifecycleStrategy.RunRestoreStrategy)
+                                {
+                                    await OperationWrapperAsync(BootstrapperStates.Restoring, async () =>
+                                    {
+                                        restored = await Settings.LifecycleStrategy.RestoreAsync(e);
+                                        DebugWrite($"After Restore. Restored: {restored}");
+                                    }, BootstrapperStates.Restored);
+                                }
+                                else
+                                {
+                                    DebugWrite("Settings.LifecycleStrategy.RunRestoreStrategy == false;");
+                                }
+                            }, BootstrapperStates.Resumed);
+                        }
+
+                        var continueStarting = false;
+                        if (e.ThisIsPrelaunch)
+                        {
+                            await OperationWrapperAsync(BootstrapperStates.Prelaunching, async () =>
+                            {
+                                await OnPrelaunchAsync(e, out continueStarting);
+                                DebugWrite($"After Prelaunch. ContinueStarting: {continueStarting}");
+                            }, BootstrapperStates.Prelaunched);
+                        }
+
+                        // handle if not restored (new launch)
+                        if (!restored & continueStarting)
+                        {
+                            await OperationWrapperAsync(BootstrapperStates.Starting, async () =>
+                            {
+                                await OnStartAsync(e);
+                            }, BootstrapperStates.Started);
+                        }
+
+                        // this will also hide any showing splashscreen
+                        Settings.WindowStrategy.ActivateWindow(ActivateWindowSources.Launching);
+                    }, BootstrapperStates.Launched);
+                }
             }
         }
 

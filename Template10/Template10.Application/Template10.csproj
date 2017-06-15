@@ -132,6 +132,7 @@
     <Compile Include="Bootstrapper\OnStartEventArgs.cs" />
     <Compile Include="Bootstrapper\StartCauses.enum.cs" />
     <Compile Include="Bootstrapper\Strategies\DefaultWindowStrategy.cs" />
+    <Compile Include="Bootstrapper\Strategies\ILifecycleStrategy.cs" />
     <Compile Include="Bootstrapper\Strategies\ISplashStrategy.cs" />
     <Compile Include="Bootstrapper\Strategies\ActivateWindowSources.enum.cs" />
     <Compile Include="Bootstrapper\AdditionalKinds.enum.cs" />

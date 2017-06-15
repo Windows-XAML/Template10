@@ -15,6 +15,10 @@
         Prelaunching,
         Initializing,
         Restoring,
+        Resuming,
+        Resumed,
+        CreatingRootElement,
+        CreatedRootElement,
 
         //BeforeInit,
         //AfterInit,

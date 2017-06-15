@@ -15,6 +15,16 @@ namespace Template10.Common
         public T Value { get; private set; }
     }
 
+    public class HandledEventArgs<T> : HandledEventArgs
+    {
+        public HandledEventArgs(T value)
+        {
+            Value = value;
+        }
+
+        public T Value { get; private set; }
+    }
+
     public class CancelEventArgs<T> : CancelEventArgs
     {
         public CancelEventArgs(T value)

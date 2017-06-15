@@ -11,10 +11,12 @@ namespace Template10.Common
 {
     public interface IBootStrapper : IBootStrapperShared
     {
-        Task OnInitializeAsync(IActivatedEventArgs e);
-        Task OnStartAsync(OnStartEventArgs e);
-        Task OnSuspendingAsync(SuspendingEventArgs e);
+        Task OnInitializeAsync(OnStartEventArgs e);
         Task<UIElement> CreateRootElementAsync(IActivatedEventArgs e);
+        Task OnStartAsync(OnStartEventArgs e);
+
+        Task OnResumingAsync(OnStartEventArgs e, out bool handled);
+        Task OnSuspendingAsync(SuspendingEventArgs e);
 
         BootstrapperStates CurrentState { get; }
         Dictionary<string, BootstrapperStates> CurrentStateHistory { get; }
