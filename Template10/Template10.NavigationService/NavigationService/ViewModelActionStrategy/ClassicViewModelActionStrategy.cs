@@ -11,12 +11,12 @@ using Classic = Template10.Services.NavigationService;
 namespace Template10.Services.NavigationService
 {
 
-    public class ClassicViewModelStrategy : ViewModelStrategyBase
+    public class ClassicViewModelActionStrategy : ViewModelActionStrategyBase
     {
         #region Debug
 
         private static void DebugWrite(string text = null, LoggingService.Severities severity = LoggingService.Severities.Template10, [CallerMemberName]string caller = null) =>
-            LoggingService.LoggingService.WriteLine(text, severity, caller: $"{nameof(ClassicViewModelStrategy)}.{caller}");
+            LoggingService.LoggingService.WriteLine(text, severity, caller: $"{nameof(ClassicViewModelActionStrategy)}.{caller}");
 
         #endregion
 

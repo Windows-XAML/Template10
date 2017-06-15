@@ -1,15 +1,20 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
-using Template10.Portable.State;
+using Template10.Portable.PersistedDictionary;
 
-namespace Template10.Services.StateService
+namespace Template10.Common.PersistedDictionary
 {
-    public abstract class StateContainerBase : IPersistedStateContainer
+    public abstract class PersistedDictionaryBase : IPersistedDictionary
     {
+        public event PropertyChangedEventHandler MapChanged;
+        protected void RaiseMapChanged(string propertyName) 
+            => MapChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        
         public string Name { get; }
 
-        public StateContainerBase(string name)
+        public PersistedDictionaryBase(string name)
         {
             Name = name;
         }
@@ -27,7 +32,7 @@ namespace Template10.Services.StateService
         public virtual async Task<T> GetValueAsync<T>(string key)
         {
             var setting = await GetValueAsync(key);
-            var serializer = StateService.DefaultSerializationStrategy;
+            var serializer = Settings.SerializationStrategy;
             var deserialized = serializer.Deserialize<T>(setting);
             return deserialized;
         }
@@ -36,7 +41,7 @@ namespace Template10.Services.StateService
 
         public async Task SetValueAsync<T>(string key, T value)
         {
-            var serializer = StateService.DefaultSerializationStrategy;
+            var serializer = Settings.SerializationStrategy;
             var serialized = serializer.Serialize(value);
             await SetValueAsync(key, serialized);
         }

@@ -1,12 +1,14 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Template10.Common;
 using Template10.Portable.Navigation;
+using Template10.Portable.PersistedDictionary;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 
 namespace Template10.Services.NavigationService
 {
-    public interface IFrameFacadeInternal: IFrameFacade
+    public interface IFrameFacadeInternal : IFrameFacade
     {
         Frame Frame { get; set; }
         INavigationService NavigationService { get; set; }
@@ -18,12 +20,13 @@ namespace Template10.Services.NavigationService
         void GoBack(NavigationTransitionInfo infoOverride);
         void GoForward();
 
+        bool CanGoBack { get; }
+        bool CanGoForward { get; }
+
         bool Navigate(Type page, object parameter, NavigationTransitionInfo info);
 
-        void RaiseNavigated(NavigatedEventArgs e);
-        void RaiseNavigating(NavigatingEventArgs e);
-        void RaiseBackRequested(HandledEventArgs args);
-        void RaiseForwardRequested(HandledEventArgs args);
+        Task<FrameState> GetFrameStateAsync();
+        Task<IPersistedDictionary> GetPageStateAsync(Type page);
 
         void ClearCache(bool removeCachedPagesInBackStack = false);
     }

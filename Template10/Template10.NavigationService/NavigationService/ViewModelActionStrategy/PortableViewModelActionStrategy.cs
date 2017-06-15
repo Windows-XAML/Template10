@@ -11,12 +11,12 @@ using CrossPlat = Template10.Portable.Navigation;
 namespace Template10.Services.NavigationService
 {
 
-    public class PortableViewModelStrategy : ViewModelStrategyBase
+    public class PortableViewModelActionStrategy : ViewModelActionStrategyBase
     {
         #region Debug
 
         private static void DebugWrite(string text = null, LoggingService.Severities severity = LoggingService.Severities.Template10, [CallerMemberName]string caller = null) =>
-            LoggingService.LoggingService.WriteLine(text, severity, caller: $"{nameof(PortableViewModelStrategy)}.{caller}");
+            LoggingService.LoggingService.WriteLine(text, severity, caller: $"{nameof(PortableViewModelActionStrategy)}.{caller}");
 
         #endregion
 

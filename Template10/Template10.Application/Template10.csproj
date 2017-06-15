@@ -129,19 +129,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Behaviors\DeviceDispositionBehavior.cs" />
-    <Compile Include="Bootstrapper\ActivateWindowSources.enum.cs" />
+    <Compile Include="Bootstrapper\OnStartEventArgs.cs" />
+    <Compile Include="Bootstrapper\StartCauses.enum.cs" />
+    <Compile Include="Bootstrapper\Strategies\DefaultWindowStrategy.cs" />
+    <Compile Include="Bootstrapper\Strategies\ISplashStrategy.cs" />
+    <Compile Include="Bootstrapper\Strategies\ActivateWindowSources.enum.cs" />
     <Compile Include="Bootstrapper\AdditionalKinds.enum.cs" />
     <Compile Include="Bootstrapper\AppExecutionState.enum.cs" />
     <Compile Include="Bootstrapper\BootstrapperStates.enum.cs" />
-    <Compile Include="Bootstrapper\ExistingContent.enum.cs" />
-    <Compile Include="Bootstrapper\Extensions.cs" />
+    <Compile Include="Bootstrapper\Strategies\DefaultSplashStrategy.cs" />
     <Compile Include="Bootstrapper\IBootStrapper.cs" />
-    <Compile Include="Bootstrapper\ISplashLogic.cs" />
-    <Compile Include="Bootstrapper\IWindowLogic.cs" />
+    <Compile Include="Bootstrapper\Strategies\IWindowStrategy.cs" />
+    <Compile Include="Bootstrapper\Settings.cs" />
     <Compile Include="Bootstrapper\StartKind.enum.cs" />
-    <Compile Include="Bootstrapper\WindowLogic.cs" />
     <Compile Include="Bootstrapper\BootStrapper.cs" />
-    <Compile Include="Bootstrapper\SplashLogic.cs" />
     <Compile Include="Mvvm\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Properties\Template10Library.rd.xml" />
@@ -196,9 +197,9 @@
       <Project>{1f9a6976-d8f9-459b-8aee-770b53904ff3}</Project>
       <Name>Template10.Shared</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Template10.StateService\Template10.Services.StateService.csproj">
+    <ProjectReference Include="..\Template10.StateService\Template10.Common.PersistedDictionary.csproj">
       <Project>{df5ddea9-9509-45bd-8f1f-dff10515ccd1}</Project>
-      <Name>Template10.Services.StateService</Name>
+      <Name>Template10.Common.PersistedDictionary</Name>
     </ProjectReference>
     <ProjectReference Include="..\Template10.WindowService\Template10.Windowing.csproj">
       <Project>{9cad4451-5adf-48d3-b690-8b341a95a228}</Project>

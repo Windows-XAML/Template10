@@ -9,7 +9,7 @@ namespace Template10.Utils
     public static class NavigationExtensions
     {
         public static INavigationService GetNavigationService(this Frame frame)
-            => NavigationService.GetForFrame(frame);
+            => NavigationServiceHelper.Instances.GetByFrame(frame);
 
         public static async Task<bool> NavigateAsyncEx(this Frame frame, Type page, object parameter = null, NavigationTransitionInfo infoOverride = null)
             => await frame.GetNavigationService().NavigateAsync(page, parameter, infoOverride);

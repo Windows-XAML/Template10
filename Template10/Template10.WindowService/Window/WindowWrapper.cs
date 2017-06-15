@@ -17,72 +17,55 @@ namespace Template10.Services.WindowWrapper
         #region Debug
 
         static void DebugWrite(string text = null, Services.LoggingService.Severities severity = Services.LoggingService.Severities.Template10, [CallerMemberName]string caller = null) =>
-            Services.LoggingService.LoggingService.WriteLine(text, severity, caller: $"WindowWrapper.{caller}");
+            Services.LoggingService.LoggingService.WriteLine(text, severity, caller: $"{nameof(WindowWrapper)}.{caller}");
 
         #endregion
 
-        static WindowWrapper()
+        internal WindowWrapper(Window window)
         {
-            DebugWrite(caller: "Static Constructor");
+            Window = window;
+            Dispatcher = new DispatcherWrapper(window.Dispatcher);
+            window.CoreWindow.Closed += (s, e) => WindowWrapperHelper.Instances.Remove(this);
+            window.Closed += (s, e) => WindowWrapperHelper.Instances.Remove(this);
+
+            window.Activate();
+            ViewService.ViewService.OnWindowCreated();
+            IsMainView = CoreApplication.MainView == CoreApplication.GetCurrentView();
+
+            _DisplayInformation = new Lazy<DisplayInformation>(() =>
+            {
+                Window.Activate();
+                return Dispatcher.Dispatch(() => DisplayInformation.GetForCurrentView());
+            });
+            _ApplicationView = new Lazy<ApplicationView>(() =>
+            {
+                Window.Activate();
+                return Dispatcher.Dispatch(() => ApplicationView.GetForCurrentView());
+            });
+            _UIViewSettings = new Lazy<UIViewSettings>(() =>
+            {
+                Window.Activate();
+                return Dispatcher.Dispatch(() => UIViewSettings.GetForCurrentView());
+            });
         }
 
-        public WindowWrapper()
-        {
-            DebugWrite(caller: "Constructor");
-        }
-
-        public static IWindowWrapper Default()
-        {
-            try
-            {
-                var mainDispatcher = CoreApplication.MainView.Dispatcher;
-                return Instances.FirstOrDefault(x => x.Window.Dispatcher == mainDispatcher) ??
-                        Instances.FirstOrDefault();
-            }
-            catch (COMException)
-            {
-                //MainView might exist but still be not accessible
-                return Instances.FirstOrDefault();
-            }
-        }
+        public bool IsMainView { get; private set; }
 
         public object Content => Dispatcher.Dispatch(() => Window.Content);
 
-        public readonly static List<IWindowWrapper> Instances = new List<IWindowWrapper>();
+        Lazy<DisplayInformation> _DisplayInformation;
+        public DisplayInformation DisplayInformation => _DisplayInformation.Value;
 
-        public static IWindowWrapper Current() => Instances.FirstOrDefault(x => x.Window == Window.Current) ?? Default();
+        Lazy<ApplicationView> _ApplicationView;
+        public ApplicationView ApplicationView => _ApplicationView.Value;
 
-        public static IWindowWrapper Current(Window window) => Instances.FirstOrDefault(x => x.Window == window);
+        Lazy<UIViewSettings> _UIViewSettings;
+        public UIViewSettings UIViewSettings => _UIViewSettings.Value;
 
-        public DisplayInformation DisplayInformation() => Dispatcher.Dispatch(() => Windows.Graphics.Display.DisplayInformation.GetForCurrentView());
+        public Window Window { get; }
 
-        public ApplicationView ApplicationView() => Dispatcher.Dispatch(() => Windows.UI.ViewManagement.ApplicationView.GetForCurrentView());
-
-        public UIViewSettings UIViewSettings() => Dispatcher.Dispatch(() => Windows.UI.ViewManagement.UIViewSettings.GetForCurrentView());
-
-        internal static void WindowCreated(Window window) => new WindowWrapper(window);
-
-        public WindowWrapper(Window window) : this()
-        {
-            if (Current(window) != null)
-            {
-                throw new Exception("Windows already has a wrapper; use Current(window) to fetch.");
-            }
-            Window = window;
-            Instances.Add(this);
-            Dispatcher = new DispatcherWrapper(window.Dispatcher);
-            window.CoreWindow.Closed += (s, e) =>
-            {
-                Instances.Remove(this);
-            };
-            window.Closed += (s, e) =>
-            {
-                Instances.Remove(this);
-            };
-        }
+        public IDispatcherWrapper Dispatcher { get; }
 
         public void Close() { Window.Close(); }
-        public Window Window { get; }
-        public IDispatcherWrapper Dispatcher { get; }
     }
 }

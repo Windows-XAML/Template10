@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Template10.Portable
+namespace Template10
 {
     public class SessionState : Dictionary<string, object>
     {

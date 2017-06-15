@@ -107,6 +107,8 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BootStrapper\BootStrapperHelper.cs" />
+    <Compile Include="BootStrapper\IBootStrapperShared.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\DeviceUtils.cs" />
     <Compile Include="Utilities\DialogUtils.cs" />

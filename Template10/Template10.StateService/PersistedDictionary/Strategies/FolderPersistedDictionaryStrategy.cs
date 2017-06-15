@@ -4,22 +4,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
 
-namespace Template10.Services.StateService
+namespace Template10.Common.PersistedDictionary
 {
-    public enum FoldersStateLocations { Local, Roam }
+    public enum FolderPersistedDictionaryLocations { Local, Roam }
 
-    public class FoldersStateContainer : StateContainerBase
+    public class FolderPersistedDictionaryStrategy : PersistedDictionaryBase
     {
-        public static async Task<FoldersStateContainer> CreateAsync(FoldersStateLocations location, string container = null, string key = null)
+        public static async Task<FolderPersistedDictionaryStrategy> CreateAsync(FolderPersistedDictionaryLocations location, string container = null, string key = null)
         {
-            key = key ?? nameof(FoldersStateContainer);
+            key = key ?? nameof(FolderPersistedDictionaryStrategy);
             var root = default(StorageFolder);
             switch (location)
             {
-                case FoldersStateLocations.Local:
+                case FolderPersistedDictionaryLocations.Local:
                     root = ApplicationData.Current.LocalFolder;
                     break;
-                case FoldersStateLocations.Roam:
+                case FolderPersistedDictionaryLocations.Roam:
                     root = ApplicationData.Current.RoamingFolder;
                     break;
             }
@@ -29,7 +29,7 @@ namespace Template10.Services.StateService
                 root = await root.CreateFolderAsync(container, CreationCollisionOption.OpenIfExists);
             }
             var folder = await root.CreateFolderAsync(key, CreationCollisionOption.OpenIfExists);
-            return new FoldersStateContainer(folder);
+            return new FolderPersistedDictionaryStrategy(folder);
         }
 
         private StorageFolder folder;
@@ -42,7 +42,7 @@ namespace Template10.Services.StateService
             folder = await parent.CreateFolderAsync(name, CreationCollisionOption.OpenIfExists);
         }
 
-        private FoldersStateContainer(StorageFolder folder) : base(folder.Name)
+        private FolderPersistedDictionaryStrategy(StorageFolder folder) : base(folder.Name)
             => this.folder = folder;
 
         public override async Task<string[]> AllKeysAsync()
@@ -65,6 +65,7 @@ namespace Template10.Services.StateService
         {
             var file = await folder.CreateFileAsync(key, CreationCollisionOption.OpenIfExists);
             await FileIO.WriteTextAsync(file, value);
+            base.RaiseMapChanged(key);
         }
     }
 }

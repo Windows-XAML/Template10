@@ -8,7 +8,7 @@ namespace Sample
     {
         public App() => InitializeComponent();
 
-        public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
+        public override async Task OnStartAsync(StartKinds startKind, IActivatedEventArgs args)
         {
             await NavigationService.NavigateAsync(typeof(Views.MainPage));
         }

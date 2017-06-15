@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Template10.Portable.State;
+using Template10.Portable.PersistedDictionary;
 
 namespace Template10.Portable.Navigation
 {

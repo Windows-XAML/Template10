@@ -78,7 +78,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Windowing", "Tem
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.BackService", "Services\Template10.Services.BackService\Template10.Services.BackService.csproj", "{8564F764-99D9-4473-B5E4-AC62CDA73977}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.StateService", "Template10\Template10.StateService\Template10.Services.StateService.csproj", "{DF5DDEA9-9509-45BD-8F1F-DFF10515CCD1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Common.PersistedDictionary", "Template10\Template10.StateService\Template10.Common.PersistedDictionary.csproj", "{DF5DDEA9-9509-45BD-8F1F-DFF10515CCD1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template.Blank", "VisualStudio\Template.Blank\Template.Blank.csproj", "{8560342F-4F61-49AB-9679-1941DB551025}"
 EndProject

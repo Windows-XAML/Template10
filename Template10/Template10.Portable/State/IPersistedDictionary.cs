@@ -1,9 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System.ComponentModel;
+using System.Threading.Tasks;
 
-namespace Template10.Portable.State
+namespace Template10.Portable.PersistedDictionary
 {
-    public interface IPersistedStateContainer
+    public interface IPersistedDictionary
     {
+        event PropertyChangedEventHandler MapChanged;
+
         string Name { get; }
 
         Task<string[]> AllKeysAsync();
@@ -12,7 +15,7 @@ namespace Template10.Portable.State
         Task<T> GetValueAsync<T>(string key);
         Task<string> GetValueAsync(string key);
 
-        Task<(bool Success, object Value)> TryGetValueAsync(string key);
+        Task<(bool Success, string Value)> TryGetValueAsync(string key);
         Task<(bool Success, T Value)> TryGetValueAsync<T>(string key);
 
         Task SetValueAsync<T>(string key, T value);

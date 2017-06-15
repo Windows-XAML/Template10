@@ -7,9 +7,9 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Services.NavigationService
 {
-    public abstract class ViewModelStrategyBase : IViewModelStrategy
+    public abstract class ViewModelActionStrategyBase : IViewModelActionStrategy
     {
-        public IDictionary<string, object> SessionState { get; set; } = sessionState;
+        public IDictionary<string, object> SessionState { get; set; } = Template10.SessionState.Current;
 
         public abstract Task<bool> NavigatingToAsync((object ViewModel, Windows.UI.Xaml.Navigation.NavigationMode NavigationMode) operation, INavigationInfo from, INavigationInfo to, INavigationService nav);
         public abstract Task NavigatedToAsync((object ViewModel, Windows.UI.Xaml.Navigation.NavigationMode NavigationMode) operation, INavigationInfo from, INavigationInfo to, INavigationService nav);

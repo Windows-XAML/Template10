@@ -113,9 +113,17 @@
     <Compile Include="Classic %28INavigable%29\INavigable.cs" />
     <Compile Include="Classic %28INavigable%29\INavigatedAwareAsync.cs" />
     <Compile Include="Classic %28INavigable%29\INavigatingAwareAsync.cs" />
-    <Compile Include="Common\BackButton.enum.cs" />
+    <Compile Include="NavigationService\BackButton.enum.cs" />
     <Compile Include="Common\NavButtonsHelper.cs" />
-    <Compile Include="Extensions\WindowExtensions.cs" />
+    <Compile Include="Frame\FrameState.cs" />
+    <Compile Include="NavigationService\NavigationServiceHelper.cs" />
+    <Compile Include="NavigationService\Settings.cs" />
+    <Compile Include="NavigationService\ViewModelActionStrategy\ClassicViewModelActionStrategy.cs" />
+    <Compile Include="NavigationService\ViewModelActionStrategy\IViewModelActionStrategy.cs" />
+    <Compile Include="NavigationService\ViewModelActionStrategy\PortableViewModelActionStrategy.cs" />
+    <Compile Include="NavigationService\ViewModelActionStrategy\ViewModelPipelineStrategyBase.cs" />
+    <Compile Include="NavigationService\ViewModelResolutionStrategy\DefaultViewModelResoltionStrategy.cs" />
+    <Compile Include="NavigationService\ViewModelResolutionStrategy\IDependecyStrategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="NavigationService\NavigatedEventArgs.cs" />
     <Compile Include="NavigationService\NavigatingEventArgs.cs" />
@@ -126,11 +134,7 @@
     <Compile Include="Frame\FrameFacade.cs" />
     <Compile Include="NavigationService\NavigationService.cs" />
     <Compile Include="NavigationService\NavigationServiceList.cs" />
-    <Compile Include="ViewModelStrategy\ClassicViewModelStrategy.cs" />
-    <Compile Include="ViewModelStrategy\IViewModelStrategy.cs" />
     <Compile Include="Extensions\PortableExtensions.cs" />
-    <Compile Include="ViewModelStrategy\PortableNavigationStrategy.cs" />
-    <Compile Include="ViewModelStrategy\ViewModelStrategyBase.cs" />
     <EmbeddedResource Include="Properties\Template10.Services.Navigation.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -166,9 +170,9 @@
       <Project>{1f9a6976-d8f9-459b-8aee-770b53904ff3}</Project>
       <Name>Template10.Shared</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Template10.StateService\Template10.Services.StateService.csproj">
+    <ProjectReference Include="..\Template10.StateService\Template10.Common.PersistedDictionary.csproj">
       <Project>{df5ddea9-9509-45bd-8f1f-dff10515ccd1}</Project>
-      <Name>Template10.Services.StateService</Name>
+      <Name>Template10.Common.PersistedDictionary</Name>
     </ProjectReference>
     <ProjectReference Include="..\Template10.WindowService\Template10.Windowing.csproj">
       <Project>{9cad4451-5adf-48d3-b690-8b341a95a228}</Project>

@@ -1,5 +1,5 @@
 ﻿using System;
-using Template10.Portable.State;
+using Template10.Portable.PersistedDictionary;
 
 namespace Template10.Portable.Navigation
 {
@@ -7,12 +7,12 @@ namespace Template10.Portable.Navigation
     {
         Type PageType { get; }
         object Parameter { get; }
-        IPersistedStateContainer PageState { get; }
+        IPersistedDictionary PageState { get; }
     }
 
     public class NavigationInfo : INavigationInfo
     {
-        public NavigationInfo(Type pageType, object parameter, IPersistedStateContainer pageState)
+        public NavigationInfo(Type pageType, object parameter, IPersistedDictionary pageState)
         {
             PageType = pageType;
             Parameter = parameter;
@@ -20,6 +20,6 @@ namespace Template10.Portable.Navigation
         }
         public Type PageType { get; }
         public object Parameter { get; }
-        public IPersistedStateContainer PageState { get; }
+        public IPersistedDictionary PageState { get; }
     }
 }

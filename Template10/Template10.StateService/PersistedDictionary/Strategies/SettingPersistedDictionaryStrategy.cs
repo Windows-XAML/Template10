@@ -3,15 +3,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
 
-namespace Template10.Services.StateService
+namespace Template10.Common.PersistedDictionary
 {
     public enum SettingsStateLocations { Local, Roam }
 
-    public class SettingsStateContainer : StateContainerBase
+    public class SettingPersistedDictionaryStrategy : PersistedDictionaryBase
     {
-        public static async Task<SettingsStateContainer> CreateAsync(SettingsStateLocations location, string container = null, string key = null)
+        public static async Task<SettingPersistedDictionaryStrategy> CreateAsync(SettingsStateLocations location, string container = null, string key = null)
         {
-            key = key ?? nameof(SettingsStateContainer);
+            key = key ?? nameof(SettingPersistedDictionaryStrategy);
             var data = default(ApplicationDataContainer);
             switch (location)
             {
@@ -28,7 +28,7 @@ namespace Template10.Services.StateService
             {
                 data = data.CreateContainer(container, ApplicationDataCreateDisposition.Existing);
             }
-            return new SettingsStateContainer(data);
+            return new SettingPersistedDictionaryStrategy(data);
         }
 
         private ApplicationDataContainer container;
@@ -36,7 +36,7 @@ namespace Template10.Services.StateService
         public async override Task ClearAsync()
             => container.Values.Clear();
 
-        private SettingsStateContainer(ApplicationDataContainer container) : base(container.Name)
+        private SettingPersistedDictionaryStrategy(ApplicationDataContainer container) : base(container.Name)
             => this.container = container;
 
         public override async Task<string[]> AllKeysAsync()
@@ -49,6 +49,9 @@ namespace Template10.Services.StateService
             => container.Values[key]?.ToString() ?? string.Empty;
 
         public override async Task SetValueAsync(string key, string value)
-            => container.Values[key] = value;
+        {
+            container.Values[key] = value;
+            base.RaiseMapChanged(key);
+        }
     }
 }

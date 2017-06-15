@@ -1,4 +1,6 @@
-﻿using Windows.UI.Core;
+﻿using System;
+using System.ComponentModel;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 
 namespace Template10.Services.BackButtonService
@@ -33,13 +35,34 @@ namespace Template10.Services.BackButtonService
             };
         }
 
+        public static CancelEventArgs RaiseBeforeBackRequested()
+        {
+            var args = new CancelEventArgs();
+            BeforeBackRequested?.Invoke(null, args);
+            return args;
+        }
+
+        /// <summary>
+        /// This event allows a mechainsm to intercept BackRequested and stop it. Some
+        /// use cases would include the ModalDialog which would cancel the event, using
+        /// it instead for itself to close the dialog - not wanting it to navigate a frame.
+        /// </summary>
+        public static event Common.TypedEventHandler<CancelEventArgs> BeforeBackRequested;
+
         public static Common.HandledEventArgs RaiseBackRequested()
         {
+            if (RaiseBeforeBackRequested().Cancel)
+            {
+                return new Common.HandledEventArgs
+                {
+                    Handled = true
+                };
+            }
+
             var args = new Common.HandledEventArgs();
             BackRequested?.Invoke(null, args);
             return args;
         }
-
         public static event Common.TypedEventHandler<Common.HandledEventArgs> BackRequested;
 
         public static Common.HandledEventArgs RaiseForwardRequested()
@@ -48,7 +71,24 @@ namespace Template10.Services.BackButtonService
             ForwardRequested?.Invoke(null, args);
             return args;
         }
-
         public static event Common.TypedEventHandler<Common.HandledEventArgs> ForwardRequested;
-   }
+
+        public static void UpdateShellBackButton(bool canGoBack)
+        {
+            // show the shell back only if there is anywhere to go in the default frame
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+                (Settings.ShowShellBackButton && (canGoBack || Settings.ForceShowShellBackButton))
+                    ? AppViewBackButtonVisibility.Visible
+                    : AppViewBackButtonVisibility.Collapsed;
+            ShellBackButtonUpdated?.Invoke(null, EventArgs.Empty);
+        }
+
+        public static event EventHandler ShellBackButtonUpdated;
+    }
+
+    public static class Settings
+    {
+        public static bool ShowShellBackButton { get; set; } = true;
+        public static bool ForceShowShellBackButton { get; set; } = false;
+    }
 }

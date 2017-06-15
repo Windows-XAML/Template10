@@ -2,11 +2,11 @@
 
 namespace Template10.Common
 {
-    public class WindowLogic : IWindowLogic
+    public class DefaultWindowStrategy : IWindowStrategy
     {
-        internal WindowLogic()
+        internal DefaultWindowStrategy()
         {
-
+            // empty
         }
 
         /// <summary>
@@ -15,13 +15,12 @@ namespace Template10.Common
         /// One scenario might be a delayed activation for Splash Screen.
         /// </summary>
         /// <param name="source">Reason for the call from Template 10</param>
-        public void ActivateWindow(ActivateWindowSources source, ISplashLogic splashLogic)
+        public void ActivateWindow(ActivateWindowSources source)
         {
             if (source != ActivateWindowSources.SplashScreen)
             {
-                splashLogic.Hide();
+                Settings.SplashStrategy.Hide();
             }
-
             Window.Current.Activate();
         }
     }
