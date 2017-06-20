@@ -30,23 +30,14 @@ namespace Template10.Mvvm
         public virtual void RaisePropertyChanged([CallerMemberName]string propertyName = null)
         {
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled) return;
-            var handler = PropertyChanged;
-            if (Equals(handler, null)) return;
-            var args = new PropertyChangedEventArgs(propertyName);
-            handler.Invoke(this, args);
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public virtual void RaisePropertyChanged<T>(Expression<Func<T>> propertyExpression)
         {
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled) return;
-            var handler = PropertyChanged;
-            if (!Equals(handler, null))
-            {
-                var propertyName = ExpressionUtils.GetPropertyName(propertyExpression);
-                if (Equals(propertyName, null)) return;
-                var args = new PropertyChangedEventArgs(propertyName);
-                handler.Invoke(this, args);
-            }
+            var propertyName = ExpressionUtils.GetPropertyName(propertyExpression);
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
