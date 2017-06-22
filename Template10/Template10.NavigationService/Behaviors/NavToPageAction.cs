@@ -5,6 +5,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media.Animation;
+using Template10.Utils;
 
 namespace Template10.Behaviors
 {
@@ -13,15 +14,20 @@ namespace Template10.Behaviors
         public object Execute(object sender, object parameter)
         {
             if (null == Page)
+            {
                 return false;
+            }
 
             if (Frame == null)
+            {
                 throw new NullReferenceException($"{nameof(NavToPageAction)}.{nameof(Frame)} is required.");
+            }
 
-
-            var nav = NavigationService.GetForFrame(Frame);
+            var nav = Frame.GetNavigationService();
             if (nav == null)
+            {
                 throw new NullReferenceException($"Cannot find NavigationService for {Frame.ToString()}.");
+            }
 
             IXamlMetadataProvider metadataProvider = Application.Current as IXamlMetadataProvider;
             if (metadataProvider == null)

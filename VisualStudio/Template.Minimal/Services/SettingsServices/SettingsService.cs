@@ -1,56 +1,62 @@
 ﻿using System;
-using Template10.Common;
+using Template10.Services.NavigationService;
+using Template10.Services.SettingsService.Services.SettingsService;
 using Template10.Services.WindowWrapper;
 using Template10.Utils;
 using Windows.UI.Xaml;
 
 namespace Sample.Services.SettingsServices
 {
-    public class SettingsService : Template10.Services.SettingsService.SettingsServiceBase
-	{
-		public static SettingsService Instance { get; } = new SettingsService();
-		private SettingsService()
-		{
-			// empty
-		}
-
-		public bool UseShellBackButton
+    public class SettingsService : SettingsServiceBase
+    {
+        public static SettingsService Instance = new SettingsService();
+        private SettingsService()
         {
-            get { return Read<bool>(nameof(UseShellBackButton), true); }
-            set
-            {
-                Write(nameof(UseShellBackButton), value);
-				WindowWrapper.Current().Dispatcher.Dispatch(() =>
-				{
-                    BootStrapper.Current.ShowShellBackButton = value;
-                    BootStrapper.Current.UpdateShellBackButton();
-                });
-            }
+            // empty
+        }
+
+        public bool UseShellBackButton
+        {
+            get => Read(nameof(UseShellBackButton), true);
+            set => Write(nameof(UseShellBackButton), value);
         }
 
         public ApplicationTheme AppTheme
         {
-            get
-            {
-                var theme = ApplicationTheme.Light;
-                var value = Read<string>(nameof(AppTheme), theme.ToString());
-                return Enum.TryParse<ApplicationTheme>(value, out theme) ? theme : ApplicationTheme.Dark;
-            }
-            set
-            {
-                Write(nameof(AppTheme), value.ToString());
-                (Window.Current.Content as FrameworkElement).RequestedTheme = value.ToElementTheme();
-            }
+            get => Read(nameof(AppTheme), ApplicationTheme.Light);
+            set => Write(nameof(AppTheme), value.ToString());
         }
 
         public TimeSpan CacheMaxDuration
         {
-            get { return Read<TimeSpan>(nameof(CacheMaxDuration), TimeSpan.FromDays(2)); }
-            set
+            get => Read(nameof(CacheMaxDuration), TimeSpan.FromDays(2));
+            set => Write(nameof(CacheMaxDuration), value);
+        }
+
+        private new void Write<T>(string key, T value)
+        {
+            // persist it
+
+            base.Write(key, value);
+
+            // implement it
+
+            WindowWrapperHelper.Current().Dispatcher.Dispatch(() =>
             {
-                Write(nameof(CacheMaxDuration), value);
-                BootStrapper.Current.CacheMaxDuration = value;
-            }
+                switch (key)
+                {
+                    case nameof(UseShellBackButton):
+                        Template10.Services.BackButtonService.Settings.ShowShellBackButton = UseShellBackButton;
+                        Template10.Services.BackButtonService.BackButtonService.UpdateBackButton(NavigationServiceHelper.Default.CanGoBack);
+                        break;
+                    case nameof(AppTheme):
+                        (Window.Current.Content as FrameworkElement).RequestedTheme = AppTheme.ToElementTheme();
+                        break;
+                    case nameof(CacheMaxDuration):
+                        Template10.Common.Settings.CacheMaxDuration = CacheMaxDuration;
+                        break;
+                }
+            });
         }
     }
 }

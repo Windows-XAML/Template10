@@ -3,26 +3,42 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Template10.Common;
 using Template10.Services.NavigationService;
-using Windows.UI.Xaml.Navigation;
+using Template10.Portable.Navigation;
+using Template10.Services.WindowWrapper;
+using Template10.Utils;
 
 namespace Template10.Mvvm
 {
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/MVVM
-    public abstract class ViewModelBase : BindableBase, INavigable
+    public abstract class ViewModelBase
+        : BindableBase,
+        INavigatedToAwareAsync,
+        INavigatedFromAwareAsync,
+        IConfirmNavigationAsync,
+        ITemplate10ViewModel
     {
-        public virtual Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state) => Task.CompletedTask;
+        public abstract Task OnNavigatedToAsync(INavigatedToParameters parameter);
 
-        public virtual Task OnNavigatedFromAsync(IDictionary<string, object> pageState, bool suspending) => Task.CompletedTask;
+        public async virtual Task OnNavigatedFromAsync(INavigatedFromParameters parameters)
+        {
+            await Task.CompletedTask;
+        }
 
-        public virtual Task OnNavigatingFromAsync(NavigatingEventArgs args) => Task.CompletedTask;
+        public async virtual Task<bool> CanNavigateAsync(IConfirmNavigationParameters parameters)
+        {
+            await Task.CompletedTask;
+            return true;
+        }
+
+        [JsonIgnore]
+        public virtual IWindowWrapper Window => NavigationService.GetWindowWrapper();
+
+        [JsonIgnore]
+        public virtual IDispatcherWrapper Dispatcher => Window.Dispatcher;
 
         [JsonIgnore]
         public virtual INavigationService NavigationService { get; set; }
 
         [JsonIgnore]
-        public virtual IDispatcherWrapper Dispatcher { get; set; }
-
-        [JsonIgnore]
-        public virtual IDictionary<string, object> SessionState => BootStrapper.Current.SessionState;
+        public virtual IDictionary<string, object> SessionState => Template10.Common.SessionState.Current;
     }
 }

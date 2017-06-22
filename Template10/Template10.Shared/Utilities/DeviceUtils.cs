@@ -47,14 +47,14 @@ namespace Template10.Utils
             MonitorUtils = MonitorUtils.Current(windowWrapper);
             WindowWrapper = windowWrapper ?? throw new ArgumentNullException(nameof(windowWrapper));
 
-            var di = windowWrapper.DisplayInformation();
+            var di = windowWrapper.DisplayInformation;
             di.OrientationChanged += new Common.WeakReference<DeviceUtils, DisplayInformation, object>(this)
             {
                 EventAction = (i, s, e) => i.Changed?.Invoke(i, EventArgs.Empty),
                 DetachAction = (i, w) => di.OrientationChanged -= w.Handler
             }.Handler;
 
-            var av = windowWrapper.ApplicationView();
+            var av = windowWrapper.ApplicationView;
             av.VisibleBoundsChanged += new Common.WeakReference<DeviceUtils, ApplicationView, object>(this)
             {
                 EventAction = (i, s, e) => i.Changed?.Invoke(i, EventArgs.Empty),
@@ -72,10 +72,10 @@ namespace Template10.Utils
             {
                 var item = new DeviceUtils(windowWrapper);
                 Cache.Add(windowWrapper, item);
-                windowWrapper.ApplicationView().Consolidated += new Common.WeakReference<DeviceUtils, ApplicationView, object>(item)
+                windowWrapper.ApplicationView.Consolidated += new Common.WeakReference<DeviceUtils, ApplicationView, object>(item)
                 {
                     EventAction = (i, s, e) => Cache.Remove(windowWrapper),
-                    DetachAction = (i, w) => windowWrapper.ApplicationView().Consolidated -= w.Handler
+                    DetachAction = (i, w) => windowWrapper.ApplicationView.Consolidated -= w.Handler
                 }.Handler;
             }
             return Cache[windowWrapper];
@@ -131,7 +131,7 @@ namespace Template10.Utils
 
         public bool IsTouch()
         {
-            return WindowWrapper.UIViewSettings().UserInteractionMode == UserInteractionMode.Touch;
+            return WindowWrapper.UIViewSettings.UserInteractionMode == UserInteractionMode.Touch;
         }
 
         public bool IsPhone()
@@ -157,7 +157,7 @@ namespace Template10.Utils
 
         public double DiagonalSize(Units units = Units.Inches)
         {
-            var di = WindowWrapper.DisplayInformation();
+            var di = WindowWrapper.DisplayInformation;
             double inches = 7;
             if (ApiInformation.IsPropertyPresent(typeof(DisplayInformation).ToString(), nameof(di.DiagonalSizeInInches)))
                 inches = di.DiagonalSizeInInches.GetValueOrDefault(inches);

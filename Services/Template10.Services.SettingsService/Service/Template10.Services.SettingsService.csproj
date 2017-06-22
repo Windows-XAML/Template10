@@ -108,17 +108,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services.SettingsService\StringHelper.cs" />
-    <Compile Include="Services.SettingsService\DefaultMapping.cs" />
-    <Compile Include="Services.SettingsService\ISettingConverter.cs" />
-    <Compile Include="Services.SettingsService\ISettingMapping.cs" />
-    <Compile Include="Services.SettingsService\DefaultConverter.cs" />
-    <Compile Include="Services.SettingsService\ISettingsService.cs" />
-    <Compile Include="Services.SettingsService\SettingsHelper.cs" />
-    <Compile Include="Services.SettingsService\SettingsService.cs" />
-    <Compile Include="Services.SettingsService\SettingsServiceBase.cs" />
-    <Compile Include="Services.SettingsService\SettingsStrategy.cs" />
+    <Compile Include="Services.SettingsService\SettingsBase.cs" />
+    <Compile Include="Services.SettingsService\CompressionHelper.cs" />
     <EmbeddedResource Include="Properties\Template10.Services.SettingsService.rd.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Helpers\Template10.Mvvm\Template10.Mvvm.csproj">
+      <Project>{B23E19AA-1797-43F6-A0F1-FB2C13111AEB}</Project>
+      <Name>Template10.Mvvm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Template10\Template10.Portable\Template10.Portable.csproj">
+      <Project>{2B6903DF-396A-4D97-BF29-45BC6DD72DBE}</Project>
+      <Name>Template10.Portable</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Template10.Services.SerializationService\Service\Template10.Services.SerializationService.csproj">
+      <Project>{d3a94520-4cd4-4d56-b30b-7e54face64bb}</Project>
+      <Name>Template10.Services.SerializationService</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

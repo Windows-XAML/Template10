@@ -38,9 +38,14 @@ namespace Template10.Services.NavigationService
             service.BackButtonHandling = backButton;
             if (backButton == BackButton.Attach)
             {
-                frame.RegisterPropertyChangedCallback(Frame.BackStackDepthProperty, (s, args) => BackButtonService.BackButtonService.UpdateShellBackButton(service.CanGoBack));
-                frame.Navigated += (s, args) => BackButtonService.BackButtonService.UpdateShellBackButton(service.CanGoBack);
-                BackButtonService.BackButtonService.BackRequested += async (s, e) => await service.GoBackAsync();
+                frame.RegisterPropertyChangedCallback(Frame.BackStackDepthProperty, (s, args)
+                    => BackButtonService.BackButtonService.UpdateBackButton(service.CanGoBack));
+
+                frame.Navigated += (s, args)
+                    => BackButtonService.BackButtonService.UpdateBackButton(service.CanGoBack);
+
+                BackButtonService.BackButtonService.BackRequested += async (s, e)
+                    => e.Handled = await service.GoBackAsync();
             }
 
             if (!Instances.Any())

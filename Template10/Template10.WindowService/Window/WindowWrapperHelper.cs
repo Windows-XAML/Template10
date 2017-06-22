@@ -29,9 +29,10 @@ namespace Template10.Services.WindowWrapper
         }
 
         public static IWindowWrapper Current() => Instances.FirstOrDefault(x => x.Window == Window.Current) ?? Default();
+
         public static IWindowWrapper Current(Window window) => Instances.FirstOrDefault(x => x.Window == window);
 
-        // will only be called from the Application.WindowCreated event
+        // (should) only be called from the Application.WindowCreated event
         public static async void Create(WindowCreatedEventArgs args)
         {
             await CreateAsync(args.Window);

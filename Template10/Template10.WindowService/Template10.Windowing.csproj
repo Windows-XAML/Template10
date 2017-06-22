@@ -109,7 +109,6 @@
   <ItemGroup>
     <Compile Include="Dispatcher\DispatcherWrapper.cs" />
     <Compile Include="Dispatcher\IDispatcherWrapper.cs" />
-    <Compile Include="Extensions\WindowExtensions.cs" />
     <Compile Include="Window\IWindowWrapper.cs" />
     <Compile Include="Window\WindowWrapper.cs" />
     <Compile Include="Popup\PopupExtensions.cs" />

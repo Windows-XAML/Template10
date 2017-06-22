@@ -1,6 +1,5 @@
 namespace Template10.Portable.Navigation
 {
-
     // don't match the XAML enum name exactly, it causes too much coding trouble
 
     public enum NavMode

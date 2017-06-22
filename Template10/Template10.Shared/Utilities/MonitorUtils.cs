@@ -17,14 +17,14 @@ namespace Template10.Utils
 
         private MonitorUtils(IWindowWrapper windowWrapper)
         {
-            var di = windowWrapper.DisplayInformation();
+            var di = windowWrapper.DisplayInformation;
             di.OrientationChanged += new WeakReference<MonitorUtils, DisplayInformation, object>(this)
             {
                 EventAction = (i, s, e) => i.Changed?.Invoke(i, EventArgs.Empty),
                 DetachAction = (i, w) => di.OrientationChanged -= w.Handler
             }.Handler;
 
-            var av = windowWrapper.ApplicationView();
+            var av = windowWrapper.ApplicationView;
             av.VisibleBoundsChanged += new WeakReference<MonitorUtils, ApplicationView, object>(this)
             {
                 EventAction = (i, s, e) => i.Changed?.Invoke(i, EventArgs.Empty),
@@ -46,10 +46,10 @@ namespace Template10.Utils
             {
                 var item = new MonitorUtils(windowWrapper);
                 Cache.Add(windowWrapper, item);
-                windowWrapper.ApplicationView().Consolidated += new WeakReference<MonitorUtils, ApplicationView, object>(item)
+                windowWrapper.ApplicationView.Consolidated += new WeakReference<MonitorUtils, ApplicationView, object>(item)
                 {
                     EventAction = (i, s, e) => Cache.Remove(windowWrapper),
-                    DetachAction = (i, w) => windowWrapper.ApplicationView().Consolidated -= w.Handler
+                    DetachAction = (i, w) => windowWrapper.ApplicationView.Consolidated -= w.Handler
                 }.Handler;
             }
             return Cache[windowWrapper];

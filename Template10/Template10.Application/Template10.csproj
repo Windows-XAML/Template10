@@ -129,20 +129,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Behaviors\DeviceDispositionBehavior.cs" />
-    <Compile Include="Bootstrapper\OnStartEventArgs.cs" />
-    <Compile Include="Bootstrapper\StartCauses.enum.cs" />
-    <Compile Include="Bootstrapper\Strategies\DefaultWindowStrategy.cs" />
-    <Compile Include="Bootstrapper\Strategies\ILifecycleStrategy.cs" />
-    <Compile Include="Bootstrapper\Strategies\ISplashStrategy.cs" />
-    <Compile Include="Bootstrapper\Strategies\ActivateWindowSources.enum.cs" />
+    <Compile Include="StartupInfo\StartupInfo.cs" />
+    <Compile Include="StartupInfo\StartCauses.enum.cs" />
+    <Compile Include="Strategies\ExtendedSessionStrategy\DefaultExtendedSessionStrategy.cs" />
+    <Compile Include="Strategies\ExtendedSessionStrategy\ExtendedSessionManager.cs" />
+    <Compile Include="Strategies\ExtendedSessionStrategy\ExtendedSessionStrategyBase.cs" />
+    <Compile Include="Strategies\ExtendedSessionStrategy\IExtendedSessionStrategy.cs" />
+    <Compile Include="Strategies\ExtendedSessionStrategy\IExtendedSessionStrategyInternal.cs" />
+    <Compile Include="Strategies\ExtendedSessionStrategy\Settings.cs" />
+    <Compile Include="Strategies\SuspendResumeStrategy\DefaultSuspendResumeStrategy.cs" />
+    <Compile Include="Strategies\SuspendResumeStrategy\ISuspendResumeStrategy.cs" />
+    <Compile Include="Strategies\SuspendResumeStrategy\Settings.cs" />
+    <Compile Include="Strategies\TitleBarStrategy\ITitleBarStrategy.cs" />
     <Compile Include="Bootstrapper\AdditionalKinds.enum.cs" />
     <Compile Include="Bootstrapper\AppExecutionState.enum.cs" />
     <Compile Include="Bootstrapper\BootstrapperStates.enum.cs" />
-    <Compile Include="Bootstrapper\Strategies\DefaultSplashStrategy.cs" />
     <Compile Include="Bootstrapper\IBootStrapper.cs" />
-    <Compile Include="Bootstrapper\Strategies\IWindowStrategy.cs" />
     <Compile Include="Bootstrapper\Settings.cs" />
-    <Compile Include="Bootstrapper\StartKind.enum.cs" />
+    <Compile Include="StartupInfo\StartKind.enum.cs" />
     <Compile Include="Bootstrapper\BootStrapper.cs" />
     <Compile Include="Mvvm\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

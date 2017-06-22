@@ -1,30 +1,32 @@
 ﻿using System;
-using Template10.Services.ExtendedSessionService;
+using System.Threading.Tasks;
+using Template10.Strategies.ExtendedSessionStrategy;
+using Template10.Strategies.SuspendResumeStrategy;
+using Template10.Strategies.TitleBarStrategy;
+using Template10.Utils;
 using Windows.ApplicationModel.Activation;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace Template10.Common
 {
-    public static class Settings
+    public class Settings
     {
-        public static IWindowStrategy WindowStrategy { get; set; } = new DefaultWindowStrategy();
-        public static ISplashStrategy SplashStrategy { get; set; } = new DefaultSplashStrategy();
-        public static IExtendedSessionService SessionStrategy { get; set; } = new ExtendedSessionService();
-        public static ILifecycleStrategy LifecycleStrategy { get; set; } = new DefaultLifecycleStrategy();
+        public static IExtendedSessionStrategy ExtendedSessionStrategy { get; set; } = new DefaultExtendedSessionStrategy();
+        public static ISuspendResumeStrategy SuspendResumeStrategy { get; set; } = new DefaultSuspendResumeStrategy();
+        public static ITitleBarStrategy TitleBarStrategy { get; set; } = new DefaultTitleBarStrategy();
+
+        public static Func<SplashScreen, UserControl> SplashFactory { get; set; }
 
         /// <summary>
-        /// The SplashFactory is a Func that returns an instantiated Splash view.
-        /// Template 10 will automatically inject this visual before loading the app.
+        ///  By default, Template 10 will setup the root element to be a Template 10
+        ///  Modal Dialog control. If you desire something different, you can set it here.
         /// </summary>
-        /// <remarks>
-        /// This is a convenience property forwarding the constant value
-        /// available through Settings.SplashStrategy.SplashFactory
-        /// </remarks>
-        public static Func<SplashScreen, UserControl> SplashFactory
+        public static Func<StartupInfo, Task<UIElement>> RootFactoryAsync { get; set; } = new Func<StartupInfo, Task<UIElement>>(async (e) =>
         {
-            get => SplashStrategy.SplashFactory;
-            set => SplashStrategy.SplashFactory = value;
-        }
+            // return new ModalDialog { Content = await new Frame().RegisterAsync() };
+            return await new Frame().RegisterAsync();
+        });
 
         /// <summary>
         /// If there is no view-model found for a view then this strategy is used
@@ -50,8 +52,8 @@ namespace Template10.Common
         /// </remarks>
         public static bool RunSuspendStrategy
         {
-            get => LifecycleStrategy.RunPersistStrategy;
-            set => LifecycleStrategy.RunPersistStrategy = value;
+            get => Strategies.SuspendResumeStrategy.Settings.RunSuspendStrategy;
+            set => Strategies.SuspendResumeStrategy.Settings.RunSuspendStrategy = value;
         }
 
         /// <summary>
@@ -64,8 +66,8 @@ namespace Template10.Common
         /// </remarks>
         public static bool RunRestoreStrategy
         {
-            get => LifecycleStrategy.RunRestoreStrategy;
-            set => LifecycleStrategy.RunRestoreStrategy = value;
+            get => Strategies.SuspendResumeStrategy.Settings.RunRestoreStrategy;
+            set => Strategies.SuspendResumeStrategy.Settings.RunRestoreStrategy = value;
         }
 
         /// <summary>
@@ -86,7 +88,16 @@ namespace Template10.Common
         /// This setting tells Template 10 if it should automatically implement a SavingData
         /// ExtendedSession when Suspending. This extends the time limit for Suspension activity.
         /// </summary>
-        public static bool AutoExtendExecutionSession { get; set; } = true;
+        /// <remarks>
+        /// This is a convenience property forwarding the constant value
+        /// available through Services.NavigationService.Settings.CacheMaxDuration
+        /// </remarks>
+        public static bool AutoExtendExecutionSession
+        {
+            get => Strategies.ExtendedSessionStrategy.Settings.AutoExtendExecutionSession;
+            set => Strategies.ExtendedSessionStrategy.Settings.AutoExtendExecutionSession = value;
+        }
+
 
         /// <summary>
         /// When set to true, this will ignore the state of the default Frame.CanGoBack

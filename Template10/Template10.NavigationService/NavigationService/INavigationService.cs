@@ -17,7 +17,7 @@ namespace Template10.Services.NavigationService
         void RaiseForwardRequested(HandledEventArgs args);
         void RaiseBackRequested(HandledEventArgs args);
 
-        Task Suspend();
+        Task SuspendAsync();
 
         event TypedEventHandler<Type> AfterRestoreSavedNavigation;
     }

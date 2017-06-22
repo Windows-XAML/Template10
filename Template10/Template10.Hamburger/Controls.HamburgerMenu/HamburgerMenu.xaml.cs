@@ -303,7 +303,7 @@ namespace Template10.Controls
                 if (!_isUpdateSelectedRunning)
                     await UpdateSelectedAsync(e.OldValue, e.NewValue);
             }
-            catch 
+            catch
             {
                 // 
             }
@@ -311,8 +311,8 @@ namespace Template10.Controls
 
         partial void InternalNavigationServiceChanged(ChangedEventArgs<INavigationService> e)
         {
-            e.NewValue.AfterRestoreSavedNavigation += (s, args) => HighlightCorrectButton(NavigationService.CurrentPageType, NavigationService.CurrentPageParam);
-            e.NewValue.FrameFacade.Navigated += (s, args) => HighlightCorrectButton(args.PageType, args.Parameter);
+            (e.NewValue as INavigationServiceInternal).AfterRestoreSavedNavigation += (s, args) => HighlightCorrectButton(NavigationService.CurrentPageType, NavigationService.CurrentPageParam);
+            (e.NewValue as INavigationServiceInternal).Navigated += (s, args) => HighlightCorrectButton(args.PageType, args.Parameter);
             ShellSplitView.Content = (e.NewValue.FrameFacade as IFrameFacadeInternal).Frame;
             UpdateFullScreenForSplashScreen(e);
         }
@@ -354,13 +354,13 @@ namespace Template10.Controls
             // If splash screen then continue showing until navigated once
             if (e.NewValue.FrameFacade.BackStack.Count == 0
                 && e.NewValue.FrameFacade.Content != null)
-                // TODO : JERRY!
-                // && Locator.BootStrapper.Instance.SplashFactory != null
-                // && Locator.BootStrapper.Instance.PreviousExecutionState != Windows.ApplicationModel.Activation.ApplicationExecutionState.Terminated)
+            // TODO : JERRY!
+            // && Locator.BootStrapper.Instance.SplashFactory != null
+            // && Locator.BootStrapper.Instance.PreviousExecutionState != Windows.ApplicationModel.Activation.ApplicationExecutionState.Terminated)
             {
                 var once = false;
                 UpdateControl(true);
-                e.NewValue.FrameFacade.Navigated += (s, args) =>
+                (e.NewValue as INavigationServiceInternal).Navigated += (s, args) =>
                 {
                     if (!once)
                     {
@@ -395,7 +395,8 @@ namespace Template10.Controls
                     {
                         try
                         {
-                            pageParam = NavigationService.SerializationService.Deserialize(pageParam.ToString());
+                            pageParam = Services.NavigationService.Settings
+                                .SerializationStrategy.Deserialize(pageParam.ToString());
                         }
                         catch
                         {
@@ -552,9 +553,14 @@ namespace Template10.Controls
 
                     IsOpen = (DisplayMode == SplitViewDisplayMode.CompactInline && IsOpen);
                     if (current.ClearHistory)
+                    {
                         NavigationService.ClearHistory();
+                    }
                     if (current.ClearCache)
-                        NavigationService.ClearCache(true);
+                    {
+                        var frameState = await (NavigationService.FrameFacade as IFrameFacadeInternal).GetFrameStateAsync();
+                        await frameState.ClearAsync();
+                    }
                 }
                 else if (NavigationService.CurrentPageType == current.PageType && (NavigationService.CurrentPageParam ?? string.Empty) == (current.PageParameter ?? string.Empty))
                 {
@@ -562,9 +568,14 @@ namespace Template10.Controls
                     SignalCurrentPage(previous, current);
 
                     if (current.ClearHistory)
+                    {
                         NavigationService.ClearHistory();
+                    }
                     if (current.ClearCache)
-                        NavigationService.ClearCache(true);
+                    {
+                        var frameState = await (NavigationService.FrameFacade as IFrameFacadeInternal).GetFrameStateAsync();
+                        await frameState.ClearAsync();
+                    }
                 }
                 else if (previous == null || NavigationService.CurrentPageType == current.PageType)
                 {

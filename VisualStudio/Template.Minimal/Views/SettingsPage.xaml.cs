@@ -11,7 +11,7 @@ namespace Sample.Views
         {
             InitializeComponent();
             NavigationCacheMode = NavigationCacheMode.Required;
-            _SerializationService = Template10.Services.SerializationService.SerializationService.Json;
+            _SerializationService = Template10.Services.SerializationService.SerializationHelper.Json;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

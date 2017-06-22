@@ -1,14 +1,24 @@
 ﻿using System;
 using System.ComponentModel;
+using Windows.Foundation.Metadata;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 
 namespace Template10.Services.BackButtonService
 {
-    public class BackButtonService
+    public class BackButtonService 
     {
         static BackButtonService()
         {
+            EnsureListener();
+        }
+
+        private static bool ensureListener = false;
+        private static void EnsureListener()
+        {
+            if (ensureListener) return;
+            else ensureListener = true;
+
             var keyHelper = new KeyboardService.KeyboardHelper();
             keyHelper.KeyDown = (e) =>
             {
@@ -29,61 +39,63 @@ namespace Template10.Services.BackButtonService
                 else if (e.OnlyAlt && e.VirtualKey == Windows.System.VirtualKey.Right) e.Handled = RaiseForwardRequested().Handled;
             };
 
-            SystemNavigationManager.GetForCurrentView().BackRequested += (s, e) =>
-            {
-                e.Handled = RaiseBackRequested().Handled;
-            };
-        }
-
-        public static CancelEventArgs RaiseBeforeBackRequested()
-        {
-            var args = new CancelEventArgs();
-            BeforeBackRequested?.Invoke(null, args);
-            return args;
+            SystemNavigationManager.GetForCurrentView().BackRequested += (s, e)
+                => e.Handled = RaiseBackRequested().Handled;
         }
 
         /// <summary>
-        /// This event allows a mechainsm to intercept BackRequested and stop it. Some
+        /// This event allows a mechanism to intercept BackRequested and stop it. Some
         /// use cases would include the ModalDialog which would cancel the event, using
         /// it instead for itself to close the dialog - not wanting it to navigate a frame.
         /// </summary>
         public static event Common.TypedEventHandler<CancelEventArgs> BeforeBackRequested;
+        public static event Common.TypedEventHandler<Common.HandledEventArgs> BackRequested;
 
         public static Common.HandledEventArgs RaiseBackRequested()
         {
-            if (RaiseBeforeBackRequested().Cancel)
+            var cancelEventArgs = new CancelEventArgs();
+            BeforeBackRequested?.Invoke(null, cancelEventArgs);
+            if (cancelEventArgs.Cancel)
             {
-                return new Common.HandledEventArgs
-                {
-                    Handled = true
-                };
+                return new Common.HandledEventArgs { Handled = true };
             }
 
-            var args = new Common.HandledEventArgs();
-            BackRequested?.Invoke(null, args);
-            return args;
+            var handledEventArgs = new Common.HandledEventArgs();
+            BackRequested?.Invoke(null, handledEventArgs);
+            return handledEventArgs;
         }
-        public static event Common.TypedEventHandler<Common.HandledEventArgs> BackRequested;
+
+        /// <summary>
+        /// This event allows a mechanism to intercept ForwardRequested and stop it. 
+        /// </summary>
+        public static event Common.TypedEventHandler<CancelEventArgs> BeforeForwardRequested;
+        public static event Common.TypedEventHandler<Common.HandledEventArgs> ForwardRequested;
 
         public static Common.HandledEventArgs RaiseForwardRequested()
         {
-            var args = new Common.HandledEventArgs();
-            ForwardRequested?.Invoke(null, args);
-            return args;
-        }
-        public static event Common.TypedEventHandler<Common.HandledEventArgs> ForwardRequested;
+            var cancelEventArgs = new CancelEventArgs();
+            BeforeForwardRequested?.Invoke(null, cancelEventArgs);
+            if (cancelEventArgs.Cancel)
+            {
+                return new Common.HandledEventArgs { Handled = true };
+            }
 
-        public static void UpdateShellBackButton(bool canGoBack)
+            var handledEventArgs = new Common.HandledEventArgs();
+            ForwardRequested?.Invoke(null, handledEventArgs);
+            return handledEventArgs;
+        }
+
+        public static event EventHandler BackButtonUpdated;
+
+        public static void UpdateBackButton(bool canGoBack, bool canGoForward = false)
         {
             // show the shell back only if there is anywhere to go in the default frame
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
                 (Settings.ShowShellBackButton && (canGoBack || Settings.ForceShowShellBackButton))
                     ? AppViewBackButtonVisibility.Visible
                     : AppViewBackButtonVisibility.Collapsed;
-            ShellBackButtonUpdated?.Invoke(null, EventArgs.Empty);
+            BackButtonUpdated?.Invoke(null, EventArgs.Empty);
         }
-
-        public static event EventHandler ShellBackButtonUpdated;
     }
 
     public static class Settings

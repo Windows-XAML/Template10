@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Template10.Common;
+using Template10.Services.WindowWrapper;
 using Windows.UI.Popups;
 using Windows.UI.Xaml.Controls;
 
@@ -35,7 +36,7 @@ namespace Template10.Utils
             }
 
             // this next line creates a dependecy on the WindowService
-            dispatcher = dispatcher ?? Services.WindowWrapper.WindowWrapper.Current().Dispatcher;
+            dispatcher = dispatcher ?? WindowWrapperHelper.Current().Dispatcher;
 
             dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
 

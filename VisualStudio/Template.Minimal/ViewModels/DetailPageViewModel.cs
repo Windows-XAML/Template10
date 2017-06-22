@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Template10.Mvvm;
+using Template10.Common;
+using Template10.Portable.Navigation;
 using Template10.Services.NavigationService;
-using Windows.UI.Xaml.Navigation;
 
 namespace Sample.ViewModels
 {
@@ -19,25 +21,28 @@ namespace Sample.ViewModels
         private string _Value = "Default";
         public string Value { get { return _Value; } set { Set(ref _Value, value); } }
 
-        public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> suspensionState)
+        public async override Task OnNavigatedToAsync(INavigatedToParameters parameter)
         {
-            Value = (suspensionState.ContainsKey(nameof(Value))) ? suspensionState[nameof(Value)]?.ToString() : parameter?.ToString();
-            await Task.CompletedTask;
-        }
-
-        public override async Task OnNavigatedFromAsync(IDictionary<string, object> suspensionState, bool suspending)
-        {
-            if (suspending)
+            if (parameter.Resuming)
             {
-                suspensionState[nameof(Value)] = Value;
+                var item = await parameter.ToNavigationInfo.PageState.TryGetValueAsync<string>(nameof(Value));
+                if (item.Success)
+                {
+                    Value = item.Value;
+                }
             }
-            await Task.CompletedTask;
+            else if (parameter.ToNavigationInfo.Parameter is string param && param != null)
+            {
+                Value = param;
+            }
         }
 
-        public override async Task OnNavigatingFromAsync(NavigatingEventArgs args)
+        public async override Task OnNavigatedFromAsync(INavigatedFromParameters parameters)
         {
-            args.Cancel = false;
-            await Task.CompletedTask;
+            if (parameters.Suspending)
+            {
+                await parameters.PageState.SetValueAsync(nameof(Value), Value);
+            }
         }
     }
 }

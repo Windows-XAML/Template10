@@ -8,6 +8,12 @@ namespace Template10.Utils
 {
     public static class NavigationExtensions
     {
+        public static async Task<Frame> RegisterAsync(this Frame frame, BackButton backButton = BackButton.Attach)
+        {
+            await NavigationServiceHelper.CreateAsync(BackButton.Attach, frame);
+            return frame;
+        }
+
         public static INavigationService GetNavigationService(this Frame frame)
             => NavigationServiceHelper.Instances.GetByFrame(frame);
 

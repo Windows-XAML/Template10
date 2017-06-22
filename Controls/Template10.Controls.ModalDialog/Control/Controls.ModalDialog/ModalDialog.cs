@@ -123,7 +123,7 @@ namespace Template10.Controls
             set { SetValue(DisableBackButtonWhenModalProperty, value); }
         }
         public static readonly DependencyProperty DisableBackButtonWhenModalProperty = DependencyProperty.Register(nameof(DisableBackButtonWhenModal),
-            typeof(bool), typeof(ModalDialog), new PropertyMetadata(false, (d, e) => (d as ModalDialog).Update()));
+            typeof(bool), typeof(ModalDialog), new PropertyMetadata(true, (d, e) => (d as ModalDialog).Update()));
 
         public Brush ModalBackground
         {

@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
-using Template10.Portable.PersistedDictionary;
 
 namespace Template10.Common.PersistedDictionary
 {
@@ -48,7 +47,7 @@ namespace Template10.Common.PersistedDictionary
 
         public abstract Task SetValueAsync(string key, string value);
 
-        public async Task<(bool Success, object Value)> TryGetValueAsync(string key)
+        public async Task<(bool Success, string Value)> TryGetValueAsync(string key)
         {
             try
             {

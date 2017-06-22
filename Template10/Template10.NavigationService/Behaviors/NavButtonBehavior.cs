@@ -62,7 +62,7 @@ namespace Template10.Behaviors
                 // if (Locator.BootStrapper.Instance != null) Locator.BootStrapper.Instance.ShellBackButtonUpdated += Current_ShellBackButtonUpdated;
 
 
-                _deviceUtils = DeviceUtils.Current(WindowWrapper.Current());
+                _deviceUtils = DeviceUtils.Current(WindowWrapperHelper.Current());
                 if (_deviceUtils != null) _deviceUtils.Changed += DispositionChanged;
             }
         }
@@ -96,7 +96,7 @@ namespace Template10.Behaviors
 
         private void Element_Click(object sender, RoutedEventArgs e)
         {
-            var nav = NavigationService.Default;
+            var nav = NavigationServiceHelper.Default;
 
             if (nav == null)
             {

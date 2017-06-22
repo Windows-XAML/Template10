@@ -4,10 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
 
-namespace Template10.Common.PersistedDictionary
+namespace Template10.Common.PersistedDictionary.Strategies
 {
-    public enum FolderPersistedDictionaryLocations { Local, Roam }
-
     public class FolderPersistedDictionaryStrategy : PersistedDictionaryBase
     {
         public static async Task<FolderPersistedDictionaryStrategy> CreateAsync(FolderPersistedDictionaryLocations location, string container = null, string key = null)

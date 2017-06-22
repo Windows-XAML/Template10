@@ -1,13 +1,14 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.Foundation.Collections;
 using Windows.Storage;
 
-namespace Template10.Common.PersistedDictionary
+namespace Template10.Common.PersistedDictionary.Strategies
 {
-    public enum SettingsStateLocations { Local, Roam }
-
     public class SettingPersistedDictionaryStrategy : PersistedDictionaryBase
+
     {
         public static async Task<SettingPersistedDictionaryStrategy> CreateAsync(SettingsStateLocations location, string container = null, string key = null)
         {

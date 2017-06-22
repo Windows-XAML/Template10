@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Template10.Portable.PersistedDictionary;
+using Template10.Portable;
+using Template10.Portable.Common;
 
 namespace Template10.Services.NavigationService
 {
     public class FrameState
     {
-        IPersistedDictionary store;
-        public FrameState(IPersistedDictionary store) => this.store = store;
+        IPropertyBagAsync store;
+        public FrameState(IPropertyBagAsync store) => this.store = store;
 
         public async Task ClearAsync()
         {
@@ -66,7 +67,21 @@ namespace Template10.Services.NavigationService
                 return (false, null);
             }
         }
-        public async Task SetCurrentPageParameterAsync(object value) => await store.SetValueAsync("CurrentPageParameter", Serialize(value));
+        public async Task SetCurrentPageParameterAsync(object value)
+        {
+            if (value != null)
+            {
+                try
+                {
+                    var text = Serialize(value);
+                    await store.SetValueAsync("CurrentPageParameter", text);
+                }
+                catch
+                {
+                    throw new Exception("Page parameter failed to serialize; all parameters must be serializable.");
+                }
+            }
+        }
 
         public async Task<(bool Success, string Value)> TryGetNavigationStateAsync() => await store.TryGetValueAsync("NavigationState");
         public async Task SetNavigationStateAsync(string value) => await store.SetValueAsync("NavigationState", value);

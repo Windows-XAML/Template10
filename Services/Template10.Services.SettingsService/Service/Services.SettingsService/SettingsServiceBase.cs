@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using Template10.Mvvm;
 using Windows.Foundation.Collections;
 using Windows.Storage;
 
 namespace Template10.Services.SettingsService
 {
     // this should not be made abstract
-    public class SettingsServiceBase : ISettingsService
+    public abstract class SettingsServiceBase : ISettingsService
     {
         protected ApplicationDataContainer _container;
         protected SettingsStrategies _strategy;

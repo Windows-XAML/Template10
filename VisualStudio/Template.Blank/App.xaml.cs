@@ -1,14 +1,15 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Template10.Common;
 using Windows.ApplicationModel.Activation;
 
 namespace Sample
 {
-    sealed partial class App : Template10.Common.BootStrapper
+    sealed partial class App : BootStrapper
     {
         public App() => InitializeComponent();
 
-        public override async Task OnStartAsync(StartKinds startKind, IActivatedEventArgs args)
+        public async override Task OnStartAsync(StartupInfo e)
         {
             await NavigationService.NavigateAsync(typeof(Views.MainPage));
         }

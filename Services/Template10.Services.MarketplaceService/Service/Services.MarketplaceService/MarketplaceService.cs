@@ -6,8 +6,13 @@ namespace Template10.Services.MarketplaceService
 {
     public sealed class MarketplaceService : IMarketplaceService
     {
-        readonly static MarketplaceHelper _helper;
+        public static MarketplaceService Instance => new MarketplaceService();
+        private MarketplaceService()
+        {
+            // empty
+        }
 
+        readonly static MarketplaceHelper _helper;
         static MarketplaceService()
         {
             _helper = new MarketplaceHelper();

@@ -31,7 +31,7 @@ namespace Sample.Views
         // hide and show busy dialog
         public static void SetBusy(bool busy, string text = null)
         {
-            WindowWrapper.Current().Dispatcher.Dispatch(() =>
+            WindowWrapperHelper.Current().Dispatcher.Dispatch(() =>
             {
                 var modal = Window.Current.Content as ModalDialog;
                 var view = modal.ModalContent as Busy;

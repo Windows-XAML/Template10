@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Template10.Mvvm;
-using Template10.Services.NavigationService;
+using Template10.Common;
+using Template10.Portable.Navigation;
 using Template10.Utils;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
 
 namespace Sample.ViewModels
 {
@@ -19,30 +19,32 @@ namespace Sample.ViewModels
             }
         }
 
-        string _Value = "Gas";
+        static string _Value = "Gas";
         public string Value { get { return _Value; } set { Set(ref _Value, value); } }
 
-        public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> suspensionState)
+        public async override Task OnNavigatedToAsync(INavigatedToParameters parameter)
         {
-            if (suspensionState.Any())
+            if (parameter.Resuming)
             {
-                Value = suspensionState[nameof(Value)]?.ToString();
+                var item = await parameter.ToNavigationInfo.PageState.TryGetValueAsync<string>(nameof(Value));
+                if (item.Success)
+                {
+                    Value = item.Value;
+                }
             }
-            await Task.CompletedTask;
         }
 
-        public override async Task OnNavigatedFromAsync(IDictionary<string, object> suspensionState, bool suspending)
+        public async override Task OnNavigatedFromAsync(INavigatedFromParameters parameters)
         {
-            if (suspending)
+            if (parameters.Suspending)
             {
-                suspensionState[nameof(Value)] = Value;
+                await parameters.PageState.SetValueAsync(nameof(Value), Value);
             }
-            await Task.CompletedTask;
         }
 
-        public override async Task OnNavigatingFromAsync(NavigatingEventArgs args)
+        public async override Task<bool> CanNavigateAsync(IConfirmNavigationParameters parameters)
         {
-            var goingToDetails = args.TargetPageType == typeof(Views.DetailPage);
+            var goingToDetails = parameters.ToNavigationInfo.PageType == typeof(Views.DetailPage);
             if (goingToDetails)
             {
                 var dialog = new ContentDialog
@@ -53,7 +55,11 @@ namespace Sample.ViewModels
                     SecondaryButtonText = "Cancel",
                 };
                 var result = await dialog.ShowAsyncEx();
-                args.Cancel = result == ContentDialogResult.Secondary;
+                return result == ContentDialogResult.Secondary;
+            }
+            else
+            {
+                return true;
             }
         }
 

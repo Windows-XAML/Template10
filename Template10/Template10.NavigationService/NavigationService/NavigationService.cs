@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Template10.Common;
+using Template10.Mvvm;
 using Template10.Portable.Navigation;
 using Template10.Services.SerializationService;
 using Template10.Services.ViewService;
@@ -127,93 +128,101 @@ namespace Template10.Services.NavigationService
         public void Navigate<T>(T key, object parameter = null, NavigationTransitionInfo infoOverride = null)
             where T : struct, IConvertible => NavigateAsync(key, parameter, infoOverride).ConfigureAwait(true);
 
+        object navigationLock = new object();
+
         private async Task<bool> NavigationOrchestratorAsync(Type page, object parameter, NavigationMode mode, Func<bool> navigate)
         {
-            DebugWrite($"Page: {page}, Parameter: {parameter}, NavigationMode: {mode}");
-
-            if (page == null) throw new ArgumentNullException(nameof(page));
-            if (navigate == null) throw new ArgumentNullException(nameof(navigate));
-
-            // this cannot be used for duplicate navigation, except for refresh
-            if ((mode != NavigationMode.Refresh)
-                && (page.FullName == CurrentPageType?.GetType().FullName)
-                && (parameter?.Equals(CurrentPageParam) ?? false))
+            using (var locker = await LockAsync.Create(navigationLock))
             {
-                return false;
+                DebugWrite($"Page: {page}, Parameter: {parameter}, NavigationMode: {mode}");
+
+                if (page == null) throw new ArgumentNullException(nameof(page));
+                if (navigate == null) throw new ArgumentNullException(nameof(navigate));
+
+                // this cannot be used for duplicate navigation, except for refresh
+                if (!Equals(mode, NavigationMode.Refresh))
+                {
+                    if (Equals(page, CurrentPageType))
+                    {
+                        if (Equals(parameter, CurrentPageParam))
+                        {
+                            return false;
+                        }
+                    }
+                }
+
+                // fetch current (which will become old)
+                var oldPage = FrameFacadeInternal.Content as Page;
+                var oldParameter = CurrentPageParam;
+                var oldViewModel = oldPage?.DataContext;
+                var oldPageState = await FrameFacadeInternal.GetPageStateAsync(oldPage?.GetType());
+                var fromInfo = new NavigationInfo(oldPage?.GetType(), oldParameter, oldPageState);
+
+                var toPageState = await FrameFacadeInternal.GetPageStateAsync(page?.GetType());
+                var toInfo = new NavigationInfo(page, parameter, toPageState);
+
+                // call oldViewModel.OnNavigatingFromAsync()
+                var viewmodelCancels = await Settings.ViewModelActionStrategy.NavigatingFromAsync((oldViewModel, false), fromInfo, toInfo, this);
+                if (viewmodelCancels)
+                {
+                    return false;
+                }
+
+                // raise Navigating event
+                RaiseNavigatingCancels(parameter, false, mode, toInfo, out var cancel);
+                if (cancel)
+                {
+                    return false;
+                }
+
+                // invoke navigate (however custom)
+                if (navigate.Invoke())
+                {
+                    CurrentPageParam = parameter;
+                    CurrentPageType = page;
+                }
+                else
+                {
+                    return false;
+                }
+
+                // fetch (current which is now new)
+                var newPage = FrameFacadeInternal.Content as Page;
+                var newViewModel = newPage?.DataContext;
+
+                // note: this has no value now, but it will
+                await Settings.ViewModelActionStrategy.NavigatingToAsync((newViewModel, mode, false), fromInfo, toInfo, this);
+
+                // raise Navigated event
+                RaiseNavigated(new NavigatedEventArgs()
+                {
+                    Parameter = parameter,
+                    NavigationMode = mode,
+                    PageType = newPage?.GetType(),
+                });
+
+                // call oldViewModel.OnNavigatedFrom()
+                await Settings.ViewModelActionStrategy.NavigatedFromAsync((oldViewModel, false), fromInfo, toInfo, this);
+
+                // call newViewModel.ResolveForPage()
+                if (newViewModel == null)
+                {
+                    newViewModel = ResolveViewModelForPage.Invoke(newPage);
+                    newPage.DataContext = newViewModel;
+                }
+
+                // call newTemplate10ViewModel.Properties
+                if (newViewModel is ITemplate10ViewModel vm)
+                {
+                    vm.NavigationService = this;
+                }
+
+                // call newViewModel.OnNavigatedToAsync()
+                await Settings.ViewModelActionStrategy.NavigatedToAsync((newViewModel, mode, false), fromInfo, toInfo, this);
+
+                // finally 
+                return true;
             }
-
-            // fetch current (which will become old)
-            var oldPage = FrameFacadeInternal.Content as Page;
-            var oldParameter = CurrentPageParam;
-            var oldViewModel = oldPage?.DataContext;
-            var oldPageState = await FrameFacadeInternal.GetPageStateAsync(oldPage?.GetType());
-            var fromInfo = new NavigationInfo(oldPage?.GetType(), oldParameter, oldPageState);
-
-            var toPageState = await FrameFacadeInternal.GetPageStateAsync(page);
-            var toInfo = new NavigationInfo(page, parameter, toPageState);
-
-            // call oldViewModel.OnNavigatingFromAsync()
-            var viewmodelCancels = await Settings.ViewModelActionStrategy.NavigatingFromAsync((oldViewModel, mode, false), fromInfo, toInfo, this);
-            if (viewmodelCancels)
-            {
-                return false;
-            }
-
-            // raise Navigating event
-            RaiseNavigatingCancels(parameter, false, mode, toInfo, out var cancel);
-            if (cancel)
-            {
-                return false;
-            }
-
-            // invoke navigate (however custom)
-            if (navigate.Invoke())
-            {
-                CurrentPageParam = parameter;
-                CurrentPageType = page;
-            }
-            else
-            {
-                return false;
-            }
-
-            // fetch (current which is now new)
-            var newPage = FrameFacadeInternal.Content as Page;
-            var newViewModel = newPage?.DataContext;
-
-            // note: this has no value now, but it will
-            await Settings.ViewModelActionStrategy.NavigatingToAsync((newViewModel, mode), fromInfo, toInfo, this);
-
-            // raise Navigated event
-            RaiseNavigated(new NavigatedEventArgs()
-            {
-                Parameter = parameter,
-                NavigationMode = mode,
-                PageType = newPage?.GetType(),
-            });
-
-            // call oldViewModel.OnNavigatedFrom()
-            await Settings.ViewModelActionStrategy.NavigatedFromAsync((oldViewModel, mode, false), fromInfo, toInfo, this);
-
-            // call newViewModel.ResolveForPage()
-            if (newViewModel == null)
-            {
-                newViewModel = ResolveViewModelForPage.Invoke(newPage);
-                newPage.DataContext = newViewModel;
-            }
-
-            // call newTemplate10ViewModel.Properties
-            if (newViewModel is INavigable vm)
-            {
-                vm.NavigationService = this;
-                vm.Dispatcher = this.Window.Dispatcher;
-            }
-
-            // call newViewModel.OnNavigatedToAsync()
-            await Settings.ViewModelActionStrategy.NavigatedToAsync((newViewModel, mode), fromInfo, toInfo, this);
-
-            // finally 
-            return true;
         }
 
         public Func<Page, object> ResolveViewModelForPage { get; set; } = page => null;
@@ -285,6 +294,11 @@ namespace Template10.Services.NavigationService
             if (CurrentPageType == null) return;
             if (RaiseBeforeSavingNavigation()) return;
 
+            var vm = (FrameFacadeInternal.Content as Page)?.DataContext;
+            var fromInfo = new NavigationInfo(CurrentPageType, CurrentPageParam, await FrameFacadeInternal.GetPageStateAsync(CurrentPageType));
+            await Settings.ViewModelActionStrategy.NavigatingFromAsync((vm, true), fromInfo, null, this);
+            await Settings.ViewModelActionStrategy.NavigatedFromAsync((vm, true), fromInfo, null, this);
+
             var frameState = await FrameFacadeInternal.GetFrameStateAsync();
             await frameState.SetCurrentPageTypeAsync(CurrentPageType);
             await frameState.SetCurrentPageParameterAsync(CurrentPageParam);
@@ -331,15 +345,15 @@ namespace Template10.Services.NavigationService
 
                 // is there a view-model there?
                 var viewModel = newPage?.DataContext;
-                if (viewModel is INavigable vm && vm != null)
+                if (viewModel is ITemplate10ViewModel vm && vm != null)
                 {
                     vm.NavigationService = this;
-                    vm.Dispatcher = this.Window.Dispatcher;
                 }
 
-                // NavigatedToAsync
+                // NavigatingToAsync/NavigatedToAsync
                 var toInfo = new NavigationInfo(CurrentPageType, FrameFacadeInternal.BackStack.Last().Parameter, await FrameFacadeInternal.GetPageStateAsync(CurrentPageType));
-                await Settings.ViewModelActionStrategy.NavigatedToAsync((viewModel, NavigationMode.New), null, toInfo, this);
+                await Settings.ViewModelActionStrategy.NavigatingToAsync((viewModel, NavigationMode.New, true), null, toInfo, this);
+                await Settings.ViewModelActionStrategy.NavigatedToAsync((viewModel, NavigationMode.New, true), null, toInfo, this);
 
                 // tell them it worked
                 return true;
@@ -389,13 +403,16 @@ namespace Template10.Services.NavigationService
         {
             if (!CanGoBack)
             {
-                return false;
+                return true;
             }
             var previous = FrameFacadeInternal.BackStack.LastOrDefault();
             var parameter = Settings.SerializationStrategy.Deserialize(previous.Parameter?.ToString());
             return await NavigationOrchestratorAsync(previous.SourcePageType, parameter, NavigationMode.Back, () =>
             {
-                FrameFacadeInternal.GoBack(infoOverride);
+                if (CanGoBack)
+                {
+                    FrameFacadeInternal.GoBack(infoOverride);
+                }
                 return true;
             });
         }
@@ -410,15 +427,18 @@ namespace Template10.Services.NavigationService
 
         public async Task<bool> GoForwardAsync()
         {
-            if (!FrameFacadeInternal.CanGoForward)
+            if (!CanGoForward)
             {
-                return false;
+                return true;
             }
             var next = FrameFacadeInternal.ForwardStack.FirstOrDefault();
             var parameter = Settings.SerializationStrategy.Deserialize(next.Parameter?.ToString());
             return await NavigationOrchestratorAsync(next.SourcePageType, parameter, NavigationMode.Forward, () =>
             {
-                FrameFacadeInternal.GoForward();
+                if (CanGoForward)
+                {
+                    FrameFacadeInternal.GoForward();
+                }
                 return true;
             });
         }
@@ -427,7 +447,7 @@ namespace Template10.Services.NavigationService
 
         public void ClearHistory() => FrameFacadeInternal.BackStack.Clear();
 
-        async Task INavigationServiceInternal.Suspend()
+        async Task INavigationServiceInternal.SuspendAsync()
         {
             DebugWrite($"Frame: {FrameFacadeInternal.FrameId}");
 
@@ -439,7 +459,7 @@ namespace Template10.Services.NavigationService
             {
                 var vm = (FrameFacadeInternal.Content as Page)?.DataContext;
                 var fromInfo = new NavigationInfo(CurrentPageType, CurrentPageParam, await FrameFacadeInternal.GetPageStateAsync(CurrentPageType));
-                await Settings.ViewModelActionStrategy.NavigatedFromAsync((vm, NavigationMode.New, true), fromInfo, null, this);
+                await Settings.ViewModelActionStrategy.NavigatedFromAsync((vm, true), fromInfo, null, this);
             });
         }
 

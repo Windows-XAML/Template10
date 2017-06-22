@@ -16,7 +16,7 @@ namespace Template10.Common
 
         #endregion
 
-        public static IDispatcherWrapper Current() => WindowWrapper.Current().Dispatcher;
+        public static IDispatcherWrapper Current() => WindowWrapperHelper.Current().Dispatcher;
 
         public DispatcherWrapper(CoreDispatcher dispatcher)
         {

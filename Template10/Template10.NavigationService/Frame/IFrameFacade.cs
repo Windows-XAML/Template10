@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Template10.Common;
-using Template10.Portable.Navigation;
-using Template10.Portable.PersistedDictionary;
+﻿using System.Collections.Generic;
 using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Services.NavigationService
