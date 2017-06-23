@@ -29,11 +29,11 @@ namespace Template10.Services.NavigationService
             (this as IFrameFacadeInternal).Frame = frame;
             frame.Navigating += (s, e) =>
             {
-                if (!BackStack.Any() && string.IsNullOrEmpty(FrameId))
-                {
-                    // auto-assign the FrameId if it isn't assigned
-                    FrameId = e.SourcePageType.ToString();
-                }
+                //if (!BackStack.Any() && string.IsNullOrEmpty(FrameId))
+                //{
+                //    // auto-assign the FrameId if it isn't assigned
+                //    FrameId = e.SourcePageType.ToString();
+                //}
             };
 
             (this as IFrameFacadeInternal).NavigationService = navigationService;
@@ -47,7 +47,7 @@ namespace Template10.Services.NavigationService
             (this as IFrameFacadeInternal).Frame.ContentTransitions.Add(t);
         }
 
-        public string FrameId { get; set; } = string.Empty;
+        public string FrameId { get; set; } = "DefaultFrame";
 
         public object Content => (this as IFrameFacadeInternal).Frame.Content;
 
@@ -170,7 +170,7 @@ namespace Template10.Services.NavigationService
     {
         // Internal properties/methods
 
-        string FrameStateKey => $"Frame-{FrameId ?? "DefaultFrame"}";
+        string FrameStateKey => $"Frame-{FrameId}";
 
         async Task<FrameState> IFrameFacadeInternal.GetFrameStateAsync()
         {

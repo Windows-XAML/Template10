@@ -15,11 +15,12 @@ namespace Sample
         {
             InitializeComponent();
 
-            var _settings = SettingsService.Instance;
+            Sample.Services.SettingsServices.SettingsService _settings = Sample.Services.SettingsServices.SettingsService.Instance;
             RequestedTheme = _settings.AppTheme;
             Settings.SplashFactory = (e) => new Views.Splash(e);
             Settings.CacheMaxDuration = _settings.CacheMaxDuration;
             Settings.ShowShellBackButton = _settings.UseShellBackButton;
+            Settings.AutoExtendExecutionSession = false;
         }
 
         public async override Task OnStartAsync(StartupInfo e)

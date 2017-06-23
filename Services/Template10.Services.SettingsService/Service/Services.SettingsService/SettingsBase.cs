@@ -27,7 +27,14 @@ namespace Template10.Services.SettingsService.Services.SettingsService
                 return;
             }
 
-            this.container = container.CreateContainer(name, ApplicationDataCreateDisposition.Existing);
+            if (container.Containers.ContainsKey(name))
+            {
+                container = container.Containers[name];
+            }
+            else
+            {
+                container = container.CreateContainer(name, ApplicationDataCreateDisposition.Always); ;
+            }
         }
 
         protected ISerializationService DefaultSerializationStrategy { get; set; } = SerializationHelper.Json;

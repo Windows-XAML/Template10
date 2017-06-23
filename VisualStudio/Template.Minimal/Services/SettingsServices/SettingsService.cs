@@ -9,7 +9,11 @@ namespace Sample.Services.SettingsServices
 {
     public class SettingsService : SettingsServiceBase
     {
-        public static SettingsService Instance = new SettingsService();
+        public static SettingsService Instance;
+        static SettingsService()
+        {
+            Instance = new SettingsService();
+        }
         private SettingsService()
         {
             // empty

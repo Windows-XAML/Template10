@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -300,9 +301,12 @@ namespace Template10.Services.NavigationService
             await Settings.ViewModelActionStrategy.NavigatedFromAsync((vm, true), fromInfo, null, this);
 
             var frameState = await FrameFacadeInternal.GetFrameStateAsync();
-            await frameState.SetCurrentPageTypeAsync(CurrentPageType);
-            await frameState.SetCurrentPageParameterAsync(CurrentPageParam);
-            await frameState.SetNavigationStateAsync(FrameFacadeInternal.GetNavigationState());
+            var navigationState = FrameFacadeInternal.GetNavigationState();
+            await frameState.SetNavigationStateAsync(navigationState);
+
+            var writtenState = await frameState.TryGetNavigationStateAsync();
+            DebugWrite($"navigationState:{navigationState} writtenState:{writtenState}");
+            Debug.Assert(navigationState.Equals(writtenState.Value), "Checking frame nav state save");
 
             await Task.CompletedTask;
         }
@@ -316,23 +320,16 @@ namespace Template10.Services.NavigationService
                 // load navigation state from settings
                 var frameState = await FrameFacadeInternal.GetFrameStateAsync();
                 {
-                    var currentPageType = await frameState.TryGetCurrentPageTypeAsync();
-                    if (currentPageType.Success)
-                    {
-                        CurrentPageType = currentPageType.Value;
-                    }
-
-                    var currentPageParam = await frameState.TryGetCurrentPageParameterAsync();
-                    if (currentPageParam.Success)
-                    {
-                        CurrentPageParam = currentPageParam.Value;
-                    }
-
                     var state = await frameState.TryGetNavigationStateAsync();
+                    DebugWrite($"After TryGetNavigationStateAsync; state: {state.Value ?? "Null"}");
                     if (state.Success && !string.IsNullOrEmpty(state.Value?.ToString()))
                     {
                         FrameFacadeInternal.SetNavigationState(state.Value.ToString());
                         while (FrameFacadeInternal.Content == null) await Task.Delay(100);
+                    }
+                    else
+                    {
+                        return false;
                     }
                 }
 
@@ -348,6 +345,13 @@ namespace Template10.Services.NavigationService
                 if (viewModel is ITemplate10ViewModel vm && vm != null)
                 {
                     vm.NavigationService = this;
+                }
+
+                var back = FrameFacade.BackStack.FirstOrDefault();
+                if (back != null)
+                {
+                    CurrentPageType = back.SourcePageType;
+                    CurrentPageParam = back.Parameter;
                 }
 
                 // NavigatingToAsync/NavigatedToAsync
