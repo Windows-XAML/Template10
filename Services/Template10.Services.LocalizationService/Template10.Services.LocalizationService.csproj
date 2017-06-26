@@ -7,8 +7,8 @@
     <ProjectGuid>{F587976D-11E2-4C5C-BAEC-A6F098645901}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Template10.Service.LocalizationService</RootNamespace>
-    <AssemblyName>Template10.Service.LocalizationService</AssemblyName>
+    <RootNamespace>Template10.Services.LocalizationService</RootNamespace>
+    <AssemblyName>Template10.Services.LocalizationService</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.10240.0</TargetPlatformVersion>

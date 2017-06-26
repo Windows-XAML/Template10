@@ -1,5 +1,5 @@
 ﻿using Windows.UI.Xaml.Controls;
-using Template10.Service.LocalizationService.Services.LocalizationService;
+using Template10.Services.LocalizationService;
 using System;
 using System.Linq;
 using Windows.UI.Xaml.Navigation;
