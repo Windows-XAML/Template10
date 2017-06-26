@@ -131,9 +131,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Services\Template10.Service.LocalizationService\Template10.Service.LocalizationService.csproj">
+    <ProjectReference Include="..\..\Services\Template10.Service.LocalizationService\Template10.Services.LocalizationService.csproj">
       <Project>{f587976d-11e2-4c5c-baec-a6f098645901}</Project>
-      <Name>Template10.Service.LocalizationService</Name>
+      <Name>Template10.Services.LocalizationService</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

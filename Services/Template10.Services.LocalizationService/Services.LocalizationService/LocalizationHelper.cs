@@ -5,7 +5,7 @@ using Windows.ApplicationModel.Resources;
 using Windows.ApplicationModel.Resources.Core;
 using Windows.Globalization;
 
-namespace Template10.Service.LocalizationService.Services.LocalizationService
+namespace Template10.Services.LocalizationService
 {
     public class LocalizationHelper
     {

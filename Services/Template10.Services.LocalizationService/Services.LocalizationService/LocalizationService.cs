@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace Template10.Service.LocalizationService.Services.LocalizationService
-{
+namespace Template10.Services.LocalizationService
+{ 
     public class LocalizationService : ILocalizationService
     {
         protected LocalizationHelper Helper { get; private set; }
