@@ -135,6 +135,9 @@ publish/
 ## TODO: If the tool you use requires repositories.config
 ## uncomment the next line
 #!packages/repositories.config
+# NuGet v3's project.json files produce more ignorable files
+*.nuget.props
+*.nuget.targets
 
 # Enable "build/" folder in the NuGet Packages folder since
 # NuGet packages use it for MSBuild targets.
