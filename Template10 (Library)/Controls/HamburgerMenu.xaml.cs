@@ -740,6 +740,21 @@ namespace Template10.Controls
             }
         }
 
+        private void NavButton_Unloaded(object sender, RoutedEventArgs e)
+        {
+            DebugWrite();
+
+            var button = new InfoElement(sender);
+            if (LoadedNavButtons.Any(x => x.FrameworkElement == button.FrameworkElement))
+            {
+                LoadedNavButtons.Remove(LoadedNavButtons.Last(x => x.FrameworkElement == button.FrameworkElement));
+                if (AllNavButtonsAreLoaded)
+                {
+                    HighlightCorrectButton(NavigationService.CurrentPageType, NavigationService.CurrentPageParam);
+                }
+            }
+        }
+
         private void ExecuteNavButtonICommand(HamburgerButtonInfo info)
         {
             ICommand command = info.Command;

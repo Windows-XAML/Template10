@@ -89,6 +89,7 @@
                                   Content="{Binding Content}"
                                   Foreground="{Binding NavButtonForeground, ElementName=ThisPage, FallbackValue=White, Mode=OneWay}"
                                   Loaded="NavButton_Loaded"
+                                  Unloaded="NavButton_Unloaded"
                                   ToolTipService.ToolTip="{Binding Path=(ToolTipService.ToolTip)}"
                                   Visibility="{Binding Visibility, Mode=TwoWay}" />
             </DataTemplate>
@@ -107,6 +108,7 @@
                               IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
                               IsTabStop="{Binding IsChecked, Converter={StaticResource ReverseBooleanConverter}}"
                               Loaded="NavButton_Loaded"
+                              Unloaded="NavButton_Unloaded"
                               RightTapped="NavButton_RightTapped"
                               TabIndex="2"
                               Tapped="NavButton_Tapped"
@@ -207,6 +209,7 @@
                         Holding="NavButton_Holding"
                         IsEnabled="{x:Bind IsEnabled, Mode=OneWay}"
                         Loaded="NavButton_Loaded"
+                        Unloaded="NavButton_Unloaded"
                         RightTapped="NavButton_RightTapped"
                         TabIndex="2"
                         Tapped="NavButton_Tapped"
