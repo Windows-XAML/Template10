@@ -15,7 +15,7 @@
         <ListView x:Name="MyListView" Grid.Row="1">
             <ListView.ItemContainerTransitions>
                 <TransitionCollection>
-                    <EntranceThemeTransition />
+                    <RepositionThemeTransition IsStaggeringEnabled="False" /> <!-- Change this 2 true! -->
                 </TransitionCollection>
             </ListView.ItemContainerTransitions>
         </ListView>
