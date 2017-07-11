@@ -114,6 +114,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "KeyboardService", "Keyboard
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyboardServiceDemoApp", "Services\Template10.Services.KeyboardService\Demo\KeyboardServiceDemoApp.csproj", "{BF0D6900-0DDE-44B4-B2D3-45A20C12F799}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_nuget", "_nuget", "{95CFDE94-3C61-4D98-B7E3-320E27406F33}"
+	ProjectSection(SolutionItems) = preProject
+		Services\Template10.Services.KeyboardService\_nuget\build.cmd = Services\Template10.Services.KeyboardService\_nuget\build.cmd
+		Services\Template10.Services.KeyboardService\_nuget\nuget.nuspec = Services\Template10.Services.KeyboardService\_nuget\nuget.nuspec
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -792,5 +798,6 @@ Global
 		{2B6903DF-396A-4D97-BF29-45BC6DD72DBE} = {BCA90A0F-E32C-478A-8DD9-54B73D52AEBC}
 		{27FEC1EE-43C8-433C-8E48-01426B5005AC} = {91C62580-DFB6-40FC-9015-932B124FC753}
 		{BF0D6900-0DDE-44B4-B2D3-45A20C12F799} = {27FEC1EE-43C8-433C-8E48-01426B5005AC}
+		{95CFDE94-3C61-4D98-B7E3-320E27406F33} = {27FEC1EE-43C8-433C-8E48-01426B5005AC}
 	EndGlobalSection
 EndGlobal

@@ -127,10 +127,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Service\Template10.Services.KeyboardService.csproj">
-      <Project>{b540d0b5-3850-416f-aec7-7737870e9ca2}</Project>
-      <Name>Template10.Services.KeyboardService</Name>
-    </ProjectReference>
+    <PackageReference Include="Template10.Services.KeyboardService">
+      <Version>1.0.0-preview</Version>
+    </PackageReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
