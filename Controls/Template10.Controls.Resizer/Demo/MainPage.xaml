@@ -1,0 +1,49 @@
+﻿<Page
+    x:Class="Demo.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Template10.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <Style TargetType="controls:Resizer">
+            <Setter Property="Margin" Value="0,0,0,8" />
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="MinHeight" Value="62" />
+            <Setter Property="MinWidth" Value="150" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <StackPanel
+            Margin="16,16,16,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top">
+
+            <controls:Resizer>
+
+                <TextBox Header="First name" Text="Jerry" />
+
+            </controls:Resizer>
+
+            <controls:Resizer GrabberBrush="Green" GrabberPath="M 126,126L 0,126L 0,0L 126,0 Z">
+
+                <TextBox Header="Middle name" Text="Lee" />
+
+            </controls:Resizer>
+
+            <controls:Resizer GrabberBrush="Blue" GrabberPath="M 63.0986,0.11554L 77.3956,48.8875L 125.832,48.5031L 86.2355,77.9227L 101.533,126.356L 62.7642,95.7664L 23.7825,126.084L 39.4182,77.759L 0.0288291,48.0632L 48.461,48.7863L 63.0986,0.11554 Z">
+
+                <TextBox Header="Last name" Text="Nixon" />
+
+            </controls:Resizer>
+
+        </StackPanel>
+
+    </Grid>
+</Page>
