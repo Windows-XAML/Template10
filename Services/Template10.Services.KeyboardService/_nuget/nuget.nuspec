@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/01/nuspec.xsd">
+  <metadata minClientVersion="3.0">
+
+    <version>1.0.0-preview</version>
+
+    <id>Template10.Services.KeyboardService</id>
+
+    <title>Template10.Services.KeyboardService</title>
+
+    <authors>Windows developers</authors>
+
+    <owners>jerrynixon, timmyreilly, darenmay</owners>
+
+    <licenseUrl>http://aka.ms/Template10-License</licenseUrl>
+
+    <projectUrl>http://aka.ms/Template10-Nuget</projectUrl>
+
+    <iconUrl>https://raw.githubusercontent.com/Windows-XAML/Template10/master/Assets/NuGetLogo.png</iconUrl>
+
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+
+    <description>
+      <![CDATA[
+        Keyboard service is used to easily handle keyboard interaction. 
+      ]]>
+    </description>
+
+    <tags>
+      Windows 10, Windows10, W10, UAP, UWP, WinRT, XAML, Template 10, Template10, T10, Windows Universal, Universal App
+    </tags>
+
+    <copyright>Jerry Nixon (c) 2015-2017</copyright>
+
+    <language />
+
+    <releaseNotes>
+      Version 1.0.0
+      First release
+    </releaseNotes>
+
+    <dependencies>
+      <dependency id="Microsoft.NETCore.UniversalWindowsPlatform" version="5.2.2" />
+    </dependencies>
+
+  </metadata>
+
+  <files>
+    <file src="lib\" target="lib\uap10.0\" />
+    <!-- <file src="lib\Template10Library\" target="lib\uap10.0\Template10Library\" /> -->
+    <!-- <file src="lib\Template10Library\Controls\" target="lib\uap10.0\Template10Library\Controls\" /> -->
+    <!-- <file src="build\" target="build\uap10.0\" /> -->
+  </files>
+
+</package>
