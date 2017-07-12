@@ -1,4 +1,5 @@
 ﻿using System;
+using Windows.Foundation;
 
 namespace Template10.Services.KeyboardService
 {
@@ -20,12 +21,16 @@ namespace Template10.Services.KeyboardService
 
                 // anything else
                 else e.Handled = false;
+
+                AfterKeyDown?.Invoke(e); 
             };
         }
 
         public Action AfterControlEGesture { get; set; }
 
         public Action AfterMenuGesture { get; set; }
+
+        public Action<KeyboardEventArgs> AfterKeyDown { get; set; }
     }
 
 }
