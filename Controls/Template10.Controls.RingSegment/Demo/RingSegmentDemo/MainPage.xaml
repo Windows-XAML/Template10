@@ -2,13 +2,58 @@
     x:Class="RingSegmentDemo.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:RingSegmentDemo"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Controls="using:Template10.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:RingSegmentDemo"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Controls:RingSegment
+            Width="400"
+            Height="400"
+            EndAngle="{Binding Value, ElementName=EndAngle}"
+            Fill="SteelBlue"
+            InnerRadius="{Binding Value, ElementName=InnerRadius}"
+            Radius="{Binding Value, ElementName=OuterRadius}"
+            StartAngle="{Binding Value, ElementName=StartAngle}"
+            Stroke="Black" />
+        <StackPanel
+            Grid.Column="1"
+            Width="400"
+            Margin="16">
+            <Slider
+                x:Name="InnerRadius"
+                Header="Inner Radius"
+                Maximum="200"
+                Minimum="10"
+                Value="100" />
+            <Slider
+                x:Name="OuterRadius"
+                Header="Outer Radius"
+                Maximum="400"
+                Minimum="210"
+                Value="300" />
+            <Slider
+                x:Name="StartAngle"
+                Header="Start Angle"
+                Maximum="360"
+                Minimum="-360"
+                Value="0" />
+            <Slider
+                x:Name="EndAngle"
+                Header="End Angle"
+                Maximum="360"
+                Minimum="-360"
+                Value="120" />
+        </StackPanel>
+    </Grid>
+
+    <!--<UserControl.Resources>
         <Storyboard x:Name="RingStoryboard">
             <DoubleAnimationUsingKeyFrames RepeatBehavior="Forever"
                                         EnableDependentAnimation="True"
@@ -34,7 +79,7 @@
 
 
         <GridView Grid.Row="1">
-            
+
             <Controls:RingSegment x:Name="MyRingSlice1"
                                   VerticalAlignment="Top"
                                   StartAngle="0"
@@ -67,13 +112,13 @@
             </StackPanel>
 
 
-            <Controls:RingSegment x:Name="MyRingSlice2" 
+            <Controls:RingSegment x:Name="MyRingSlice2"
                                   VerticalAlignment="Top"
                                   StartAngle="25"
                                   EndAngle="223"
                                   Fill="LightBlue" Stroke="Black"
                                   InnerRadius="100" Radius="120" StrokeThickness="2" />
-            <Controls:RingSegment x:Name="MyRingSlice3" 
+            <Controls:RingSegment x:Name="MyRingSlice3"
                                   VerticalAlignment="Top"
                                   StartAngle="180"
                                   EndAngle="340"
@@ -91,5 +136,5 @@
 
         </GridView>
 
-    </Grid>
+    </Grid>-->
 </Page>

@@ -26,15 +26,5 @@ namespace RingSegmentDemo
         {
             this.InitializeComponent();
         }
-
-        private void Start_Click(object sender, RoutedEventArgs e)
-        {
-            RingStoryboard.Begin();
-        }
-
-        private void Stop_Click(object sender, RoutedEventArgs e)
-        {
-            RingStoryboard.Stop();
-        }
     }
 }
