@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Template10.Common
 {
@@ -31,16 +29,6 @@ namespace Template10.Common
                 value = default(T);
                 return false;
             }
-        }
-    }
-
-    public class SessionState : Dictionary<string, object>
-    {
-        public static SessionState Current = new SessionState();
-
-        private SessionState()
-        {
-            // empty
         }
     }
 }

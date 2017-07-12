@@ -113,10 +113,6 @@
     <EmbeddedResource Include="Properties\Template10.Services.SettingsService.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Helpers\Template10.Mvvm\Template10.Mvvm.csproj">
-      <Project>{B23E19AA-1797-43F6-A0F1-FB2C13111AEB}</Project>
-      <Name>Template10.Mvvm</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\Template10\Template10.Portable\Template10.Portable.csproj">
       <Project>{2B6903DF-396A-4D97-BF29-45BC6DD72DBE}</Project>
       <Name>Template10.Portable</Name>

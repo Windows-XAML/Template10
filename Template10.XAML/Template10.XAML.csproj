@@ -4,14 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B23E19AA-1797-43F6-A0F1-FB2C13111AEB}</ProjectGuid>
+    <ProjectGuid>{678660ED-D3B7-4E55-A34A-C61FCCA622FB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Template10.Mvvm</RootNamespace>
-    <AssemblyName>Template10.Mvvm</AssemblyName>
+    <RootNamespace>Template10.XAML</RootNamespace>
+    <AssemblyName>Template10.XAML</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.15063.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
@@ -102,13 +102,37 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
+  <PropertyGroup>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <None Include="project.json" />
+    <Compile Include="Behaviors\ChangeCursorAction.cs" />
+    <Compile Include="Behaviors\CloseFlyoutAction.cs" />
+    <Compile Include="Behaviors\ConditionalAction.cs" />
+    <Compile Include="Behaviors\EllipsisBehavior.cs" />
+    <Compile Include="Behaviors\EventTriggerBehaviorBase.cs" />
+    <Compile Include="Behaviors\FocusAction.cs" />
+    <Compile Include="Behaviors\KeyBehavior.cs" />
+    <Compile Include="Behaviors\MessageDialogAction.cs" />
+    <Compile Include="Behaviors\OpenFlyoutAction.cs" />
+    <Compile Include="Behaviors\TextBoxEnterKeyBehavior.cs" />
+    <Compile Include="Behaviors\ThrottledEventTriggerBehavior.cs" />
+    <Compile Include="Behaviors\TimeoutAction.cs" />
+    <Compile Include="Common\EventThrottleHelper.cs" />
+    <Compile Include="Converters\ChangeTypeConverter.cs" />
+    <Compile Include="Converters\DateTimeOffsetConverter.cs" />
+    <Compile Include="Converters\StringFormatConverter.cs" />
+    <Compile Include="Converters\ValueWhenConverter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Properties\Template10.XAML.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\Template10.Mvvm.rd.xml" />
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
+      <Version>5.3.3</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed">
+      <Version>2.0.0</Version>
+    </PackageReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

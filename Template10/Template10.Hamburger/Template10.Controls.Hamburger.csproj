@@ -135,21 +135,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Helpers\Template10.Behaviors\Template10.Behaviors.csproj">
-      <Project>{045661d1-85e7-4968-b3b1-9334abda261f}</Project>
-      <Name>Template10.Behaviors</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Helpers\Template10.CodeBehind\Template10.CodeBehind.csproj">
       <Project>{b3a4e50e-9dca-457e-bed5-b71d97b957f3}</Project>
       <Name>Template10.CodeBehind</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Helpers\Template10.Converters\Template10.Converters.csproj">
-      <Project>{9669bd42-59d0-4fbd-a180-11419bd007d6}</Project>
-      <Name>Template10.Converters</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Helpers\Template10.Mvvm\Template10.Mvvm.csproj">
-      <Project>{b23e19aa-1797-43f6-a0f1-fb2c13111aeb}</Project>
-      <Name>Template10.Mvvm</Name>
     </ProjectReference>
     <ProjectReference Include="..\Template10.NavigationService\Template10.Navigation.csproj">
       <Project>{cd31d870-42f3-4379-b67a-2070c4b0a444}</Project>

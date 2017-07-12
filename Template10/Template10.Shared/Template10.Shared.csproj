@@ -110,6 +110,8 @@
     <Compile Include="BootStrapper\BootStrapperHelper.cs" />
     <Compile Include="BootStrapper\IBootStrapperShared.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SessionState\Extensions.cs" />
+    <Compile Include="SessionState\SessionState.cs" />
     <Compile Include="Utilities\DeviceUtils.cs" />
     <Compile Include="Utilities\DialogUtils.cs" />
     <Compile Include="Utilities\MonitorUtils.cs" />

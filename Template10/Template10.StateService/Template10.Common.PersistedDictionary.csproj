@@ -107,16 +107,7 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PersistedDictionary\IPersistedDictionary.cs" />
-    <Compile Include="PersistedDictionary\PersistedDictionaryBase.cs" />
-    <Compile Include="PersistedDictionary\PersistedDictionaryHelper.cs" />
-    <Compile Include="PersistedDictionary\PersistedDictionaryTypes.cs" />
-    <Compile Include="PersistedDictionary\Settings.cs" />
-    <Compile Include="PersistedDictionary\Strategies\FolderPersistedDictionaryLocations.cs" />
-    <Compile Include="PersistedDictionary\Strategies\SettingsStateLocations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PersistedDictionary\Strategies\FolderPersistedDictionaryStrategy.cs" />
-    <Compile Include="PersistedDictionary\Strategies\SettingPersistedDictionaryStrategy.cs" />
     <EmbeddedResource Include="Properties\Template10.StateService.rd.xml" />
   </ItemGroup>
   <ItemGroup>

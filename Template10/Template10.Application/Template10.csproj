@@ -137,6 +137,10 @@
     <Compile Include="Strategies\ExtendedSessionStrategy\IExtendedSessionStrategy.cs" />
     <Compile Include="Strategies\ExtendedSessionStrategy\IExtendedSessionStrategyInternal.cs" />
     <Compile Include="Strategies\ExtendedSessionStrategy\Settings.cs" />
+    <Compile Include="Strategies\PersistenceStrategy\FolderPersistedDictionaryLocations.cs" />
+    <Compile Include="Strategies\PersistenceStrategy\FolderPersistedDictionaryStrategy.cs" />
+    <Compile Include="Strategies\PersistenceStrategy\SettingPersistedDictionaryStrategy.cs" />
+    <Compile Include="Strategies\PersistenceStrategy\SettingsStateLocations.cs" />
     <Compile Include="Strategies\SuspendResumeStrategy\DefaultSuspendResumeStrategy.cs" />
     <Compile Include="Strategies\SuspendResumeStrategy\ISuspendResumeStrategy.cs" />
     <Compile Include="Strategies\SuspendResumeStrategy\Settings.cs" />
@@ -181,14 +185,6 @@
     <ProjectReference Include="..\..\Helpers\Template10.CodeBehind\Template10.CodeBehind.csproj">
       <Project>{B3A4E50E-9DCA-457E-BED5-B71D97B957F3}</Project>
       <Name>Template10.CodeBehind</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Helpers\Template10.Mvvm\Template10.Mvvm.csproj">
-      <Project>{b23e19aa-1797-43f6-a0f1-fb2c13111aeb}</Project>
-      <Name>Template10.Mvvm</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Template10.LifetimeService\Template10.Lifetime.csproj">
-      <Project>{06e576b8-d472-4fe0-95a2-05968ad13a8f}</Project>
-      <Name>Template10.Lifetime</Name>
     </ProjectReference>
     <ProjectReference Include="..\Template10.NavigationService\Template10.Navigation.csproj">
       <Project>{cd31d870-42f3-4379-b67a-2070c4b0a444}</Project>
