@@ -9,17 +9,11 @@ using Windows.UI.Xaml.Media;
 
 namespace Template10.Controls
 {
-    [TemplatePart(Name = nameof(PART_ROOT), Type = typeof(Grid))]
     [TemplatePart(Name = nameof(PART_THUMB), Type = typeof(Thumb))]
-    [TemplatePart(Name = nameof(PART_GRABBER), Type = typeof(Grid))]
-    [TemplatePart(Name = nameof(PART_CONTENT), Type = typeof(ContentControl))]
     [ContentProperty(Name = nameof(ElementControl))]
     public sealed class Resizer : ContentControl
     {
         private Thumb PART_THUMB;
-        private ContentControl PART_CONTENT;
-        private Grid PART_GRABBER;
-        private Grid PART_ROOT;
 
         private Size _originalSize;
         public Resizer()
@@ -29,13 +23,77 @@ namespace Template10.Controls
 
         protected override void OnApplyTemplate()
         {
-            PART_ROOT = GetTemplateChild<Grid>(nameof(PART_ROOT));
-            PART_GRABBER = GetTemplateChild<Grid>(nameof(PART_GRABBER));
-            PART_CONTENT = GetTemplateChild<ContentControl>(nameof(PART_CONTENT));
-            PART_THUMB = GetTemplateChild<Thumb>(nameof(PART_THUMB));
-
-            InitEvents();
+            PART_THUMB = GetTemplateChild<Thumb>(nameof(PART_THUMB)) ?? throw new NullReferenceException("PART_THUMB not found.");
+            PART_THUMB.Loaded += (s, e) =>
+            {
+                _originalSize = ElementControl.RenderSize;
+            };
+            PART_THUMB.DragDelta += (s, e) =>
+            {
+                ElementControl.Width = Math.Max(0, ElementControl.ActualWidth + e.HorizontalChange); //HorizontalChange could become negative
+                ElementControl.Height = Math.Max(0, ElementControl.ActualHeight + e.VerticalChange); //VerticalChange could become negative
+            };
+            PART_THUMB.DoubleTapped += (s, e) =>
+            {
+                ElementControl.Height = _originalSize.Height;
+                ElementControl.Width = _originalSize.Width;
+            };
         }
+
+        public Control ElementControl
+        {
+            get => (Control)GetValue(ElementControlProperty) ?? throw new NullReferenceException("Content is required.");
+            set => SetValue(ElementControlProperty, value);
+        }
+        public static readonly DependencyProperty ElementControlProperty =
+            DependencyProperty.Register(nameof(ElementControl), typeof(Control),
+                typeof(Resizer), new PropertyMetadata(default(Control)));
+
+        public Visibility GrabberVisibility
+        {
+            get { return (Visibility)GetValue(GrabberVisibilityProperty); }
+            set { SetValue(GrabberVisibilityProperty, value); }
+        }
+
+        public static readonly DependencyProperty GrabberVisibilityProperty =
+            DependencyProperty.Register(nameof(GrabberVisibility), typeof(Visibility),
+                typeof(Resizer), new PropertyMetadata(null));
+
+        public double GrabberSize
+        {
+            get { return (double)GetValue(GrabberSizeProperty); }
+            set { SetValue(GrabberSizeProperty, value); }
+        }
+        public static readonly DependencyProperty GrabberSizeProperty =
+            DependencyProperty.Register(nameof(GrabberSize), typeof(double),
+                typeof(Resizer), new PropertyMetadata(null));
+
+        public Transform GrabberTransform
+        {
+            get { return (Transform)GetValue(GrabberTransformProperty); }
+            set { SetValue(GrabberTransformProperty, value); }
+        }
+        public static readonly DependencyProperty GrabberTransformProperty =
+            DependencyProperty.Register(nameof(GrabberTransform), typeof(Transform),
+                typeof(Resizer), new PropertyMetadata(null));
+
+        public Geometry GrabberPath
+        {
+            get { return (Geometry)GetValue(GrabberPathProperty); }
+            set { SetValue(GrabberPathProperty, value); }
+        }
+        public static readonly DependencyProperty GrabberPathProperty =
+            DependencyProperty.Register(nameof(GrabberPath), typeof(Geometry), 
+                typeof(Resizer), new PropertyMetadata(null));
+
+        public Brush GrabberBrush
+        {
+            get { return (Brush)GetValue(GrabberBrushProperty); }
+            set { SetValue(GrabberBrushProperty, value); }
+        }
+        public static readonly DependencyProperty GrabberBrushProperty =
+            DependencyProperty.Register(nameof(GrabberBrush), typeof(Brush),
+                typeof(Resizer), new PropertyMetadata(null));
 
         private T GetTemplateChild<T>(string name) where T : FrameworkElement
         {
@@ -46,86 +104,5 @@ namespace Template10.Controls
             }
             return child;
         }
-
-        private void InitEvents()
-        {
-            PART_THUMB.Loaded += thumb_Loaded;
-            PART_THUMB.DragDelta += thumb_DragDelta;
-            PART_THUMB.DoubleTapped += thumb_DoubleTapped;
-        }
-
-        private void thumb_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
-        {
-            ElementControl.Height = _originalSize.Height;
-            ElementControl.Width = _originalSize.Width;
-        }
-
-        private void thumb_DragDelta(object sender, DragDeltaEventArgs e)
-        {
-            ElementControl.Width = Math.Max(0, ElementControl.ActualWidth + e.HorizontalChange); //HorizontalChange could become negative
-            ElementControl.Height = Math.Max(0, ElementControl.ActualHeight + e.VerticalChange); //VerticalChange could become negative
-        }
-
-        private void thumb_Loaded(object sender, RoutedEventArgs e)
-        {
-            _originalSize = ElementControl.RenderSize;
-        }
-
-
-        public Control ElementControl
-        {
-            get { return (Control)GetValue(ElementControlProperty); }
-            set { SetValue(ElementControlProperty, value); }
-        }
-
-        public static readonly DependencyProperty ElementControlProperty =
-            DependencyProperty.Register(nameof(ElementControl), typeof(Control), 
-                typeof(Resizer), new PropertyMetadata(default(Control)));
-
-        public Visibility GrabberVisibility
-        {
-            get { return (Visibility)GetValue(GrabberVisibilityProperty); }
-            set { SetValue(GrabberVisibilityProperty, value); }
-        }
-
-        public static readonly DependencyProperty GrabberVisibilityProperty =
-            DependencyProperty.Register(nameof(GrabberVisibility), typeof(Visibility), 
-                typeof(Resizer), new PropertyMetadata(default(Visibility)));
-
-
-
-        public Size GrabberSize
-        {
-            get { return PART_GRABBER.RenderSize; }
-            set
-            {
-                PART_GRABBER.Width = value.Width;
-                PART_GRABBER.Height = value.Height;
-
-                // move it
-                var transform = PART_GRABBER.RenderTransform as CompositeTransform;
-                if (transform != null)
-                {
-                    transform.TranslateX = value.Width * .3;
-                    transform.TranslateY = value.Height * .3;
-                }
-            }
-        }
-
-        public static readonly DependencyProperty GrabberSizeProperty =
-            DependencyProperty.Register(nameof(GrabberSize), typeof(Size), 
-                typeof(Resizer), new PropertyMetadata(default(Size)));
-
-
-        public Brush GrabberBrush
-        {
-            get { return (Brush)GetValue(GrabberBrushProperty); }
-            set { SetValue(GrabberBrushProperty, value); }
-        }
-
-        public static readonly DependencyProperty GrabberBrushProperty =
-            DependencyProperty.Register(nameof(GrabberBrush), typeof(Brush), 
-                typeof(Resizer), new PropertyMetadata(default(Brush)));
-
     }
 }
