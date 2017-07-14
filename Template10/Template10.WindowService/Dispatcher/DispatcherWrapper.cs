@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using Template10.Services.WindowWrapper;
 using Windows.UI.Core;
 
 namespace Template10.Common
 {
+
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/DispatcherWrapper
     public class DispatcherWrapper : IDispatcherWrapper
     {
@@ -16,9 +16,7 @@ namespace Template10.Common
 
         #endregion
 
-        public static IDispatcherWrapper Current() => WindowWrapperHelper.Current().Dispatcher;
-
-        public DispatcherWrapper(CoreDispatcher dispatcher)
+        internal DispatcherWrapper(CoreDispatcher dispatcher)
         {
             DebugWrite(caller: "Constructor");
             this.dispatcher = dispatcher;

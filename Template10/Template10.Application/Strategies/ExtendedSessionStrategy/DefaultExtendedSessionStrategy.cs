@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Template10.Common;
 
-namespace Template10.Strategies.ExtendedSessionStrategy
+namespace Template10.Strategies
 {
     public class DefaultExtendedSessionStrategy : ExtendedSessionStrategyBase
     {

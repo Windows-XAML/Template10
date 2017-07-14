@@ -182,17 +182,21 @@
       <Project>{8b565035-0b8f-41b0-a2a1-23793a58aa50}</Project>
       <Name>Template10.Controls.ModalDialog</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Controls\Template10.Controls.PageHeader\Template10.Controls.PageHeader.csproj">
+      <Project>{509386d0-711e-4345-83ad-f71998efbdd7}</Project>
+      <Name>Template10.Controls.PageHeader</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Controls\Template10.Controls.Resizer\Control\Template10.Controls.Resizer.csproj">
       <Project>{4c95717c-b59c-4a2f-967a-79e74dd903cc}</Project>
       <Name>Template10.Controls.Resizer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Helpers\Template10.CodeBehind\Template10.CodeBehind.csproj">
-      <Project>{b3a4e50e-9dca-457e-bed5-b71d97b957f3}</Project>
-      <Name>Template10.CodeBehind</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Services\Template10.Services.BackService\Template10.Services.BackService.csproj">
       <Project>{8564f764-99d9-4473-b5e4-ac62cda73977}</Project>
       <Name>Template10.Services.BackService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Template10.CodeBehind\Template10.CodeBehind.csproj">
+      <Project>{b3a4e50e-9dca-457e-bed5-b71d97b957f3}</Project>
+      <Name>Template10.CodeBehind</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Services\Template10.Services.LoggingService\Service\Template10.Services.LoggingService.csproj">
       <Project>{eadde808-bf0d-4ebc-b4ca-9fda63b53862}</Project>
@@ -210,11 +214,15 @@
       <Project>{eba14736-2c70-4e33-a156-221b44ff43c1}</Project>
       <Name>Template10.Services.SettingsService</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Template10.XAML\Template10.XAML.csproj">
+      <Project>{af4f2a41-d0e8-4cb2-950f-ed523c29b19c}</Project>
+      <Name>Template10.XAML</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Template10\Template10.Application\Template10.csproj">
       <Project>{ac3e4f10-6615-4e16-bb0f-104760c92b95}</Project>
       <Name>Template10</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Template10\Template10.Hamburger\Template10.Controls.Hamburger.csproj">
+    <ProjectReference Include="..\..\Controls\Template10.Controls.Hamburger\Template10.Controls.Hamburger.csproj">
       <Project>{5144566e-80eb-4375-9fe2-415808e2051d}</Project>
       <Name>Template10.Controls.Hamburger</Name>
     </ProjectReference>
@@ -229,10 +237,6 @@
     <ProjectReference Include="..\..\Template10\Template10.Shared\Template10.Shared.csproj">
       <Project>{1f9a6976-d8f9-459b-8aee-770b53904ff3}</Project>
       <Name>Template10.Shared</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Template10\Template10.StateService\Template10.Common.PersistedDictionary.csproj">
-      <Project>{df5ddea9-9509-45bd-8f1f-dff10515ccd1}</Project>
-      <Name>Template10.Common.PersistedDictionary</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Template10\Template10.WindowService\Template10.Windowing.csproj">
       <Project>{9cad4451-5adf-48d3-b690-8b341a95a228}</Project>

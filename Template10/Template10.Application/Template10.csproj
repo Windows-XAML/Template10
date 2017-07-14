@@ -132,23 +132,26 @@
     <Compile Include="StartupInfo\StartupInfo.cs" />
     <Compile Include="StartupInfo\StartCauses.enum.cs" />
     <Compile Include="Strategies\ExtendedSessionStrategy\DefaultExtendedSessionStrategy.cs" />
+    <Compile Include="Strategies\ExtendedSessionStrategy\ExtendedSessionKinds.cs" />
     <Compile Include="Strategies\ExtendedSessionStrategy\ExtendedSessionManager.cs" />
     <Compile Include="Strategies\ExtendedSessionStrategy\ExtendedSessionStrategyBase.cs" />
     <Compile Include="Strategies\ExtendedSessionStrategy\IExtendedSessionStrategy.cs" />
     <Compile Include="Strategies\ExtendedSessionStrategy\IExtendedSessionStrategyInternal.cs" />
     <Compile Include="Strategies\ExtendedSessionStrategy\Settings.cs" />
-    <Compile Include="Strategies\PersistenceStrategy\FolderPersistedDictionaryLocations.cs" />
-    <Compile Include="Strategies\PersistenceStrategy\FolderPersistedDictionaryStrategy.cs" />
-    <Compile Include="Strategies\PersistenceStrategy\SettingPersistedDictionaryStrategy.cs" />
-    <Compile Include="Strategies\PersistenceStrategy\SettingsStateLocations.cs" />
-    <Compile Include="Strategies\SuspendResumeStrategy\DefaultSuspendResumeStrategy.cs" />
-    <Compile Include="Strategies\SuspendResumeStrategy\ISuspendResumeStrategy.cs" />
-    <Compile Include="Strategies\SuspendResumeStrategy\Settings.cs" />
+    <Compile Include="Strategies\LifecycleStrategy\DefaultLifecycleStrategyStrategy.cs" />
+    <Compile Include="Strategies\LifecycleStrategy\ILifecycleStrategyStrategy.cs" />
+    <Compile Include="Strategies\PersistenceStrategy\DefaultPersistenceFactory.cs" />
+    <Compile Include="Strategies\PersistenceStrategy\FolderPersistenceLocations.enum.cs" />
+    <Compile Include="Strategies\PersistenceStrategy\FolderPersistenceStrategy.cs" />
+    <Compile Include="Strategies\PersistenceStrategy\IPersistenceStrategy.cs" />
+    <Compile Include="Strategies\PersistenceStrategy\SettingsPersistenceStrategy.cs" />
+    <Compile Include="Strategies\PersistenceStrategy\SettingsStateLocations.enum.cs" />
+    <Compile Include="Strategies\LifecycleStrategy\Settings.cs" />
+    <Compile Include="Strategies\TitleBarStrategy\DefaultTitleBarStrategy.cs" />
     <Compile Include="Strategies\TitleBarStrategy\ITitleBarStrategy.cs" />
     <Compile Include="Bootstrapper\AdditionalKinds.enum.cs" />
     <Compile Include="Bootstrapper\AppExecutionState.enum.cs" />
     <Compile Include="Bootstrapper\BootstrapperStates.enum.cs" />
-    <Compile Include="Bootstrapper\IBootStrapper.cs" />
     <Compile Include="Bootstrapper\Settings.cs" />
     <Compile Include="StartupInfo\StartKind.enum.cs" />
     <Compile Include="Bootstrapper\BootStrapper.cs" />
@@ -182,9 +185,13 @@
       <Project>{EBA14736-2C70-4E33-A156-221B44FF43C1}</Project>
       <Name>Template10.Services.SettingsService</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Helpers\Template10.CodeBehind\Template10.CodeBehind.csproj">
-      <Project>{B3A4E50E-9DCA-457E-BED5-B71D97B957F3}</Project>
+    <ProjectReference Include="..\..\Template10.CodeBehind\Template10.CodeBehind.csproj">
+      <Project>{b3a4e50e-9dca-457e-bed5-b71d97b957f3}</Project>
       <Name>Template10.CodeBehind</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Template10.XAML\Template10.XAML.csproj">
+      <Project>{af4f2a41-d0e8-4cb2-950f-ed523c29b19c}</Project>
+      <Name>Template10.XAML</Name>
     </ProjectReference>
     <ProjectReference Include="..\Template10.NavigationService\Template10.Navigation.csproj">
       <Project>{cd31d870-42f3-4379-b67a-2070c4b0a444}</Project>
@@ -197,10 +204,6 @@
     <ProjectReference Include="..\Template10.Shared\Template10.Shared.csproj">
       <Project>{1f9a6976-d8f9-459b-8aee-770b53904ff3}</Project>
       <Name>Template10.Shared</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Template10.StateService\Template10.Common.PersistedDictionary.csproj">
-      <Project>{df5ddea9-9509-45bd-8f1f-dff10515ccd1}</Project>
-      <Name>Template10.Common.PersistedDictionary</Name>
     </ProjectReference>
     <ProjectReference Include="..\Template10.WindowService\Template10.Windowing.csproj">
       <Project>{9cad4451-5adf-48d3-b690-8b341a95a228}</Project>

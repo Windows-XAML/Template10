@@ -15,7 +15,8 @@ namespace Template10.Controls
             Unloaded += ModalDialog_Unloaded;
         }
 
-        public ModalDialog(UIElement content, UIElement modalContent) : this()
+        public ModalDialog(UIElement content, UIElement modalContent)
+            : this()
         {
             Content = content;
             ModalContent = modalContent;
@@ -23,12 +24,12 @@ namespace Template10.Controls
 
         private void ModalDialog_Loaded(object sender, RoutedEventArgs e)
         {
-            Services.BackButtonService.BackButtonService.BackRequested += BackButtonService_NavigateBack;
+            Services.BackButtonService.BackButtonService.Instance.BackRequested += BackButtonService_NavigateBack;
         }
 
         private void ModalDialog_Unloaded(object sender, RoutedEventArgs e)
         {
-            Services.BackButtonService.BackButtonService.BackRequested -= BackButtonService_NavigateBack;
+            Services.BackButtonService.BackButtonService.Instance.BackRequested -= BackButtonService_NavigateBack;
         }
 
         private void BackButtonService_NavigateBack(object sender, Common.HandledEventArgs e)

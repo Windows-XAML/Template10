@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Template10.Strategies.ExtendedSessionStrategy;
-using Template10.Strategies.SuspendResumeStrategy;
+using Template10.Common.PersistedDictionary;
+using Template10.Strategies;
 using Template10.Strategies.TitleBarStrategy;
 using Template10.Utils;
 using Windows.ApplicationModel.Activation;
@@ -13,8 +13,16 @@ namespace Template10.Common
     public class Settings
     {
         public static IExtendedSessionStrategy ExtendedSessionStrategy { get; set; } = new DefaultExtendedSessionStrategy();
-        public static ISuspendResumeStrategy SuspendResumeStrategy { get; set; } = new DefaultSuspendResumeStrategy();
+
+        public static ILifecycleStrategyStrategy SuspendResumeStrategy { get; set; } = new DefaultLifecycleStrategyStrategy();
+
         public static ITitleBarStrategy TitleBarStrategy { get; set; } = new DefaultTitleBarStrategy();
+
+        public static IPersistedDictionaryFactory PersistenceStrategyFactory
+        {
+            get => Services.NavigationService.Settings.PersistedDictionaryFactory;
+            set => Services.NavigationService.Settings.PersistedDictionaryFactory = value;
+        }
 
         public static Func<SplashScreen, UserControl> SplashFactory { get; set; }
 
@@ -52,8 +60,8 @@ namespace Template10.Common
         /// </remarks>
         public static bool RunSuspendStrategy
         {
-            get => Strategies.SuspendResumeStrategy.Settings.RunSuspendStrategy;
-            set => Strategies.SuspendResumeStrategy.Settings.RunSuspendStrategy = value;
+            get => Strategies.Settings.RunSuspendStrategy;
+            set => Strategies.Settings.RunSuspendStrategy = value;
         }
 
         /// <summary>
@@ -66,8 +74,8 @@ namespace Template10.Common
         /// </remarks>
         public static bool RunRestoreStrategy
         {
-            get => Strategies.SuspendResumeStrategy.Settings.RunRestoreStrategy;
-            set => Strategies.SuspendResumeStrategy.Settings.RunRestoreStrategy = value;
+            get => Strategies.Settings.RunRestoreStrategy;
+            set => Strategies.Settings.RunRestoreStrategy = value;
         }
 
         /// <summary>
@@ -94,8 +102,8 @@ namespace Template10.Common
         /// </remarks>
         public static bool AutoExtendExecutionSession
         {
-            get => Strategies.ExtendedSessionStrategy.Settings.AutoExtendExecutionSession;
-            set => Strategies.ExtendedSessionStrategy.Settings.AutoExtendExecutionSession = value;
+            get => Strategies.Settings.AutoExtendExecutionSession;
+            set => Strategies.Settings.AutoExtendExecutionSession = value;
         }
 
 

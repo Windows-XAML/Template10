@@ -108,6 +108,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dispatcher\DispatcherWrapper.cs" />
+    <Compile Include="Dispatcher\DispatcherWrapperFactory.cs" />
+    <Compile Include="Dispatcher\DispatcherWrapperHelper.cs" />
     <Compile Include="Dispatcher\IDispatcherWrapper.cs" />
     <Compile Include="Window\IWindowWrapper.cs" />
     <Compile Include="Window\WindowWrapper.cs" />
@@ -120,6 +122,7 @@
     <Compile Include="View\ViewLifetimeControl.cs" />
     <Compile Include="View\ViewLifeTimeException.cs" />
     <Compile Include="View\ViewService.cs" />
+    <Compile Include="Window\WindowWrapperFactory.cs" />
     <Compile Include="Window\WindowWrapperHelper.cs" />
     <EmbeddedResource Include="Properties\Template10.Services.WindowService.rd.xml" />
   </ItemGroup>

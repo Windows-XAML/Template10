@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using Template10.Common;
 using Windows.ApplicationModel.Core;
 using Windows.Graphics.Display;
@@ -11,6 +11,7 @@ using Windows.UI.Xaml;
 
 namespace Template10.Services.WindowWrapper
 {
+
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Docs-%7C-WindowWrapper
     public class WindowWrapper : IWindowWrapper
     {
@@ -27,9 +28,8 @@ namespace Template10.Services.WindowWrapper
             Dispatcher = new DispatcherWrapper(window.Dispatcher);
             window.CoreWindow.Closed += (s, e) => WindowWrapperHelper.Instances.Remove(this);
             window.Closed += (s, e) => WindowWrapperHelper.Instances.Remove(this);
-
             window.Activate();
-            ViewService.ViewService.OnWindowCreated();
+
             IsMainView = CoreApplication.MainView == CoreApplication.GetCurrentView();
 
             _DisplayInformation = new Lazy<DisplayInformation>(() =>

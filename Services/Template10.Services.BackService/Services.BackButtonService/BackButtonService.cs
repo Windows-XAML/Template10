@@ -6,15 +6,17 @@ using Windows.UI.Xaml;
 
 namespace Template10.Services.BackButtonService
 {
-    public class BackButtonService 
+
+    public class BackButtonService
     {
-        static BackButtonService()
+        public static BackButtonService Instance { get; } = new BackButtonService();
+        private BackButtonService()
         {
             EnsureListener();
         }
 
-        private static bool ensureListener = false;
-        private static void EnsureListener()
+        private bool ensureListener = false;
+        private void EnsureListener()
         {
             if (ensureListener) return;
             else ensureListener = true;
@@ -48,10 +50,10 @@ namespace Template10.Services.BackButtonService
         /// use cases would include the ModalDialog which would cancel the event, using
         /// it instead for itself to close the dialog - not wanting it to navigate a frame.
         /// </summary>
-        public static event Common.TypedEventHandler<CancelEventArgs> BeforeBackRequested;
-        public static event Common.TypedEventHandler<Common.HandledEventArgs> BackRequested;
+        public event Common.TypedEventHandler<CancelEventArgs> BeforeBackRequested;
+        public event Common.TypedEventHandler<Common.HandledEventArgs> BackRequested;
 
-        public static Common.HandledEventArgs RaiseBackRequested()
+        public Common.HandledEventArgs RaiseBackRequested()
         {
             var cancelEventArgs = new CancelEventArgs();
             BeforeBackRequested?.Invoke(null, cancelEventArgs);
@@ -68,10 +70,10 @@ namespace Template10.Services.BackButtonService
         /// <summary>
         /// This event allows a mechanism to intercept ForwardRequested and stop it. 
         /// </summary>
-        public static event Common.TypedEventHandler<CancelEventArgs> BeforeForwardRequested;
-        public static event Common.TypedEventHandler<Common.HandledEventArgs> ForwardRequested;
+        public event Common.TypedEventHandler<CancelEventArgs> BeforeForwardRequested;
+        public event Common.TypedEventHandler<Common.HandledEventArgs> ForwardRequested;
 
-        public static Common.HandledEventArgs RaiseForwardRequested()
+        public Common.HandledEventArgs RaiseForwardRequested()
         {
             var cancelEventArgs = new CancelEventArgs();
             BeforeForwardRequested?.Invoke(null, cancelEventArgs);
@@ -85,9 +87,9 @@ namespace Template10.Services.BackButtonService
             return handledEventArgs;
         }
 
-        public static event EventHandler BackButtonUpdated;
+        public event EventHandler BackButtonUpdated;
 
-        public static void UpdateBackButton(bool canGoBack, bool canGoForward = false)
+        public void UpdateBackButton(bool canGoBack, bool canGoForward = false)
         {
             // show the shell back only if there is anywhere to go in the default frame
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =

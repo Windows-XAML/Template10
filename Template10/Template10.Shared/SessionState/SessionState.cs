@@ -4,7 +4,7 @@ namespace Template10.Common
 {
     public class SessionState : Dictionary<string, object>
     {
-        public static SessionState Current = new SessionState();
+        internal static SessionState Instance = new SessionState();
 
         private SessionState()
         {

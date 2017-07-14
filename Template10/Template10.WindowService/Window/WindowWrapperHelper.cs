@@ -31,23 +31,5 @@ namespace Template10.Services.WindowWrapper
         public static IWindowWrapper Current() => Instances.FirstOrDefault(x => x.Window == Window.Current) ?? Default();
 
         public static IWindowWrapper Current(Window window) => Instances.FirstOrDefault(x => x.Window == window);
-
-        // (should) only be called from the Application.WindowCreated event
-        public static async void Create(WindowCreatedEventArgs args)
-        {
-            await CreateAsync(args.Window);
-        }
-
-        // this is async for future use
-        public static async Task<IWindowWrapper> CreateAsync(Window window)
-        {
-            if (Instances.Any(x => x.Window.Equals(window)))
-            {
-                throw new Exception("Windows already has a wrapper; use Current(window) to fetch.");
-            }
-            var wrapper = new WindowWrapper(window);
-            Instances.Add(wrapper);
-            return wrapper;
-        }
     }
 }

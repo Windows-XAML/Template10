@@ -11,8 +11,8 @@
     <AssemblyName>Template10.Services.BackButton</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.15063.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.14393.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -112,7 +112,7 @@
     <EmbeddedResource Include="Properties\Template10.Services.BackButton.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Helpers\Template10.CodeBehind\Template10.CodeBehind.csproj">
+    <ProjectReference Include="..\..\Template10.CodeBehind\Template10.CodeBehind.csproj">
       <Project>{b3a4e50e-9dca-457e-bed5-b71d97b957f3}</Project>
       <Name>Template10.CodeBehind</Name>
     </ProjectReference>

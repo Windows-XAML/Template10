@@ -2,22 +2,14 @@ using System;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.ExtendedExecution;
 
-namespace Template10.Strategies.ExtendedSessionStrategy
+namespace Template10.Strategies
 {
-    public enum SessionKinds
-    {
-        None = -1,
-        Unspecified = 0,
-        LocationTracking = 1,
-        SavingData = 2
-    }
-
     internal class ExtendedSessionManager : IDisposable
     {
         volatile static ExtendedExecutionSession _extendedExecutionSession;
 
-        volatile static SessionKinds _currentKind = SessionKinds.None;
-        public SessionKinds CurrentKind => _currentKind;
+        volatile static ExtendedSessionKinds _currentKind = ExtendedSessionKinds.None;
+        public ExtendedSessionKinds CurrentKind => _currentKind;
 
         public bool IsActive => _isStarted && !_isRevoked;
 
@@ -51,26 +43,26 @@ namespace Template10.Strategies.ExtendedSessionStrategy
             _isRevoked = true;
         }
 
-        public async Task<bool> StartAsync(SessionKinds kind)
+        public async Task<bool> StartAsync(ExtendedSessionKinds kind)
         {
             try
             {
                 switch (kind)
                 {
-                    case SessionKinds.Unspecified:
+                    case ExtendedSessionKinds.Unspecified:
                         _extendedExecutionSession.Reason = ExtendedExecutionReason.Unspecified;
                         break;
-                    case SessionKinds.LocationTracking:
+                    case ExtendedSessionKinds.LocationTracking:
                         _extendedExecutionSession.Reason = ExtendedExecutionReason.LocationTracking;
                         break;
-                    case SessionKinds.SavingData:
+                    case ExtendedSessionKinds.SavingData:
                         _extendedExecutionSession.Reason = ExtendedExecutionReason.SavingData;
                         break;
                     default:
                         throw new NotSupportedException(kind.ToString());
                 }
                 var result = await _extendedExecutionSession.RequestExtensionAsync();
-                return result == ExtendedExecutionResult.Allowed;
+                return _isStarted = result == ExtendedExecutionResult.Allowed;
             }
             catch
             {

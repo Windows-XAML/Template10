@@ -39,6 +39,6 @@ namespace Template10.Mvvm
         public virtual INavigationService NavigationService { get; set; }
 
         [JsonIgnore]
-        public virtual IDictionary<string, object> SessionState => Template10.Common.SessionState.Current;
+        public virtual IDictionary<string, object> SessionState => SessionStateHelper.Current;
     }
 }

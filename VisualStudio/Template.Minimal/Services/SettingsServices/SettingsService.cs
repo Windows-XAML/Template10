@@ -51,7 +51,7 @@ namespace Sample.Services.SettingsServices
                 {
                     case nameof(UseShellBackButton):
                         Template10.Services.BackButtonService.Settings.ShowShellBackButton = UseShellBackButton;
-                        Template10.Services.BackButtonService.BackButtonService.UpdateBackButton(NavigationServiceHelper.Default.CanGoBack);
+                        Template10.Services.BackButtonService.BackButtonService.Instance.UpdateBackButton(NavigationServiceHelper.Default.CanGoBack);
                         break;
                     case nameof(AppTheme):
                         (Window.Current.Content as FrameworkElement).RequestedTheme = AppTheme.ToElementTheme();

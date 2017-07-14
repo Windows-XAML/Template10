@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Template10.Common;
 
-namespace Template10.Strategies.ExtendedSessionStrategy
+namespace Template10.Strategies
 {
     public abstract class ExtendedSessionStrategyBase : IExtendedSessionStrategyInternal
     {
@@ -19,7 +19,7 @@ namespace Template10.Strategies.ExtendedSessionStrategy
             _manager.Dispose();
         }
 
-        SessionKinds IExtendedSessionStrategyInternal.CurrentKind => _manager.CurrentKind;
+        ExtendedSessionKinds IExtendedSessionStrategyInternal.CurrentKind => _manager.CurrentKind;
 
         bool IExtendedSessionStrategyInternal.IsActive => _manager.IsActive;
 
@@ -33,7 +33,7 @@ namespace Template10.Strategies.ExtendedSessionStrategy
         {
             if (_manager.IsActive)
             {
-                if (_manager.CurrentKind == SessionKinds.Unspecified)
+                if (_manager.CurrentKind == ExtendedSessionKinds.Unspecified)
                 {
                     return true;
                 }
@@ -41,7 +41,7 @@ namespace Template10.Strategies.ExtendedSessionStrategy
             }
             else
             {
-                return await _manager.StartAsync(SessionKinds.Unspecified);
+                return await _manager.StartAsync(ExtendedSessionKinds.Unspecified);
             }
         }
 
@@ -49,13 +49,13 @@ namespace Template10.Strategies.ExtendedSessionStrategy
         {
             if (_manager.IsActive)
             {
-                if (_manager.CurrentKind == SessionKinds.SavingData)
+                if (_manager.CurrentKind == ExtendedSessionKinds.SavingData)
                 {
                     return true;
                 }
                 _manager.Recreate();
             }
-            return await _manager.StartAsync(SessionKinds.SavingData);
+            return await _manager.StartAsync(ExtendedSessionKinds.SavingData);
         }
     }
 }

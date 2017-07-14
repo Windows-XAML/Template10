@@ -12,38 +12,6 @@ using Windows.UI.Xaml;
 
 namespace Template10.Common
 {
-    public enum BootstrapperStates
-    {
-        None,
-
-        Launching,
-        Launched,
-
-        Starting,
-        Started,
-
-        Activating,
-        Activated,
-
-        Prelaunching,
-        Prelaunched,
-
-        Initializing,
-        Initialized,
-
-        Restoring,
-        Restored,
-
-        Resuming,
-        Resumed,
-
-        CreatingRootElement,
-        CreatedRootElement,
-
-        Suspending,
-        Suspended,
-    }
-
     public interface IBootStrapper : IBootStrapperShared
     {
         INavigationServiceAsync NavigationService { get; }
@@ -55,6 +23,14 @@ namespace Template10.Common
     {
         #region IBootStrapper
 
+        /// <summary>
+        /// This memory-only dictionary gives developers a place to store complex types while
+        /// navigating, including non-serializable types that cannot be passed as parameters.
+        /// </summary>
+        /// <remarks>
+        /// This is a convenience property forwarding the constant value
+        /// available through Template10.Common.SessionState.Current
+        /// </remarks>
         public IValueWithHistory<BootstrapperStates> Status { get; } = new ValueWithHistory<BootstrapperStates>(BootstrapperStates.None, (d, v) =>
         {
             DebugWrite($"BootStrapper.State changed to {v}");
@@ -68,7 +44,7 @@ namespace Template10.Common
         /// This is a convenience property forwarding the constant value
         /// available through Template10.Common.SessionState.Current
         /// </remarks>
-        public IDictionary<string, object> SessionState { get; } = Template10.Common.SessionState.Current;
+        public IDictionary<string, object> SessionState { get; } = Template10.Common.SessionStateHelper.Current;
 
         /// <summary>
         /// Returns the first NavigationService from all available services.
@@ -98,67 +74,97 @@ namespace Template10.Common
 
             using (var locker = await LockAsync.Create(startupLocker))
             {
+                DoEnsurePersistedStrategyFactory();
+
                 if (e.ThisIsFirstStart)
                 {
                     // handle launch
                     await OperationWrapperAsync(BootstrapperStates.Launching, async () =>
                     {
                         var window = DoShowSplash(e);
+
                         var root = await DoCreateRootElementAsync(e);
+
                         await Task.Delay(1);
 
                         if (e.ThisIsPrelaunch)
                         {
-                            await OperationWrapperAsync(BootstrapperStates.Prelaunching, async () =>
-                            {
-                                try
-                                {
-                                    await OnStartAsync(e);
-                                }
-                                catch
-                                {
-                                    Debugger.Break();
-                                    throw;
-                                }
-                            }, BootstrapperStates.Prelaunched);
+                            await DoStartAsPrelaunch(e);
                         }
                         else
                         {
-                            if (!await DoRestoreWhenResumingAsync(e))
-                            {
-                                await OperationWrapperAsync(BootstrapperStates.Starting, async () =>
-                                {
-                                    try
-                                    {
-                                        await OnStartAsync(e);
-                                    }
-                                    catch
-                                    {
-                                        Debugger.Break();
-                                        throw;
-                                    }
-                                }, BootstrapperStates.Started);
-                            }
+                            await DoStartAsNormal(e);
                         }
 
-                        // do some one-time things
-                        DoSetupResuming(e);
-                        DoSetupSuspending(e);
-                        DoSetupTitleBar(e);
-                        DoSetupBackButton(e);
-                        await DoSetupExtendedSessionAsync(e);
                         DoHideSplash(e, root, window);
 
                     }, BootstrapperStates.Launched);
+
+                    DoSetupSuspending(e);
+
+                    DoSetupResuming(e);
+
+                    DoSetupTitleBar(e);
+
+                    DoSetupBackButton(e);
+
+                    await DoSetupExtendedSessionAsync(e);
                 }
                 else
                 {
-                    // handle activate
-                    await OperationWrapperAsync(BootstrapperStates.Activating, async () =>
+                    await DoStartAsActivate(e);
+                }
+            }
+        }
+
+        private async Task DoStartAsActivate(StartupInfo e)
+        {
+            await OperationWrapperAsync(BootstrapperStates.Activating, async () =>
+            {
+                await OnStartAsync(e);
+            }, BootstrapperStates.Activated);
+        }
+
+        private async Task DoStartAsPrelaunch(StartupInfo e)
+        {
+            await OperationWrapperAsync(BootstrapperStates.Prelaunching, async () =>
+            {
+                try
+                {
+                    await OnStartAsync(e);
+                }
+                catch
+                {
+                    Debugger.Break();
+                    throw;
+                }
+            }, BootstrapperStates.Prelaunched);
+        }
+
+        private async Task DoStartAsNormal(StartupInfo e)
+        {
+            if (!await DoRestoreWhenResumingAsync(e))
+            {
+                await OperationWrapperAsync(BootstrapperStates.Starting, async () =>
+                {
+                    try
                     {
                         await OnStartAsync(e);
-                    }, BootstrapperStates.Activated);
-                }
+                    }
+                    catch
+                    {
+                        Debugger.Break();
+                        throw;
+                    }
+                }, BootstrapperStates.Started);
+            }
+        }
+
+        private static void DoEnsurePersistedStrategyFactory()
+        {
+            if (Settings.PersistenceStrategyFactory == null)
+            {
+                Settings.PersistenceStrategyFactory = new Strategies.DefaultPersistenceFactory();
             }
         }
 
@@ -198,9 +204,12 @@ namespace Template10.Common
 
         private void DoSetupBackButton(StartupInfo e)
         {
-            Services.BackButtonService.BackButtonService.BackRequested += (s, args) =>
+            Services.BackButtonService.BackButtonService.Instance.BackRequested += (s, args) =>
             {
-                if (args.Handled) return;
+                if (args.Handled)
+                {
+                    return;
+                }
                 args.Handled = true;
                 NavigationServiceHelper.Default?.GoBack();
             };
@@ -208,7 +217,7 @@ namespace Template10.Common
 
         private void DoSetupResuming(StartupInfo args)
         {
-            Resuming += (s, e) =>
+            base.Resuming += (s, e) =>
             {
                 // resume is handled in StartupOrchestrator
             };
@@ -216,7 +225,7 @@ namespace Template10.Common
 
         private void DoSetupSuspending(StartupInfo args)
         {
-            Suspending += async (s, e) =>
+            base.Suspending += async (s, e) =>
             {
                 if (args.ThisIsPrelaunch)
                 {
@@ -275,7 +284,11 @@ namespace Template10.Common
         public BootStrapper()
         {
             BootStrapperHelper.Current = this;
+             
         }
+
+        private new event EventHandler<object> Resuming;
+        private new event SuspendingEventHandler Suspending;
 
         /// <summary>
         /// There can be only one BootStrapper. This is a simple means to access it without
@@ -302,7 +315,7 @@ namespace Template10.Common
         protected sealed override void OnWindowCreated(WindowCreatedEventArgs args)
         {
             DebugWrite();
-            WindowWrapperHelper.Create(args);
+            var wrapper = WindowWrapperFactory.Create(args);
             base.OnWindowCreated(args);
         }
 

@@ -16,7 +16,7 @@ namespace Template10.Services.SerializationService.Strategies
             {
                 Formatting = Formatting.None,
                 TypeNameHandling = TypeNameHandling.Auto,
-                TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
+                //TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
                 PreserveReferencesHandling = PreserveReferencesHandling.All,
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 ObjectCreationHandling = ObjectCreationHandling.Auto,

@@ -1,6 +1,6 @@
-﻿namespace Template10.Strategies.ExtendedSessionStrategy
+﻿namespace Template10.Strategies
 {
-    public static class Settings
+    public static partial class Settings
     {
         public static bool AutoExtendExecutionSession { get; set; } = true;
     }
