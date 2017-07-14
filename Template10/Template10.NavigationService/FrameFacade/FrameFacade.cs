@@ -39,6 +39,11 @@ namespace Template10.Services.NavigationService
             (this as IFrameFacadeInternal).NavigationService = navigationService;
 
             // setup animations
+            SetupAnnimations();
+        }
+
+        private void SetupAnnimations()
+        {
             var t = new NavigationThemeTransition
             {
                 DefaultNavigationTransitionInfo = new EntranceNavigationTransitionInfo()
@@ -94,77 +99,13 @@ namespace Template10.Services.NavigationService
 
         internal bool Navigate(Type page, object parameter) => (this as IFrameFacadeInternal).Frame.Navigate(page, parameter);
 
+        public void PurgeNavigationState() => (this as IFrameFacadeInternal).Frame.SetNavigationState("1,0");
+
         public IList<PageStackEntry> BackStack => (this as IFrameFacadeInternal).Frame.BackStack;
 
         public IList<PageStackEntry> ForwardStack => (this as IFrameFacadeInternal).Frame.ForwardStack;
 
     }
-
-    //public partial class FrameFacade : IFrameFacadeInternal
-    //{
-    //    // Obsolete properties/methods
-
-    //    [Obsolete("This may be made private in a future version.", false)]
-    //    public void GoBack() => (this as IFrameFacadeInternal).GoBack();
-
-    //    [Obsolete("This may be made private in a future version.", false)]
-    //    public void GoForward() => (this as IFrameFacadeInternal).GoForward();
-
-    //    [Obsolete("Use FrameFacade.BackStack.Count. THis will be deleted in future versions.", false)]
-    //    public int BackStackDepth => (this as IFrameFacadeInternal).Frame.BackStack.Count;
-
-    //    [Obsolete("Use NavigationService.BackButtonHandling This may be made private in a future version.", false)]
-    //    public BackButton BackButtonHandling
-    //    {
-    //        get { return NavigationService.BackButtonHandling; }
-    //        internal set { NavigationService.BackButtonHandling = value; }
-    //    }
-
-    //    [Obsolete("Use NavigationService.Suspension.GetFrameState(). This may be made private in a future version.", false)]
-    //    private SettingsService.ISettingsService FrameStateSettingsService() { throw new NotImplementedException(); }
-
-    //    [Obsolete("Use NavigationService.Suspension.GetFrameState().Write(). This may be made private in a future version.", false)]
-    //    public void SetFrameState(string key, string value) { throw new NotImplementedException(); }
-
-    //    [Obsolete("Use NavigationService.Suspension.GetFrameState().Read(). This may be made private in a future version.", false)]
-    //    public string GetFrameState(string key, string otherwise) { throw new NotImplementedException(); }
-
-    //    [Obsolete("Use NavigationService.Suspension.ClearFrameState(). This may be made private in a future version.", false)]
-    //    public void ClearFrameState() { throw new NotImplementedException(); }
-
-    //    [Obsolete("Use NavigationService.Suspension.GetPageState(). This may be made private in a future version.", false)]
-    //    public SettingsService.ISettingsService PageStateSettingsService(Type type) { throw new NotImplementedException(); }
-
-    //    [Obsolete("Use NavigationService.Suspension.GetPageState(). This may be made private in a future version.", false)]
-    //    public SettingsService.ISettingsService PageStateSettingsService(string key) { throw new NotImplementedException(); }
-
-    //    [Obsolete("Use NavigationService.Suspension.ClearPageState(). This may be made private in a future version.", false)]
-    //    public void ClearPageState(Type type) { throw new NotImplementedException(); }
-
-    //    [Obsolete("This may be made private in a future version.", false)]
-    //    public INavigationService NavigationService { get { throw new NotImplementedException(); } }
-
-    //    [Obsolete("This will be made private in a future version.", true)]
-    //    public Frame Frame { get { throw new NotImplementedException(); } }
-
-    //    [Obsolete("This may be made private in a future version.", true)]
-    //    public NavigationMode NavigationModeHint { get { throw new NotImplementedException(); } }
-
-    //    [Obsolete("Use NavigationService.Refresh(). This may be made private in a future version.", false)]
-    //    public void Refresh() { throw new NotImplementedException(); }
-
-    //    [Obsolete("Use NavigationService.Refresh(). This may be made private in a future version.", false)]
-    //    public void Refresh(object param) { throw new NotImplementedException(); }
-
-    //    [Obsolete("Use NavigationService.LastNavigationType. This may be made private in a future version.", false)]
-    //    public Type CurrentPageType { get { throw new NotImplementedException(); } }
-
-    //    [Obsolete("Use NavigationService.LastNavigationParameter. This may be made private in a future version.", false)]
-    //    public object CurrentPageParam { get { throw new NotImplementedException(); } }
-
-    //    [Obsolete("Use NavigationService.SerializationService. This may be made private in a future version.", false)]
-    //    public SerializationService.ISerializationService SerializationService { get { throw new NotImplementedException(); } }
-    //}
 
     public partial class FrameFacade : IFrameFacadeInternal
     {
@@ -174,14 +115,14 @@ namespace Template10.Services.NavigationService
 
         async Task<FrameState> IFrameFacadeInternal.GetFrameStateAsync()
         {
-            var store = await PersistedDictionaryHelper.GetAsync(FrameStateKey, string.Empty, Settings.PersistenceDefault);
+            var store = await Settings.PersistedDictionaryFactory.CreateAsync(FrameStateKey);
             return new FrameState(store);
         }
 
         async Task<IPersistedDictionary> IFrameFacadeInternal.GetPageStateAsync(Type page)
         {
             if (page == null) return null;
-            return await PersistedDictionaryHelper.GetAsync($"Page-{page.ToString()}", FrameStateKey, Settings.PersistenceDefault);
+            return await Settings.PersistedDictionaryFactory.CreateAsync($"Page-{page.ToString()}", FrameStateKey);
         }
 
         bool IFrameFacadeInternal.CanGoBack => (this as IFrameFacadeInternal).Frame.CanGoBack;

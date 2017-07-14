@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Template10.Portable.Navigation;
+using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace Template10.Services.NavigationService
+namespace Template10.Strategies
 {
     public abstract class ViewModelActionStrategyBase : IViewModelActionStrategy
     {
-        public IDictionary<string, object> SessionState { get; set; } = Template10.Common.SessionState.Current;
+        public IDictionary<string, object> SessionState { get; set; } = Template10.Common.SessionStateHelper.Current;
 
         public abstract Task<bool> NavigatingToAsync((object ViewModel, Windows.UI.Xaml.Navigation.NavigationMode NavigationMode, bool Resuming) operation, INavigationInfo from, INavigationInfo to, INavigationService nav);
         public abstract Task NavigatedToAsync((object ViewModel, Windows.UI.Xaml.Navigation.NavigationMode NavigationMode, bool Resuming) operation, INavigationInfo from, INavigationInfo to, INavigationService nav);

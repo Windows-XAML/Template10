@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Template10.Portable.Navigation;
+using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace Template10.Services.NavigationService
+namespace Template10.Strategies
 {
     public interface IViewModelActionStrategy
     {

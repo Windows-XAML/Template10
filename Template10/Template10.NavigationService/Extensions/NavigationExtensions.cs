@@ -10,7 +10,7 @@ namespace Template10.Utils
     {
         public static async Task<Frame> RegisterAsync(this Frame frame, BackButton backButton = BackButton.Attach)
         {
-            await NavigationServiceHelper.CreateAsync(BackButton.Attach, frame);
+            await NavigationServiceFactory.CreateAsync(BackButton.Attach, frame);
             return frame;
         }
 

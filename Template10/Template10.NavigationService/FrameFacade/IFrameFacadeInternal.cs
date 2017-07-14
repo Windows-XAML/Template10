@@ -13,6 +13,7 @@ namespace Template10.Services.NavigationService
 
         string GetNavigationState();
         void SetNavigationState(string state);
+        void PurgeNavigationState();
 
         void GoBack();
         void GoBack(NavigationTransitionInfo infoOverride);

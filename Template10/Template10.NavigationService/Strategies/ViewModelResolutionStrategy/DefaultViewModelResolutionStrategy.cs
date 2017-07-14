@@ -4,7 +4,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Template10.Services.NavigationService
 {
-    public class DefaultViewModelResoltionStrategy : IViewModelResolutionStrategy
+    public class DefaultViewModelResolutionStrategy : IViewModelResolutionStrategy
     {
         public Task<object> ResolveViewModel(Type type)
         {

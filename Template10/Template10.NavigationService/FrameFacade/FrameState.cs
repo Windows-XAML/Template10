@@ -10,10 +10,7 @@ namespace Template10.Services.NavigationService
         IPropertyBagAsync store;
         public FrameState(IPropertyBagAsync store) => this.store = store;
 
-        public async Task ClearAsync()
-        {
-            await store.ClearAsync();
-        }
+        public async Task ClearAsync() => await store.ClearAsync();
 
         public async Task<(bool Success, DateTime Value)> TryGetCacheDateKeyAsync()
         {

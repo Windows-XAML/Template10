@@ -27,7 +27,7 @@ namespace Template10.Behaviors
         {
             if (!Windows.ApplicationModel.DesignMode.DesignModeEnabled)
             {
-                _dispatcher = DispatcherWrapper.Current();
+                _dispatcher = DispatcherWrapperHelper.Current();
                 _throttleHelper = new EventThrottleHelper { Throttle = 1000 };
             }
         }

@@ -3,20 +3,21 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Template10.Common;
 using Template10.Portable.Navigation;
+using Template10.Services.NavigationService;
 using Template10.Utils;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using CrossPlat = Template10.Portable.Navigation;
 
-namespace Template10.Services.NavigationService
+namespace Template10.Strategies
 {
 
     public class DefaultViewModelActionStrategy : ViewModelActionStrategyBase
     {
         #region Debug
 
-        private static void DebugWrite(string text = null, LoggingService.Severities severity = LoggingService.Severities.Template10, [CallerMemberName]string caller = null) =>
-            LoggingService.LoggingService.WriteLine(text, severity, caller: $"{nameof(DefaultViewModelActionStrategy)}.{caller}");
+        private static void DebugWrite(string text = null, Services.LoggingService.Severities severity = Services.LoggingService.Severities.Template10, [CallerMemberName]string caller = null) =>
+            Services.LoggingService.LoggingService.WriteLine(text, severity, caller: $"{nameof(DefaultViewModelActionStrategy)}.{caller}");
 
         #endregion
 
