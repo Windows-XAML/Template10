@@ -23,6 +23,6 @@ namespace Template10.Portable.Navigation
         /// <summary>
         /// Navigation is to the current page (perhaps with different data).
         /// </summary>
-        Refresh = 3
+        Refresh = 3, Suspending = 4, Resuming = 5
     }
 }

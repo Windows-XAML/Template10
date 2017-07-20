@@ -128,9 +128,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Control\Template10.Controls.RingSegment.csproj">
+    <ProjectReference Include="..\..\Control\Template10.Controls.RingSegment.Control.csproj">
       <Project>{84415006-a82c-40dc-a8b4-176afc0cf517}</Project>
-      <Name>Template10.Controls.RingSegment</Name>
+      <Name>Template10.Controls.RingSegment.Control</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

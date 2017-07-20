@@ -57,13 +57,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10", "Template10\Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Navigation", "Template10\Template10.NavigationService\Template10.Navigation.csproj", "{CD31D870-42F3-4379-B67A-2070C4B0A444}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Controls.ImageEx", "Controls\Template10.Controls.ImageEx\Control\Template10.Controls.ImageEx.csproj", "{6DB25E07-B9EE-4E75-8923-CD802CB9AFF6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Controls.ImageEx.Control", "Controls\Template10.Controls.ImageEx\Control\Template10.Controls.ImageEx.Control.csproj", "{6DB25E07-B9EE-4E75-8923-CD802CB9AFF6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Controls.ModalDialog", "Controls\Template10.Controls.ModalDialog\Control\Template10.Controls.ModalDialog.csproj", "{8B565035-0B8F-41B0-A2A1-23793A58AA50}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Controls.Resizer", "Controls\Template10.Controls.Resizer\Control\Template10.Controls.Resizer.csproj", "{4C95717C-B59C-4A2F-967A-79E74DD903CC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Controls.Resizer.Control", "Controls\Template10.Controls.Resizer\Control\Template10.Controls.Resizer.Control.csproj", "{4C95717C-B59C-4A2F-967A-79E74DD903CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Controls.RingSegment", "Controls\Template10.Controls.RingSegment\Control\Template10.Controls.RingSegment.csproj", "{84415006-A82C-40DC-A8B4-176AFC0CF517}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Controls.RingSegment.Control", "Controls\Template10.Controls.RingSegment\Control\Template10.Controls.RingSegment.Control.csproj", "{84415006-A82C-40DC-A8B4-176AFC0CF517}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Windowing", "Template10\Template10.WindowService\Template10.Windowing.csproj", "{9CAD4451-5ADF-48D3-B690-8B341A95A228}"
 EndProject

@@ -8,21 +8,19 @@ using Template10.Portable.Common;
 using Template10.Services.NavigationService;
 using Template10.Services.WindowWrapper;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Core;
 using Windows.UI.Xaml;
 
 namespace Template10.Common
 {
-    public interface IBootStrapper : IBootStrapperShared
-    {
-        INavigationServiceAsync NavigationService { get; }
-        IValueWithHistory<BootstrapperStates> Status { get; }
-        Task OnStartAsync(StartupInfo e);
-    }
-
     public abstract partial class BootStrapper : Application, INotifyPropertyChanged, IBootStrapper
     {
         #region IBootStrapper
 
+        ValueWithHistory<BootstrapperStates> _status = new ValueWithHistory<BootstrapperStates>(BootstrapperStates.None, (date, before, after) =>
+        {
+            DebugWrite($"{nameof(Status)} changed from {before} to {after}");
+        });
         /// <summary>
         /// This memory-only dictionary gives developers a place to store complex types while
         /// navigating, including non-serializable types that cannot be passed as parameters.
@@ -31,10 +29,11 @@ namespace Template10.Common
         /// This is a convenience property forwarding the constant value
         /// available through Template10.Common.SessionState.Current
         /// </remarks>
-        public IValueWithHistory<BootstrapperStates> Status { get; } = new ValueWithHistory<BootstrapperStates>(BootstrapperStates.None, (d, v) =>
+        public BootstrapperStates Status
         {
-            DebugWrite($"BootStrapper.State changed to {v}");
-        });
+            set => _status.Value = value;
+            get => _status.Value;
+        }
 
         /// <summary>
         /// This memory-only dictionary gives developers a place to store complex types while
@@ -67,6 +66,7 @@ namespace Template10.Common
 
         // if start takes a while, activation can occur twice/during
         object startupLocker = new object();
+        private UIElement _rootElement;
 
         private async void StartupOrchestratorAsync(StartupInfo e)
         {
@@ -81,11 +81,9 @@ namespace Template10.Common
                     // handle launch
                     await OperationWrapperAsync(BootstrapperStates.Launching, async () =>
                     {
-                        var window = DoShowSplash(e);
+                        ShowSplash(e);
 
-                        var root = await DoCreateRootElementAsync(e);
-
-                        await Task.Delay(1);
+                        _rootElement = await DoCreateRootElementAsync(e);
 
                         if (e.ThisIsPrelaunch)
                         {
@@ -96,7 +94,7 @@ namespace Template10.Common
                             await DoStartAsNormal(e);
                         }
 
-                        DoHideSplash(e, root, window);
+                        HideSplash();
 
                     }, BootstrapperStates.Launched);
 
@@ -168,18 +166,38 @@ namespace Template10.Common
             }
         }
 
-        private Window DoShowSplash(StartupInfo e)
+        private void ShowSplash(StartupInfo e)
         {
-            var window = Window.Current;
-            window.Content = Settings.SplashFactory(e.OnLaunchedEventArgs.SplashScreen);
-            window.Activate();
-            return window;
+            if (Settings.SplashFactory == null)
+            {
+                DebugWrite("No splash to show.");
+            }
+            else
+            {
+                OperationWrapper(BootstrapperStates.ShowingSplash, () =>
+                {
+                    var window = WindowWrapperHelper.Main().Window;
+                    window.Content = Settings.SplashFactory(e.OnLaunchedEventArgs.SplashScreen);
+                    window.Activate();
+                }, BootstrapperStates.ShowedSplash);
+            }
         }
 
-        private void DoHideSplash(StartupInfo e, UIElement element, Window window)
+        public void HideSplash()
         {
-            window.Content = element;
-            window.Activate();
+            var window = WindowWrapperHelper.Main().Window;
+            if (window.Content.Equals(_rootElement))
+            {
+                DebugWrite("No splash to hide.");
+            }
+            else
+            {
+                OperationWrapper(BootstrapperStates.HidingSplash, () =>
+                {
+                    window.Content = _rootElement;
+                    window.Activate();
+                }, BootstrapperStates.HiddenSplash);
+            }
         }
 
         private async Task DoSetupExtendedSessionAsync(StartupInfo e)
@@ -284,7 +302,7 @@ namespace Template10.Common
         public BootStrapper()
         {
             BootStrapperHelper.Current = this;
-             
+
         }
 
         private new event EventHandler<object> Resuming;
@@ -348,16 +366,16 @@ namespace Template10.Common
 
         void OperationWrapper(BootstrapperStates before, Action method, BootstrapperStates after)
         {
-            Status.Value = before;
+            Status = before;
             try { method(); }
-            finally { Status.Value = after; }
+            finally { Status = after; }
         }
 
         async Task OperationWrapperAsync(BootstrapperStates before, Func<Task> method, BootstrapperStates after)
         {
-            Status.Value = before;
+            Status = before;
             try { await method(); }
-            finally { Status.Value = after; }
+            finally { Status = after; }
         }
     }
 }

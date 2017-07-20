@@ -10,6 +10,9 @@ namespace Template10.Services.WindowWrapper
     {
         Window Window { get; }
         object Content { get; }
+
+        bool IsMainView { get; }
+
         IDispatcherWrapper Dispatcher { get; }
         ApplicationView ApplicationView { get; }
         DisplayInformation DisplayInformation { get; }

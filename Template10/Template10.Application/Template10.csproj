@@ -129,6 +129,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Behaviors\DeviceDispositionBehavior.cs" />
+    <Compile Include="Bootstrapper\IBootStrapper.cs" />
     <Compile Include="StartupInfo\StartupInfo.cs" />
     <Compile Include="StartupInfo\StartCauses.enum.cs" />
     <Compile Include="Strategies\ExtendedSessionStrategy\DefaultExtendedSessionStrategy.cs" />

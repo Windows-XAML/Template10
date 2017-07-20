@@ -6,7 +6,6 @@ using Windows.UI.Xaml;
 
 namespace Template10.Services.BackButtonService
 {
-
     public class BackButtonService
     {
         public static BackButtonService Instance { get; } = new BackButtonService();
@@ -93,7 +92,7 @@ namespace Template10.Services.BackButtonService
         {
             // show the shell back only if there is anywhere to go in the default frame
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
-                (Settings.ShowShellBackButton && (canGoBack || Settings.ForceShowShellBackButton))
+                (Settings.ShellBackButtonVisible && (canGoBack || Settings.ForceShowShellBackButton))
                     ? AppViewBackButtonVisibility.Visible
                     : AppViewBackButtonVisibility.Collapsed;
             BackButtonUpdated?.Invoke(null, EventArgs.Empty);
@@ -102,7 +101,12 @@ namespace Template10.Services.BackButtonService
 
     public static class Settings
     {
-        public static bool ShowShellBackButton { get; set; } = true;
+        public static bool ShellBackButtonVisible
+        {
+            get => SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility == AppViewBackButtonVisibility.Visible ? true : false;
+            set => SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = value ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
+        }
+
         public static bool ForceShowShellBackButton { get; set; } = false;
     }
 }

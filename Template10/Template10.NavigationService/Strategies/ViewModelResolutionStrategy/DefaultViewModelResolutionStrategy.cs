@@ -6,12 +6,12 @@ namespace Template10.Services.NavigationService
 {
     public class DefaultViewModelResolutionStrategy : IViewModelResolutionStrategy
     {
-        public Task<object> ResolveViewModel(Type type)
+        public async Task<object> ResolveViewModel(Type type)
         {
             return null;
         }
 
-        public Task<object> ResolveViewModel(Page page)
+        public async Task<object> ResolveViewModel(Page page)
         {
             return null;
         }

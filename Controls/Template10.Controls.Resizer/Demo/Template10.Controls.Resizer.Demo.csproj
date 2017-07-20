@@ -132,9 +132,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Control\Template10.Controls.Resizer.csproj">
+    <ProjectReference Include="..\Control\Template10.Controls.Resizer.Control.csproj">
       <Project>{4c95717c-b59c-4a2f-967a-79e74dd903cc}</Project>
-      <Name>Template10.Controls.Resizer</Name>
+      <Name>Template10.Controls.Resizer.Control</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

@@ -5,10 +5,10 @@ using Template10.Portable.Common;
 
 namespace Template10.Services.NavigationService
 {
-    public class FrameState
+    public class FrameWrapperState
     {
         IPropertyBagAsync store;
-        public FrameState(IPropertyBagAsync store) => this.store = store;
+        public FrameWrapperState(IPropertyBagAsync store) => this.store = store;
 
         public async Task ClearAsync() => await store.ClearAsync();
 

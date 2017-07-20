@@ -27,13 +27,13 @@ namespace Template10.Strategies
 
             foreach (var nav in NavigationServiceHelper.Instances.Select(x => x as INavigationServiceInternal))
             {
-                await nav.SaveAsync();
+                await nav.SaveAsync(true);
             }
         }
 
         public bool IsResuming(StartupInfo e)
         {
-            if (Settings.AlwaysResume)
+            if (Settings.AlwaysResume && e.StartKind == StartKinds.Launch && e.StartCause == StartCauses.Primary)
             {
                 return true;
             }
@@ -78,7 +78,11 @@ namespace Template10.Strategies
             {
                 foreach (var nav in NavigationServiceHelper.Instances.Select(x => x as INavigationServiceInternal))
                 {
-                    if (!await nav.LoadAsync())
+                    if (await nav.LoadAsync(true))
+                    {
+                        // 
+                    }
+                    else
                     {
                         return false;
                     }

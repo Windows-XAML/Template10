@@ -30,5 +30,9 @@
 
         Suspending,
         Suspended,
+        HidingSplash,
+        HiddenSplash,
+        ShowingSplash,
+        ShowedSplash,
     }
 }

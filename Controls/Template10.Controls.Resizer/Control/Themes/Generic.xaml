@@ -6,7 +6,6 @@
     <Style TargetType="controls:Resizer">
         <Setter Property="GrabberSize" Value="24" />
         <Setter Property="GrabberBrush" Value="{ThemeResource ThumbBackgroundThemeBrush}" />
-        <Setter Property="GrabberPath" Value="M 126,2.28882e-005L -9.68492e-006,126L 126,126" />
         <Setter Property="GrabberVisibility" Value="Visible" />
         <Setter Property="GrabberTransform">
             <Setter.Value>
@@ -35,7 +34,7 @@
                                 BorderBrush="Transparent" />
                             <Viewbox Margin="4">
                                 <Path
-                                    Data="{TemplateBinding GrabberPath}"
+                                    Data="M 126,2.28882e-005L -9.68492e-006,126L 126,126Z"
                                     Fill="{TemplateBinding GrabberBrush}"
                                     IsHitTestVisible="False"
                                     Stretch="Uniform" />

@@ -11,8 +11,8 @@ namespace Template10.Services.NavigationService
 {
     public interface INavigationServiceInternal : INavigationService
     {
-        Task SaveAsync();
-        Task<bool> LoadAsync();
+        Task SaveAsync(bool navigateFrom);
+        Task<bool> LoadAsync(bool navigateTo);
 
         void RaiseForwardRequested(HandledEventArgs args);
         void RaiseBackRequested(HandledEventArgs args);
@@ -50,7 +50,7 @@ namespace Template10.Services.NavigationService
         event EventHandler<HandledEventArgs> BackRequested;
         event EventHandler<HandledEventArgs> ForwardRequested;
 
-        IFrameFacade FrameFacade { get; }
+        IFrameWrapper FrameFacade { get; }
         IWindowWrapper Window { get; }
         bool CanGoBack { get; }
         bool CanGoForward { get; }

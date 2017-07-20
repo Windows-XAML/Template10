@@ -26,21 +26,15 @@
             VerticalAlignment="Top">
 
             <controls:Resizer>
-
                 <TextBox Header="First name" Text="Jerry" />
-
             </controls:Resizer>
 
-            <controls:Resizer GrabberBrush="Green" GrabberPath="M 126,126L 0,126L 0,0L 126,0 Z">
-
+            <controls:Resizer GrabberBrush="Green">
                 <TextBox Header="Middle name" Text="Lee" />
-
             </controls:Resizer>
 
-            <controls:Resizer GrabberBrush="Blue" GrabberPath="M 63.0986,0.11554L 77.3956,48.8875L 125.832,48.5031L 86.2355,77.9227L 101.533,126.356L 62.7642,95.7664L 23.7825,126.084L 39.4182,77.759L 0.0288291,48.0632L 48.461,48.7863L 63.0986,0.11554 Z">
-
+            <controls:Resizer GrabberBrush="Blue">
                 <TextBox Header="Last name" Text="Nixon" />
-
             </controls:Resizer>
 
         </StackPanel>

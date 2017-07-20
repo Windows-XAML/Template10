@@ -50,7 +50,7 @@ namespace Sample.Services.SettingsServices
                 switch (key)
                 {
                     case nameof(UseShellBackButton):
-                        Template10.Services.BackButtonService.Settings.ShowShellBackButton = UseShellBackButton;
+                        Template10.Services.BackButtonService.Settings.ShellBackButtonVisible = UseShellBackButton;
                         Template10.Services.BackButtonService.BackButtonService.Instance.UpdateBackButton(NavigationServiceHelper.Default.CanGoBack);
                         break;
                     case nameof(AppTheme):

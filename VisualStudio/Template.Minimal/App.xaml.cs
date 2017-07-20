@@ -14,19 +14,16 @@ namespace Sample
         public App()
         {
             InitializeComponent();
-
-            Sample.Services.SettingsServices.SettingsService _settings = Sample.Services.SettingsServices.SettingsService.Instance;
+            SettingsService _settings = SettingsService.Instance;
             RequestedTheme = _settings.AppTheme;
-            Settings.SplashFactory = (e) => new Views.Splash(e);
+            // Settings.ShowShellBackButton = _settings.UseShellBackButton;
+            Settings.SplashFactory = s => new Views.Splash(s);
             Settings.CacheMaxDuration = _settings.CacheMaxDuration;
-            Settings.ShowShellBackButton = _settings.UseShellBackButton;
             Settings.AutoExtendExecutionSession = false;
         }
 
         public async override Task OnStartAsync(StartupInfo e)
         {
-            await Task.Delay(1000);
-
             switch (e.StartKind)
             {
                 case StartKinds.Prelaunch:

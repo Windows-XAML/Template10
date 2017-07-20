@@ -31,5 +31,7 @@ namespace Template10.Services.WindowWrapper
         public static IWindowWrapper Current() => Instances.FirstOrDefault(x => x.Window == Window.Current) ?? Default();
 
         public static IWindowWrapper Current(Window window) => Instances.FirstOrDefault(x => x.Window == window);
+
+        public static IWindowWrapper Main() => Instances.FirstOrDefault(x => x.IsMainView);
     }
 }

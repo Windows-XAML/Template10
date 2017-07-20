@@ -131,8 +131,8 @@ namespace Template10.Common
         /// </remarks>
         public static bool ShowShellBackButton
         {
-            get => Services.BackButtonService.Settings.ShowShellBackButton;
-            set => Services.BackButtonService.Settings.ShowShellBackButton = value;
+            get => Services.BackButtonService.Settings.ShellBackButtonVisible;
+            set => Services.BackButtonService.Settings.ShellBackButtonVisible = value;
         }
     }
 }

@@ -313,7 +313,7 @@ namespace Template10.Controls
         {
             (e.NewValue as INavigationServiceInternal).AfterRestoreSavedNavigation += (s, args) => HighlightCorrectButton(NavigationService.CurrentPageType, NavigationService.CurrentPageParam);
             (e.NewValue as INavigationServiceInternal).Navigated += (s, args) => HighlightCorrectButton(args.PageType, args.Parameter);
-            ShellSplitView.Content = (e.NewValue.FrameFacade as IFrameFacadeInternal).Frame;
+            ShellSplitView.Content = (e.NewValue.FrameFacade as IFrameWrapperInternal).Frame;
             UpdateFullScreenForSplashScreen(e);
         }
 
@@ -558,7 +558,7 @@ namespace Template10.Controls
                     }
                     if (current.ClearCache)
                     {
-                        var frameState = await (NavigationService.FrameFacade as IFrameFacadeInternal).GetFrameStateAsync();
+                        var frameState = await (NavigationService.FrameFacade as IFrameWrapperInternal).GetFrameStateAsync();
                         await frameState.ClearAsync();
                     }
                 }
@@ -573,7 +573,7 @@ namespace Template10.Controls
                     }
                     if (current.ClearCache)
                     {
-                        var frameState = await (NavigationService.FrameFacade as IFrameFacadeInternal).GetFrameStateAsync();
+                        var frameState = await (NavigationService.FrameFacade as IFrameWrapperInternal).GetFrameStateAsync();
                         await frameState.ClearAsync();
                     }
                 }

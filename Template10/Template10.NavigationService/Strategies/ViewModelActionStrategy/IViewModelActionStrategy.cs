@@ -12,7 +12,7 @@ namespace Template10.Strategies
     {
         Task<bool> NavigatingToAsync((object ViewModel, Windows.UI.Xaml.Navigation.NavigationMode NavigationMode, bool Resuming) operation, INavigationInfo from, INavigationInfo to, INavigationService nav);
         Task NavigatedToAsync((object ViewModel, Windows.UI.Xaml.Navigation.NavigationMode NavigationMode, bool Resuming) operation, INavigationInfo from, INavigationInfo to, INavigationService nav);
-        Task<bool> NavigatingFromAsync((object ViewModel, bool Suspending) operation, INavigationInfo from, INavigationInfo to, INavigationService nav);
-        Task NavigatedFromAsync((object ViewModel, bool Suspending) operation, INavigationInfo from, INavigationInfo to, INavigationService nav);
+        Task<bool> NavigatingFromAsync((object ViewModel, Windows.UI.Xaml.Navigation.NavigationMode NavigationMode, bool Suspending) operation, INavigationInfo from, INavigationInfo to, INavigationService nav);
+        Task NavigatedFromAsync((object ViewModel, Windows.UI.Xaml.Navigation.NavigationMode NavigationMode, bool Suspending) operation, INavigationInfo from, INavigationInfo to, INavigationService nav);
     }
 }

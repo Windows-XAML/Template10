@@ -186,9 +186,9 @@
       <Project>{509386d0-711e-4345-83ad-f71998efbdd7}</Project>
       <Name>Template10.Controls.PageHeader</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Controls\Template10.Controls.Resizer\Control\Template10.Controls.Resizer.csproj">
+    <ProjectReference Include="..\..\Controls\Template10.Controls.Resizer\Control\Template10.Controls.Resizer.Control.csproj">
       <Project>{4c95717c-b59c-4a2f-967a-79e74dd903cc}</Project>
-      <Name>Template10.Controls.Resizer</Name>
+      <Name>Template10.Controls.Resizer.Control</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Services\Template10.Services.BackService\Template10.Services.BackService.csproj">
       <Project>{8564f764-99d9-4473-b5e4-ac62cda73977}</Project>

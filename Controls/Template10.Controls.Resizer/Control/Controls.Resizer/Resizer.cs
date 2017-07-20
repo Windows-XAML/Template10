@@ -77,15 +77,6 @@ namespace Template10.Controls
             DependencyProperty.Register(nameof(GrabberTransform), typeof(Transform),
                 typeof(Resizer), new PropertyMetadata(null));
 
-        public Geometry GrabberPath
-        {
-            get { return (Geometry)GetValue(GrabberPathProperty); }
-            set { SetValue(GrabberPathProperty, value); }
-        }
-        public static readonly DependencyProperty GrabberPathProperty =
-            DependencyProperty.Register(nameof(GrabberPath), typeof(Geometry), 
-                typeof(Resizer), new PropertyMetadata(null));
-
         public Brush GrabberBrush
         {
             get { return (Brush)GetValue(GrabberBrushProperty); }

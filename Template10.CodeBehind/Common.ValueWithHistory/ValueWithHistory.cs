@@ -6,20 +6,21 @@ namespace Template10.Portable.Common
     public class ValueWithHistory<T> : IValueWithHistory<T>
     {
         public ValueWithHistory(T initial) => Value = initial;
-        public ValueWithHistory(T initial, Action<DateTime, T> callback)
+        public ValueWithHistory(T initial, Action<DateTime, T, T> callback)
             : this(initial) => _callback = callback;
 
         T _value;
-        Action<DateTime, T> _callback;
+        Action<DateTime, T, T> _callback;
 
         public T Value
         {
             get => _value;
             set
             {
+                var old = value;
                 _value = value;
                 History.Add(DateTime.UtcNow, value);
-                _callback?.Invoke(DateTime.UtcNow, value);
+                _callback?.Invoke(DateTime.UtcNow, old, value);
             }
         }
 
