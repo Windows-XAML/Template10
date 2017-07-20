@@ -109,6 +109,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services.BackButtonService\BackButtonService.cs" />
+    <Compile Include="Services.BackButtonService\Settings.cs" />
     <EmbeddedResource Include="Properties\Template10.Services.BackButton.rd.xml" />
   </ItemGroup>
   <ItemGroup>

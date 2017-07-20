@@ -6,7 +6,7 @@ namespace Template10.Strategies
 {
     public interface IExtendedSessionStrategy : IDisposable
     {
-        Task StartupAsync(StartupInfo e);
+        Task StartupAsync(Template10StartArgs e);
         Task SuspendingAsync();
     }
 }

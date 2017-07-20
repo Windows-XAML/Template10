@@ -14,7 +14,7 @@ namespace Template10.Common
     {
         public static IExtendedSessionStrategy ExtendedSessionStrategy { get; set; } = new DefaultExtendedSessionStrategy();
 
-        public static ILifecycleStrategyStrategy SuspendResumeStrategy { get; set; } = new DefaultLifecycleStrategyStrategy();
+        public static ILifecycleStrategy SuspendResumeStrategy { get; set; } = new DefaultLifecycleStrategy();
 
         public static ITitleBarStrategy TitleBarStrategy { get; set; } = new DefaultTitleBarStrategy();
 
@@ -30,7 +30,7 @@ namespace Template10.Common
         ///  By default, Template 10 will setup the root element to be a Template 10
         ///  Modal Dialog control. If you desire something different, you can set it here.
         /// </summary>
-        public static Func<StartupInfo, Task<UIElement>> RootFactoryAsync { get; set; } = new Func<StartupInfo, Task<UIElement>>(async (e) =>
+        public static Func<Template10StartArgs, Task<UIElement>> RootFactoryAsync { get; set; } = new Func<Template10StartArgs, Task<UIElement>>(async (e) =>
         {
             // return new ModalDialog { Content = await new Frame().RegisterAsync() };
             return await new Frame().RegisterAsync();

@@ -98,15 +98,4 @@ namespace Template10.Services.BackButtonService
             BackButtonUpdated?.Invoke(null, EventArgs.Empty);
         }
     }
-
-    public static class Settings
-    {
-        public static bool ShellBackButtonVisible
-        {
-            get => SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility == AppViewBackButtonVisibility.Visible ? true : false;
-            set => SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = value ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
-        }
-
-        public static bool ForceShowShellBackButton { get; set; } = false;
-    }
 }

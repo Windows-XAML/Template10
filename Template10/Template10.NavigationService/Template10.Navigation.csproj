@@ -111,10 +111,11 @@
     <Compile Include="Behaviors\NavButtonBehavior.cs" />
     <Compile Include="Behaviors\NavToPageAction.cs" />
     <Compile Include="Extensions\WindowExtensions.cs" />
-    <Compile Include="FrameFacade\FrameWrapperFactory.cs" />
-    <Compile Include="FrameFacade\FrameWrapperState.cs" />
-    <Compile Include="FrameFacade\IFrameWrapper.cs" />
-    <Compile Include="FrameFacade\IFrameWrapperInternal.cs" />
+    <Compile Include="Template10Frame\ITemplate10Frame.cs" />
+    <Compile Include="Template10Frame\ITemplate10FrameInternal.cs" />
+    <Compile Include="Template10Frame\Template10Frame.cs" />
+    <Compile Include="Template10Frame\Template10FrameFactory.cs" />
+    <Compile Include="Template10Frame\Template10FrameState.cs" />
     <Compile Include="NavigationService\BackButton.enum.cs" />
     <Compile Include="Common\NavButtonsHelper.cs" />
     <Compile Include="Mvvm\ITemplate10ViewModel.cs" />
@@ -129,7 +130,6 @@
     <Compile Include="NavigationService\NavigatingEventArgs.cs" />
     <Compile Include="NavigationService\INavigationService.cs" />
     <Compile Include="Extensions\NavigationExtensions.cs" />
-    <Compile Include="FrameFacade\FrameWrapper.cs" />
     <Compile Include="NavigationService\NavigationService.cs" />
     <Compile Include="NavigationService\NavigationServiceList.cs" />
     <Compile Include="Extensions\PortableExtensions.cs" />

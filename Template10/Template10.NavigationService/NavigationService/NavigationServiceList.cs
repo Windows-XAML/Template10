@@ -8,7 +8,7 @@ namespace Template10.Services.NavigationService
     {
         internal NavigationServiceList() { }
         public INavigationService GetByFrameId(string frameId) => this.FirstOrDefault(x => x.FrameFacade.FrameId == frameId);
-        public INavigationService GetByFrameFacade(IFrameWrapper frame) => this.FirstOrDefault(x => x.FrameFacade.Equals(frame));
-        public INavigationService GetByFrame(Frame frame) => this.FirstOrDefault(x => (x.FrameFacade as IFrameWrapperInternal).Frame.Equals(frame));
+        public INavigationService GetByFrameFacade(ITemplate10Frame frame) => this.FirstOrDefault(x => x.FrameFacade.Equals(frame));
+        public INavigationService GetByFrame(Frame frame) => this.FirstOrDefault(x => (x.FrameFacade as ITemplate10FrameInternal).Frame.Equals(frame));
     }
 }

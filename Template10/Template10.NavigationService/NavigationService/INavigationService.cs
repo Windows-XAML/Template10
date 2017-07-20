@@ -50,7 +50,7 @@ namespace Template10.Services.NavigationService
         event EventHandler<HandledEventArgs> BackRequested;
         event EventHandler<HandledEventArgs> ForwardRequested;
 
-        IFrameWrapper FrameFacade { get; }
+        ITemplate10Frame FrameFacade { get; }
         IWindowWrapper Window { get; }
         bool CanGoBack { get; }
         bool CanGoForward { get; }

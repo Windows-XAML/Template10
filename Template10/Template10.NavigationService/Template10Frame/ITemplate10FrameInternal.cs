@@ -6,7 +6,7 @@ using Windows.UI.Xaml.Media.Animation;
 
 namespace Template10.Services.NavigationService
 {
-    public interface IFrameWrapperInternal : IFrameWrapper
+    public interface ITemplate10FrameInternal : ITemplate10Frame
     {
         Frame Frame { get; set; }
         INavigationService NavigationService { get; set; }
@@ -24,7 +24,7 @@ namespace Template10.Services.NavigationService
 
         bool Navigate(Type page, object parameter, NavigationTransitionInfo info);
 
-        Task<FrameWrapperState> GetFrameStateAsync();
+        Task<Template10FrameState> GetFrameStateAsync();
         Task<IPersistedDictionary> GetPageStateAsync(Type page);
 
         void ClearCache(bool removeCachedPagesInBackStack = false);

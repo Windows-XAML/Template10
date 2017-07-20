@@ -10,7 +10,7 @@ namespace Template10.Strategies
             // empty
         }
 
-        public async override Task StartupAsync(StartupInfo e)
+        public async override Task StartupAsync(Template10StartArgs e)
         {
             if (Settings.AutoExtendExecutionSession)
             {

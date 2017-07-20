@@ -2,23 +2,20 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Template10.Common;
+using Template10.Services.Messenger;
 using Template10.Services.NavigationService;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Storage;
 
 namespace Template10.Strategies
 {
-    public class DefaultLifecycleStrategyStrategy : ILifecycleStrategyStrategy
+    public class DefaultLifecycleStrategy : ILifecycleStrategy
     {
-        public event EventHandler<HandledEventArgs<StartupInfo>> Resuming;
-        public event EventHandler<HandledEventArgs<SuspendingEventArgs>> Suspending;
-
         public async Task SuspendAsync(SuspendingEventArgs e)
         {
-            var args = new HandledEventArgs<SuspendingEventArgs>(e);
-            Suspending?.Invoke(this, args);
-            if (!Settings.RunSuspendStrategy | args.Handled)
+            Template10.Services.Messenger.MessengerService.Instance.Send(new SuspendingMessage { EventArgs = e });
+
+            if (!Settings.RunSuspendStrategy)
             {
                 return;
             }
@@ -31,9 +28,9 @@ namespace Template10.Strategies
             }
         }
 
-        public bool IsResuming(StartupInfo e)
+        public bool IsResuming(Template10StartArgs e)
         {
-            if (Settings.AlwaysResume && e.StartKind == StartKinds.Launch && e.StartCause == StartCauses.Primary)
+            if (Settings.AppAlwaysResumes && e.StartKind == StartKinds.Launch && e.StartCause == StartCauses.Primary)
             {
                 return true;
             }
@@ -60,11 +57,9 @@ namespace Template10.Strategies
             }
         }
 
-        public async Task<bool> ResumeAsync(StartupInfo e)
+        public async Task<bool> ResumeAsync(Template10StartArgs e)
         {
-            var args = new HandledEventArgs<StartupInfo>(e);
-            Resuming?.Invoke(this, args);
-            if (!Settings.RunRestoreStrategy | args.Handled)
+            if (!Settings.RunRestoreStrategy)
             {
                 return false;
             }

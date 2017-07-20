@@ -130,8 +130,11 @@
   <ItemGroup>
     <Compile Include="Behaviors\DeviceDispositionBehavior.cs" />
     <Compile Include="Bootstrapper\IBootStrapper.cs" />
-    <Compile Include="StartupInfo\StartupInfo.cs" />
-    <Compile Include="StartupInfo\StartCauses.enum.cs" />
+    <Compile Include="Strategies\LifecycleStrategy\DefaultLifecycleStrategy.cs" />
+    <Compile Include="Strategies\LifecycleStrategy\ILifecycleStrategy.cs" />
+    <Compile Include="Strategies\LifecycleStrategy\SuspendingMessage.cs" />
+    <Compile Include="Template10ActivationArgs\StartCauses.enum.cs" />
+    <Compile Include="Template10ActivationArgs\Template10ActivationArgs.cs" />
     <Compile Include="Strategies\ExtendedSessionStrategy\DefaultExtendedSessionStrategy.cs" />
     <Compile Include="Strategies\ExtendedSessionStrategy\ExtendedSessionKinds.cs" />
     <Compile Include="Strategies\ExtendedSessionStrategy\ExtendedSessionManager.cs" />
@@ -139,8 +142,6 @@
     <Compile Include="Strategies\ExtendedSessionStrategy\IExtendedSessionStrategy.cs" />
     <Compile Include="Strategies\ExtendedSessionStrategy\IExtendedSessionStrategyInternal.cs" />
     <Compile Include="Strategies\ExtendedSessionStrategy\Settings.cs" />
-    <Compile Include="Strategies\LifecycleStrategy\DefaultLifecycleStrategyStrategy.cs" />
-    <Compile Include="Strategies\LifecycleStrategy\ILifecycleStrategyStrategy.cs" />
     <Compile Include="Strategies\PersistenceStrategy\DefaultPersistenceFactory.cs" />
     <Compile Include="Strategies\PersistenceStrategy\FolderPersistenceLocations.enum.cs" />
     <Compile Include="Strategies\PersistenceStrategy\FolderPersistenceStrategy.cs" />
@@ -154,7 +155,7 @@
     <Compile Include="Bootstrapper\AppExecutionState.enum.cs" />
     <Compile Include="Bootstrapper\BootstrapperStates.enum.cs" />
     <Compile Include="Bootstrapper\Settings.cs" />
-    <Compile Include="StartupInfo\StartKind.enum.cs" />
+    <Compile Include="Template10ActivationArgs\StartKind.enum.cs" />
     <Compile Include="Bootstrapper\BootStrapper.cs" />
     <Compile Include="Mvvm\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -181,6 +182,14 @@
     <ProjectReference Include="..\..\Services\Template10.Services.LoggingService\Service\Template10.Services.LoggingService.csproj">
       <Project>{eadde808-bf0d-4ebc-b4ca-9fda63b53862}</Project>
       <Name>Template10.Services.LoggingService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.Messenger\Service\Template10.Services.Messenger.csproj">
+      <Project>{e14bcd62-b2a4-4aa2-95a8-6a556a31fb29}</Project>
+      <Name>Template10.Services.Messenger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.SerializationService\Service\Template10.Services.SerializationService.csproj">
+      <Project>{D3A94520-4CD4-4D56-B30B-7E54FACE64BB}</Project>
+      <Name>Template10.Services.SerializationService</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Services\Template10.Services.SettingsService\Service\Template10.Services.SettingsService.csproj">
       <Project>{EBA14736-2C70-4E33-A156-221B44FF43C1}</Project>

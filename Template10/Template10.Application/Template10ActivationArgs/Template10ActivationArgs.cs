@@ -3,15 +3,9 @@ using Windows.ApplicationModel.Activation;
 
 namespace Template10.Common
 {
-    public class StartupInfo
+    public class Template10StartArgs
     {
-        public void Test()
-        {
-            var number = 2;
-            System.Console.WriteLine($"{number = 1}{++number}{number++}{number}");
-        }
-
-        public StartupInfo(object arg, StartKinds startKind)
+        public Template10StartArgs(object arg, StartKinds startKind)
         {
             Starts++;
             RawEventArgs = arg;
@@ -86,6 +80,7 @@ namespace Template10.Common
                     return StartCauses.BackgroundTrigger;
                 case IToastNotificationActivatedEventArgs e:
                     return StartCauses.Toast;
+                // TODO for RS3: ICommandLine
                 case ILaunchActivatedEventArgs e when e != null:
                     switch (e.TileId)
                     {

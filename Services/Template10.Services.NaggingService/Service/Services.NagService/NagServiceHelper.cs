@@ -24,7 +24,7 @@ namespace Template10.Services.NagService
         {
             if (string.IsNullOrEmpty(nagId)) throw new ArgumentException("nagId cannot be null or empty", "nagId");
 
-            return await _fileService.FileExistsAsync(string.Format(StateFileNameTemplate, nagId), location);
+            return await _fileService.FileExistsAsync(string.Format(StateFileNameTemplate, nagId));
         }
 
         public async Task<NagResponseInfo> Load(string nagId, StorageStrategies location)
@@ -35,7 +35,7 @@ namespace Template10.Services.NagService
             {
                 if (await Exists(nagId, location))
                 {
-                    return await _fileService.ReadFileAsync<NagResponseInfo>(GetFileName(nagId), location);
+                    return await _fileService.ReadFileAsync<NagResponseInfo>(GetFileName(nagId));
                 }
 
                 return new NagResponseInfo() { NagId = nagId };
@@ -52,7 +52,7 @@ namespace Template10.Services.NagService
         {
             if (string.IsNullOrEmpty(nagId)) throw new ArgumentException("nagId cannot be null or empty", "nagId");
 
-            await _fileService.DeleteFileAsync(GetFileName(nagId), location);
+            await _fileService.DeleteFileAsync(GetFileName(nagId));
         }
 
         public async Task Persist(NagResponseInfo state, string nagId, StorageStrategies location)
@@ -60,7 +60,7 @@ namespace Template10.Services.NagService
             if (state == null) throw new ArgumentNullException("state");
             if (string.IsNullOrEmpty(nagId)) throw new ArgumentException("nagId cannot be null or empty", "nagId");
 
-            await _fileService.WriteFileAsync<NagResponseInfo>(state, GetFileName(nagId), location);
+            await _fileService.WriteFileAsync<NagResponseInfo>(state, GetFileName(nagId));
         }
 
         public async Task Register(Nag nag, int launches)

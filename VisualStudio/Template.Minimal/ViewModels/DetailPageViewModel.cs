@@ -39,7 +39,7 @@ namespace Sample.ViewModels
 
         public async override Task OnNavigatedFromAsync(INavigatedFromParameters parameters)
         {
-            if (parameters.Suspending)
+             if (parameters.Suspending)
             {
                 await parameters.PageState.SetValueAsync(nameof(Value), Value);
             }

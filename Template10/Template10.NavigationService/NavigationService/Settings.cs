@@ -11,6 +11,7 @@ namespace Template10.Services.NavigationService
         public static IViewModelResolutionStrategy ViewModelResolutionStrategy { get; set; } = new DefaultViewModelResolutionStrategy();
         public static IViewModelActionStrategy ViewModelActionStrategy { get; set; } = new DefaultViewModelActionStrategy { SessionState = Common.SessionStateHelper.Current };
         public static ISerializationService SerializationStrategy { get; set; } = SerializationHelper.Json;
+        public static bool RequireParameterSerialization { get; set; } = true;
         public static TimeSpan CacheMaxDuration { get; set; } = TimeSpan.MaxValue;
     }
 }

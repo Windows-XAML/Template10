@@ -35,8 +35,8 @@ namespace Template10.Services.NavigationService
 
         public IWindowWrapper Window { get; private set; }
 
-        public IFrameWrapper FrameFacade { get; private set; }
-        IFrameWrapperInternal FrameFacadeInternal => FrameFacade as IFrameWrapperInternal;
+        public ITemplate10Frame FrameFacade { get; private set; }
+        ITemplate10FrameInternal FrameFacadeInternal => FrameFacade as ITemplate10FrameInternal;
 
         public BackButton BackButtonHandling { get; set; }
 
@@ -51,7 +51,7 @@ namespace Template10.Services.NavigationService
 
         internal NavigationService(Frame frame) : this()
         {
-            FrameFacade = FrameWrapperFactory.Create(frame, this as INavigationService);
+            FrameFacade = Template10FrameFactory.Create(frame, this as INavigationService);
             _ViewService = new Lazy<IViewService>(() => new ViewService.ViewService());
         }
 
@@ -338,6 +338,7 @@ namespace Template10.Services.NavigationService
             var writtenState = await frameState.TryGetNavigationStateAsync();
             DebugWrite($"navigationState:{navigationState} writtenState:{writtenState}");
             Debug.Assert(navigationState.Equals(writtenState.Value), "Checking frame nav state save");
+            /// TODO: I think this is double-serializaing the state to file.
 
             await Task.CompletedTask;
         }
@@ -378,17 +379,12 @@ namespace Template10.Services.NavigationService
                     vm.NavigationService = this;
                 }
 
-                var back = FrameFacade.BackStack.FirstOrDefault();
-                if (back != null)
-                {
-                    CurrentPageType = back.SourcePageType;
-                    CurrentPageParam = back.Parameter;
-                }
 
+                // NavigatingToAsync/NavigatedToAsync
                 if (navigateTo)
                 {
-                    // NavigatingToAsync/NavigatedToAsync
-                    var toInfo = new NavigationInfo(CurrentPageType, FrameFacadeInternal.BackStack.Last().Parameter, await FrameFacadeInternal.GetPageStateAsync(CurrentPageType));
+                    CurrentPageType = FrameFacade.Content?.GetType();
+                    var toInfo = new NavigationInfo(CurrentPageType, null, await FrameFacadeInternal.GetPageStateAsync(CurrentPageType));
                     await Settings.ViewModelActionStrategy.NavigatingToAsync((viewModel, NavigationMode.New, true), null, toInfo, this);
                     await Settings.ViewModelActionStrategy.NavigatedToAsync((viewModel, NavigationMode.New, true), null, toInfo, this);
                 }

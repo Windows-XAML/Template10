@@ -218,9 +218,9 @@
       <Project>{af4f2a41-d0e8-4cb2-950f-ed523c29b19c}</Project>
       <Name>Template10.XAML</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Template10\Template10.Application\Template10.csproj">
+    <ProjectReference Include="..\..\Template10\Template10.Application\Template10.Core.csproj">
       <Project>{ac3e4f10-6615-4e16-bb0f-104760c92b95}</Project>
-      <Name>Template10</Name>
+      <Name>Template10.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Controls\Template10.Controls.Hamburger\Template10.Controls.Hamburger.csproj">
       <Project>{5144566e-80eb-4375-9fe2-415808e2051d}</Project>

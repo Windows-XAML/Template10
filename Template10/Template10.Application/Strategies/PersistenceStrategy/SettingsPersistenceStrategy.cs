@@ -46,10 +46,10 @@ namespace Template10.Strategies
         public async Task<bool> ContainsKeyAsync(string key)
             => container.Values.ContainsKey(key);
 
-        public override async Task<string> GetValueAsync(string key)
+        protected override async Task<string> GetStringAsync(string key)
             => container.Values[key]?.ToString() ?? string.Empty;
 
-        public override async Task SetValueAsync(string key, string value)
+        protected override async Task SetStringAsync(string key, string value)
         {
             container.Values[key] = value;
             base.RaiseMapChanged(key);

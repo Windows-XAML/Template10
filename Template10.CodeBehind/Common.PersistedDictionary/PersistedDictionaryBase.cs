@@ -30,18 +30,18 @@ namespace Template10.Common.PersistedDictionary
             => (await AllKeysAsync()).Contains(key);
 
         public virtual async Task<T> GetValueAsync<T>(string key)
-            => _serializer.Deserialize<T>(await GetValueAsync(key));
+            => _serializer.Deserialize<T>(await GetStringAsync(key));
 
-        public abstract Task<string> GetValueAsync(string key);
+        protected abstract Task<string> GetStringAsync(string key);
 
         public async Task SetValueAsync<T>(string key, T value)
-            => await SetValueAsync(key, _serializer.Serialize(value));
+            => await SetStringAsync(key, _serializer.Serialize(value));
 
-        public abstract Task SetValueAsync(string key, string value);
+        protected abstract Task SetStringAsync(string key, string value);
 
         public async Task<(bool Success, string Value)> TryGetValueAsync(string key)
         {
-            try { return (true, await GetValueAsync(key)); }
+            try { return (true, await GetStringAsync(key)); }
             catch { return (false, null); }
         }
 

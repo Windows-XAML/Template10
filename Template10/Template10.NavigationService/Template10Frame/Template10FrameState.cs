@@ -5,10 +5,10 @@ using Template10.Portable.Common;
 
 namespace Template10.Services.NavigationService
 {
-    public class FrameWrapperState
+    public class Template10FrameState
     {
         IPropertyBagAsync store;
-        public FrameWrapperState(IPropertyBagAsync store) => this.store = store;
+        public Template10FrameState(IPropertyBagAsync store) => this.store = store;
 
         public async Task ClearAsync() => await store.ClearAsync();
 
@@ -75,15 +75,24 @@ namespace Template10.Services.NavigationService
                 }
                 catch
                 {
-                    throw new Exception("Page parameter failed to serialize; all parameters must be serializable.");
+                    if (Settings.RequireParameterSerialization)
+                    {
+                        throw new Exception("Page parameter failed to serialize; all parameters must be serializable.");
+                    }
                 }
             }
         }
 
-        public async Task<(bool Success, string Value)> TryGetNavigationStateAsync() => await store.TryGetValueAsync("NavigationState");
-        public async Task SetNavigationStateAsync(string value) => await store.SetValueAsync("NavigationState", value);
+        public async Task<(bool Success, string Value)> TryGetNavigationStateAsync()
+            => await store.TryGetValueAsync("NavigationState");
 
-        private string Serialize(object value) => Settings.SerializationStrategy.Serialize(value);
-        private object Deserialize(string value) => Settings.SerializationStrategy.Deserialize(value);
+        public async Task SetNavigationStateAsync(string value)
+            => await store.SetValueAsync("NavigationState", value);
+
+        private string Serialize(object value)
+            => Settings.SerializationStrategy.Serialize(value);
+
+        private object Deserialize(string value)
+            => Settings.SerializationStrategy.Deserialize(value);
     }
 }

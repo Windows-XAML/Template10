@@ -8,7 +8,7 @@ namespace Template10.Common
     {
         INavigationServiceAsync NavigationService { get; }
         BootstrapperStates Status { get; }
-        Task OnStartAsync(StartupInfo e);
+        Task OnStartAsync(Template10StartArgs e);
         void HideSplash();
     }
 }

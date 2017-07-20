@@ -2,12 +2,8 @@
 
 namespace Template10.Strategies
 {
-    public interface IPersistenceStrategy
+    public interface IPersistenceStrategy: Portable.Common.IPropertyBagAsync
     {
-        Task<string[]> AllKeysAsync();
-        Task ClearAsync();
-        Task<bool> ContainsKeyAsync(string key);
-        Task<string> GetValueAsync(string key);
-        Task SetValueAsync(string key, string value);
+        // empty
     }
 }

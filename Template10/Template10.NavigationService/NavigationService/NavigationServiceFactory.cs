@@ -51,7 +51,7 @@ namespace Template10.Services.NavigationService
             // expire any state (based on expiry delta from today)
             foreach (var nav in NavigationServiceHelper.Instances)
             {
-                var facade = nav.FrameFacade as IFrameWrapperInternal;
+                var facade = nav.FrameFacade as ITemplate10FrameInternal;
                 var state = await facade.GetFrameStateAsync();
                 var setting = await state.TryGetCacheDateKeyAsync();
 

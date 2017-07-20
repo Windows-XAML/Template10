@@ -11,7 +11,7 @@ namespace Template10.Strategies
             _manager = new ExtendedSessionManager();
         }
 
-        public abstract Task StartupAsync(StartupInfo e);
+        public abstract Task StartupAsync(Template10StartArgs e);
         public abstract Task SuspendingAsync();
 
         public virtual void Dispose()

@@ -60,7 +60,7 @@ namespace Template10.Common
         /// Template 10 will not call OnStartAsync if the app is restored from state.
         /// An app restores from state when the app was suspended and then terminated (PreviousExecutionState terminated).
         /// </summary>
-        public abstract Task OnStartAsync(StartupInfo e);
+        public abstract Task OnStartAsync(Template10StartArgs e);
 
         #endregion
 
@@ -68,7 +68,7 @@ namespace Template10.Common
         object startupLocker = new object();
         private UIElement _rootElement;
 
-        private async void StartupOrchestratorAsync(StartupInfo e)
+        private async void StartupOrchestratorAsync(Template10StartArgs e)
         {
             DebugWrite(e.ToString());
 
@@ -115,7 +115,7 @@ namespace Template10.Common
             }
         }
 
-        private async Task DoStartAsActivate(StartupInfo e)
+        private async Task DoStartAsActivate(Template10StartArgs e)
         {
             await OperationWrapperAsync(BootstrapperStates.Activating, async () =>
             {
@@ -123,7 +123,7 @@ namespace Template10.Common
             }, BootstrapperStates.Activated);
         }
 
-        private async Task DoStartAsPrelaunch(StartupInfo e)
+        private async Task DoStartAsPrelaunch(Template10StartArgs e)
         {
             await OperationWrapperAsync(BootstrapperStates.Prelaunching, async () =>
             {
@@ -139,7 +139,7 @@ namespace Template10.Common
             }, BootstrapperStates.Prelaunched);
         }
 
-        private async Task DoStartAsNormal(StartupInfo e)
+        private async Task DoStartAsNormal(Template10StartArgs e)
         {
             if (!await DoRestoreWhenResumingAsync(e))
             {
@@ -166,7 +166,7 @@ namespace Template10.Common
             }
         }
 
-        private void ShowSplash(StartupInfo e)
+        private void ShowSplash(Template10StartArgs e)
         {
             if (Settings.SplashFactory == null)
             {
@@ -200,12 +200,12 @@ namespace Template10.Common
             }
         }
 
-        private async Task DoSetupExtendedSessionAsync(StartupInfo e)
+        private async Task DoSetupExtendedSessionAsync(Template10StartArgs e)
         {
             await Settings.ExtendedSessionStrategy.StartupAsync(e);
         }
 
-        private async Task<UIElement> DoCreateRootElementAsync(StartupInfo e)
+        private async Task<UIElement> DoCreateRootElementAsync(Template10StartArgs e)
         {
             var root = default(UIElement);
             await OperationWrapperAsync(BootstrapperStates.CreatingRootElement, async () =>
@@ -215,12 +215,12 @@ namespace Template10.Common
             return root;
         }
 
-        private void DoSetupTitleBar(StartupInfo e)
+        private void DoSetupTitleBar(Template10StartArgs e)
         {
             Settings.TitleBarStrategy.Startup();
         }
 
-        private void DoSetupBackButton(StartupInfo e)
+        private void DoSetupBackButton(Template10StartArgs e)
         {
             Services.BackButtonService.BackButtonService.Instance.BackRequested += (s, args) =>
             {
@@ -233,7 +233,7 @@ namespace Template10.Common
             };
         }
 
-        private void DoSetupResuming(StartupInfo args)
+        private void DoSetupResuming(Template10StartArgs args)
         {
             base.Resuming += (s, e) =>
             {
@@ -241,7 +241,7 @@ namespace Template10.Common
             };
         }
 
-        private void DoSetupSuspending(StartupInfo args)
+        private void DoSetupSuspending(Template10StartArgs args)
         {
             base.Suspending += async (s, e) =>
             {
@@ -268,7 +268,7 @@ namespace Template10.Common
             };
         }
 
-        private async Task<bool> DoRestoreWhenResumingAsync(StartupInfo e)
+        private async Task<bool> DoRestoreWhenResumingAsync(Template10StartArgs e)
         {
             var restored = false;
             if (Settings.SuspendResumeStrategy.IsResuming(e))
@@ -321,15 +321,15 @@ namespace Template10.Common
         #region Application overrides that Template 10 seals
 
         // it is the intent of Template 10 to no longer require Launched/Activated overrides, only OnStartAsync()
-        protected override sealed void OnActivated(IActivatedEventArgs e) { DebugWrite(); StartupOrchestratorAsync(new StartupInfo(e, StartKinds.Activate)); }
-        protected override sealed void OnCachedFileUpdaterActivated(CachedFileUpdaterActivatedEventArgs e) { DebugWrite(); StartupOrchestratorAsync(new StartupInfo(e, StartKinds.Activate)); }
-        protected override sealed void OnFileActivated(FileActivatedEventArgs e) { DebugWrite(); StartupOrchestratorAsync(new StartupInfo(e, StartKinds.Activate)); }
-        protected override sealed void OnFileOpenPickerActivated(FileOpenPickerActivatedEventArgs e) { DebugWrite(); StartupOrchestratorAsync(new StartupInfo(e, StartKinds.Activate)); }
-        protected override sealed void OnFileSavePickerActivated(FileSavePickerActivatedEventArgs e) { DebugWrite(); StartupOrchestratorAsync(new StartupInfo(e, StartKinds.Activate)); }
-        protected override sealed void OnSearchActivated(SearchActivatedEventArgs e) { DebugWrite(); StartupOrchestratorAsync(new StartupInfo(e, StartKinds.Activate)); }
-        protected override sealed void OnShareTargetActivated(ShareTargetActivatedEventArgs e) { DebugWrite(); StartupOrchestratorAsync(new StartupInfo(e, StartKinds.Activate)); }
-        protected sealed override void OnLaunched(LaunchActivatedEventArgs e) { DebugWrite(); StartupOrchestratorAsync(new StartupInfo(e, StartKinds.Launch)); }
-        protected sealed override void OnBackgroundActivated(BackgroundActivatedEventArgs e) { DebugWrite(); StartupOrchestratorAsync(new StartupInfo(e, StartKinds.Background)); }
+        protected override sealed void OnActivated(IActivatedEventArgs e) { DebugWrite(); StartupOrchestratorAsync(new Template10StartArgs(e, StartKinds.Activate)); }
+        protected override sealed void OnCachedFileUpdaterActivated(CachedFileUpdaterActivatedEventArgs e) { DebugWrite(); StartupOrchestratorAsync(new Template10StartArgs(e, StartKinds.Activate)); }
+        protected override sealed void OnFileActivated(FileActivatedEventArgs e) { DebugWrite(); StartupOrchestratorAsync(new Template10StartArgs(e, StartKinds.Activate)); }
+        protected override sealed void OnFileOpenPickerActivated(FileOpenPickerActivatedEventArgs e) { DebugWrite(); StartupOrchestratorAsync(new Template10StartArgs(e, StartKinds.Activate)); }
+        protected override sealed void OnFileSavePickerActivated(FileSavePickerActivatedEventArgs e) { DebugWrite(); StartupOrchestratorAsync(new Template10StartArgs(e, StartKinds.Activate)); }
+        protected override sealed void OnSearchActivated(SearchActivatedEventArgs e) { DebugWrite(); StartupOrchestratorAsync(new Template10StartArgs(e, StartKinds.Activate)); }
+        protected override sealed void OnShareTargetActivated(ShareTargetActivatedEventArgs e) { DebugWrite(); StartupOrchestratorAsync(new Template10StartArgs(e, StartKinds.Activate)); }
+        protected sealed override void OnLaunched(LaunchActivatedEventArgs e) { DebugWrite(); StartupOrchestratorAsync(new Template10StartArgs(e, StartKinds.Launch)); }
+        protected sealed override void OnBackgroundActivated(BackgroundActivatedEventArgs e) { DebugWrite(); StartupOrchestratorAsync(new Template10StartArgs(e, StartKinds.Background)); }
         protected sealed override void OnWindowCreated(WindowCreatedEventArgs args)
         {
             DebugWrite();
