@@ -7,8 +7,8 @@
     <ProjectGuid>{B3A4E50E-9DCA-457E-BED5-B71D97B957F3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Template10.Utilities</RootNamespace>
-    <AssemblyName>Template10.Utilities</AssemblyName>
+    <RootNamespace>Template10.CodeBehind</RootNamespace>
+    <AssemblyName>Template10.CodeBehind</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.15063.0</TargetPlatformVersion>

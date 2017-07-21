@@ -14,7 +14,7 @@ namespace Template10.Services.NavigationService
 
         public async Task<(bool Success, DateTime Value)> TryGetCacheDateKeyAsync()
         {
-            var setting = await store.TryGetValueAsync("CacheDateKey");
+            var setting = await store.TryGetStringAsync("CacheDateKey");
             if (!setting.Success)
             {
                 return (false, DateTime.MinValue);
@@ -32,7 +32,7 @@ namespace Template10.Services.NavigationService
 
         public async Task<(bool Success, Type Value)> TryGetCurrentPageTypeAsync()
         {
-            var setting = await store.TryGetValueAsync("CurrentPageType");
+            var setting = await store.TryGetStringAsync("CurrentPageType");
             if (!setting.Success)
             {
                 return (false, null);
@@ -50,7 +50,7 @@ namespace Template10.Services.NavigationService
 
         public async Task<(bool Success, object Value)> TryGetCurrentPageParameterAsync()
         {
-            var setting = await store.TryGetValueAsync("CurrentPageParameter");
+            var setting = await store.TryGetStringAsync("CurrentPageParameter");
             if (!setting.Success)
             {
                 return (false, null);
@@ -84,10 +84,10 @@ namespace Template10.Services.NavigationService
         }
 
         public async Task<(bool Success, string Value)> TryGetNavigationStateAsync()
-            => await store.TryGetValueAsync("NavigationState");
+            => await store.TryGetStringAsync("NavigationState");
 
         public async Task SetNavigationStateAsync(string value)
-            => await store.SetValueAsync("NavigationState", value);
+            => await store.SetStringAsync("NavigationState", value);
 
         private string Serialize(object value)
             => Settings.SerializationStrategy.Serialize(value);
