@@ -4,6 +4,6 @@ namespace Template10.Common
 {
     public static class DispatcherWrapperHelper
     {
-        public static IDispatcherWrapper Current() => WindowWrapperHelper.Current().Dispatcher;
+        public static IDispatcherWrapper Current() => WindowWrapperManager.Current().Dispatcher;
     }
 }

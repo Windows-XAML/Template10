@@ -8,7 +8,7 @@ using Windows.UI.Xaml;
 
 namespace Template10.Services.WindowWrapper
 {
-    public static class WindowWrapperHelper
+    public static class WindowWrapperManager
     {
         public static List<IWindowWrapper> Instances { get; } = new List<IWindowWrapper>();
 
@@ -18,13 +18,13 @@ namespace Template10.Services.WindowWrapper
             {
                 // this cannot be called from a background thread.
                 var mainDispatcher = CoreApplication.MainView.Dispatcher;
-                return WindowWrapperHelper.Instances.FirstOrDefault(x => x.Window.Dispatcher == mainDispatcher) ??
-                        WindowWrapperHelper.Instances.FirstOrDefault();
+                return WindowWrapperManager.Instances.FirstOrDefault(x => x.Window.Dispatcher == mainDispatcher) ??
+                        WindowWrapperManager.Instances.FirstOrDefault();
             }
             catch (COMException)
             {
                 //MainView might exist but still be not accessible
-                return WindowWrapperHelper.Instances.FirstOrDefault();
+                return WindowWrapperManager.Instances.FirstOrDefault();
             }
         }
 

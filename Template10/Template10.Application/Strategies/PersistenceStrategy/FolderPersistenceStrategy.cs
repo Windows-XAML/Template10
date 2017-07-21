@@ -51,7 +51,7 @@ namespace Template10.Strategies
             return files.Select(x => x.Name).ToArray();
         }
 
-        protected override async Task<string> GetStringAsync(string key)
+        public override async Task<string> GetStringAsync(string key)
         {
             if (!await ContainsKeyAsync(key))
             {
@@ -61,7 +61,7 @@ namespace Template10.Strategies
             return await FileIO.ReadTextAsync(file);
         }
 
-        protected override async Task SetStringAsync(string key, string value)
+        public override async Task SetStringAsync(string key, string value)
         {
             var file = await folder.CreateFileAsync(key, CreationCollisionOption.OpenIfExists);
             await FileIO.WriteTextAsync(file, value);

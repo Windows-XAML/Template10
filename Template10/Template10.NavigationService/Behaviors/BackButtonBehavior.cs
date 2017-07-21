@@ -20,7 +20,7 @@ namespace Template10.Behaviors
         public void Attach(DependencyObject associatedObject)
         {
             AssociatedObject = associatedObject;
-            _dispatcher = Services.WindowWrapper.WindowWrapperHelper.Current().Dispatcher;
+            _dispatcher = Services.WindowWrapper.WindowWrapperManager.Current().Dispatcher;
             Services.BackButtonService.BackButtonService.Instance.BackRequested += BackButtonService_NavigateBack;
         }
 

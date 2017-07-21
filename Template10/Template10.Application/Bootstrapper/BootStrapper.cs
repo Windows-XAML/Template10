@@ -176,7 +176,7 @@ namespace Template10.Common
             {
                 OperationWrapper(BootstrapperStates.ShowingSplash, () =>
                 {
-                    var window = WindowWrapperHelper.Main().Window;
+                    var window = WindowWrapperManager.Main().Window;
                     window.Content = Settings.SplashFactory(e.OnLaunchedEventArgs.SplashScreen);
                     window.Activate();
                 }, BootstrapperStates.ShowedSplash);
@@ -185,7 +185,7 @@ namespace Template10.Common
 
         public void HideSplash()
         {
-            var window = WindowWrapperHelper.Main().Window;
+            var window = WindowWrapperManager.Main().Window;
             if (window.Content.Equals(_rootElement))
             {
                 DebugWrite("No splash to hide.");

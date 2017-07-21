@@ -45,7 +45,7 @@ namespace Sample.Services.SettingsServices
 
             // implement it
 
-            WindowWrapperHelper.Current().Dispatcher.Dispatch(() =>
+            WindowWrapperManager.Current().Dispatcher.Dispatch(() =>
             {
                 switch (key)
                 {
