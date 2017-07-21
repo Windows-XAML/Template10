@@ -10,13 +10,13 @@ namespace Template10.Portable.Common
         bool ContainsKey(string key);
 
         T GetValue<T>(string key);
-        string GetValue(string key);
+        string GetString(string key);
 
         (bool Success, string Value) TryGetValue(string key);
         (bool Success, T Value) TryGetValue<T>(string key);
 
         void SetValue<T>(string key, T value);
-        void SetValue(string key, string value);
+        void SetString(string key, string value);
 
         void Clear();
     }

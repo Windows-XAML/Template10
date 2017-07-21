@@ -201,6 +201,7 @@ Templates (Project)/Blank/null
 
 # NuGet
 [Pp]ackages/
+*.nuget.props
 
 # Visual Studio 2015 cache/options directory
 .vs/

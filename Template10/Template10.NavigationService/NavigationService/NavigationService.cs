@@ -338,7 +338,6 @@ namespace Template10.Services.NavigationService
             var writtenState = await frameState.TryGetNavigationStateAsync();
             DebugWrite($"navigationState:{navigationState} writtenState:{writtenState}");
             Debug.Assert(navigationState.Equals(writtenState.Value), "Checking frame nav state save");
-            /// TODO: I think this is double-serializaing the state to file.
 
             await Task.CompletedTask;
         }

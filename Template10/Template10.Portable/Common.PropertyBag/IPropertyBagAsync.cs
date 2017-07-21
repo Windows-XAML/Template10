@@ -12,10 +12,14 @@ namespace Template10.Portable.Common
 
         Task<T> GetValueAsync<T>(string key);
 
-        Task<(bool Success, string Value)> TryGetValueAsync(string key);
-        Task<(bool Success, T Value)> TryGetValueAsync<T>(string key);
-
         Task SetValueAsync<T>(string key, T value);
+
+        Task<string> GetStringAsync(string key);
+
+        Task SetStringAsync(string key, string value);
+
+        Task<(bool Success, string Value)> TryGetStringAsync(string key);
+        Task<(bool Success, T Value)> TryGetValueAsync<T>(string key);
 
         Task ClearAsync();
     }

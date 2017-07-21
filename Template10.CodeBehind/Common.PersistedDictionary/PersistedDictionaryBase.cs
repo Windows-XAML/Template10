@@ -39,7 +39,7 @@ namespace Template10.Common.PersistedDictionary
 
         public abstract Task SetStringAsync(string key, string value);
 
-        public async Task<(bool Success, string Value)> TryGetValueAsync(string key)
+        public async Task<(bool Success, string Value)> TryGetStringAsync(string key)
         {
             try { return (true, await GetStringAsync(key)); }
             catch { return (false, null); }
