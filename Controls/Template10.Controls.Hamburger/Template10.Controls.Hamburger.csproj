@@ -150,6 +150,10 @@
       <Project>{d3a94520-4cd4-4d56-b30b-7e54face64bb}</Project>
       <Name>Template10.Services.SerializationService</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Template10\Template10.Portable\Template10.Portable.csproj">
+      <Project>{2b6903df-396a-4d97-bf29-45bc6dd72dbe}</Project>
+      <Name>Template10.Portable</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

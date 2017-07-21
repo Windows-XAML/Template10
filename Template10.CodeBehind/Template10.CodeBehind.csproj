@@ -117,6 +117,8 @@
     <Compile Include="Common.ObservableDictionary\ObservableDictionary.cs" />
     <Compile Include="Common.ObservableItemCollection\IObservableItemCollection.cs" />
     <Compile Include="Common.ObservableItemCollection\ObservableItemCollection.cs" />
+    <Compile Include="Common.PersistedDictionary\PersistedDictionaryFolderAdapter.cs" />
+    <Compile Include="Common.PersistedDictionary\PersistedDictionarySettingsAdapter.cs" />
     <Compile Include="Common.Queue\IQueue.cs" />
     <Compile Include="Common.Queue\Queue.cs" />
     <Compile Include="Common.WeakReference\WeakReference.cs" />

@@ -9,7 +9,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Sample.ViewModels
 {
-    public class MainPageViewModel : ViewModelBase
+    public class MainPageViewModel : Template10ViewModel
     {
         public MainPageViewModel()
         {

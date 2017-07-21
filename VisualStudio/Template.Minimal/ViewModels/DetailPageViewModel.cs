@@ -8,7 +8,7 @@ using Template10.Services.NavigationService;
 
 namespace Sample.ViewModels
 {
-    public class DetailPageViewModel : ViewModelBase
+    public class DetailPageViewModel : Template10ViewModel
     {
         public DetailPageViewModel()
         {

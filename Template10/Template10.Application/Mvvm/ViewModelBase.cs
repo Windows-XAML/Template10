@@ -9,7 +9,7 @@ using Template10.Utils;
 
 namespace Template10.Mvvm
 {
-    public abstract class ViewModelBase
+    public abstract class Template10ViewModel
         : BindableBase,
         INavigatedToAwareAsync,
         INavigatedFromAwareAsync,

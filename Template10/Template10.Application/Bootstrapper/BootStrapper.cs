@@ -162,7 +162,7 @@ namespace Template10.Common
         {
             if (Settings.PersistenceStrategyFactory == null)
             {
-                Settings.PersistenceStrategyFactory = new Strategies.DefaultPersistenceFactory();
+                Settings.PersistenceStrategyFactory = new Strategies.DefaultPersistenceStrategyFactory(Strategies.DefaultPersistenceStrategyFactory.FolderPersistenceLocations.Local);
             }
         }
 

@@ -1,47 +1,42 @@
 using System;
 using System.Threading.Tasks;
+using Template10.Common;
 using Windows.ApplicationModel.ExtendedExecution;
 
 namespace Template10.Strategies
 {
     internal class ExtendedSessionManager : IDisposable
     {
-        volatile static ExtendedExecutionSession _extendedExecutionSession;
+        static ExtendedSessionManager() => CreateInternal();
 
-        volatile static ExtendedSessionKinds _currentKind = ExtendedSessionKinds.None;
-        public ExtendedSessionKinds CurrentKind => _currentKind;
+        volatile static ExtendedSessionKinds s_currentKind = ExtendedSessionKinds.None;
+        public ExtendedSessionKinds CurrentKind => s_currentKind;
 
-        public bool IsActive => _isStarted && !_isRevoked;
+        volatile static bool s_isStarted = false;
+        public bool IsStarted => s_isStarted;
 
-        volatile static bool _isStarted = false;
-        public bool IsStarted => _isStarted;
+        volatile static bool s_isRevoked = false;
+        public bool IsRevoked => s_isRevoked;
 
-        volatile static bool _isRevoked = false;
-        public bool IsRevoked => _isRevoked;
+        public bool IsActive => s_isStarted && !s_isRevoked;
 
-        public int Progress
+        public int CurrentProgress
         {
-            get { return (int)_extendedExecutionSession.PercentProgress; }
-            set { if (IsStarted) _extendedExecutionSession.PercentProgress = (uint)value; }
-        }
-
-        static ExtendedSessionManager() => Create();
-
-        static void Create()
-        {
-            _isStarted = _isRevoked = false;
-            _extendedExecutionSession = new ExtendedExecutionSession
+            get { return (int)s_extendedExecutionSession.PercentProgress; }
+            set
             {
-                Description = typeof(ExtendedSessionManager).ToString(),
-            };
-            _extendedExecutionSession.Revoked += _extendedExecutionSession_Revoked;
+                if (!IsStarted)
+                {
+                    return;
+                }
+                s_extendedExecutionSession.PercentProgress = (uint)value;
+                CurrentProgressChanged?.Invoke(this, value);
+            }
         }
 
-        private static void _extendedExecutionSession_Revoked(object sender, ExtendedExecutionRevokedEventArgs args)
-        {
-            _isStarted = false;
-            _isRevoked = true;
-        }
+        public event TypedEventHandler<int> CurrentProgressChanged;
+
+        volatile static ExtendedExecutionSession s_extendedExecutionSession;
 
         public async Task<bool> StartAsync(ExtendedSessionKinds kind)
         {
@@ -50,19 +45,19 @@ namespace Template10.Strategies
                 switch (kind)
                 {
                     case ExtendedSessionKinds.Unspecified:
-                        _extendedExecutionSession.Reason = ExtendedExecutionReason.Unspecified;
+                        s_extendedExecutionSession.Reason = ExtendedExecutionReason.Unspecified;
                         break;
                     case ExtendedSessionKinds.LocationTracking:
-                        _extendedExecutionSession.Reason = ExtendedExecutionReason.LocationTracking;
+                        s_extendedExecutionSession.Reason = ExtendedExecutionReason.LocationTracking;
                         break;
                     case ExtendedSessionKinds.SavingData:
-                        _extendedExecutionSession.Reason = ExtendedExecutionReason.SavingData;
+                        s_extendedExecutionSession.Reason = ExtendedExecutionReason.SavingData;
                         break;
                     default:
                         throw new NotSupportedException(kind.ToString());
                 }
-                var result = await _extendedExecutionSession.RequestExtensionAsync();
-                return _isStarted = result == ExtendedExecutionResult.Allowed;
+                var result = await s_extendedExecutionSession.RequestExtensionAsync();
+                return s_isStarted = result == ExtendedExecutionResult.Allowed;
             }
             catch
             {
@@ -70,19 +65,35 @@ namespace Template10.Strategies
             }
         }
 
-        public void Recreate()
+        public void Create()
         {
-            if (_extendedExecutionSession != null)
+            if (s_extendedExecutionSession != null)
             {
-                _extendedExecutionSession.Revoked -= _extendedExecutionSession_Revoked;
-                _extendedExecutionSession.Dispose();
+                s_extendedExecutionSession.Revoked -= HandleRevoked;
+                s_extendedExecutionSession.Dispose();
             }
-            Create();
+            CreateInternal();
+        }
+
+        static void CreateInternal()
+        {
+            s_isStarted = s_isRevoked = false;
+            s_extendedExecutionSession = new ExtendedExecutionSession
+            {
+                Description = typeof(ExtendedSessionManager).ToString(),
+            };
+            s_extendedExecutionSession.Revoked += HandleRevoked;
+        }
+
+        private static void HandleRevoked(object sender, ExtendedExecutionRevokedEventArgs args)
+        {
+            s_isStarted = false;
+            s_isRevoked = true;
         }
 
         public void Dispose()
         {
-            _extendedExecutionSession.Dispose();
+            s_extendedExecutionSession.Dispose();
         }
     }
 

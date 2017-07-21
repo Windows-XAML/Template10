@@ -133,21 +133,17 @@
     <Compile Include="Strategies\LifecycleStrategy\DefaultLifecycleStrategy.cs" />
     <Compile Include="Strategies\LifecycleStrategy\ILifecycleStrategy.cs" />
     <Compile Include="Strategies\LifecycleStrategy\SuspendingMessage.cs" />
+    <Compile Include="Strategies\PersistenceStrategy\DefaultPersistenceStrategy.cs" />
+    <Compile Include="Strategies\PersistenceStrategy\DefaultPersistenceStrategyFactory.cs" />
     <Compile Include="Template10ActivationArgs\StartCauses.enum.cs" />
     <Compile Include="Template10ActivationArgs\Template10ActivationArgs.cs" />
     <Compile Include="Strategies\ExtendedSessionStrategy\DefaultExtendedSessionStrategy.cs" />
-    <Compile Include="Strategies\ExtendedSessionStrategy\ExtendedSessionKinds.cs" />
+    <Compile Include="Strategies\ExtendedSessionStrategy\ExtendedSessionKinds.enum.cs" />
     <Compile Include="Strategies\ExtendedSessionStrategy\ExtendedSessionManager.cs" />
     <Compile Include="Strategies\ExtendedSessionStrategy\ExtendedSessionStrategyBase.cs" />
     <Compile Include="Strategies\ExtendedSessionStrategy\IExtendedSessionStrategy.cs" />
     <Compile Include="Strategies\ExtendedSessionStrategy\IExtendedSessionStrategyInternal.cs" />
     <Compile Include="Strategies\ExtendedSessionStrategy\Settings.cs" />
-    <Compile Include="Strategies\PersistenceStrategy\DefaultPersistenceFactory.cs" />
-    <Compile Include="Strategies\PersistenceStrategy\FolderPersistenceLocations.enum.cs" />
-    <Compile Include="Strategies\PersistenceStrategy\FolderPersistenceStrategy.cs" />
-    <Compile Include="Strategies\PersistenceStrategy\IPersistenceStrategy.cs" />
-    <Compile Include="Strategies\PersistenceStrategy\SettingsPersistenceStrategy.cs" />
-    <Compile Include="Strategies\PersistenceStrategy\SettingsStateLocations.enum.cs" />
     <Compile Include="Strategies\LifecycleStrategy\Settings.cs" />
     <Compile Include="Strategies\TitleBarStrategy\DefaultTitleBarStrategy.cs" />
     <Compile Include="Strategies\TitleBarStrategy\ITitleBarStrategy.cs" />
@@ -183,9 +179,9 @@
       <Project>{eadde808-bf0d-4ebc-b4ca-9fda63b53862}</Project>
       <Name>Template10.Services.LoggingService</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Services\Template10.Services.Messenger\Service\Template10.Services.Messenger.csproj">
+    <ProjectReference Include="..\..\Services\Template10.Services.Messenger\Service\Template10.Services.Messenging.csproj">
       <Project>{e14bcd62-b2a4-4aa2-95a8-6a556a31fb29}</Project>
-      <Name>Template10.Services.Messenger</Name>
+      <Name>Template10.Services.Messenging</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Services\Template10.Services.SerializationService\Service\Template10.Services.SerializationService.csproj">
       <Project>{D3A94520-4CD4-4D56-B30B-7E54FACE64BB}</Project>

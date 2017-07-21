@@ -27,7 +27,7 @@ namespace Template10.Strategies
 
         bool IExtendedSessionStrategyInternal.IsRevoked => _manager.IsRevoked;
 
-        int IExtendedSessionStrategyInternal.Progress => _manager.Progress;
+        int IExtendedSessionStrategyInternal.Progress => _manager.CurrentProgress;
 
         async Task<bool> IExtendedSessionStrategyInternal.StartUnspecifiedAsync()
         {
@@ -53,7 +53,7 @@ namespace Template10.Strategies
                 {
                     return true;
                 }
-                _manager.Recreate();
+                _manager.Create();
             }
             return await _manager.StartAsync(ExtendedSessionKinds.SavingData);
         }

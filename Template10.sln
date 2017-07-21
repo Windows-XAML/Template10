@@ -146,7 +146,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.XAML", "Template
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Controls.Hamburger", "Controls\Template10.Controls.Hamburger\Template10.Controls.Hamburger.csproj", "{5144566E-80EB-4375-9FE2-415808E2051D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.Messenger", "Services\Template10.Services.Messenger\Service\Template10.Services.Messenger.csproj", "{E14BCD62-B2A4-4AA2-95A8-6A556A31FB29}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.Messenging", "Services\Template10.Services.Messenger\Service\Template10.Services.Messenging.csproj", "{E14BCD62-B2A4-4AA2-95A8-6A556A31FB29}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

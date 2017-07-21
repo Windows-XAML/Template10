@@ -2,36 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Template10.Common.PersistedDictionary;
 using Windows.Storage;
 
-namespace Template10.Strategies
+namespace Template10.Common.PersistedDictionary
 {
-
-    public class FolderPersistenceStrategy : PersistedDictionaryBase, IPersistenceStrategy
+    public class PersistedDictionaryFolderAdapter : PersistedDictionaryBase
     {
-        public static async Task<IPersistedDictionary> CreateAsync(FolderPersistenceLocations location, string container = null, string key = null)
-        {
-            key = key ?? nameof(FolderPersistenceStrategy);
-            var root = default(StorageFolder);
-            switch (location)
-            {
-                case FolderPersistenceLocations.Local:
-                    root = ApplicationData.Current.LocalFolder;
-                    break;
-                case FolderPersistenceLocations.Roam:
-                    root = ApplicationData.Current.RoamingFolder;
-                    break;
-            }
-            root = await root.CreateFolderAsync("App-State", CreationCollisionOption.OpenIfExists);
-            if (!string.IsNullOrEmpty(container))
-            {
-                root = await root.CreateFolderAsync(container, CreationCollisionOption.OpenIfExists);
-            }
-            var folder = await root.CreateFolderAsync(key, CreationCollisionOption.OpenIfExists);
-            return new FolderPersistenceStrategy(folder);
-        }
-
         private StorageFolder folder;
 
         public async override Task ClearAsync()
@@ -42,7 +18,7 @@ namespace Template10.Strategies
             folder = await parent.CreateFolderAsync(name, CreationCollisionOption.OpenIfExists);
         }
 
-        private FolderPersistenceStrategy(StorageFolder folder) : base(folder.Name)
+        public PersistedDictionaryFolderAdapter(StorageFolder folder) : base(folder.Name)
             => this.folder = folder;
 
         public override async Task<string[]> AllKeysAsync()

@@ -8,7 +8,7 @@ using Windows.UI.Xaml;
 
 namespace Sample.ViewModels
 {
-    public class SettingsPageViewModel : ViewModelBase
+    public class SettingsPageViewModel : Template10ViewModel
     {
         public override Task OnNavigatedToAsync(INavigatedToParameters parameter)
         {
