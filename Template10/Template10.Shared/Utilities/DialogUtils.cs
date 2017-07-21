@@ -36,7 +36,7 @@ namespace Template10.Utils
             }
 
             // this next line creates a dependecy on the WindowService
-            dispatcher = dispatcher ?? WindowWrapperHelper.Current().Dispatcher;
+            dispatcher = dispatcher ?? WindowWrapperManager.Current().Dispatcher;
 
             dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
 

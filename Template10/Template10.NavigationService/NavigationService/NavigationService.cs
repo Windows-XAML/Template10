@@ -46,7 +46,7 @@ namespace Template10.Services.NavigationService
 
         internal NavigationService()
         {
-            Window = WindowWrapperHelper.Current();
+            Window = WindowWrapperManager.Current();
         }
 
         internal NavigationService(Frame frame) : this()

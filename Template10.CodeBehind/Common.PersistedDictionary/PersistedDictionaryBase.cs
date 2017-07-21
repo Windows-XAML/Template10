@@ -32,12 +32,12 @@ namespace Template10.Common.PersistedDictionary
         public virtual async Task<T> GetValueAsync<T>(string key)
             => _serializer.Deserialize<T>(await GetStringAsync(key));
 
-        protected abstract Task<string> GetStringAsync(string key);
+        public abstract Task<string> GetStringAsync(string key);
 
         public async Task SetValueAsync<T>(string key, T value)
             => await SetStringAsync(key, _serializer.Serialize(value));
 
-        protected abstract Task SetStringAsync(string key, string value);
+        public abstract Task SetStringAsync(string key, string value);
 
         public async Task<(bool Success, string Value)> TryGetValueAsync(string key)
         {

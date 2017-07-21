@@ -62,7 +62,7 @@ namespace Template10.Behaviors
                 // if (Locator.BootStrapper.Instance != null) Locator.BootStrapper.Instance.ShellBackButtonUpdated += Current_ShellBackButtonUpdated;
 
 
-                _deviceUtils = DeviceUtils.Current(WindowWrapperHelper.Current());
+                _deviceUtils = DeviceUtils.Current(WindowWrapperManager.Current());
                 if (_deviceUtils != null) _deviceUtils.Changed += DispositionChanged;
             }
         }

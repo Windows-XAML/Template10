@@ -26,8 +26,8 @@ namespace Template10.Services.WindowWrapper
         {
             Window = window;
             Dispatcher = new DispatcherWrapper(window.Dispatcher);
-            window.CoreWindow.Closed += (s, e) => WindowWrapperHelper.Instances.Remove(this);
-            window.Closed += (s, e) => WindowWrapperHelper.Instances.Remove(this);
+            window.CoreWindow.Closed += (s, e) => WindowWrapperManager.Instances.Remove(this);
+            window.Closed += (s, e) => WindowWrapperManager.Instances.Remove(this);
             window.Activate();
 
             IsMainView = CoreApplication.MainView == CoreApplication.GetCurrentView();

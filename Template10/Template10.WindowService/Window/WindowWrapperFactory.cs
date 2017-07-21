@@ -10,12 +10,12 @@ namespace Template10.Services.WindowWrapper
 
         public static IWindowWrapper Create(Window window)
         {
-            if (WindowWrapperHelper.Instances.Any(x => x.Window.Equals(window)))
+            if (WindowWrapperManager.Instances.Any(x => x.Window.Equals(window)))
             {
                 throw new Exception("Windows already has a wrapper; use Current(window) to fetch.");
             }
             var wrapper = new WindowWrapper(window);
-            WindowWrapperHelper.Instances.Add(wrapper);
+            WindowWrapperManager.Instances.Add(wrapper);
             ViewService.ViewService.OnWindowCreated();
             return wrapper;
         }
