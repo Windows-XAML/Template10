@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Template10.Common.PersistedDictionary;
 using Template10.Strategies;
-using Template10.Strategies.TitleBarStrategy;
 using Template10.Utils;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
@@ -12,7 +11,7 @@ namespace Template10.Common
 {
     public class Settings
     {
-        public static IExtendedSessionStrategy ExtendedSessionStrategy { get; set; } = new DefaultExtendedSessionStrategy();
+        public static IExtendedSessionStrategy ExtendedSessionStrategy { get; set; } // = new DefaultExtendedSessionStrategy();
 
         public static ILifecycleStrategy SuspendResumeStrategy { get; set; } = new DefaultLifecycleStrategy();
 
@@ -30,7 +29,7 @@ namespace Template10.Common
         ///  By default, Template 10 will setup the root element to be a Template 10
         ///  Modal Dialog control. If you desire something different, you can set it here.
         /// </summary>
-        public static Func<Template10StartArgs, Task<UIElement>> RootFactoryAsync { get; set; } = new Func<Template10StartArgs, Task<UIElement>>(async (e) =>
+        public static Func<Template10.Template10StartArgs, Task<UIElement>> RootFactoryAsync { get; set; } = new Func<Template10.Template10StartArgs, Task<UIElement>>(async (e) =>
         {
             // return new ModalDialog { Content = await new Frame().RegisterAsync() };
             return await new Frame().RegisterAsync();
@@ -48,34 +47,6 @@ namespace Template10.Common
         {
             get => Services.NavigationService.Settings.ViewModelResolutionStrategy;
             set => Services.NavigationService.Settings.ViewModelResolutionStrategy = value;
-        }
-
-        /// <summary>
-        /// This setting tells Template 10 if it should run Suspend logic which saves
-        /// NavigationState of every NavigationService's Frame, enabling restore on Resume.
-        /// </summary>
-        /// <remarks>
-        /// This is a convenience property forwarding the constant value
-        /// available through LifecycleStrategy.RunSuspendStrategy
-        /// </remarks>
-        public static bool RunSuspendStrategy
-        {
-            get => Strategies.Settings.RunSuspendStrategy;
-            set => Strategies.Settings.RunSuspendStrategy = value;
-        }
-
-        /// <summary>
-        /// This property tells Template 10 if should run Restore logic which restores
-        /// NavitgationState of every [currently-existing] NavigationService from suspension.
-        /// </summary>
-        /// <remarks>
-        /// This is a convenience property forwarding the constant value
-        /// available through LifecycleStrategy.RunRestoreStrategy;
-        /// </remarks>
-        public static bool RunRestoreStrategy
-        {
-            get => Strategies.Settings.RunRestoreStrategy;
-            set => Strategies.Settings.RunRestoreStrategy = value;
         }
 
         /// <summary>

@@ -50,11 +50,11 @@ namespace Template10.Common
         public object RawEventArgs { get; private set; }
         public StartKinds StartKind { get; private set; }
         public static bool PrelaunchOccurred { get; private set; }
+        public bool ThisIsPrelaunch => OnLaunchedEventArgs?.PrelaunchActivated ?? false;
         public ApplicationExecutionState PreviousExecutionState { get; private set; }
 
         public bool ThisIsFirstStart => Starts.Equals(1);
         public bool ThisIsResuming => Settings.SuspendResumeStrategy.IsResuming(this);
-        public bool ThisIsPrelaunch => OnLaunchedEventArgs?.PrelaunchActivated ?? false;
         public StartCauses StartCause => DetermineStartCause(RawEventArgs);
 
         public IActivatedEventArgs OnActivatedEventArgs => RawEventArgs as IActivatedEventArgs;

@@ -26,6 +26,7 @@ namespace Template10.Services.NavigationService
 
         Task<Template10FrameState> GetFrameStateAsync();
         Task<IPersistedDictionary> GetPageStateAsync(Type page);
+        Task<IPersistedDictionary> GetPageStateAsync(string page);
 
         void ClearCache(bool removeCachedPagesInBackStack = false);
     }

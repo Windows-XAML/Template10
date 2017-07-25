@@ -162,10 +162,12 @@ namespace Template10.Services.NavigationService
                 var oldPage = FrameFacadeInternal.Content as Page;
                 var oldParameter = CurrentPageParam;
                 var oldViewModel = oldPage?.DataContext;
+                var oldPageName = oldPage?.GetType().ToString();
                 var oldPageState = await FrameFacadeInternal.GetPageStateAsync(oldPage?.GetType());
                 var from = new NavigationInfo(oldPage?.GetType(), oldParameter, oldPageState);
 
-                var newPageState = await FrameFacadeInternal.GetPageStateAsync(page?.GetType());
+                var newPageName = page?.ToString();
+                var newPageState = await FrameFacadeInternal.GetPageStateAsync(newPageName);
                 var to = new NavigationInfo(page, parameter, newPageState);
 
                 // call oldViewModel.OnNavigatingFromAsync()

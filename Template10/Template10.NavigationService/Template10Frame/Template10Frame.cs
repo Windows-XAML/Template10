@@ -125,6 +125,12 @@ namespace Template10.Services.NavigationService
             return await Settings.PersistedDictionaryFactory.CreateAsync($"Page-{page.ToString()}", FrameStateKey);
         }
 
+        async Task<IPersistedDictionary> ITemplate10FrameInternal.GetPageStateAsync(string page)
+        {
+            if (string.IsNullOrEmpty(page)) return null;
+            return await Settings.PersistedDictionaryFactory.CreateAsync($"Page-{page}", FrameStateKey);
+        }
+
         bool ITemplate10FrameInternal.CanGoBack => (this as ITemplate10FrameInternal).Frame.CanGoBack;
 
         bool ITemplate10FrameInternal.CanGoForward => (this as ITemplate10FrameInternal).Frame.CanGoForward;

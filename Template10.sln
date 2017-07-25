@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{F8B66765-EFAD-45EE-911F-8815B9C9E297}"
 	ProjectSection(SolutionItems) = preProject
@@ -53,7 +53,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.Setting
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.WebApiService", "Services\Template10.Services.WebApiService\Service\Template10.Services.WebApiService.csproj", "{6068AA09-C486-46C3-8E4F-0BEC33E7936F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Core", "Template10\Template10.Application\Template10.Core.csproj", "{AC3E4F10-6615-4E16-BB0F-104760C92B95}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.CoreOld", "Template10\Template10.Application\Template10.CoreOld.csproj", "{AC3E4F10-6615-4E16-BB0F-104760C92B95}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Navigation", "Template10\Template10.NavigationService\Template10.Navigation.csproj", "{CD31D870-42F3-4379-B67A-2070C4B0A444}"
 EndProject
@@ -147,6 +147,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Controls.Hamburger", "Controls\Template10.Controls.Hamburger\Template10.Controls.Hamburger.csproj", "{5144566E-80EB-4375-9FE2-415808E2051D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.Messenging", "Services\Template10.Services.Messenger\Service\Template10.Services.Messenging.csproj", "{E14BCD62-B2A4-4AA2-95A8-6A556A31FB29}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Core", "Template10\Template10.Core\Template10.Core.csproj", "{43417386-DDD5-422A-A563-CB666857C59C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.ContainerService", "Services\Template10.Services.Container\Service\Template10.Services.ContainerService.csproj", "{B4C8A753-3376-4C55-AFF1-326F2D1CFCBC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Container", "Container", "{8BE7C2DA-A08C-436D-88A0-7DE838AF5C66}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -776,6 +782,38 @@ Global
 		{E14BCD62-B2A4-4AA2-95A8-6A556A31FB29}.Release|x64.Build.0 = Release|x64
 		{E14BCD62-B2A4-4AA2-95A8-6A556A31FB29}.Release|x86.ActiveCfg = Release|x86
 		{E14BCD62-B2A4-4AA2-95A8-6A556A31FB29}.Release|x86.Build.0 = Release|x86
+		{43417386-DDD5-422A-A563-CB666857C59C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43417386-DDD5-422A-A563-CB666857C59C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43417386-DDD5-422A-A563-CB666857C59C}.Debug|ARM.ActiveCfg = Debug|ARM
+		{43417386-DDD5-422A-A563-CB666857C59C}.Debug|ARM.Build.0 = Debug|ARM
+		{43417386-DDD5-422A-A563-CB666857C59C}.Debug|x64.ActiveCfg = Debug|x64
+		{43417386-DDD5-422A-A563-CB666857C59C}.Debug|x64.Build.0 = Debug|x64
+		{43417386-DDD5-422A-A563-CB666857C59C}.Debug|x86.ActiveCfg = Debug|x86
+		{43417386-DDD5-422A-A563-CB666857C59C}.Debug|x86.Build.0 = Debug|x86
+		{43417386-DDD5-422A-A563-CB666857C59C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43417386-DDD5-422A-A563-CB666857C59C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43417386-DDD5-422A-A563-CB666857C59C}.Release|ARM.ActiveCfg = Release|ARM
+		{43417386-DDD5-422A-A563-CB666857C59C}.Release|ARM.Build.0 = Release|ARM
+		{43417386-DDD5-422A-A563-CB666857C59C}.Release|x64.ActiveCfg = Release|x64
+		{43417386-DDD5-422A-A563-CB666857C59C}.Release|x64.Build.0 = Release|x64
+		{43417386-DDD5-422A-A563-CB666857C59C}.Release|x86.ActiveCfg = Release|x86
+		{43417386-DDD5-422A-A563-CB666857C59C}.Release|x86.Build.0 = Release|x86
+		{B4C8A753-3376-4C55-AFF1-326F2D1CFCBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4C8A753-3376-4C55-AFF1-326F2D1CFCBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4C8A753-3376-4C55-AFF1-326F2D1CFCBC}.Debug|ARM.ActiveCfg = Debug|ARM
+		{B4C8A753-3376-4C55-AFF1-326F2D1CFCBC}.Debug|ARM.Build.0 = Debug|ARM
+		{B4C8A753-3376-4C55-AFF1-326F2D1CFCBC}.Debug|x64.ActiveCfg = Debug|x64
+		{B4C8A753-3376-4C55-AFF1-326F2D1CFCBC}.Debug|x64.Build.0 = Debug|x64
+		{B4C8A753-3376-4C55-AFF1-326F2D1CFCBC}.Debug|x86.ActiveCfg = Debug|x86
+		{B4C8A753-3376-4C55-AFF1-326F2D1CFCBC}.Debug|x86.Build.0 = Debug|x86
+		{B4C8A753-3376-4C55-AFF1-326F2D1CFCBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4C8A753-3376-4C55-AFF1-326F2D1CFCBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4C8A753-3376-4C55-AFF1-326F2D1CFCBC}.Release|ARM.ActiveCfg = Release|ARM
+		{B4C8A753-3376-4C55-AFF1-326F2D1CFCBC}.Release|ARM.Build.0 = Release|ARM
+		{B4C8A753-3376-4C55-AFF1-326F2D1CFCBC}.Release|x64.ActiveCfg = Release|x64
+		{B4C8A753-3376-4C55-AFF1-326F2D1CFCBC}.Release|x64.Build.0 = Release|x64
+		{B4C8A753-3376-4C55-AFF1-326F2D1CFCBC}.Release|x86.ActiveCfg = Release|x86
+		{B4C8A753-3376-4C55-AFF1-326F2D1CFCBC}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -827,5 +865,8 @@ Global
 		{AF4F2A41-D0E8-4CB2-950F-ED523C29B19C} = {198DC569-4687-486C-90F7-C42841B6A82F}
 		{5144566E-80EB-4375-9FE2-415808E2051D} = {B7A32690-D854-4B29-A995-FA3623879A43}
 		{E14BCD62-B2A4-4AA2-95A8-6A556A31FB29} = {D1B54308-4CA7-4E2F-8707-98D27060612E}
+		{43417386-DDD5-422A-A563-CB666857C59C} = {BCA90A0F-E32C-478A-8DD9-54B73D52AEBC}
+		{B4C8A753-3376-4C55-AFF1-326F2D1CFCBC} = {8BE7C2DA-A08C-436D-88A0-7DE838AF5C66}
+		{8BE7C2DA-A08C-436D-88A0-7DE838AF5C66} = {D1B54308-4CA7-4E2F-8707-98D27060612E}
 	EndGlobalSection
 EndGlobal

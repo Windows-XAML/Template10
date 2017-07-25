@@ -11,14 +11,17 @@ namespace Template10.Strategies
 {
     public class DefaultLifecycleStrategy : ILifecycleStrategy
     {
+        public Boolean PreviouslySuspended
+        {
+            get { return Windows.Storage.ApplicationData.Current.LocalSettings.Values["Template10-PreviousExecutionState"] as Boolean? ?? false; }
+            set { Windows.Storage.ApplicationData.Current.LocalSettings.Values["Template10-PreviousExecutionState"] = value; }
+        }
+
         public async Task SuspendAsync(SuspendingEventArgs e)
         {
-            Template10.Services.Messenger.MessengerService.Instance.Send(new SuspendingMessage { EventArgs = e });
+            PreviouslySuspended = true;
 
-            if (!Settings.RunSuspendStrategy)
-            {
-                return;
-            }
+            Template10.Services.Messenger.MessengerService.Instance.Send(new SuspendingMessage { EventArgs = e });
 
             // TODO: what to do with multiple views?
 
@@ -31,6 +34,11 @@ namespace Template10.Strategies
         public bool IsResuming(Template10StartArgs e)
         {
             if (Settings.AppAlwaysResumes && e.StartKind == StartKinds.Launch && e.StartCause == StartCauses.Primary)
+            {
+                return true;
+            }
+
+            if (PreviouslySuspended)
             {
                 return true;
             }
@@ -49,6 +57,7 @@ namespace Template10.Strategies
             {
                 // if the app was previous suspended (and not terminated)
                 case ApplicationExecutionState.Suspended:
+                    return true;
                 // if the app was previous suspended (and terminate)
                 case ApplicationExecutionState.Terminated:
                 case ApplicationExecutionState.NotRunning:
@@ -59,15 +68,12 @@ namespace Template10.Strategies
 
         public async Task<bool> ResumeAsync(Template10StartArgs e)
         {
-            if (!Settings.RunRestoreStrategy)
-            {
-                return false;
-            }
-
             if (!IsResuming(e))
             {
                 return false;
             }
+
+            PreviouslySuspended = false;
 
             if (e.StartKind == StartKinds.Launch)
             {

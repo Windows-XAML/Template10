@@ -126,6 +126,10 @@
       <Project>{B3A4E50E-9DCA-457E-BED5-B71D97B957F3}</Project>
       <Name>Template10.CodeBehind</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Template10\Template10.Portable\Template10.Portable.csproj">
+      <Project>{2b6903df-396a-4d97-bf29-45bc6dd72dbe}</Project>
+      <Name>Template10.Portable</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
