@@ -6,7 +6,7 @@ namespace Template10.Services.SettingsService.Services.SettingsService
 {
     public abstract class SettingsServiceBase
     {
-        ApplicationDataContainer container;
+        ApplicationDataContainer _container;
 
         public SettingsServiceBase()
             : this(ApplicationData.Current.LocalSettings, nameof(SettingsServiceBase))
@@ -29,11 +29,11 @@ namespace Template10.Services.SettingsService.Services.SettingsService
 
             if (container.Containers.ContainsKey(name))
             {
-                container = container.Containers[name];
+                _container = container.Containers[name];
             }
             else
             {
-                container = container.CreateContainer(name, ApplicationDataCreateDisposition.Always); ;
+                _container = container.CreateContainer(name, ApplicationDataCreateDisposition.Always); ;
             }
         }
 
@@ -51,7 +51,7 @@ namespace Template10.Services.SettingsService.Services.SettingsService
 
             try
             {
-                var value = container.Values[key] as string;
+                var value = _container.Values[key] as string;
                 value = CompressionHelper.Decompress(value);
                 setting = DefaultSerializationStrategy.Deserialize<T>(value);
                 return true;
@@ -72,7 +72,7 @@ namespace Template10.Services.SettingsService.Services.SettingsService
 
             var value = DefaultSerializationStrategy.Serialize(setting);
             value = CompressionHelper.Compress(value);
-            container.Values[key] = value;
+            _container.Values[key] = value;
         }
     }
 }
