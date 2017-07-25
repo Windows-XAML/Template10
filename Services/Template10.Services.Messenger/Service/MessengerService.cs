@@ -4,12 +4,12 @@ namespace Template10.Services.Messenger
 {
     public class MessengerService : IMessengerService
     {
-        public static IMessengerAdapter _adapter { get; set; }
-
         private static IMessengerService _instance;
         public static IMessengerService Instance => GetInstance();
         public static IMessengerService GetInstance() => _instance ?? (_instance = new MessengerService(Settings.DefaultAdapter));
         private MessengerService(IMessengerAdapter adapter) => _adapter = adapter;
+
+        public IMessengerAdapter _adapter { get; set; }
 
         public void Send<T>(T message) => _adapter.Send(message);
         public void Subscribe<T>(object subscriber, Action<T> callback) => _adapter.Subscribe(subscriber, callback);
