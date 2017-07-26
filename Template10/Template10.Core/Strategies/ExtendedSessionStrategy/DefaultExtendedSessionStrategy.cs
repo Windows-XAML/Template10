@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Template10.Common;
+using Template10.StartArgs;
 
 namespace Template10.Strategies
 {
@@ -10,7 +11,7 @@ namespace Template10.Strategies
             // empty
         }
 
-        public async override Task StartupAsync(Template10StartArgs e)
+        public async override Task StartupAsync(ITemplate10StartArgs e)
         {
             if (Settings.AutoExtendExecutionSession)
             {

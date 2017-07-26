@@ -139,9 +139,9 @@
       <Project>{af4f2a41-d0e8-4cb2-950f-ed523c29b19c}</Project>
       <Name>Template10.XAML</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Template10.WindowService\Template10.Windowing.csproj">
+    <ProjectReference Include="..\Template10.WindowService\Template10.Core.Windowing.csproj">
       <Project>{9cad4451-5adf-48d3-b690-8b341a95a228}</Project>
-      <Name>Template10.Windowing</Name>
+      <Name>Template10.Core.Windowing</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

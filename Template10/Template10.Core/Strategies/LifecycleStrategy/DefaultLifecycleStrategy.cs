@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Template10.Common;
 using Template10.Services.Messenger;
 using Template10.Services.NavigationService;
+using Template10.StartArgs;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 
@@ -13,15 +14,15 @@ namespace Template10.Strategies
     {
         public Boolean PreviouslySuspended
         {
-            get { return Windows.Storage.ApplicationData.Current.LocalSettings.Values["Template10-PreviousExecutionState"] as Boolean? ?? false; }
-            set { Windows.Storage.ApplicationData.Current.LocalSettings.Values["Template10-PreviousExecutionState"] = value; }
+            get { return Windows.Storage.ApplicationData.Current.LocalSettings.Values[$"Template10-{nameof(PreviouslySuspended)}"] as Boolean? ?? false; }
+            set { Windows.Storage.ApplicationData.Current.LocalSettings.Values[$"Template10-{nameof(PreviouslySuspended)}"] = value; }
         }
 
-        public async Task SuspendAsync(SuspendingEventArgs e)
+        public async Task SuspendAsync(ISuspendingEventArgs e)
         {
             PreviouslySuspended = true;
 
-            Template10.Services.Messenger.MessengerService.Instance.Send(new SuspendingMessage { EventArgs = e });
+            MessengerService.Instance.Send(new Messages.SuspendingMessage { EventArgs = e });
 
             // TODO: what to do with multiple views?
 
@@ -31,11 +32,11 @@ namespace Template10.Strategies
             }
         }
 
-        public bool IsResuming(Template10StartArgs e)
+        public bool IsResuming(ITemplate10StartArgs e)
         {
-            if (Settings.AppAlwaysResumes 
-                && e.StartKind == Template10.Template10StartArgs.StartKinds.Launch 
-                && e.StartCause == Template10.Template10StartArgs.StartCauses.Primary)
+            if (Settings.AppAlwaysResumes
+                && e?.StartKind == Template10StartArgs.StartKinds.Launch
+                && e?.StartCause == Template10StartArgs.StartCauses.Primary)
             {
                 return true;
             }
@@ -45,7 +46,7 @@ namespace Template10.Strategies
                 return true;
             }
 
-            if (e.ThisIsPrelaunch)
+            if (e?.LaunchActivatedEventArgs?.PrelaunchActivated ?? false)
             {
                 return false;
             }
@@ -68,7 +69,12 @@ namespace Template10.Strategies
             }
         }
 
-        public async Task<bool> ResumeAsync(Template10StartArgs e)
+        public async Task ResumingAsync()
+        {
+            await Task.CompletedTask;
+        }
+
+        public async Task<bool> ResumeAsync(ITemplate10StartArgs e)
         {
             if (!IsResuming(e))
             {
@@ -77,7 +83,7 @@ namespace Template10.Strategies
 
             PreviouslySuspended = false;
 
-            if (e.StartKind == Template10.Template10StartArgs.StartKinds.Launch)
+            if (e?.StartKind == Template10StartArgs.StartKinds.Launch)
             {
                 foreach (var nav in NavigationServiceHelper.Instances.Select(x => x as INavigationServiceInternal))
                 {

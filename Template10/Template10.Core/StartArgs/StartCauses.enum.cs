@@ -1,4 +1,4 @@
-﻿namespace Template10
+﻿namespace Template10.StartArgs
 {
     public partial class Template10StartArgs
     {

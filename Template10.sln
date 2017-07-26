@@ -55,7 +55,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.WebApiS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.CoreOld", "Template10\Template10.Application\Template10.CoreOld.csproj", "{AC3E4F10-6615-4E16-BB0F-104760C92B95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Navigation", "Template10\Template10.NavigationService\Template10.Navigation.csproj", "{CD31D870-42F3-4379-B67A-2070C4B0A444}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Core.Navigation", "Template10\Template10.NavigationService\Template10.Core.Navigation.csproj", "{CD31D870-42F3-4379-B67A-2070C4B0A444}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Controls.ImageEx.Control", "Controls\Template10.Controls.ImageEx\Control\Template10.Controls.ImageEx.Control.csproj", "{6DB25E07-B9EE-4E75-8923-CD802CB9AFF6}"
 EndProject
@@ -65,7 +65,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Controls.Resizer
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Controls.RingSegment.Control", "Controls\Template10.Controls.RingSegment\Control\Template10.Controls.RingSegment.Control.csproj", "{84415006-A82C-40DC-A8B4-176AFC0CF517}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Windowing", "Template10\Template10.WindowService\Template10.Windowing.csproj", "{9CAD4451-5ADF-48D3-B690-8B341A95A228}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Core.Windowing", "Template10\Template10.WindowService\Template10.Core.Windowing.csproj", "{9CAD4451-5ADF-48D3-B690-8B341A95A228}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template.Blank", "VisualStudio\Template.Blank\Template.Blank.csproj", "{8560342F-4F61-49AB-9679-1941DB551025}"
 EndProject
@@ -79,7 +79,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Controls", "Controls", "{86
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{198DC569-4687-486C-90F7-C42841B6A82F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Shared", "Template10\Template10.Shared\Template10.Shared.csproj", "{1F9A6976-D8F9-459B-8AEE-770B53904FF3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Core.Shared", "Template10\Template10.Shared\Template10.Core.Shared.csproj", "{1F9A6976-D8F9-459B-8AEE-770B53904FF3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template.Minimal", "VisualStudio\Template.Minimal\Template.Minimal.csproj", "{2945EF59-92B1-4E86-9F1A-AB6352152A5A}"
 EndProject

@@ -26,7 +26,7 @@ namespace Template10.Strategies
 
         public async Task<bool> NavigatingToAsync((object ViewModel, NavigationMode NavigationMode, bool Resuming) operation, INavigationInfo from, INavigationInfo to, INavigationService nav)
         {
-            DebugWrite();
+            DebugWrite($"{operation.ViewModel}");
 
             if (operation.ViewModel is T10v2.INavigatingToAwareAsync vm && vm != null)
             {
@@ -41,7 +41,7 @@ namespace Template10.Strategies
 
         public async Task NavigatedToAsync((object ViewModel, NavigationMode NavigationMode, bool Resuming) operation, INavigationInfo from, INavigationInfo to, INavigationService nav)
         {
-            DebugWrite();
+            DebugWrite($"{operation.ViewModel}");
 
             if (operation.ViewModel is T10v2.INavigatedToAwareAsync vm && vm != null)
             {
@@ -53,7 +53,7 @@ namespace Template10.Strategies
 
         public async Task<bool> NavigatingFromAsync((object ViewModel, NavigationMode NavigationMode, bool Suspending) operation, INavigationInfo from, INavigationInfo to, INavigationService nav)
         {
-            DebugWrite();
+            DebugWrite($"{operation.ViewModel}");
 
             if (!operation.Suspending && operation.ViewModel is T10v2.IConfirmNavigationAsync confirm && confirm != null)
             {
@@ -70,7 +70,7 @@ namespace Template10.Strategies
 
         public async Task NavigatedFromAsync((object ViewModel, NavigationMode NavigationMode, bool Suspending) operation, INavigationInfo from, INavigationInfo to, INavigationService nav)
         {
-            DebugWrite();
+            DebugWrite($"{operation.ViewModel}");
 
             if (operation.ViewModel is T10v2.INavigatedFromAwareAsync vm && vm != null)
             {

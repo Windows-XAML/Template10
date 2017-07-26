@@ -13,7 +13,7 @@ using Template10.StartArgs;
 using Template10.Strategies;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
-using static Template10.Template10StartArgs;
+using static Template10.StartArgs.Template10StartArgs;
 
 namespace Template10
 {
@@ -25,13 +25,12 @@ namespace Template10
         public BootStrapper()
         {
             Current = this;
-            _strategy.OnStartDelegate = OnStartAsync;
+            _strategy.OnStartAsyncDelegate = OnStartAsync;
             base.Resuming += _strategy.HandleResuming;
             base.Suspending += _strategy.HandleSuspending;
-            base.EnteredBackground += (s, e) => { DebugWrite(); MessengerService.Send(new Messages.EnteredBackgroundMessage { EventArgs = e }); };
-            base.LeavingBackground += (s, e) => { DebugWrite(); MessengerService.Send(new Messages.LeavingBackgroundMessage { EventArgs = e }); };
-            base.UnhandledException += (s, e) => { DebugWrite(); MessengerService.Send(new Messages.UnhandledExceptionMessage { EventArgs = e }); };
-            Services.BackButtonService.BackButtonService.Instance.BackRequested += (s, e) => { DebugWrite(); MessengerService.Send(new Messages.BackRequestedMessage { }); };
+            base.EnteredBackground += _strategy.HandleEnteredBackground;
+            base.LeavingBackground += _strategy.HandleLeavingBackground;
+            base.UnhandledException += _strategy.HandleUnhandledException;
         }
 
         // new properties

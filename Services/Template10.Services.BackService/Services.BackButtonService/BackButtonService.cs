@@ -8,7 +8,8 @@ namespace Template10.Services.BackButtonService
 {
     public class BackButtonService
     {
-        public static BackButtonService Instance { get; } = new BackButtonService();
+        static BackButtonService _instance = new BackButtonService();
+        public static BackButtonService GetInstance() => _instance;
         private BackButtonService()
         {
             EnsureListener();

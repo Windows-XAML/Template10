@@ -1,29 +1,31 @@
 ﻿using System;
 using Windows.ApplicationModel.Activation;
-using static Template10.Template10StartArgs;
 
 namespace Template10.StartArgs
 {
     public partial class Template10StartArgs : ITemplate10StartArgs
     {
+        public static ITemplate10StartArgs Create(object eventArgs, StartKinds kind)
+          => new Template10StartArgs(eventArgs, kind);
+
         internal static int Starts { get; private set; } = 0;
 
-        internal Template10StartArgs(object eventArgs, Template10.Template10StartArgs.StartKinds kind)
+        private Template10StartArgs(object eventArgs, StartKinds kind)
         {
             Starts++;
             StartKind = kind;
             EventArgs = eventArgs;
 
-            if (ThisIsFirstStart && StartKind == Template10.Template10StartArgs.StartKinds.Activate)
+            if (ThisIsFirstStart && StartKind == StartKinds.Activate)
             {
-                StartKind = Template10.Template10StartArgs.StartKinds.Launch;
+                StartKind = StartKinds.Launch;
             }
-            else if (!ThisIsFirstStart && StartKind == Template10.Template10StartArgs.StartKinds.Launch)
+            else if (!ThisIsFirstStart && StartKind == StartKinds.Launch)
             {
-                StartKind = Template10.Template10StartArgs.StartKinds.Activate;
+                StartKind = StartKinds.Activate;
             }
 
-            if (StartKind == Template10.Template10StartArgs.StartKinds.Activate)
+            if (StartKind == StartKinds.Activate)
             {
                 PreviousExecutionState = ApplicationExecutionState.Running;
             }
@@ -42,7 +44,7 @@ namespace Template10.StartArgs
         }
 
         public object EventArgs { get; }
-        public Template10.Template10StartArgs.StartKinds StartKind { get; }
+        public StartKinds StartKind { get; }
         public bool ThisIsFirstStart => Starts.Equals(1);
         public ApplicationExecutionState PreviousExecutionState { get; }
 
@@ -56,7 +58,7 @@ namespace Template10.StartArgs
         public LaunchActivatedEventArgs LaunchActivatedEventArgs => EventArgs as LaunchActivatedEventArgs;
         public BackgroundActivatedEventArgs BackgroundActivatedEventArgs => EventArgs as BackgroundActivatedEventArgs;
 
-        public StartCauses StartCause
+        public Template10StartArgs.StartCauses StartCause
         {
             get
             {
@@ -64,27 +66,27 @@ namespace Template10.StartArgs
                 {
                     case IBackgroundActivatedEventArgs e:
                         {
-                            return StartCauses.BackgroundTrigger;
+                            return Template10StartArgs.StartCauses.BackgroundTrigger;
                         }
                     case IToastNotificationActivatedEventArgs e:
                         {
-                            return StartCauses.Toast;
+                            return Template10StartArgs.StartCauses.Toast;
                         }
                     // TODO for RS3: ICommandLine
                     case ILaunchActivatedEventArgs e when e != null:
                         switch (e.TileId)
                         {
                             case "App" when string.IsNullOrEmpty(e?.Arguments):
-                                return StartCauses.Primary;
+                                return Template10StartArgs.StartCauses.Primary;
                             case "App" when !string.IsNullOrEmpty(e?.Arguments):
-                                return StartCauses.JumpListItem;
+                                return Template10StartArgs.StartCauses.JumpListItem;
                             case string id when !string.IsNullOrEmpty(id):
-                                return StartCauses.SecondaryTile;
+                                return Template10StartArgs.StartCauses.SecondaryTile;
                             default:
-                                return StartCauses.Other;
+                                return Template10StartArgs.StartCauses.Other;
                         }
                     default:
-                        return StartCauses.Other;
+                        return Template10StartArgs.StartCauses.Other;
                 }
             }
         }

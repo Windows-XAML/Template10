@@ -138,9 +138,9 @@
       <Project>{af4f2a41-d0e8-4cb2-950f-ed523c29b19c}</Project>
       <Name>Template10.XAML</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Template10\Template10.NavigationService\Template10.Navigation.csproj">
+    <ProjectReference Include="..\..\Template10\Template10.NavigationService\Template10.Core.Navigation.csproj">
       <Project>{cd31d870-42f3-4379-b67a-2070c4b0a444}</Project>
-      <Name>Template10.Navigation</Name>
+      <Name>Template10.Core.Navigation</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Services\Template10.Services.KeyboardService\Service\Template10.Services.KeyboardService.csproj">
       <Project>{b540d0b5-3850-416f-aec7-7737870e9ca2}</Project>

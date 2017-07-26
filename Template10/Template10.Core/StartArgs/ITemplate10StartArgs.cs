@@ -5,8 +5,8 @@ namespace Template10.StartArgs
     public interface ITemplate10StartArgs
     {
         bool ThisIsFirstStart { get; }
-        Template10.Template10StartArgs.StartKinds StartKind { get; }
-        Template10.Template10StartArgs.StartCauses StartCause { get; }
+        Template10StartArgs.StartKinds StartKind { get; }
+        Template10StartArgs.StartCauses StartCause { get; }
         ApplicationExecutionState PreviousExecutionState { get; }
 
         object EventArgs { get; }

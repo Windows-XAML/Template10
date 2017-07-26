@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Template10.Common;
+using Template10.StartArgs;
 
 namespace Template10.Strategies
 {
@@ -11,7 +12,8 @@ namespace Template10.Strategies
             _manager = new ExtendedSessionManager();
         }
 
-        public abstract Task StartupAsync(Template10StartArgs e);
+        public abstract Task StartupAsync(ITemplate10StartArgs e);
+
         public abstract Task SuspendingAsync();
 
         public virtual void Dispose()

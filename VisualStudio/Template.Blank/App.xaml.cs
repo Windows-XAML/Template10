@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Template10.Common;
+using Template10.StartArgs;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 
 namespace Sample
 {
-    sealed partial class App : Template10.Common.BootStrapper
+    sealed partial class App : Template10.BootStrapper
     {
         public App() => InitializeComponent();
 
-        protected override void OnLaunched(LaunchActivatedEventArgs args)
+        public override async Task OnStartAsync(ITemplate10StartArgs e)
         {
-            base.OnLaunched(args);
-            Window.Current.Activate();
+            await NavigationService.NavigateAsync(typeof(Views.MainPage));
         }
 
         //public async override Task OnStartAsync(StartupInfo e)

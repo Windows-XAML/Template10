@@ -5,7 +5,7 @@
         private static IContainerAdapter _defaultAdapter;
         public static IContainerAdapter DefaultAdapter
         {
-            get { return _defaultAdapter ?? (_defaultAdapter = new UnityContainerAdapter()); }
+            get { return _defaultAdapter ?? (_defaultAdapter = UnityContainerAdapter.Create()); }
             set { _defaultAdapter = value; }
         }
     }

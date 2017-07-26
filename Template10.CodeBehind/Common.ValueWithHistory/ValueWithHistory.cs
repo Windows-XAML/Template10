@@ -17,10 +17,10 @@ namespace Template10.Portable.Common
             get => _value;
             set
             {
-                var old = value;
+                var old = _value;
                 _value = value;
-                History.Add(DateTime.UtcNow, value);
                 _callback?.Invoke(DateTime.UtcNow, old, value);
+                History.Add(DateTime.UtcNow, value);
             }
         }
 

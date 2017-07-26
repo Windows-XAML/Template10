@@ -110,6 +110,9 @@
     <Compile Include="BootStrapper\BootStrapper.cs" />
     <Compile Include="BootStrapper\BootstrapperStates.cs" />
     <Compile Include="Container\ContainerService.cs" />
+    <Compile Include="Messages\ResumedMessage.cs" />
+    <Compile Include="Messages\ResumingMessage.cs" />
+    <Compile Include="Messages\SuspendingMessage.cs" />
     <Compile Include="Strategies\BootStrapperStrategy\DefaultBootStrapperStrategy.cs" />
     <Compile Include="Dispatcher\ITemplate10Dispatcher.cs" />
     <Compile Include="Dispatcher\Template10Dispatcher.cs" />
@@ -127,7 +130,6 @@
     <Compile Include="StartArgs\StartKinds.enum.cs" />
     <Compile Include="StartArgs\Template10StartArgs.cs" />
     <Compile Include="Messages\UnhandledExceptionMessage.cs" />
-    <Compile Include="StartArgs\Template10StartArgsFactory.cs" />
     <Compile Include="Strategies\ExtendedSessionStrategy\DefaultExtendedSessionStrategy.cs" />
     <Compile Include="Strategies\ExtendedSessionStrategy\ExtendedSessionKinds.enum.cs" />
     <Compile Include="Strategies\ExtendedSessionStrategy\ExtendedSessionManager.cs" />
@@ -138,17 +140,18 @@
     <Compile Include="Strategies\LifecycleStrategy\DefaultLifecycleStrategy.cs" />
     <Compile Include="Strategies\LifecycleStrategy\ILifecycleStrategy.cs" />
     <Compile Include="Strategies\LifecycleStrategy\Settings.cs" />
-    <Compile Include="Strategies\LifecycleStrategy\SuspendingMessage.cs" />
     <Compile Include="Strategies\PersistenceStrategy\DefaultPersistenceStrategy.cs" />
     <Compile Include="Strategies\PersistenceStrategy\DefaultPersistenceStrategyFactory.cs" />
+    <Compile Include="Strategies\PersistenceStrategy\Settings.cs" />
     <Compile Include="Strategies\TitleBarStrategy\DefaultTitleBarStrategy.cs" />
     <Compile Include="Strategies\TitleBarStrategy\ITitleBarStrategy.cs" />
-    <Compile Include="Template10ActivationArgs\StartCauses.enum.cs" />
-    <Compile Include="Template10ActivationArgs\StartKind.enum.cs" />
-    <Compile Include="Template10ActivationArgs\Template10ActivationArgs.cs" />
     <EmbeddedResource Include="Properties\Template10.Core.rd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Controls\Template10.Controls.CustomTitleBar\Control\Template10.Controls.CustomTitleBar.csproj">
+      <Project>{5cc9c9d2-2103-4e03-b425-7fd58a7a2a2e}</Project>
+      <Name>Template10.Controls.CustomTitleBar</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Services\Template10.Services.BackService\Template10.Services.BackService.csproj">
       <Project>{8564f764-99d9-4473-b5e4-ac62cda73977}</Project>
       <Name>Template10.Services.BackService</Name>
@@ -169,17 +172,21 @@
       <Project>{B3A4E50E-9DCA-457E-BED5-B71D97B957F3}</Project>
       <Name>Template10.CodeBehind</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Template10.NavigationService\Template10.Navigation.csproj">
+    <ProjectReference Include="..\Template10.NavigationService\Template10.Core.Navigation.csproj">
       <Project>{cd31d870-42f3-4379-b67a-2070c4b0a444}</Project>
-      <Name>Template10.Navigation</Name>
+      <Name>Template10.Core.Navigation</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Template10.Shared\Template10.Shared.csproj">
+    <ProjectReference Include="..\Template10.Portable\Template10.Portable.csproj">
+      <Project>{2B6903DF-396A-4D97-BF29-45BC6DD72DBE}</Project>
+      <Name>Template10.Portable</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Template10.Shared\Template10.Core.Shared.csproj">
       <Project>{1F9A6976-D8F9-459B-8AEE-770B53904FF3}</Project>
-      <Name>Template10.Shared</Name>
+      <Name>Template10.Core.Shared</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Template10.WindowService\Template10.Windowing.csproj">
+    <ProjectReference Include="..\Template10.WindowService\Template10.Core.Windowing.csproj">
       <Project>{9cad4451-5adf-48d3-b690-8b341a95a228}</Project>
-      <Name>Template10.Windowing</Name>
+      <Name>Template10.Core.Windowing</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
