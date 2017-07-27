@@ -1,11 +1,11 @@
 ﻿using System;
 using Microsoft.Xaml.Interactivity;
-using Template10.Services.NavigationService;
+using Template10.Navigation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media.Animation;
-using Template10.Utils;
+using Template10.Extensions;
 
 namespace Template10.Behaviors
 {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace Template10.Utils
+namespace Template10.Extensions
 {
     public static class IEnumerableUtils
     {

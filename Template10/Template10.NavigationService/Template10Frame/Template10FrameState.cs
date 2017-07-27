@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Template10.Portable;
 using Template10.Portable.Common;
 
-namespace Template10.Services.NavigationService
+namespace Template10.Navigation
 {
     public class Template10FrameState
     {

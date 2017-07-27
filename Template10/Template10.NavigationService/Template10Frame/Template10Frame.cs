@@ -6,20 +6,21 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Template10.Common.PersistedDictionary;
 using Template10.Portable;
+using Template10.Services.LoggingService;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
-namespace Template10.Services.NavigationService
+namespace Template10.Navigation
 {
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Navigation-Service
     public partial class Template10Frame : ITemplate10FrameInternal, ITemplate10Frame
     {
         #region Debug
 
-        static void DebugWrite(string text = null, Services.LoggingService.Severities severity = LoggingService.Severities.Template10, [CallerMemberName]string caller = null) =>
-            LoggingService.LoggingService.WriteLine(text, severity, caller: $"{nameof(Template10Frame)}.{caller}");
+        static void DebugWrite(string text = null, Severities severity = Severities.Template10, [CallerMemberName]string caller = null) =>
+            LoggingService.WriteLine(text, severity, caller: $"{nameof(Template10Frame)}.{caller}");
 
         #endregion
 

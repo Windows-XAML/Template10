@@ -2,7 +2,7 @@
 using System.Threading;
 using Logging = Template10.Services.LoggingService.LoggingService;
 
-namespace Template10.Services.ViewService
+namespace Template10.Core
 {
     class SecondaryViewSynchronizationContextDecorator : SynchronizationContext
     {

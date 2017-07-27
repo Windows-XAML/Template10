@@ -3,7 +3,7 @@ using System.Linq;
 using Template10.Controls;
 using Windows.UI.Xaml;
 
-namespace Template10.Utils
+namespace Template10.Extensions
 {
     public static class HamburgerExtensions
     {

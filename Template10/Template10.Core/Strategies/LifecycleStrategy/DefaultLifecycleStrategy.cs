@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Template10.Common;
 using Template10.Services.Messenger;
-using Template10.Services.NavigationService;
+using Template10.Navigation;
 using Template10.StartArgs;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -26,7 +26,7 @@ namespace Template10.Strategies
 
             // TODO: what to do with multiple views?
 
-            foreach (var nav in NavigationServiceHelper.Instances.Select(x => x as INavigationServiceInternal))
+            foreach (var nav in NavigationService.Instances.Select(x => x as INavigationServiceInternal))
             {
                 await nav.SaveAsync(true);
             }
@@ -41,10 +41,10 @@ namespace Template10.Strategies
                 return true;
             }
 
-            if (PreviouslySuspended)
-            {
-                return true;
-            }
+            // if (PreviouslySuspended)
+            // {
+            //     return true;
+            // }
 
             if (e?.LaunchActivatedEventArgs?.PrelaunchActivated ?? false)
             {
@@ -85,7 +85,7 @@ namespace Template10.Strategies
 
             if (e?.StartKind == Template10StartArgs.StartKinds.Launch)
             {
-                foreach (var nav in NavigationServiceHelper.Instances.Select(x => x as INavigationServiceInternal))
+                foreach (var nav in NavigationService.Instances.Select(x => x as INavigationServiceInternal))
                 {
                     if (await nav.LoadAsync(true))
                     {

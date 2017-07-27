@@ -2,10 +2,10 @@
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Template10.Common;
-using Template10.Services.NavigationService;
+using Template10.Navigation;
 using Template10.Portable.Navigation;
-using Template10.Services.WindowWrapper;
-using Template10.Utils;
+using Template10.Extensions;
+using Template10.Core;
 
 namespace Template10.Mvvm
 {
@@ -30,10 +30,10 @@ namespace Template10.Mvvm
         }
 
         [JsonIgnore]
-        public virtual IWindowWrapper Window => NavigationService.GetWindowWrapper();
+        public virtual ITemplate10Window Window => NavigationService.GetWindow();
 
         [JsonIgnore]
-        public virtual IDispatcherWrapper Dispatcher => Window.Dispatcher;
+        public virtual ITemplate10Dispatcher Dispatcher => Window.Dispatcher;
 
         [JsonIgnore]
         public virtual INavigationService NavigationService { get; set; }

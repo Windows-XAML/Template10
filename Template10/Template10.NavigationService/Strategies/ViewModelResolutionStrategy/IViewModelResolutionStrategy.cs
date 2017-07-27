@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 
-namespace Template10.Services.NavigationService
+namespace Template10.Strategies
 {
     public interface IViewModelResolutionStrategy
     {

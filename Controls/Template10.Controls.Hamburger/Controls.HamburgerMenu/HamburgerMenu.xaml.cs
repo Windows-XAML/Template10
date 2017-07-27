@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Template10.Common;
 using Template10.Services.KeyboardService;
-using Template10.Services.NavigationService;
-using Template10.Utils;
+using Template10.Navigation;
+using Template10.Extensions;
 using Windows.Devices.Input;
 using Windows.Foundation;
 using Windows.System;
@@ -395,7 +395,7 @@ namespace Template10.Controls
                     {
                         try
                         {
-                            pageParam = Services.NavigationService.Settings
+                            pageParam = Navigation.Settings
                                 .SerializationStrategy.Deserialize(pageParam.ToString());
                         }
                         catch

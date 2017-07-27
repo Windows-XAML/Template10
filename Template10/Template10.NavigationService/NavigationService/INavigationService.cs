@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Template10.Common;
-using Template10.Services.ViewService;
-using Template10.Services.WindowWrapper;
+using Template10.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 
-namespace Template10.Services.NavigationService
+namespace Template10.Navigation
 {
     public interface INavigationServiceInternal : INavigationService
     {
@@ -51,7 +50,7 @@ namespace Template10.Services.NavigationService
         event EventHandler<HandledEventArgs> ForwardRequested;
 
         ITemplate10Frame FrameFacade { get; }
-        IWindowWrapper Window { get; }
+        ITemplate10Window Window { get; }
         bool CanGoBack { get; }
         bool CanGoForward { get; }
         object CurrentPageParam { get; }

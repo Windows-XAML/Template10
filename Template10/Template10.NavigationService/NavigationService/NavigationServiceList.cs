@@ -2,7 +2,7 @@
 using System.Linq;
 using Windows.UI.Xaml.Controls;
 
-namespace Template10.Services.NavigationService
+namespace Template10.Navigation
 {
     public class NavigationServiceList : List<INavigationService>
     {

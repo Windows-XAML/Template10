@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Template10.Services.WindowWrapper;
+using Template10.Core;
 using Windows.Foundation.Metadata;
 using Windows.Graphics.Display;
 using Windows.UI.ViewManagement;
 
-namespace Template10.Utils
+namespace Template10.Extensions
 {
     public class DeviceUtils
     {
@@ -13,7 +13,7 @@ namespace Template10.Utils
 
         public MonitorUtils MonitorUtils { get; private set; }
 
-        public IWindowWrapper WindowWrapper { get; private set; }
+        public ITemplate10Window WindowWrapper { get; private set; }
 
         [Flags]
         public enum DeviceDispositions
@@ -42,7 +42,7 @@ namespace Template10.Utils
             Mobile = 1 << 5
         }
 
-        private DeviceUtils(IWindowWrapper windowWrapper)
+        private DeviceUtils(ITemplate10Window windowWrapper)
         {
             MonitorUtils = MonitorUtils.Current(windowWrapper);
             WindowWrapper = windowWrapper ?? throw new ArgumentNullException(nameof(windowWrapper));
@@ -64,8 +64,8 @@ namespace Template10.Utils
 
         #region singleton
 
-        static Dictionary<IWindowWrapper, DeviceUtils> Cache = new Dictionary<IWindowWrapper, DeviceUtils>();
-        public static DeviceUtils Current(IWindowWrapper windowWrapper)
+        static Dictionary<ITemplate10Window, DeviceUtils> Cache = new Dictionary<ITemplate10Window, DeviceUtils>();
+        public static DeviceUtils Current(ITemplate10Window windowWrapper)
         {
             windowWrapper = windowWrapper ?? throw new ArgumentNullException(nameof(windowWrapper));
             if (!Cache.ContainsKey(windowWrapper))

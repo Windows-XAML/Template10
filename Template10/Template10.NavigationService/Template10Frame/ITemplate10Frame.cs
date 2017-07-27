@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Windows.UI.Xaml.Navigation;
 
-namespace Template10.Services.NavigationService
+namespace Template10.Navigation
 {
     public interface ITemplate10Frame
     {

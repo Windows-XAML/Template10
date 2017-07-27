@@ -1,8 +1,9 @@
 ﻿using System;
 using Microsoft.Xaml.Interactivity;
-using Template10.Utils;
+using Template10.Extensions;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Markup;
+using Template10.Core;
 
 namespace Template10.Behaviors
 {
@@ -16,7 +17,7 @@ namespace Template10.Behaviors
         public void Attach(DependencyObject associatedObject)
         {
             AssociatedObject = associatedObject;
-            _deviceUtils = DeviceUtils.Current(Services.WindowWrapper.WindowWrapperManager.Current());
+            _deviceUtils = DeviceUtils.Current(Template10Window.Current());
             if (_deviceUtils != null) _deviceUtils.Changed += DeviceDispositionBehavior_Changed;
             Update();
             _ready = true;
@@ -40,7 +41,7 @@ namespace Template10.Behaviors
 
         private void Update()
         {
-            var w = Services.WindowWrapper.WindowWrapperManager.Current();
+            var w = Template10Window.Current();
             var d = DeviceUtils.Current(w);
             switch (d.DeviceDisposition())
             {

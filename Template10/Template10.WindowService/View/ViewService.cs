@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Template10.Common;
 using Windows.ApplicationModel.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using static Template10.Services.LoggingService.LoggingService;
 
-namespace Template10.Services.ViewService
+namespace Template10.Core
 {
     public sealed class ViewService : IViewService
     {
@@ -34,7 +33,7 @@ namespace Template10.Services.ViewService
             title = title ?? currentView.Title;
 
             var newView = CoreApplication.CreateNewView();
-            var dispatcher = new DispatcherWrapper(newView.Dispatcher);
+            var dispatcher = Template10Dispatcher.Create(newView.Dispatcher);
             var newControl = await dispatcher.Dispatch(async () =>
             {
                 var control = ViewLifetimeControl.GetForCurrentView();

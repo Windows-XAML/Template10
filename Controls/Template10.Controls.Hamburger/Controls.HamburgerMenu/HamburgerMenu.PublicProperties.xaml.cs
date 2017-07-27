@@ -2,8 +2,8 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using Template10.Common;
-using Template10.Services.NavigationService;
-using Template10.Utils;
+using Template10.Navigation;
+using Template10.Extensions;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;

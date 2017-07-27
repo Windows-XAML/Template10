@@ -1,6 +1,6 @@
 using System;
 
-namespace Template10.Services.ViewService
+namespace Template10.Core
 {
     public class ViewLifeTimeException : Exception
     {

@@ -128,7 +128,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Behaviors\DeviceDispositionBehavior.cs" />
     <Compile Include="Bootstrapper\IBootStrapper.cs" />
     <Compile Include="Strategies\LifecycleStrategy\DefaultLifecycleStrategy.cs" />
     <Compile Include="Strategies\LifecycleStrategy\ILifecycleStrategy.cs" />
@@ -153,7 +152,6 @@
     <Compile Include="Bootstrapper\Settings.cs" />
     <Compile Include="Template10ActivationArgs\StartKind.enum.cs" />
     <Compile Include="Bootstrapper\BootStrapper.cs" />
-    <Compile Include="Mvvm\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Properties\Template10Library.rd.xml" />
   </ItemGroup>

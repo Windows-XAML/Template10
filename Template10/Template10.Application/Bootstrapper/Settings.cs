@@ -32,7 +32,7 @@ namespace Template10.Common
         public static Func<Template10StartArgs, Task<UIElement>> RootFactoryAsync { get; set; } = new Func<Template10StartArgs, Task<UIElement>>(async (e) =>
         {
             // return new ModalDialog { Content = await new Frame().RegisterAsync() };
-            return await new Frame().RegisterAsync();
+            return await new Frame().CreateNavigationService();
         });
 
         /// <summary>

@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Template10.Common;
-using Template10.Dispatcher;
-using Template10.Portable.Common;
 using Template10.Services.Container;
 using Template10.Services.LoggingService;
 using Template10.Services.Messenger;
-using Template10.Services.NavigationService;
+using Template10.Navigation;
 using Template10.StartArgs;
 using Template10.Strategies;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using static Template10.StartArgs.Template10StartArgs;
+using Template10.Core;
 
 namespace Template10
 {
@@ -33,15 +32,18 @@ namespace Template10
             base.UnhandledException += _strategy.HandleUnhandledException;
         }
 
-        // new properties
+        // redirected properties
 
         private IBootStrapperStrategy _strategy => Settings.BootStrapperStrategy;
         public IContainerService ContainerService => Settings.ContainerService;
         public IMessengerService MessengerService => Settings.MessengerService;
-        public INavigationService NavigationService => NavigationServiceHelper.Default;
+        public INavigationService NavigationService => Navigation.NavigationService.Default;
         public ITemplate10Dispatcher Dispatcher => Settings.DefaultDispatcher;
-        public new static BootStrapper Current { get; internal set; }
         public IDictionary<string, object> SessionState => SessionStateHelper.Current;
+
+        // net-new properties 
+
+        public new static BootStrapper Current { get; internal set; }
 
         // implementation methods
 

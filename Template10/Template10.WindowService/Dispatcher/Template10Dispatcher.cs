@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Template10.Core;
 using Windows.UI.Core;
 
-namespace Template10.Common
+namespace Template10.Core
 {
 
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/DispatcherWrapper
-    public class DispatcherWrapper : IDispatcherWrapper
+    public class Template10Dispatcher : ITemplate10Dispatcher
     {
         #region Debug
 
@@ -16,7 +17,14 @@ namespace Template10.Common
 
         #endregion
 
-        internal DispatcherWrapper(CoreDispatcher dispatcher)
+        public static ITemplate10Dispatcher Current() => Template10Window.Current().Dispatcher;
+
+        public static ITemplate10Dispatcher Create(CoreDispatcher dispatcher)
+        {
+            return new Template10Dispatcher(dispatcher);
+        }
+
+        private Template10Dispatcher(CoreDispatcher dispatcher)
         {
             DebugWrite(caller: "Constructor");
             this.dispatcher = dispatcher;

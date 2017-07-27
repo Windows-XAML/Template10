@@ -1,4 +1,5 @@
 ﻿using System;
+using Template10.Controls.Popup;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -8,86 +9,17 @@ using Windows.UI.Xaml.Media;
 namespace Template10.Services.PopupService
 {
     public enum PopupSize { FullScreen, ContentBased }
-
-    public class PopupService
-    {
-
-        public Popup Create(PopupSize size, UIElement content = null)
-        {
-            var container = new ContentControl
-            {
-                HorizontalContentAlignment = HorizontalAlignment.Stretch,
-                VerticalContentAlignment = VerticalAlignment.Stretch,
-                Height = Window.Current.Bounds.Height,
-                Width = Window.Current.Bounds.Width,
-                Content = content,
-            };
-            var popup = new Popup
-            {
-                Child = container,
-                HorizontalOffset = 0,
-                VerticalOffset = 0,
-            };
-            WindowSizeChangedEventHandler handler = (s, e) =>
-            {
-                if (popup.IsOpen)
-                {
-                    if (size == PopupSize.FullScreen)
-                    {
-                        container.Height = Window.Current.Bounds.Height;
-                        container.Width = Window.Current.Bounds.Width;
-                    }
-                    else if (size == PopupSize.ContentBased)
-                    {
-                        popup.HorizontalOffset = (Window.Current.Bounds.Width - popup.ActualWidth) / 2;
-                        popup.VerticalOffset = (Window.Current.Bounds.Height - popup.ActualHeight) / 2;
-                    }
-                }
-            };
-            popup.RegisterPropertyChangedCallback(Popup.IsOpenProperty, (d, e) =>
-            {
-                if (popup.IsOpen)
-                {
-                    Window.Current.SizeChanged += handler;
-                }
-                else
-                {
-                    Window.Current.SizeChanged -= handler;
-                }
-            });
-            popup.Loaded += (s, e) => handler.Invoke(null, null);
-            return popup;
-        }
-
-        public Popup Show(Popup popup)
-        {
-            popup.IsOpen = true;
-            return popup;
-        }
-
-        public Popup Show(PopupSize size, UIElement content = null)
-        {
-            var popup = Create(size, content);
-            return Show(popup);
-        }
-
-        public void SetContent(Popup popup, UIElement content) => popup.SetContent(content);
-
-        public UIElement GetContent(Popup popup) => popup.GetContent();
-    }
 }
 namespace Template10.Controls.PopupFacade
 {
-    public enum PopupPlacement { Fill, Center }
-
-    public class PopupFacade
+    public class Template10Popup
     {
-        Popup popup;
+        Windows.UI.Xaml.Controls.Primitives.Popup popup;
         Window window;
 
-        public PopupFacade()
+        public Template10Popup()
         {
-            popup = new Popup
+            popup = new Windows.UI.Xaml.Controls.Primitives.Popup
             {
                 Child = new ContentControl
                 {

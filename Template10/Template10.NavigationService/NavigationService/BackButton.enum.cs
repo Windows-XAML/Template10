@@ -1,4 +1,4 @@
-﻿namespace Template10.Services.NavigationService
+﻿namespace Template10.Navigation
 {
     public enum BackButton
     {

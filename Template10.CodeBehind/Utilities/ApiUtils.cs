@@ -1,6 +1,6 @@
 using Windows.Foundation.Metadata;
 
-namespace Template10.Utils
+namespace Template10.Extensions
 {
     public static class ApiUtils
     {

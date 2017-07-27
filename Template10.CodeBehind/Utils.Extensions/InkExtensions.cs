@@ -5,7 +5,7 @@ using Windows.Storage;
 using Windows.UI.Input.Inking;
 using Windows.UI.Xaml.Controls;
 
-namespace Template10.Utils
+namespace Template10.Extensions
 {
     public static class InkUtils
     {

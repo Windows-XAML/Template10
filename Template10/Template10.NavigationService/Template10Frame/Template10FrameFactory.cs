@@ -1,6 +1,6 @@
 ﻿using Windows.UI.Xaml.Controls;
 
-namespace Template10.Services.NavigationService
+namespace Template10.Navigation
 {
     public static class Template10FrameFactory
     {

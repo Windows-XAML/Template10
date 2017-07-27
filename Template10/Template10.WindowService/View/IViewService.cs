@@ -2,7 +2,7 @@
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 
-namespace Template10.Services.ViewService
+namespace Template10.Core
 {
     public interface IViewService
     {

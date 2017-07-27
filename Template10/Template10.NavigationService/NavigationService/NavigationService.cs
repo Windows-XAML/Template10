@@ -9,31 +9,109 @@ using System.Threading.Tasks;
 using Template10.Common;
 using Template10.Mvvm;
 using Template10.Portable.Navigation;
+using Template10.Services.BackButtonService;
+using Template10.Services.LoggingService;
 using Template10.Services.SerializationService;
-using Template10.Services.ViewService;
-using Template10.Services.WindowWrapper;
-using Template10.Utils;
+using Template10.Extensions;
+using Template10.Core;
 using Windows.ApplicationModel.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
-namespace Template10.Services.NavigationService
+namespace Template10.Navigation
 {
     public partial class NavigationService : INavigationServiceInternal
     {
         #region Debug
 
-        internal static void DebugWrite(string text = null, LoggingService.Severities severity = Services.LoggingService.Severities.Template10, [CallerMemberName]string caller = null) =>
-            Services.LoggingService.LoggingService.WriteLine(text, severity, caller: $"NavigationService.{caller}");
+        internal static void DebugWrite(string text = null, Severities severity = Severities.Template10, [CallerMemberName]string caller = null) =>
+            LoggingService.WriteLine(text, severity, caller: $"NavigationService.{caller}");
 
         #endregion
+
+        /// <summary>
+        /// Creates a new NavigationService from the gived Frame to the
+        /// WindowWrapper collection. In addition, it optionally will setup the
+        /// shell back button to react to the nav of the Frame.
+        /// A developer should call this when creating a new/secondary frame.
+        /// </summary>
+        /// <remarks>
+        /// The shell back button should only be setup one time.
+        /// </remarks>
+        public static async Task<INavigationService> CreateAsync(BackButton backButton, Frame frame = null)
+        {
+            await CheckAllCacheExpiryAsync();
+
+            var existing = frame.GetNavigationService();
+            if (existing != null)
+            {
+                return existing;
+            }
+
+            var service = new NavigationService(frame);
+            service.BackButtonHandling = backButton;
+            if (backButton == BackButton.Attach)
+            {
+                frame.RegisterPropertyChangedCallback(Frame.BackStackDepthProperty, (s, args) => BackButtonService.GetInstance().UpdateBackButton(service.CanGoBack));
+                frame.Navigated += (s, args) => BackButtonService.GetInstance().UpdateBackButton(service.CanGoBack);
+                BackButtonService.GetInstance().BackRequested += async (s, e) => e.Handled = await service.GoBackAsync();
+            }
+
+            if (!Instances.Any())
+            {
+                Default = service;
+            }
+            Instances.Add(service);
+
+            return service;
+        }
+
+        private static object _PageKeys;
+        public static Dictionary<T, Type> PageKeys<T>() where T : struct, IConvertible
+        {
+            if (!typeof(T).GetTypeInfo().IsEnum)
+            {
+                throw new ArgumentException("T must be an enumerated type");
+            }
+            if (_PageKeys != null && _PageKeys is Dictionary<T, Type>)
+            {
+                return _PageKeys as Dictionary<T, Type>;
+            }
+            return (_PageKeys = new Dictionary<T, Type>()) as Dictionary<T, Type>;
+        }
+
+        public static INavigationService Default { get; set; }
+        public static NavigationServiceList Instances { get; } = new NavigationServiceList();
+
+
+        async static Task CheckAllCacheExpiryAsync()
+        {
+            // this is always okay to check, default or not, 
+            // expire any state (based on expiry delta from today)
+            foreach (var nav in Instances)
+            {
+                var facade = nav.FrameFacade as ITemplate10FrameInternal;
+                var state = await facade.GetFrameStateAsync();
+                var setting = await state.TryGetCacheDateKeyAsync();
+
+                // default the cache age to very fresh if not known
+                var date = setting.Success ? setting.Value : DateTime.MaxValue;
+                var cacheAge = DateTime.Now.Subtract(date);
+
+                // clear state in every nav service in every view
+                if (cacheAge >= Settings.CacheMaxDuration)
+                {
+                    await state.ClearAsync();
+                }
+            }
+        }
 
         Lazy<IViewService> _ViewService;
         private IViewService ViewService => _ViewService.Value;
 
-        public IWindowWrapper Window { get; private set; }
+        public ITemplate10Window Window { get; private set; }
 
         public ITemplate10Frame FrameFacade { get; private set; }
         ITemplate10FrameInternal FrameFacadeInternal => FrameFacade as ITemplate10FrameInternal;
@@ -46,13 +124,13 @@ namespace Template10.Services.NavigationService
 
         internal NavigationService()
         {
-            Window = WindowWrapperManager.Current();
+            Window = Template10Window.Current();
         }
 
         internal NavigationService(Frame frame) : this()
         {
             FrameFacade = Template10FrameFactory.Create(frame, this as INavigationService);
-            _ViewService = new Lazy<IViewService>(() => new ViewService.ViewService());
+            _ViewService = new Lazy<IViewService>(() => new ViewService());
         }
 
         public Task<IViewLifetimeControl> OpenAsync(Type page, object parameter = null, string title = null, ViewSizePreference size = ViewSizePreference.UseHalf)
@@ -119,7 +197,7 @@ namespace Template10.Services.NavigationService
         {
             DebugWrite($"Key: {key}, Parameter: {parameter}, NavigationTransitionInfo: {infoOverride}");
 
-            var keys = NavigationServiceHelper.PageKeys<T>();
+            var keys = PageKeys<T>();
             if (!keys.TryGetValue(key, out var page))
             {
                 throw new KeyNotFoundException(key.ToString());

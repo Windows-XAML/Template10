@@ -4,7 +4,7 @@ using Template10.Common.PersistedDictionary;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 
-namespace Template10.Services.NavigationService
+namespace Template10.Navigation
 {
     public interface ITemplate10FrameInternal : ITemplate10Frame
     {

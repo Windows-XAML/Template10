@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Template10.Portable.Common;
 using Template10.StartArgs;
-using Template10.Utils;
+using Template10.Extensions;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
@@ -62,7 +62,7 @@ namespace Template10.Strategies
         public async Task<UIElement> CreateRootAsync(ITemplate10StartArgs e)
         {
             DebugWrite();
-            return await new Frame().RegisterAsync();
+            return await new Frame().CreateNavigationService();
         }
         public async Task<UIElement> CreateSpashAsync(SplashScreen e)
         {
@@ -72,7 +72,7 @@ namespace Template10.Strategies
         public void OnWindowCreated(WindowCreatedEventArgs args)
         {
             DebugWrite();
-            Services.WindowWrapper.WindowWrapperFactory.Create(args);
+            Core.Template10Window.Create(args);
             SetupAfterFirstWindow();
         }
 
@@ -158,16 +158,23 @@ namespace Template10.Strategies
 
                 if (args.ThisIsFirstStart)
                 {
-                    if (Services.NavigationService.Settings.PersistedDictionaryFactory == null)
+                    if (Navigation.Settings.PersistedDictionaryFactory == null)
                     {
-                        Services.NavigationService.Settings.PersistedDictionaryFactory = new DefaultPersistenceStrategyFactory();
+                        Navigation.Settings.PersistedDictionaryFactory = new DefaultPersistenceStrategyFactory();
                     }
 
                     await OperationWrapperAsync(BootstrapperStates.Launching, async () =>
                     {
-                        await ShowSplashAsync(args);
-
-                        _rootElement = await CreateRootAsync(args);
+                        if (await ShowSplashAsync(args))
+                        {
+                            _rootElement = await CreateRootAsync(args);
+                        }
+                        else
+                        {
+                            var window = Window.Current;
+                            window.Content = _rootElement = await CreateRootAsync(args);
+                            window.Activate();
+                        }
 
                         if (args.LaunchActivatedEventArgs?.PrelaunchActivated ?? false)
                         {
@@ -229,7 +236,6 @@ namespace Template10.Strategies
     {
         static void DebugWrite(string text = null, Services.LoggingService.Severities severity = Services.LoggingService.Severities.Template10, [CallerMemberName]string caller = null)
             => Services.LoggingService.LoggingService.WriteLine(text, severity, caller: $"{nameof(DefaultBootStrapperStrategy)}.{caller}");
-
 
         // internal
 

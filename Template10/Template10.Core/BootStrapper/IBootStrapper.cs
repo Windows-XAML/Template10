@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Template10.Common;
-using Template10.Dispatcher;
 using Template10.Services.Container;
 using Template10.Services.Messenger;
-using Template10.Services.NavigationService;
+using Template10.Navigation;
 using Template10.StartArgs;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
+using Template10.Core;
 
 namespace Template10
 {

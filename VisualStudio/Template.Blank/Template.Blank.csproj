@@ -148,6 +148,10 @@
       <Project>{8b565035-0b8f-41b0-a2a1-23793a58aa50}</Project>
       <Name>Template10.Controls.ModalDialog</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Controls\Template10.Controls.PageHeader\Template10.Controls.PageHeader.csproj">
+      <Project>{509386d0-711e-4345-83ad-f71998efbdd7}</Project>
+      <Name>Template10.Controls.PageHeader</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Services\Template10.Services.Container\Service\Template10.Services.ContainerService.csproj">
       <Project>{b4c8a753-3376-4c55-aff1-326f2d1cfcbc}</Project>
       <Name>Template10.Services.ContainerService</Name>

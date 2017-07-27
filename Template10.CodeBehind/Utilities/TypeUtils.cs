@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 
-namespace Template10.Utils
+namespace Template10.Extensions
 {
     public static class TypeUtils
 	{

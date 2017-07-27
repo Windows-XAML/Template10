@@ -104,32 +104,37 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <None Include="Nuget\Build.cmd" />
+    <None Include="Nuget\Init.ps1" />
+    <None Include="Nuget\Template10.targets" />
+    <None Include="Nuget\Template10Library.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Behaviors\DeviceDispositionBehavior.cs" />
     <Compile Include="BootStrapper\BootStrapper.cs" />
     <Compile Include="BootStrapper\BootstrapperStates.cs" />
     <Compile Include="Container\ContainerService.cs" />
-    <Compile Include="Messages\ResumedMessage.cs" />
-    <Compile Include="Messages\ResumingMessage.cs" />
-    <Compile Include="Messages\SuspendingMessage.cs" />
-    <Compile Include="Strategies\BootStrapperStrategy\DefaultBootStrapperStrategy.cs" />
-    <Compile Include="Dispatcher\ITemplate10Dispatcher.cs" />
-    <Compile Include="Dispatcher\Template10Dispatcher.cs" />
-    <Compile Include="Dispatcher\Template10DispatcherFactory.cs" />
-    <Compile Include="BootStrapper\IBootStrapper.cs" />
     <Compile Include="Messages\BackgroundActivatedMessage.cs" />
     <Compile Include="Messages\BackRequestedMessage.cs" />
     <Compile Include="Messages\EnteredBackgroundMessage.cs" />
-    <Compile Include="Strategies\BootStrapperStrategy\IBootStrapperStrategy.cs" />
     <Compile Include="Messages\LeavingBackgroundMessage.cs" />
+    <Compile Include="Messages\ResumedMessage.cs" />
+    <Compile Include="Messages\ResumingMessage.cs" />
+    <Compile Include="Messages\SuspendingMessage.cs" />
+    <Compile Include="Messages\UnhandledExceptionMessage.cs" />
+    <Compile Include="Mvvm\ViewModelBase.cs" />
+    <Compile Include="Strategies\BootStrapperStrategy\DefaultBootStrapperStrategy.cs" />
+    <Compile Include="BootStrapper\IBootStrapper.cs" />
+    <Compile Include="Strategies\BootStrapperStrategy\IBootStrapperStrategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="StartArgs\ITemplate10StartArgs.cs" />
     <Compile Include="StartArgs\StartCauses.enum.cs" />
     <Compile Include="StartArgs\StartKinds.enum.cs" />
     <Compile Include="StartArgs\Template10StartArgs.cs" />
-    <Compile Include="Messages\UnhandledExceptionMessage.cs" />
     <Compile Include="Strategies\ExtendedSessionStrategy\DefaultExtendedSessionStrategy.cs" />
     <Compile Include="Strategies\ExtendedSessionStrategy\ExtendedSessionKinds.enum.cs" />
     <Compile Include="Strategies\ExtendedSessionStrategy\ExtendedSessionManager.cs" />

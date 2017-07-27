@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
-using Template10.Utils;
+using Template10.Extensions;
 using Windows.UI.Xaml;
 
 namespace Template10.Mvvm

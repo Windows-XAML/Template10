@@ -1,5 +1,5 @@
 ﻿using System;
-using Template10.Utils;
+using Template10.Extensions;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;

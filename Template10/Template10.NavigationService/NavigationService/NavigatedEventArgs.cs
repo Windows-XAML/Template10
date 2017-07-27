@@ -2,7 +2,7 @@
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace Template10.Services.NavigationService
+namespace Template10.Navigation
 {
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Navigation-Service
     public class NavigatedEventArgs : EventArgs

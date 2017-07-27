@@ -22,12 +22,11 @@
 
 using System;
 using System.Collections.Concurrent;
-using Template10.Services.WindowWrapper;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 
-namespace Template10.Services.ViewService
+namespace Template10.Core
 {
     // A ViewLifetimeControl is instantiated for every secondary view. ViewLifetimeControl's reference count
     // keeps track of when the secondary view thinks it's in use and when the main view is interacting with the secondary view (about to show
@@ -73,7 +72,7 @@ namespace Template10.Services.ViewService
         #endregion
 
         #region WindowWrapper
-        public IWindowWrapper WindowWrapper { get; }
+        public ITemplate10Window WindowWrapper { get; }
         #endregion
 
         #region NavigationService
@@ -83,7 +82,7 @@ namespace Template10.Services.ViewService
         private ViewLifetimeControl(CoreWindow newWindow)
         {
             CoreDispatcher = newWindow.Dispatcher;
-            WindowWrapper = Services.WindowWrapper.WindowWrapperManager.Current();
+            WindowWrapper = Template10Window.Current();
             Id = ApplicationView.GetApplicationViewIdForWindow(newWindow);
 
             // This class will automatically tell the view when its time to close
@@ -172,7 +171,7 @@ namespace Template10.Services.ViewService
                     refCountCopy = ++refCount;                    
                 }
             }
-            LoggingService.LoggingService.WriteLine("Start:" + refCountCopy);
+            Services.LoggingService.LoggingService.WriteLine("Start:" + refCountCopy);
             if (releasedCopy)
             {
                 throw new ViewLifeTimeException("This view is being disposed");
@@ -211,7 +210,7 @@ namespace Template10.Services.ViewService
                     }
                 }
             }
-            LoggingService.LoggingService.WriteLine("Stop:" + refCountCopy);
+            Services.LoggingService.LoggingService.WriteLine("Stop:" + refCountCopy);
             if (releasedCopy)
             {
                 throw new ViewLifeTimeException("This view is being disposed");

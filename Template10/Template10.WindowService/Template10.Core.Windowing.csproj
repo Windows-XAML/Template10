@@ -107,14 +107,9 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dispatcher\DispatcherWrapper.cs" />
-    <Compile Include="Dispatcher\DispatcherWrapperFactory.cs" />
-    <Compile Include="Dispatcher\DispatcherWrapperHelper.cs" />
-    <Compile Include="Dispatcher\IDispatcherWrapper.cs" />
-    <Compile Include="Window\IWindowWrapper.cs" />
-    <Compile Include="Window\WindowWrapper.cs" />
-    <Compile Include="Popup\PopupExtensions.cs" />
-    <Compile Include="Popup\PopupService.cs" />
+    <Compile Include="Dispatcher\ITemplate10Dispatcher.cs" />
+    <Compile Include="Dispatcher\Template10Dispatcher.cs" />
+    <Compile Include="Extensions\WindowExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View\IViewLifetimeControl.cs" />
     <Compile Include="View\IViewService.cs" />
@@ -122,8 +117,8 @@
     <Compile Include="View\ViewLifetimeControl.cs" />
     <Compile Include="View\ViewLifeTimeException.cs" />
     <Compile Include="View\ViewService.cs" />
-    <Compile Include="Window\WindowWrapperFactory.cs" />
-    <Compile Include="Window\WindowWrapperHelper.cs" />
+    <Compile Include="Windowing\ITemplate10Wrapper.cs" />
+    <Compile Include="Windowing\Template10Window.cs" />
     <EmbeddedResource Include="Properties\Template10.Services.WindowService.rd.xml" />
   </ItemGroup>
   <ItemGroup>

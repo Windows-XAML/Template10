@@ -2,12 +2,13 @@
 using System.Runtime.CompilerServices;
 using Microsoft.Xaml.Interactivity;
 using Template10.Common;
-using Template10.Services.NavigationService;
-using Template10.Services.WindowWrapper;
-using Template10.Utils;
+using Template10.Navigation;
+using Template10.Extensions;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Template10.Core;
+using Template10.Navigation;
 
 namespace Template10.Behaviors
 {
@@ -15,7 +16,7 @@ namespace Template10.Behaviors
     [Microsoft.Xaml.Interactivity.TypeConstraint(typeof(Button))]
     public class NavButtonBehavior : DependencyObject, IBehavior
     {
-        private readonly IDispatcherWrapper _dispatcher;
+        private readonly ITemplate10Dispatcher _dispatcher;
         private readonly EventThrottleHelper _throttleHelper;
         private DeviceUtils _deviceUtils;
 
@@ -27,7 +28,7 @@ namespace Template10.Behaviors
         {
             if (!Windows.ApplicationModel.DesignMode.DesignModeEnabled)
             {
-                _dispatcher = DispatcherWrapperHelper.Current();
+                _dispatcher = Template10Dispatcher.Current();
                 _throttleHelper = new EventThrottleHelper { Throttle = 1000 };
             }
         }
@@ -62,7 +63,7 @@ namespace Template10.Behaviors
                 // if (Locator.BootStrapper.Instance != null) Locator.BootStrapper.Instance.ShellBackButtonUpdated += Current_ShellBackButtonUpdated;
 
 
-                _deviceUtils = DeviceUtils.Current(WindowWrapperManager.Current());
+                _deviceUtils = DeviceUtils.Current(Template10Window.Current());
                 if (_deviceUtils != null) _deviceUtils.Changed += DispositionChanged;
             }
         }
@@ -96,7 +97,7 @@ namespace Template10.Behaviors
 
         private void Element_Click(object sender, RoutedEventArgs e)
         {
-            var nav = NavigationServiceHelper.Default;
+            var nav = NavigationService.Default;
 
             if (nav == null)
             {

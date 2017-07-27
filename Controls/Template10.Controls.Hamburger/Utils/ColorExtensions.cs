@@ -1,7 +1,7 @@
 ﻿using Windows.UI;
 using Windows.UI.Xaml.Media;
 
-namespace Template10.Utils
+namespace Template10.Extensions
 {
     public static class ColorUtils
     {
