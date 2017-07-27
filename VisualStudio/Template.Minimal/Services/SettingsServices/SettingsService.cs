@@ -1,18 +1,20 @@
 ﻿using System;
-using Template10.Services.NavigationService;
+using Template10.Core;
+using Template10.Extensions;
+using Template10.Navigation;
+using Template10.Services.BackButtonService;
 using Template10.Services.SettingsService.Services.SettingsService;
-using Template10.Services.WindowWrapper;
-using Template10.Utils;
 using Windows.UI.Xaml;
 
 namespace Sample.Services.SettingsServices
 {
     public class SettingsService : SettingsServiceBase
     {
-        public static SettingsService Instance;
+        private static SettingsService _instance;
+        public SettingsService GetInstance() => _instance;
         static SettingsService()
         {
-            Instance = new SettingsService();
+            _instance = new SettingsService();
         }
         private SettingsService()
         {
@@ -45,19 +47,19 @@ namespace Sample.Services.SettingsServices
 
             // implement it
 
-            WindowWrapperManager.Current().Dispatcher.Dispatch(() =>
+            Template10Window.Current().Dispatcher.Dispatch(() =>
             {
                 switch (key)
                 {
                     case nameof(UseShellBackButton):
                         Template10.Services.BackButtonService.Settings.ShellBackButtonVisible = UseShellBackButton;
-                        Template10.Services.BackButtonService.BackButtonService.Instance.UpdateBackButton(NavigationServiceHelper.Default.CanGoBack);
+                        BackButtonService.GetInstance().UpdateBackButton(NavigationService.Default.CanGoBack);
                         break;
                     case nameof(AppTheme):
                         (Window.Current.Content as FrameworkElement).RequestedTheme = AppTheme.ToElementTheme();
                         break;
                     case nameof(CacheMaxDuration):
-                        Template10.Common.Settings.CacheMaxDuration = CacheMaxDuration;
+                        Template10.Navigation.Settings.CacheMaxDuration = CacheMaxDuration;
                         break;
                 }
             });

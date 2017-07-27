@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Template10.Navigation;
-using Template10.Portable.Navigation;
+using Template10.Mvvm;
 using Template10.Navigation;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;

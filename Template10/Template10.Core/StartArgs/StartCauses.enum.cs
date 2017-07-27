@@ -7,7 +7,7 @@
             Primary,
             Toast,
             SecondaryTile,
-            Other,
+            Undetermined,
             JumpListItem,
             BackgroundTrigger,
             CommandLine

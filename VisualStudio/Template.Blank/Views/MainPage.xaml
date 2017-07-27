@@ -13,19 +13,8 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-
-        <CommandBar RequestedTheme="Light">
-            <CommandBar.Content>
-                <TextBlock Padding="8,12,0,0" Text="Page header" />
-            </CommandBar.Content>
-        </CommandBar>
-
-        <StackPanel Grid.Row="1" Margin="16,12,0,0">
-            <TextBlock Text="Hello World" />
+        <StackPanel Padding="16,12,0,0">
+            <TextBlock Text="Hello world" />
         </StackPanel>
 
     </Grid>

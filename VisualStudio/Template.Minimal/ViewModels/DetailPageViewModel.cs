@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Template10.Mvvm;
 using Template10.Common;
-using Template10.Portable.Navigation;
-using Template10.Services.NavigationService;
+using Template10.Mvvm;
 
 namespace Sample.ViewModels
 {
-    public class DetailPageViewModel : Template10ViewModel
+    public class DetailPageViewModel : ViewModelBase
     {
         public DetailPageViewModel()
         {

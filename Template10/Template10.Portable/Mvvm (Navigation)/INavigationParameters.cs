@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Template10.Portable;
 
-namespace Template10.Portable.Navigation
+namespace Template10.Mvvm
 {
     public interface INavigationParameters
     {

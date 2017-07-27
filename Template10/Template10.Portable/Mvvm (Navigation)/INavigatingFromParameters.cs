@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Template10.Portable;
 using Template10.Portable.Common;
 
-namespace Template10.Portable.Navigation
+namespace Template10.Mvvm
 {
     public interface INavigatingFromParameters : INavigationParameters
     {

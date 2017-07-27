@@ -18,11 +18,9 @@ namespace Template10.Controls
             // behaviors
             var behavior = new Behaviors.EllipsisBehavior();
             RegisterPropertyChangedCallback(EllipsisVisibilityProperty, (s, e) => behavior.Visibility = EllipsisVisibility);
-            var collection = new Microsoft.Xaml.Interactivity.BehaviorCollection();
-            collection.Add(behavior);
+            var collection = new Microsoft.Xaml.Interactivity.BehaviorCollection { behavior };
             SetValue(Microsoft.Xaml.Interactivity.Interaction.BehaviorsProperty, collection);
-
-            TabIndex = 5000;
+            IsTabStop = false;
         }
 
         public Behaviors.EllipsisBehavior.Visibilities EllipsisVisibility

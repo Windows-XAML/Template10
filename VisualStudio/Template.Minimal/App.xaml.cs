@@ -2,10 +2,11 @@
 using Sample.Services.SettingsServices;
 using Template10.Common;
 using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Controls;
-using Windows.UI;
-using Template10.Utils;
 using System.Diagnostics;
+using Template10;
+using System;
+using Template10.StartArgs;
+using static Template10.StartArgs.Template10StartArgs;
 
 namespace Sample
 {
@@ -16,15 +17,15 @@ namespace Sample
         {
             InitializeComponent();
 
-            SettingsService _settings = SettingsService.Instance;
-            RequestedTheme = _settings.AppTheme;
-            // Settings.ShowShellBackButton = _settings.UseShellBackButton;
-            Settings.SplashFactory = s => new Views.Splash(s);
-            Settings.CacheMaxDuration = _settings.CacheMaxDuration;
-            Settings.AutoExtendExecutionSession = false;
+            //SettingsService _settings = SettingsService.Instance;
+            //RequestedTheme = _settings.AppTheme;
+            //// Settings.ShowShellBackButton = _settings.UseShellBackButton;
+            //Settings.SplashFactory = s => new Views.Splash(s);
+            //Settings.CacheMaxDuration = _settings.CacheMaxDuration;
+            //Settings.AutoExtendExecutionSession = false;
         }
 
-        public async override Task OnStartAsync(Template10StartArgs e)
+        public override async Task OnStartAsync(ITemplate10StartArgs e)
         {
             Windows.UI.Xaml.Window.Current.VisibilityChanged += (s, args) =>
             {
@@ -36,7 +37,19 @@ namespace Sample
                 case StartKinds.Prelaunch:
                 case StartKinds.Launch:
                 case StartKinds.Activate:
-                    await NavigationService.NavigateAsync(typeof(Views.MainPage));
+                    switch (e.StartCause)
+                    {
+                        case StartCauses.Primary:
+                        case StartCauses.Toast:
+                        case StartCauses.SecondaryTile:
+                        case StartCauses.JumpListItem:
+                        case StartCauses.BackgroundTrigger:
+                        case StartCauses.CommandLine:
+                        case StartCauses.Undetermined:
+                        default:
+                            await NavigationService.NavigateAsync(typeof(Views.MainPage));
+                            break;
+                    }
                     break;
                 case StartKinds.Background:
                     break;

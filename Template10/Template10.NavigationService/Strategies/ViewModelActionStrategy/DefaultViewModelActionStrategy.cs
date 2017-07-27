@@ -4,12 +4,12 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Template10.Common;
 using Template10.Navigation;
-using Template10.Portable.Navigation;
+using Template10.Mvvm;
 using Template10.Navigation;
 using Template10.Extensions;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using T10v2 = Template10.Portable.Navigation;
+using T10v2 = Template10.Mvvm;
 
 namespace Template10.Strategies
 {

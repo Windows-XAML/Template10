@@ -83,10 +83,10 @@ namespace Template10.StartArgs
                             case string id when !string.IsNullOrEmpty(id):
                                 return Template10StartArgs.StartCauses.SecondaryTile;
                             default:
-                                return Template10StartArgs.StartCauses.Other;
+                                return Template10StartArgs.StartCauses.Undetermined;
                         }
                     default:
-                        return Template10StartArgs.StartCauses.Other;
+                        return Template10StartArgs.StartCauses.Undetermined;
                 }
             }
         }

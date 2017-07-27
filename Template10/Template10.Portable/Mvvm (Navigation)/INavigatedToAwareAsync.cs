@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Template10.Portable.Navigation
+namespace Template10.Mvvm
 {
     public interface INavigatedToAwareAsync
     {

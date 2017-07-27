@@ -19,7 +19,6 @@ namespace Template10.Core
             this.context = context;
         }
 
-
         public override void OperationStarted()
         {
 

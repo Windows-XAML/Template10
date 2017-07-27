@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Template10.Portable;
 
-namespace Template10.Portable.Navigation
+namespace Template10.Mvvm
 {
     public interface IConfirmNavigationParameters : INavigationParameters
     {

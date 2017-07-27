@@ -176,6 +176,10 @@
       <Project>{cd31d870-42f3-4379-b67a-2070c4b0a444}</Project>
       <Name>Template10.Core.Navigation</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Template10\Template10.Portable\Template10.Portable.csproj">
+      <Project>{2b6903df-396a-4d97-bf29-45bc6dd72dbe}</Project>
+      <Name>Template10.Portable</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Template10\Template10.Shared\Template10.Core.Shared.csproj">
       <Project>{1f9a6976-d8f9-459b-8aee-770b53904ff3}</Project>
       <Name>Template10.Core.Shared</Name>

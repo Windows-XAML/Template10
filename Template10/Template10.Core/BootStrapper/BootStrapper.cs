@@ -71,5 +71,11 @@ namespace Template10
         protected override sealed void OnLaunched(LaunchActivatedEventArgs e) { DebugWrite(); _strategy.StartOrchestrationAsync(e, StartKinds.Launch); }
         protected override sealed void OnBackgroundActivated(BackgroundActivatedEventArgs e) { DebugWrite(); MessengerService.Send(new Messages.BackgroundActivatedMessage { EventArgs = e }); }
         protected override sealed void OnWindowCreated(WindowCreatedEventArgs e) { DebugWrite(); _strategy.OnWindowCreated(e); }
+
+        // clean up the object API
+
+        public sealed override bool Equals(object obj) => base.Equals(obj);
+        public sealed override int GetHashCode() => base.GetHashCode();
+        public sealed override string ToString() => base.ToString();
     }
 }

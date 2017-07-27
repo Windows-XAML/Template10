@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Template10.Common;
 using Template10.Mvvm;
-using Template10.Portable.Navigation;
+using Template10.Mvvm;
 using Template10.Services.BackButtonService;
 using Template10.Services.LoggingService;
 using Template10.Services.SerializationService;

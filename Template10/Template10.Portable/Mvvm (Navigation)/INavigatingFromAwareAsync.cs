@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Template10.Portable.Navigation
+namespace Template10.Mvvm
 {
     public interface INavigatingFromAwareAsync
     {
