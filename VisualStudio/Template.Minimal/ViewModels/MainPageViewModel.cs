@@ -3,13 +3,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Template10.Mvvm;
 using Template10.Common;
-using Template10.Mvvm;
 using Template10.Utils;
 using Windows.UI.Xaml.Controls;
 
 namespace Sample.ViewModels
 {
-    public class MainPageViewModel : Template10ViewModel
+    public class MainPageViewModel : ViewModelBase
     {
         public MainPageViewModel()
         {

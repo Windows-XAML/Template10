@@ -11,7 +11,7 @@ namespace Sample.Services.SettingsServices
     public class SettingsService : SettingsServiceBase
     {
         private static SettingsService _instance;
-        public SettingsService GetInstance() => _instance;
+        public static SettingsService GetInstance() => _instance;
         static SettingsService()
         {
             _instance = new SettingsService();

@@ -1,5 +1,5 @@
 ﻿using Template10.Controls;
-using Template10.Services.WindowWrapper;
+using Template10.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -31,7 +31,7 @@ namespace Sample.Views
         // hide and show busy dialog
         public static void SetBusy(bool busy, string text = null)
         {
-            WindowWrapperManager.Current().Dispatcher.Dispatch(() =>
+            Template10Dispatcher.Current().Dispatch(() =>
             {
                 var modal = Window.Current.Content as ModalDialog;
                 var view = modal.ModalContent as Busy;

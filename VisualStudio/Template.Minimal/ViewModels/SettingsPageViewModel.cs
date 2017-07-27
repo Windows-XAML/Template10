@@ -2,13 +2,11 @@
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Template10.Mvvm;
-using Template10.Mvvm;
-using Template10.Services.SettingsService.Services.SettingsService;
 using Windows.UI.Xaml;
 
 namespace Sample.ViewModels
 {
-    public class SettingsPageViewModel : Template10ViewModel
+    public class SettingsPageViewModel : ViewModelBase
     {
         public override Task OnNavigatedToAsync(INavigatedToParameters parameter)
         {
@@ -23,7 +21,7 @@ namespace Sample.ViewModels
     {
         Services.SettingsServices.SettingsService _settings;
 
-        public SettingsPartViewModel() => _settings = Services.SettingsServices.SettingsService.Instance;
+        public SettingsPartViewModel() => _settings = Services.SettingsServices.SettingsService.GetInstance();
 
         public bool UseShellBackButton
         {
