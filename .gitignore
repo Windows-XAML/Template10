@@ -196,3 +196,5 @@ Templates (Project)/Blank/null
 
 *.zip
 /packages/Newtonsoft.Json.9.0.1
+*.props
+/.vs

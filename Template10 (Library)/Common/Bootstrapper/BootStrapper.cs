@@ -83,7 +83,7 @@ namespace Template10.Common
         /// This setting tells Template 10 if it should automatically implement a SavingData 
         /// ExtendedSession when Suspending. This extends the time limit for Suspension activity.
         /// </summary>
-        public bool AutoExtendExecutionSession { get; set; } = true;
+        public bool AutoExtendExecutionSession { get; set; } = false;
 
         /// <summary>
         /// This setting tells Template 10 if it should automatically save the NavigationState
