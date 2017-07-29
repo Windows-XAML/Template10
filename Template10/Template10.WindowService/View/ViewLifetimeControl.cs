@@ -72,7 +72,7 @@ namespace Template10.Core
         #endregion
 
         #region WindowWrapper
-        public ITemplate10Window WindowWrapper { get; }
+        public IWindowEx WindowWrapper { get; }
         #endregion
 
         #region NavigationService
@@ -82,7 +82,7 @@ namespace Template10.Core
         private ViewLifetimeControl(CoreWindow newWindow)
         {
             CoreDispatcher = newWindow.Dispatcher;
-            WindowWrapper = Template10Window.Current();
+            WindowWrapper = WindowEx.Current();
             Id = ApplicationView.GetApplicationViewIdForWindow(newWindow);
 
             // This class will automatically tell the view when its time to close

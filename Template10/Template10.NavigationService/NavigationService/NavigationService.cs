@@ -111,7 +111,7 @@ namespace Template10.Navigation
         Lazy<IViewService> _ViewService;
         private IViewService ViewService => _ViewService.Value;
 
-        public ITemplate10Window Window { get; private set; }
+        public IWindowEx Window { get; private set; }
 
         public IFrameEx FrameEx { get; private set; }
         IFrameEx2 FrameFacadeInternal => FrameEx as IFrameEx2;
@@ -124,7 +124,7 @@ namespace Template10.Navigation
 
         internal NavigationService()
         {
-            Window = Template10Window.Current();
+            Window = WindowEx.Current();
         }
 
         internal NavigationService(Frame frame) : this()

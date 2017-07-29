@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Windows.Services.NagService.Extensions
+namespace Template10.Extensions
 {
-    public static class Extensions
+    public static class NagExtensions
     {
         public static Template10.Services.FileService.StorageStrategies ToFileServiceStrategy(this Template10.Services.NagService.Nag.StorageStrategies strategy)
         {

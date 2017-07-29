@@ -11,11 +11,6 @@ using Windows.UI.Xaml.Media;
 
 namespace Template10.Controls
 {
-    internal static class Extensions
-    {
-        public static ChangedEventArgs<T> ToChangedEventArgs<T>(this DependencyPropertyChangedEventArgs e)
-            => new ChangedEventArgs<T>((T)e.OldValue, (T)e.NewValue);
-    }
 
     public sealed partial class HamburgerMenu : UserControl
     {

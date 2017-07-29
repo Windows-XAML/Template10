@@ -15,7 +15,7 @@ namespace Template10.Extensions
 
         public PixelsInfo Pixels { get; }
 
-        private MonitorUtils(ITemplate10Window windowWrapper)
+        private MonitorUtils(IWindowEx windowWrapper)
         {
             var di = windowWrapper.DisplayInformation;
             di.OrientationChanged += new WeakReference<MonitorUtils, DisplayInformation, object>(this)
@@ -37,9 +37,9 @@ namespace Template10.Extensions
 
         #region singleton
 
-        private static Dictionary<ITemplate10Window, MonitorUtils> Cache = new Dictionary<ITemplate10Window, MonitorUtils>();
+        private static Dictionary<IWindowEx, MonitorUtils> Cache = new Dictionary<IWindowEx, MonitorUtils>();
 
-        public static MonitorUtils Current(ITemplate10Window windowWrapper = null)
+        public static MonitorUtils Current(IWindowEx windowWrapper = null)
         {
             windowWrapper = windowWrapper ?? throw new ArgumentNullException(nameof(windowWrapper));
             if (!Cache.ContainsKey(windowWrapper))
@@ -68,9 +68,9 @@ namespace Template10.Extensions
 
         public class InchesInfo
         {
-            private ITemplate10Window WindowWrapper;
+            private IWindowEx WindowWrapper;
 
-            public InchesInfo(ITemplate10Window windowWrapper)
+            public InchesInfo(IWindowEx windowWrapper)
             {
                 WindowWrapper = windowWrapper;
             }
@@ -84,9 +84,9 @@ namespace Template10.Extensions
 
         public class PixelsInfo
         {
-            private ITemplate10Window WindowWrapper;
+            private IWindowEx WindowWrapper;
 
-            public PixelsInfo(ITemplate10Window windowWrapper)
+            public PixelsInfo(IWindowEx windowWrapper)
             {
                 WindowWrapper = windowWrapper;
             }

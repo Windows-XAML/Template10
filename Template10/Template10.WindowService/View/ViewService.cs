@@ -33,7 +33,7 @@ namespace Template10.Core
             title = title ?? currentView.Title;
 
             var newView = CoreApplication.CreateNewView();
-            var dispatcher = Template10Dispatcher.Create(newView.Dispatcher);
+            var dispatcher = DispatcherEx.Create(newView.Dispatcher);
             var newControl = await dispatcher.Dispatch(async () =>
             {
                 var control = ViewLifetimeControl.GetForCurrentView();

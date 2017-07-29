@@ -7,8 +7,8 @@ namespace Template10.Core
 {
     public interface ITemplate10ViewModel
     {
-        ITemplate10Window Window { get; }
-        ITemplate10Dispatcher Dispatcher { get; }
+        IWindowEx Window { get; }
+        IDispatcherEx Dispatcher { get; }
         IDictionary<string, object> SessionState { get; }
         INavigationService NavigationService { get; set; }
     }

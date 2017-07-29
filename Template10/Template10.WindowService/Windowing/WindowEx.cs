@@ -11,33 +11,33 @@ using Windows.UI.Xaml;
 
 namespace Template10.Core
 {
-    public class Template10Window : ITemplate10Window
+    public class WindowEx : IWindowEx
     {
         #region Debug
 
         static void DebugWrite(string text = null, Services.LoggingService.Severities severity = Services.LoggingService.Severities.Template10, [CallerMemberName]string caller = null) =>
-            Services.LoggingService.LoggingService.WriteLine(text, severity, caller: $"{nameof(Template10Window)}.{caller}");
+            Services.LoggingService.LoggingService.WriteLine(text, severity, caller: $"{nameof(WindowEx)}.{caller}");
 
         #endregion
 
-        public static ITemplate10Window Create(WindowCreatedEventArgs args) => Create(args.Window);
+        public static IWindowEx Create(WindowCreatedEventArgs args) => Create(args.Window);
 
-        public static ITemplate10Window Create(Window window)
+        public static IWindowEx Create(Window window)
         {
             if (Instances.Any(x => x.Window.Equals(window)))
             {
                 throw new Exception("Windows already has a wrapper; use Current(window) to fetch.");
             }
-            var wrapper = new Template10Window(window);
+            var wrapper = new WindowEx(window);
             Instances.Add(wrapper);
             ViewService.OnWindowCreated();
             return wrapper;
         }
 
-        private Template10Window(Window window)
+        private WindowEx(Window window)
         {
             Window = window;
-            Dispatcher = Template10Dispatcher.Create(window.Dispatcher);
+            Dispatcher = DispatcherEx.Create(window.Dispatcher);
             window.CoreWindow.Closed += (s, e) => Instances.Remove(this);
             window.Closed += (s, e) => Instances.Remove(this);
             window.Activate();
@@ -61,29 +61,29 @@ namespace Template10.Core
             });
         }
 
-        public static List<ITemplate10Window> Instances { get; } = new List<ITemplate10Window>();
+        public static List<IWindowEx> Instances { get; } = new List<IWindowEx>();
 
-        public static ITemplate10Window Default()
+        public static IWindowEx Default()
         {
             try
             {
                 // this cannot be called from a background thread.
                 var mainDispatcher = CoreApplication.MainView.Dispatcher;
-                return Template10Window.Instances.FirstOrDefault(x => x.Window.Dispatcher == mainDispatcher) ??
-                        Template10Window.Instances.FirstOrDefault();
+                return WindowEx.Instances.FirstOrDefault(x => x.Window.Dispatcher == mainDispatcher) ??
+                        WindowEx.Instances.FirstOrDefault();
             }
             catch (COMException)
             {
                 //MainView might exist but still be not accessible
-                return Template10Window.Instances.FirstOrDefault();
+                return WindowEx.Instances.FirstOrDefault();
             }
         }
 
-        public static ITemplate10Window Current() => Instances.FirstOrDefault(x => x.Window == Window.Current) ?? Default();
+        public static IWindowEx Current() => Instances.FirstOrDefault(x => x.Window == Window.Current) ?? Default();
 
-        public static ITemplate10Window Current(Window window) => Instances.FirstOrDefault(x => x.Window == window);
+        public static IWindowEx Current(Window window) => Instances.FirstOrDefault(x => x.Window == window);
 
-        public static ITemplate10Window Main() => Instances.FirstOrDefault(x => x.IsMainView);
+        public static IWindowEx Main() => Instances.FirstOrDefault(x => x.IsMainView);
 
         public bool IsMainView { get; private set; }
 
@@ -104,7 +104,7 @@ namespace Template10.Core
 
         public Window Window { get; }
 
-        public ITemplate10Dispatcher Dispatcher { get; }
+        public IDispatcherEx Dispatcher { get; }
 
         public void Close() { Window.Close(); }
     }

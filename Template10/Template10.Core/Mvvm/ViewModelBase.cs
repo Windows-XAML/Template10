@@ -41,10 +41,10 @@ namespace Template10.Mvvm
         }
 
         [JsonIgnore]
-        public ITemplate10Window Window => NavigationService.GetWindow();
+        public IWindowEx Window => NavigationService.GetWindow();
 
         [JsonIgnore]
-        public ITemplate10Dispatcher Dispatcher => Window.Dispatcher;
+        public IDispatcherEx Dispatcher => Window.Dispatcher;
 
         [JsonIgnore]
         public INavigationService NavigationService { get; set; }

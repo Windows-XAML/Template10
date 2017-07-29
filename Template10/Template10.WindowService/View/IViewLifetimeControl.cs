@@ -12,7 +12,7 @@ namespace Template10.Core
         CoreDispatcher CoreDispatcher { get; }
         int Id { get; }
         // INavigationService NavigationService { get; set; }
-        ITemplate10Window WindowWrapper { get; }
+        IWindowEx WindowWrapper { get; }
 
         event ViewReleasedHandler Released;
 

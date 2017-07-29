@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Template10.Services.DialogService;
 using Template10.Services.FileService;
-using Windows.Services.NagService.Extensions;
+using Template10.Services.Nag.Extensions;
 using Windows.UI.Popups;
 
 namespace Template10.Services.NagService

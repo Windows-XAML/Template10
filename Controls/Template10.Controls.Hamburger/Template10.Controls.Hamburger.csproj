@@ -107,6 +107,7 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls.HamburgerMenu\Extensions.cs" />
     <Compile Include="Controls.HamburgerMenu\HamburgerButtonInfo.cs" />
     <Compile Include="Controls.HamburgerMenu\HamburgerButtonTemplateSelected.cs" />
     <Compile Include="Controls.HamburgerMenu\HamburgerMenu.PublicMethods.xaml.cs">

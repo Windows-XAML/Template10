@@ -72,7 +72,7 @@ namespace Template10.Strategies
         public void OnWindowCreated(WindowCreatedEventArgs args)
         {
             DebugWrite();
-            Core.Template10Window.Create(args);
+            Core.WindowEx.Create(args);
             SetupAfterFirstWindow();
         }
 

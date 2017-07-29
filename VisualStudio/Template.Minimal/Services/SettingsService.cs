@@ -53,7 +53,7 @@ namespace Sample.Services
 
             // implement it
 
-            Template10Window.Current().Dispatcher.Dispatch(() =>
+            WindowEx.Current().Dispatcher.Dispatch(() =>
             {
                 switch (key)
                 {

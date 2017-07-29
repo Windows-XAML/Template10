@@ -13,7 +13,7 @@ namespace Template10.Extensions
 
         public MonitorUtils MonitorUtils { get; private set; }
 
-        public ITemplate10Window WindowWrapper { get; private set; }
+        public IWindowEx WindowWrapper { get; private set; }
 
         [Flags]
         public enum DeviceDispositions
@@ -42,7 +42,7 @@ namespace Template10.Extensions
             Mobile = 1 << 5
         }
 
-        private DeviceUtils(ITemplate10Window windowWrapper)
+        private DeviceUtils(IWindowEx windowWrapper)
         {
             MonitorUtils = MonitorUtils.Current(windowWrapper);
             WindowWrapper = windowWrapper ?? throw new ArgumentNullException(nameof(windowWrapper));
@@ -64,8 +64,8 @@ namespace Template10.Extensions
 
         #region singleton
 
-        static Dictionary<ITemplate10Window, DeviceUtils> Cache = new Dictionary<ITemplate10Window, DeviceUtils>();
-        public static DeviceUtils Current(ITemplate10Window windowWrapper)
+        static Dictionary<IWindowEx, DeviceUtils> Cache = new Dictionary<IWindowEx, DeviceUtils>();
+        public static DeviceUtils Current(IWindowEx windowWrapper)
         {
             windowWrapper = windowWrapper ?? throw new ArgumentNullException(nameof(windowWrapper));
             if (!Cache.ContainsKey(windowWrapper))

@@ -97,7 +97,10 @@
                         <DataTemplate>
                             <StackPanel>
                                 <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="{Binding Title}" />
-                                <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{Binding Content}" Margin="0,4,0,12" />
+                                <TextBlock
+                                    Margin="0,4,0,12"
+                                    Style="{StaticResource BodyTextBlockStyle}"
+                                    Text="{Binding Content}" />
                             </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

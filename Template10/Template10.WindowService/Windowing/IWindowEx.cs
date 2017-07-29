@@ -6,13 +6,13 @@ using Windows.UI.Xaml;
 
 namespace Template10.Core
 {
-    public interface ITemplate10Window
+    public interface IWindowEx
     {
         Window Window { get; }
         ApplicationView ApplicationView { get; }
         bool IsMainView { get; }
         UIElement Content { get; set; }
-        ITemplate10Dispatcher Dispatcher { get; }
+        IDispatcherEx Dispatcher { get; }
         DisplayInformation DisplayInformation { get; }
         UIViewSettings UIViewSettings { get; }
 

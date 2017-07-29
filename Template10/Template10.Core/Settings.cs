@@ -8,7 +8,7 @@ namespace Template10
 {
     public static partial class Settings
     {
-        public static ITemplate10Dispatcher DefaultDispatcher { get; set; }
+        public static IDispatcherEx DefaultDispatcher { get; set; }
 
         static IMessengerService _MessengerService = Services.Messenger.MessengerService.Instance;
         public static IMessengerService MessengerService

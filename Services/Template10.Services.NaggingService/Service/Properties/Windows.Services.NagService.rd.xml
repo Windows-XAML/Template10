@@ -25,7 +25,7 @@
     https://go.microsoft.com/fwlink/?LinkID=391919
 -->
 <Directives xmlns="http://schemas.microsoft.com/netfx/2013/01/metadata">
-  <Library Name="Windows.Services.NagService">
+  <Library Name="Template10.Services.Nag">
 
   	<!-- add directives for your library here -->
 

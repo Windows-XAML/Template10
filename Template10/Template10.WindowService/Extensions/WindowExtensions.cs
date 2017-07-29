@@ -3,11 +3,11 @@ using Windows.UI.Xaml;
 
 namespace Template10.Extensions
 {
-    public static class Template10Extensions
+    public static class WindowExtensions
     {
-        public static ITemplate10Window Create(this WindowCreatedEventArgs args)
+        public static IWindowEx Create(this WindowCreatedEventArgs args)
         {
-            return Template10Window.Create(args);
+            return WindowEx.Create(args);
         }
     }
 }

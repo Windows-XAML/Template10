@@ -13,10 +13,10 @@ namespace Template10
 {
     public interface IBootStrapper: IBootStrapperShared
     {
-        IMessengerService MessengerService { get; }
-        IContainerService ContainerService { get; }
-        ITemplate10Dispatcher Dispatcher { get; }
+        IDispatcherEx Dispatcher { get; }
         INavigationService NavigationService { get; }
+
+        // publi api
 
         Task OnStartAsync(ITemplate10StartArgs e);
         Task<UIElement> CreateRootElement(ITemplate10StartArgs e);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Template10.Core;
 using Template10.Mvvm;
 using Template10.Navigation;
 using Windows.UI.Xaml.Controls;
@@ -10,6 +11,16 @@ namespace Template10.Extensions
 {
     public static class NavigationExtensions
     {
+        public static IWindowEx GetWindow(this INavigationService service)
+        {
+            return service.Window;
+        }
+
+        public static IDispatcherEx GetDispatcher(this INavigationService service)
+        {
+            return service.GetWindow().Dispatcher;
+        }
+
         public static async Task<Frame> CreateNavigationService(this Frame frame, BackButton backButton = BackButton.Attach)
         {
             await NavigationService.CreateAsync(BackButton.Attach, frame);

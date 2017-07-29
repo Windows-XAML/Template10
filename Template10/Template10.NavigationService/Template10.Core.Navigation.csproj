@@ -110,7 +110,6 @@
     <Compile Include="Behaviors\BackButtonBehavior.cs" />
     <Compile Include="Behaviors\NavButtonBehavior.cs" />
     <Compile Include="Behaviors\NavToPageAction.cs" />
-    <Compile Include="Extensions\WindowExtensions.cs" />
     <Compile Include="FrameEx\IFrameEx.cs" />
     <Compile Include="FrameEx\IFrameEx2.cs" />
     <Compile Include="FrameEx\FrameEx.cs" />
@@ -129,7 +128,6 @@
     <Compile Include="Extensions\NavigationExtensions.cs" />
     <Compile Include="NavigationService\NavigationService.cs" />
     <Compile Include="NavigationService\NavigationServiceList.cs" />
-    <Compile Include="Extensions\PortableExtensions.cs" />
     <Compile Include="Strategies\ViewModelResolutionStrategy\IViewModelResolutionStrategy.cs" />
     <EmbeddedResource Include="Properties\Template10.Services.Navigation.rd.xml" />
   </ItemGroup>

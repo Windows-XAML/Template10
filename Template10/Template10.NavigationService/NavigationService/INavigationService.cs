@@ -16,7 +16,7 @@ namespace Template10.Navigation
         event EventHandler<HandledEventArgs> ForwardRequested;
 
         IFrameEx FrameEx { get; }
-        ITemplate10Window Window { get; }
+        IWindowEx Window { get; }
         bool CanGoBack { get; }
         bool CanGoForward { get; }
         object CurrentPageParam { get; }

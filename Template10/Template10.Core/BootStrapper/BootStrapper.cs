@@ -38,7 +38,7 @@ namespace Template10
         public IContainerService ContainerService => Settings.ContainerService;
         public IMessengerService MessengerService => Settings.MessengerService;
         public INavigationService NavigationService => Navigation.NavigationService.Default;
-        public ITemplate10Dispatcher Dispatcher => Settings.DefaultDispatcher;
+        public IDispatcherEx Dispatcher => Settings.DefaultDispatcher;
         public IDictionary<string, object> SessionState => SessionStateHelper.Current;
 
         // net-new properties 

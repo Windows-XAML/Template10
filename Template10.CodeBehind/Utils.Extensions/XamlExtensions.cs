@@ -10,17 +10,17 @@ namespace Template10.Extensions
     {
         public static void UpdateBindings(this Page page)
         {
-            XamlUtils.UpdateBindings(page);
+            page.UpdateBindings();
         }
 
         public static void InitializeBindings(this Page page)
         {
-            XamlUtils.InitializeBindings(page);
+            page.InitializeBindings();
         }
 
         public static void StopTrackingBindings(this Page page)
         {
-            XamlUtils.StopTrackingBindings(page);
+            page.StopTrackingBindings();
         }
 
         public static T FirstAncestor<T>(this DependencyObject control) where T : DependencyObject
@@ -46,13 +46,16 @@ namespace Template10.Extensions
             return list;
         }
 
-        public static T FirstChild<T>(this DependencyObject parent) where T : DependencyObject => XamlUtils.AllChildren<T>(parent).FirstOrDefault();
+        public static T FirstChild<T>(this DependencyObject parent) where T : DependencyObject
+        {
+            return parent.AllChildren().OfType<T>().FirstOrDefault();
+        }
 
         public static List<DependencyObject> AllChildren(this DependencyObject parent)
         {
             var list = new List<DependencyObject>();
             var count = VisualTreeHelper.GetChildrenCount(parent);
-            for (int i = 0; i < count; i++)
+            for (var i = 0; i < count; i++)
             {
                 var child = VisualTreeHelper.GetChild(parent, i);
                 list.AddRange(AllChildren(list.AddAndReturn(child)));
@@ -94,7 +97,9 @@ namespace Template10.Extensions
         public static void SetIfNotSet(this DependencyObject o, DependencyProperty dp, object value)
         {
             if (o.ReadLocalValue(dp) == DependencyProperty.UnsetValue)
+            {
                 o.SetValue(dp, value);
+            }
         }
     }
 }
