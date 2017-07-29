@@ -14,20 +14,24 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Navigation
 {
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Navigation-Service
-    public partial class Template10Frame : ITemplate10FrameInternal, ITemplate10Frame
+    public partial class FrameEx : IFrameEx2, IFrameEx
     {
         #region Debug
 
         static void DebugWrite(string text = null, Severities severity = Severities.Template10, [CallerMemberName]string caller = null) =>
-            LoggingService.WriteLine(text, severity, caller: $"{nameof(Template10Frame)}.{caller}");
+            LoggingService.WriteLine(text, severity, caller: $"{nameof(FrameEx)}.{caller}");
 
         #endregion
 
-        // [Obsolete("Internal use only")]
-        internal Template10Frame(Frame frame, INavigationService navigationService)
+        internal static IFrameEx2 Create(Frame frame, INavigationService navigationService)
         {
-            (this as ITemplate10FrameInternal).Frame = frame;
+            return new FrameEx(frame, navigationService);
+        }
+
+        // [Obsolete("Internal use only")]
+        internal FrameEx(Frame frame, INavigationService navigationService)
+        {
+            (this as IFrameEx2).Frame = frame;
             frame.Navigating += (s, e) =>
             {
                 //if (!BackStack.Any() && string.IsNullOrEmpty(FrameId))
@@ -37,7 +41,7 @@ namespace Template10.Navigation
                 //}
             };
 
-            (this as ITemplate10FrameInternal).NavigationService = navigationService;
+            (this as IFrameEx2).NavigationService = navigationService;
 
             // setup animations
             SetupAnnimations();
@@ -49,25 +53,25 @@ namespace Template10.Navigation
             {
                 DefaultNavigationTransitionInfo = new EntranceNavigationTransitionInfo()
             };
-            (this as ITemplate10FrameInternal).Frame.ContentTransitions = new TransitionCollection { };
-            (this as ITemplate10FrameInternal).Frame.ContentTransitions.Add(t);
+            (this as IFrameEx2).Frame.ContentTransitions = new TransitionCollection { };
+            (this as IFrameEx2).Frame.ContentTransitions.Add(t);
         }
 
         public string FrameId { get; set; } = "DefaultFrame";
 
-        public object Content => (this as ITemplate10FrameInternal).Frame.Content;
+        public object Content => (this as IFrameEx2).Frame.Content;
 
-        public object GetValue(DependencyProperty dp) => (this as ITemplate10FrameInternal).Frame.GetValue(dp);
+        public object GetValue(DependencyProperty dp) => (this as IFrameEx2).Frame.GetValue(dp);
 
-        public void SetValue(DependencyProperty dp, object value) { (this as ITemplate10FrameInternal).Frame.SetValue(dp, value); }
+        public void SetValue(DependencyProperty dp, object value) { (this as IFrameEx2).Frame.SetValue(dp, value); }
 
-        public void ClearValue(DependencyProperty dp) { (this as ITemplate10FrameInternal).Frame.ClearValue(dp); }
+        public void ClearValue(DependencyProperty dp) { (this as IFrameEx2).Frame.ClearValue(dp); }
 
         public void ClearCache(bool removeCachedPagesInBackStack = false)
         {
             DebugWrite($"Frame: {FrameId}");
 
-            var frame = (this as ITemplate10FrameInternal).Frame;
+            var frame = (this as IFrameEx2).Frame;
 
             int currentSize = frame.CacheSize;
             try
@@ -98,55 +102,55 @@ namespace Template10.Navigation
             }
         }
 
-        internal bool Navigate(Type page, object parameter) => (this as ITemplate10FrameInternal).Frame.Navigate(page, parameter);
+        internal bool Navigate(Type page, object parameter) => (this as IFrameEx2).Frame.Navigate(page, parameter);
 
-        public void PurgeNavigationState() => (this as ITemplate10FrameInternal).Frame.SetNavigationState("1,0");
+        public void PurgeNavigationState() => (this as IFrameEx2).Frame.SetNavigationState("1,0");
 
-        public IList<PageStackEntry> BackStack => (this as ITemplate10FrameInternal).Frame.BackStack;
+        public IList<PageStackEntry> BackStack => (this as IFrameEx2).Frame.BackStack;
 
-        public IList<PageStackEntry> ForwardStack => (this as ITemplate10FrameInternal).Frame.ForwardStack;
+        public IList<PageStackEntry> ForwardStack => (this as IFrameEx2).Frame.ForwardStack;
 
     }
 
-    public partial class Template10Frame : ITemplate10FrameInternal
+    public partial class FrameEx : IFrameEx2
     {
         // Internal properties/methods
 
         string FrameStateKey => $"Frame-{FrameId}";
 
-        async Task<Template10FrameState> ITemplate10FrameInternal.GetFrameStateAsync()
+        async Task<FrameExState> IFrameEx2.GetFrameStateAsync()
         {
             var store = await Settings.PersistedDictionaryFactory.CreateAsync(FrameStateKey);
-            return new Template10FrameState(store);
+            return new FrameExState(store);
         }
 
-        async Task<IPersistedDictionary> ITemplate10FrameInternal.GetPageStateAsync(Type page)
+        async Task<IPersistedDictionary> IFrameEx2.GetPageStateAsync(Type page)
         {
             if (page == null) return null;
             return await Settings.PersistedDictionaryFactory.CreateAsync($"Page-{page.ToString()}", FrameStateKey);
         }
 
-        async Task<IPersistedDictionary> ITemplate10FrameInternal.GetPageStateAsync(string page)
+        async Task<IPersistedDictionary> IFrameEx2.GetPageStateAsync(string page)
         {
             if (string.IsNullOrEmpty(page)) return null;
             return await Settings.PersistedDictionaryFactory.CreateAsync($"Page-{page}", FrameStateKey);
         }
 
-        bool ITemplate10FrameInternal.CanGoBack => (this as ITemplate10FrameInternal).Frame.CanGoBack;
+        bool IFrameEx2.CanGoBack => (this as IFrameEx2).Frame.CanGoBack;
 
-        bool ITemplate10FrameInternal.CanGoForward => (this as ITemplate10FrameInternal).Frame.CanGoForward;
+        bool IFrameEx2.CanGoForward => (this as IFrameEx2).Frame.CanGoForward;
 
-        void ITemplate10FrameInternal.SetNavigationState(string state) => (this as ITemplate10FrameInternal).Frame.SetNavigationState(state);
+        void IFrameEx2.SetNavigationState(string state) => (this as IFrameEx2).Frame.SetNavigationState(state);
 
-        string ITemplate10FrameInternal.GetNavigationState() => (this as ITemplate10FrameInternal).Frame.GetNavigationState();
+        string IFrameEx2.GetNavigationState() => (this as IFrameEx2).Frame.GetNavigationState();
 
-        void ITemplate10FrameInternal.GoForward()
+        void IFrameEx2.GoForward()
         {
             try
             {
-                if ((this as ITemplate10FrameInternal).CanGoForward)
+                if ((this as IFrameEx2).CanGoForward)
                 {
-                    (this as ITemplate10FrameInternal).Frame.GoForward();
+                    (this as IFrameEx2).Frame.GoForward();
                 }
             }
             catch (Exception)
@@ -156,15 +160,15 @@ namespace Template10.Navigation
             }
         }
 
-        bool ITemplate10FrameInternal.Navigate(Type page, object parameter, NavigationTransitionInfo info) => (this as ITemplate10FrameInternal).Frame.Navigate(page, parameter, info);
+        bool IFrameEx2.Navigate(Type page, object parameter, NavigationTransitionInfo info) => (this as IFrameEx2).Frame.Navigate(page, parameter, info);
 
-        void ITemplate10FrameInternal.GoBack(NavigationTransitionInfo infoOverride)
+        void IFrameEx2.GoBack(NavigationTransitionInfo infoOverride)
         {
             try
             {
-                if ((this as ITemplate10FrameInternal).CanGoBack)
+                if ((this as IFrameEx2).CanGoBack)
                 {
-                    (this as ITemplate10FrameInternal).Frame.GoBack(infoOverride);
+                    (this as IFrameEx2).Frame.GoBack(infoOverride);
                 }
             }
             catch (Exception)
@@ -174,13 +178,13 @@ namespace Template10.Navigation
             }
         }
 
-        void ITemplate10FrameInternal.GoBack()
+        void IFrameEx2.GoBack()
         {
             try
             {
-                if ((this as ITemplate10FrameInternal).CanGoBack)
+                if ((this as IFrameEx2).CanGoBack)
                 {
-                    (this as ITemplate10FrameInternal).Frame.GoBack();
+                    (this as IFrameEx2).Frame.GoBack();
                 }
             }
             catch (Exception)
@@ -190,8 +194,8 @@ namespace Template10.Navigation
             }
         }
 
-        Frame ITemplate10FrameInternal.Frame { get; set; }
+        Frame IFrameEx2.Frame { get; set; }
 
-        INavigationService ITemplate10FrameInternal.NavigationService { get; set; }
+        INavigationService IFrameEx2.NavigationService { get; set; }
     }
 }

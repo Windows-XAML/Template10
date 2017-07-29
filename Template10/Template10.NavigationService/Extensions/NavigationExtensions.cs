@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Template10.Mvvm;
 using Template10.Navigation;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
+using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Extensions
 {
@@ -22,5 +24,18 @@ namespace Template10.Extensions
 
         public static async Task<bool> NavigateAsyncEx<T>(this Frame frame, T key, object parameter = null, NavigationTransitionInfo infoOverride = null) where T : struct, IConvertible
             => await frame.GetNavigationService().NavigateAsync(key, parameter, infoOverride);
+
+        public static NavMode ToPortableNavigationMode(this NavigationMode mode)
+        {
+            switch (mode)
+            {
+                case NavigationMode.New: return NavMode.New;
+                case NavigationMode.Back: return NavMode.Back;
+                case NavigationMode.Forward: return NavMode.Forward;
+                case NavigationMode.Refresh: return NavMode.Refresh;
+                default:
+                    throw new NotSupportedException();
+            }
+        }
     }
 }

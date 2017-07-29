@@ -6,7 +6,7 @@ using Template10.Services.BackButtonService;
 using Template10.Services.SettingsService.Services.SettingsService;
 using Windows.UI.Xaml;
 
-namespace Sample.Services.SettingsServices
+namespace Sample.Services
 {
     public class SettingsService : SettingsServiceBase
     {
@@ -37,6 +37,12 @@ namespace Sample.Services.SettingsServices
         {
             get => Read(nameof(CacheMaxDuration), TimeSpan.FromDays(2));
             set => Write(nameof(CacheMaxDuration), value);
+        }
+
+        public string BusyText
+        {
+            get => Read(nameof(BusyText), "Please wait...");
+            set => Write(nameof(BusyText), value);
         }
 
         private new void Write<T>(string key, T value)

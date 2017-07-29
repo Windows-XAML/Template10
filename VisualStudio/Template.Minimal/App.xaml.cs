@@ -1,10 +1,7 @@
 ﻿using System.Threading.Tasks;
-using Sample.Services.SettingsServices;
-using Template10.Common;
 using Windows.UI.Xaml.Data;
 using System.Diagnostics;
 using Template10;
-using System;
 using Template10.StartArgs;
 using static Template10.StartArgs.Template10StartArgs;
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Template10.Mvvm;
+using Template10.Navigation;
 
 namespace Sample.ViewModels
 {

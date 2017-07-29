@@ -2,7 +2,7 @@
 using Template10.Portable;
 using Template10.Portable.Common;
 
-namespace Template10.Mvvm
+namespace Template10.Navigation
 {
     public interface INavigationInfo
     {

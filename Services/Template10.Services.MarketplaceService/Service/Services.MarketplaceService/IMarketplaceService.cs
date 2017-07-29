@@ -8,9 +8,9 @@ namespace Template10.Services.MarketplaceService
     {
         Task LaunchAppInStore();
 
-        Task LaunchAppReviewInStore();
+        Task LaunchAppReviewInStoreAsync();
 
-        Task LaunchPublisherPageInStore();
+        Task LaunchPublisherPageInStoreAsync();
 
         Nag CreateAppReviewNag();
 

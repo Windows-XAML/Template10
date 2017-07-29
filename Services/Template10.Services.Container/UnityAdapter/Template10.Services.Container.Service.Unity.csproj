@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{43417386-DDD5-422A-A563-CB666857C59C}</ProjectGuid>
+    <ProjectGuid>{524D4BCB-21A1-44F6-B5B2-2712A3E7718D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Template10</RootNamespace>
-    <AssemblyName>Template10.Core</AssemblyName>
+    <RootNamespace>Template10.Services.Container</RootNamespace>
+    <AssemblyName>Template10.Services.Container.UnityAdapter</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.14393.0</TargetPlatformVersion>
@@ -104,101 +104,20 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <None Include="Nuget\Build.cmd" />
-    <None Include="Nuget\Init.ps1" />
-    <None Include="Nuget\Template10.targets" />
-    <None Include="Nuget\Template10Library.nuspec">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Behaviors\DeviceDispositionBehavior.cs" />
-    <Compile Include="BootStrapper\BootStrapper.cs" />
-    <Compile Include="BootStrapper\BootstrapperStates.cs" />
-    <Compile Include="Container\ContainerService.cs" />
-    <Compile Include="Messages\BackgroundActivatedMessage.cs" />
-    <Compile Include="Messages\BackRequestedMessage.cs" />
-    <Compile Include="Messages\EnteredBackgroundMessage.cs" />
-    <Compile Include="Messages\LeavingBackgroundMessage.cs" />
-    <Compile Include="Messages\ResumedMessage.cs" />
-    <Compile Include="Messages\ResumingMessage.cs" />
-    <Compile Include="Messages\SuspendingMessage.cs" />
-    <Compile Include="Messages\UnhandledExceptionMessage.cs" />
-    <Compile Include="Mvvm\ViewModelBase.cs" />
-    <Compile Include="Strategies\BootStrapperStrategy\DefaultBootStrapperStrategy.cs" />
-    <Compile Include="BootStrapper\IBootStrapper.cs" />
-    <Compile Include="Strategies\BootStrapperStrategy\IBootStrapperStrategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="StartArgs\ITemplate10StartArgs.cs" />
-    <Compile Include="StartArgs\StartCauses.enum.cs" />
-    <Compile Include="StartArgs\StartKinds.enum.cs" />
-    <Compile Include="StartArgs\Template10StartArgs.cs" />
-    <Compile Include="Strategies\ExtendedSessionStrategy\DefaultExtendedSessionStrategy.cs" />
-    <Compile Include="Strategies\ExtendedSessionStrategy\ExtendedSessionKinds.enum.cs" />
-    <Compile Include="Strategies\ExtendedSessionStrategy\ExtendedSessionManager.cs" />
-    <Compile Include="Strategies\ExtendedSessionStrategy\ExtendedSessionStrategyBase.cs" />
-    <Compile Include="Strategies\ExtendedSessionStrategy\IExtendedSessionStrategy.cs" />
-    <Compile Include="Strategies\ExtendedSessionStrategy\IExtendedSessionStrategyInternal.cs" />
-    <Compile Include="Strategies\ExtendedSessionStrategy\Settings.cs" />
-    <Compile Include="Strategies\LifecycleStrategy\DefaultLifecycleStrategy.cs" />
-    <Compile Include="Strategies\LifecycleStrategy\ILifecycleStrategy.cs" />
-    <Compile Include="Strategies\LifecycleStrategy\Settings.cs" />
-    <Compile Include="Strategies\PersistenceStrategy\DefaultPersistenceStrategy.cs" />
-    <Compile Include="Strategies\PersistenceStrategy\DefaultPersistenceStrategyFactory.cs" />
-    <Compile Include="Strategies\PersistenceStrategy\Settings.cs" />
-    <Compile Include="Strategies\TitleBarStrategy\DefaultTitleBarStrategy.cs" />
-    <Compile Include="Strategies\TitleBarStrategy\ITitleBarStrategy.cs" />
-    <EmbeddedResource Include="Properties\Template10.Core.rd.xml" />
+    <Compile Include="UnityContainerAdapter.cs" />
+    <EmbeddedResource Include="Properties\UnityAdapter.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Controls\Template10.Controls.CustomTitleBar\Control\Template10.Controls.CustomTitleBar.csproj">
-      <Project>{5cc9c9d2-2103-4e03-b425-7fd58a7a2a2e}</Project>
-      <Name>Template10.Controls.CustomTitleBar</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Services\Template10.Services.BackService\Template10.Services.BackService.csproj">
-      <Project>{8564f764-99d9-4473-b5e4-ac62cda73977}</Project>
-      <Name>Template10.Services.BackService</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Services\Template10.Services.Container\Service\Template10.Services.Container.Service.csproj">
+    <ProjectReference Include="..\Service\Template10.Services.Container.Service.csproj">
       <Project>{b4c8a753-3376-4c55-aff1-326f2d1cfcbc}</Project>
-      <Name>Template10.Services.ContainerService</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Services\Template10.Services.Container\UnityAdapter\Template10.Services.Container.Service.Unity.csproj">
-      <Project>{524d4bcb-21a1-44f6-b5b2-2712a3e7718d}</Project>
-      <Name>Template10.Services.Container.Service.Unity</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Services\Template10.Services.LoggingService\Service\Template10.Services.LoggingService.csproj">
-      <Project>{eadde808-bf0d-4ebc-b4ca-9fda63b53862}</Project>
-      <Name>Template10.Services.LoggingService</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Services\Template10.Services.Messenger\Service\Template10.Services.Messenging.csproj">
-      <Project>{e14bcd62-b2a4-4aa2-95a8-6a556a31fb29}</Project>
-      <Name>Template10.Services.Messenging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Template10.CodeBehind\Template10.CodeBehind.csproj">
-      <Project>{B3A4E50E-9DCA-457E-BED5-B71D97B957F3}</Project>
-      <Name>Template10.CodeBehind</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Template10.NavigationService\Template10.Core.Navigation.csproj">
-      <Project>{cd31d870-42f3-4379-b67a-2070c4b0a444}</Project>
-      <Name>Template10.Core.Navigation</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Template10.Portable\Template10.Portable.csproj">
-      <Project>{2B6903DF-396A-4D97-BF29-45BC6DD72DBE}</Project>
-      <Name>Template10.Portable</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Template10.Shared\Template10.Core.Shared.csproj">
-      <Project>{1F9A6976-D8F9-459B-8AEE-770B53904FF3}</Project>
-      <Name>Template10.Core.Shared</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Template10.WindowService\Template10.Core.Windowing.csproj">
-      <Project>{9cad4451-5adf-48d3-b690-8b341a95a228}</Project>
-      <Name>Template10.Core.Windowing</Name>
+      <Name>Template10.Services.Container.Service</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

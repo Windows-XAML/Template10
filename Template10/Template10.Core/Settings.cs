@@ -20,7 +20,7 @@ namespace Template10
         static IContainerService _ContainerService;
         public static IContainerService ContainerService
         {
-            get => _ContainerService ?? (_ContainerService = Services.Container.ContainerService.Instance);
+            get => _ContainerService ?? (_ContainerService = Services.Container.ContainerService.GetInstance(UnityContainerAdapter.Create()));
             set => _ContainerService = value;
         }
 

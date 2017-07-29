@@ -8,7 +8,24 @@ using Windows.UI.Xaml.Media.Animation;
 
 namespace Template10.Navigation
 {
-    public interface INavigationServiceInternal : INavigationService
+    public interface INavigationService : INavigationServiceAsync, INavigationServiceVoid
+    {
+        event EventHandler<NavigatedEventArgs> Navigated;
+        event EventHandler<NavigatingEventArgs> Navigating;
+        event EventHandler<HandledEventArgs> BackRequested;
+        event EventHandler<HandledEventArgs> ForwardRequested;
+
+        IFrameEx FrameEx { get; }
+        ITemplate10Window Window { get; }
+        bool CanGoBack { get; }
+        bool CanGoForward { get; }
+        object CurrentPageParam { get; }
+        Type CurrentPageType { get; }
+        BackButton BackButtonHandling { get; set; }
+        void ClearHistory();
+    }
+
+    public interface INavigationService2 : INavigationService
     {
         Task SaveAsync(bool navigateFrom);
         Task<bool> LoadAsync(bool navigateTo);
@@ -40,22 +57,5 @@ namespace Template10.Navigation
         void Navigate<T>(T key, object parameter = null, NavigationTransitionInfo infoOverride = null) where T : struct, IConvertible;
         void Refresh();
         void Refresh(object param);
-    }
-
-    public interface INavigationService: INavigationServiceAsync, INavigationServiceVoid
-    {
-        event EventHandler<NavigatedEventArgs> Navigated;
-        event EventHandler<NavigatingEventArgs> Navigating;
-        event EventHandler<HandledEventArgs> BackRequested;
-        event EventHandler<HandledEventArgs> ForwardRequested;
-
-        ITemplate10Frame FrameFacade { get; }
-        ITemplate10Window Window { get; }
-        bool CanGoBack { get; }
-        bool CanGoForward { get; }
-        object CurrentPageParam { get; }
-        Type CurrentPageType { get; }
-        BackButton BackButtonHandling { get; set; }
-        void ClearHistory();
     }
 }

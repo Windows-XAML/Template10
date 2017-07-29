@@ -2,7 +2,7 @@
 {
     public class UnityContainerAdapter : IContainerAdapter
     {
-        internal static IContainerAdapter Create()
+        public static IContainerAdapter Create()
             => new UnityContainerAdapter();
 
         Microsoft.Practices.Unity.IUnityContainer _container;

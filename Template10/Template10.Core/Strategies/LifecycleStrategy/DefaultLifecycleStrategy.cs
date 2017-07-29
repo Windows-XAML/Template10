@@ -26,7 +26,7 @@ namespace Template10.Strategies
 
             // TODO: what to do with multiple views?
 
-            foreach (var nav in NavigationService.Instances.Select(x => x as INavigationServiceInternal))
+            foreach (var nav in NavigationService.Instances.Select(x => x as INavigationService2))
             {
                 await nav.SaveAsync(true);
             }
@@ -85,7 +85,7 @@ namespace Template10.Strategies
 
             if (e?.StartKind == Template10StartArgs.StartKinds.Launch)
             {
-                foreach (var nav in NavigationService.Instances.Select(x => x as INavigationServiceInternal))
+                foreach (var nav in NavigationService.Instances.Select(x => x as INavigationService2))
                 {
                     if (await nav.LoadAsync(true))
                     {

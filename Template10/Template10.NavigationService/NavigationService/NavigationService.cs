@@ -22,7 +22,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Navigation
 {
-    public partial class NavigationService : INavigationServiceInternal
+    public partial class NavigationService : INavigationService2
     {
         #region Debug
 
@@ -92,7 +92,7 @@ namespace Template10.Navigation
             // expire any state (based on expiry delta from today)
             foreach (var nav in Instances)
             {
-                var facade = nav.FrameFacade as ITemplate10FrameInternal;
+                var facade = nav.FrameEx as IFrameEx2;
                 var state = await facade.GetFrameStateAsync();
                 var setting = await state.TryGetCacheDateKeyAsync();
 
@@ -113,8 +113,8 @@ namespace Template10.Navigation
 
         public ITemplate10Window Window { get; private set; }
 
-        public ITemplate10Frame FrameFacade { get; private set; }
-        ITemplate10FrameInternal FrameFacadeInternal => FrameFacade as ITemplate10FrameInternal;
+        public IFrameEx FrameEx { get; private set; }
+        IFrameEx2 FrameFacadeInternal => FrameEx as IFrameEx2;
 
         public BackButton BackButtonHandling { get; set; }
 
@@ -129,7 +129,7 @@ namespace Template10.Navigation
 
         internal NavigationService(Frame frame) : this()
         {
-            FrameFacade = Template10FrameFactory.Create(frame, this as INavigationService);
+            FrameEx = Navigation.FrameEx.Create(frame, this as INavigationService);
             _ViewService = new Lazy<IViewService>(() => new ViewService());
         }
 
@@ -363,13 +363,13 @@ namespace Template10.Navigation
         }
 
         public event EventHandler<HandledEventArgs> BackRequested;
-        void INavigationServiceInternal.RaiseBackRequested(HandledEventArgs args)
+        void INavigationService2.RaiseBackRequested(HandledEventArgs args)
         {
             BackRequested?.Invoke(this, args);
         }
 
         public event EventHandler<HandledEventArgs> ForwardRequested;
-        void INavigationServiceInternal.RaiseForwardRequested(HandledEventArgs args)
+        void INavigationService2.RaiseForwardRequested(HandledEventArgs args)
         {
             ForwardRequested?.Invoke(this, args);
         }
@@ -384,7 +384,7 @@ namespace Template10.Navigation
 
         TypedEventHandler<Type> afterRestoreSavedNavigation;
         void RaiseAfterRestoreSavedNavigation() => afterRestoreSavedNavigation?.Invoke(this, CurrentPageType);
-        event TypedEventHandler<Type> INavigationServiceInternal.AfterRestoreSavedNavigation
+        event TypedEventHandler<Type> INavigationService2.AfterRestoreSavedNavigation
         {
             add => afterRestoreSavedNavigation += value;
             remove => afterRestoreSavedNavigation -= value;
@@ -394,7 +394,7 @@ namespace Template10.Navigation
 
         #region Save/Load Navigation methods
 
-        async Task INavigationServiceInternal.SaveAsync(bool navigateFrom)
+        async Task INavigationService2.SaveAsync(bool navigateFrom)
         {
             // save navigation state into settings
 
@@ -422,7 +422,7 @@ namespace Template10.Navigation
             await Task.CompletedTask;
         }
 
-        async Task<bool> INavigationServiceInternal.LoadAsync(bool navigateTo)
+        async Task<bool> INavigationService2.LoadAsync(bool navigateTo)
         {
             DebugWrite($"Frame: {FrameFacadeInternal.FrameId}");
 
@@ -462,7 +462,7 @@ namespace Template10.Navigation
                 // NavigatingToAsync/NavigatedToAsync
                 if (navigateTo)
                 {
-                    CurrentPageType = FrameFacade.Content?.GetType();
+                    CurrentPageType = FrameEx.Content?.GetType();
                     var toInfo = new NavigationInfo(CurrentPageType, null, await FrameFacadeInternal.GetPageStateAsync(CurrentPageType));
                     await Settings.ViewModelActionStrategy.NavigatingToAsync((viewModel, NavigationMode.New, true), null, toInfo, this);
                     await Settings.ViewModelActionStrategy.NavigatedToAsync((viewModel, NavigationMode.New, true), null, toInfo, this);
@@ -560,7 +560,7 @@ namespace Template10.Navigation
 
         public void ClearHistory() => FrameFacadeInternal.BackStack.Clear();
 
-        async Task INavigationServiceInternal.SuspendAsync()
+        async Task INavigationService2.SuspendAsync()
         {
             DebugWrite($"Frame: {FrameFacadeInternal.FrameId}");
 

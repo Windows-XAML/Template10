@@ -111,11 +111,10 @@
     <Compile Include="Behaviors\NavButtonBehavior.cs" />
     <Compile Include="Behaviors\NavToPageAction.cs" />
     <Compile Include="Extensions\WindowExtensions.cs" />
-    <Compile Include="Template10Frame\ITemplate10Frame.cs" />
-    <Compile Include="Template10Frame\ITemplate10FrameInternal.cs" />
-    <Compile Include="Template10Frame\Template10Frame.cs" />
-    <Compile Include="Template10Frame\Template10FrameFactory.cs" />
-    <Compile Include="Template10Frame\Template10FrameState.cs" />
+    <Compile Include="FrameEx\IFrameEx.cs" />
+    <Compile Include="FrameEx\IFrameEx2.cs" />
+    <Compile Include="FrameEx\FrameEx.cs" />
+    <Compile Include="FrameEx\FrameExStates.enum.cs" />
     <Compile Include="NavigationService\BackButton.enum.cs" />
     <Compile Include="Common\NavButtonsHelper.cs" />
     <Compile Include="Mvvm\ITemplate10ViewModel.cs" />
@@ -176,7 +175,6 @@
       <Name>Template10.Core.Windowing</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

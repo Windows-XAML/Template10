@@ -1,27 +1,23 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Template10.Mvvm;
+using Template10.Services.MarketplaceService;
 using Windows.UI.Xaml;
 
 namespace Sample.ViewModels
 {
     public class SettingsPageViewModel : ViewModelBase
     {
-        public override Task OnNavigatedToAsync(INavigatedToParameters parameter)
+        Services.SettingsService _settings;
+        MarketplaceService _marketplace;
+
+        public SettingsPageViewModel()
         {
-            return Task.CompletedTask;
+            _settings = Services.SettingsService.GetInstance();
+            _marketplace = MarketplaceService.Create();
         }
 
-        public SettingsPartViewModel SettingsPartViewModel { get; } = new SettingsPartViewModel();
-        public AboutPartViewModel AboutPartViewModel { get; } = new AboutPartViewModel();
-    }
-
-    public class SettingsPartViewModel : BindableBase
-    {
-        Services.SettingsServices.SettingsService _settings;
-
-        public SettingsPartViewModel() => _settings = Services.SettingsServices.SettingsService.GetInstance();
+        // Settings
 
         public bool UseShellBackButton
         {
@@ -35,35 +31,17 @@ namespace Sample.ViewModels
             set => Set(() => { _settings.AppTheme = value ? ApplicationTheme.Light : ApplicationTheme.Dark; });
         }
 
-        private string _BusyText = "Please wait...";
         public string BusyText
         {
-            get => _BusyText;
-            set
-            {
-                Set(ref _BusyText, value);
-                _ShowBusyCommand.RaiseCanExecuteChanged();
-            }
+            get => _settings.BusyText;
+            set => Set(() => { _settings.BusyText = value; });
         }
 
-        DelegateCommand _ShowBusyCommand;
-        public DelegateCommand ShowBusyCommand
-            => _ShowBusyCommand ?? (_ShowBusyCommand = new DelegateCommand(async () =>
-            {
-                Views.Busy.SetBusy(true, _BusyText);
-                await Task.Delay(5000);
-                Views.Busy.SetBusy(false);
-            }, () => !string.IsNullOrEmpty(BusyText)));
+        public void ShowBusy() => Views.Busy.ShowBusyFor(BusyText, 5000);
 
-        public void Set(Action set, [CallerMemberName]string propertyName = null)
-        {
-            set.Invoke();
-            RaisePropertyChanged(propertyName);
-        }
-    }
 
-    public class AboutPartViewModel : BindableBase
-    {
+        // About
+
         public Uri Logo => Windows.ApplicationModel.Package.Current.Logo;
 
         public string DisplayName => Windows.ApplicationModel.Package.Current.DisplayName;
@@ -74,11 +52,11 @@ namespace Sample.ViewModels
         {
             get
             {
-                var version = Windows.ApplicationModel.Package.Current.Id.Version;
-                return $"{version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
+                var v = Windows.ApplicationModel.Package.Current.Id.Version;
+                return $"{v.Major}.{v.Minor}.{v.Build}.{v.Revision}";
             }
         }
 
-        public Uri RateMe => new Uri($"ms-windows-store:review?PFN={Uri.EscapeUriString(Windows.ApplicationModel.Package.Current.Id.FamilyName)}");
+        public async void Review() => await _marketplace.LaunchAppReviewInStoreAsync();
     }
 }

@@ -10,6 +10,11 @@ namespace Template10.Mvvm
     public abstract class DependencyBindableBase : DependencyObject, IBindable
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        public virtual void Set(Action set, [CallerMemberName]string propertyName = null)
+        {
+            set.Invoke();
+            RaisePropertyChanged(propertyName);
+        }
 
         public virtual bool Set<T>(ref T storage, T value, [CallerMemberName]string propertyName = null)
         {

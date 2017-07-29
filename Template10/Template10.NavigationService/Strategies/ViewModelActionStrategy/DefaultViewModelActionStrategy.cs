@@ -5,11 +5,10 @@ using System.Threading.Tasks;
 using Template10.Common;
 using Template10.Navigation;
 using Template10.Mvvm;
-using Template10.Navigation;
 using Template10.Extensions;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using T10v2 = Template10.Mvvm;
+using T10v2 = Template10.Navigation;
 
 namespace Template10.Strategies
 {
@@ -48,7 +47,7 @@ namespace Template10.Strategies
             {
                 var parameters = new T10v2.NavigatedToParameters(operation.NavigationMode.ToPortableNavigationMode(), from, to, operation.Resuming, SessionState);
                 await vm.OnNavigatedToAsync(parameters);
-                (nav.FrameFacade.Content as Page).UpdateBindings();
+                (nav.FrameEx.Content as Page).UpdateBindings();
             }
         }
 

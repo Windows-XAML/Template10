@@ -34,7 +34,6 @@
         </controls:PageHeader>
 
         <RelativePanel
-            EntranceNavigationTransitionInfo.IsTargetElement="True"
             RelativePanel.AlignBottomWithPanel="True"
             RelativePanel.AlignLeftWithPanel="True"
             RelativePanel.AlignRightWithPanel="True"

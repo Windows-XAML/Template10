@@ -1,4 +1,5 @@
-﻿using Template10.Controls;
+﻿using System;
+using Template10.Controls;
 using Template10.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -29,7 +30,7 @@ namespace Sample.Views
             DependencyProperty.Register(nameof(IsBusy), typeof(bool), typeof(Busy), new PropertyMetadata(false));
 
         // hide and show busy dialog
-        public static void SetBusy(bool busy, string text = null)
+        public static void ShowBusyFor(string text = null, int milliseconds = int.MaxValue)
         {
             Template10Dispatcher.Current().Dispatch(() =>
             {
@@ -37,8 +38,23 @@ namespace Sample.Views
                 var view = modal.ModalContent as Busy;
                 if (view == null)
                     modal.ModalContent = view = new Busy();
-                modal.IsModal = view.IsBusy = busy;
+                modal.IsModal = view.IsBusy = true;
                 view.BusyText = text;
+            });
+            Template10Dispatcher.Current().Dispatch(() =>
+            {
+                HideBusy();
+            }, milliseconds);
+        }
+
+        public static void HideBusy()
+        {
+            Template10Dispatcher.Current().Dispatch(() =>
+            {
+                var modal = Window.Current.Content as ModalDialog;
+                var view = modal.ModalContent as Busy;
+                if (view != null)
+                    modal.IsModal = view.IsBusy = false;
             });
         }
     }

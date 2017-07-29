@@ -1,4 +1,4 @@
-namespace Template10.Mvvm
+namespace Template10.Navigation
 {
     // don't match the XAML enum name exactly, it causes too much coding trouble
 

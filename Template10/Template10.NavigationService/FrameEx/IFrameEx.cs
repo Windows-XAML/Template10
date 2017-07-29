@@ -3,7 +3,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Navigation
 {
-    public interface ITemplate10Frame
+    public interface IFrameEx
     {
         string FrameId { get; set; }
         object Content { get; }

@@ -3,8 +3,7 @@
     public class ContainerService : IContainerService
     {
         private static IContainerService _instance;
-        public static IContainerService Instance => GetInstance();
-        public static IContainerService GetInstance() => _instance ?? (_instance = new ContainerService(Settings.DefaultAdapter));
+        public static IContainerService GetInstance(IContainerAdapter adapter) => _instance ?? (_instance = new ContainerService(adapter));
         private ContainerService(IContainerAdapter adapter) => _adapter = adapter;
 
         public IContainerAdapter _adapter { get; set; }
