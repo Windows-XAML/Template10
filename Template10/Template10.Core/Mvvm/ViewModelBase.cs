@@ -40,6 +40,8 @@ namespace Template10.Mvvm
             return true;
         }
 
+        // add helper properties
+
         [JsonIgnore]
         public IWindowEx Window => NavigationService.GetWindow();
 
@@ -50,7 +52,9 @@ namespace Template10.Mvvm
         public INavigationService NavigationService { get; set; }
 
         [JsonIgnore]
-        public IDictionary<string, object> SessionState => SessionStateHelper.Current;
+        public IDictionary<string, object> SessionState => Core.SessionState.Instance();
+
+        // remove bindable overrides
 
         public sealed override void RaisePropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -71,6 +75,8 @@ namespace Template10.Mvvm
         {
             return base.Set(ref storage, value, propertyName);
         }
+
+        // remove object overrides
 
         public sealed override bool Equals(object obj)
         {

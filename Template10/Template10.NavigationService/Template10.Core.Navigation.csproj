@@ -110,10 +110,10 @@
     <Compile Include="Behaviors\BackButtonBehavior.cs" />
     <Compile Include="Behaviors\NavButtonBehavior.cs" />
     <Compile Include="Behaviors\NavToPageAction.cs" />
-    <Compile Include="FrameEx\IFrameEx.cs" />
-    <Compile Include="FrameEx\IFrameEx2.cs" />
-    <Compile Include="FrameEx\FrameEx.cs" />
-    <Compile Include="FrameEx\FrameExStates.enum.cs" />
+    <Compile Include="Navigation.FrameEx\IFrameEx.cs" />
+    <Compile Include="Navigation.FrameEx\IFrameEx2.cs" />
+    <Compile Include="Navigation.FrameEx\FrameEx.cs" />
+    <Compile Include="Navigation.FrameEx\FrameExStates.enum.cs" />
     <Compile Include="NavigationService\BackButton.enum.cs" />
     <Compile Include="Common\NavButtonsHelper.cs" />
     <Compile Include="Mvvm\ITemplate10ViewModel.cs" />

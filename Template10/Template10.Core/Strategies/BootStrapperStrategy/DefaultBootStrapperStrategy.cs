@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Template10.Portable.Common;
-using Template10.StartArgs;
+using Template10.Core;
 using Template10.Extensions;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -59,7 +59,7 @@ namespace Template10.Strategies
 
         // public methods
 
-        public async Task<UIElement> CreateRootAsync(ITemplate10StartArgs e)
+        public async Task<UIElement> CreateRootAsync(IStartArgsEx e)
         {
             DebugWrite();
             return await new Frame().CreateNavigationService();
@@ -76,7 +76,7 @@ namespace Template10.Strategies
             SetupAfterFirstWindow();
         }
 
-        public async Task<bool> ShowSplashAsync(ITemplate10StartArgs e)
+        public async Task<bool> ShowSplashAsync(IStartArgsEx e)
         {
             var splash = await CreateSpashAsync(e.LaunchActivatedEventArgs.SplashScreen);
             if (splash == null)
@@ -117,7 +117,7 @@ namespace Template10.Strategies
 
         // public properties
 
-        public Func<ITemplate10StartArgs, Task> OnStartAsyncDelegate { get; set; } = null;
+        public Func<IStartArgsEx, Task> OnStartAsyncDelegate { get; set; } = null;
 
         ValueWithHistory<BootstrapperStates> _status = new ValueWithHistory<BootstrapperStates>(BootstrapperStates.None, (date, before, after) =>
         {
@@ -147,14 +147,14 @@ namespace Template10.Strategies
 
         UIElement _rootElement;
         static SemaphoreSlim StartOrchestrationAsyncSemaphore = new SemaphoreSlim(1, 1);
-        public async void StartOrchestrationAsync(IActivatedEventArgs e, Template10StartArgs.StartKinds kind)
+        public async void StartOrchestrationAsync(IActivatedEventArgs e, StartArgsEx.StartKinds kind)
         {
             await StartOrchestrationAsyncSemaphore.WaitAsync();
 
             try
             {
                 DebugWrite();
-                var args = Template10StartArgs.Create(e, kind);
+                var args = StartArgsEx.Create(e, kind);
 
                 if (args.ThisIsFirstStart)
                 {

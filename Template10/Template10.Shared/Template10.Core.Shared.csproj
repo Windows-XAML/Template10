@@ -11,7 +11,7 @@
     <AssemblyName>Template10.Shared</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
+    <TargetPlatformVersion>10.0.15063.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
@@ -107,15 +107,18 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BootStrapper\BootStrapperHelper.cs" />
-    <Compile Include="BootStrapper\IBootStrapperShared.cs" />
+    <Compile Include="Core.BootStrapper\IBootStrapperShared.cs" />
+    <Compile Include="Core.DispatcherEx\DispatcherEx.cs" />
+    <Compile Include="Core.DispatcherEx\IDispatcherEx.cs" />
+    <Compile Include="Core.DispatcherEx\IDispatcherEx2.cs" />
+    <Compile Include="Core.StartArgsEx\IStartArgsEx.cs" />
+    <Compile Include="Core.StartArgsEx\StartArgsEx.cs" />
+    <Compile Include="Core.StartArgsEx\StartCauses.enum.cs" />
+    <Compile Include="Core.StartArgsEx\StartKinds.enum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SessionState\Extensions.cs" />
-    <Compile Include="SessionState\SessionState.cs" />
-    <Compile Include="SessionState\SessionStateHelper.cs" />
-    <Compile Include="Utilities\DeviceUtils.cs" />
-    <Compile Include="Utilities\DialogUtils.cs" />
-    <Compile Include="Utilities\MonitorUtils.cs" />
+    <Compile Include="Core.SessionState\Extensions.cs" />
+    <Compile Include="Core.SessionState\SessionState.cs" />
+    <Compile Include="Core.SessionState\SessionStateHelper.cs" />
     <EmbeddedResource Include="Properties\Template10.Shared.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -126,6 +129,10 @@
     <ProjectReference Include="..\..\Services\Template10.Services.FileService\Service\Template10.Services.FileService.csproj">
       <Project>{fd4892b4-4cf8-4c74-b28f-ad7623e405e6}</Project>
       <Name>Template10.Services.FileService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.LoggingService\Service\Template10.Services.LoggingService.csproj">
+      <Project>{EADDE808-BF0D-4EBC-B4CA-9FDA63B53862}</Project>
+      <Name>Template10.Services.LoggingService</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Services\Template10.Services.Messenger\Service\Template10.Services.Messenging.csproj">
       <Project>{E14BCD62-B2A4-4AA2-95A8-6A556A31FB29}</Project>
@@ -146,10 +153,6 @@
     <ProjectReference Include="..\..\Template10.XAML\Template10.XAML.csproj">
       <Project>{af4f2a41-d0e8-4cb2-950f-ed523c29b19c}</Project>
       <Name>Template10.XAML</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Template10.WindowService\Template10.Core.Windowing.csproj">
-      <Project>{9cad4451-5adf-48d3-b690-8b341a95a228}</Project>
-      <Name>Template10.Core.Windowing</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

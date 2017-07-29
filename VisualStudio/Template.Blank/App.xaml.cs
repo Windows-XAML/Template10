@@ -1,7 +1,7 @@
 ﻿using System;
 using Template10.Core;
 using Template10.Common;
-using Template10.StartArgs;
+using Template10.Core;
 using Template10.Extensions;
 using Windows.ApplicationModel.Activation;
 using System.Threading.Tasks;
@@ -16,7 +16,7 @@ namespace Sample
             InitializeComponent();
         }
 
-        public override async Task OnStartAsync(ITemplate10StartArgs e)
+        public override async Task OnStartAsync(IStartArgsEx e)
         {
             await NavigationService.NavigateAsync(typeof(Views.MainPage));
         }

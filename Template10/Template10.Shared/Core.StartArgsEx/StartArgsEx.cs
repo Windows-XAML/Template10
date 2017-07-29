@@ -1,16 +1,16 @@
 ﻿using System;
 using Windows.ApplicationModel.Activation;
 
-namespace Template10.StartArgs
+namespace Template10.Core
 {
-    public partial class Template10StartArgs : ITemplate10StartArgs
+    public partial class StartArgsEx : IStartArgsEx
     {
-        public static ITemplate10StartArgs Create(object eventArgs, StartKinds kind)
-          => new Template10StartArgs(eventArgs, kind);
+        public static IStartArgsEx Create(object eventArgs, StartKinds kind)
+          => new StartArgsEx(eventArgs, kind);
 
         internal static int Starts { get; private set; } = 0;
 
-        private Template10StartArgs(object eventArgs, StartKinds kind)
+        private StartArgsEx(object eventArgs, StartKinds kind)
         {
             Starts++;
             StartKind = kind;
@@ -58,7 +58,7 @@ namespace Template10.StartArgs
         public LaunchActivatedEventArgs LaunchActivatedEventArgs => EventArgs as LaunchActivatedEventArgs;
         public BackgroundActivatedEventArgs BackgroundActivatedEventArgs => EventArgs as BackgroundActivatedEventArgs;
 
-        public Template10StartArgs.StartCauses StartCause
+        public StartArgsEx.StartCauses StartCause
         {
             get
             {
@@ -66,27 +66,27 @@ namespace Template10.StartArgs
                 {
                     case IBackgroundActivatedEventArgs e:
                         {
-                            return Template10StartArgs.StartCauses.BackgroundTrigger;
+                            return StartArgsEx.StartCauses.BackgroundTrigger;
                         }
                     case IToastNotificationActivatedEventArgs e:
                         {
-                            return Template10StartArgs.StartCauses.Toast;
+                            return StartArgsEx.StartCauses.Toast;
                         }
                     // TODO for RS3: ICommandLine
                     case ILaunchActivatedEventArgs e when e != null:
                         switch (e.TileId)
                         {
                             case "App" when string.IsNullOrEmpty(e?.Arguments):
-                                return Template10StartArgs.StartCauses.Primary;
+                                return StartArgsEx.StartCauses.Primary;
                             case "App" when !string.IsNullOrEmpty(e?.Arguments):
-                                return Template10StartArgs.StartCauses.JumpListItem;
+                                return StartArgsEx.StartCauses.JumpListItem;
                             case string id when !string.IsNullOrEmpty(id):
-                                return Template10StartArgs.StartCauses.SecondaryTile;
+                                return StartArgsEx.StartCauses.SecondaryTile;
                             default:
-                                return Template10StartArgs.StartCauses.Undetermined;
+                                return StartArgsEx.StartCauses.Undetermined;
                         }
                     default:
-                        return Template10StartArgs.StartCauses.Undetermined;
+                        return StartArgsEx.StartCauses.Undetermined;
                 }
             }
         }

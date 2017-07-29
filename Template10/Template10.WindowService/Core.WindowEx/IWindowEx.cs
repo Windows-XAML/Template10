@@ -6,16 +6,14 @@ using Windows.UI.Xaml;
 
 namespace Template10.Core
 {
-    public interface IWindowEx
+    public interface IWindowEx : IWindowEx2
     {
-        Window Window { get; }
         ApplicationView ApplicationView { get; }
         bool IsMainView { get; }
         UIElement Content { get; set; }
         IDispatcherEx Dispatcher { get; }
         DisplayInformation DisplayInformation { get; }
         UIViewSettings UIViewSettings { get; }
-
         void Close();
     }
 }

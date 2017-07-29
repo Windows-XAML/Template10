@@ -2,6 +2,6 @@
 {
     public static class SessionStateHelper
     {
-        public static SessionState Current => SessionState.Instance;
+        
     }
 }

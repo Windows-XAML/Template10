@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Template10.Common;
 using Template10.Services.Messenger;
 using Template10.Navigation;
-using Template10.StartArgs;
+using Template10.Core;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 
@@ -32,11 +32,11 @@ namespace Template10.Strategies
             }
         }
 
-        public bool IsResuming(ITemplate10StartArgs e)
+        public bool IsResuming(IStartArgsEx e)
         {
             if (Settings.AppAlwaysResumes
-                && e?.StartKind == Template10StartArgs.StartKinds.Launch
-                && e?.StartCause == Template10StartArgs.StartCauses.Primary)
+                && e?.StartKind == StartArgsEx.StartKinds.Launch
+                && e?.StartCause == StartArgsEx.StartCauses.Primary)
             {
                 return true;
             }
@@ -74,7 +74,7 @@ namespace Template10.Strategies
             await Task.CompletedTask;
         }
 
-        public async Task<bool> ResumeAsync(ITemplate10StartArgs e)
+        public async Task<bool> ResumeAsync(IStartArgsEx e)
         {
             if (!IsResuming(e))
             {
@@ -83,7 +83,7 @@ namespace Template10.Strategies
 
             PreviouslySuspended = false;
 
-            if (e?.StartKind == Template10StartArgs.StartKinds.Launch)
+            if (e?.StartKind == StartArgsEx.StartKinds.Launch)
             {
                 foreach (var nav in NavigationService.Instances.Select(x => x as INavigationService2))
                 {

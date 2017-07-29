@@ -7,11 +7,11 @@ using Template10.Services.Container;
 using Template10.Services.LoggingService;
 using Template10.Services.Messenger;
 using Template10.Navigation;
-using Template10.StartArgs;
+using Template10.Core;
 using Template10.Strategies;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
-using static Template10.StartArgs.Template10StartArgs;
+using static Template10.Core.StartArgsEx;
 using Template10.Core;
 
 namespace Template10
@@ -39,7 +39,7 @@ namespace Template10
         public IMessengerService MessengerService => Settings.MessengerService;
         public INavigationService NavigationService => Navigation.NavigationService.Default;
         public IDispatcherEx Dispatcher => Settings.DefaultDispatcher;
-        public IDictionary<string, object> SessionState => SessionStateHelper.Current;
+        public IDictionary<string, object> SessionState => Core.SessionState.Instance();
 
         // net-new properties 
 
@@ -47,8 +47,8 @@ namespace Template10
 
         // implementation methods
 
-        public abstract Task OnStartAsync(ITemplate10StartArgs e);
-        public virtual async Task<UIElement> CreateRootElement(ITemplate10StartArgs e) => await _strategy.CreateRootAsync(e);
+        public abstract Task OnStartAsync(IStartArgsEx e);
+        public virtual async Task<UIElement> CreateRootElement(IStartArgsEx e) => await _strategy.CreateRootAsync(e);
         public virtual async Task<UIElement> CreateSpashAsync(SplashScreen e) => await _strategy.CreateSpashAsync(e);
 
         // hidden events

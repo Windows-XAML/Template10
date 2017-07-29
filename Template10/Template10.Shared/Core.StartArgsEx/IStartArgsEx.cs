@@ -1,17 +1,17 @@
 ﻿using Windows.ApplicationModel.Activation;
 
-namespace Template10.StartArgs
+namespace Template10.Core
 {
-    public interface ITemplate10StartArgs
+    public interface IStartArgsEx
     {
         bool ThisIsFirstStart { get; }
-        Template10StartArgs.StartKinds StartKind { get; }
-        Template10StartArgs.StartCauses StartCause { get; }
+        StartArgsEx.StartKinds StartKind { get; }
+        StartArgsEx.StartCauses StartCause { get; }
         ApplicationExecutionState PreviousExecutionState { get; }
 
         object EventArgs { get; }
 
-        BackgroundActivatedEventArgs BackgroundActivatedEventArgs { get; }
+        Windows.ApplicationModel.Activation.BackgroundActivatedEventArgs BackgroundActivatedEventArgs { get; }
         CachedFileUpdaterActivatedEventArgs CachedFileUpdaterActivatedEventArgs { get; }
         FileActivatedEventArgs FileActivatedEventArgs { get; }
         FileOpenPickerActivatedEventArgs FileOpenPickerActivatedEventArgs { get; }

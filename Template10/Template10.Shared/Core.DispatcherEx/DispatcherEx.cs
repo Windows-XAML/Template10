@@ -2,22 +2,19 @@
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Template10.Core;
+using Template10.Services.LoggingService;
 using Windows.UI.Core;
 
 namespace Template10.Core
 {
-
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/DispatcherWrapper
     public class DispatcherEx : IDispatcherEx
     {
         #region Debug
 
-        static void DebugWrite(string text = null, Services.LoggingService.Severities severity = Services.LoggingService.Severities.Template10, [CallerMemberName]string caller = null) =>
-            Services.LoggingService.LoggingService.WriteLine(text, severity, caller: $"DispatcherWrapper.{caller}");
+        static void DebugWrite(string text = null, Severities severity = Severities.Template10, [CallerMemberName]string caller = null) =>
+            LoggingService.WriteLine(text, severity, caller: $"DispatcherWrapper.{caller}");
 
         #endregion
-
-        public static IDispatcherEx Current() => WindowEx.Current().Dispatcher;
 
         public static IDispatcherEx Create(CoreDispatcher dispatcher)
         {
@@ -26,29 +23,30 @@ namespace Template10.Core
 
         private DispatcherEx(CoreDispatcher dispatcher)
         {
-            DebugWrite(caller: "Constructor");
-            this.dispatcher = dispatcher;
+            Two.CoreDispatcher = dispatcher;
         }
 
-        public bool HasThreadAccess() => dispatcher.HasThreadAccess;
+        public bool HasThreadAccess() => Two.CoreDispatcher.HasThreadAccess;
 
-        private readonly CoreDispatcher dispatcher;
+        IDispatcherEx2 Two => this as IDispatcherEx2;
+
+        CoreDispatcher IDispatcherEx2.CoreDispatcher { get; set; }
 
         public async Task<T> DispatchAsync<T>(Func<Task<T>> func, int delayms = 0, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal)
         {
             if (delayms > 0)
             {
-                await Task.Delay(delayms).ConfigureAwait(dispatcher.HasThreadAccess);
+                await Task.Delay(delayms).ConfigureAwait(Two.CoreDispatcher.HasThreadAccess);
             }
 
-            if (dispatcher.HasThreadAccess && priority == CoreDispatcherPriority.Normal)
+            if (Two.CoreDispatcher.HasThreadAccess && priority == CoreDispatcherPriority.Normal)
             {
                 return await func().ConfigureAwait(false);
             }
             else
             {
                 var tcs = new TaskCompletionSource<T>();
-                await dispatcher.RunAsync(priority, async () =>
+                await Two.CoreDispatcher.RunAsync(priority, async () =>
                 {
                     try
                     {
@@ -67,16 +65,16 @@ namespace Template10.Core
         public async Task DispatchAsync(Action action, int delayms = 0, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal)
         {
             if (delayms > 0)
-                await Task.Delay(delayms).ConfigureAwait(dispatcher.HasThreadAccess);
+                await Task.Delay(delayms).ConfigureAwait(Two.CoreDispatcher.HasThreadAccess);
 
-            if (dispatcher.HasThreadAccess && priority == CoreDispatcherPriority.Normal)
+            if (Two.CoreDispatcher.HasThreadAccess && priority == CoreDispatcherPriority.Normal)
             {
                 action();
             }
             else
             {
                 var tcs = new TaskCompletionSource<object>();
-                await dispatcher.RunAsync(priority, () =>
+                await Two.CoreDispatcher.RunAsync(priority, () =>
                 {
                     try
                     {
@@ -95,16 +93,16 @@ namespace Template10.Core
         public async Task DispatchAsync(Func<Task> func, int delayms = 0, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal)
         {
             if (delayms > 0)
-                await Task.Delay(delayms).ConfigureAwait(dispatcher.HasThreadAccess);
+                await Task.Delay(delayms).ConfigureAwait(Two.CoreDispatcher.HasThreadAccess);
 
-            if (dispatcher.HasThreadAccess && priority == CoreDispatcherPriority.Normal)
+            if (Two.CoreDispatcher.HasThreadAccess && priority == CoreDispatcherPriority.Normal)
             {
                 await func().ConfigureAwait(false);
             }
             else
             {
                 var tcs = new TaskCompletionSource<object>();
-                await dispatcher.RunAsync(priority, async () =>
+                await Two.CoreDispatcher.RunAsync(priority, async () =>
                 {
                     try
                     {
@@ -123,16 +121,16 @@ namespace Template10.Core
         public async Task<T> DispatchAsync<T>(Func<T> func, int delayms = 0, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal)
         {
             if (delayms > 0)
-                await Task.Delay(delayms).ConfigureAwait(dispatcher.HasThreadAccess);
+                await Task.Delay(delayms).ConfigureAwait(Two.CoreDispatcher.HasThreadAccess);
 
-            if (dispatcher.HasThreadAccess && priority == CoreDispatcherPriority.Normal)
+            if (Two.CoreDispatcher.HasThreadAccess && priority == CoreDispatcherPriority.Normal)
             {
                 return func();
             }
             else
             {
                 var tcs = new TaskCompletionSource<T>();
-                await dispatcher.RunAsync(priority, () =>
+                await Two.CoreDispatcher.RunAsync(priority, () =>
                 {
                     try
                     {
@@ -150,31 +148,31 @@ namespace Template10.Core
         public void Dispatch(Action action, int delayms = 0, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal)
         {
             if (delayms > 0)
-                Task.Delay(delayms).ConfigureAwait(dispatcher.HasThreadAccess).GetAwaiter().GetResult();
+                Task.Delay(delayms).ConfigureAwait(Two.CoreDispatcher.HasThreadAccess).GetAwaiter().GetResult();
 
-            if (dispatcher.HasThreadAccess && priority == CoreDispatcherPriority.Normal)
+            if (Two.CoreDispatcher.HasThreadAccess && priority == CoreDispatcherPriority.Normal)
             {
                 action();
             }
             else
             {
-                dispatcher.RunAsync(priority, () => action()).AsTask().ConfigureAwait(false).GetAwaiter().GetResult();
+                Two.CoreDispatcher.RunAsync(priority, () => action()).AsTask().ConfigureAwait(false).GetAwaiter().GetResult();
             }
         }
 
         public T Dispatch<T>(Func<T> action, int delayms = 0, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal)
         {
             if (delayms > 0)
-                Task.Delay(delayms).ConfigureAwait(dispatcher.HasThreadAccess).GetAwaiter().GetResult();
+                Task.Delay(delayms).ConfigureAwait(Two.CoreDispatcher.HasThreadAccess).GetAwaiter().GetResult();
 
-            if (dispatcher.HasThreadAccess && priority == CoreDispatcherPriority.Normal)
+            if (Two.CoreDispatcher.HasThreadAccess && priority == CoreDispatcherPriority.Normal)
             {
                 return action();
             }
             else
             {
                 var tcs = new TaskCompletionSource<T>();
-                dispatcher.RunAsync(priority, delegate
+                Two.CoreDispatcher.RunAsync(priority, delegate
                 {
                     try
                     {
@@ -195,7 +193,7 @@ namespace Template10.Core
                 await Task.Delay(delayms).ConfigureAwait(false);
 
             var tcs = new TaskCompletionSource<object>();
-            await dispatcher.RunIdleAsync(delegate
+            await Two.CoreDispatcher.RunIdleAsync(delegate
             {
                 try
                 {
@@ -216,7 +214,7 @@ namespace Template10.Core
                 await Task.Delay(delayms).ConfigureAwait(false);
 
             var tcs = new TaskCompletionSource<object>();
-            await dispatcher.RunIdleAsync(async delegate
+            await Two.CoreDispatcher.RunIdleAsync(async delegate
             {
                 try
                 {
@@ -237,7 +235,7 @@ namespace Template10.Core
                 await Task.Delay(delayms).ConfigureAwait(false);
 
             var tcs = new TaskCompletionSource<T>();
-            await dispatcher.RunIdleAsync(delegate
+            await Two.CoreDispatcher.RunIdleAsync(delegate
             {
                 try
                 {
@@ -256,7 +254,7 @@ namespace Template10.Core
             if (delayms > 0)
                 Task.Delay(delayms).ConfigureAwait(false).GetAwaiter().GetResult();
 
-            dispatcher.RunIdleAsync(args => action()).AsTask().ConfigureAwait(false).GetAwaiter().GetResult();
+            Two.CoreDispatcher.RunIdleAsync(args => action()).AsTask().ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         public T DispatchIdle<T>(Func<T> action, int delayms = 0) where T : class
@@ -265,7 +263,7 @@ namespace Template10.Core
                 Task.Delay(delayms).ConfigureAwait(false).GetAwaiter().GetResult();
 
             var tcs = new TaskCompletionSource<T>();
-            dispatcher.RunIdleAsync(delegate
+            Two.CoreDispatcher.RunIdleAsync(delegate
             {
                 try
                 {

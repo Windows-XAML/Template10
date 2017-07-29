@@ -36,7 +36,7 @@ namespace Template10.Core
 
         private WindowEx(Window window)
         {
-            Window = window;
+            Two.Window = window;
             Dispatcher = DispatcherEx.Create(window.Dispatcher);
             window.CoreWindow.Closed += (s, e) => Instances.Remove(this);
             window.Closed += (s, e) => Instances.Remove(this);
@@ -46,17 +46,17 @@ namespace Template10.Core
 
             _DisplayInformation = new Lazy<DisplayInformation>(() =>
             {
-                Window.Activate();
+                Two.Window.Activate();
                 return Dispatcher.Dispatch(() => DisplayInformation.GetForCurrentView());
             });
             _ApplicationView = new Lazy<ApplicationView>(() =>
             {
-                Window.Activate();
+                Two.Window.Activate();
                 return Dispatcher.Dispatch(() => ApplicationView.GetForCurrentView());
             });
             _UIViewSettings = new Lazy<UIViewSettings>(() =>
             {
-                Window.Activate();
+                Two.Window.Activate();
                 return Dispatcher.Dispatch(() => UIViewSettings.GetForCurrentView());
             });
         }
@@ -89,9 +89,11 @@ namespace Template10.Core
 
         public UIElement Content
         {
-            get => Dispatcher.Dispatch(() => Window.Content);
-            set => Dispatcher.Dispatch(() => Window.Content = value);
+            get => Dispatcher.Dispatch(() => Two.Window.Content);
+            set => Dispatcher.Dispatch(() => Two.Window.Content = value);
         }
+
+        IWindowEx2 Two => this as IWindowEx2;
 
         Lazy<DisplayInformation> _DisplayInformation;
         public DisplayInformation DisplayInformation => _DisplayInformation.Value;
@@ -102,10 +104,10 @@ namespace Template10.Core
         Lazy<UIViewSettings> _UIViewSettings;
         public UIViewSettings UIViewSettings => _UIViewSettings.Value;
 
-        public Window Window { get; }
+        Window IWindowEx2.Window { get; set; }
 
         public IDispatcherEx Dispatcher { get; }
 
-        public void Close() { Window.Close(); }
+        public void Close() { Two.Window.Close(); }
     }
 }

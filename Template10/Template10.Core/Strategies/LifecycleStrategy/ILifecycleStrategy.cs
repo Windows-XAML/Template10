@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Template10.Common;
-using Template10.StartArgs;
+using Template10.Core;
 using Windows.ApplicationModel;
 
 namespace Template10.Strategies
@@ -11,9 +11,9 @@ namespace Template10.Strategies
     public interface ILifecycleStrategy
     {
         bool PreviouslySuspended { get; set; }
-        bool IsResuming(ITemplate10StartArgs e);
+        bool IsResuming(IStartArgsEx e);
 
-        Task<bool> ResumeAsync(ITemplate10StartArgs e);
+        Task<bool> ResumeAsync(IStartArgsEx e);
         Task SuspendAsync(ISuspendingEventArgs e);
         Task ResumingAsync();
     }

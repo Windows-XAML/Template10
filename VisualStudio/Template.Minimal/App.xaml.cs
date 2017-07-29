@@ -2,8 +2,8 @@
 using Windows.UI.Xaml.Data;
 using System.Diagnostics;
 using Template10;
-using Template10.StartArgs;
-using static Template10.StartArgs.Template10StartArgs;
+using Template10.Core;
+using static Template10.Core.StartArgsEx;
 
 namespace Sample
 {
@@ -22,7 +22,7 @@ namespace Sample
             //Settings.AutoExtendExecutionSession = false;
         }
 
-        public override async Task OnStartAsync(ITemplate10StartArgs e)
+        public override async Task OnStartAsync(IStartArgsEx e)
         {
             Windows.UI.Xaml.Window.Current.VisibilityChanged += (s, args) =>
             {

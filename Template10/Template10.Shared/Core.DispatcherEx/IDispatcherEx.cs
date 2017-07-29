@@ -5,7 +5,7 @@ namespace Template10.Core
 {
     using Windows.UI.Core;
 
-    public interface IDispatcherEx
+    public interface IDispatcherEx : IDispatcherEx2
     {
         void Dispatch(Action action, int delayms = 0, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal);
         T Dispatch<T>(Func<T> action, int delayms = 0, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal);

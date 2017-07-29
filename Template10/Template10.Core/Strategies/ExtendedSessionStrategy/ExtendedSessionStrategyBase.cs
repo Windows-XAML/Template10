@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Template10.Common;
-using Template10.StartArgs;
+using Template10.Core;
 
 namespace Template10.Strategies
 {
@@ -12,7 +12,7 @@ namespace Template10.Strategies
             _manager = new ExtendedSessionManager();
         }
 
-        public abstract Task StartupAsync(ITemplate10StartArgs e);
+        public abstract Task StartupAsync(IStartArgsEx e);
 
         public abstract Task SuspendingAsync();
 
