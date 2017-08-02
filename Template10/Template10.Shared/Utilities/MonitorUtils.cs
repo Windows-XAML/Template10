@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using Template10.Common;
-using Template10.Services.WindowWrapper;
+using Template10.Core;
 using Windows.Graphics.Display;
 using Windows.UI.ViewManagement;
 
-namespace Template10.Utils
+namespace Template10.Extensions
 {
     public class MonitorUtils
     {
@@ -15,16 +15,16 @@ namespace Template10.Utils
 
         public PixelsInfo Pixels { get; }
 
-        private MonitorUtils(IWindowWrapper windowWrapper)
+        private MonitorUtils(ITemplate10Window windowWrapper)
         {
-            var di = windowWrapper.DisplayInformation();
+            var di = windowWrapper.DisplayInformation;
             di.OrientationChanged += new WeakReference<MonitorUtils, DisplayInformation, object>(this)
             {
                 EventAction = (i, s, e) => i.Changed?.Invoke(i, EventArgs.Empty),
                 DetachAction = (i, w) => di.OrientationChanged -= w.Handler
             }.Handler;
 
-            var av = windowWrapper.ApplicationView();
+            var av = windowWrapper.ApplicationView;
             av.VisibleBoundsChanged += new WeakReference<MonitorUtils, ApplicationView, object>(this)
             {
                 EventAction = (i, s, e) => i.Changed?.Invoke(i, EventArgs.Empty),
@@ -37,19 +37,19 @@ namespace Template10.Utils
 
         #region singleton
 
-        private static Dictionary<IWindowWrapper, MonitorUtils> Cache = new Dictionary<IWindowWrapper, MonitorUtils>();
+        private static Dictionary<ITemplate10Window, MonitorUtils> Cache = new Dictionary<ITemplate10Window, MonitorUtils>();
 
-        public static MonitorUtils Current(IWindowWrapper windowWrapper = null)
+        public static MonitorUtils Current(ITemplate10Window windowWrapper = null)
         {
             windowWrapper = windowWrapper ?? throw new ArgumentNullException(nameof(windowWrapper));
             if (!Cache.ContainsKey(windowWrapper))
             {
                 var item = new MonitorUtils(windowWrapper);
                 Cache.Add(windowWrapper, item);
-                windowWrapper.ApplicationView().Consolidated += new WeakReference<MonitorUtils, ApplicationView, object>(item)
+                windowWrapper.ApplicationView.Consolidated += new WeakReference<MonitorUtils, ApplicationView, object>(item)
                 {
                     EventAction = (i, s, e) => Cache.Remove(windowWrapper),
-                    DetachAction = (i, w) => windowWrapper.ApplicationView().Consolidated -= w.Handler
+                    DetachAction = (i, w) => windowWrapper.ApplicationView.Consolidated -= w.Handler
                 }.Handler;
             }
             return Cache[windowWrapper];
@@ -68,9 +68,9 @@ namespace Template10.Utils
 
         public class InchesInfo
         {
-            private IWindowWrapper WindowWrapper;
+            private ITemplate10Window WindowWrapper;
 
-            public InchesInfo(IWindowWrapper windowWrapper)
+            public InchesInfo(ITemplate10Window windowWrapper)
             {
                 WindowWrapper = windowWrapper;
             }
@@ -84,9 +84,9 @@ namespace Template10.Utils
 
         public class PixelsInfo
         {
-            private IWindowWrapper WindowWrapper;
+            private ITemplate10Window WindowWrapper;
 
-            public PixelsInfo(IWindowWrapper windowWrapper)
+            public PixelsInfo(ITemplate10Window windowWrapper)
             {
                 WindowWrapper = windowWrapper;
             }

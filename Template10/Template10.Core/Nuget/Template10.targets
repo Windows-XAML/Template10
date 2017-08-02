@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <SourcePath>$(MSBuildThisFileDirectory)..\..\lib\uap10.0</SourcePath>
+    <ObjPath>$(TargetDir.Replace("\bin\", "\obj\"))</ObjPath>
+  </PropertyGroup>
+
+  <Target Name="Template10" BeforeTargets="Compile">
+
+    <Message Importance="high" Text="Template10 MSBuild.targets" />
+    <Message Importance="high" Text="Source: $(SourcePath)" />
+    <Message Importance="high" Text="Target: $(ObjPath)" />
+
+    <!-- test -->
+    <Error Text="[SOURCE] $(SourcePath)\Template10Library does not exist." Condition="!Exists('$(SourcePath)\Template10Library')" />
+
+    <!-- alert -->
+    <Message Importance="high" Text='xcopy "$(SourcePath)" "$(ObjPath)" /e/s/y/q' />
+
+    <!-- exec -->
+    <Exec Command='xcopy "$(SourcePath)" "$(ObjPath)" /e/s/y/q' />
+
+    <!-- test -->
+    <Error Text="[TARGET] $(ObjPath)Template10Library does not exist." Condition="!Exists('$(ObjPath)Template10Library')" />
+
+  </Target>
+
+</Project>

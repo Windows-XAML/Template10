@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xaml.Interactivity;
 using Template10.Common;
+using Template10.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Markup;
 
@@ -14,19 +15,19 @@ namespace Template10.Behaviors
     [ContentProperty(Name = nameof(Actions))]
     public class BackButtonBehavior : DependencyObject, IBehavior
     {
-        private IDispatcherWrapper _dispatcher;
+        private ITemplate10Dispatcher _dispatcher;
         public DependencyObject AssociatedObject { get; set; }
 
         public void Attach(DependencyObject associatedObject)
         {
             AssociatedObject = associatedObject;
-            _dispatcher = Services.WindowWrapper.WindowWrapper.Current().Dispatcher;
-            Services.BackButtonService.BackButtonService.BackRequested += BackButtonService_NavigateBack;
+            _dispatcher = Template10Window.Current().Dispatcher;
+            Services.BackButtonService.BackButtonService.GetInstance().BackRequested += BackButtonService_NavigateBack;
         }
 
         public void Detach()
         {
-            Services.BackButtonService.BackButtonService.BackRequested += BackButtonService_NavigateBack;
+            Services.BackButtonService.BackButtonService.GetInstance().BackRequested -= BackButtonService_NavigateBack;
         }
 
         private void BackButtonService_NavigateBack(object sender, HandledEventArgs e)

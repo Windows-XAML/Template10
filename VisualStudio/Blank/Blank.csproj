@@ -138,7 +138,7 @@
     <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Template10\Template10.Application\Template10.Application.csproj">
+    <ProjectReference Include="..\..\Template10\Template10.Application\Template10.Core.csproj">
       <Project>{ac3e4f10-6615-4e16-bb0f-104760c92b95}</Project>
       <Name>Template10.Application</Name>
     </ProjectReference>

@@ -1,8 +1,8 @@
-﻿<common:BootStrapper
+﻿<t10:BootStrapper
     x:Class="Sample.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:common="using:Template10.Common"
+    xmlns:t10="using:Template10"
     RequestedTheme="Light">
 
     <Application.Resources>
@@ -11,5 +11,5 @@
         </ResourceDictionary>
     </Application.Resources>
 
-</common:BootStrapper>
+</t10:BootStrapper>
 

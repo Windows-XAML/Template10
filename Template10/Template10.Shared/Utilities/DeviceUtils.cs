@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Template10.Services.WindowWrapper;
+using Template10.Core;
 using Windows.Foundation.Metadata;
 using Windows.Graphics.Display;
 using Windows.UI.ViewManagement;
 
-namespace Template10.Utils
+namespace Template10.Extensions
 {
     public class DeviceUtils
     {
@@ -13,7 +13,7 @@ namespace Template10.Utils
 
         public MonitorUtils MonitorUtils { get; private set; }
 
-        public IWindowWrapper WindowWrapper { get; private set; }
+        public ITemplate10Window WindowWrapper { get; private set; }
 
         [Flags]
         public enum DeviceDispositions
@@ -42,19 +42,19 @@ namespace Template10.Utils
             Mobile = 1 << 5
         }
 
-        private DeviceUtils(IWindowWrapper windowWrapper)
+        private DeviceUtils(ITemplate10Window windowWrapper)
         {
             MonitorUtils = MonitorUtils.Current(windowWrapper);
             WindowWrapper = windowWrapper ?? throw new ArgumentNullException(nameof(windowWrapper));
 
-            var di = windowWrapper.DisplayInformation();
+            var di = windowWrapper.DisplayInformation;
             di.OrientationChanged += new Common.WeakReference<DeviceUtils, DisplayInformation, object>(this)
             {
                 EventAction = (i, s, e) => i.Changed?.Invoke(i, EventArgs.Empty),
                 DetachAction = (i, w) => di.OrientationChanged -= w.Handler
             }.Handler;
 
-            var av = windowWrapper.ApplicationView();
+            var av = windowWrapper.ApplicationView;
             av.VisibleBoundsChanged += new Common.WeakReference<DeviceUtils, ApplicationView, object>(this)
             {
                 EventAction = (i, s, e) => i.Changed?.Invoke(i, EventArgs.Empty),
@@ -64,18 +64,18 @@ namespace Template10.Utils
 
         #region singleton
 
-        static Dictionary<IWindowWrapper, DeviceUtils> Cache = new Dictionary<IWindowWrapper, DeviceUtils>();
-        public static DeviceUtils Current(IWindowWrapper windowWrapper)
+        static Dictionary<ITemplate10Window, DeviceUtils> Cache = new Dictionary<ITemplate10Window, DeviceUtils>();
+        public static DeviceUtils Current(ITemplate10Window windowWrapper)
         {
             windowWrapper = windowWrapper ?? throw new ArgumentNullException(nameof(windowWrapper));
             if (!Cache.ContainsKey(windowWrapper))
             {
                 var item = new DeviceUtils(windowWrapper);
                 Cache.Add(windowWrapper, item);
-                windowWrapper.ApplicationView().Consolidated += new Common.WeakReference<DeviceUtils, ApplicationView, object>(item)
+                windowWrapper.ApplicationView.Consolidated += new Common.WeakReference<DeviceUtils, ApplicationView, object>(item)
                 {
                     EventAction = (i, s, e) => Cache.Remove(windowWrapper),
-                    DetachAction = (i, w) => windowWrapper.ApplicationView().Consolidated -= w.Handler
+                    DetachAction = (i, w) => windowWrapper.ApplicationView.Consolidated -= w.Handler
                 }.Handler;
             }
             return Cache[windowWrapper];
@@ -131,7 +131,7 @@ namespace Template10.Utils
 
         public bool IsTouch()
         {
-            return WindowWrapper.UIViewSettings().UserInteractionMode == UserInteractionMode.Touch;
+            return WindowWrapper.UIViewSettings.UserInteractionMode == UserInteractionMode.Touch;
         }
 
         public bool IsPhone()
@@ -157,7 +157,7 @@ namespace Template10.Utils
 
         public double DiagonalSize(Units units = Units.Inches)
         {
-            var di = WindowWrapper.DisplayInformation();
+            var di = WindowWrapper.DisplayInformation;
             double inches = 7;
             if (ApiInformation.IsPropertyPresent(typeof(DisplayInformation).ToString(), nameof(di.DiagonalSizeInInches)))
                 inches = di.DiagonalSizeInInches.GetValueOrDefault(inches);
