@@ -9,6 +9,9 @@ using Template10.Strategies;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using static Template10.Core.StartArgsEx;
+using Template10.Services.Messenger;
+using Template10.Services.Serialization;
+using Template10.Services.BackButtonService;
 
 namespace Template10
 {
@@ -59,26 +62,26 @@ namespace Template10
 
         void RegisterDependencyInjection(IBootStrapperStrategy strategy)
         {
-            _container = _container ?? new Services.Container.UnityContainerService();
-            _container.Register<Core.ISessionState, Core.SessionState>();
-            _container.Register<Services.Logging.ILoggingService, Services.Logging.LoggingService>();
-            _container.Register<Services.Messenger.IMessengerService, Services.Messenger.MvvmLightMessengerService>();
-            _container.Register<Services.Serialization.ISerializationService, Services.Serialization.JsonSerializationService>();
-            _container.Register<Services.BackButtonService.IBackButtonService, Services.BackButtonService.BackButtonService>();
+            _container = _container ?? new UnityContainerService();
+            _container.Register<ISessionState, SessionState>();
+            _container.Register<ILoggingService, LoggingService>();
+            _container.Register<IMessengerService, MvvmLightMessengerService>();
+            _container.Register<ISerializationService, JsonSerializationService>();
+            _container.Register<IBackButtonService, BackButtonService>();
             if (strategy == null)
             {
-                _container.Register<Strategies.IBootStrapperStrategy, DefaultBootStrapperStrategy>();
+                _container.Register<IBootStrapperStrategy, DefaultBootStrapperStrategy>();
             }
             else
             {
-                _container.Register<Strategies.IBootStrapperStrategy>(strategy);
+                _container.Register<IBootStrapperStrategy>(strategy);
             }
-            _container.Register<Strategies.ILifecycleStrategy, Strategies.DefaultLifecycleStrategy>();
-            _container.Register<Strategies.IStateStrategy, Strategies.DefaultStateStrategy>();
-            _container.Register<Strategies.ITitleBarStrategy, Strategies.DefaultTitleBarStrategy>();
-            _container.Register<Strategies.IExtendedSessionStrategy, Strategies.DefaultExtendedSessionStrategy>();
-            _container.Register<Strategies.IViewModelActionStrategy, Strategies.DefaultViewModelActionStrategy>();
-            _container.Register<Strategies.IViewModelResolutionStrategy, Strategies.DefaultViewModelResolutionStrategy>();
+            _container.Register<ILifecycleStrategy, DefaultLifecycleStrategy>();
+            _container.Register<IStateStrategy, DefaultStateStrategy>();
+            _container.Register<ITitleBarStrategy, DefaultTitleBarStrategy>();
+            _container.Register<IExtendedSessionStrategy, DefaultExtendedSessionStrategy>();
+            _container.Register<IViewModelActionStrategy, DefaultViewModelActionStrategy>();
+            _container.Register<IViewModelResolutionStrategy, DefaultViewModelResolutionStrategy>();
         }
 
         // redirected properties
