@@ -13,10 +13,14 @@ namespace Sample
         public App()
         {
             InitializeComponent();
+        }
 
-            this.RequestedTheme = Services.SettingsService.GetInstance().AppTheme;
+        public override Task OnInitializeAsync()
+        {
+            // this.RequestedTheme = Services.SettingsService.GetInstance().AppTheme;
             Settings.ShellBackButtonPreference = Services.SettingsService.GetInstance().ShellBackButtonPreference;
             Settings.CacheExpiry = Services.SettingsService.GetInstance().CacheExpiry;
+            return base.OnInitializeAsync();
         }
 
         public override async Task<UIElement> CreateSpashAsync(SplashScreen e)

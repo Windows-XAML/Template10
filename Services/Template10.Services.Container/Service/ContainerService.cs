@@ -5,8 +5,8 @@
         static IContainerService _Default;
         public static IContainerService Default
         {
-            get => _Default ?? throw new System.Exception("Default ContainerService has not yet been set.");
-            private set => _Default = value;
+            get => _Default;
+            set => _Default = value;
         }
 
         public ContainerService(IContainerAdapter adapter, bool setAsDefault = true)

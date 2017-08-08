@@ -35,11 +35,13 @@ namespace Template10
 
     public abstract partial class BootStrapper : Application, IBootStrapper
     {
-        IContainerService _container;
         internal BootStrapper(IContainerService container, IBootStrapperStrategy strategy)
             : this(strategy)
         {
-            _container = container;
+            if (Services.Container.ContainerService.Default != container)
+            {
+                Services.Container.ContainerService.Default = container;
+            }
         }
 
         public BootStrapper(IBootStrapperStrategy strategy = null)
@@ -48,50 +50,53 @@ namespace Template10
 
             RegisterDependencyInjection(strategy);
 
-            _BootStrapperStrategy.OnStartAsyncDelegate = OnStartAsync;
-            _BootStrapperStrategy.OnInitAsyncDelegate = OnInitializeAsync;
-            _BootStrapperStrategy.CreateSpashAsyncDelegate = CreateSpashAsync;
-            _BootStrapperStrategy.CreateRootElementAsyncDelegate = CreateRootElementAsync;
+            BootStrapperStrategy.OnStartAsyncDelegate = OnStartAsync;
+            BootStrapperStrategy.OnInitAsyncDelegate = OnInitializeAsync;
+            BootStrapperStrategy.CreateSpashAsyncDelegate = CreateSpashAsync;
+            BootStrapperStrategy.CreateRootElementAsyncDelegate = CreateRootElementAsync;
 
-            base.Resuming += _BootStrapperStrategy.HandleResuming;
-            base.Suspending += _BootStrapperStrategy.HandleSuspending;
-            base.EnteredBackground += _BootStrapperStrategy.HandleEnteredBackground;
-            base.LeavingBackground += _BootStrapperStrategy.HandleLeavingBackground;
-            base.UnhandledException += _BootStrapperStrategy.HandleUnhandledException;
+            base.Resuming += BootStrapperStrategy.HandleResuming;
+            base.Suspending += BootStrapperStrategy.HandleSuspending;
+            base.EnteredBackground += BootStrapperStrategy.HandleEnteredBackground;
+            base.LeavingBackground += BootStrapperStrategy.HandleLeavingBackground;
+            base.UnhandledException += BootStrapperStrategy.HandleUnhandledException;
         }
 
-        void RegisterDependencyInjection(IBootStrapperStrategy strategy)
+        void RegisterDependencyInjection(IBootStrapperStrategy bootStrapperStrategy)
         {
-            _container = _container ?? new UnityContainerService();
-            _container.Register<ISessionState, SessionState>();
-            _container.Register<ILoggingService, LoggingService>();
-            _container.Register<IMessengerService, MvvmLightMessengerService>();
-            _container.Register<ISerializationService, JsonSerializationService>();
-            _container.Register<IBackButtonService, BackButtonService>();
-            if (strategy == null)
+            if (Services.Container.ContainerService.Default == null)
             {
-                _container.Register<IBootStrapperStrategy, DefaultBootStrapperStrategy>();
+                Services.Container.ContainerService.Default = new UnityContainerService();
+            }
+            ContainerService.Register<ISessionState, SessionState>();
+            ContainerService.Register<ILoggingService, LoggingService>();
+            ContainerService.Register<IMessengerService, MvvmLightMessengerService>();
+            ContainerService.Register<ISerializationService, JsonSerializationService>();
+            ContainerService.Register<IBackButtonService, BackButtonService>();
+            if (bootStrapperStrategy == null)
+            {
+                ContainerService.Register<IBootStrapperStrategy, DefaultBootStrapperStrategy>();
             }
             else
             {
-                _container.Register<IBootStrapperStrategy>(strategy);
+                ContainerService.Register<IBootStrapperStrategy>(bootStrapperStrategy);
             }
-            _container.Register<ILifecycleStrategy, DefaultLifecycleStrategy>();
-            _container.Register<IStateStrategy, DefaultStateStrategy>();
-            _container.Register<ITitleBarStrategy, DefaultTitleBarStrategy>();
-            _container.Register<IExtendedSessionStrategy, DefaultExtendedSessionStrategy>();
-            _container.Register<IViewModelActionStrategy, DefaultViewModelActionStrategy>();
-            _container.Register<IViewModelResolutionStrategy, DefaultViewModelResolutionStrategy>();
+            ContainerService.Register<ILifecycleStrategy, DefaultLifecycleStrategy>();
+            ContainerService.Register<IStateStrategy, DefaultStateStrategy>();
+            ContainerService.Register<ITitleBarStrategy, DefaultTitleBarStrategy>();
+            ContainerService.Register<IExtendedSessionStrategy, DefaultExtendedSessionStrategy>();
+            ContainerService.Register<IViewModelActionStrategy, DefaultViewModelActionStrategy>();
+            ContainerService.Register<IViewModelResolutionStrategy, DefaultViewModelResolutionStrategy>();
         }
 
         // redirected properties
 
-        private IBootStrapperStrategy _BootStrapperStrategy => ContainerService.Resolve<IBootStrapperStrategy>();
+        private IBootStrapperStrategy BootStrapperStrategy => ContainerService.Resolve<IBootStrapperStrategy>();
         public IContainerService ContainerService => Services.Container.ContainerService.Default;
-        public Services.Messenger.IMessengerService MessengerService => ContainerService.Resolve<Services.Messenger.IMessengerService>();
+        public IMessengerService MessengerService => Central.MessengerService;
         public INavigationService NavigationService => Navigation.NavigationService.Default;
         public IDispatcherEx Dispatcher => WindowEx.GetDefault().Dispatcher;
-        public ISessionState SessionState => ContainerService.Resolve<ISessionState>();
+        public ISessionState SessionState => Central.SessionState;
 
         // net-new properties 
 
@@ -104,7 +109,7 @@ namespace Template10
         public virtual Task<UIElement> CreateRootElementAsync(IStartArgsEx e) => null;
         public virtual Task<UIElement> CreateSpashAsync(SplashScreen e) => null;
 
-        // hidden events
+        // clean up the Application events
 
         private new event EventHandler<object> Resuming;
         private new event SuspendingEventHandler Suspending;
@@ -112,18 +117,18 @@ namespace Template10
         private new event EnteredBackgroundEventHandler EnteredBackground;
         private new event LeavingBackgroundEventHandler LeavingBackground;
 
-        // hidden overrides
+        // clean up the Application overrides
 
-        protected override sealed void OnActivated(IActivatedEventArgs e) { LogThis(); _BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate); }
-        protected override sealed void OnCachedFileUpdaterActivated(CachedFileUpdaterActivatedEventArgs e) { LogThis(); _BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate); }
-        protected override sealed void OnFileActivated(FileActivatedEventArgs e) { LogThis(); _BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate); }
-        protected override sealed void OnFileOpenPickerActivated(FileOpenPickerActivatedEventArgs e) { LogThis(); _BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate); }
-        protected override sealed void OnFileSavePickerActivated(FileSavePickerActivatedEventArgs e) { LogThis(); _BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate); }
-        protected override sealed void OnSearchActivated(SearchActivatedEventArgs e) { LogThis(); _BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate); }
-        protected override sealed void OnShareTargetActivated(ShareTargetActivatedEventArgs e) { LogThis(); _BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate); }
-        protected override sealed void OnLaunched(LaunchActivatedEventArgs e) { LogThis(); _BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Launch); }
+        protected override sealed void OnActivated(IActivatedEventArgs e) { LogThis(); BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate); }
+        protected override sealed void OnCachedFileUpdaterActivated(CachedFileUpdaterActivatedEventArgs e) { LogThis(); BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate); }
+        protected override sealed void OnFileActivated(FileActivatedEventArgs e) { LogThis(); BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate); }
+        protected override sealed void OnFileOpenPickerActivated(FileOpenPickerActivatedEventArgs e) { LogThis(); BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate); }
+        protected override sealed void OnFileSavePickerActivated(FileSavePickerActivatedEventArgs e) { LogThis(); BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate); }
+        protected override sealed void OnSearchActivated(SearchActivatedEventArgs e) { LogThis(); BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate); }
+        protected override sealed void OnShareTargetActivated(ShareTargetActivatedEventArgs e) { LogThis(); BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate); }
+        protected override sealed void OnLaunched(LaunchActivatedEventArgs e) { LogThis(); BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Launch); }
         protected override sealed void OnBackgroundActivated(BackgroundActivatedEventArgs e) { LogThis(); MessengerService.Send(new Messages.BackgroundActivatedMessage { EventArgs = e }); }
-        protected override sealed void OnWindowCreated(WindowCreatedEventArgs e) { LogThis(); _BootStrapperStrategy.OnWindowCreated(e); }
+        protected override sealed void OnWindowCreated(WindowCreatedEventArgs e) { LogThis(); BootStrapperStrategy.OnWindowCreated(e); }
 
         // clean up the object API
 

@@ -14,7 +14,7 @@ using Template10.Services.BackButtonService;
 
 namespace Template10.Strategies
 {
-    public partial class DefaultBootStrapperStrategy : Services.Logging.Loggable, IBootStrapperStrategy
+    public partial class DefaultBootStrapperStrategy : IBootStrapperStrategy
     {
         ILifecycleStrategy _lifecycleStrategy;
         IMessengerService _messengerService;
