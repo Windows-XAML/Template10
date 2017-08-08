@@ -12,6 +12,7 @@ using static Template10.Core.StartArgsEx;
 using Template10.Services.Messenger;
 using Template10.Services.Serialization;
 using Template10.Services.BackButtonService;
+using Template10.Services.KeyboardService;
 
 namespace Template10
 {
@@ -26,11 +27,11 @@ namespace Template10
 
     public abstract partial class BootStrapper : ILoggable
     {
-        ILoggingService ILoggable.LoggingService { get; set; }
+        ILoggingService ILoggable.LoggingService => Central.LoggingService;
         void LogThis(string text = null, Severities severity = Severities.Template10, [CallerMemberName]string caller = null)
-            => (this as ILoggable).LogThis(text, severity, caller: $"{GetType()}.{caller}");
+            => (this as ILoggable).LogThis(text, severity, caller: $"{caller}");
         void ILoggable.LogThis(string text, Severities severity, string caller)
-            => (this as ILoggable).LoggingService.WriteLine(text, severity, caller: $"{GetType()}.{caller}");
+            => (this as ILoggable).LoggingService.WriteLine(text, severity, caller: $"{caller}");
     }
 
     public abstract partial class BootStrapper : Application, IBootStrapper
@@ -48,7 +49,9 @@ namespace Template10
         {
             Current = this;
 
-            RegisterDependencyInjection(strategy);
+            RegisterDependencyObjects(strategy);
+
+            LogThis($"After {nameof(RegisterDependencyObjects)}");
 
             BootStrapperStrategy.OnStartAsyncDelegate = OnStartAsync;
             BootStrapperStrategy.OnInitAsyncDelegate = OnInitializeAsync;
@@ -62,8 +65,9 @@ namespace Template10
             base.UnhandledException += BootStrapperStrategy.HandleUnhandledException;
         }
 
-        void RegisterDependencyInjection(IBootStrapperStrategy bootStrapperStrategy)
+        void RegisterDependencyObjects(IBootStrapperStrategy bootStrapperStrategy)
         {
+            // services
             if (Services.Container.ContainerService.Default == null)
             {
                 Services.Container.ContainerService.Default = new UnityContainerService();
@@ -73,6 +77,9 @@ namespace Template10
             ContainerService.Register<IMessengerService, MvvmLightMessengerService>();
             ContainerService.Register<ISerializationService, JsonSerializationService>();
             ContainerService.Register<IBackButtonService, BackButtonService>();
+            ContainerService.Register<IKeyboardService, KeyboardService>();
+
+            // strategies
             if (bootStrapperStrategy == null)
             {
                 ContainerService.Register<IBootStrapperStrategy, DefaultBootStrapperStrategy>();
@@ -87,6 +94,12 @@ namespace Template10
             ContainerService.Register<IExtendedSessionStrategy, DefaultExtendedSessionStrategy>();
             ContainerService.Register<IViewModelActionStrategy, DefaultViewModelActionStrategy>();
             ContainerService.Register<IViewModelResolutionStrategy, DefaultViewModelResolutionStrategy>();
+
+            // delay some things until after first window is created
+            Central.MessengerService.Subscribe<Messages.WindowCreatedMessage>(this, e =>
+            {
+                ContainerService.Resolve<IBackButtonService>().Setup(); // TODO: unsubscribe
+            });
         }
 
         // redirected properties

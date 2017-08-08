@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using Template10.Services.KeyboardService;
 using Windows.Foundation.Metadata;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -14,19 +15,20 @@ namespace Template10.Services.BackButtonService
             return container.Resolve<IBackButtonService>();
         }
 
-        public BackButtonService()
+        IKeyboardService _keyboardService;
+        public BackButtonService(IKeyboardService keyboardService)
         {
-            EnsureListener();
+            _keyboardService = keyboardService;
         }
 
-        private static bool ensureListener = false;
-        private void EnsureListener()
+        private static bool setup = false;
+        public void Setup()
         {
-            if (ensureListener) return;
-            else ensureListener = true;
+            if (setup) return;
+            else setup = true;
 
-            var keyHelper = new KeyboardService.KeyboardHelper();
-            keyHelper.KeyDown = (e) =>
+            _keyboardService.Setup();
+            _keyboardService.AfterKeyDown = (e) =>
             {
                 e.Handled = true;
 

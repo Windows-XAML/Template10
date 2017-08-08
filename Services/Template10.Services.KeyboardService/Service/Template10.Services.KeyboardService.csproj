@@ -112,7 +112,6 @@
     <Compile Include="Services.KeyboardService\KeyboardEventArgs.cs" />
     <Compile Include="Services.KeyboardService\KeyboardHelper.cs" />
     <Compile Include="Services.KeyboardService\KeyboardService.cs" />
-    <Compile Include="Services.KeyboardService\KeyboardServiceBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Template10.Services.KeyboardService.rd.xml" />
   </ItemGroup>

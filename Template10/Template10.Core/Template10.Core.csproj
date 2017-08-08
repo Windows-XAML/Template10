@@ -161,6 +161,10 @@
       <Project>{524d4bcb-21a1-44f6-b5b2-2712a3e7718d}</Project>
       <Name>Template10.Services.Container.Unity</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.KeyboardService\Service\Template10.Services.KeyboardService.csproj">
+      <Project>{B540D0B5-3850-416F-AEC7-7737870E9CA2}</Project>
+      <Name>Template10.Services.KeyboardService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Services\Template10.Services.LoggingService\Service\Template10.Services.LoggingService.csproj">
       <Project>{eadde808-bf0d-4ebc-b4ca-9fda63b53862}</Project>
       <Name>Template10.Services.LoggingService</Name>

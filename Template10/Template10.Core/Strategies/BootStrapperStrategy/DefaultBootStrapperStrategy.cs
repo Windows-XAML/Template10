@@ -270,7 +270,7 @@ namespace Template10.Strategies
         {
             Status = before;
             try { method(); }
-            catch (Exception ex) { LogThis($"While {before}, Exception {ex.Message}"); }
+            catch (Exception ex) { LogThis($"Error in OperationWrapper while {before}, Exception {ex.Message}", severity: Services.Logging.Severities.Error); }
             finally { Status = after; }
         }
 
@@ -278,7 +278,7 @@ namespace Template10.Strategies
         {
             Status = before;
             try { await method(); }
-            catch (Exception ex) { LogThis($"While {before}, Exception {ex.Message}"); }
+            catch (Exception ex) { LogThis($"Error in OperationWrapperAsync while {before}, Exception {ex.Message}", severity: Services.Logging.Severities.Error); }
             finally { Status = after; }
         }
     }

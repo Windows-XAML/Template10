@@ -12,6 +12,7 @@ namespace Template10.Services.BackButtonService
         event TypedEventHandler<CancelEventArgs> BeforeForwardRequested;
         event TypedEventHandler<HandledEventArgs> ForwardRequested;
 
+        void Setup();
         HandledEventArgs RaiseBackRequested();
         HandledEventArgs RaiseForwardRequested();
         void UpdateBackButton(bool canGoBack, bool canGoForward = false);
