@@ -10,7 +10,8 @@
             Undetermined,
             JumpListItem,
             BackgroundTrigger,
-            CommandLine
+            CommandLine,
+            Restart
         }
     }
 }

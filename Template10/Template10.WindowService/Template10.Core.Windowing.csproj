@@ -11,8 +11,8 @@
     <AssemblyName>Template10.Services.WindowService</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.15063.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -107,17 +107,24 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core.WindowEx\IWindowEx2.cs" />
+    <Compile Include="Behaviors\DeviceDispositionBehavior.cs" />
+    <Compile Include="DispatcherEx\DispatcherEx.cs" />
+    <Compile Include="DispatcherEx\IDispatcherEx.cs" />
+    <Compile Include="DispatcherEx\IDispatcherEx2.cs" />
+    <Compile Include="WindowEx\IWindowEx2.cs" />
     <Compile Include="Extensions\WindowExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\DeviceUtils.cs" />
+    <Compile Include="Utilities\DialogUtils.cs" />
+    <Compile Include="Utilities\MonitorUtils.cs" />
     <Compile Include="View %28TODO%29\IViewLifetimeControl.cs" />
     <Compile Include="View %28TODO%29\IViewService.cs" />
     <Compile Include="View %28TODO%29\SecondaryViewSynchronizationContextDecorator.cs" />
     <Compile Include="View %28TODO%29\ViewLifetimeControl.cs" />
     <Compile Include="View %28TODO%29\ViewLifeTimeException.cs" />
     <Compile Include="View %28TODO%29\ViewService.cs" />
-    <Compile Include="Core.WindowEx\IWindowEx.cs" />
-    <Compile Include="Core.WindowEx\WindowEx.cs" />
+    <Compile Include="WindowEx\IWindowEx.cs" />
+    <Compile Include="WindowEx\WindowEx.cs" />
     <EmbeddedResource Include="Properties\Template10.Services.WindowService.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -125,10 +132,19 @@
       <Project>{eadde808-bf0d-4ebc-b4ca-9fda63b53862}</Project>
       <Name>Template10.Services.LoggingService</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Template10.CodeBehind\Template10.CodeBehind.csproj">
+      <Project>{B3A4E50E-9DCA-457E-BED5-B71D97B957F3}</Project>
+      <Name>Template10.CodeBehind</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Template10.Shared\Template10.Core.Shared.csproj">
       <Project>{1f9a6976-d8f9-459b-8aee-770b53904ff3}</Project>
       <Name>Template10.Core.Shared</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="WindowsMobile, Version=10.0.15063.0">
+      <Name>Windows Mobile Extensions for the UWP</Name>
+    </SDKReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

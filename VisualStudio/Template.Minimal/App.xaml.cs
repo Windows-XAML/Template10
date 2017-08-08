@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 using Windows.UI.Xaml.Data;
-using System.Diagnostics;
 using Template10;
 using Template10.Core;
-using static Template10.Core.StartArgsEx;
+using Windows.ApplicationModel.Activation;
+using Windows.UI.Xaml;
 
 namespace Sample
 {
@@ -14,43 +14,19 @@ namespace Sample
         {
             InitializeComponent();
 
-            //SettingsService _settings = SettingsService.Instance;
-            //RequestedTheme = _settings.AppTheme;
-            //// Settings.ShowShellBackButton = _settings.UseShellBackButton;
-            //Settings.SplashFactory = s => new Views.Splash(s);
-            //Settings.CacheMaxDuration = _settings.CacheMaxDuration;
-            //Settings.AutoExtendExecutionSession = false;
+            this.RequestedTheme = Services.SettingsService.GetInstance().AppTheme;
+            Settings.ShellBackButtonPreference = Services.SettingsService.GetInstance().ShellBackButtonPreference;
+            Settings.CacheExpiry = Services.SettingsService.GetInstance().CacheExpiry;
+        }
+
+        public override async Task<UIElement> CreateSpashAsync(SplashScreen e)
+        {
+            return new Views.Splash(e);
         }
 
         public override async Task OnStartAsync(IStartArgsEx e)
         {
-            Windows.UI.Xaml.Window.Current.VisibilityChanged += (s, args) =>
-            {
-                Debug.WriteLine($"Window Visible: {args.Visible}");
-            };
-
-            switch (e.StartKind)
-            {
-                case StartKinds.Prelaunch:
-                case StartKinds.Launch:
-                case StartKinds.Activate:
-                    switch (e.StartCause)
-                    {
-                        case StartCauses.Primary:
-                        case StartCauses.Toast:
-                        case StartCauses.SecondaryTile:
-                        case StartCauses.JumpListItem:
-                        case StartCauses.BackgroundTrigger:
-                        case StartCauses.CommandLine:
-                        case StartCauses.Undetermined:
-                        default:
-                            await NavigationService.NavigateAsync(typeof(Views.MainPage));
-                            break;
-                    }
-                    break;
-                case StartKinds.Background:
-                    break;
-            }
+            await NavigationService.NavigateAsync(typeof(Views.MainPage));
         }
     }
 }

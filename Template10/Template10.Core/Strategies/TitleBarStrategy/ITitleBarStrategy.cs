@@ -8,6 +8,6 @@ namespace Template10.Strategies
 {
     public interface ITitleBarStrategy
     {
-        void Startup();
+        void Update();
     }
 }

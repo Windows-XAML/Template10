@@ -8,20 +8,11 @@ namespace Template10.Extensions
 {
     public static class XamlExtensions
     {
-        public static void UpdateBindings(this Page page)
-        {
-            page.UpdateBindings();
-        }
+        public static void UpdateBindings(this Page page) => XamlUtils.UpdateBindings(page);
 
-        public static void InitializeBindings(this Page page)
-        {
-            page.InitializeBindings();
-        }
+        public static void InitializeBindings(this Page page) => XamlUtils.InitializeBindings(page);
 
-        public static void StopTrackingBindings(this Page page)
-        {
-            page.StopTrackingBindings();
-        }
+        public static void StopTrackingBindings(this Page page) => XamlUtils.StopTrackingBindings(page);
 
         public static T FirstAncestor<T>(this DependencyObject control) where T : DependencyObject
         {

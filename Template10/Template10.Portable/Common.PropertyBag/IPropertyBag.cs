@@ -1,23 +1,19 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
+using System.Threading.Tasks;
 
-namespace Template10.Portable.Common
+namespace Template10.Common
 {
-    public interface IPropertyBag
+
+    public interface IPropertyBagEx : IPropertyBagExSimple
     {
-        event PropertyChangedEventHandler MapChanged;
-
-        string[] AllKeys();
-        bool ContainsKey(string key);
-
-        T GetValue<T>(string key);
-        string GetString(string key);
-
-        (bool Success, string Value) TryGetValue(string key);
-        (bool Success, T Value) TryGetValue<T>(string key);
-
-        void SetValue<T>(string key, T value);
-        void SetString(string key, string value);
-
-        void Clear();
+        Task ClearAsync();
+        Task<string[]> GetKeysAsync();
+        Task<(bool Success, T Value)> TryGetAsync<T>(string key);
+        Task<(bool Success, string Value)> TryGetStringAsync(string key);
+        Task<bool> TrySetAsync<T>(string key, T value);
+        Task<bool> TrySetStringAsync(string key, string value);
+        IPropertyBagExPersistenceStrategy PersistenceStrategy { get; set; }
+        IPropertyBagExSerializationStrategy SerializationStrategy { get; set; }
     }
 }

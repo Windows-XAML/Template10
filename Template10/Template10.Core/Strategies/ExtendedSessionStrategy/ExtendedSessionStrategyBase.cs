@@ -4,7 +4,7 @@ using Template10.Core;
 
 namespace Template10.Strategies
 {
-    public abstract class ExtendedSessionStrategyBase : IExtendedSessionStrategyInternal
+    public abstract class ExtendedSessionStrategyBase : IExtendedSessionStrategy2
     {
         ExtendedSessionManager _manager;
         public ExtendedSessionStrategyBase()
@@ -21,17 +21,17 @@ namespace Template10.Strategies
             _manager.Dispose();
         }
 
-        ExtendedSessionKinds IExtendedSessionStrategyInternal.CurrentKind => _manager.CurrentKind;
+        ExtendedSessionKinds IExtendedSessionStrategy2.CurrentKind => _manager.CurrentKind;
 
-        bool IExtendedSessionStrategyInternal.IsActive => _manager.IsActive;
+        bool IExtendedSessionStrategy2.IsActive => _manager.IsActive;
 
-        bool IExtendedSessionStrategyInternal.IsStarted => _manager.IsStarted;
+        bool IExtendedSessionStrategy2.IsStarted => _manager.IsStarted;
 
-        bool IExtendedSessionStrategyInternal.IsRevoked => _manager.IsRevoked;
+        bool IExtendedSessionStrategy2.IsRevoked => _manager.IsRevoked;
 
-        int IExtendedSessionStrategyInternal.Progress => _manager.CurrentProgress;
+        int IExtendedSessionStrategy2.Progress => _manager.CurrentProgress;
 
-        async Task<bool> IExtendedSessionStrategyInternal.StartUnspecifiedAsync()
+        async Task<bool> IExtendedSessionStrategy2.StartUnspecifiedAsync()
         {
             if (_manager.IsActive)
             {
@@ -47,7 +47,7 @@ namespace Template10.Strategies
             }
         }
 
-        async Task<bool> IExtendedSessionStrategyInternal.StartSaveDataAsync()
+        async Task<bool> IExtendedSessionStrategy2.StartSaveDataAsync()
         {
             if (_manager.IsActive)
             {

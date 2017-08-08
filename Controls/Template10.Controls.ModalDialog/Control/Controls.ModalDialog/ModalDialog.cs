@@ -8,6 +8,12 @@ namespace Template10.Controls
 {
     public sealed class ModalDialog : ContentControl
     {
+        // TODO: what if Default is null and it is custom?
+        public Services.Container.IContainerService ContainerService { get; set; } 
+            = Services.Container.ContainerService.Default;
+        Services.BackButtonService.IBackButtonService _BackButtonService 
+            => ContainerService.Resolve<Services.BackButtonService.IBackButtonService>();
+
         public ModalDialog()
         {
             DefaultStyleKey = typeof(ModalDialog);
@@ -24,12 +30,12 @@ namespace Template10.Controls
 
         private void ModalDialog_Loaded(object sender, RoutedEventArgs e)
         {
-            Services.BackButtonService.BackButtonService.GetInstance().BackRequested += BackButtonService_NavigateBack;
+            _BackButtonService.BackRequested += BackButtonService_NavigateBack;
         }
 
         private void ModalDialog_Unloaded(object sender, RoutedEventArgs e)
         {
-            Services.BackButtonService.BackButtonService.GetInstance().BackRequested -= BackButtonService_NavigateBack;
+            _BackButtonService.BackRequested -= BackButtonService_NavigateBack;
         }
 
         private void BackButtonService_NavigateBack(object sender, Common.HandledEventArgs e)

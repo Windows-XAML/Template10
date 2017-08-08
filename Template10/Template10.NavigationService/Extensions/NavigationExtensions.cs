@@ -6,6 +6,7 @@ using Template10.Navigation;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+using Template10.Services.Serialization;
 
 namespace Template10.Extensions
 {

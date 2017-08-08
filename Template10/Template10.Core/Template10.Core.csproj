@@ -113,10 +113,8 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Behaviors\DeviceDispositionBehavior.cs" />
     <Compile Include="BootStrapper\BootStrapper.cs" />
     <Compile Include="BootStrapper\BootstrapperStates.cs" />
-    <Compile Include="Container\ContainerService.cs" />
     <Compile Include="Messages\BackgroundActivatedMessage.cs" />
     <Compile Include="Messages\BackRequestedMessage.cs" />
     <Compile Include="Messages\EnteredBackgroundMessage.cs" />
@@ -125,6 +123,7 @@
     <Compile Include="Messages\ResumingMessage.cs" />
     <Compile Include="Messages\SuspendingMessage.cs" />
     <Compile Include="Messages\UnhandledExceptionMessage.cs" />
+    <Compile Include="Messages\WindowCreatedMessage.cs" />
     <Compile Include="Mvvm\ViewModelBase.cs" />
     <Compile Include="Strategies\BootStrapperStrategy\DefaultBootStrapperStrategy.cs" />
     <Compile Include="BootStrapper\IBootStrapper.cs" />
@@ -134,21 +133,15 @@
     <Compile Include="Strategies\ExtendedSessionStrategy\DefaultExtendedSessionStrategy.cs" />
     <Compile Include="Strategies\ExtendedSessionStrategy\ExtendedSessionKinds.enum.cs" />
     <Compile Include="Strategies\ExtendedSessionStrategy\ExtendedSessionManager.cs" />
-    <Compile Include="Strategies\ExtendedSessionStrategy\ExtendedSessionStrategyBase.cs" />
     <Compile Include="Strategies\ExtendedSessionStrategy\IExtendedSessionStrategy.cs" />
-    <Compile Include="Strategies\ExtendedSessionStrategy\IExtendedSessionStrategyInternal.cs" />
+    <Compile Include="Strategies\ExtendedSessionStrategy\IExtendedSessionStrategy2.cs" />
     <Compile Include="Strategies\ExtendedSessionStrategy\Settings.cs" />
     <Compile Include="Strategies\LifecycleStrategy\DefaultLifecycleStrategy.cs" />
     <Compile Include="Strategies\LifecycleStrategy\ILifecycleStrategy.cs" />
     <Compile Include="Strategies\LifecycleStrategy\Settings.cs" />
-    <Compile Include="Strategies\PersistenceStrategy\DefaultPersistenceStrategy.cs" />
-    <Compile Include="Strategies\PersistenceStrategy\DefaultPersistenceStrategyFactory.cs" />
-    <Compile Include="Strategies\PersistenceStrategy\Settings.cs" />
     <Compile Include="Strategies\TitleBarStrategy\DefaultTitleBarStrategy.cs" />
     <Compile Include="Strategies\TitleBarStrategy\ITitleBarStrategy.cs" />
-    <Compile Include="Utilities\DeviceUtils.cs" />
-    <Compile Include="Utilities\DialogUtils.cs" />
-    <Compile Include="Utilities\MonitorUtils.cs" />
+    <Compile Include="Strategies\TitleBarStrategy\Settings.cs" />
     <EmbeddedResource Include="Properties\Template10.Core.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -160,21 +153,33 @@
       <Project>{8564f764-99d9-4473-b5e4-ac62cda73977}</Project>
       <Name>Template10.Services.BackService</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Services\Template10.Services.Container\Service\Template10.Services.Container.Service.csproj">
+    <ProjectReference Include="..\..\Services\Template10.Services.Container\Service\Template10.Services.Container.Core.csproj">
       <Project>{b4c8a753-3376-4c55-aff1-326f2d1cfcbc}</Project>
-      <Name>Template10.Services.ContainerService</Name>
+      <Name>Template10.Services.Container.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Services\Template10.Services.Container\UnityAdapter\Template10.Services.Container.Service.Unity.csproj">
+    <ProjectReference Include="..\..\Services\Template10.Services.Container\UnityAdapter\Template10.Services.Container.Unity.csproj">
       <Project>{524d4bcb-21a1-44f6-b5b2-2712a3e7718d}</Project>
-      <Name>Template10.Services.Container.Service.Unity</Name>
+      <Name>Template10.Services.Container.Unity</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Services\Template10.Services.LoggingService\Service\Template10.Services.LoggingService.csproj">
       <Project>{eadde808-bf0d-4ebc-b4ca-9fda63b53862}</Project>
       <Name>Template10.Services.LoggingService</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Services\Template10.Services.Messenger\Service\Template10.Services.Messenging.csproj">
+    <ProjectReference Include="..\..\Services\Template10.Services.Messenger\MvvmLight\Template10.Services.Messaging.MvvmLight.csproj">
+      <Project>{94037ef8-d55e-46f4-b92a-38ebdec5ecf8}</Project>
+      <Name>Template10.Services.Messaging.MvvmLight</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.Messenger\Service\Template10.Services.Messaging.Core.csproj">
       <Project>{e14bcd62-b2a4-4aa2-95a8-6a556a31fb29}</Project>
-      <Name>Template10.Services.Messenging</Name>
+      <Name>Template10.Services.Messaging.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.SerializationService\Service\Template10.Services.Serialization.csproj">
+      <Project>{D3A94520-4CD4-4D56-B30B-7E54FACE64BB}</Project>
+      <Name>Template10.Services.Serialization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.SettingsService\Service\Template10.Services.SettingsService.csproj">
+      <Project>{EBA14736-2C70-4E33-A156-221B44FF43C1}</Project>
+      <Name>Template10.Services.SettingsService</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Template10.CodeBehind\Template10.CodeBehind.csproj">
       <Project>{B3A4E50E-9DCA-457E-BED5-B71D97B957F3}</Project>

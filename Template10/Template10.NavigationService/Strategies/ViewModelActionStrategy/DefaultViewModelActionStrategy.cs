@@ -13,20 +13,18 @@ using T10v2 = Template10.Navigation;
 namespace Template10.Strategies
 {
 
-    public class DefaultViewModelActionStrategy : IViewModelActionStrategy
+    public class DefaultViewModelActionStrategy : Services.Logging.Loggable, IViewModelActionStrategy
     {
-        #region Debug
+        public DefaultViewModelActionStrategy(Core.ISessionState sessionState)
+        {
+            this.SessionState = sessionState;
+        }
 
-        private static void DebugWrite(string text = null, Services.LoggingService.Severities severity = Services.LoggingService.Severities.Template10, [CallerMemberName]string caller = null) =>
-            Services.LoggingService.LoggingService.WriteLine(text, severity, caller: $"{nameof(DefaultViewModelActionStrategy)}.{caller}");
-
-        #endregion
-
-        public IDictionary<string, object> SessionState { get; set; } = SessionStateHelper.Current;
+        public Core.ISessionState SessionState { get; private set; } 
 
         public async Task<bool> NavigatingToAsync((object ViewModel, NavigationMode NavigationMode, bool Resuming) operation, INavigationInfo from, INavigationInfo to, INavigationService nav)
         {
-            DebugWrite($"{operation.ViewModel}");
+            LogThis($"{operation.ViewModel}");
 
             if (operation.ViewModel is T10v2.INavigatingToAwareAsync vm && vm != null)
             {
@@ -41,7 +39,7 @@ namespace Template10.Strategies
 
         public async Task NavigatedToAsync((object ViewModel, NavigationMode NavigationMode, bool Resuming) operation, INavigationInfo from, INavigationInfo to, INavigationService nav)
         {
-            DebugWrite($"{operation.ViewModel}");
+            LogThis($"{operation.ViewModel}");
 
             if (operation.ViewModel is T10v2.INavigatedToAwareAsync vm && vm != null)
             {
@@ -53,7 +51,7 @@ namespace Template10.Strategies
 
         public async Task<bool> NavigatingFromAsync((object ViewModel, NavigationMode NavigationMode, bool Suspending) operation, INavigationInfo from, INavigationInfo to, INavigationService nav)
         {
-            DebugWrite($"{operation.ViewModel}");
+            LogThis($"{operation.ViewModel}");
 
             if (!operation.Suspending && operation.ViewModel is T10v2.IConfirmNavigationAsync confirm && confirm != null)
             {
@@ -70,7 +68,7 @@ namespace Template10.Strategies
 
         public async Task NavigatedFromAsync((object ViewModel, NavigationMode NavigationMode, bool Suspending) operation, INavigationInfo from, INavigationInfo to, INavigationService nav)
         {
-            DebugWrite($"{operation.ViewModel}");
+            LogThis($"{operation.ViewModel}");
 
             if (operation.ViewModel is T10v2.INavigatedFromAwareAsync vm && vm != null)
             {

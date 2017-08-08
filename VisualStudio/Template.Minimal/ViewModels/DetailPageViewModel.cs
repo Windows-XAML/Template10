@@ -23,7 +23,7 @@ namespace Sample.ViewModels
         {
             if (parameter.Resuming)
             {
-                var item = await parameter.ToNavigationInfo.PageState.TryGetValueAsync<string>(nameof(Value));
+                var item = await parameter.ToNavigationInfo.PageState.TryGetAsync<string>(nameof(Value));
                 if (item.Success)
                 {
                     Value = item.Value;
@@ -39,7 +39,7 @@ namespace Sample.ViewModels
         {
              if (parameters.Suspending)
             {
-                await parameters.PageState.SetValueAsync(nameof(Value), Value);
+                await parameters.PageState.TrySetAsync(nameof(Value), Value);
             }
         }
     }

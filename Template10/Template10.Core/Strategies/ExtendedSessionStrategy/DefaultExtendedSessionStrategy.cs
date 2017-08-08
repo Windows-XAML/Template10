@@ -1,34 +1,82 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Template10.Common;
 using Template10.Core;
 
 namespace Template10.Strategies
 {
-    public class DefaultExtendedSessionStrategy : ExtendedSessionStrategyBase
+    public partial class DefaultExtendedSessionStrategy : IExtendedSessionStrategy2
     {
-        public DefaultExtendedSessionStrategy() : base()
+        ExtendedSessionManager _manager;
+
+        public DefaultExtendedSessionStrategy()
         {
-            // empty
+            _manager = new ExtendedSessionManager();
         }
 
-        public async override Task StartupAsync(IStartArgsEx e)
+        bool _StartupAsync = false;
+        public async Task StartupAsync(IStartArgsEx e)
         {
-            if (Settings.AutoExtendExecutionSession)
+            if (Settings.EnableExtendedSessionStrategy)
             {
-                await (this as IExtendedSessionStrategyInternal).StartUnspecifiedAsync();
+                if (_StartupAsync)
+                {
+                    throw new Exception("Startup has alrady been called once.");
+                }
+                _StartupAsync = true;
+                await (this as IExtendedSessionStrategy2).StartUnspecifiedAsync();
             }
         }
 
-        public async override Task SuspendingAsync()
+        public async Task SuspendingAsync()
         {
-            if (Settings.AutoExtendExecutionSession)
+            if (Settings.EnableExtendedSessionStrategy)
             {
-                await (this as IExtendedSessionStrategyInternal).StartSaveDataAsync();
+                await (this as IExtendedSessionStrategy2).StartSaveDataAsync();
+            }
+        }
+
+        public void Dispose() => _manager.Dispose();
+    }
+
+    public partial class DefaultExtendedSessionStrategy
+    {
+        ExtendedSessionKinds IExtendedSessionStrategy2.CurrentKind => _manager.CurrentKind;
+
+        bool IExtendedSessionStrategy2.IsActive => _manager.IsActive;
+
+        bool IExtendedSessionStrategy2.IsStarted => _manager.IsStarted;
+
+        bool IExtendedSessionStrategy2.IsRevoked => _manager.IsRevoked;
+
+        int IExtendedSessionStrategy2.Progress => _manager.CurrentProgress;
+
+        async Task<bool> IExtendedSessionStrategy2.StartUnspecifiedAsync()
+        {
+            if (_manager.IsActive)
+            {
+                return (_manager.CurrentKind == ExtendedSessionKinds.Unspecified);
             }
             else
             {
-                await Task.CompletedTask;
+                return await _manager.StartAsync(ExtendedSessionKinds.Unspecified);
             }
+        }
+
+        async Task<bool> IExtendedSessionStrategy2.StartSaveDataAsync()
+        {
+            if (_manager.IsActive)
+            {
+                if (_manager.CurrentKind == ExtendedSessionKinds.SavingData)
+                {
+                    return true;
+                }
+                else
+                {
+                    _manager.Create();
+                }
+            }
+            return await _manager.StartAsync(ExtendedSessionKinds.SavingData);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Template10.Mvvm;
+using Template10.Services.BackButtonService;
 using Template10.Services.MarketplaceService;
 using Windows.UI.Xaml;
 
@@ -21,8 +22,8 @@ namespace Sample.ViewModels
 
         public bool UseShellBackButton
         {
-            get => _settings.UseShellBackButton;
-            set => Set(() => { _settings.UseShellBackButton = value; });
+            get => _settings.ShellBackButtonPreference == ShellBackButtonPreferences.AutoShowInShell ? true: false;
+            set => Set(() => { _settings.ShellBackButtonPreference = value ? ShellBackButtonPreferences.AutoShowInShell : ShellBackButtonPreferences.NeverShowInShell; });
         }
 
         public bool UseLightThemeButton

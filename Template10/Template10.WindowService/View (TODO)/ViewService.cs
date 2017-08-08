@@ -4,11 +4,11 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
-using static Template10.Services.LoggingService.LoggingService;
+using static Template10.Services.Logging.LoggingService;
 
 namespace Template10.Core
 {
-    public sealed class ViewService : IViewService
+    public sealed class ViewService : Services.Logging.Loggable, IViewService
     {
         public static void OnWindowCreated()
         {
@@ -27,7 +27,7 @@ namespace Template10.Core
         public async Task<IViewLifetimeControl> OpenAsync(UIElement content, string title = null,
             ViewSizePreference size = ViewSizePreference.UseHalf)
         {
-            WriteLine($"Frame: {content}, Title: {title}, Size: {size}");
+            LogThis($"Frame: {content}, Title: {title}, Size: {size}");
 
             var currentView = ApplicationView.GetForCurrentView();
             title = title ?? currentView.Title;

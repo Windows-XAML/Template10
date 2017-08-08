@@ -7,12 +7,12 @@
     <ProjectGuid>{CD31D870-42F3-4379-B67A-2070C4B0A444}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Template10.Services</RootNamespace>
-    <AssemblyName>Template10.Services.Navigation</AssemblyName>
+    <RootNamespace>Template10</RootNamespace>
+    <AssemblyName>Template10.Core.Navigation</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.15063.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -110,14 +110,17 @@
     <Compile Include="Behaviors\BackButtonBehavior.cs" />
     <Compile Include="Behaviors\NavButtonBehavior.cs" />
     <Compile Include="Behaviors\NavToPageAction.cs" />
+    <Compile Include="NavigationService\INavigationService2.cs" />
+    <Compile Include="Strategies\StateStrategy\DefaultStateStrategy.cs" />
+    <Compile Include="Navigation.FrameEx\FrameExState.cs" />
     <Compile Include="Navigation.FrameEx\IFrameEx.cs" />
     <Compile Include="Navigation.FrameEx\IFrameEx2.cs" />
     <Compile Include="Navigation.FrameEx\FrameEx.cs" />
-    <Compile Include="Navigation.FrameEx\FrameExStates.enum.cs" />
     <Compile Include="NavigationService\BackButton.enum.cs" />
     <Compile Include="Common\NavButtonsHelper.cs" />
     <Compile Include="Mvvm\ITemplate10ViewModel.cs" />
     <Compile Include="NavigationService\Settings.cs" />
+    <Compile Include="Strategies\StateStrategy\IStateStrategy.cs" />
     <Compile Include="Strategies\ViewModelActionStrategy\DefaultViewModelActionStrategy.cs" />
     <Compile Include="Strategies\ViewModelActionStrategy\IViewModelActionStrategy.cs" />
     <Compile Include="Strategies\ViewModelResolutionStrategy\DefaultViewModelResolutionStrategy.cs" />
@@ -136,6 +139,10 @@
       <Project>{8564f764-99d9-4473-b5e4-ac62cda73977}</Project>
       <Name>Template10.Services.BackService</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.Container\Service\Template10.Services.Container.Core.csproj">
+      <Project>{b4c8a753-3376-4c55-aff1-326f2d1cfcbc}</Project>
+      <Name>Template10.Services.Container.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Services\Template10.Services.KeyboardService\Service\Template10.Services.KeyboardService.csproj">
       <Project>{b540d0b5-3850-416f-aec7-7737870e9ca2}</Project>
       <Name>Template10.Services.KeyboardService</Name>
@@ -144,9 +151,9 @@
       <Project>{eadde808-bf0d-4ebc-b4ca-9fda63b53862}</Project>
       <Name>Template10.Services.LoggingService</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Services\Template10.Services.SerializationService\Service\Template10.Services.SerializationService.csproj">
+    <ProjectReference Include="..\..\Services\Template10.Services.SerializationService\Service\Template10.Services.Serialization.csproj">
       <Project>{d3a94520-4cd4-4d56-b30b-7e54face64bb}</Project>
-      <Name>Template10.Services.SerializationService</Name>
+      <Name>Template10.Services.Serialization</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Services\Template10.Services.SettingsService\Service\Template10.Services.SettingsService.csproj">
       <Project>{eba14736-2c70-4e33-a156-221b44ff43c1}</Project>

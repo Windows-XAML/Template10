@@ -4,9 +4,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using Template10.Common.PersistedDictionary;
-using Template10.Portable;
-using Template10.Services.LoggingService;
+using Template10.Common;
+using Template10.Core;
+using Template10.Services.Logging;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
@@ -14,24 +15,21 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Navigation
 {
-    public partial class FrameEx : IFrameEx2, IFrameEx
+    public partial class FrameEx : Loggable, IFrameEx
     {
-        #region Debug
-
-        static void DebugWrite(string text = null, Severities severity = Severities.Template10, [CallerMemberName]string caller = null) =>
-            LoggingService.WriteLine(text, severity, caller: $"{nameof(FrameEx)}.{caller}");
-
-        #endregion
-
-        internal static IFrameEx2 Create(Frame frame, INavigationService navigationService)
+        internal static IFrameEx Create(Frame frame, INavigationService navigationService)
         {
             return new FrameEx(frame, navigationService);
         }
 
-        // [Obsolete("Internal use only")]
+        IFrameEx2 Two => this as IFrameEx2;
+
+        Strategies.IStateStrategy IFrameEx2.StateStrategy { get; set; } = new Strategies.DefaultStateStrategy();
+
+
         internal FrameEx(Frame frame, INavigationService navigationService)
         {
-            (this as IFrameEx2).Frame = frame;
+            Two.Frame = frame;
             frame.Navigating += (s, e) =>
             {
                 //if (!BackStack.Any() && string.IsNullOrEmpty(FrameId))
@@ -41,39 +39,39 @@ namespace Template10.Navigation
                 //}
             };
 
-            (this as IFrameEx2).NavigationService = navigationService;
+            Two.NavigationService = navigationService;
 
             // setup animations
-            SetupAnnimations();
+            SetupAnimations();
         }
 
-        private void SetupAnnimations()
+        private void SetupAnimations()
         {
             var t = new NavigationThemeTransition
             {
                 DefaultNavigationTransitionInfo = new EntranceNavigationTransitionInfo()
             };
-            (this as IFrameEx2).Frame.ContentTransitions = new TransitionCollection { };
-            (this as IFrameEx2).Frame.ContentTransitions.Add(t);
+            Two.Frame.ContentTransitions = new TransitionCollection { };
+            Two.Frame.ContentTransitions.Add(t);
         }
 
         public string FrameId { get; set; } = "DefaultFrame";
 
-        public object Content => (this as IFrameEx2).Frame.Content;
+        public object Content => Two.Frame.Content;
 
-        public object GetValue(DependencyProperty dp) => (this as IFrameEx2).Frame.GetValue(dp);
+        public object GetValue(DependencyProperty dp) => Two.Frame.GetValue(dp);
 
-        public void SetValue(DependencyProperty dp, object value) { (this as IFrameEx2).Frame.SetValue(dp, value); }
+        public void SetValue(DependencyProperty dp, object value) { Two.Frame.SetValue(dp, value); }
 
-        public void ClearValue(DependencyProperty dp) { (this as IFrameEx2).Frame.ClearValue(dp); }
+        public void ClearValue(DependencyProperty dp) { Two.Frame.ClearValue(dp); }
 
         public void ClearCache(bool removeCachedPagesInBackStack = false)
         {
-            DebugWrite($"Frame: {FrameId}");
+            LogThis($"Frame: {FrameId}");
 
-            var frame = (this as IFrameEx2).Frame;
+            var frame = Two.Frame;
 
-            int currentSize = frame.CacheSize;
+            var currentSize = frame.CacheSize;
             try
             {
                 if (removeCachedPagesInBackStack)
@@ -102,13 +100,13 @@ namespace Template10.Navigation
             }
         }
 
-        internal bool Navigate(Type page, object parameter) => (this as IFrameEx2).Frame.Navigate(page, parameter);
+        internal bool Navigate(Type page, object parameter) => Two.Frame.Navigate(page, parameter);
 
-        public void PurgeNavigationState() => (this as IFrameEx2).Frame.SetNavigationState("1,0");
+        public void PurgeNavigationState() => Two.Frame.SetNavigationState("1,0");
 
-        public IList<PageStackEntry> BackStack => (this as IFrameEx2).Frame.BackStack;
+        public IList<PageStackEntry> BackStack => Two.Frame.BackStack;
 
-        public IList<PageStackEntry> ForwardStack => (this as IFrameEx2).Frame.ForwardStack;
+        public IList<PageStackEntry> ForwardStack => Two.Frame.ForwardStack;
 
     }
 
@@ -118,39 +116,34 @@ namespace Template10.Navigation
 
         string FrameStateKey => $"Frame-{FrameId}";
 
-        async Task<FrameExState> IFrameEx2.GetFrameStateAsync()
+        async Task<FrameExState> IFrameEx2.GetFrameStateAsync() => await Two.StateStrategy.GetFrameStateAsync(FrameId);
+
+        async Task<IPropertyBagEx> IFrameEx2.GetPageStateAsync(Type page) => await Two.GetPageStateAsync(page?.ToString());
+
+        async Task<IPropertyBagEx> IFrameEx2.GetPageStateAsync(string page)
         {
-            var store = await Settings.PersistedDictionaryFactory.CreateAsync(FrameStateKey);
-            return new FrameExState(store);
+            if (string.IsNullOrEmpty(page))
+            {
+                return null;
+            }
+            return await Two.StateStrategy.GetPageStateAsync(FrameId, page);
         }
 
-        async Task<IPersistedDictionary> IFrameEx2.GetPageStateAsync(Type page)
-        {
-            if (page == null) return null;
-            return await Settings.PersistedDictionaryFactory.CreateAsync($"Page-{page.ToString()}", FrameStateKey);
-        }
+        bool IFrameEx2.CanGoBack => Two.Frame.CanGoBack;
 
-        async Task<IPersistedDictionary> IFrameEx2.GetPageStateAsync(string page)
-        {
-            if (string.IsNullOrEmpty(page)) return null;
-            return await Settings.PersistedDictionaryFactory.CreateAsync($"Page-{page}", FrameStateKey);
-        }
+        bool IFrameEx2.CanGoForward => Two.Frame.CanGoForward;
 
-        bool IFrameEx2.CanGoBack => (this as IFrameEx2).Frame.CanGoBack;
+        void IFrameEx2.SetNavigationState(string state) => Two.Frame.SetNavigationState(state);
 
-        bool IFrameEx2.CanGoForward => (this as IFrameEx2).Frame.CanGoForward;
-
-        void IFrameEx2.SetNavigationState(string state) => (this as IFrameEx2).Frame.SetNavigationState(state);
-
-        string IFrameEx2.GetNavigationState() => (this as IFrameEx2).Frame.GetNavigationState();
+        string IFrameEx2.GetNavigationState() => Two.Frame.GetNavigationState();
 
         void IFrameEx2.GoForward()
         {
             try
             {
-                if ((this as IFrameEx2).CanGoForward)
+                if (Two.CanGoForward)
                 {
-                    (this as IFrameEx2).Frame.GoForward();
+                    Two.Frame.GoForward();
                 }
             }
             catch (Exception)
@@ -160,15 +153,15 @@ namespace Template10.Navigation
             }
         }
 
-        bool IFrameEx2.Navigate(Type page, object parameter, NavigationTransitionInfo info) => (this as IFrameEx2).Frame.Navigate(page, parameter, info);
+        bool IFrameEx2.Navigate(Type page, object parameter, NavigationTransitionInfo info) => Two.Frame.Navigate(page, parameter, info);
 
         void IFrameEx2.GoBack(NavigationTransitionInfo infoOverride)
         {
             try
             {
-                if ((this as IFrameEx2).CanGoBack)
+                if (Two.CanGoBack)
                 {
-                    (this as IFrameEx2).Frame.GoBack(infoOverride);
+                    Two.Frame.GoBack(infoOverride);
                 }
             }
             catch (Exception)
@@ -182,9 +175,9 @@ namespace Template10.Navigation
         {
             try
             {
-                if ((this as IFrameEx2).CanGoBack)
+                if (Two.CanGoBack)
                 {
-                    (this as IFrameEx2).Frame.GoBack();
+                    Two.Frame.GoBack();
                 }
             }
             catch (Exception)

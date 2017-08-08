@@ -107,19 +107,20 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\SettingsExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services.SettingsService\SettingsBase.cs" />
-    <Compile Include="Services.SettingsService\CompressionHelper.cs" />
+    <Compile Include="Extensions\CompressionExtensions.cs" />
+    <Compile Include="Services.SettingsService\SettingsServiceBase.cs" />
     <EmbeddedResource Include="Properties\Template10.Services.SettingsService.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Template10\Template10.Portable\Template10.Portable.csproj">
-      <Project>{2B6903DF-396A-4D97-BF29-45BC6DD72DBE}</Project>
-      <Name>Template10.Portable</Name>
+    <ProjectReference Include="..\..\Template10.Services.Container\Service\Template10.Services.Container.Core.csproj">
+      <Project>{b4c8a753-3376-4c55-aff1-326f2d1cfcbc}</Project>
+      <Name>Template10.Services.Container.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Template10.Services.SerializationService\Service\Template10.Services.SerializationService.csproj">
+    <ProjectReference Include="..\..\Template10.Services.SerializationService\Service\Template10.Services.Serialization.csproj">
       <Project>{d3a94520-4cd4-4d56-b30b-7e54face64bb}</Project>
-      <Name>Template10.Services.SerializationService</Name>
+      <Name>Template10.Services.Serialization</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

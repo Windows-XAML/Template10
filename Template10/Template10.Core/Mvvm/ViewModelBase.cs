@@ -19,6 +19,11 @@ namespace Template10.Mvvm
         IConfirmNavigationAsync,
         ITemplate10ViewModel
     {
+        public ViewModelBase()
+        {
+            SessionState = Central.SessionState;
+        }
+
         /// <remarks>
         /// It is not necessary to call base.OnNavigatedToAsync in the concrete override
         /// </remarks>
@@ -52,7 +57,7 @@ namespace Template10.Mvvm
         public INavigationService NavigationService { get; set; }
 
         [JsonIgnore]
-        public IDictionary<string, object> SessionState => Core.SessionState.Instance();
+        public IPropertyBagEx SessionState { get; private set; }
 
         // remove bindable overrides
 

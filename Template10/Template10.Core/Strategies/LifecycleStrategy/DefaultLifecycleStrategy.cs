@@ -12,6 +12,12 @@ namespace Template10.Strategies
 {
     public class DefaultLifecycleStrategy : ILifecycleStrategy
     {
+        IMessengerService _messengerService;
+        public DefaultLifecycleStrategy(IMessengerService messengerService)
+        {
+            _messengerService = messengerService;
+        }
+
         public Boolean PreviouslySuspended
         {
             get { return Windows.Storage.ApplicationData.Current.LocalSettings.Values[$"Template10-{nameof(PreviouslySuspended)}"] as Boolean? ?? false; }
@@ -20,15 +26,20 @@ namespace Template10.Strategies
 
         public async Task SuspendAsync(ISuspendingEventArgs e)
         {
-            PreviouslySuspended = true;
-
-            MessengerService.Instance.Send(new Messages.SuspendingMessage { EventArgs = e });
-
-            // TODO: what to do with multiple views?
-
-            foreach (var nav in NavigationService.Instances.Select(x => x as INavigationService2))
+            if (Settings.EnableLifecycleStrategy)
             {
-                await nav.SaveAsync(true);
+
+                PreviouslySuspended = true;
+
+                _messengerService.Send(new Messages.SuspendingMessage { EventArgs = e });
+
+                // TODO: what to do with multiple views?
+
+                foreach (var nav in NavigationService.Instances.Select(x => x as INavigationService2))
+                {
+                    await nav.SaveAsync(true);
+                }
+
             }
         }
 
@@ -71,11 +82,19 @@ namespace Template10.Strategies
 
         public async Task ResumingAsync()
         {
-            await Task.CompletedTask;
+            if (Settings.EnableLifecycleStrategy)
+            {
+                await Task.CompletedTask;
+            }
         }
 
         public async Task<bool> ResumeAsync(IStartArgsEx e)
         {
+            if (!Settings.EnableLifecycleStrategy)
+            {
+                return false;
+            }
+
             if (!IsResuming(e))
             {
                 return false;

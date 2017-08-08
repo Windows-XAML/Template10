@@ -7,7 +7,6 @@ using Template10.Navigation;
 using Template10.Core;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
-using Template10.Core;
 
 namespace Template10
 {
@@ -17,8 +16,13 @@ namespace Template10
 
         // publi api
 
+        Task OnInitializeAsync();
         Task OnStartAsync(IStartArgsEx e);
-        Task<UIElement> CreateRootElement(IStartArgsEx e);
+        Task<UIElement> CreateRootElementAsync(IStartArgsEx e);
         Task<UIElement> CreateSpashAsync(SplashScreen e);
+        ISessionState SessionState { get; }
+        IMessengerService MessengerService { get; }
+        IContainerService ContainerService { get; }
+        IDispatcherEx Dispatcher { get; }
     }
 }

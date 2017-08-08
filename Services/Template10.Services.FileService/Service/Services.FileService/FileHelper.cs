@@ -7,8 +7,8 @@ namespace Template10.Services.FileService
 {
     public class FileHelper
     {
-        SerializationService.ISerializationService _serializer;
-        public FileHelper(SerializationService.ISerializationService serializer)
+        Serialization.ISerializationService _serializer;
+        public FileHelper(Serialization.ISerializationService serializer)
         {
             _serializer = serializer;
         }

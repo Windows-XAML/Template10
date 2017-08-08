@@ -15,14 +15,15 @@ namespace Template10.Strategies
         void OnWindowCreated(WindowCreatedEventArgs args);
         void StartOrchestrationAsync(IActivatedEventArgs e, Core.StartArgsEx.StartKinds activate);
         Func<IStartArgsEx, Task> OnStartAsyncDelegate { get; set; }
+        Func<Task> OnInitAsyncDelegate { get; set; }
+        Func<SplashScreen, Task<UIElement>> CreateSpashAsyncDelegate { get; set; }
+        Func<IStartArgsEx, Task<UIElement>> CreateRootElementAsyncDelegate { get; set; }
+
         Task<UIElement> CreateRootAsync(IStartArgsEx e);
         Task<UIElement> CreateSpashAsync(SplashScreen e);
 
         void HandleEnteredBackground(object sender, EnteredBackgroundEventArgs e);
         void HandleLeavingBackground(object sender, LeavingBackgroundEventArgs e);
         void HandleUnhandledException(object sender, UnhandledExceptionEventArgs e);
-
-        Task<bool> ShowSplashAsync(IStartArgsEx e);
-        bool HideSplash();
     }
 }

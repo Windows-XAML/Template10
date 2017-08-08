@@ -115,9 +115,9 @@
     <EmbeddedResource Include="Properties\Template10.Services.FileService.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Template10.Services.SerializationService\Service\Template10.Services.SerializationService.csproj">
+    <ProjectReference Include="..\..\Template10.Services.SerializationService\Service\Template10.Services.Serialization.csproj">
       <Project>{d3a94520-4cd4-4d56-b30b-7e54face64bb}</Project>
-      <Name>Template10.Services.SerializationService</Name>
+      <Name>Template10.Services.Serialization</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

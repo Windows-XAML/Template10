@@ -6,16 +6,20 @@ using Windows.UI.Xaml;
 
 namespace Template10.Services.BackButtonService
 {
-    public class BackButtonService
+    public class BackButtonService : IBackButtonService
     {
-        static BackButtonService _instance = new BackButtonService();
-        public static BackButtonService GetInstance() => _instance;
-        private BackButtonService()
+        public static IBackButtonService GetDefault(Container.IContainerService container = null)
+        {
+            container = container ?? Container.ContainerService.Default;
+            return container.Resolve<IBackButtonService>();
+        }
+
+        public BackButtonService()
         {
             EnsureListener();
         }
 
-        private bool ensureListener = false;
+        private static bool ensureListener = false;
         private void EnsureListener()
         {
             if (ensureListener) return;
@@ -91,12 +95,21 @@ namespace Template10.Services.BackButtonService
 
         public void UpdateBackButton(bool canGoBack, bool canGoForward = false)
         {
-            // show the shell back only if there is anywhere to go in the default frame
-            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
-                (Settings.ShellBackButtonVisible && (canGoBack || Settings.ForceShowShellBackButton))
-                    ? AppViewBackButtonVisibility.Visible
-                    : AppViewBackButtonVisibility.Collapsed;
-            BackButtonUpdated?.Invoke(null, EventArgs.Empty);
+            switch (Settings.ShellBackButtonPreference)
+            {
+                case ShellBackButtonPreferences.AlwaysShowInShell when (!Settings.ShellBackButtonVisible):
+                    Settings.ShellBackButtonVisible = true;
+                    BackButtonUpdated?.Invoke(null, EventArgs.Empty);
+                    break;
+                case ShellBackButtonPreferences.AutoShowInShell when (!Settings.ShellBackButtonVisible):
+                    Settings.ShellBackButtonVisible = canGoBack;
+                    BackButtonUpdated?.Invoke(null, EventArgs.Empty);
+                    break;
+                case ShellBackButtonPreferences.NeverShowInShell when (Settings.ShellBackButtonVisible):
+                    Settings.ShellBackButtonVisible = false;
+                    BackButtonUpdated?.Invoke(null, EventArgs.Empty);
+                    break;
+            }
         }
     }
 }

@@ -395,8 +395,7 @@ namespace Template10.Controls
                     {
                         try
                         {
-                            pageParam = Navigation.Settings
-                                .SerializationStrategy.Deserialize(pageParam.ToString());
+                            pageParam = pageParam.ToString().DeserializeEx();
                         }
                         catch
                         {

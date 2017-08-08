@@ -1,10 +1,26 @@
 ﻿namespace Template10.Services.Container
 {
-    public class ContainerService : IContainerService
+    public abstract class ContainerService : IContainerService
     {
-        private static IContainerService _instance;
-        public static IContainerService GetInstance(IContainerAdapter adapter) => _instance ?? (_instance = new ContainerService(adapter));
-        private ContainerService(IContainerAdapter adapter) => _adapter = adapter;
+        static IContainerService _Default;
+        public static IContainerService Default
+        {
+            get => _Default ?? throw new System.Exception("Default ContainerService has not yet been set.");
+            private set => _Default = value;
+        }
+
+        public ContainerService(IContainerAdapter adapter, bool setAsDefault = true)
+        {
+            if (setAsDefault && _Default != null)
+            {
+                throw new System.Exception("Default ContainerService has already been set.");
+            }
+            _adapter = adapter;
+            if (setAsDefault)
+            {
+                _Default = this;
+            }
+        }
 
         public IContainerAdapter _adapter { get; set; }
 

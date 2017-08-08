@@ -194,17 +194,17 @@
       <Project>{8564f764-99d9-4473-b5e4-ac62cda73977}</Project>
       <Name>Template10.Services.BackService</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Services\Template10.Services.Container\Service\Template10.Services.Container.Service.csproj">
+    <ProjectReference Include="..\..\Services\Template10.Services.Container\Service\Template10.Services.Container.Core.csproj">
       <Project>{b4c8a753-3376-4c55-aff1-326f2d1cfcbc}</Project>
-      <Name>Template10.Services.Container.Service</Name>
+      <Name>Template10.Services.Container.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Services\Template10.Services.Container\UnityAdapter\Template10.Services.Container.Service.Unity.csproj">
+    <ProjectReference Include="..\..\Services\Template10.Services.Container\UnityAdapter\Template10.Services.Container.Unity.csproj">
       <Project>{524d4bcb-21a1-44f6-b5b2-2712a3e7718d}</Project>
-      <Name>Template10.Services.Container.Service.Unity</Name>
+      <Name>Template10.Services.Container.Unity</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Services\Template10.Services.Messenger\Service\Template10.Services.Messenging.csproj">
+    <ProjectReference Include="..\..\Services\Template10.Services.Messenger\Service\Template10.Services.Messaging.Core.csproj">
       <Project>{e14bcd62-b2a4-4aa2-95a8-6a556a31fb29}</Project>
-      <Name>Template10.Services.Messenging</Name>
+      <Name>Template10.Services.Messaging.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Template10.CodeBehind\Template10.CodeBehind.csproj">
       <Project>{b3a4e50e-9dca-457e-bed5-b71d97b957f3}</Project>
@@ -218,9 +218,9 @@
       <Project>{80e5b1c6-dd8e-4b06-a693-dd2d11f9c32a}</Project>
       <Name>Template10.Services.MarketplaceService</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Services\Template10.Services.SerializationService\Service\Template10.Services.SerializationService.csproj">
+    <ProjectReference Include="..\..\Services\Template10.Services.SerializationService\Service\Template10.Services.Serialization.csproj">
       <Project>{d3a94520-4cd4-4d56-b30b-7e54face64bb}</Project>
-      <Name>Template10.Services.SerializationService</Name>
+      <Name>Template10.Services.Serialization</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Services\Template10.Services.SettingsService\Service\Template10.Services.SettingsService.csproj">
       <Project>{eba14736-2c70-4e33-a156-221b44ff43c1}</Project>

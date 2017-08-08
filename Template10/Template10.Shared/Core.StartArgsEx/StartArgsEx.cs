@@ -72,8 +72,14 @@ namespace Template10.Core
                         {
                             return StartArgsEx.StartCauses.Toast;
                         }
+                    // starting in RS3
+                    // https://blogs.windows.com/buildingapps/2017/07/28/restart-app-programmatically/#1sGJmiirzC2MtROE.97
+                    case IActivatedEventArgs e when (e != null && e.Kind == ActivationKind.Launch && e.PreviousExecutionState == ApplicationExecutionState.Terminated):
+                        {
+                            return StartArgsEx.StartCauses.Restart;
+                        }
                     // TODO for RS3: ICommandLine
-                    case ILaunchActivatedEventArgs e when e != null:
+                    case ILaunchActivatedEventArgs e when (e != null):
                         switch (e.TileId)
                         {
                             case "App" when string.IsNullOrEmpty(e?.Arguments):

@@ -1,22 +1,27 @@
 ﻿using System;
 using System.Threading;
-using Logging = Template10.Services.LoggingService.LoggingService;
+using Template10.Services.Logging;
 
 namespace Template10.Core
 {
-    class SecondaryViewSynchronizationContextDecorator : SynchronizationContext
+    partial class SecondaryViewSynchronizationContextDecorator : ILoggable
+    {
+        ILoggingService ILoggable.LoggingService { get; set; } = Central.LoggingService;
+        void LogThis(string text = null, Severities severity = Severities.Template10, [System.Runtime.CompilerServices.CallerMemberName]string caller = null)
+            => (this as ILoggable).LogThis(text, severity, caller: $"{GetType()}.{caller}");
+        void ILoggable.LogThis(string text, Severities severity, string caller)
+            => (this as ILoggable).LoggingService.WriteLine(text, severity, caller: $"{GetType()}.{caller}");
+    }
+
+    partial class SecondaryViewSynchronizationContextDecorator : SynchronizationContext
     {
         private readonly IViewLifetimeControl control;
         private readonly SynchronizationContext context;
 
         public SecondaryViewSynchronizationContextDecorator(IViewLifetimeControl control, SynchronizationContext context)
         {
-            if (context == null)
-                throw new ArgumentNullException(nameof(context));
-            if (control == null)
-                throw new ArgumentNullException(nameof(control));
-            this.control = control;
-            this.context = context;
+            this.control = control ?? throw new ArgumentNullException(nameof(control));
+            this.context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         public override void OperationStarted()
@@ -25,7 +30,7 @@ namespace Template10.Core
             try
             {
                 var count = control.StartViewInUse();
-                Logging.WriteLine("SecondaryViewSynchronizationContextDecorator : OperationStarted: " + count);
+                LogThis("SecondaryViewSynchronizationContextDecorator : OperationStarted: " + count);
                 context.OperationStarted();
             }
             catch (ViewLifeTimeException)
@@ -51,7 +56,7 @@ namespace Template10.Core
             {
                 context.OperationCompleted();
                 var count = control.StopViewInUse();
-                Logging.WriteLine("SecondaryViewSynchronizationContextDecorator : OperationCompleted: " + count);
+                LogThis("SecondaryViewSynchronizationContextDecorator : OperationCompleted: " + count);
             }
             catch (ViewLifeTimeException)
             {

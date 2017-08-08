@@ -32,7 +32,7 @@ namespace Sample.Views
         // hide and show busy dialog
         public static void ShowBusyFor(string text = null, int milliseconds = int.MaxValue)
         {
-            DispatcherEx.Current().Dispatch(() =>
+            WindowEx.Current().Dispatcher.Dispatch(() =>
             {
                 var modal = Window.Current.Content as ModalDialog;
                 var view = modal.ModalContent as Busy;
@@ -41,7 +41,7 @@ namespace Sample.Views
                 modal.IsModal = view.IsBusy = true;
                 view.BusyText = text;
             });
-            DispatcherEx.Current().Dispatch(() =>
+            WindowEx.Current().Dispatcher.Dispatch(() =>
             {
                 HideBusy();
             }, milliseconds);
@@ -49,7 +49,7 @@ namespace Sample.Views
 
         public static void HideBusy()
         {
-            DispatcherEx.Current().Dispatch(() =>
+            WindowEx.Current().Dispatcher.Dispatch(() =>
             {
                 var modal = Window.Current.Content as ModalDialog;
                 var view = modal.ModalContent as Busy;

@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Template10</RootNamespace>
-    <AssemblyName>Template10.Shared</AssemblyName>
+    <AssemblyName>Template10.Core.Shared</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.15063.0</TargetPlatformVersion>
@@ -107,24 +107,32 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Central.cs" />
     <Compile Include="Core.BootStrapper\IBootStrapperShared.cs" />
-    <Compile Include="Core.DispatcherEx\DispatcherEx.cs" />
-    <Compile Include="Core.DispatcherEx\IDispatcherEx.cs" />
-    <Compile Include="Core.DispatcherEx\IDispatcherEx2.cs" />
+    <Compile Include="Core.PropertyBag\EmptyPropertyBagSerializationStrategy.cs" />
+    <Compile Include="Core.PropertyBag\FolderPropertyBagPersistenceStrategy.cs" />
+    <Compile Include="Core.PropertyBag\MemoryPropertyBagPersistenceStrategy.cs" />
+    <Compile Include="Core.PropertyBag\PropertyBagEx.cs" />
+    <Compile Include="Core.PropertyBag\PropertyBagSerialziationStrategy.cs" />
+    <Compile Include="Core.PropertyBag\SettingsPropertyBagPersistenceStrategy.cs" />
+    <Compile Include="Core.SessionState\ISessionState.cs" />
     <Compile Include="Core.StartArgsEx\IStartArgsEx.cs" />
     <Compile Include="Core.StartArgsEx\StartArgsEx.cs" />
     <Compile Include="Core.StartArgsEx\StartCauses.enum.cs" />
     <Compile Include="Core.StartArgsEx\StartKinds.enum.cs" />
+    <Compile Include="Extensions\SharedExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Core.SessionState\Extensions.cs" />
     <Compile Include="Core.SessionState\SessionState.cs" />
-    <Compile Include="Core.SessionState\SessionStateHelper.cs" />
     <EmbeddedResource Include="Properties\Template10.Shared.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Services\Template10.Services.Container\Service\Template10.Services.Container.Service.csproj">
+    <ProjectReference Include="..\..\Services\Template10.Services.BackService\Template10.Services.BackService.csproj">
+      <Project>{8564f764-99d9-4473-b5e4-ac62cda73977}</Project>
+      <Name>Template10.Services.BackService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.Container\Service\Template10.Services.Container.Core.csproj">
       <Project>{B4C8A753-3376-4C55-AFF1-326F2D1CFCBC}</Project>
-      <Name>Template10.Services.Container.Service</Name>
+      <Name>Template10.Services.Container.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Services\Template10.Services.FileService\Service\Template10.Services.FileService.csproj">
       <Project>{fd4892b4-4cf8-4c74-b28f-ad7623e405e6}</Project>
@@ -134,13 +142,13 @@
       <Project>{EADDE808-BF0D-4EBC-B4CA-9FDA63B53862}</Project>
       <Name>Template10.Services.LoggingService</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Services\Template10.Services.Messenger\Service\Template10.Services.Messenging.csproj">
+    <ProjectReference Include="..\..\Services\Template10.Services.Messenger\Service\Template10.Services.Messaging.Core.csproj">
       <Project>{E14BCD62-B2A4-4AA2-95A8-6A556A31FB29}</Project>
-      <Name>Template10.Services.Messenging</Name>
+      <Name>Template10.Services.Messaging.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Services\Template10.Services.SerializationService\Service\Template10.Services.SerializationService.csproj">
+    <ProjectReference Include="..\..\Services\Template10.Services.SerializationService\Service\Template10.Services.Serialization.csproj">
       <Project>{d3a94520-4cd4-4d56-b30b-7e54face64bb}</Project>
-      <Name>Template10.Services.SerializationService</Name>
+      <Name>Template10.Services.Serialization</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Services\Template10.Services.SettingsService\Service\Template10.Services.SettingsService.csproj">
       <Project>{eba14736-2c70-4e33-a156-221b44ff43c1}</Project>
@@ -153,6 +161,10 @@
     <ProjectReference Include="..\..\Template10.XAML\Template10.XAML.csproj">
       <Project>{af4f2a41-d0e8-4cb2-950f-ed523c29b19c}</Project>
       <Name>Template10.XAML</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Template10.Portable\Template10.Portable.csproj">
+      <Project>{2B6903DF-396A-4D97-BF29-45BC6DD72DBE}</Project>
+      <Name>Template10.Portable</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

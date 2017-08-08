@@ -122,6 +122,10 @@
       <Project>{8564f764-99d9-4473-b5e4-ac62cda73977}</Project>
       <Name>Template10.Services.BackService</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Services\Template10.Services.Container\Service\Template10.Services.Container.Core.csproj">
+      <Project>{b4c8a753-3376-4c55-aff1-326f2d1cfcbc}</Project>
+      <Name>Template10.Services.Container.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Template10.CodeBehind\Template10.CodeBehind.csproj">
       <Project>{B3A4E50E-9DCA-457E-BED5-B71D97B957F3}</Project>
       <Name>Template10.CodeBehind</Name>

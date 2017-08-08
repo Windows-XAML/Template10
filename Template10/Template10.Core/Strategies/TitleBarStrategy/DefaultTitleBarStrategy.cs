@@ -5,9 +5,10 @@ namespace Template10.Strategies
 {
     public class DefaultTitleBarStrategy : ITitleBarStrategy
     {
-        public void Startup()
+        public void Update()
         {
             // this needless test is important due to a platform bug
+
             try
             {
                 if (Application.Current.Resources.ContainsKey("ExtendedSplashBackground"))
@@ -17,19 +18,23 @@ namespace Template10.Strategies
             }
             catch { /* this is okay */ }
 
-            // this wonky style of loop is important due to a platform bug
-            var count = Application.Current.Resources.Count;
-            foreach (var resource in Application.Current.Resources)
+            if (Settings.EnableCustomTitleBar)
             {
-                var key = resource.Key;
-                if (key == typeof(CustomTitleBar))
+                // this wonky style of loop is important due to a platform bug
+
+                var count = Application.Current.Resources.Count;
+                foreach (var resource in Application.Current.Resources)
                 {
-                    var style = resource.Value as Style;
-                    var title = new CustomTitleBar();
-                    title.Style = style;
+                    var key = resource.Key;
+                    if (key == typeof(CustomTitleBar))
+                    {
+                        var style = resource.Value as Style;
+                        var title = new CustomTitleBar();
+                        title.Style = style;
+                    }
+                    count--;
+                    if (count == 0) break;
                 }
-                count--;
-                if (count == 0) break;
             }
         }
     }

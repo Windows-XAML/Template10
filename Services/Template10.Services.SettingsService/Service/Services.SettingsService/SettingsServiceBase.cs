@@ -1,71 +1,47 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using Template10.Mvvm;
-using Windows.Foundation.Collections;
+using Template10.Extensions;
+using Template10.Services.Serialization;
 using Windows.Storage;
 
-namespace Template10.Services.SettingsService
+namespace Template10.Services.Settings
 {
-    // this should not be made abstract
-    public abstract class SettingsServiceBase : ISettingsService
+    public abstract class SettingsServiceBase
     {
-        protected ApplicationDataContainer _container;
-        protected SettingsStrategies _strategy;
-
-        public SettingsServiceBase() : this(SettingsStrategies.Local, nameof(SettingsServiceBase), true)
+        ApplicationDataContainer _DataContainer;
+        ISerializationService _SerializationService;
+        public SettingsServiceBase(ApplicationDataContainer data, ISerializationService serializer)
         {
-            // 
+            _DataContainer = data;
+            _SerializationService = serializer;
         }
 
-        public SettingsServiceBase(SettingsStrategies strategy, string folderName, bool createFolderIfNotExists)
+        protected T Read<T>(string key, T otherwise) => TryRead<T>(key, out var value) ? value : otherwise;
+
+        protected bool TryRead<T>(string key, out T value)
         {
-            _strategy = strategy;
-            Helper = new SettingsHelper();
-
-            switch (strategy)
-            {
-                case SettingsStrategies.Local:
-                    _container = ApplicationData.Current.LocalSettings;
-                    break;
-                case SettingsStrategies.Roam:
-                    _container = ApplicationData.Current.RoamingSettings;
-                    break;
-                default:
-                    throw new ArgumentException($"Unsupported Settings Strategy: {strategy}", nameof(strategy));
-            }
-
-            if (!string.IsNullOrWhiteSpace(folderName))
-            {
-                try
-                {
-                    _container = _container.CreateContainer(folderName, createFolderIfNotExists ? ApplicationDataCreateDisposition.Always : ApplicationDataCreateDisposition.Existing);
-                }
-                catch (Exception)
-                {
-                    throw new KeyNotFoundException($"No folder exists named '{folderName}'");
-                }
-            }
+            var success = _DataContainer.TryRead<T>(key, out var result, true, _SerializationService);
+            value = result;
+            return success;
         }
 
-        public ISettingsService Open(string folderName, bool createFolderIfNotExists = true) => new SettingsService(_strategy, folderName, createFolderIfNotExists);
+        protected string ReadString(string key)
+        {
+            if (!_DataContainer.Values.ContainsKey(key))
+            {
+                return string.Empty;
+            }
+            var result = _DataContainer.Values[key]?.ToString();
+            result = result.Decompress();
+            return result;
+        }
 
-        public IPropertySet Values => _container.Values;
+        protected void Write<T>(string key, T value) => _DataContainer.TryWrite(key, value, true, _SerializationService);
 
-        protected SettingsHelper Helper { get; private set; }
+        protected bool TryWrite<T>(string key, T value) => _DataContainer.TryWrite<T>(key, value, true, _SerializationService);
 
-        public Func<string, ISettingConverter> GetConverter { get; set; } = p => new DefaultConverter();
-
-        public virtual bool Exists(string key) => Values.ContainsKey(key);
-
-        public virtual void Remove(string key) => Helper.Remove(key, Values, _container);
-
-        public virtual void Clear(bool deep = true) => Helper.Clear(deep, Values, _container);
-
-        public virtual void Write<T>(string key, T value) => Helper.Write(key, value, Values, GetConverter);
-
-        public virtual T Read<T>(string key, T fallback = default(T)) => Helper.Read<T>(key, fallback, Values, GetConverter);
-
+        protected void WriteString(string key, string value)
+        {
+            _DataContainer.Values[key] = value.Compress();
+        }
     }
 }

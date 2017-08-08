@@ -7,8 +7,8 @@
     <ProjectGuid>{EADDE808-BF0D-4EBC-B4CA-9FDA63B53862}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Template10.Services.LoggingService</RootNamespace>
-    <AssemblyName>Template10.Services.LoggingService</AssemblyName>
+    <RootNamespace>Template10.Services.Logging</RootNamespace>
+    <AssemblyName>Template10.Services.Logging</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.15063.0</TargetPlatformVersion>
@@ -107,8 +107,13 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Services.LoggingService\LoggingService.cs" />
+    <Compile Include="Services.Logging\ILoggable.cs" />
+    <Compile Include="Services.Logging\ILoggingService.cs" />
+    <Compile Include="Services.Logging\Loggable.cs" />
+    <Compile Include="Services.Logging\LoggingService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services.Logging\Severities.cs" />
+    <Compile Include="Services.Logging\Targets.cs" />
     <EmbeddedResource Include="Properties\Template10.Services.LoggingService.rd.xml" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

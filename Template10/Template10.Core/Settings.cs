@@ -1,32 +1,23 @@
-﻿using Template10.Common;
+﻿using System;
 using Template10.Core;
-using Template10.Services.Container;
-using Template10.Services.Messenger;
-using Template10.Strategies;
+using Template10.Services.BackButtonService;
 
 namespace Template10
 {
     public static partial class Settings
     {
-        public static IDispatcherEx DefaultDispatcher { get; set; }
+                public static IDispatcherEx DefaultDispatcher { get; set; }
 
-        static IMessengerService _MessengerService = Services.Messenger.MessengerService.Instance;
-        public static IMessengerService MessengerService
+        public static TimeSpan CacheExpiry
         {
-            get => _MessengerService ?? (_MessengerService = Services.Messenger.MessengerService.Instance);
-            set => _MessengerService = value;
+            get => Navigation.Settings.CacheExpiry;
+            set => Navigation.Settings.CacheExpiry = value;
         }
 
-        static IContainerService _ContainerService;
-        public static IContainerService ContainerService
+        public static ShellBackButtonPreferences ShellBackButtonPreference
         {
-            get => _ContainerService ?? (_ContainerService = Services.Container.ContainerService.GetInstance(UnityContainerAdapter.Create()));
-            set => _ContainerService = value;
+            get => Services.BackButtonService.Settings.ShellBackButtonPreference;
+            set => Services.BackButtonService.Settings.ShellBackButtonPreference = value;
         }
-
-        public static IBootStrapperStrategy BootStrapperStrategy { get; set; } = new DefaultBootStrapperStrategy();
-        public static IExtendedSessionStrategy ExtendedSessionStrategy { get; set; } = new DefaultExtendedSessionStrategy();
-        public static ILifecycleStrategy SuspendResumeStrategy { get; set; } = new DefaultLifecycleStrategy();
-        public static ITitleBarStrategy TitleBarStrategy { get; set; } = new DefaultTitleBarStrategy();
     }
 }

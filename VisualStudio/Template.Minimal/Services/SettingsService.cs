@@ -1,9 +1,11 @@
 ﻿using System;
+using Template10.Services.Container;
+using Template10.Services.Serialization;
 using Template10.Core;
 using Template10.Extensions;
 using Template10.Navigation;
 using Template10.Services.BackButtonService;
-using Template10.Services.SettingsService.Services.SettingsService;
+using Template10.Services.Settings;
 using Windows.UI.Xaml;
 
 namespace Sample.Services
@@ -17,14 +19,9 @@ namespace Sample.Services
             _instance = new SettingsService();
         }
         private SettingsService()
+            : base(Windows.Storage.ApplicationData.Current.LocalSettings, SerializationService)
         {
             // empty
-        }
-
-        public bool UseShellBackButton
-        {
-            get => Read(nameof(UseShellBackButton), true);
-            set => Write(nameof(UseShellBackButton), value);
         }
 
         public ApplicationTheme AppTheme
@@ -33,10 +30,10 @@ namespace Sample.Services
             set => Write(nameof(AppTheme), value.ToString());
         }
 
-        public TimeSpan CacheMaxDuration
+        public TimeSpan CacheExpiry
         {
-            get => Read(nameof(CacheMaxDuration), TimeSpan.FromDays(2));
-            set => Write(nameof(CacheMaxDuration), value);
+            get => Read(nameof(CacheExpiry), TimeSpan.FromDays(2));
+            set => Write(nameof(CacheExpiry), value);
         }
 
         public string BusyText
@@ -45,11 +42,20 @@ namespace Sample.Services
             set => Write(nameof(BusyText), value);
         }
 
+        public ShellBackButtonPreferences ShellBackButtonPreference
+        {
+            get => Read(nameof(ShellBackButtonPreference), ShellBackButtonPreferences.AutoShowInShell);
+            set => Write(nameof(ShellBackButtonPreference), value);
+        }
+
         private new void Write<T>(string key, T value)
         {
             // persist it
 
-            base.Write(key, value);
+            if (!TryWrite(key, value))
+            {
+                System.Diagnostics.Debugger.Break();
+            }
 
             // implement it
 
@@ -57,18 +63,24 @@ namespace Sample.Services
             {
                 switch (key)
                 {
-                    case nameof(UseShellBackButton):
-                        Template10.Services.BackButtonService.Settings.ShellBackButtonVisible = UseShellBackButton;
-                        BackButtonService.GetInstance().UpdateBackButton(NavigationService.Default.CanGoBack);
+                    case nameof(ShellBackButtonPreference):
+                        // hide/show let the service handle it
+                        BackButtonService.UpdateBackButton(NavigationService.Default.CanGoBack);
                         break;
                     case nameof(AppTheme):
+                        // update the requested theme
                         (Window.Current.Content as FrameworkElement).RequestedTheme = AppTheme.ToElementTheme();
                         break;
-                    case nameof(CacheMaxDuration):
-                        Template10.Navigation.Settings.CacheMaxDuration = CacheMaxDuration;
+                    case nameof(CacheExpiry):
+                        // update the navigation setting
+                        Template10.Navigation.Settings.CacheExpiry = CacheExpiry;
                         break;
                 }
             });
         }
+
+        public static IContainerService ContainerService => Template10.Services.Container.ContainerService.Default;
+        public static IBackButtonService BackButtonService => ContainerService.Resolve<IBackButtonService>();
+        public static ISerializationService SerializationService => ContainerService.Resolve<ISerializationService>();
     }
 }

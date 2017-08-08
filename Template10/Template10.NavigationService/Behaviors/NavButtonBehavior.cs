@@ -8,7 +8,6 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Template10.Core;
-using Template10.Navigation;
 
 namespace Template10.Behaviors
 {
@@ -28,7 +27,7 @@ namespace Template10.Behaviors
         {
             if (!Windows.ApplicationModel.DesignMode.DesignModeEnabled)
             {
-                _dispatcher = DispatcherEx.Current();
+                _dispatcher = WindowEx.Current().Dispatcher;
                 _throttleHelper = new EventThrottleHelper { Throttle = 1000 };
             }
         }
