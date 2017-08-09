@@ -124,13 +124,13 @@ namespace Template10
 
         // clean up the Application events
 
-#pragma warning disable CS1998 
+#pragma warning disable CS0067
         private new event EventHandler<object> Resuming;
         private new event SuspendingEventHandler Suspending;
         private new event UnhandledExceptionEventHandler UnhandledException;
         private new event EnteredBackgroundEventHandler EnteredBackground;
         private new event LeavingBackgroundEventHandler LeavingBackground;
-#pragma warning restore CS1998
+#pragma warning restore CS0067
 
         // clean up the Application overrides
 

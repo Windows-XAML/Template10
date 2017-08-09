@@ -118,19 +118,23 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Template10.CodeBehind\Template10.Common.CodeBehind.csproj">
+      <Project>{b3a4e50e-9dca-457e-bed5-b71d97b957f3}</Project>
+      <Name>Template10.Common.CodeBehind</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Template10.XAML\Template10.Common.XAML.csproj">
+      <Project>{af4f2a41-d0e8-4cb2-950f-ed523c29b19c}</Project>
+      <Name>Template10.Common.XAML</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.BackService\Template10.Services.BackService.csproj">
+      <Project>{8564f764-99d9-4473-b5e4-ac62cda73977}</Project>
+      <Name>Template10.Services.BackService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Services\Template10.Services.LoggingService\Service\Template10.Services.LoggingService.csproj">
       <Project>{eadde808-bf0d-4ebc-b4ca-9fda63b53862}</Project>
       <Name>Template10.Services.LoggingService</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Template10.CodeBehind\Template10.CodeBehind.csproj">
-      <Project>{b3a4e50e-9dca-457e-bed5-b71d97b957f3}</Project>
-      <Name>Template10.CodeBehind</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Template10.XAML\Template10.XAML.csproj">
-      <Project>{af4f2a41-d0e8-4cb2-950f-ed523c29b19c}</Project>
-      <Name>Template10.XAML</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Template10\Template10.NavigationService\Template10.Core.Navigation.csproj">
+    <ProjectReference Include="..\..\Template10\Template10.Core.Navigation\Template10.Core.Navigation.csproj">
       <Project>{cd31d870-42f3-4379-b67a-2070c4b0a444}</Project>
       <Name>Template10.Core.Navigation</Name>
     </ProjectReference>

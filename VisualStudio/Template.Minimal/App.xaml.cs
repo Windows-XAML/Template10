@@ -20,12 +20,7 @@ namespace Sample
             var settings = Services.SettingsService.GetInstance();
             Settings.DefaultTheme = settings.DefaultTheme;
             Settings.ShellBackButtonPreference = settings.ShellBackButtonPreference;
-            Settings.CacheExpiry = settings.CacheExpiry;
-        }
-
-        public override UIElement CreateRootElement(IStartArgsEx e)
-        {
-            return base.CreateRootElement(e);
+            Settings.CacheMaxDuration = settings.CacheMaxDuration;
         }
 
         public override UIElement CreateSpash(SplashScreen e)

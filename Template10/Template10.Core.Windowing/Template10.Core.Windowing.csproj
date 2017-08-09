@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B540D0B5-3850-416F-AEC7-7737870E9CA2}</ProjectGuid>
+    <ProjectGuid>{9CAD4451-5ADF-48D3-B690-8B341A95A228}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Template10.Services.KeyboardService</RootNamespace>
-    <AssemblyName>Template10.Services.KeyboardService</AssemblyName>
+    <RootNamespace>Template10.Services.WindowService</RootNamespace>
+    <AssemblyName>Template10.Services.WindowService</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.15063.0</TargetPlatformVersion>
@@ -35,7 +35,6 @@
     <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <GenerateLibraryLayout>true</GenerateLibraryLayout>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <PlatformTarget>x86</PlatformTarget>
@@ -108,20 +107,57 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Services.KeyboardService\IKeyboardService.cs" />
-    <Compile Include="Services.KeyboardService\KeyboardEventArgs.cs" />
-    <Compile Include="Services.KeyboardService\KeyboardHelper.cs" />
-    <Compile Include="Services.KeyboardService\KeyboardService.cs" />
+    <Compile Include="Behaviors\DeviceDispositionBehavior.cs" />
+    <Compile Include="DispatcherEx\DispatcherEx.cs" />
+    <Compile Include="DispatcherEx\IDispatcherEx.cs" />
+    <Compile Include="DispatcherEx\IDispatcherEx2.cs" />
+    <Compile Include="WindowEx\IWindowEx2.cs" />
+    <Compile Include="Extensions\WindowExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\Template10.Services.KeyboardService.rd.xml" />
+    <Compile Include="Utilities\DeviceUtils.cs" />
+    <Compile Include="Utilities\DialogUtils.cs" />
+    <Compile Include="Utilities\MonitorUtils.cs" />
+    <Compile Include="View %28TODO%29\IViewLifetimeControl.cs" />
+    <Compile Include="View %28TODO%29\IViewService.cs" />
+    <Compile Include="View %28TODO%29\SecondaryViewSynchronizationContextDecorator.cs" />
+    <Compile Include="View %28TODO%29\ViewLifetimeControl.cs" />
+    <Compile Include="View %28TODO%29\ViewLifeTimeException.cs" />
+    <Compile Include="View %28TODO%29\ViewService.cs" />
+    <Compile Include="WindowEx\IWindowEx.cs" />
+    <Compile Include="WindowEx\WindowEx.cs" />
+    <EmbeddedResource Include="Properties\Template10.Services.WindowService.rd.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Template10.CodeBehind\Template10.Common.CodeBehind.csproj">
+      <Project>{b3a4e50e-9dca-457e-bed5-b71d97b957f3}</Project>
+      <Name>Template10.Common.CodeBehind</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Template10.XAML\Template10.Common.XAML.csproj">
+      <Project>{af4f2a41-d0e8-4cb2-950f-ed523c29b19c}</Project>
+      <Name>Template10.Common.XAML</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.BackService\Template10.Services.BackService.csproj">
+      <Project>{8564f764-99d9-4473-b5e4-ac62cda73977}</Project>
+      <Name>Template10.Services.BackService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.LoggingService\Service\Template10.Services.LoggingService.csproj">
+      <Project>{eadde808-bf0d-4ebc-b4ca-9fda63b53862}</Project>
+      <Name>Template10.Services.LoggingService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Template10.Core.Shared\Template10.Core.Shared.csproj">
+      <Project>{1f9a6976-d8f9-459b-8aee-770b53904ff3}</Project>
+      <Name>Template10.Core.Shared</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="WindowsMobile, Version=10.0.15063.0">
+      <Name>Windows Mobile Extensions for the UWP</Name>
+    </SDKReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>call "$(ProjectDir)..\_nuget\Build.cmd" "$(TargetDir)" "$(TargetName)" "$(ProjectDir)"</PostBuildEvent>
-  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

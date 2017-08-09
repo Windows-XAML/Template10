@@ -391,17 +391,6 @@ namespace Template10.Controls
                     {
                         pageParam = NavigationService.CurrentPageParam;
                     }
-                    else if (pageParam.ToString().StartsWith("{"))
-                    {
-                        try
-                        {
-                            pageParam = pageParam.ToString().DeserializeEx();
-                        }
-                        catch
-                        {
-                            // 
-                        }
-                    }
 
                     // add parameter match
                     buttons = buttons.Where(x => Equals(x.HamburgerButtonInfo.PageParameter, null) || Equals(x.HamburgerButtonInfo.PageParameter, pageParam));

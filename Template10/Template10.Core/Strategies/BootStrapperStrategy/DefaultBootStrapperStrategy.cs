@@ -89,8 +89,16 @@ namespace Template10.Strategies
             else
             {
                 var frame = new Frame();
-                frame.CreateNavigationService("RootFrame");
-                frame.GetNavigationService().FrameEx.FrameId = "RootFrame";
+                try
+                {
+                    frame.CreateNavigationService("RootFrame");
+                    frame.GetNavigationService().FrameEx.FrameId = "RootFrame";
+                }
+                catch (Exception)
+                {
+                    System.Diagnostics.Debugger.Break();
+                    throw;
+                }
                 return frame;
             }
         }

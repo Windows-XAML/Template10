@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B540D0B5-3850-416F-AEC7-7737870E9CA2}</ProjectGuid>
+    <ProjectGuid>{CD31D870-42F3-4379-B67A-2070C4B0A444}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Template10.Services.KeyboardService</RootNamespace>
-    <AssemblyName>Template10.Services.KeyboardService</AssemblyName>
+    <RootNamespace>Template10</RootNamespace>
+    <AssemblyName>Template10.Core.Navigation</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.15063.0</TargetPlatformVersion>
@@ -35,7 +35,6 @@
     <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <GenerateLibraryLayout>true</GenerateLibraryLayout>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <PlatformTarget>x86</PlatformTarget>
@@ -108,20 +107,88 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Services.KeyboardService\IKeyboardService.cs" />
-    <Compile Include="Services.KeyboardService\KeyboardEventArgs.cs" />
-    <Compile Include="Services.KeyboardService\KeyboardHelper.cs" />
-    <Compile Include="Services.KeyboardService\KeyboardService.cs" />
+    <Compile Include="Behaviors\BackButtonBehavior.cs" />
+    <Compile Include="Behaviors\NavButtonBehavior.cs" />
+    <Compile Include="Behaviors\NavToPageAction.cs" />
+    <Compile Include="Messages\NavigationServiceCreatedMessage.cs" />
+    <Compile Include="NavigationService\INavigationService2.cs" />
+    <Compile Include="Strategies\StateStrategy\DefaultStateStrategy.cs" />
+    <Compile Include="Navigation.FrameEx\FrameExState.cs" />
+    <Compile Include="Navigation.FrameEx\IFrameEx.cs" />
+    <Compile Include="Navigation.FrameEx\IFrameEx2.cs" />
+    <Compile Include="Navigation.FrameEx\FrameEx.cs" />
+    <Compile Include="NavigationService\BackButton.enum.cs" />
+    <Compile Include="Common\NavButtonsHelper.cs" />
+    <Compile Include="Mvvm\ITemplate10ViewModel.cs" />
+    <Compile Include="NavigationService\Settings.cs" />
+    <Compile Include="Strategies\StateStrategy\IStateStrategy.cs" />
+    <Compile Include="Strategies\ViewModelActionStrategy\DefaultViewModelActionStrategy.cs" />
+    <Compile Include="Strategies\ViewModelActionStrategy\IViewModelActionStrategy.cs" />
+    <Compile Include="Strategies\ViewModelResolutionStrategy\DefaultViewModelResolutionStrategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\Template10.Services.KeyboardService.rd.xml" />
+    <Compile Include="NavigationService\NavigatedEventArgs.cs" />
+    <Compile Include="NavigationService\NavigatingEventArgs.cs" />
+    <Compile Include="NavigationService\INavigationService.cs" />
+    <Compile Include="Extensions\NavigationExtensions.cs" />
+    <Compile Include="NavigationService\NavigationService.cs" />
+    <Compile Include="NavigationService\NavigationServiceList.cs" />
+    <Compile Include="Strategies\ViewModelResolutionStrategy\IViewModelResolutionStrategy.cs" />
+    <EmbeddedResource Include="Properties\Template10.Services.Navigation.rd.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Template10.CodeBehind\Template10.Common.CodeBehind.csproj">
+      <Project>{b3a4e50e-9dca-457e-bed5-b71d97b957f3}</Project>
+      <Name>Template10.Common.CodeBehind</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Template10.XAML\Template10.Common.XAML.csproj">
+      <Project>{af4f2a41-d0e8-4cb2-950f-ed523c29b19c}</Project>
+      <Name>Template10.Common.XAML</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.BackService\Template10.Services.BackService.csproj">
+      <Project>{8564f764-99d9-4473-b5e4-ac62cda73977}</Project>
+      <Name>Template10.Services.BackService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.Container\Service\Template10.Services.Container.Core.csproj">
+      <Project>{b4c8a753-3376-4c55-aff1-326f2d1cfcbc}</Project>
+      <Name>Template10.Services.Container.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.KeyboardService\Service\Template10.Services.KeyboardService.csproj">
+      <Project>{b540d0b5-3850-416f-aec7-7737870e9ca2}</Project>
+      <Name>Template10.Services.KeyboardService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.LoggingService\Service\Template10.Services.LoggingService.csproj">
+      <Project>{eadde808-bf0d-4ebc-b4ca-9fda63b53862}</Project>
+      <Name>Template10.Services.LoggingService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.Messenger\Service\Template10.Services.Messaging.Core.csproj">
+      <Project>{e14bcd62-b2a4-4aa2-95a8-6a556a31fb29}</Project>
+      <Name>Template10.Services.Messaging.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.SerializationService\Service\Template10.Services.Serialization.csproj">
+      <Project>{d3a94520-4cd4-4d56-b30b-7e54face64bb}</Project>
+      <Name>Template10.Services.Serialization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.SettingsService\Service\Template10.Services.SettingsService.csproj">
+      <Project>{eba14736-2c70-4e33-a156-221b44ff43c1}</Project>
+      <Name>Template10.Services.SettingsService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Template10.Portable\Template10.Portable.csproj">
+      <Project>{2b6903df-396a-4d97-bf29-45bc6dd72dbe}</Project>
+      <Name>Template10.Portable</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Template10.Core.Shared\Template10.Core.Shared.csproj">
+      <Project>{1f9a6976-d8f9-459b-8aee-770b53904ff3}</Project>
+      <Name>Template10.Core.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Template10.Core.Windowing\Template10.Core.Windowing.csproj">
+      <Project>{9cad4451-5adf-48d3-b690-8b341a95a228}</Project>
+      <Name>Template10.Core.Windowing</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>call "$(ProjectDir)..\_nuget\Build.cmd" "$(TargetDir)" "$(TargetName)" "$(ProjectDir)"</PostBuildEvent>
-  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -30,10 +30,10 @@ namespace Sample.Services
             set => Write(nameof(DefaultTheme), value.ToString());
         }
 
-        public TimeSpan CacheExpiry
+        public TimeSpan CacheMaxDuration
         {
-            get => Read(nameof(CacheExpiry), TimeSpan.FromDays(2));
-            set => Write(nameof(CacheExpiry), value);
+            get => Read(nameof(CacheMaxDuration), TimeSpan.FromHours(1));
+            set => Write(nameof(CacheMaxDuration), value);
         }
 
         public string BusyText
@@ -71,9 +71,9 @@ namespace Sample.Services
                         // update the requested theme
                         (Window.Current.Content as FrameworkElement).RequestedTheme = DefaultTheme;
                         break;
-                    case nameof(CacheExpiry):
+                    case nameof(CacheMaxDuration):
                         // update the navigation setting
-                        Template10.Navigation.Settings.CacheExpiry = CacheExpiry;
+                        Template10.Navigation.Settings.CacheMaxDuration = CacheMaxDuration;
                         break;
                 }
             });

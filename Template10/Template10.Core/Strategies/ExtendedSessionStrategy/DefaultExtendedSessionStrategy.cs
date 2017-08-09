@@ -17,21 +17,9 @@ namespace Template10.Strategies
             }
         }
 
-        bool _StartupAsync = false;
-        public async Task StartupAsync(IStartArgsEx e)
-        {
-            if (_StartupAsync)
-            {
-                throw new Exception("Startup has alrady been called once.");
-            }
-            _StartupAsync = true;
-            await (this as IExtendedSessionStrategy2).StartUnspecifiedAsync();
-        }
+        public async Task StartupAsync(IStartArgsEx e) => await Two.StartUnspecifiedAsync();
 
-        public async Task SuspendingAsync()
-        {
-            await (this as IExtendedSessionStrategy2).StartSaveDataAsync();
-        }
+        public async Task SuspendingAsync() => await Two.StartSaveDataAsync();
 
         public void Dispose() => _manager?.Dispose();
     }
@@ -40,19 +28,19 @@ namespace Template10.Strategies
     {
         IExtendedSessionStrategy2 Two => this as IExtendedSessionStrategy2;
 
-        ExtendedSessionKinds IExtendedSessionStrategy2.CurrentKind 
+        ExtendedSessionKinds IExtendedSessionStrategy2.CurrentKind
             => _manager?.CurrentKind ?? ExtendedSessionKinds.None;
 
-        bool IExtendedSessionStrategy2.IsActive 
+        bool IExtendedSessionStrategy2.IsActive
             => _manager?.IsActive ?? false;
 
-        bool IExtendedSessionStrategy2.IsStarted 
+        bool IExtendedSessionStrategy2.IsStarted
             => _manager?.IsStarted ?? false;
 
-        bool IExtendedSessionStrategy2.IsRevoked 
+        bool IExtendedSessionStrategy2.IsRevoked
             => _manager?.IsRevoked ?? false;
 
-        int IExtendedSessionStrategy2.Progress 
+        int IExtendedSessionStrategy2.Progress
             => _manager?.CurrentProgress ?? default(int);
 
         async Task<bool> IExtendedSessionStrategy2.StartUnspecifiedAsync()
@@ -61,9 +49,13 @@ namespace Template10.Strategies
             {
                 return (Two.CurrentKind == ExtendedSessionKinds.Unspecified);
             }
+            else if (_manager != null)
+            {
+                return await _manager.StartAsync(ExtendedSessionKinds.Unspecified);
+            }
             else
             {
-                return await _manager?.StartAsync(ExtendedSessionKinds.Unspecified);
+                return false;
             }
         }
 
@@ -75,12 +67,19 @@ namespace Template10.Strategies
                 {
                     return true;
                 }
-                else
+                else if (_manager != null)
                 {
                     _manager.Create();
                 }
             }
-            return await _manager?.StartAsync(ExtendedSessionKinds.SavingData);
+            if (_manager == null)
+            {
+                return false;
+            }
+            else
+            {
+                return await _manager.StartAsync(ExtendedSessionKinds.SavingData);
+            }
         }
     }
 }

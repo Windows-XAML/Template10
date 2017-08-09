@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B540D0B5-3850-416F-AEC7-7737870E9CA2}</ProjectGuid>
+    <ProjectGuid>{1F9A6976-D8F9-459B-8AEE-770B53904FF3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Template10.Services.KeyboardService</RootNamespace>
-    <AssemblyName>Template10.Services.KeyboardService</AssemblyName>
+    <RootNamespace>Template10</RootNamespace>
+    <AssemblyName>Template10.Core.Shared</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.15063.0</TargetPlatformVersion>
@@ -35,7 +35,6 @@
     <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <GenerateLibraryLayout>true</GenerateLibraryLayout>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <PlatformTarget>x86</PlatformTarget>
@@ -108,20 +107,63 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Services.KeyboardService\IKeyboardService.cs" />
-    <Compile Include="Services.KeyboardService\KeyboardEventArgs.cs" />
-    <Compile Include="Services.KeyboardService\KeyboardHelper.cs" />
-    <Compile Include="Services.KeyboardService\KeyboardService.cs" />
+    <Compile Include="Central.cs" />
+    <Compile Include="Core.BootStrapper\IBootStrapperShared.cs" />
+    <Compile Include="Core.PropertyBag\EmptyPropertyBagSerializationStrategy.cs" />
+    <Compile Include="Core.PropertyBag\FolderPropertyBagPersistenceStrategy.cs" />
+    <Compile Include="Core.PropertyBag\MemoryPropertyBagPersistenceStrategy.cs" />
+    <Compile Include="Core.PropertyBag\PropertyBagEx.cs" />
+    <Compile Include="Core.PropertyBag\PropertyBagSerialziationStrategy.cs" />
+    <Compile Include="Core.PropertyBag\SettingsPropertyBagPersistenceStrategy.cs" />
+    <Compile Include="Core.SessionState\ISessionState.cs" />
+    <Compile Include="Core.StartArgsEx\IStartArgsEx.cs" />
+    <Compile Include="Core.StartArgsEx\StartArgsEx.cs" />
+    <Compile Include="Core.StartArgsEx\StartCauses.enum.cs" />
+    <Compile Include="Core.StartArgsEx\StartKinds.enum.cs" />
+    <Compile Include="Extensions\SharedExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\Template10.Services.KeyboardService.rd.xml" />
+    <Compile Include="Core.SessionState\SessionState.cs" />
+    <EmbeddedResource Include="Properties\Template10.Shared.rd.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Services\Template10.Services.BackService\Template10.Services.BackService.csproj">
+      <Project>{8564f764-99d9-4473-b5e4-ac62cda73977}</Project>
+      <Name>Template10.Services.BackService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.Container\Service\Template10.Services.Container.Core.csproj">
+      <Project>{B4C8A753-3376-4C55-AFF1-326F2D1CFCBC}</Project>
+      <Name>Template10.Services.Container.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.FileService\Service\Template10.Services.FileService.csproj">
+      <Project>{fd4892b4-4cf8-4c74-b28f-ad7623e405e6}</Project>
+      <Name>Template10.Services.FileService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.LoggingService\Service\Template10.Services.LoggingService.csproj">
+      <Project>{EADDE808-BF0D-4EBC-B4CA-9FDA63B53862}</Project>
+      <Name>Template10.Services.LoggingService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.Messenger\Service\Template10.Services.Messaging.Core.csproj">
+      <Project>{E14BCD62-B2A4-4AA2-95A8-6A556A31FB29}</Project>
+      <Name>Template10.Services.Messaging.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.SerializationService\Service\Template10.Services.Serialization.csproj">
+      <Project>{d3a94520-4cd4-4d56-b30b-7e54face64bb}</Project>
+      <Name>Template10.Services.Serialization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.SettingsService\Service\Template10.Services.SettingsService.csproj">
+      <Project>{eba14736-2c70-4e33-a156-221b44ff43c1}</Project>
+      <Name>Template10.Services.SettingsService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Template10.Portable\Template10.Portable.csproj">
+      <Project>{2B6903DF-396A-4D97-BF29-45BC6DD72DBE}</Project>
+      <Name>Template10.Portable</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>call "$(ProjectDir)..\_nuget\Build.cmd" "$(TargetDir)" "$(TargetName)" "$(ProjectDir)"</PostBuildEvent>
-  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -23,10 +23,13 @@ namespace Sample.ViewModels
 
         public async override Task OnNavigatedToAsync(INavigatedToParameters parameter)
         {
-            var item = await parameter.ToNavigationInfo.PageState.TryGetAsync<string>(nameof(Value));
-            if (item.Success)
+            if (parameter.NavigationMode == NavMode.Back | parameter.Resuming)
             {
-                Value = item.Value;
+                var item = await parameter.ToNavigationInfo.PageState.TryGetAsync<string>(nameof(Value));
+                if (item.Success)
+                {
+                    Value = item.Value;
+                }
             }
         }
 
@@ -48,7 +51,7 @@ namespace Sample.ViewModels
                     SecondaryButtonText = "Cancel",
                 };
                 var result = await dialog.ShowAsyncEx();
-                return result == ContentDialogResult.Secondary;
+                return result != ContentDialogResult.Secondary;
             }
             else
             {

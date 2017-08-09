@@ -4,14 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B540D0B5-3850-416F-AEC7-7737870E9CA2}</ProjectGuid>
+    <ProjectGuid>{AF4F2A41-D0E8-4CB2-950F-ED523C29B19C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Template10.Services.KeyboardService</RootNamespace>
-    <AssemblyName>Template10.Services.KeyboardService</AssemblyName>
+    <RootNamespace>Template10.XAML</RootNamespace>
+    <AssemblyName>Template10.XAML</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.15063.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.10240.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.14393.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
@@ -35,7 +35,6 @@
     <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <GenerateLibraryLayout>true</GenerateLibraryLayout>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <PlatformTarget>x86</PlatformTarget>
@@ -108,20 +107,30 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Services.KeyboardService\IKeyboardService.cs" />
-    <Compile Include="Services.KeyboardService\KeyboardEventArgs.cs" />
-    <Compile Include="Services.KeyboardService\KeyboardHelper.cs" />
-    <Compile Include="Services.KeyboardService\KeyboardService.cs" />
+    <Compile Include="Behaviors\ChangeCursorAction.cs" />
+    <Compile Include="Behaviors\CloseFlyoutAction.cs" />
+    <Compile Include="Behaviors\ConditionalAction.cs" />
+    <Compile Include="Behaviors\EllipsisBehavior.cs" />
+    <Compile Include="Behaviors\EventTriggerBehaviorBase.cs" />
+    <Compile Include="Behaviors\FocusAction.cs" />
+    <Compile Include="Behaviors\KeyBehavior.cs" />
+    <Compile Include="Behaviors\MessageDialogAction.cs" />
+    <Compile Include="Behaviors\OpenFlyoutAction.cs" />
+    <Compile Include="Behaviors\TextBoxEnterKeyBehavior.cs" />
+    <Compile Include="Behaviors\ThrottledEventTriggerBehavior.cs" />
+    <Compile Include="Behaviors\TimeoutAction.cs" />
+    <Compile Include="Common\EventThrottleHelper.cs" />
+    <Compile Include="Converters\ChangeTypeConverter.cs" />
+    <Compile Include="Converters\DateTimeOffsetConverter.cs" />
+    <Compile Include="Converters\StringFormatConverter.cs" />
+    <Compile Include="Converters\ValueWhenConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\Template10.Services.KeyboardService.rd.xml" />
+    <EmbeddedResource Include="Properties\Template10.XAML.rd.xml" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>call "$(ProjectDir)..\_nuget\Build.cmd" "$(TargetDir)" "$(TargetName)" "$(ProjectDir)"</PostBuildEvent>
-  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

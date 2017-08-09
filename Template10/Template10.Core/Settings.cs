@@ -13,10 +13,10 @@ namespace Template10
             set => Navigation.Settings.DefaultTheme = value;
         }
 
-        public static TimeSpan CacheExpiry
+        public static TimeSpan CacheMaxDuration
         {
-            get => Navigation.Settings.CacheExpiry;
-            set => Navigation.Settings.CacheExpiry = value;
+            get => Navigation.Settings.CacheMaxDuration;
+            set => Navigation.Settings.CacheMaxDuration = value;
         }
 
         public static ShellBackButtonPreferences ShellBackButtonPreference
