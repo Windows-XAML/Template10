@@ -1,12 +1,17 @@
 ﻿using System;
 using Template10.Core;
 using Template10.Services.BackButtonService;
+using Windows.UI.Xaml;
 
 namespace Template10
 {
     public static partial class Settings
     {
-                public static IDispatcherEx DefaultDispatcher { get; set; }
+        public static ElementTheme DefaultTheme
+        {
+            get => Navigation.Settings.DefaultTheme;
+            set => Navigation.Settings.DefaultTheme = value;
+        }
 
         public static TimeSpan CacheExpiry
         {

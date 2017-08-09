@@ -24,10 +24,10 @@ namespace Sample.Services
             // empty
         }
 
-        public ApplicationTheme AppTheme
+        public ElementTheme DefaultTheme
         {
-            get => Read(nameof(AppTheme), ApplicationTheme.Light);
-            set => Write(nameof(AppTheme), value.ToString());
+            get => Read(nameof(DefaultTheme), ElementTheme.Light);
+            set => Write(nameof(DefaultTheme), value.ToString());
         }
 
         public TimeSpan CacheExpiry
@@ -67,9 +67,9 @@ namespace Sample.Services
                         // hide/show let the service handle it
                         BackButtonService.UpdateBackButton(NavigationService.Default.CanGoBack);
                         break;
-                    case nameof(AppTheme):
+                    case nameof(DefaultTheme):
                         // update the requested theme
-                        (Window.Current.Content as FrameworkElement).RequestedTheme = AppTheme.ToElementTheme();
+                        (Window.Current.Content as FrameworkElement).RequestedTheme = DefaultTheme;
                         break;
                     case nameof(CacheExpiry):
                         // update the navigation setting

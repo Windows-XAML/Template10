@@ -57,6 +57,12 @@ namespace Template10.Navigation
 
         public string FrameId { get; set; } = "DefaultFrame";
 
+        public ElementTheme RequestedTheme
+        {
+            get => Two.Frame.RequestedTheme;
+            set => Two.Frame.RequestedTheme = value;
+        }
+
         public object Content => Two.Frame.Content;
 
         public object GetValue(DependencyProperty dp) => Two.Frame.GetValue(dp);
@@ -65,7 +71,7 @@ namespace Template10.Navigation
 
         public void ClearValue(DependencyProperty dp) { Two.Frame.ClearValue(dp); }
 
-        public void ClearCache(bool removeCachedPagesInBackStack = false)
+        public void ClearNavigationCache(bool removeCachedPagesInBackStack = false)
         {
             LogThis($"Frame: {FrameId}");
 

@@ -26,9 +26,10 @@ namespace Template10.Strategies
 
         public async Task SuspendAsync(ISuspendingEventArgs e)
         {
+            Settings.LastSuspended = DateTime.Now;
+
             if (Settings.EnableLifecycleStrategy)
             {
-
                 PreviouslySuspended = true;
 
                 _messengerService.Send(new Messages.SuspendingMessage { EventArgs = e });
@@ -39,7 +40,6 @@ namespace Template10.Strategies
                 {
                     await nav.SaveAsync(true);
                 }
-
             }
         }
 
@@ -51,11 +51,6 @@ namespace Template10.Strategies
             {
                 return true;
             }
-
-            // if (PreviouslySuspended)
-            // {
-            //     return true;
-            // }
 
             if (e?.LaunchActivatedEventArgs?.PrelaunchActivated ?? false)
             {
@@ -106,7 +101,7 @@ namespace Template10.Strategies
             {
                 foreach (var nav in NavigationService.Instances.Select(x => x as INavigationService2))
                 {
-                    if (await nav.LoadAsync(true))
+                    if (await nav.LoadAsync(true, Windows.UI.Xaml.Navigation.NavigationMode.New))
                     {
                         // 
                     }

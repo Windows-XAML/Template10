@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Navigation
@@ -10,5 +11,7 @@ namespace Template10.Navigation
 
         IList<PageStackEntry> BackStack { get; }
         IList<PageStackEntry> ForwardStack { get; }
+
+        ElementTheme RequestedTheme { get; set; }
     }
 }

@@ -14,13 +14,14 @@ namespace Template10.Strategies
         void HandleSuspending(object sender, SuspendingEventArgs e);
         void OnWindowCreated(WindowCreatedEventArgs args);
         void StartOrchestrationAsync(IActivatedEventArgs e, Core.StartArgsEx.StartKinds activate);
+
         Func<IStartArgsEx, Task> OnStartAsyncDelegate { get; set; }
         Func<Task> OnInitAsyncDelegate { get; set; }
-        Func<SplashScreen, Task<UIElement>> CreateSpashAsyncDelegate { get; set; }
-        Func<IStartArgsEx, Task<UIElement>> CreateRootElementAsyncDelegate { get; set; }
+        Func<SplashScreen, UIElement> CreateSpashDelegate { get; set; }
+        Func<IStartArgsEx, UIElement> CreateRootElementDelegate { get; set; }
 
-        Task<UIElement> CreateRootAsync(IStartArgsEx e);
-        Task<UIElement> CreateSpashAsync(SplashScreen e);
+        UIElement CreateRoot(IStartArgsEx e);
+        UIElement CreateSpash(SplashScreen e);
 
         void HandleEnteredBackground(object sender, EnteredBackgroundEventArgs e);
         void HandleLeavingBackground(object sender, LeavingBackgroundEventArgs e);

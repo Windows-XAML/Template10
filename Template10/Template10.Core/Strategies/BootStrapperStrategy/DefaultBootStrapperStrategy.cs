@@ -35,7 +35,7 @@ namespace Template10.Strategies
             _titleBarStrategy = titleBarStrategy;
             _status = new ValueWithHistory<BootstrapperStates>(BootstrapperStates.None, (date, before, after) =>
             {
-                LogThis($"{nameof(Status)} changed from {before} to {after}");
+                LogThis($"{nameof(Status)} changed from {before} to {after}", caller: $"{nameof(DefaultBootStrapperStrategy)}");
             });
         }
 
@@ -47,6 +47,7 @@ namespace Template10.Strategies
             await _lifecycleStrategy.ResumingAsync();
             _messengerService.Send(new Messages.ResumingMessage());
         }
+
         public async void HandleSuspending(object sender, SuspendingEventArgs e)
         {
             LogThis();
@@ -66,25 +67,29 @@ namespace Template10.Strategies
                 deferral.Complete();
             }
         }
+
         public void HandleEnteredBackground(object sender, EnteredBackgroundEventArgs e)
             => LogThis(() => _messengerService.Send(new Messages.EnteredBackgroundMessage { EventArgs = e }));
+
         public void HandleLeavingBackground(object sender, LeavingBackgroundEventArgs e)
             => LogThis(() => _messengerService.Send(new Messages.LeavingBackgroundMessage { EventArgs = e }));
+
         public void HandleUnhandledException(object sender, UnhandledExceptionEventArgs e)
             => LogThis(() => _messengerService.Send(new Messages.UnhandledExceptionMessage { EventArgs = e }));
 
         // public methods
 
-        public async Task<UIElement> CreateRootAsync(IStartArgsEx e)
+        public UIElement CreateRoot(IStartArgsEx e)
         {
             LogThis();
-            if (await CreateRootElementAsyncDelegate?.Invoke(e) is UIElement result && result != null)
+            if (CreateRootElementDelegate?.Invoke(e) is UIElement result && result != null)
             {
                 return result;
             }
             else
             {
-                var frame = await new Frame().CreateNavigationService();
+                var frame = new Frame();
+                frame.CreateNavigationService("RootFrame");
                 frame.GetNavigationService().FrameEx.FrameId = "RootFrame";
                 return frame;
             }
@@ -109,12 +114,12 @@ namespace Template10.Strategies
             }
         }
 
-        public async Task<UIElement> CreateSpashAsync(SplashScreen e)
-            => await LogThis(async () => await CreateSpashAsyncDelegate?.Invoke(e));
+        public UIElement CreateSpash(SplashScreen e)
+            => LogThis(() => CreateSpashDelegate.Invoke(e));
 
-        public async Task<bool> ShowSplashAsync(IStartArgsEx e)
+        public bool ShowSplash(IStartArgsEx e)
         {
-            var splash = await CreateSpashAsync(e.LaunchActivatedEventArgs.SplashScreen);
+            var splash = CreateSpash(e.LaunchActivatedEventArgs.SplashScreen);
             if (splash == null)
             {
                 LogThis("No splash to show.");
@@ -153,9 +158,9 @@ namespace Template10.Strategies
 
         // public properties
 
-        public Func<IStartArgsEx, Task<UIElement>> CreateRootElementAsyncDelegate { get; set; }
+        public Func<IStartArgsEx, UIElement> CreateRootElementDelegate { get; set; }
 
-        public Func<SplashScreen, Task<UIElement>> CreateSpashAsyncDelegate { get; set; }
+        public Func<SplashScreen, UIElement> CreateSpashDelegate { get; set; }
 
         public Func<IStartArgsEx, Task> OnStartAsyncDelegate { get; set; } = null;
 
@@ -175,6 +180,7 @@ namespace Template10.Strategies
         public async void StartOrchestrationAsync(IActivatedEventArgs e, StartArgsEx.StartKinds kind)
         {
             LogThis($"Type:{e} Kind:{kind}");
+
             await StartOrchestrationAsyncSemaphore.WaitAsync();
 
             try
@@ -182,28 +188,30 @@ namespace Template10.Strategies
                 LogThis();
                 var args = StartArgsEx.Create(e, kind);
 
+                LogThis($"args.StartKind:{args.StartKind} ");
+                LogThis($"args.StartCause:{args.StartCause} ");
+                LogThis($"args.ThisIsFirstStart:{args.ThisIsFirstStart} ");
+                LogThis($"args.PreviousExecutionState:{args.PreviousExecutionState} ");
+                LogThis($"args.LaunchActivatedEventArgs?.PrelaunchActivated:{args.LaunchActivatedEventArgs?.PrelaunchActivated}");
+                LogThis($"_lifecycleStrategy.IsResuming(args):{_lifecycleStrategy.IsResuming(args)}");
+
                 if (args.ThisIsFirstStart)
                 {
-                    LogThis($"args.ThisIsFirstStart:{args.ThisIsFirstStart} ");
-                    LogThis($"args.LaunchActivatedEventArgs?.PrelaunchActivated:{args.LaunchActivatedEventArgs?.PrelaunchActivated}");
-                    LogThis($"_lifecycleStrategy.IsResuming(args):{_lifecycleStrategy.IsResuming(args)}");
-
-                    await OperationWrapperAsync(BootstrapperStates.Initialized, async () =>
+                    await OperationWrapperAsync(BootstrapperStates.Initializing, async () =>
                     {
                         await OnInitAsyncDelegate?.Invoke();
                     }, BootstrapperStates.Initialized);
 
                     await OperationWrapperAsync(BootstrapperStates.Launching, async () =>
                     {
-                        if (await ShowSplashAsync(args))
+                        if (ShowSplash(args))
                         {
-                            _rootElement = await CreateRootAsync(args);
+                            _rootElement = CreateRoot(args);
                         }
                         else
                         {
                             var window = Window.Current;
-                            window.Content = _rootElement = await CreateRootAsync(args);
-                            window.Activate();
+                            window.Content = _rootElement = CreateRoot(args);
                         }
 
                         if (args.LaunchActivatedEventArgs?.PrelaunchActivated ?? false)
@@ -270,7 +278,12 @@ namespace Template10.Strategies
         {
             Status = before;
             try { method(); }
-            catch (Exception ex) { LogThis($"Error in OperationWrapper while {before}, Exception {ex.Message}", severity: Services.Logging.Severities.Error); }
+            catch (Exception ex)
+            {
+                var message = $"Error in {GetType()}.{nameof(OperationWrapper)} while {before}. Exception;{ex.Message}";
+                LogThis(message, severity: Services.Logging.Severities.Error);
+                throw new Exception(message, ex);
+            }
             finally { Status = after; }
         }
 
@@ -278,7 +291,12 @@ namespace Template10.Strategies
         {
             Status = before;
             try { await method(); }
-            catch (Exception ex) { LogThis($"Error in OperationWrapperAsync while {before}, Exception {ex.Message}", severity: Services.Logging.Severities.Error); }
+            catch (Exception ex)
+            {
+                var message = $"Error in {GetType()}.{nameof(OperationWrapperAsync)} while {before}. Exception:{ex.Message}";
+                LogThis(message, severity: Services.Logging.Severities.Error);
+                throw new Exception(message, ex);
+            }
             finally { Status = after; }
         }
     }

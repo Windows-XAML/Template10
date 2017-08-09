@@ -16,24 +16,6 @@ namespace Template10.Navigation
 
         public async Task ClearAsync() => await store.ClearAsync();
 
-        public async Task<(bool Success, DateTime Value)> TryGetCacheDateKeyAsync()
-        {
-            var setting = await store.TryGetStringAsync("CacheDateKey");
-            if (!setting.Success)
-            {
-                return (false, DateTime.MinValue);
-            }
-            try
-            {
-                return (true, DateTime.Parse(setting.Value));
-            }
-            catch (Exception)
-            {
-                return (false, DateTime.MinValue);
-            }
-        }
-        public async Task SetCacheDateKeyAsync(DateTime value) => await store.TrySetStringAsync("CacheDateKey", value.ToString());
-
         public async Task<(bool Success, Type Value)> TryGetCurrentPageTypeAsync()
         {
             var setting = await store.TryGetStringAsync("CurrentPageType");

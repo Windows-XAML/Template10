@@ -22,14 +22,14 @@ namespace Sample.ViewModels
 
         public bool UseShellBackButton
         {
-            get => _settings.ShellBackButtonPreference == ShellBackButtonPreferences.AutoShowInShell ? true: false;
+            get => _settings.ShellBackButtonPreference == ShellBackButtonPreferences.AutoShowInShell ? true : false;
             set => Set(() => { _settings.ShellBackButtonPreference = value ? ShellBackButtonPreferences.AutoShowInShell : ShellBackButtonPreferences.NeverShowInShell; });
         }
 
         public bool UseLightThemeButton
         {
-            get => _settings.AppTheme.Equals(ApplicationTheme.Light);
-            set => Set(() => { _settings.AppTheme = value ? ApplicationTheme.Light : ApplicationTheme.Dark; });
+            get => _settings.DefaultTheme.Equals(ElementTheme.Light);
+            set => Set(() => { _settings.DefaultTheme = value ? ElementTheme.Light : ElementTheme.Dark; });
         }
 
         public string BusyText

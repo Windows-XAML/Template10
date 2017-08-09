@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Template10.Common;
 using Template10.Core;
 using Windows.UI.ViewManagement;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 

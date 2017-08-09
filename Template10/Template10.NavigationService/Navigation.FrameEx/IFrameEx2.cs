@@ -31,7 +31,7 @@ namespace Template10.Navigation
         Task<IPropertyBagEx> GetPageStateAsync(Type page);
         Task<IPropertyBagEx> GetPageStateAsync(string page);
 
-        void ClearCache(bool removeCachedPagesInBackStack = false);
+        void ClearNavigationCache(bool removeCachedPagesInBackStack = false);
 
         Strategies.IStateStrategy StateStrategy { get; set; }
     }

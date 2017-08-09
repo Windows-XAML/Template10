@@ -2,7 +2,7 @@
 
 namespace Template10.Strategies
 {
-    public interface IExtendedSessionStrategy2 : IExtendedSessionStrategy
+    public interface IExtendedSessionStrategy2 
     {
         ExtendedSessionKinds CurrentKind { get; }
         bool IsActive { get; }

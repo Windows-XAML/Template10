@@ -25,6 +25,6 @@ namespace Template10.Services.Logging
         protected void LogThis(string text = null, Severities severity = Severities.Template10, [CallerMemberName]string caller = null)
             => (this as ILoggable).LogThis(text, severity, caller: $"{caller}");
         void ILoggable.LogThis(string text, Severities severity, string caller)
-            => (this as ILoggable).LoggingService.WriteLine(text, severity, caller: $"{caller}");
+            => (this as ILoggable).LoggingService.WriteLine(text, severity, caller: $"{GetType()}.{caller}");
     }
 }

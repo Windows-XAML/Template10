@@ -18,8 +18,8 @@ namespace Template10
 
         Task OnInitializeAsync();
         Task OnStartAsync(IStartArgsEx e);
-        Task<UIElement> CreateRootElementAsync(IStartArgsEx e);
-        Task<UIElement> CreateSpashAsync(SplashScreen e);
+        UIElement CreateRootElement(IStartArgsEx e);
+        UIElement CreateSpash(SplashScreen e);
         ISessionState SessionState { get; }
         IMessengerService MessengerService { get; }
         IContainerService ContainerService { get; }

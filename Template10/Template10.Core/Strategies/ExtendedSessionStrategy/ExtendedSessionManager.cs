@@ -7,7 +7,7 @@ namespace Template10.Strategies
 {
     internal class ExtendedSessionManager : IDisposable
     {
-        static ExtendedSessionManager() => CreateInternal();
+        // static ExtendedSessionManager() => CreateInternal();
 
         volatile static ExtendedSessionKinds s_currentKind = ExtendedSessionKinds.None;
         public ExtendedSessionKinds CurrentKind => s_currentKind;
@@ -93,7 +93,7 @@ namespace Template10.Strategies
 
         public void Dispose()
         {
-            s_extendedExecutionSession.Dispose();
+            s_extendedExecutionSession?.Dispose();
         }
     }
 

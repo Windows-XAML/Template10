@@ -8,8 +8,8 @@ namespace Template10.Strategies
     {
         internal static DateTime LastSuspended
         {
-            get => ApplicationData.Current.LocalSettings.TryRead<DateTime>(nameof(LastSuspended), out var value) ? value : DateTime.MaxValue;
-            set => ApplicationData.Current.LocalSettings.TryWrite(nameof(LastSuspended), value);
+            get => Navigation.Settings.LastSuspended;
+            set => Navigation.Settings.LastSuspended = value;
         }
 
         /// <summary>

@@ -17,13 +17,18 @@ namespace Sample
 
         public override async Task OnInitializeAsync()
         {
-            this.RequestedTheme = Services.SettingsService.GetInstance().AppTheme;
-            Settings.ShellBackButtonPreference = Services.SettingsService.GetInstance().ShellBackButtonPreference;
-            Settings.CacheExpiry = Services.SettingsService.GetInstance().CacheExpiry;
-            await Task.CompletedTask;
+            var settings = Services.SettingsService.GetInstance();
+            Settings.DefaultTheme = settings.DefaultTheme;
+            Settings.ShellBackButtonPreference = settings.ShellBackButtonPreference;
+            Settings.CacheExpiry = settings.CacheExpiry;
         }
 
-        public override async Task<UIElement> CreateSpashAsync(SplashScreen e)
+        public override UIElement CreateRootElement(IStartArgsEx e)
+        {
+            return base.CreateRootElement(e);
+        }
+
+        public override UIElement CreateSpash(SplashScreen e)
         {
             return new Views.Splash(e);
         }

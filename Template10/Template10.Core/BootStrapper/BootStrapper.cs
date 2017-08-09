@@ -39,10 +39,10 @@ namespace Template10
         internal BootStrapper(IContainerService container, IBootStrapperStrategy strategy)
             : this(strategy)
         {
-            if (Services.Container.ContainerService.Default != container)
-            {
-                Services.Container.ContainerService.Default = container;
-            }
+           if (Services.Container.ContainerService.Default != container)
+           {
+               Services.Container.ContainerService.Default = container;
+           }
         }
 
         public BootStrapper(IBootStrapperStrategy strategy = null)
@@ -51,12 +51,12 @@ namespace Template10
 
             RegisterDependencyObjects(strategy);
 
-            LogThis($"After {nameof(RegisterDependencyObjects)}");
+            LogThis($"After {nameof(RegisterDependencyObjects)}. This is the first Template 10 trace.");
 
             BootStrapperStrategy.OnStartAsyncDelegate = OnStartAsync;
             BootStrapperStrategy.OnInitAsyncDelegate = OnInitializeAsync;
-            BootStrapperStrategy.CreateSpashAsyncDelegate = CreateSpashAsync;
-            BootStrapperStrategy.CreateRootElementAsyncDelegate = CreateRootElementAsync;
+            BootStrapperStrategy.CreateSpashDelegate = CreateSpash;
+            BootStrapperStrategy.CreateRootElementDelegate = CreateRootElement;
 
             base.Resuming += BootStrapperStrategy.HandleResuming;
             base.Suspending += BootStrapperStrategy.HandleSuspending;
@@ -117,18 +117,20 @@ namespace Template10
 
         // implementation methods
 
-        public virtual Task OnInitializeAsync() => null;
+        public virtual Task OnInitializeAsync() => Task.CompletedTask;
         public abstract Task OnStartAsync(IStartArgsEx e);
-        public virtual Task<UIElement> CreateRootElementAsync(IStartArgsEx e) => null;
-        public virtual Task<UIElement> CreateSpashAsync(SplashScreen e) => null;
+        public virtual UIElement CreateRootElement(IStartArgsEx e) => null;
+        public virtual UIElement CreateSpash(SplashScreen e) => null;
 
         // clean up the Application events
 
+#pragma warning disable CS1998 
         private new event EventHandler<object> Resuming;
         private new event SuspendingEventHandler Suspending;
         private new event UnhandledExceptionEventHandler UnhandledException;
         private new event EnteredBackgroundEventHandler EnteredBackground;
         private new event LeavingBackgroundEventHandler LeavingBackground;
+#pragma warning restore CS1998
 
         // clean up the Application overrides
 

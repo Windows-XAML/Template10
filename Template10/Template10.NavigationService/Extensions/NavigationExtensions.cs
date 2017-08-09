@@ -13,20 +13,13 @@ namespace Template10.Extensions
     public static class NavigationExtensions
     {
         public static IWindowEx GetWindow(this INavigationService service)
-        {
-            return service.Window;
-        }
+            => service.Window;
 
         public static IDispatcherEx GetDispatcher(this INavigationService service)
-        {
-            return service.GetWindow().Dispatcher;
-        }
+            => service.GetWindow().Dispatcher;
 
-        public static async Task<Frame> CreateNavigationService(this Frame frame, BackButton backButton = BackButton.Attach)
-        {
-            await NavigationService.CreateAsync(BackButton.Attach, frame);
-            return frame;
-        }
+        public static async void CreateNavigationService(this Frame frame, string frameId = "RootFrame", BackButton backButton = BackButton.Attach)
+            => (await NavigationService.CreateAsync(BackButton.Attach, frame)).FrameEx.FrameId = frameId;
 
         public static INavigationService GetNavigationService(this Frame frame)
             => NavigationService.Instances.GetByFrame(frame);

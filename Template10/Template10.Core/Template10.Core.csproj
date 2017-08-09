@@ -119,6 +119,7 @@
     <Compile Include="Messages\BackRequestedMessage.cs" />
     <Compile Include="Messages\EnteredBackgroundMessage.cs" />
     <Compile Include="Messages\LeavingBackgroundMessage.cs" />
+    <Compile Include="Messages\NavigationServiceCreatedMessage.cs" />
     <Compile Include="Messages\ResumedMessage.cs" />
     <Compile Include="Messages\ResumingMessage.cs" />
     <Compile Include="Messages\SuspendingMessage.cs" />

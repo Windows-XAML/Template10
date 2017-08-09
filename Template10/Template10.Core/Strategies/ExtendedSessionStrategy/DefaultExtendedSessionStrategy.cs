@@ -5,69 +5,73 @@ using Template10.Core;
 
 namespace Template10.Strategies
 {
-    public partial class DefaultExtendedSessionStrategy : IExtendedSessionStrategy2
+    public partial class DefaultExtendedSessionStrategy : IExtendedSessionStrategy
     {
         ExtendedSessionManager _manager;
 
         public DefaultExtendedSessionStrategy()
         {
-            _manager = new ExtendedSessionManager();
+            if (Settings.EnableExtendedSessionStrategy)
+            {
+                _manager = new ExtendedSessionManager();
+            }
         }
 
         bool _StartupAsync = false;
         public async Task StartupAsync(IStartArgsEx e)
         {
-            if (Settings.EnableExtendedSessionStrategy)
+            if (_StartupAsync)
             {
-                if (_StartupAsync)
-                {
-                    throw new Exception("Startup has alrady been called once.");
-                }
-                _StartupAsync = true;
-                await (this as IExtendedSessionStrategy2).StartUnspecifiedAsync();
+                throw new Exception("Startup has alrady been called once.");
             }
+            _StartupAsync = true;
+            await (this as IExtendedSessionStrategy2).StartUnspecifiedAsync();
         }
 
         public async Task SuspendingAsync()
         {
-            if (Settings.EnableExtendedSessionStrategy)
-            {
-                await (this as IExtendedSessionStrategy2).StartSaveDataAsync();
-            }
+            await (this as IExtendedSessionStrategy2).StartSaveDataAsync();
         }
 
-        public void Dispose() => _manager.Dispose();
+        public void Dispose() => _manager?.Dispose();
     }
 
-    public partial class DefaultExtendedSessionStrategy
+    public partial class DefaultExtendedSessionStrategy : IExtendedSessionStrategy2
     {
-        ExtendedSessionKinds IExtendedSessionStrategy2.CurrentKind => _manager.CurrentKind;
+        IExtendedSessionStrategy2 Two => this as IExtendedSessionStrategy2;
 
-        bool IExtendedSessionStrategy2.IsActive => _manager.IsActive;
+        ExtendedSessionKinds IExtendedSessionStrategy2.CurrentKind 
+            => _manager?.CurrentKind ?? ExtendedSessionKinds.None;
 
-        bool IExtendedSessionStrategy2.IsStarted => _manager.IsStarted;
+        bool IExtendedSessionStrategy2.IsActive 
+            => _manager?.IsActive ?? false;
 
-        bool IExtendedSessionStrategy2.IsRevoked => _manager.IsRevoked;
+        bool IExtendedSessionStrategy2.IsStarted 
+            => _manager?.IsStarted ?? false;
 
-        int IExtendedSessionStrategy2.Progress => _manager.CurrentProgress;
+        bool IExtendedSessionStrategy2.IsRevoked 
+            => _manager?.IsRevoked ?? false;
+
+        int IExtendedSessionStrategy2.Progress 
+            => _manager?.CurrentProgress ?? default(int);
 
         async Task<bool> IExtendedSessionStrategy2.StartUnspecifiedAsync()
         {
-            if (_manager.IsActive)
+            if (Two.IsActive)
             {
-                return (_manager.CurrentKind == ExtendedSessionKinds.Unspecified);
+                return (Two.CurrentKind == ExtendedSessionKinds.Unspecified);
             }
             else
             {
-                return await _manager.StartAsync(ExtendedSessionKinds.Unspecified);
+                return await _manager?.StartAsync(ExtendedSessionKinds.Unspecified);
             }
         }
 
         async Task<bool> IExtendedSessionStrategy2.StartSaveDataAsync()
         {
-            if (_manager.IsActive)
+            if (Two.IsActive)
             {
-                if (_manager.CurrentKind == ExtendedSessionKinds.SavingData)
+                if (Two.CurrentKind == ExtendedSessionKinds.SavingData)
                 {
                     return true;
                 }
@@ -76,7 +80,7 @@ namespace Template10.Strategies
                     _manager.Create();
                 }
             }
-            return await _manager.StartAsync(ExtendedSessionKinds.SavingData);
+            return await _manager?.StartAsync(ExtendedSessionKinds.SavingData);
         }
     }
 }

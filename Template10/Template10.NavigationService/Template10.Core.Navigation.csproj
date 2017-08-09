@@ -110,6 +110,7 @@
     <Compile Include="Behaviors\BackButtonBehavior.cs" />
     <Compile Include="Behaviors\NavButtonBehavior.cs" />
     <Compile Include="Behaviors\NavToPageAction.cs" />
+    <Compile Include="Messages\NavigationServiceCreatedMessage.cs" />
     <Compile Include="NavigationService\INavigationService2.cs" />
     <Compile Include="Strategies\StateStrategy\DefaultStateStrategy.cs" />
     <Compile Include="Navigation.FrameEx\FrameExState.cs" />
@@ -150,6 +151,10 @@
     <ProjectReference Include="..\..\Services\Template10.Services.LoggingService\Service\Template10.Services.LoggingService.csproj">
       <Project>{eadde808-bf0d-4ebc-b4ca-9fda63b53862}</Project>
       <Name>Template10.Services.LoggingService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.Messenger\Service\Template10.Services.Messaging.Core.csproj">
+      <Project>{e14bcd62-b2a4-4aa2-95a8-6a556a31fb29}</Project>
+      <Name>Template10.Services.Messaging.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Services\Template10.Services.SerializationService\Service\Template10.Services.Serialization.csproj">
       <Project>{d3a94520-4cd4-4d56-b30b-7e54face64bb}</Project>
