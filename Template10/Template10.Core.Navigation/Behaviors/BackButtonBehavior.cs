@@ -15,10 +15,10 @@ namespace Template10.Behaviors
     [ContentProperty(Name = nameof(Actions))]
     public class BackButtonBehavior : DependencyObject, IBehavior
     {
-        Services.BackButtonService.IBackButtonService _BackButtonService;
+        Services.Gesture.IGestureService _GestureService;
         public BackButtonBehavior()
         {
-            _BackButtonService = Central.BackButtonService;
+            _GestureService = Central.GestureService;
         }
 
         private IDispatcherEx _dispatcher;
@@ -28,12 +28,12 @@ namespace Template10.Behaviors
         {
             AssociatedObject = associatedObject;
             _dispatcher = WindowEx.Current().Dispatcher;
-            _BackButtonService.BackRequested += BackButtonService_NavigateBack;
+            _GestureService.BackRequested += BackButtonService_NavigateBack;
         }
 
         public void Detach()
         {
-            _BackButtonService.BackRequested -= BackButtonService_NavigateBack;
+            _GestureService.BackRequested -= BackButtonService_NavigateBack;
         }
 
         private void BackButtonService_NavigateBack(object sender, HandledEventArgs e)

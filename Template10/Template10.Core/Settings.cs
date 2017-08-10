@@ -1,6 +1,6 @@
 ﻿using System;
 using Template10.Core;
-using Template10.Services.BackButtonService;
+using Template10.Services.Gesture;
 using Windows.UI.Xaml;
 
 namespace Template10
@@ -21,8 +21,8 @@ namespace Template10
 
         public static ShellBackButtonPreferences ShellBackButtonPreference
         {
-            get => Services.BackButtonService.Settings.ShellBackButtonPreference;
-            set => Services.BackButtonService.Settings.ShellBackButtonPreference = value;
+            get => Services.Gesture.Settings.ShellBackButtonPreference;
+            set => Services.Gesture.Settings.ShellBackButtonPreference = value;
         }
     }
 }

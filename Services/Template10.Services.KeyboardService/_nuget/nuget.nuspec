@@ -4,9 +4,9 @@
 
     <version>1.0.0-preview</version>
 
-    <id>Template10.Services.KeyboardService</id>
+    <id>Template10.Services.Gesture</id>
 
-    <title>Template10.Services.KeyboardService</title>
+    <title>Template10.Services.Gesture</title>
 
     <authors>Windows developers</authors>
 

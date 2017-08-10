@@ -118,13 +118,13 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Libraries\Template10.CodeBehind\Template10.Common.CodeBehind.csproj">
+    <ProjectReference Include="..\..\..\Libraries\Template10.CodeBehind\Template10.Common.CodeBehind.Library.csproj">
       <Project>{B3A4E50E-9DCA-457E-BED5-B71D97B957F3}</Project>
-      <Name>Template10.Common.CodeBehind</Name>
+      <Name>Template10.Common.CodeBehind.Library</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Services\Template10.Services.BackService\Template10.Services.BackService.csproj">
+    <ProjectReference Include="..\..\..\Services\Template10.Services.BackService\Template10.Services.Gesture.csproj">
       <Project>{8564f764-99d9-4473-b5e4-ac62cda73977}</Project>
-      <Name>Template10.Services.BackService</Name>
+      <Name>Template10.Services.Gesture</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Services\Template10.Services.Container\Service\Template10.Services.Container.Core.csproj">
       <Project>{b4c8a753-3376-4c55-aff1-326f2d1cfcbc}</Project>

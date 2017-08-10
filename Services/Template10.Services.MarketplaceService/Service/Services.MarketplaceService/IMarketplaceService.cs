@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
+using Template10.Services.Nag;
+using Template10.Services.Dialog;
 
-using Template10.Services.NagService;
-
-namespace Template10.Services.MarketplaceService
+namespace Template10.Services.Marketplace
 {
     public interface IMarketplaceService
     {
@@ -12,8 +12,8 @@ namespace Template10.Services.MarketplaceService
 
         Task LaunchPublisherPageInStoreAsync();
 
-        Nag CreateAppReviewNag();
+        NagObject CreateAppReviewNag();
 
-        Nag CreateAppReviewNag(string message);
+        NagObject CreateAppReviewNag(string message);
     }
 }

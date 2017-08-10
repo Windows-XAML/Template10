@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Template10.Common;
-using Template10.Services.KeyboardService;
+using Template10.Services.Gesture;
 using Template10.Navigation;
 using Template10.Extensions;
 using Windows.Devices.Input;
@@ -47,7 +47,7 @@ namespace Template10.Controls
                 Loaded += HamburgerMenu_Loaded;
 
                 // xbox controller menu button support
-                KeyboardService.Instance.AfterMenuGesture += () =>
+                Central.GestureService.AfterMenuGesture += (s, e) =>
                 {
                     HamburgerCommand.Execute();
                     HamburgerButton.Focus(FocusState.Programmatic);

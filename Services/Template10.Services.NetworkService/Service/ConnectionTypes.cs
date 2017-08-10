@@ -1,4 +1,4 @@
-﻿namespace Template10.Services.NetworkAvailableService
+﻿namespace Template10.Services.Network
 {
     public enum ConnectionTypes
     {

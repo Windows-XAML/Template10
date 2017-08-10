@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Template10.Services.NagService;
+using Template10.Services.Dialog;
 using Windows.ApplicationModel;
+using Template10.Services.Nag;
 
-namespace Template10.Services.MarketplaceService
+namespace Template10.Services.Marketplace
 {
     public sealed class MarketplaceService : IMarketplaceService
     {
@@ -27,15 +28,15 @@ namespace Template10.Services.MarketplaceService
         public async Task LaunchPublisherPageInStoreAsync() =>
             await _helper.LaunchPublisherPageInStore(Package.Current.Id.Publisher);
 
-        public Nag CreateAppReviewNag() => CreateAppReviewNag($"Review {Package.Current.DisplayName}?");
+        public NagObject CreateAppReviewNag() => CreateAppReviewNag($"Review {Package.Current.DisplayName}?");
 
-        public Nag CreateAppReviewNag(string message)
+        public NagObject CreateAppReviewNag(string message)
         {
-            return new Nag("AppReviewNag", message, async () => await this.LaunchAppReviewInStoreAsync())
+            return new NagObject("AppReviewNag", message, async () => await LaunchAppReviewInStoreAsync())
             {
                 Title = $"Review {Package.Current.DisplayName}",
                 AcceptText = "Review app",
-                Location = Nag.StorageStrategies.Roaming
+                Location = NagStorageStrategies.Roaming
             };
         }
     }

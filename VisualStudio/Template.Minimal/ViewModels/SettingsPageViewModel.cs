@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Template10.Mvvm;
-using Template10.Services.BackButtonService;
-using Template10.Services.MarketplaceService;
+using Template10.Services.Gesture;
+using Template10.Services.Marketplace;
 using Windows.UI.Xaml;
 
 namespace Sample.ViewModels

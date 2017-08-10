@@ -4,7 +4,7 @@ using Template10.Services.Serialization;
 using Template10.Core;
 using Template10.Extensions;
 using Template10.Navigation;
-using Template10.Services.BackButtonService;
+using Template10.Services.Gesture;
 using Template10.Services.Settings;
 using Windows.UI.Xaml;
 

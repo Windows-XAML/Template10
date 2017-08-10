@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Template10.Common;
 using Template10.Mvvm;
 using Template10.Strategies;
-using Template10.Services.BackButtonService;
+using Template10.Services.Gesture;
 using Template10.Services.Logging;
 using Template10.Services.Serialization;
 using Template10.Extensions;

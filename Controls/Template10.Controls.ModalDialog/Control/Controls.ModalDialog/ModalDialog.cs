@@ -11,8 +11,8 @@ namespace Template10.Controls
         // TODO: what if Default is null and it is custom?
         public Services.Container.IContainerService ContainerService { get; set; } 
             = Services.Container.ContainerService.Default;
-        Services.BackButtonService.IBackButtonService _BackButtonService 
-            => ContainerService.Resolve<Services.BackButtonService.IBackButtonService>();
+        Services.Gesture.IBackButtonService _BackButtonService 
+            => ContainerService.Resolve<Services.Gesture.IBackButtonService>();
 
         public ModalDialog()
         {

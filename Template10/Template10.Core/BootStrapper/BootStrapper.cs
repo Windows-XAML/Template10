@@ -11,20 +11,10 @@ using Windows.UI.Xaml;
 using static Template10.Core.StartArgsEx;
 using Template10.Services.Messenger;
 using Template10.Services.Serialization;
-using Template10.Services.BackButtonService;
-using Template10.Services.KeyboardService;
+using Template10.Services.Gesture;
 
 namespace Template10
 {
-    public abstract class BootStrapper<T> : BootStrapper where T : IContainerService
-    {
-        public BootStrapper(IBootStrapperStrategy strategy = null)
-            : base(Activator.CreateInstance<T>(), strategy)
-        {
-            // empty
-        }
-    }
-
     public abstract partial class BootStrapper : ILoggable
     {
         ILoggingService ILoggable.LoggingService => Central.LoggingService;
@@ -36,15 +26,6 @@ namespace Template10
 
     public abstract partial class BootStrapper : Application, IBootStrapper
     {
-        internal BootStrapper(IContainerService container, IBootStrapperStrategy strategy)
-            : this(strategy)
-        {
-           if (Services.Container.ContainerService.Default != container)
-           {
-               Services.Container.ContainerService.Default = container;
-           }
-        }
-
         public BootStrapper(IBootStrapperStrategy strategy = null)
         {
             Current = this;
@@ -74,7 +55,7 @@ namespace Template10
             }
             ContainerService.Register<ISessionState, SessionState>();
             ContainerService.Register<ILoggingService, LoggingService>();
-            ContainerService.Register<IMessengerService, MvvmLightMessengerService>();
+            // TODO: remove this ContainerService.Register<IMessengerService, MvvmLightMessengerService>();
             ContainerService.Register<ISerializationService, JsonSerializationService>();
             ContainerService.Register<IBackButtonService, BackButtonService>();
             ContainerService.Register<IKeyboardService, KeyboardService>();

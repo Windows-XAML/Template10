@@ -20,8 +20,8 @@ namespace Template10
         public static Services.Logging.ILoggingService LoggingService 
             => ContainerService.Resolve<Services.Logging.ILoggingService>();
 
-        public static Services.BackButtonService.IBackButtonService BackButtonService
-            => ContainerService.Resolve<Services.BackButtonService.IBackButtonService>();
+        public static Services.Gesture.IGestureService GestureService
+            => ContainerService.Resolve<Services.Gesture.IGestureService>();
 
         public static Core.ISessionState SessionState
             => ContainerService.Resolve<Core.ISessionState>();

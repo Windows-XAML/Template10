@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 using Windows.System;
 
-namespace Template10.Services.MarketplaceService
+namespace Template10.Services.Marketplace
 {
     //https://msdn.microsoft.com/en-us/windows/uwp/launch-resume/launch-store-app
     public class MarketplaceHelper

@@ -150,17 +150,17 @@
       <Project>{5cc9c9d2-2103-4e03-b425-7fd58a7a2a2e}</Project>
       <Name>Template10.Controls.CustomTitleBar</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Template10.CodeBehind\Template10.Common.CodeBehind.csproj">
+    <ProjectReference Include="..\..\Libraries\Template10.CodeBehind\Template10.Common.CodeBehind.Library.csproj">
       <Project>{b3a4e50e-9dca-457e-bed5-b71d97b957f3}</Project>
-      <Name>Template10.Common.CodeBehind</Name>
+      <Name>Template10.Common.CodeBehind.Library</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Template10.XAML\Template10.Common.XAML.csproj">
+    <ProjectReference Include="..\..\Libraries\Template10.XAML\Template10.Common.XAML.Library.csproj">
       <Project>{af4f2a41-d0e8-4cb2-950f-ed523c29b19c}</Project>
-      <Name>Template10.Common.XAML</Name>
+      <Name>Template10.Common.XAML.Library</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Services\Template10.Services.BackService\Template10.Services.BackService.csproj">
+    <ProjectReference Include="..\..\Services\Template10.Services.BackService\Template10.Services.Gesture.csproj">
       <Project>{8564f764-99d9-4473-b5e4-ac62cda73977}</Project>
-      <Name>Template10.Services.BackService</Name>
+      <Name>Template10.Services.Gesture</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Services\Template10.Services.Container\Service\Template10.Services.Container.Core.csproj">
       <Project>{b4c8a753-3376-4c55-aff1-326f2d1cfcbc}</Project>
@@ -170,13 +170,9 @@
       <Project>{524d4bcb-21a1-44f6-b5b2-2712a3e7718d}</Project>
       <Name>Template10.Services.Container.Unity</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Services\Template10.Services.KeyboardService\Service\Template10.Services.KeyboardService.csproj">
-      <Project>{B540D0B5-3850-416F-AEC7-7737870E9CA2}</Project>
-      <Name>Template10.Services.KeyboardService</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Services\Template10.Services.LoggingService\Service\Template10.Services.LoggingService.csproj">
+    <ProjectReference Include="..\..\Services\Template10.Services.LoggingService\Service\Template10.Services.Logging.Core.csproj">
       <Project>{eadde808-bf0d-4ebc-b4ca-9fda63b53862}</Project>
-      <Name>Template10.Services.LoggingService</Name>
+      <Name>Template10.Services.Logging.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Services\Template10.Services.Messenger\MvvmLight\Template10.Services.Messaging.MvvmLight.csproj">
       <Project>{94037ef8-d55e-46f4-b92a-38ebdec5ecf8}</Project>
@@ -186,13 +182,13 @@
       <Project>{e14bcd62-b2a4-4aa2-95a8-6a556a31fb29}</Project>
       <Name>Template10.Services.Messaging.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Services\Template10.Services.SerializationService\Service\Template10.Services.Serialization.csproj">
+    <ProjectReference Include="..\..\Services\Template10.Services.SerializationService\Service\Template10.Services.Serialization.Service.csproj">
       <Project>{D3A94520-4CD4-4D56-B30B-7E54FACE64BB}</Project>
-      <Name>Template10.Services.Serialization</Name>
+      <Name>Template10.Services.Serialization.Service</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Services\Template10.Services.SettingsService\Service\Template10.Services.SettingsService.csproj">
+    <ProjectReference Include="..\..\Services\Template10.Services.SettingsService\Service\Template10.Services.Settings.Service.csproj">
       <Project>{EBA14736-2C70-4E33-A156-221B44FF43C1}</Project>
-      <Name>Template10.Services.SettingsService</Name>
+      <Name>Template10.Services.Settings.Service</Name>
     </ProjectReference>
     <ProjectReference Include="..\Template10.Core.Navigation\Template10.Core.Navigation.csproj">
       <Project>{cd31d870-42f3-4379-b67a-2070c4b0a444}</Project>

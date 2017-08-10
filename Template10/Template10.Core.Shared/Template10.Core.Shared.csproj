@@ -126,9 +126,9 @@
     <EmbeddedResource Include="Properties\Template10.Shared.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Services\Template10.Services.BackService\Template10.Services.BackService.csproj">
+    <ProjectReference Include="..\..\Services\Template10.Services.BackService\Template10.Services.Gesture.csproj">
       <Project>{8564f764-99d9-4473-b5e4-ac62cda73977}</Project>
-      <Name>Template10.Services.BackService</Name>
+      <Name>Template10.Services.Gesture</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Services\Template10.Services.Container\Service\Template10.Services.Container.Core.csproj">
       <Project>{B4C8A753-3376-4C55-AFF1-326F2D1CFCBC}</Project>
@@ -138,21 +138,21 @@
       <Project>{fd4892b4-4cf8-4c74-b28f-ad7623e405e6}</Project>
       <Name>Template10.Services.FileService</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Services\Template10.Services.LoggingService\Service\Template10.Services.LoggingService.csproj">
+    <ProjectReference Include="..\..\Services\Template10.Services.LoggingService\Service\Template10.Services.Logging.Core.csproj">
       <Project>{EADDE808-BF0D-4EBC-B4CA-9FDA63B53862}</Project>
-      <Name>Template10.Services.LoggingService</Name>
+      <Name>Template10.Services.Logging.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Services\Template10.Services.Messenger\Service\Template10.Services.Messaging.Core.csproj">
       <Project>{E14BCD62-B2A4-4AA2-95A8-6A556A31FB29}</Project>
       <Name>Template10.Services.Messaging.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Services\Template10.Services.SerializationService\Service\Template10.Services.Serialization.csproj">
+    <ProjectReference Include="..\..\Services\Template10.Services.SerializationService\Service\Template10.Services.Serialization.Service.csproj">
       <Project>{d3a94520-4cd4-4d56-b30b-7e54face64bb}</Project>
-      <Name>Template10.Services.Serialization</Name>
+      <Name>Template10.Services.Serialization.Service</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Services\Template10.Services.SettingsService\Service\Template10.Services.SettingsService.csproj">
+    <ProjectReference Include="..\..\Services\Template10.Services.SettingsService\Service\Template10.Services.Settings.Service.csproj">
       <Project>{eba14736-2c70-4e33-a156-221b44ff43c1}</Project>
-      <Name>Template10.Services.SettingsService</Name>
+      <Name>Template10.Services.Settings.Service</Name>
     </ProjectReference>
     <ProjectReference Include="..\Template10.Portable\Template10.Portable.csproj">
       <Project>{2B6903DF-396A-4D97-BF29-45BC6DD72DBE}</Project>
