@@ -1,11 +1,21 @@
 ## Template 10: Getting Started
 
-### For the latest news on Template 10.2 check [here](https://github.com/Windows-XAML/Template10/issues/1519)
+**Ready to use Template 10?**
 
-Looking for the code currently in Nuget?
+Just open Visual Studio 2017 & search "Template 10" in the Extension Manager. After installing, go File>New>Project and choose a Template 10 project template.
+
+**Learn more:**
+
+1. Docs: http://aka.ms/Template10
+2. Training: https://mva.microsoft.com/en-us/training-courses/getting-started-with-template-10-16336
+
+## About Template 10.1
+
+The current version of Template 10 is good to go. Want to learn more about it? Watch this full-day course. 
+Are you looking for the code currently in Nuget?
 
 > https://github.com/Windows-XAML/Template10/tree/version_1.1.12
 
-If you want Template 10, just open up Visual Studio 2017 and search "Template 10" in the Extension Manager. After you install it, when you go File>New>Project the Template 10 project template will be in your list.
+## About Template 10.2
 
-After you create a project, head to our documentation wiki and get started: <http://aka.ms/Template10>
+We are building the next version of Template 10. We might not get finished before the Fall Creators Update, so we don't recommend waiting for it. Aside: the work on 10.2 is what you find in the `master` branch.
