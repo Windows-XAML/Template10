@@ -202,7 +202,7 @@ namespace Template10.Services.NavigationService
             // call newViewModel.ResolveForPage()
             if (newViewModel == null)
             {
-                newPage.DataContext = BootStrapper.Current.ResolveForPage(newPage, this);
+                newViewModel = newPage.DataContext = BootStrapper.Current.ResolveForPage(newPage, this);
             }
 
             // call newTemplate10ViewModel.Properties
