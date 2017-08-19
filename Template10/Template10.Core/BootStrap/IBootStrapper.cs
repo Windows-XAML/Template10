@@ -8,7 +8,7 @@ using Template10.Core;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 
-namespace Template10
+namespace Template10.BootStrap
 {
     public interface IBootStrapper: IBootStrapperShared
     {

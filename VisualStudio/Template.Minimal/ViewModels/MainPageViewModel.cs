@@ -5,6 +5,7 @@ using Template10.Mvvm;
 using Template10.Extensions;
 using Windows.UI.Xaml.Controls;
 using Template10.Navigation;
+using Template10.Extensions;
 
 namespace Sample.ViewModels
 {

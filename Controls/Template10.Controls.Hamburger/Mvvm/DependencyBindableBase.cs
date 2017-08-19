@@ -7,7 +7,7 @@ using Windows.UI.Xaml;
 
 namespace Template10.Mvvm
 {
-    public abstract class DependencyBindableBase : DependencyObject, IBindable
+    public abstract class DependencyBindableBase : DependencyObject, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public virtual void Set(Action set, [CallerMemberName]string propertyName = null)

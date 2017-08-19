@@ -12,10 +12,12 @@ using static Template10.Core.StartArgsEx;
 using Template10.Services.Messenger;
 using Template10.Services.Serialization;
 using Template10.Services.Gesture;
+using Template10.Messages;
+using Template10.Services.Resources;
 
-namespace Template10
+namespace Template10.BootStrap
 {
-    public abstract partial class BootStrapper : ILoggable
+    public abstract partial class BootStrapperBase : ILoggable
     {
         ILoggingService ILoggable.LoggingService => Central.LoggingService;
         void LogThis(string text = null, Severities severity = Severities.Template10, [CallerMemberName]string caller = null)
@@ -24,21 +26,26 @@ namespace Template10
             => (this as ILoggable).LoggingService.WriteLine(text, severity, caller: $"{caller}");
     }
 
-    public abstract partial class BootStrapper : Application, IBootStrapper
+    public abstract partial class BootStrapperBase : Application, IBootStrapper
     {
-        public BootStrapper(IBootStrapperStrategy strategy = null)
+        public BootStrapperBase()
         {
+            // start
+
             Current = this;
+            RegisterDependencies();
+            LogThis();
 
-            RegisterDependencyObjects(strategy);
-
-            LogThis($"After {nameof(RegisterDependencyObjects)}. This is the first Template 10 trace.");
+            // forward methods
 
             BootStrapperStrategy.OnStartAsyncDelegate = OnStartAsync;
             BootStrapperStrategy.OnInitAsyncDelegate = OnInitializeAsync;
             BootStrapperStrategy.CreateSpashDelegate = CreateSpash;
             BootStrapperStrategy.CreateRootElementDelegate = CreateRootElement;
 
+            // setup events
+
+            Central.MessengerService.Subscribe<WindowCreatedMessage>(this, AfterFirstWindowCreated);
             base.Resuming += BootStrapperStrategy.HandleResuming;
             base.Suspending += BootStrapperStrategy.HandleSuspending;
             base.EnteredBackground += BootStrapperStrategy.HandleEnteredBackground;
@@ -46,41 +53,16 @@ namespace Template10
             base.UnhandledException += BootStrapperStrategy.HandleUnhandledException;
         }
 
-        void RegisterDependencyObjects(IBootStrapperStrategy bootStrapperStrategy)
+        public abstract void RegisterDependencies();
+
+        private void AfterFirstWindowCreated(WindowCreatedMessage obj)
         {
-            // services
-            if (Services.Container.ContainerService.Default == null)
-            {
-                Services.Container.ContainerService.Default = new UnityContainerService();
-            }
-            ContainerService.Register<ISessionState, SessionState>();
-            ContainerService.Register<ILoggingService, LoggingService>();
-            // TODO: remove this ContainerService.Register<IMessengerService, MvvmLightMessengerService>();
-            ContainerService.Register<ISerializationService, JsonSerializationService>();
-            ContainerService.Register<IBackButtonService, BackButtonService>();
-            ContainerService.Register<IKeyboardService, KeyboardService>();
+            // unsubscribe so this is only called a single time
+            Central.MessengerService.Unsubscribe<WindowCreatedMessage>(this, AfterFirstWindowCreated);
 
-            // strategies
-            if (bootStrapperStrategy == null)
-            {
-                ContainerService.Register<IBootStrapperStrategy, DefaultBootStrapperStrategy>();
-            }
-            else
-            {
-                ContainerService.Register<IBootStrapperStrategy>(bootStrapperStrategy);
-            }
-            ContainerService.Register<ILifecycleStrategy, DefaultLifecycleStrategy>();
-            ContainerService.Register<IStateStrategy, DefaultStateStrategy>();
-            ContainerService.Register<ITitleBarStrategy, DefaultTitleBarStrategy>();
-            ContainerService.Register<IExtendedSessionStrategy, DefaultExtendedSessionStrategy>();
-            ContainerService.Register<IViewModelActionStrategy, DefaultViewModelActionStrategy>();
-            ContainerService.Register<IViewModelResolutionStrategy, DefaultViewModelResolutionStrategy>();
-
-            // delay some things until after first window is created
-            Central.MessengerService.Subscribe<Messages.WindowCreatedMessage>(this, e =>
-            {
-                ContainerService.Resolve<IBackButtonService>().Setup(); // TODO: unsubscribe
-            });
+            // these are the things delayed until after the first window is created
+            ContainerService.Resolve<IBackButtonService>().Setup();
+            ContainerService.Resolve<ITitleBarStrategy>().Update();
         }
 
         // redirected properties
@@ -94,7 +76,7 @@ namespace Template10
 
         // net-new properties 
 
-        public new static BootStrapper Current { get; internal set; }
+        public new static IBootStrapper Current { get; internal set; }
 
         // implementation methods
 

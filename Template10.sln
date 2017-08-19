@@ -154,7 +154,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.Gesture
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.Dialog.Service", "Services\Template10.Services.Dialog\Service\Template10.Services.Dialog.Service.csproj", "{9DAACEA0-6905-46F8-AED1-C6B566C83CDC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.MvvmLight", "Template10\Template10.MvvmLight\Template10.MvvmLight.csproj", "{FFD32A47-5ED4-4BE4-9C09-C4B9E9F895BB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.BootStrapper.MvvmLight", "Template10\Template10.MvvmLight\Template10.BootStrapper.MvvmLight.csproj", "{FFD32A47-5ED4-4BE4-9C09-C4B9E9F895BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.Container.MvvmLight", "Services\Template10.Services.Container\MvvmLightAdapter\Template10.Services.Container.MvvmLight.csproj", "{F5077709-6D92-483C-A263-C4124274BCB8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -807,6 +809,22 @@ Global
 		{FFD32A47-5ED4-4BE4-9C09-C4B9E9F895BB}.Release|x64.Build.0 = Release|x64
 		{FFD32A47-5ED4-4BE4-9C09-C4B9E9F895BB}.Release|x86.ActiveCfg = Release|x86
 		{FFD32A47-5ED4-4BE4-9C09-C4B9E9F895BB}.Release|x86.Build.0 = Release|x86
+		{F5077709-6D92-483C-A263-C4124274BCB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5077709-6D92-483C-A263-C4124274BCB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5077709-6D92-483C-A263-C4124274BCB8}.Debug|ARM.ActiveCfg = Debug|ARM
+		{F5077709-6D92-483C-A263-C4124274BCB8}.Debug|ARM.Build.0 = Debug|ARM
+		{F5077709-6D92-483C-A263-C4124274BCB8}.Debug|x64.ActiveCfg = Debug|x64
+		{F5077709-6D92-483C-A263-C4124274BCB8}.Debug|x64.Build.0 = Debug|x64
+		{F5077709-6D92-483C-A263-C4124274BCB8}.Debug|x86.ActiveCfg = Debug|x86
+		{F5077709-6D92-483C-A263-C4124274BCB8}.Debug|x86.Build.0 = Debug|x86
+		{F5077709-6D92-483C-A263-C4124274BCB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5077709-6D92-483C-A263-C4124274BCB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5077709-6D92-483C-A263-C4124274BCB8}.Release|ARM.ActiveCfg = Release|ARM
+		{F5077709-6D92-483C-A263-C4124274BCB8}.Release|ARM.Build.0 = Release|ARM
+		{F5077709-6D92-483C-A263-C4124274BCB8}.Release|x64.ActiveCfg = Release|x64
+		{F5077709-6D92-483C-A263-C4124274BCB8}.Release|x64.Build.0 = Release|x64
+		{F5077709-6D92-483C-A263-C4124274BCB8}.Release|x86.ActiveCfg = Release|x86
+		{F5077709-6D92-483C-A263-C4124274BCB8}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -862,5 +880,6 @@ Global
 		{8564F764-99D9-4473-B5E4-AC62CDA73977} = {D1B54308-4CA7-4E2F-8707-98D27060612E}
 		{9DAACEA0-6905-46F8-AED1-C6B566C83CDC} = {D1B54308-4CA7-4E2F-8707-98D27060612E}
 		{FFD32A47-5ED4-4BE4-9C09-C4B9E9F895BB} = {BCA90A0F-E32C-478A-8DD9-54B73D52AEBC}
+		{F5077709-6D92-483C-A263-C4124274BCB8} = {8BE7C2DA-A08C-436D-88A0-7DE838AF5C66}
 	EndGlobalSection
 EndGlobal

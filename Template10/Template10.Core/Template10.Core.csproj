@@ -113,8 +113,8 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BootStrapper\BootStrapper.cs" />
-    <Compile Include="BootStrapper\BootstrapperStates.cs" />
+    <Compile Include="BootStrap\BootStrapperBase.cs" />
+    <Compile Include="BootStrap\BootstrapperStates.cs" />
     <Compile Include="Messages\BackgroundActivatedMessage.cs" />
     <Compile Include="Messages\BackRequestedMessage.cs" />
     <Compile Include="Messages\EnteredBackgroundMessage.cs" />
@@ -125,9 +125,8 @@
     <Compile Include="Messages\SuspendingMessage.cs" />
     <Compile Include="Messages\UnhandledExceptionMessage.cs" />
     <Compile Include="Messages\WindowCreatedMessage.cs" />
-    <Compile Include="Mvvm\ViewModelBase.cs" />
     <Compile Include="Strategies\BootStrapperStrategy\DefaultBootStrapperStrategy.cs" />
-    <Compile Include="BootStrapper\IBootStrapper.cs" />
+    <Compile Include="BootStrap\IBootStrapper.cs" />
     <Compile Include="Strategies\BootStrapperStrategy\IBootStrapperStrategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
@@ -166,17 +165,9 @@
       <Project>{b4c8a753-3376-4c55-aff1-326f2d1cfcbc}</Project>
       <Name>Template10.Services.Container.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Services\Template10.Services.Container\UnityAdapter\Template10.Services.Container.Unity.csproj">
-      <Project>{524d4bcb-21a1-44f6-b5b2-2712a3e7718d}</Project>
-      <Name>Template10.Services.Container.Unity</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Services\Template10.Services.LoggingService\Service\Template10.Services.Logging.Core.csproj">
       <Project>{eadde808-bf0d-4ebc-b4ca-9fda63b53862}</Project>
       <Name>Template10.Services.Logging.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Services\Template10.Services.Messenger\MvvmLight\Template10.Services.Messaging.MvvmLight.csproj">
-      <Project>{94037ef8-d55e-46f4-b92a-38ebdec5ecf8}</Project>
-      <Name>Template10.Services.Messaging.MvvmLight</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Services\Template10.Services.Messenger\Service\Template10.Services.Messaging.Core.csproj">
       <Project>{e14bcd62-b2a4-4aa2-95a8-6a556a31fb29}</Project>

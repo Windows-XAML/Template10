@@ -106,7 +106,9 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="MvvmLightApplication.cs" />
+    <Compile Include="BootStrapper.cs" />
+    <Compile Include="Mvvm\BindableBase.cs" />
+    <Compile Include="Mvvm\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Template10.MvvmLight.rd.xml" />
   </ItemGroup>
@@ -116,13 +118,21 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Services\Template10.Services.BackService\Template10.Services.Gesture.csproj">
+      <Project>{8564f764-99d9-4473-b5e4-ac62cda73977}</Project>
+      <Name>Template10.Services.Gesture</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.Container\MvvmLightAdapter\Template10.Services.Container.MvvmLight.csproj">
+      <Project>{f5077709-6d92-483c-a263-c4124274bcb8}</Project>
+      <Name>Template10.Services.Container.MvvmLight</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Services\Template10.Services.Container\Service\Template10.Services.Container.Core.csproj">
       <Project>{b4c8a753-3376-4c55-aff1-326f2d1cfcbc}</Project>
       <Name>Template10.Services.Container.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Services\Template10.Services.Container\UnityAdapter\Template10.Services.Container.Unity.csproj">
-      <Project>{524d4bcb-21a1-44f6-b5b2-2712a3e7718d}</Project>
-      <Name>Template10.Services.Container.Unity</Name>
+    <ProjectReference Include="..\..\Services\Template10.Services.LoggingService\Service\Template10.Services.Logging.Core.csproj">
+      <Project>{eadde808-bf0d-4ebc-b4ca-9fda63b53862}</Project>
+      <Name>Template10.Services.Logging.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Services\Template10.Services.Messenger\MvvmLight\Template10.Services.Messaging.MvvmLight.csproj">
       <Project>{94037ef8-d55e-46f4-b92a-38ebdec5ecf8}</Project>
@@ -132,9 +142,29 @@
       <Project>{e14bcd62-b2a4-4aa2-95a8-6a556a31fb29}</Project>
       <Name>Template10.Services.Messaging.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.SerializationService\Service\Template10.Services.Serialization.Service.csproj">
+      <Project>{d3a94520-4cd4-4d56-b30b-7e54face64bb}</Project>
+      <Name>Template10.Services.Serialization.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Template10.Core.Navigation\Template10.Core.Navigation.csproj">
+      <Project>{CD31D870-42F3-4379-B67A-2070C4B0A444}</Project>
+      <Name>Template10.Core.Navigation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Template10.Core.Shared\Template10.Core.Shared.csproj">
+      <Project>{1f9a6976-d8f9-459b-8aee-770b53904ff3}</Project>
+      <Name>Template10.Core.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Template10.Core.Windowing\Template10.Core.Windowing.csproj">
+      <Project>{9CAD4451-5ADF-48D3-B690-8B341A95A228}</Project>
+      <Name>Template10.Core.Windowing</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Template10.Core\Template10.Core.csproj">
       <Project>{43417386-ddd5-422a-a563-cb666857c59c}</Project>
       <Name>Template10.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Template10.Portable\Template10.Portable.csproj">
+      <Project>{2B6903DF-396A-4D97-BF29-45BC6DD72DBE}</Project>
+      <Name>Template10.Portable</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

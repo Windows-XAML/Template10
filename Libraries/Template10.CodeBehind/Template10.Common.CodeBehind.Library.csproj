@@ -125,11 +125,8 @@
     <Compile Include="Common\LockAsync.cs" />
     <Compile Include="Common\TypedEventHandler.cs" />
     <Compile Include="Mvvm\AwaitableDelegateCommand.cs" />
-    <Compile Include="Mvvm\BindableBase.cs" />
     <Compile Include="Mvvm\ChangedCommandAdapter.cs" />
     <Compile Include="Mvvm\DelegateCommand.cs" />
-    <Compile Include="Mvvm\DependencyBindableBase.cs" />
-    <Compile Include="Mvvm\IBindable.cs" />
     <Compile Include="Mvvm\IChangedCommand.cs" />
     <Compile Include="Utils.Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Utils.Extensions\InkExtensions.cs" />

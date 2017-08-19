@@ -11,6 +11,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Template10.Services.Messenger;
 using Template10.Services.Gesture;
+using Template10.BootStrap;
 
 namespace Template10.Strategies
 {

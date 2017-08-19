@@ -27,7 +27,7 @@
         public T Resolve<T>() where T : class
             => _adapter.Resolve<T>();
 
-        public void Register<F, T>() where F : class where T : F
+        public void Register<F, T>() where F : class where T : class, F
             => _adapter.Register<F, T>();
 
         public void Register<F>(F instance) where F : class

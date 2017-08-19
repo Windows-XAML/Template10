@@ -9,7 +9,7 @@ namespace Template10.Core
     {
         IWindowEx Window { get; }
         IDispatcherEx Dispatcher { get; }
-        IPropertyBagEx SessionState { get; }
+        ISessionState SessionState { get; }
         INavigationService NavigationService { get; set; }
     }
 }

@@ -16,7 +16,7 @@ namespace Template10.Services.Container
         public T Resolve<T>() where T : class
             => _container.Resolve(typeof(T)) as T;
 
-        public void Register<F, T>() where F : class where T : F
+        public void Register<F, T>() where F : class where T : class, F
             => _container.RegisterType(typeof(F), typeof(T), _lifetime);
 
         public void Register<F>(F instance) where F : class

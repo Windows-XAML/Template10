@@ -202,9 +202,21 @@
       <Project>{8564f764-99d9-4473-b5e4-ac62cda73977}</Project>
       <Name>Template10.Services.Gesture</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.Container\MvvmLightAdapter\Template10.Services.Container.MvvmLight.csproj">
+      <Project>{f5077709-6d92-483c-a263-c4124274bcb8}</Project>
+      <Name>Template10.Services.Container.MvvmLight</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Services\Template10.Services.Container\Service\Template10.Services.Container.Core.csproj">
       <Project>{b4c8a753-3376-4c55-aff1-326f2d1cfcbc}</Project>
       <Name>Template10.Services.Container.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.Dialog\Service\Template10.Services.Dialog.Service.csproj">
+      <Project>{9daacea0-6905-46f8-aed1-c6b566c83cdc}</Project>
+      <Name>Template10.Services.Dialog.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.Messenger\MvvmLight\Template10.Services.Messaging.MvvmLight.csproj">
+      <Project>{94037ef8-d55e-46f4-b92a-38ebdec5ecf8}</Project>
+      <Name>Template10.Services.Messaging.MvvmLight</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Services\Template10.Services.Messenger\Service\Template10.Services.Messaging.Core.csproj">
       <Project>{e14bcd62-b2a4-4aa2-95a8-6a556a31fb29}</Project>
@@ -245,6 +257,10 @@
     <ProjectReference Include="..\..\Template10\Template10.Core\Template10.Core.csproj">
       <Project>{43417386-ddd5-422a-a563-cb666857c59c}</Project>
       <Name>Template10.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Template10\Template10.MvvmLight\Template10.BootStrapper.MvvmLight.csproj">
+      <Project>{ffd32a47-5ed4-4be4-9c09-c4b9e9f895bb}</Project>
+      <Name>Template10.BootStrapper.MvvmLight</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Template10\Template10.Portable\Template10.Portable.csproj">
       <Project>{2b6903df-396a-4d97-bf29-45bc6dd72dbe}</Project>

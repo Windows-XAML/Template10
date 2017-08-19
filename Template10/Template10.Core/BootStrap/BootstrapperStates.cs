@@ -1,4 +1,4 @@
-﻿namespace Template10
+﻿namespace Template10.BootStrap
 {
     public enum BootstrapperStates
     {

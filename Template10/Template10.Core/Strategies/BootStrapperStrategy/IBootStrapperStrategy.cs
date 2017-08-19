@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Template10.BootStrap;
 using Template10.Core;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;

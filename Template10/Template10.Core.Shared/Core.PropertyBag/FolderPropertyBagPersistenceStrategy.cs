@@ -21,7 +21,7 @@ namespace Template10.Core
                 await folder.DeleteAsync(StorageDeleteOption.Default);
                 folder = await parent.CreateFolderAsync(name, CreationCollisionOption.OpenIfExists);
             }
-            catch (Exception ex)
+            catch 
             {
                 throw;
             }
