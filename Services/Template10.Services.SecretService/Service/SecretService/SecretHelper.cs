@@ -45,12 +45,37 @@ namespace Template10.Services.Secrets
                 var credential = _vault.Retrieve(container, key);
                 credential.RetrievePassword();
                 credential.Password = secret;
+                _vault.Add(credential);
             }
             else
             {
                 var credential = new PasswordCredential(container, key, secret);
                 _vault.Add(credential);
             }
+        }
+
+        public bool IsSecretExistsForKey(string key, bool RemoveIfExists = false)
+        {
+            var container = GetType().ToString();
+
+            if (_vault.RetrieveAll().Any(x => x.Resource == container && x.UserName == key))
+            {
+                var credential = _vault.Retrieve(container, key);
+                credential.RetrievePassword();
+
+                if (credential.Password.Length > 0)
+                {
+                    if (RemoveIfExists) _vault.Remove(credential);
+                    return true;
+                }
+                else
+                {
+                    // a blank key shouldn't exist, but who knows ...
+                    _vault.Remove(credential);
+                }
+            }
+
+            return false;
         }
     }
 }
