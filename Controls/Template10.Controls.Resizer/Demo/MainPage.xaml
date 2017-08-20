@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="Demo.MainPage"
+    x:Class="Template10.Demo.ResizerControlDemo.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Template10.Controls"
