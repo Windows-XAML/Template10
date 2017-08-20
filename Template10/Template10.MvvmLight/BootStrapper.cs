@@ -35,6 +35,18 @@ namespace Template10
             c.Register<IGestureService, GestureService>();
             c.Register<IResourceService, ResourceService>();
 
+#if DEBUG
+            // test
+            var mservice = c.Resolve<IMessengerService>();
+            var sservice = c.Resolve<ISessionState>();
+            var lservice = c.Resolve<ILoggingService>();
+            var xservice = c.Resolve<ISerializationService>();
+            var bservice = c.Resolve<IBackButtonService>();
+            var kservice = c.Resolve<IKeyboardService>();
+            var gservice = c.Resolve<IGestureService>();
+            var rservice = c.Resolve<IResourceService>();
+#endif
+
             // strategies
             c.Register<IBootStrapperShared>(this);
             c.Register<IBootStrapperStrategy, DefaultBootStrapperStrategy>();
@@ -47,14 +59,6 @@ namespace Template10
 
 #if DEBUG 
             // test
-            var mservice = c.Resolve<IMessengerService>();
-            var sservice = c.Resolve<ISessionState>();
-            var lservice = c.Resolve<ILoggingService>();
-            var xservice = c.Resolve<ISerializationService>();
-            var bservice = c.Resolve<IBackButtonService>();
-            var kservice = c.Resolve<IKeyboardService>();
-            var gservice = c.Resolve<IGestureService>();
-            var rservice = c.Resolve<IResourceService>();
             var bstrategy = c.Resolve<IBootStrapperStrategy>();
             var lstrategy = c.Resolve<ILifecycleStrategy>();
             var sstrategy = c.Resolve<IStateStrategy>();
