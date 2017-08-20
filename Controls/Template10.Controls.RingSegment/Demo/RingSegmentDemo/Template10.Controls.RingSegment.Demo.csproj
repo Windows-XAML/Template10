@@ -7,8 +7,8 @@
     <ProjectGuid>{38AA9DBC-D3FD-41A5-AB1F-3B51522090DD}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RingSegmentDemo</RootNamespace>
-    <AssemblyName>RingSegmentDemo</AssemblyName>
+    <RootNamespace>Template10.Demo.RingSegmentControl</RootNamespace>
+    <AssemblyName>Template10.Demo.RingSegmentControl</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.15063.0</TargetPlatformVersion>

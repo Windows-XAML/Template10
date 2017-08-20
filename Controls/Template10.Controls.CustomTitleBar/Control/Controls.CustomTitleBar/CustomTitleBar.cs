@@ -155,11 +155,10 @@ namespace Template10.Controls
             foreach (var resource in Application.Current.Resources)
             {
                 var k = resource.Key;
-                if (k == typeof(Controls.CustomTitleBar))
+                if (k == typeof(CustomTitleBar))
                 {
                     var s = resource.Value as Style;
-                    var t = new Controls.CustomTitleBar();
-                    t.Style = s;
+                    var t = new CustomTitleBar() { Style = s };
                 }
                 count--;
                 if (count == 0) break;

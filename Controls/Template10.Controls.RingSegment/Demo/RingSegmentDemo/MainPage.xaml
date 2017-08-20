@@ -1,10 +1,9 @@
 ﻿<Page
-    x:Class="RingSegmentDemo.MainPage"
+    x:Class="Template10.Demo.RingSegmentControlDemo.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Controls="using:Template10.Controls"
+	xmlns:Controls="using:Template10.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="using:RingSegmentDemo"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 

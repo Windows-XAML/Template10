@@ -7,8 +7,8 @@
     <ProjectGuid>{754D3A2E-4E19-45CD-8929-6D895EBE7E56}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Demo</RootNamespace>
-    <AssemblyName>Demo</AssemblyName>
+    <RootNamespace>Template10.Demo.ImageExControlDemo</RootNamespace>
+    <AssemblyName>Template10.Demo.ImageExControlDemo</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.15063.0</TargetPlatformVersion>

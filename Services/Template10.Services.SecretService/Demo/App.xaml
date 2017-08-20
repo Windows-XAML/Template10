@@ -1,8 +1,8 @@
 ﻿<Application
-    x:Class="Template10.Demo.SecretService.App"
+    x:Class="Template10.Demo.SecretServiceDemo.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Template10.Demo.SecretService"
+    xmlns:local="using:Template10.Demo.SecretServiceDemo"
     RequestedTheme="Light">
 
 </Application>

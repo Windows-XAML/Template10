@@ -4,7 +4,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
 
-namespace Template10.Demo.NetworkService.Converters
+namespace Template10.Demo.NetworkServiceDemo.Converters
 {
     public class IconForegroundToStatusVisibility : IValueConverter
     {

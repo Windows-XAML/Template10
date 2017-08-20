@@ -7,8 +7,8 @@
     <ProjectGuid>{BF0D6900-0DDE-44B4-B2D3-45A20C12F799}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>KeyboardServiceDemoApp</RootNamespace>
-    <AssemblyName>KeyboardServiceDemoApp</AssemblyName>
+    <RootNamespace>Template10.Demo.KeyboardServiceDemo</RootNamespace>
+    <AssemblyName>Template10.Demo.KeyboardServiceDemo</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.15063.0</TargetPlatformVersion>
