@@ -24,13 +24,19 @@
 
         public IContainerAdapter _adapter { get; set; }
 
-        public T Resolve<T>() where T : class
-            => _adapter.Resolve<T>();
+        public TInterface Resolve<TInterface>() where TInterface : class
+            => _adapter.Resolve<TInterface>();
 
-        public void Register<F, T>() where F : class where T : class, F
-            => _adapter.Register<F, T>();
+        public TInterface Resolve<TInterface>(string key) where TInterface : class
+            => _adapter.Resolve<TInterface>(key);
 
-        public void Register<F>(F instance) where F : class
-            => _adapter.Register<F>(instance);
+        public void Register<TInterface, TClass>() where TInterface : class where TClass : class, TInterface
+            => _adapter.Register<TInterface, TClass>();
+
+        public void Register<TInterface, TClass>(string key) where TInterface : class where TClass : class, TInterface
+            => _adapter.Register<TInterface, TClass>(key);
+
+        public void Register<TClass>(TClass instance) where TClass : class
+            => _adapter.Register<TClass>(instance);
     }
 }

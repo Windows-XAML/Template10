@@ -4,22 +4,31 @@ namespace Template10.Services.Container
 {
     public class UnityContainerAdapter : IContainerAdapter
     {
-        Microsoft.Practices.Unity.IUnityContainer _container;
+        IUnityContainer _container;
         internal UnityContainerAdapter()
         {
-            _container = new Microsoft.Practices.Unity.UnityContainer();
+            _container = new UnityContainer();
         }
 
-        Microsoft.Practices.Unity.LifetimeManager _lifetime
-            => new Microsoft.Practices.Unity.ContainerControlledLifetimeManager();
+        LifetimeManager _lifetime => new ContainerControlledLifetimeManager();
 
-        public T Resolve<T>() where T : class
-            => _container.Resolve(typeof(T)) as T;
+        public TInterface Resolve<TInterface>() where TInterface : class
+            => _container.Resolve<TInterface>();
 
-        public void Register<F, T>() where F : class where T : class, F
-            => _container.RegisterType(typeof(F), typeof(T), _lifetime);
+        public TInterface Resolve<TInterface>(string key) where TInterface : class
+            => _container.Resolve<TInterface>(name: key);
 
-        public void Register<F>(F instance) where F : class
-            => _container.RegisterInstance(typeof(F), instance, _lifetime);
+        public void Register<TIntreface, TClass>()
+            where TIntreface : class
+            where TClass : class, TIntreface
+            => _container.RegisterType<TIntreface, TClass>(_lifetime);
+
+        public void Register<TInterface, TClass>(string key)
+            where TInterface : class 
+            where TClass : class, TInterface
+            => _container.RegisterType<TInterface, TClass>(name: key, lifetimeManager: _lifetime);
+
+        public void Register<TClass>(TClass instance) where TClass : class
+            => _container.RegisterInstance(instance, _lifetime);
     }
 }

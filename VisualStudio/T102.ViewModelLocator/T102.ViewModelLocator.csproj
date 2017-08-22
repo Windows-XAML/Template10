@@ -4,20 +4,20 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{8560342F-4F61-49AB-9679-1941DB551025}</ProjectGuid>
+    <ProjectGuid>{E7916E38-075D-451F-874B-9A5BE4B96953}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sample</RootNamespace>
-    <AssemblyName>Template.Blank</AssemblyName>
+    <RootNamespace>T102.ViewModelLocator</RootNamespace>
+    <AssemblyName>T102.ViewModelLocator</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.15063.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.15063.0</TargetPlatformMinVersion>
+    <TargetPlatformMinVersion>10.0.14393.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
-    <PackageCertificateKeyFile>Template.Blank_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>T102.ViewModelLocator_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -96,16 +96,32 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\SettingsService.cs" />
+    <Compile Include="Strategies\UnityViewModelResolutionStrategy.cs" />
+    <Compile Include="ViewModels\DetailPageViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
+    <Compile Include="ViewModels\SettingsPageViewModel.cs" />
+    <Compile Include="Views\Busy.xaml.cs">
+      <DependentUpon>Busy.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DetailPage.xaml.cs">
+      <DependentUpon>DetailPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Splash.xaml.cs">
+      <DependentUpon>Splash.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="Template.Blank_TemporaryKey.pfx" />
+    <None Include="T102.ViewModelLocator_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Properties\Default.rd.xml" />
@@ -122,31 +138,77 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Views\MainPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>5.4.0</Version>
     </PackageReference>
-    <PackageReference Include="MvvmLightLibs">
-      <Version>5.3.0</Version>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed">
+      <Version>2.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>9.0.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
-    <Folder Include="Services\" />
+    <Page Include="Styles\Custom.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Views\Busy.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DetailPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SettingsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Splash.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Controls\Template10.Controls.CustomTitleBar\Control\Template10.Controls.CustomTitleBar.csproj">
+      <Project>{5cc9c9d2-2103-4e03-b425-7fd58a7a2a2e}</Project>
+      <Name>Template10.Controls.CustomTitleBar</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Controls\Template10.Controls.Hamburger\Template10.Controls.Hamburger.Control.csproj">
+      <Project>{5144566e-80eb-4375-9fe2-415808e2051d}</Project>
+      <Name>Template10.Controls.Hamburger.Control</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Controls\Template10.Controls.ImageEx\Control\Template10.Controls.ImageEx.Control.csproj">
+      <Project>{6db25e07-b9ee-4e75-8923-cd802cb9aff6}</Project>
+      <Name>Template10.Controls.ImageEx.Control</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Controls\Template10.Controls.ModalDialog\Control\Template10.Controls.ModalDialog.csproj">
-      <Project>{8b565035-0b8f-41b0-a2a1-23793a58aa50}</Project>
+      <Project>{8B565035-0B8F-41B0-A2A1-23793A58AA50}</Project>
       <Name>Template10.Controls.ModalDialog</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Controls\Template10.Controls.PageHeader\Template10.Controls.PageHeader.Control.csproj">
       <Project>{509386d0-711e-4345-83ad-f71998efbdd7}</Project>
       <Name>Template10.Controls.PageHeader.Control</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Controls\Template10.Controls.PopupEx\Control\Template10.Controls.PopupEx.csproj">
+      <Project>{7346f540-fcbc-45b5-962f-c3899710546e}</Project>
+      <Name>Template10.Controls.PopupEx</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Controls\Template10.Controls.Resizer\Control\Template10.Controls.Resizer.Control.csproj">
+      <Project>{4c95717c-b59c-4a2f-967a-79e74dd903cc}</Project>
+      <Name>Template10.Controls.Resizer.Control</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Controls\Template10.Controls.RingSegment\Control\Template10.Controls.RingSegment.Control.csproj">
+      <Project>{84415006-a82c-40dc-a8b4-176afc0cf517}</Project>
+      <Name>Template10.Controls.RingSegment.Control</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Template10.CodeBehind\Template10.Common.CodeBehind.Library.csproj">
       <Project>{b3a4e50e-9dca-457e-bed5-b71d97b957f3}</Project>
@@ -157,57 +219,80 @@
       <Name>Template10.Common.XAML.Library</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Services\Template10.Services.BackService\Template10.Services.Gesture.csproj">
-      <Project>{8564f764-99d9-4473-b5e4-ac62cda73977}</Project>
+      <Project>{8564F764-99D9-4473-B5E4-AC62CDA73977}</Project>
       <Name>Template10.Services.Gesture</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Services\Template10.Services.Container\MvvmLightAdapter\Template10.Services.Container.MvvmLight.csproj">
-      <Project>{f5077709-6d92-483c-a263-c4124274bcb8}</Project>
-      <Name>Template10.Services.Container.MvvmLight</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Services\Template10.Services.Container\Service\Template10.Services.Container.Core.csproj">
-      <Project>{b4c8a753-3376-4c55-aff1-326f2d1cfcbc}</Project>
+      <Project>{B4C8A753-3376-4C55-AFF1-326F2D1CFCBC}</Project>
       <Name>Template10.Services.Container.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.Container\UnityAdapter\Template10.Services.Container.Unity.csproj">
+      <Project>{524D4BCB-21A1-44F6-B5B2-2712A3E7718D}</Project>
+      <Name>Template10.Services.Container.Unity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.Dialog\Service\Template10.Services.Dialog.Service.csproj">
+      <Project>{9daacea0-6905-46f8-aed1-c6b566c83cdc}</Project>
+      <Name>Template10.Services.Dialog.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.KeyboardService\Service\Template10.Services.KeyboardService.csproj">
+      <Project>{b540d0b5-3850-416f-aec7-7737870e9ca2}</Project>
+      <Name>Template10.Services.KeyboardService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Services\Template10.Services.LoggingService\Service\Template10.Services.Logging.Core.csproj">
-      <Project>{eadde808-bf0d-4ebc-b4ca-9fda63b53862}</Project>
+      <Project>{EADDE808-BF0D-4EBC-B4CA-9FDA63B53862}</Project>
       <Name>Template10.Services.Logging.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.MarketplaceService\Service\Template10.Services.Marketplace.Service.csproj">
+      <Project>{80E5B1C6-DD8E-4B06-A693-DD2D11F9C32A}</Project>
+      <Name>Template10.Services.Marketplace.Service</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Services\Template10.Services.Messenger\MvvmLight\Template10.Services.Messaging.MvvmLight.csproj">
-      <Project>{94037ef8-d55e-46f4-b92a-38ebdec5ecf8}</Project>
+      <Project>{94037EF8-D55E-46F4-B92A-38EBDEC5ECF8}</Project>
       <Name>Template10.Services.Messaging.MvvmLight</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Services\Template10.Services.Messenger\Service\Template10.Services.Messaging.Core.csproj">
       <Project>{e14bcd62-b2a4-4aa2-95a8-6a556a31fb29}</Project>
       <Name>Template10.Services.Messaging.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Controls\Template10.Controls.Hamburger\Template10.Controls.Hamburger.Control.csproj">
-      <Project>{5144566e-80eb-4375-9fe2-415808e2051d}</Project>
-      <Name>Template10.Controls.Hamburger.Control</Name>
+    <ProjectReference Include="..\..\Services\Template10.Services.NaggingService\Service\Template10.Services.Nag.Service.csproj">
+      <Project>{a6da4a45-4045-4598-b9fd-44a5010ca450}</Project>
+      <Name>Template10.Services.Nag.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.SerializationService\Service\Template10.Services.Serialization.Service.csproj">
+      <Project>{D3A94520-4CD4-4D56-B30B-7E54FACE64BB}</Project>
+      <Name>Template10.Services.Serialization.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.SettingsService\Service\Template10.Services.Settings.Service.csproj">
+      <Project>{EBA14736-2C70-4E33-A156-221B44FF43C1}</Project>
+      <Name>Template10.Services.Settings.Service</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Template10\Template10.Core.Navigation\Template10.Core.Navigation.csproj">
-      <Project>{cd31d870-42f3-4379-b67a-2070c4b0a444}</Project>
+      <Project>{CD31D870-42F3-4379-B67A-2070C4B0A444}</Project>
       <Name>Template10.Core.Navigation</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Template10\Template10.Core.Shared\Template10.Core.Shared.csproj">
-      <Project>{1f9a6976-d8f9-459b-8aee-770b53904ff3}</Project>
+      <Project>{1F9A6976-D8F9-459B-8AEE-770B53904FF3}</Project>
       <Name>Template10.Core.Shared</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Template10\Template10.Core.Windowing\Template10.Core.Windowing.csproj">
-      <Project>{9cad4451-5adf-48d3-b690-8b341a95a228}</Project>
+      <Project>{9CAD4451-5ADF-48D3-B690-8B341A95A228}</Project>
       <Name>Template10.Core.Windowing</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Template10\Template10.Core\Template10.Core.csproj">
-      <Project>{43417386-ddd5-422a-a563-cb666857c59c}</Project>
+      <Project>{43417386-DDD5-422A-A563-CB666857C59C}</Project>
       <Name>Template10.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Template10\Template10.MvvmLight\Template10.BootStrapper.MvvmLight.csproj">
-      <Project>{ffd32a47-5ed4-4be4-9c09-c4b9e9f895bb}</Project>
+      <Project>{FFD32A47-5ED4-4BE4-9C09-C4B9E9F895BB}</Project>
       <Name>Template10.BootStrapper.MvvmLight</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Template10\Template10.Portable\Template10.Portable.csproj">
       <Project>{2b6903df-396a-4d97-bf29-45bc6dd72dbe}</Project>
       <Name>Template10.Portable</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

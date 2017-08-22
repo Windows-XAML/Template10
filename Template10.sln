@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.7
+VisualStudioVersion = 15.0.26730.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{F8B66765-EFAD-45EE-911F-8815B9C9E297}"
 	ProjectSection(SolutionItems) = preProject
@@ -165,6 +165,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NetworkService", "NetworkService", "{80486397-68BD-4E68-8205-35BBEBB1C803}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.Network.Service.Demo", "Services\Template10.Services.NetworkService\Demo\Template10.Services.Network.Service.Demo.csproj", "{913CB595-CF9A-4701-8AF8-DC4C3864347A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "T102.ViewModelLocator", "VisualStudio\T102.ViewModelLocator\T102.ViewModelLocator.csproj", "{E7916E38-075D-451F-874B-9A5BE4B96953}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo", "Demo", "{31467C40-9D32-42F5-BBB3-4BE74ABBA9AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -854,6 +858,28 @@ Global
 		{913CB595-CF9A-4701-8AF8-DC4C3864347A}.Release|x86.ActiveCfg = Release|x86
 		{913CB595-CF9A-4701-8AF8-DC4C3864347A}.Release|x86.Build.0 = Release|x86
 		{913CB595-CF9A-4701-8AF8-DC4C3864347A}.Release|x86.Deploy.0 = Release|x86
+		{E7916E38-075D-451F-874B-9A5BE4B96953}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{E7916E38-075D-451F-874B-9A5BE4B96953}.Debug|Any CPU.Build.0 = Debug|x86
+		{E7916E38-075D-451F-874B-9A5BE4B96953}.Debug|Any CPU.Deploy.0 = Debug|x86
+		{E7916E38-075D-451F-874B-9A5BE4B96953}.Debug|ARM.ActiveCfg = Debug|ARM
+		{E7916E38-075D-451F-874B-9A5BE4B96953}.Debug|ARM.Build.0 = Debug|ARM
+		{E7916E38-075D-451F-874B-9A5BE4B96953}.Debug|ARM.Deploy.0 = Debug|ARM
+		{E7916E38-075D-451F-874B-9A5BE4B96953}.Debug|x64.ActiveCfg = Debug|x64
+		{E7916E38-075D-451F-874B-9A5BE4B96953}.Debug|x64.Build.0 = Debug|x64
+		{E7916E38-075D-451F-874B-9A5BE4B96953}.Debug|x64.Deploy.0 = Debug|x64
+		{E7916E38-075D-451F-874B-9A5BE4B96953}.Debug|x86.ActiveCfg = Debug|x86
+		{E7916E38-075D-451F-874B-9A5BE4B96953}.Debug|x86.Build.0 = Debug|x86
+		{E7916E38-075D-451F-874B-9A5BE4B96953}.Debug|x86.Deploy.0 = Debug|x86
+		{E7916E38-075D-451F-874B-9A5BE4B96953}.Release|Any CPU.ActiveCfg = Release|x86
+		{E7916E38-075D-451F-874B-9A5BE4B96953}.Release|ARM.ActiveCfg = Release|ARM
+		{E7916E38-075D-451F-874B-9A5BE4B96953}.Release|ARM.Build.0 = Release|ARM
+		{E7916E38-075D-451F-874B-9A5BE4B96953}.Release|ARM.Deploy.0 = Release|ARM
+		{E7916E38-075D-451F-874B-9A5BE4B96953}.Release|x64.ActiveCfg = Release|x64
+		{E7916E38-075D-451F-874B-9A5BE4B96953}.Release|x64.Build.0 = Release|x64
+		{E7916E38-075D-451F-874B-9A5BE4B96953}.Release|x64.Deploy.0 = Release|x64
+		{E7916E38-075D-451F-874B-9A5BE4B96953}.Release|x86.ActiveCfg = Release|x86
+		{E7916E38-075D-451F-874B-9A5BE4B96953}.Release|x86.Build.0 = Release|x86
+		{E7916E38-075D-451F-874B-9A5BE4B96953}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -914,5 +940,9 @@ Global
 		{C8A3DAF1-C15F-4164-B300-061E17A3898B} = {8D496587-9EA5-4D4B-AB03-F58E99F84F52}
 		{80486397-68BD-4E68-8205-35BBEBB1C803} = {D1B54308-4CA7-4E2F-8707-98D27060612E}
 		{913CB595-CF9A-4701-8AF8-DC4C3864347A} = {80486397-68BD-4E68-8205-35BBEBB1C803}
+		{E7916E38-075D-451F-874B-9A5BE4B96953} = {31467C40-9D32-42F5-BBB3-4BE74ABBA9AE}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C2300FA7-07CE-46AC-913D-B99670ECF08C}
 	EndGlobalSection
 EndGlobal
