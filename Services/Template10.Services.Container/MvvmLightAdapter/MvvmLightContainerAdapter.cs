@@ -1,4 +1,6 @@
-﻿namespace Template10.Services.Container
+﻿using System;
+
+namespace Template10.Services.Container
 {
     public class MvvmLightContainerAdapter : IContainerAdapter
     {
@@ -8,11 +10,21 @@
             _container = new GalaSoft.MvvmLight.Ioc.SimpleIoc();
         }
 
-        public T Resolve<T>() where T : class
-            => _container.GetInstance<T>(typeof(T).ToString()) as T;
+        public TInterface Resolve<TInterface>() where TInterface : class
+            => _container.GetInstance<TInterface>(typeof(TInterface).ToString());
 
-        public void Register<F, T>() where F : class where T : class, F
-            => _container.Register<F, T>();
+        public TInterface Resolve<TInterface>(string key) where TInterface : class
+            => throw new NotImplementedException();
+
+        public void Register<TInterface, TClass>()
+            where TInterface : class
+            where TClass : class, TInterface
+            => _container.Register<TInterface, TClass>();
+
+        public void Register<TInterface, TClass>(string key)
+            where TInterface : class
+            where TClass : class, TInterface
+            => throw new NotImplementedException();
 
         public void Register<F>(F instance) where F : class
             => _container.Register<F>(() => instance);
