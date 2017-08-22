@@ -1,26 +1,26 @@
-﻿using System.Threading.Tasks;
-using Template10.Services.Dialog;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Template10.Extensions;
 using Windows.UI.Popups;
 
 namespace Template10.Services.Dialog
 {
     public class DialogService : IDialogService
     {
-        DialogHelper _helper;
+        public async Task<IUICommand> ShowAsync(string content, string title = default(string))
+            => await new MessageDialog(content, title).ShowAsyncEx();
 
-        public DialogService()
+        public async Task<IUICommand> ShowAsync(string content, string title, params IUICommand[] commands)
         {
-            _helper = new DialogHelper();
-        }
-
-        public async Task ShowAsync(string content, string title = default(string))
-        {
-            await this._helper.ShowAsync(content, title);
-        }
-
-        public async Task ShowAsync(string content, string title, params UICommand[] commands)
-        {
-            await this._helper.ShowAsync(content, title, commands);
+            var dialog = new MessageDialog(content, title);
+            if (commands != null && commands.Any())
+            {
+                foreach (var item in commands)
+                {
+                    dialog.Commands.Add(item);
+                }
+            }
+            return await dialog.ShowAsyncEx();
         }
     }
 }
