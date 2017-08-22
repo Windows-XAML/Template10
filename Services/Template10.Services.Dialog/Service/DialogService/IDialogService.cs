@@ -5,7 +5,7 @@ namespace Template10.Services.Dialog
 {
     public interface IDialogService
     {
-        Task ShowAsync(string content, string title = default(string));
-        Task ShowAsync(string content, string title, params UICommand[] commands);
+        Task<IUICommand> ShowAsync(string content, string title = default(string));
+        Task<IUICommand> ShowAsync(string content, string title, params IUICommand[] commands);
     }
 }

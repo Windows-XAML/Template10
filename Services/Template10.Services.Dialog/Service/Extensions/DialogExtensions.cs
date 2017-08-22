@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Template10.Services.Dialog;
 using Windows.UI.Popups;
 using Windows.UI.Xaml.Controls;
 
@@ -18,18 +19,7 @@ namespace Template10.Extensions
         public static async Task<ContentDialogResult> ShowAsyncEx(this ContentDialog contentDialog)
             => await ShowAsync(async () => await contentDialog.ShowAsync());
 
-        static SemaphoreSlim _showAsyncSemaphoreSlim = new SemaphoreSlim(1, 1);
         private static async Task<T> ShowAsync<T>(Func<Task<T>> show)
-        {
-            await _showAsyncSemaphoreSlim.WaitAsync();
-            try
-            {
-                return await show();
-            }
-            finally
-            {
-                _showAsyncSemaphoreSlim.Release();
-            }
-        }
+            => await DialogManager.OnlyOneAsync<T>(show);
     }
 }
