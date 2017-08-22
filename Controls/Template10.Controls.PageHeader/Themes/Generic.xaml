@@ -235,7 +235,7 @@
                                                     </VisualState>
                                                     <VisualState x:Name="Disabled">
                                                         <VisualState.Setters>
-                                                            <Setter Target="RootGrid.Foreground" Value="{ThemeResource SystemControlDisabledBaseLowBrush}" />
+															<Setter Target="RootGrid.Background" Value="{ThemeResource SystemControlDisabledBaseLowBrush}" />
                                                         </VisualState.Setters>
                                                     </VisualState>
                                                 </VisualStateGroup>
