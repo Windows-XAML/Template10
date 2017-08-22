@@ -31,6 +31,23 @@ namespace Template10.Services.Dialog
             ContentButtonInfo secondaryButton = null,
             ContentButtonInfo closeButton = null,
             Action openedCallback = null,
-            Action closedCallback = null);
+            Action closedCallback = null,
+            TimeSpan timeout = default(TimeSpan));
+    }
+
+    public class ContentService : IContentService
+    {
+        public Task<ContentDialogResult> ShowAsync(UIElement content,
+            object title = null,
+            ContentOrientations orientation = ContentOrientations.Fill,
+            ContentButtonInfo primaryButton = null,
+            ContentButtonInfo secondaryButton = null,
+            ContentButtonInfo closeButton = null,
+            Action openedCallback = null,
+            Action closedCallback = null,
+            TimeSpan timeout = default(TimeSpan))
+        {
+            throw new NotImplementedException();
+        }
     }
 }
