@@ -1,8 +1,13 @@
-﻿namespace Template10.Services.Container
+﻿using System;
+
+namespace Template10.Services.Container
 {
     public abstract class ContainerService : IContainerService
     {
         static IContainerService _Default;
+
+        protected IContainerAdapter Adapter { get; set; }
+
         public static IContainerService Default
         {
             get => _Default;
@@ -15,28 +20,40 @@
             {
                 throw new System.Exception("Default ContainerService has already been set.");
             }
-            _adapter = adapter;
+            Adapter = adapter;
             if (setAsDefault)
             {
                 _Default = this;
             }
         }
 
-        public IContainerAdapter _adapter { get; set; }
+        public TInterface Resolve<TInterface, TClass>(string key)
+            where TInterface : class
+            where TClass : class, TInterface
+        {
+            return Adapter.Resolve<TInterface, TClass>(key);
+        }
 
-        public TInterface Resolve<TInterface>() where TInterface : class
-            => _adapter.Resolve<TInterface>();
+        public T Resolve<T>() where T : class
+            => Adapter.Resolve<T>();
 
-        public TInterface Resolve<TInterface>(string key) where TInterface : class
-            => _adapter.Resolve<TInterface>(key);
+        public void Register<TInterface, TClass>(string key)
+            where TInterface : class
+            where TClass : class, TInterface
+            => Adapter.Register<TInterface, TClass>(key);
 
-        public void Register<TInterface, TClass>() where TInterface : class where TClass : class, TInterface
-            => _adapter.Register<TInterface, TClass>();
+        public void Register<TInterface, TClass>()
+            where TInterface : class
+            where TClass : class, TInterface
+            => Adapter.Register<TInterface, TClass>();
 
-        public void Register<TInterface, TClass>(string key) where TInterface : class where TClass : class, TInterface
-            => _adapter.Register<TInterface, TClass>(key);
+        public void RegisterInstance<TClass>(TClass instance)
+            where TClass : class
+            => Adapter.RegisterInstance<TClass>(instance);
 
-        public void Register<TClass>(TClass instance) where TClass : class
-            => _adapter.Register<TClass>(instance);
+        public void RegisterInstance<TInterface, TClass>(TClass instance)
+            where TInterface : class
+            where TClass : class, TInterface
+            => Adapter.RegisterInstance<TInterface>(instance);
     }
 }

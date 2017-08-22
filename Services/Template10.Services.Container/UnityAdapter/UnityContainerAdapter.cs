@@ -1,34 +1,45 @@
-﻿using Microsoft.Practices.Unity;
+﻿using System;
+using Microsoft.Practices.Unity;
 
 namespace Template10.Services.Container
 {
     public class UnityContainerAdapter : IContainerAdapter
     {
-        IUnityContainer _container;
+        Microsoft.Practices.Unity.IUnityContainer _container;
         internal UnityContainerAdapter()
         {
-            _container = new UnityContainer();
+            _container = new Microsoft.Practices.Unity.UnityContainer();
         }
 
-        LifetimeManager _lifetime => new ContainerControlledLifetimeManager();
+        Microsoft.Practices.Unity.LifetimeManager _lifetime
+            => new Microsoft.Practices.Unity.ContainerControlledLifetimeManager();
 
-        public TInterface Resolve<TInterface>() where TInterface : class
-            => _container.Resolve<TInterface>();
+        public T Resolve<T>()
+            where T : class
+            => _container.Resolve(typeof(T)) as T;
 
-        public TInterface Resolve<TInterface>(string key) where TInterface : class
-            => _container.Resolve<TInterface>(name: key);
-
-        public void Register<TIntreface, TClass>()
-            where TIntreface : class
-            where TClass : class, TIntreface
-            => _container.RegisterType<TIntreface, TClass>(_lifetime);
-
-        public void Register<TInterface, TClass>(string key)
-            where TInterface : class 
+        public TInterface Resolve<TInterface, TClass>(string key)
+            where TInterface : class
             where TClass : class, TInterface
-            => _container.RegisterType<TInterface, TClass>(name: key, lifetimeManager: _lifetime);
+            => _container.Resolve<TInterface>(key);
 
-        public void Register<TClass>(TClass instance) where TClass : class
-            => _container.RegisterInstance(instance, _lifetime);
+        public void Register<TInterface, TClass>()
+            where TInterface : class
+            where TClass : class, TInterface
+            => _container.RegisterType(typeof(TInterface), typeof(TClass), _lifetime);
+
+        public void Register<TInterface>(TInterface instance)
+            where TInterface : class
+            => _container.RegisterInstance(typeof(TInterface), instance, _lifetime);
+
+        void IContainerAdapter.Register<TInterface, TClass>(string key)
+            => _container.RegisterType<TInterface, TClass>(key);
+
+        public void RegisterInstance<TClass>(TClass instance)
+            where TClass : class
+            => _container.RegisterInstance(instance);
+
+        void IContainerAdapter.RegisterInstance<TInterface, TClass>(TClass instance)
+            => _container.RegisterInstance<TInterface>(instance);
     }
 }

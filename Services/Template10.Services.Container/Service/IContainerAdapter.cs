@@ -2,10 +2,21 @@
 {
     public interface IContainerAdapter
     {
-        TInterface Resolve<TInterface>() where TInterface : class;
-        TInterface Resolve<TInterface>(string key) where TInterface : class;
-        void Register<TInterface, TClass>() where TInterface : class where TClass : class, TInterface;
-        void Register<TInterface, TClass>(string key) where TInterface : class where TClass : class, TInterface;
-        void Register<TClass>(TClass instance) where TClass : class;
+        T Resolve<T>()
+        where T : class;
+        void Register<TInterface, TClass>(string key)
+           where TInterface : class
+           where TClass : class, TInterface;
+        TInterface Resolve<TInterface, TClass>(string key)
+            where TInterface : class
+            where TClass : class, TInterface;
+        void Register<F, T>()
+             where F : class
+             where T : class, F;
+        void RegisterInstance<TClass>(TClass instance)
+            where TClass : class;
+        void RegisterInstance<TInterface, TClass>(TClass instance)
+            where TInterface : class
+            where TClass : class, TInterface;
     }
 }
