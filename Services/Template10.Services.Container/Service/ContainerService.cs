@@ -1,8 +1,13 @@
-﻿namespace Template10.Services.Container
+﻿using System;
+
+namespace Template10.Services.Container
 {
     public abstract class ContainerService : IContainerService
     {
         static IContainerService _Default;
+
+        protected IContainerAdapter Adapter { get; set; }
+
         public static IContainerService Default
         {
             get => _Default;
@@ -15,22 +20,40 @@
             {
                 throw new System.Exception("Default ContainerService has already been set.");
             }
-            _adapter = adapter;
+            Adapter = adapter;
             if (setAsDefault)
             {
                 _Default = this;
             }
         }
 
-        public IContainerAdapter _adapter { get; set; }
+        public TInterface Resolve<TInterface, TClass>(string key)
+            where TInterface : class
+            where TClass : class, TInterface
+        {
+            return Adapter.Resolve<TInterface, TClass>(key);
+        }
 
         public T Resolve<T>() where T : class
-            => _adapter.Resolve<T>();
+            => Adapter.Resolve<T>();
 
-        public void Register<F, T>() where F : class where T : class, F
-            => _adapter.Register<F, T>();
+        public void Register<TInterface, TClass>(string key)
+            where TInterface : class
+            where TClass : class, TInterface
+            => Adapter.Register<TInterface, TClass>(key);
 
-        public void Register<F>(F instance) where F : class
-            => _adapter.Register<F>(instance);
+        public void Register<TInterface, TClass>()
+            where TInterface : class
+            where TClass : class, TInterface
+            => Adapter.Register<TInterface, TClass>();
+
+        public void RegisterInstance<TClass>(TClass instance)
+            where TClass : class
+            => Adapter.RegisterInstance<TClass>(instance);
+
+        public void RegisterInstance<TInterface, TClass>(TClass instance)
+            where TInterface : class
+            where TClass : class, TInterface
+            => Adapter.RegisterInstance<TInterface>(instance);
     }
 }

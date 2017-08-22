@@ -1,20 +1,51 @@
-﻿namespace Template10.Services.Container
+﻿using System;
+using System.Collections.Generic;
+
+namespace Template10.Services.Container
 {
     public class MvvmLightContainerAdapter : IContainerAdapter
     {
-        GalaSoft.MvvmLight.Ioc.ISimpleIoc _container;
+        GalaSoft.MvvmLight.Ioc.SimpleIoc _container;
         internal MvvmLightContainerAdapter()
         {
             _container = new GalaSoft.MvvmLight.Ioc.SimpleIoc();
         }
 
-        public T Resolve<T>() where T : class
-            => _container.GetInstance<T>(typeof(T).ToString()) as T;
+        public void Register<TInterface, TClass>(string key)
+            where TInterface : class
+            where TClass : class, TInterface
+        {
+            // note: this is a workaround until SimpleIoT supports .Register<TInterface, TClass>(string key);
+            _container.Register<TClass>();
+        }
 
-        public void Register<F, T>() where F : class where T : class, F
-            => _container.Register<F, T>();
+        public TInterface Resolve<TInterface, TClass>(string key)
+            where TInterface : class
+            where TClass : class, TInterface
+        {
+            // note: this is a workaround until SimpleIoT supports .Register<TInterface, TClass>(string key);
+            return _container.IsRegistered<TClass>() 
+                ? _container.GetInstance<TClass>() 
+                : throw new Exception($"The type [{typeof(TClass)}] is not registered.");
+        }
 
-        public void Register<F>(F instance) where F : class
-            => _container.Register<F>(() => instance);
+        public TInterface Resolve<TInterface>()
+            where TInterface : class
+            => _container.GetInstance<TInterface>() as TInterface;
+
+        public void Register<TInterface, TClass>()
+            where TInterface : class
+            where TClass : class, TInterface
+            => _container.Register<TInterface, TClass>();
+
+        public void RegisterInstance<TClass>(TClass instance)
+            where TClass : class
+            => _container.Register<TClass>(() => instance);
+
+        public void RegisterInstance<TInterface, TClass>(TClass instance)
+            where TInterface : class
+            where TClass : class, TInterface
+            => _container.Register<TInterface>(() => instance);
+
     }
 }
