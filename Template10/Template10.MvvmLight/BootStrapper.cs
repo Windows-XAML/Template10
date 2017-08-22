@@ -48,7 +48,7 @@ namespace Template10
 #endif
 
             // strategies
-            c.Register<IBootStrapperShared>(this);
+            c.RegisterInstance<IBootStrapperShared>(this);
             c.Register<IBootStrapperStrategy, DefaultBootStrapperStrategy>();
             c.Register<ILifecycleStrategy, DefaultLifecycleStrategy>();
             c.Register<IStateStrategy, DefaultStateStrategy>();
