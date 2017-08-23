@@ -33,6 +33,6 @@ namespace Template10.Navigation
 
         void ClearNavigationCache(bool removeCachedPagesInBackStack = false);
 
-        Strategies.IStateStrategy StateStrategy { get; set; }
+        Strategies.INavStateStrategy StateStrategy { get; set; }
     }
 }

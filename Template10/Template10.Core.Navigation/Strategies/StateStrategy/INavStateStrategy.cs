@@ -4,7 +4,7 @@ using Template10.Navigation;
 
 namespace Template10.Strategies
 {
-    public interface IStateStrategy
+    public interface INavStateStrategy
     {
         Task<FrameExState> GetFrameStateAsync(string frameId);
         Task<IPropertyBagEx> GetPageStateAsync(string frameId, string pageId);

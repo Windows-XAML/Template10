@@ -51,7 +51,7 @@ namespace Template10
             c.RegisterInstance<IBootStrapperShared>(this);
             c.Register<IBootStrapperStrategy, DefaultBootStrapperStrategy>();
             c.Register<ILifecycleStrategy, DefaultLifecycleStrategy>();
-            c.Register<IStateStrategy, DefaultStateStrategy>();
+            c.Register<INavStateStrategy, DefaultNavStateStrategy>();
             c.Register<ITitleBarStrategy, DefaultTitleBarStrategy>();
             c.Register<IExtendedSessionStrategy, DefaultExtendedSessionStrategy>();
             c.Register<IViewModelActionStrategy, DefaultViewModelActionStrategy>();
@@ -61,7 +61,7 @@ namespace Template10
             // test
             var bstrategy = c.Resolve<IBootStrapperStrategy>();
             var lstrategy = c.Resolve<ILifecycleStrategy>();
-            var sstrategy = c.Resolve<IStateStrategy>();
+            var sstrategy = c.Resolve<INavStateStrategy>();
             var tstrategy = c.Resolve<ITitleBarStrategy>();
             var estrategy = c.Resolve<IExtendedSessionStrategy>();
             var astrategy = c.Resolve<IViewModelActionStrategy>();

@@ -24,7 +24,7 @@ namespace Template10.Navigation
 
         IFrameEx2 Two => this as IFrameEx2;
 
-        Strategies.IStateStrategy IFrameEx2.StateStrategy { get; set; } = new Strategies.DefaultStateStrategy();
+        Strategies.INavStateStrategy IFrameEx2.StateStrategy { get; set; } = new Strategies.DefaultNavStateStrategy();
 
 
         internal FrameEx(Frame frame, INavigationService navigationService)

@@ -7,7 +7,7 @@ using Windows.Storage;
 
 namespace Template10.Strategies
 {
-    public class DefaultStateStrategy : IStateStrategy
+    public class DefaultNavStateStrategy : INavStateStrategy
     {
         private async Task<StorageFolder> GetRootAsync()
         {
