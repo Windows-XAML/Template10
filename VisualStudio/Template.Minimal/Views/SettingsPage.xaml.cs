@@ -10,8 +10,10 @@ namespace Sample.Views
         public SettingsPage()
         {
             InitializeComponent();
-            NavigationCacheMode = NavigationCacheMode.Required;
         }
+
+        public ViewModels.SettingsPageViewModel ViewModel
+            => DataContext as ViewModels.SettingsPageViewModel;
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {

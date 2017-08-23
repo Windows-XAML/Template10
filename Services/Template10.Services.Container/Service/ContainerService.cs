@@ -27,12 +27,9 @@ namespace Template10.Services.Container
             }
         }
 
-        public TInterface Resolve<TInterface, TClass>(string key)
+        public TInterface Resolve<TInterface>(string key)
             where TInterface : class
-            where TClass : class, TInterface
-        {
-            return Adapter.Resolve<TInterface, TClass>(key);
-        }
+            => Adapter.Resolve<TInterface>(key);
 
         public T Resolve<T>() where T : class
             => Adapter.Resolve<T>();

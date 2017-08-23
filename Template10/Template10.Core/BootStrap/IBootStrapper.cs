@@ -22,7 +22,7 @@ namespace Template10.BootStrap
         UIElement CreateSpash(SplashScreen e);
         ISessionState SessionState { get; }
         IMessengerService MessengerService { get; }
-        IContainerService ContainerService { get; }
+        IContainerService Container { get; }
         IDispatcherEx Dispatcher { get; }
     }
 }

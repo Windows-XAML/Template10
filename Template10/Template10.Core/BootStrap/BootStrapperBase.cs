@@ -61,14 +61,14 @@ namespace Template10.BootStrap
             Central.MessengerService.Unsubscribe<WindowCreatedMessage>(this, AfterFirstWindowCreated);
 
             // these are the things delayed until after the first window is created
-            ContainerService.Resolve<IBackButtonService>().Setup();
-            ContainerService.Resolve<ITitleBarStrategy>().Update();
+            Container.Resolve<IBackButtonService>().Setup();
+            Container.Resolve<ITitleBarStrategy>().Update();
         }
 
         // redirected properties
 
-        private IBootStrapperStrategy BootStrapperStrategy => ContainerService.Resolve<IBootStrapperStrategy>();
-        public IContainerService ContainerService => Services.Container.ContainerService.Default;
+        private IBootStrapperStrategy BootStrapperStrategy => Container.Resolve<IBootStrapperStrategy>();
+        public IContainerService Container => Services.Container.ContainerService.Default;
         public IMessengerService MessengerService => Central.MessengerService;
         public INavigationService NavigationService => Navigation.NavigationService.Default;
         public IDispatcherEx Dispatcher => WindowEx.GetDefault().Dispatcher;

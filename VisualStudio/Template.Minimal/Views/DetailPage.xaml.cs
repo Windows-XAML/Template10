@@ -8,7 +8,9 @@ namespace Sample.Views
         public DetailPage()
         {
             InitializeComponent();
-            NavigationCacheMode = NavigationCacheMode.Disabled;
         }
+
+        public ViewModels.DetailPageViewModel ViewModel
+            => DataContext as ViewModels.DetailPageViewModel;
     }
 }

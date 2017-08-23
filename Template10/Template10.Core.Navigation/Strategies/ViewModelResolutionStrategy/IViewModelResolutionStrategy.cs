@@ -9,7 +9,7 @@ namespace Template10.Strategies
 {
     public interface IViewModelResolutionStrategy
     {
-        Task<object> ResolveViewModel(Type type);
-        Task<object> ResolveViewModel(Page page);
+        Task<object> ResolveViewModelAsync(Type type);
+        Task<object> ResolveViewModelAsync(Page page);
     }
 }

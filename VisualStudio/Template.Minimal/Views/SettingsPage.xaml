@@ -9,9 +9,9 @@
     xmlns:vm="using:Sample.ViewModels"
     mc:Ignorable="d">
 
-    <Page.DataContext>
+    <d:Page.DataContext>
         <vm:SettingsPageViewModel x:Name="ViewModel" />
-    </Page.DataContext>
+    </d:Page.DataContext>
 
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">

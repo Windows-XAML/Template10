@@ -4,6 +4,12 @@ using Template10;
 using Template10.Core;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
+using Sample.ViewModels;
+using System;
+using Windows.UI.Xaml.Controls;
+using Template10.Strategies;
+using Template10.Services.Container;
+using Sample.Views;
 
 namespace Sample
 {
@@ -15,22 +21,51 @@ namespace Sample
             InitializeComponent();
         }
 
-        public override async Task OnInitializeAsync()
-        {
-            var settings = Services.SettingsService.GetInstance();
-            Settings.DefaultTheme = settings.DefaultTheme;
-            Settings.ShellBackButtonPreference = settings.ShellBackButtonPreference;
-            Settings.CacheMaxDuration = settings.CacheMaxDuration;
-        }
-
         public override UIElement CreateSpash(SplashScreen e)
         {
             return new Views.Splash(e);
+        }
+
+        public override UIElement CreateRootElement(IStartArgsEx e)
+        {
+            return base.CreateRootElement(e);
+        }
+
+        public override async Task OnInitializeAsync()
+        {
+            UpdateSettings(Services.SettingsService.GetInstance());
+            RegisterViewModels(Container);
         }
 
         public override async Task OnStartAsync(IStartArgsEx e)
         {
             await NavigationService.NavigateAsync(typeof(Views.MainPage));
         }
+
+        private static void UpdateSettings(Services.SettingsService settings)
+        {
+            Template10.Settings.DefaultTheme = settings.DefaultTheme;
+            Template10.Settings.ShellBackButtonPreference = settings.ShellBackButtonPreference;
+            Template10.Settings.CacheMaxDuration = settings.CacheMaxDuration;
+        }
+
+        private void RegisterViewModels(IContainerService service)
+        {
+            service.Register<IViewModelResolutionStrategy, CustomViewModelResolutionStrategy>();
+            service.Register<ITemplate10ViewModel, MainPageViewModel>(typeof(MainPage).ToString());
+            service.Register<ITemplate10ViewModel, DetailPageViewModel>(typeof(DetailPage).ToString());
+            service.Register<ITemplate10ViewModel, SettingsPageViewModel>(typeof(SettingsPage).ToString());
+        }
+    }
+
+    public class CustomViewModelResolutionStrategy : IViewModelResolutionStrategy
+    {
+        IContainerService container = ContainerService.Default;
+
+        public async Task<object> ResolveViewModelAsync(Type type)
+            => container.Resolve<ITemplate10ViewModel>(type.ToString());
+
+        public async Task<object> ResolveViewModelAsync(Page page)
+            => await ResolveViewModelAsync(page.GetType());
     }
 }

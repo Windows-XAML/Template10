@@ -279,7 +279,7 @@ namespace Template10.Navigation
                 {
                     case NavigationMode.New:
                     case NavigationMode.Refresh:
-                        newViewModel = await ViewModelResolutionStrategy.ResolveViewModel(page);
+                        newViewModel = await ViewModelResolutionStrategy.ResolveViewModelAsync(page);
                         if (newViewModel != null)
                         {
                             await ViewModelActionStrategy.NavigatingToAsync((newViewModel, mode, false), from, to, this);
@@ -476,7 +476,7 @@ namespace Template10.Navigation
 
                 // resolve?
 
-                var viewModel = await ViewModelResolutionStrategy.ResolveViewModel(newPage);
+                var viewModel = await ViewModelResolutionStrategy.ResolveViewModelAsync(newPage);
                 if (viewModel == null)
                 {
                     viewModel = newPage?.DataContext;
