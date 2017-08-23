@@ -2,9 +2,9 @@
 using Template10.Extensions;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using T102.ViewModelLocator.ViewModels;
+using Template10.Services.Container.Unity.Demo.ViewModels;
 
-namespace T102.ViewModelLocator.Views
+namespace Template10.Services.Container.Unity.Demo.Views
 {
     public sealed partial class SettingsPage : Page
     {

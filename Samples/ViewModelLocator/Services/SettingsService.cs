@@ -8,7 +8,7 @@ using Template10.Services.Gesture;
 using Template10.Services.Settings;
 using Windows.UI.Xaml;
 
-namespace T102.ViewModelLocator.Services
+namespace Template10.Services.Container.Unity.Demo.Services
 {
     public class SettingsService : SettingsServiceBase
     {

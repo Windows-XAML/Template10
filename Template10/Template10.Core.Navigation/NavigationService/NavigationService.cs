@@ -279,7 +279,6 @@ namespace Template10.Navigation
                 {
                     case NavigationMode.New:
                     case NavigationMode.Refresh:
-                    case NavigationMode.Back:
                         newViewModel = await ViewModelResolutionStrategy.ResolveViewModel(page);
                         if (newViewModel != null)
                         {
@@ -305,7 +304,7 @@ namespace Template10.Navigation
                 }
 
                 // fetch current (which is now new)
-                if (newViewModel != null && newViewModel != newPage?.DataContext)
+                if (newViewModel != null)
                 {
                     newPage.DataContext = newViewModel;
                 }

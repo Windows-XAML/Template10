@@ -1,8 +1,8 @@
 ﻿<t10:BootStrapperBase
-    x:Class="T102.ViewModelLocator.App"
+    x:Class="Template10.Services.Container.Unity.Demo.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:T102.ViewModelLocator"
+    xmlns:local="using:Template10.Services.Container.Unity.Demo"
     xmlns:t10="using:Template10.BootStrap"
     RequestedTheme="Light">
     

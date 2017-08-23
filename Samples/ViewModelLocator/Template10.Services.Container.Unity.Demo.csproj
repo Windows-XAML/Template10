@@ -7,8 +7,8 @@
     <ProjectGuid>{E7916E38-075D-451F-874B-9A5BE4B96953}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>T102.ViewModelLocator</RootNamespace>
-    <AssemblyName>T102.ViewModelLocator</AssemblyName>
+    <RootNamespace>Template10.Services.Container.Unity.Demo</RootNamespace>
+    <AssemblyName>Template10.Services.Container.Unity.Demo</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.15063.0</TargetPlatformVersion>

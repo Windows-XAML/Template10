@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Template10.Mvvm;
 using Template10.Navigation;
 
-namespace T102.ViewModelLocator.ViewModels
+namespace Template10.Services.Container.Unity.Demo.ViewModels
 {
     public class DetailPageViewModel : ViewModelBase
     {

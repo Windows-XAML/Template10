@@ -6,7 +6,7 @@ using Template10.Extensions;
 using Windows.UI.Xaml.Controls;
 using Template10.Navigation;
 
-namespace T102.ViewModelLocator.ViewModels
+namespace Template10.Services.Container.Unity.Demo.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {

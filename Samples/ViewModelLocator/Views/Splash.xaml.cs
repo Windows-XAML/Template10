@@ -2,7 +2,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace T102.ViewModelLocator.Views
+namespace Template10.Services.Container.Unity.Demo.Views
 {
     public sealed partial class Splash : UserControl
     {

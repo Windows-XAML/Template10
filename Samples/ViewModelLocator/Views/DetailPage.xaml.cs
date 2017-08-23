@@ -1,8 +1,8 @@
-﻿using T102.ViewModelLocator.ViewModels;
+﻿using Template10.Services.Container.Unity.Demo.ViewModels;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace T102.ViewModelLocator.Views
+namespace Template10.Services.Container.Unity.Demo.Views
 {
     public sealed partial class DetailPage : Page
     {

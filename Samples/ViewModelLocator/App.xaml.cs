@@ -1,33 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
-using T102.ViewModelLocator.Strategies;
+﻿using System.Threading.Tasks;
+using Template10.Services.Container.Unity.Demo.Strategies;
 using Template10.BootStrap;
 using Template10.Core;
 using Template10.Mvvm;
-using Template10.Services.Container;
 using Template10.Services.Gesture;
 using Template10.Services.Logging;
 using Template10.Services.Messenger;
 using Template10.Services.Resources;
 using Template10.Services.Serialization;
 using Template10.Strategies;
-using Windows.ApplicationModel;
-using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
-namespace T102.ViewModelLocator
+namespace Template10.Services.Container.Unity.Demo
 {
 
     sealed partial class App : BootStrapperBase
@@ -61,13 +44,14 @@ namespace T102.ViewModelLocator
             c.Register<ILoggingService, LoggingService>();
             c.Register<ISerializationService, JsonSerializationService>();
             c.Register<IBackButtonService, BackButtonService>();
-            c.Register<IKeyboardService, KeyboardService>();
+            c.Register<KeyboardService.IKeyboardService, KeyboardService.KeyboardService>();
+            c.Register<Gesture.IKeyboardService, Gesture.KeyboardService>();
             c.Register<IGestureService, GestureService>();
             c.Register<IResourceService, ResourceService>();
 
             // strategies
-            c.Register<IBootStrapperShared>(this);
             c.Register<IBootStrapperStrategy, DefaultBootStrapperStrategy>();
+            c.RegisterInstance<IBootStrapperShared>(this);
             c.Register<ILifecycleStrategy, DefaultLifecycleStrategy>();
             c.Register<IStateStrategy, DefaultStateStrategy>();
             c.Register<ITitleBarStrategy, DefaultTitleBarStrategy>();
@@ -76,9 +60,9 @@ namespace T102.ViewModelLocator
             c.Register<IViewModelResolutionStrategy, UnityViewModelResolutionStrategy>();
 
             // ViewModels
-            c.Register<ViewModelBase, ViewModels.MainPageViewModel>(nameof(Views.MainPage));
-            c.Register<ViewModelBase, ViewModels.DetailPageViewModel>(nameof(Views.DetailPage));
-            c.Register<ViewModelBase, ViewModels.SettingsPageViewModel>(nameof(Views.SettingsPage));
+            c.Register<ITemplate10ViewModel, ViewModels.MainPageViewModel>(nameof(Views.MainPage));
+            c.Register<ITemplate10ViewModel, ViewModels.DetailPageViewModel>(nameof(Views.DetailPage));
+            c.Register<ITemplate10ViewModel, ViewModels.SettingsPageViewModel>(nameof(Views.SettingsPage));
         }
     }
 }

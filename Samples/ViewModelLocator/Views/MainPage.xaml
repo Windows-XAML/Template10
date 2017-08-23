@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="T102.ViewModelLocator.Views.MainPage"
+    x:Class="Template10.Services.Container.Unity.Demo.Views.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Behaviors="using:Template10.Behaviors"

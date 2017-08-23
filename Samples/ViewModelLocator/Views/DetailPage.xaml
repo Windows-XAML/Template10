@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="T102.ViewModelLocator.Views.DetailPage"
+    x:Class="Template10.Services.Container.Unity.Demo.Views.DetailPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Behaviors="using:Template10.Behaviors"
@@ -7,7 +7,7 @@
     xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:controls="using:Template10.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="using:T102.ViewModelLocator"
+    xmlns:local="using:Template10.Services.Container.Unity.Demo"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     x:Name="ThisPage"
     mc:Ignorable="d">

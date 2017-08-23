@@ -14,7 +14,7 @@
   <mp:PhoneIdentity PhoneProductId="37fe2de5-4703-437e-a621-492a701088d4" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>T102.ViewModelLocator</DisplayName>
+    <DisplayName>Template10.Services.Container.Unity.Demo</DisplayName>
     <PublisherDisplayName>rpedretti</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -30,12 +30,12 @@
   <Applications>
     <Application Id="App"
       Executable="$targetnametoken$.exe"
-      EntryPoint="T102.ViewModelLocator.App">
+      EntryPoint="Template10.Services.Container.Unity.Demo.App">
       <uap:VisualElements
-        DisplayName="T102.ViewModelLocator"
+        DisplayName="Template10.Services.Container.Unity.Demo"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="T102.ViewModelLocator"
+        Description="Template10.Services.Container.Unity.Demo"
         BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />

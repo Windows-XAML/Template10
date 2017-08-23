@@ -166,9 +166,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NetworkService", "NetworkSe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.Network.Service.Demo", "Services\Template10.Services.NetworkService\Demo\Template10.Services.Network.Service.Demo.csproj", "{913CB595-CF9A-4701-8AF8-DC4C3864347A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "T102.ViewModelLocator", "VisualStudio\T102.ViewModelLocator\T102.ViewModelLocator.csproj", "{E7916E38-075D-451F-874B-9A5BE4B96953}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo", "Demo", "{31467C40-9D32-42F5-BBB3-4BE74ABBA9AE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.Container.Unity.Demo", "Samples\ViewModelLocator\Template10.Services.Container.Unity.Demo.csproj", "{E7916E38-075D-451F-874B-9A5BE4B96953}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -940,7 +940,7 @@ Global
 		{C8A3DAF1-C15F-4164-B300-061E17A3898B} = {8D496587-9EA5-4D4B-AB03-F58E99F84F52}
 		{80486397-68BD-4E68-8205-35BBEBB1C803} = {D1B54308-4CA7-4E2F-8707-98D27060612E}
 		{913CB595-CF9A-4701-8AF8-DC4C3864347A} = {80486397-68BD-4E68-8205-35BBEBB1C803}
-		{E7916E38-075D-451F-874B-9A5BE4B96953} = {31467C40-9D32-42F5-BBB3-4BE74ABBA9AE}
+		{E7916E38-075D-451F-874B-9A5BE4B96953} = {8BE7C2DA-A08C-436D-88A0-7DE838AF5C66}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C2300FA7-07CE-46AC-913D-B99670ECF08C}

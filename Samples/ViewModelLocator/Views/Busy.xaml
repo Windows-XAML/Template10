@@ -1,8 +1,8 @@
-﻿<UserControl x:Class="T102.ViewModelLocator.Views.Busy"
+﻿<UserControl x:Class="Template10.Services.Container.Unity.Demo.Views.Busy"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="using:T102.ViewModelLocator"
+             xmlns:local="using:Template10.Services.Container.Unity.Demo"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              d:DesignHeight="300" d:DesignWidth="400" mc:Ignorable="d">
 

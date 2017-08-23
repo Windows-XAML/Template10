@@ -6,7 +6,7 @@ using Template10.Services.Gesture;
 using Template10.Services.Marketplace;
 using Windows.UI.Xaml;
 
-namespace T102.ViewModelLocator.ViewModels
+namespace Template10.Services.Container.Unity.Demo.ViewModels
 {
     public class SettingsPageViewModel : ViewModelBase
     {
