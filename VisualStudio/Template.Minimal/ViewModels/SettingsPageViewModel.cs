@@ -39,16 +39,20 @@ namespace Sample.ViewModels
             set => Set(() => { _settings.BusyText = value; });
         }
 
-        public void ShowBusy() => Views.Busy.ShowBusyFor(BusyText, 5000);
+        public void ShowBusy() 
+            => Views.Busy.ShowBusyFor(BusyText, 5000);
 
 
         // About
 
-        public Uri Logo => Windows.ApplicationModel.Package.Current.Logo;
+        public Uri Logo 
+            => Windows.ApplicationModel.Package.Current.Logo;
 
-        public string DisplayName => Windows.ApplicationModel.Package.Current.DisplayName;
+        public string DisplayName 
+            => Windows.ApplicationModel.Package.Current.DisplayName;
 
-        public string Publisher => Windows.ApplicationModel.Package.Current.PublisherDisplayName;
+        public string Publisher 
+            => Windows.ApplicationModel.Package.Current.PublisherDisplayName;
 
         public string Version
         {
@@ -59,6 +63,7 @@ namespace Sample.ViewModels
             }
         }
 
-        public async void Review() => await _marketplace.LaunchAppReviewInStoreAsync();
+        public async void Review() 
+            => await _marketplace.LaunchAppReviewInStoreAsync();
     }
 }
