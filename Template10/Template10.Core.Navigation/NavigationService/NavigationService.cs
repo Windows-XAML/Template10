@@ -35,6 +35,8 @@ namespace Template10.Navigation
         /// </remarks>
         public static async Task<INavigationService> CreateAsync(BackButton backButton, Frame frame = null)
         {
+            frame = frame ?? new Frame();
+
             var existing = frame.GetNavigationService();
             if (existing != null)
             {
