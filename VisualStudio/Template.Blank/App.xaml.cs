@@ -9,7 +9,7 @@ using Windows.UI.Xaml;
 
 namespace Sample
 {
-    sealed partial class App : Template10.BootStrapper
+    sealed partial class App : Template10.MvvmLightBootStrapper
     {
         public App()
         {

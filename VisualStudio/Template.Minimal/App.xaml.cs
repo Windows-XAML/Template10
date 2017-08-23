@@ -4,11 +4,12 @@ using Template10;
 using Template10.Core;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
+using Template10.Services.Container;
 
 namespace Sample
 {
     [Bindable]
-    sealed partial class App : BootStrapper
+    sealed partial class App : MvvmLightBootStrapper
     {
         public App()
         {
