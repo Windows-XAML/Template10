@@ -277,16 +277,10 @@ namespace Template10.Navigation
 
                 // try to resolve the view-model before navigation
                 var newViewModel = default(object);
-                switch (mode)
+                newViewModel = await ViewModelResolutionStrategy.ResolveViewModelAsync(page);
+                if (newViewModel != null)
                 {
-                    case NavigationMode.New:
-                    case NavigationMode.Refresh:
-                        newViewModel = await ViewModelResolutionStrategy.ResolveViewModelAsync(page);
-                        if (newViewModel != null)
-                        {
-                            await ViewModelActionStrategy.NavigatingToAsync((newViewModel, mode, false), from, to, this);
-                        }
-                        break;
+                    await ViewModelActionStrategy.NavigatingToAsync((newViewModel, mode, false), from, to, this);
                 }
 
                 // navigate
