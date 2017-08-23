@@ -18,6 +18,7 @@ namespace Template10.BootStrap
 
         Task OnInitializeAsync();
         Task OnStartAsync(IStartArgsEx e);
+        IContainerService CreateContainer();
         UIElement CreateRootElement(IStartArgsEx e);
         UIElement CreateSpash(SplashScreen e);
         ISessionState SessionState { get; }

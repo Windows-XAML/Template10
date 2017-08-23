@@ -33,8 +33,8 @@ namespace Sample
 
         public override async Task OnInitializeAsync()
         {
-            UpdateSettings(Services.SettingsService.GetInstance());
             RegisterViewModels(Container);
+            LoadSettings(Services.SettingsService.GetInstance());
         }
 
         public override async Task OnStartAsync(IStartArgsEx e)
@@ -42,7 +42,7 @@ namespace Sample
             await NavigationService.NavigateAsync(typeof(Views.MainPage));
         }
 
-        private static void UpdateSettings(Services.SettingsService settings)
+        private static void LoadSettings(Services.SettingsService settings)
         {
             Template10.Settings.DefaultTheme = settings.DefaultTheme;
             Template10.Settings.ShellBackButtonPreference = settings.ShellBackButtonPreference;
