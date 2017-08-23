@@ -3,15 +3,12 @@ using GalaSoft.MvvmLight.Ioc;
 
 namespace Template10.Services.Container
 {
-    public interface IMvvmLightContainerService
+    public class MvvmLightContainerService : ContainerService, IContainerService2<ISimpleIoc>
     {
-        ISimpleIoc Container { get; }
-    }
-
-    public class MvvmLightContainerService : ContainerService, IMvvmLightContainerService
-    {
-        ISimpleIoc IMvvmLightContainerService.Container
+        ISimpleIoc IContainerService2<ISimpleIoc>.Container
             => (Adapter as MvvmLightContainerAdapter)._container;
+
+        IContainerService2<ISimpleIoc> Two => this as IContainerService2<ISimpleIoc>;
 
         public MvvmLightContainerService() :
             base(new MvvmLightContainerAdapter())

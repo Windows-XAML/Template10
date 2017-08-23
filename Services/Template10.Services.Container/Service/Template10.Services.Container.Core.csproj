@@ -110,6 +110,7 @@
     <Compile Include="ContainerService.cs" />
     <Compile Include="IContainerAdapter.cs" />
     <Compile Include="IContainerService.cs" />
+    <Compile Include="IContainerService2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Service.rd.xml" />
   </ItemGroup>
