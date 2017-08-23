@@ -22,7 +22,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Navigation
 {
-    public partial class NavigationService : Loggable, INavigationService2
+    public partial class NavigationService : Loggable
     {
         /// <summary>
         /// Creates a new NavigationService from the gived Frame to the
@@ -269,7 +269,7 @@ namespace Template10.Navigation
                 }
 
                 // raise Navigating event
-                RaiseNavigatingCancels(parameter, false, mode, to, out var cancel);
+                Two.RaiseNavigatingCancels(parameter, false, mode, to, out var cancel);
                 if (cancel)
                 {
                     return false;
@@ -316,7 +316,7 @@ namespace Template10.Navigation
                 }
 
                 // raise Navigated event
-                RaiseNavigated(new NavigatedEventArgs()
+                Two.RaiseNavigated(new NavigatedEventArgs()
                 {
                     Parameter = parameter,
                     NavigationMode = mode,
@@ -351,16 +351,106 @@ namespace Template10.Navigation
 
         #endregion
 
-        #region events
+        #region Refresh methods
+
+        public void Refresh() => RefreshAsync().ConfigureAwait(true);
+
+        public void Refresh(object param) => RefreshAsync(param).ConfigureAwait(true);
+
+        public async Task<bool> RefreshAsync()
+        {
+            await Two.SaveAsync(true);
+            return await NavigationOrchestratorAsync(CurrentPageType, CurrentPageParam, NavigationMode.Refresh, () =>
+            {
+                Windows.ApplicationModel.Resources.Core.ResourceContext.GetForCurrentView().Reset();
+                return Two.LoadAsync(true, NavigationMode.Refresh).Result;
+            });
+        }
+
+        public async Task<bool> RefreshAsync(object param)
+        {
+            var history = FrameEx.BackStack.Last();
+            return await NavigationOrchestratorAsync(CurrentPageType, param, NavigationMode.Refresh, () =>
+            {
+                Windows.ApplicationModel.Resources.Core.ResourceContext.GetForCurrentView().Reset();
+                FrameEx2.SetNavigationState(FrameEx2.GetNavigationState());
+                return true;
+            });
+        }
+
+        #endregion
+
+        #region GoBack methods
+
+        public bool CanGoBack => FrameEx2.CanGoBack;
+
+        public void GoBack(NavigationTransitionInfo infoOverride = null) => GoBackAsync(infoOverride).ConfigureAwait(true);
+
+        public async Task<bool> GoBackAsync(NavigationTransitionInfo infoOverride = null)
+        {
+            if (!CanGoBack)
+            {
+                return true;
+            }
+            var previous = FrameEx.BackStack.LastOrDefault();
+            // there is no parameter when going forward and back
+            return await NavigationOrchestratorAsync(previous.SourcePageType, null, NavigationMode.Back, () =>
+            {
+                if (CanGoBack)
+                {
+                    FrameEx2.GoBack(infoOverride);
+                }
+                return true;
+            });
+        }
+
+        #endregion
+
+        #region GoForward methods
+
+        public bool CanGoForward => FrameEx2.CanGoForward;
+
+        public void GoForward() => GoForwardAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+
+        public async Task<bool> GoForwardAsync()
+        {
+            if (!CanGoForward)
+            {
+                return true;
+            }
+            var next = FrameEx.ForwardStack.FirstOrDefault();
+            // there is no parameter when going forward and back
+            return await NavigationOrchestratorAsync(next.SourcePageType, null, NavigationMode.Forward, () =>
+            {
+                if (CanGoForward)
+                {
+                    FrameEx2.GoForward();
+                }
+                return true;
+            });
+        }
+
+        #endregion
+
+        public void ClearHistory() => FrameEx.BackStack.Clear();
 
         public event EventHandler<NavigatedEventArgs> Navigated;
-        public void RaiseNavigated(NavigatedEventArgs e)
+        public event EventHandler<NavigatingEventArgs> Navigating;
+        public event EventHandler<HandledEventArgs> BackRequested;
+        public event EventHandler<HandledEventArgs> ForwardRequested;
+        public event EventHandler<CancelEventArgs<Type>> BeforeSavingNavigation;
+    }
+
+    public partial class NavigationService : INavigationService2
+    {
+        INavigationService2 Two => this as INavigationService2;
+
+        void INavigationService2.RaiseNavigated(NavigatedEventArgs e)
         {
             Navigated?.Invoke(this, e);
         }
 
-        public event EventHandler<NavigatingEventArgs> Navigating;
-        public void RaiseNavigatingCancels(object parameter, bool suspending, NavigationMode mode, NavigationInfo toInfo, out bool cancel)
+        void INavigationService2.RaiseNavigatingCancels(object parameter, bool suspending, NavigationMode mode, NavigationInfo toInfo, out bool cancel)
         {
             var navigatingDeferral = new Common.DeferralManager();
             var navigatingEventArgs = new NavigatingEventArgs(navigatingDeferral)
@@ -375,37 +465,27 @@ namespace Template10.Navigation
             cancel = navigatingEventArgs.Cancel;
         }
 
-        public event EventHandler<HandledEventArgs> BackRequested;
-        void INavigationService2.RaiseBackRequested(HandledEventArgs args)
-        {
-            BackRequested?.Invoke(this, args);
-        }
-
-        public event EventHandler<HandledEventArgs> ForwardRequested;
-        void INavigationService2.RaiseForwardRequested(HandledEventArgs args)
-        {
-            ForwardRequested?.Invoke(this, args);
-        }
-
-        public event EventHandler<CancelEventArgs<Type>> BeforeSavingNavigation;
-        bool RaiseBeforeSavingNavigation()
+        void INavigationService2.RaiseBeforeSavingNavigation(out bool cancel)
         {
             var args = new CancelEventArgs<Type>(CurrentPageType);
             BeforeSavingNavigation?.Invoke(this, args);
-            return args.Cancel;
+            cancel = args.Cancel;
         }
+        void INavigationService2.RaiseAfterRestoreSavedNavigation()
+            => afterRestoreSavedNavigation?.Invoke(this, CurrentPageType);
+
+        void INavigationService2.RaiseBackRequested(HandledEventArgs args)
+            => BackRequested?.Invoke(this, args);
+
+        void INavigationService2.RaiseForwardRequested(HandledEventArgs args)
+            => ForwardRequested?.Invoke(this, args);
 
         TypedEventHandler<Type> afterRestoreSavedNavigation;
-        void RaiseAfterRestoreSavedNavigation() => afterRestoreSavedNavigation?.Invoke(this, CurrentPageType);
         event TypedEventHandler<Type> INavigationService2.AfterRestoreSavedNavigation
         {
             add => afterRestoreSavedNavigation += value;
             remove => afterRestoreSavedNavigation -= value;
         }
-
-        #endregion
-
-        #region Save/Load Navigation methods
 
         async Task INavigationService2.SaveAsync(bool navigateFrom)
         {
@@ -414,7 +494,11 @@ namespace Template10.Navigation
             LogThis($"Frame: {FrameEx.FrameId}");
 
             if (CurrentPageType == null) return;
-            if (RaiseBeforeSavingNavigation()) return;
+            Two.RaiseBeforeSavingNavigation(out var cancel);
+            if (cancel)
+            {
+                return;
+            }
 
             if (navigateFrom)
             {
@@ -509,95 +593,8 @@ namespace Template10.Navigation
                 return true;
             }
             catch { return false; }
-            finally { RaiseAfterRestoreSavedNavigation(); }
+            finally { Two.RaiseAfterRestoreSavedNavigation(); }
         }
-
-        #endregion
-
-        #region Refresh methods
-
-        public void Refresh() => RefreshAsync().ConfigureAwait(true);
-
-        public void Refresh(object param) => RefreshAsync(param).ConfigureAwait(true);
-
-        public async Task<bool> RefreshAsync()
-        {
-            await Two.SaveAsync(true);
-            return await NavigationOrchestratorAsync(CurrentPageType, CurrentPageParam, NavigationMode.Refresh, () =>
-            {
-                Windows.ApplicationModel.Resources.Core.ResourceContext.GetForCurrentView().Reset();
-                return Two.LoadAsync(true, NavigationMode.Refresh).Result;
-            });
-        }
-
-        INavigationService2 Two => this as INavigationService2;
-
-        public async Task<bool> RefreshAsync(object param)
-        {
-            var history = FrameEx.BackStack.Last();
-            return await NavigationOrchestratorAsync(CurrentPageType, param, NavigationMode.Refresh, () =>
-            {
-                Windows.ApplicationModel.Resources.Core.ResourceContext.GetForCurrentView().Reset();
-                FrameEx2.SetNavigationState(FrameEx2.GetNavigationState());
-                return true;
-            });
-        }
-
-        #endregion
-
-        #region GoBack methods
-
-        public bool CanGoBack => FrameEx2.CanGoBack;
-
-        public void GoBack(NavigationTransitionInfo infoOverride = null) => GoBackAsync(infoOverride).ConfigureAwait(true);
-
-        public async Task<bool> GoBackAsync(NavigationTransitionInfo infoOverride = null)
-        {
-            if (!CanGoBack)
-            {
-                return true;
-            }
-            var previous = FrameEx.BackStack.LastOrDefault();
-            // there is no parameter when going forward and back
-            return await NavigationOrchestratorAsync(previous.SourcePageType, null, NavigationMode.Back, () =>
-            {
-                if (CanGoBack)
-                {
-                    FrameEx2.GoBack(infoOverride);
-                }
-                return true;
-            });
-        }
-
-        #endregion
-
-        #region GoForward methods
-
-        public bool CanGoForward => FrameEx2.CanGoForward;
-
-        public void GoForward() => GoForwardAsync().ConfigureAwait(false).GetAwaiter().GetResult();
-
-        public async Task<bool> GoForwardAsync()
-        {
-            if (!CanGoForward)
-            {
-                return true;
-            }
-            var next = FrameEx.ForwardStack.FirstOrDefault();
-            // there is no parameter when going forward and back
-            return await NavigationOrchestratorAsync(next.SourcePageType, null, NavigationMode.Forward, () =>
-            {
-                if (CanGoForward)
-                {
-                    FrameEx2.GoForward();
-                }
-                return true;
-            });
-        }
-
-        #endregion
-
-        public void ClearHistory() => FrameEx.BackStack.Clear();
 
         async Task INavigationService2.SuspendAsync()
         {

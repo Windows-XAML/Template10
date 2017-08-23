@@ -12,6 +12,10 @@ namespace Template10.Navigation
 
         void RaiseForwardRequested(HandledEventArgs args);
         void RaiseBackRequested(HandledEventArgs args);
+        void RaiseNavigated(NavigatedEventArgs e);
+        void RaiseNavigatingCancels(object parameter, bool suspending, NavigationMode mode, NavigationInfo toInfo, out bool cancel);
+        void RaiseBeforeSavingNavigation(out bool cancel);
+        void RaiseAfterRestoreSavedNavigation();
 
         Task SuspendAsync();
 
