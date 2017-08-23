@@ -10,15 +10,16 @@ using Windows.UI.Xaml;
 
 namespace Template10.BootStrap
 {
-    public interface IBootStrapper: IBootStrapperShared
+    public interface IBootStrapper : IBootStrapperShared
     {
         INavigationService NavigationService { get; }
 
         // publi api
 
+        Visibilities Visibility { get; }
         Task OnInitializeAsync();
         Task OnStartAsync(IStartArgsEx e);
-        IContainerService CreateContainer();
+        IContainerService CreateDependecyInjectionContainer();
         UIElement CreateRootElement(IStartArgsEx e);
         UIElement CreateSpash(SplashScreen e);
         ISessionState SessionState { get; }

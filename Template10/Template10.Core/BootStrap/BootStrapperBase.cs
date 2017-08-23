@@ -34,19 +34,14 @@ namespace Template10.BootStrap
 
             Current = this;
 
-            CreateContainer();
-
+            CreateDependecyInjectionContainer();
             try { var c = Central.ContainerService; }
-            catch { throw new Exception($"IContainerService is required but " +
-                $"is not registered in DI."); }
+            catch { throw new Exception($"IContainerService is required but is not registered in DI."); }
 
-            DefaultDependencies();
-
-            RegisterDependencies();
-
+            RegisterDefaultDependencies();
+            RegisterCustomDependencies();
             try { var m = Central.MessengerService; }
-            catch { throw new Exception($"IMessengerService is required but " +
-                $"is not registered in DI."); }
+            catch { throw new Exception($"IMessengerService is required but is not registered in DI."); }
 
 #if DEBUG
             // test DI
@@ -78,10 +73,19 @@ namespace Template10.BootStrap
             // setup events
 
             Central.MessengerService.Subscribe<WindowCreatedMessage>(this, AfterFirstWindowCreated);
+            Central.MessengerService.Subscribe<AppVisibilityChangedMessage>(this, (e) => Visibility = e.Visibility);
             base.Resuming += BootStrapperStrategy.HandleResuming;
             base.Suspending += BootStrapperStrategy.HandleSuspending;
-            base.EnteredBackground += BootStrapperStrategy.HandleEnteredBackground;
-            base.LeavingBackground += BootStrapperStrategy.HandleLeavingBackground;
+            base.EnteredBackground += (s, e) =>
+            {
+                Visibility = Visibilities.Background;
+                BootStrapperStrategy.HandleEnteredBackground(s, e);
+            };
+            base.LeavingBackground += (s, e) =>
+            {
+                Visibility = Visibilities.Foreground;
+                BootStrapperStrategy.HandleLeavingBackground(s, e); ;
+            };
             base.UnhandledException += BootStrapperStrategy.HandleUnhandledException;
         }
 
@@ -97,6 +101,7 @@ namespace Template10.BootStrap
 
         // redirected properties
 
+        public Visibilities Visibility { get; private set; } = Visibilities.Background;
         private IBootStrapperStrategy BootStrapperStrategy => Container.Resolve<IBootStrapperStrategy>();
         public IContainerService Container => Services.Container.ContainerService.Default;
         public IMessengerService MessengerService => Central.MessengerService;
@@ -114,9 +119,9 @@ namespace Template10.BootStrap
         public abstract Task OnStartAsync(IStartArgsEx e);
         public virtual UIElement CreateRootElement(IStartArgsEx e) => null;
         public virtual UIElement CreateSpash(SplashScreen e) => null;
-        public abstract IContainerService CreateContainer();
-        public abstract void RegisterDependencies();
-        void DefaultDependencies()
+        public abstract IContainerService CreateDependecyInjectionContainer();
+        public abstract void RegisterCustomDependencies();
+        void RegisterDefaultDependencies()
         {
             // services
             Container.Register<ISessionState, SessionState>();

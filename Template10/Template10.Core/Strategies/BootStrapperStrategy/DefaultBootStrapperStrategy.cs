@@ -70,10 +70,18 @@ namespace Template10.Strategies
         }
 
         public void HandleEnteredBackground(object sender, EnteredBackgroundEventArgs e)
-            => LogThis(() => _messengerService.Send(new Messages.EnteredBackgroundMessage { EventArgs = e }));
+        {
+            LogThis();
+            _messengerService.Send(new Messages.EnteredBackgroundMessage { EventArgs = e });
+            _messengerService.Send(new Messages.AppVisibilityChangedMessage{ Visibility = Visibilities.Background });
+        }
 
         public void HandleLeavingBackground(object sender, LeavingBackgroundEventArgs e)
-            => LogThis(() => _messengerService.Send(new Messages.LeavingBackgroundMessage { EventArgs = e }));
+        {
+            LogThis();
+            _messengerService.Send(new Messages.LeavingBackgroundMessage { EventArgs = e });
+            _messengerService.Send(new Messages.AppVisibilityChangedMessage { Visibility = Visibilities.Foreground });
+        }
 
         public void HandleUnhandledException(object sender, UnhandledExceptionEventArgs e)
             => LogThis(() => _messengerService.Send(new Messages.UnhandledExceptionMessage { EventArgs = e }));

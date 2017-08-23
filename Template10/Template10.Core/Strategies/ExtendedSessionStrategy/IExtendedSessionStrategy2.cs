@@ -1,16 +1,13 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using Windows.ApplicationModel.ExtendedExecution;
 
 namespace Template10.Strategies
 {
     public interface IExtendedSessionStrategy2 
     {
-        ExtendedSessionKinds CurrentKind { get; }
-        bool IsActive { get; }
-        bool IsStarted { get; }
-        bool IsRevoked { get; }
-        int Progress { get; }
-
-        Task<bool> StartSaveDataAsync();
+        ExtendedExecutionSession ExSession { get; set; }
+        Task<bool> StartSavingDataAsync(Action revokedCallback);
         Task<bool> StartUnspecifiedAsync();
     }
 }

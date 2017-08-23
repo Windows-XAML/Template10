@@ -2,84 +2,94 @@
 using System.Threading.Tasks;
 using Template10.Common;
 using Template10.Core;
+using Windows.ApplicationModel.ExtendedExecution;
 
 namespace Template10.Strategies
 {
     public partial class DefaultExtendedSessionStrategy : IExtendedSessionStrategy
     {
-        ExtendedSessionManager _manager;
+        public bool IsStarted { get; private set; } = false;
 
-        public DefaultExtendedSessionStrategy()
+        public bool IsRevoked { get; private set; } = false;
+
+        public bool IsActive => IsStarted && !IsRevoked;
+
+        public ExtendedExecutionReason ExReason { get; private set; }
+
+        public async Task StartupAsync(IStartArgsEx e)
         {
             if (Settings.EnableExtendedSessionStrategy)
             {
-                _manager = new ExtendedSessionManager();
+                await Two.StartUnspecifiedAsync();
             }
         }
 
-        public async Task StartupAsync(IStartArgsEx e) => await Two.StartUnspecifiedAsync();
-
-        public async Task SuspendingAsync() => await Two.StartSaveDataAsync();
-
-        public void Dispose() => _manager?.Dispose();
+        public async Task SuspendingAsync()
+        {
+            if (Settings.EnableExtendedSessionStrategy)
+            {
+                await Two.StartSavingDataAsync(null);
+            }
+        }
     }
 
-    public partial class DefaultExtendedSessionStrategy : IExtendedSessionStrategy2
+    public partial class DefaultExtendedSessionStrategy : IExtendedSessionStrategy2, IDisposable
     {
-        IExtendedSessionStrategy2 Two => this as IExtendedSessionStrategy2;
+        IExtendedSessionStrategy2 Two
+            => this as IExtendedSessionStrategy2;
 
-        ExtendedSessionKinds IExtendedSessionStrategy2.CurrentKind
-            => _manager?.CurrentKind ?? ExtendedSessionKinds.None;
+        ExtendedExecutionSession IExtendedSessionStrategy2.ExSession { get; set; }
 
-        bool IExtendedSessionStrategy2.IsActive
-            => _manager?.IsActive ?? false;
-
-        bool IExtendedSessionStrategy2.IsStarted
-            => _manager?.IsStarted ?? false;
-
-        bool IExtendedSessionStrategy2.IsRevoked
-            => _manager?.IsRevoked ?? false;
-
-        int IExtendedSessionStrategy2.Progress
-            => _manager?.CurrentProgress ?? default(int);
+        Action _revokedCallback = null;
+        async Task<bool> IExtendedSessionStrategy2.StartSavingDataAsync(Action revokedCallback)
+        {
+            _revokedCallback = revokedCallback;
+            var e = Create(ExtendedExecutionReason.SavingData);
+            var result = await e.RequestExtensionAsync();
+            return IsStarted = result == ExtendedExecutionResult.Allowed;
+        }
 
         async Task<bool> IExtendedSessionStrategy2.StartUnspecifiedAsync()
         {
-            if (Two.IsActive)
-            {
-                return (Two.CurrentKind == ExtendedSessionKinds.Unspecified);
-            }
-            else if (_manager != null)
-            {
-                return await _manager.StartAsync(ExtendedSessionKinds.Unspecified);
-            }
-            else
-            {
-                return false;
-            }
+            var e = Create(ExtendedExecutionReason.Unspecified);
+            var result = await e.RequestExtensionAsync();
+            return IsStarted = result == ExtendedExecutionResult.Allowed;
         }
 
-        async Task<bool> IExtendedSessionStrategy2.StartSaveDataAsync()
+        private ExtendedExecutionSession Create(ExtendedExecutionReason reason)
         {
-            if (Two.IsActive)
+            DestroyIfExists();
+            Two.ExSession = new ExtendedExecutionSession
             {
-                if (Two.CurrentKind == ExtendedSessionKinds.SavingData)
-                {
-                    return true;
-                }
-                else if (_manager != null)
-                {
-                    _manager.Create();
-                }
-            }
-            if (_manager == null)
+                Description = GetType().ToString(),
+                Reason = reason,
+            };
+            Two.ExSession.Revoked += _ExtendedExecutionSession_Revoked;
+            return Two.ExSession;
+        }
+
+        private void DestroyIfExists()
+        {
+            if (Two.ExSession == null)
             {
-                return false;
+                return;
             }
-            else
-            {
-                return await _manager.StartAsync(ExtendedSessionKinds.SavingData);
-            }
+            Two.ExSession.Revoked -= _ExtendedExecutionSession_Revoked;
+            Two.ExSession.Dispose();
+            IsStarted = IsRevoked = false;
+        }
+
+        public event TypedEventHandler<ExtendedExecutionReason> Revoked;
+        private void _ExtendedExecutionSession_Revoked(object sender, ExtendedExecutionRevokedEventArgs args)
+        {
+            IsRevoked = true;
+            Revoked?.Invoke(this, ExReason);
+            _revokedCallback?.Invoke();
+        }
+
+        public void Dispose()
+        {
+            DestroyIfExists();
         }
     }
 }
