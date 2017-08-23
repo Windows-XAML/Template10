@@ -33,13 +33,39 @@ namespace Template10.BootStrap
             // start
 
             Current = this;
+
             CreateContainer();
+
             try { var c = Central.ContainerService; }
-            catch { throw new Exception($"IContainerService is not registered in DI."); }
+            catch { throw new Exception($"IContainerService is required but " +
+                $"is not registered in DI."); }
+
             DefaultDependencies();
+
             RegisterDependencies();
+
             try { var m = Central.MessengerService; }
-            catch { throw new Exception($"IMessengerService is not registered in DI."); }
+            catch { throw new Exception($"IMessengerService is required but " +
+                $"is not registered in DI."); }
+
+#if DEBUG
+            // test DI
+            var sservice = Container.Resolve<ISessionState>();
+            var lservice = Container.Resolve<ILoggingService>();
+            var xservice = Container.Resolve<ISerializationService>();
+            var bservice = Container.Resolve<IBackButtonService>();
+            var kservice = Container.Resolve<IKeyboardService>();
+            var gservice = Container.Resolve<IGestureService>();
+            var rservice = Container.Resolve<IResourceService>();
+            var bstrategy = Container.Resolve<IBootStrapperStrategy>();
+            var lstrategy = Container.Resolve<ILifecycleStrategy>();
+            var sstrategy = Container.Resolve<INavStateStrategy>();
+            var tstrategy = Container.Resolve<ITitleBarStrategy>();
+            var estrategy = Container.Resolve<IExtendedSessionStrategy>();
+            var astrategy = Container.Resolve<IViewModelActionStrategy>();
+            var rstrategy = Container.Resolve<IViewModelResolutionStrategy>();
+#endif
+
             LogThis();
 
             // forward methods
@@ -92,6 +118,7 @@ namespace Template10.BootStrap
         public abstract void RegisterDependencies();
         void DefaultDependencies()
         {
+            // services
             Container.Register<ISessionState, SessionState>();
             Container.Register<ILoggingService, LoggingService>();
             Container.Register<ISerializationService, JsonSerializationService>();
@@ -99,18 +126,6 @@ namespace Template10.BootStrap
             Container.Register<IKeyboardService, KeyboardService>();
             Container.Register<IGestureService, GestureService>();
             Container.Register<IResourceService, ResourceService>();
-
-#if DEBUG
-            // test
-            var mservice = Container.Resolve<IMessengerService>();
-            var sservice = Container.Resolve<ISessionState>();
-            var lservice = Container.Resolve<ILoggingService>();
-            var xservice = Container.Resolve<ISerializationService>();
-            var bservice = Container.Resolve<IBackButtonService>();
-            var kservice = Container.Resolve<IKeyboardService>();
-            var gservice = Container.Resolve<IGestureService>();
-            var rservice = Container.Resolve<IResourceService>();
-#endif
 
             // strategies
             Container.RegisterInstance<IBootStrapperShared>(this);
@@ -121,17 +136,6 @@ namespace Template10.BootStrap
             Container.Register<IExtendedSessionStrategy, DefaultExtendedSessionStrategy>();
             Container.Register<IViewModelActionStrategy, DefaultViewModelActionStrategy>();
             Container.Register<IViewModelResolutionStrategy, DefaultViewModelResolutionStrategy>();
-
-#if DEBUG 
-            // test
-            var bstrategy = Container.Resolve<IBootStrapperStrategy>();
-            var lstrategy = Container.Resolve<ILifecycleStrategy>();
-            var sstrategy = Container.Resolve<INavStateStrategy>();
-            var tstrategy = Container.Resolve<ITitleBarStrategy>();
-            var estrategy = Container.Resolve<IExtendedSessionStrategy>();
-            var astrategy = Container.Resolve<IViewModelActionStrategy>();
-            var rstrategy = Container.Resolve<IViewModelResolutionStrategy>();
-#endif
         }
 
         // override built-in Application events
