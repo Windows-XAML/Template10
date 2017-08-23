@@ -115,6 +115,7 @@
   <ItemGroup>
     <Compile Include="BootStrap\BootStrapperBase.cs" />
     <Compile Include="BootStrap\BootstrapperStates.cs" />
+    <Compile Include="BootStrap\DefaultBootStrapper.cs" />
     <Compile Include="Messages\BackgroundActivatedMessage.cs" />
     <Compile Include="Messages\BackRequestedMessage.cs" />
     <Compile Include="Messages\EnteredBackgroundMessage.cs" />

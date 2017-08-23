@@ -28,11 +28,14 @@ namespace Template10.BootStrap
 
     public abstract partial class BootStrapperBase : Application, IBootStrapper
     {
-        public BootStrapperBase()
+        public BootStrapperBase(IContainerService containerService)
         {
             // start
 
             Current = this;
+            Services.Container.ContainerService.Default = containerService;
+            RegisterMessagingService();
+            RegisterInternalDependencies();
             RegisterDependencies();
             LogThis();
 
@@ -53,7 +56,9 @@ namespace Template10.BootStrap
             base.UnhandledException += BootStrapperStrategy.HandleUnhandledException;
         }
 
-        public abstract void RegisterDependencies();
+        public abstract void RegisterMessagingService();
+        public abstract void RegisterInternalDependencies();
+        public virtual void RegisterDependencies() { }
 
         private void AfterFirstWindowCreated(WindowCreatedMessage obj)
         {

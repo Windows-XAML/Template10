@@ -1,0 +1,36 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:controls="using:Template10.Controls">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="ms-appx:///Styles/Custom.Shared.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <ResourceDictionary.ThemeDictionaries>
+
+        <!--  RequestedTheme=HighContrast  -->
+        <ResourceDictionary x:Key="HighContrast">
+
+            <SolidColorBrush x:Key="ExtendedSplashBackground" Color="Black" />
+            <SolidColorBrush x:Key="ExtendedSplashForeground" Color="White" />
+            <SolidColorBrush x:Key="ModalBackground" Color="Black" />
+
+            <Style BasedOn="{StaticResource HamburgerMenuStyle}" TargetType="controls:HamburgerMenu">
+                <Setter Property="HamburgerBackground" Value="Black" />
+                <Setter Property="HamburgerForeground" Value="White" />
+                <Setter Property="NavAreaBackground" Value="Black" />
+                <Setter Property="NavButtonBackground" Value="White" />
+                <Setter Property="NavButtonCheckedOverlayBackground" Value="White" />
+                <Setter Property="NavButtonForeground" Value="Black" />
+                <Setter Property="NavButtonHoverOverlayBackground" Value="White" />
+                <Setter Property="SecondarySeparator" Value="White" />
+            </Style>
+
+            <Style BasedOn="{StaticResource PageHeaderStyle}" TargetType="controls:PageHeader">
+                <Setter Property="HeaderBackground" Value="Black" />
+                <Setter Property="HeaderForeground" Value="White" />
+            </Style>
+
+        </ResourceDictionary>
+
+    </ResourceDictionary.ThemeDictionaries>
+
+</ResourceDictionary>
