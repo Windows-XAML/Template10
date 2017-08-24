@@ -1,19 +1,11 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
+﻿using Template10.Core;
 using Template10.Services.Container;
-using Template10.Services.Logging;
-using Template10.Navigation;
-using Template10.Core;
-using Template10.Strategies;
-using Windows.ApplicationModel.Activation;
-using Windows.UI.Xaml;
-using static Template10.Core.StartArgsEx;
-using Template10.Services.Messenger;
-using Template10.Services.Serialization;
 using Template10.Services.Gesture;
-using Template10.Messages;
+using Template10.Services.Logging;
+using Template10.Services.Messenger;
 using Template10.Services.Resources;
+using Template10.Services.Serialization;
+using Template10.Strategies;
 
 namespace Template10
 {
