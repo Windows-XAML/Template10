@@ -20,6 +20,11 @@ namespace Template10.BootStrap
     public abstract partial class BootStrapperBase : ILoggable
     {
         ILoggingService ILoggable.LoggingService => Central.LoggingService;
+        void LogThis(Action action, string text = null, Severities severity = Severities.Template10, [CallerMemberName]string caller = null)
+        {
+            action();
+            (this as ILoggable).LogThis(text, severity, caller: $"{caller}");
+        }
         void LogThis(string text = null, Severities severity = Severities.Template10, [CallerMemberName]string caller = null)
             => (this as ILoggable).LogThis(text, severity, caller: $"{caller}");
         void ILoggable.LogThis(string text, Severities severity, string caller)
@@ -153,16 +158,26 @@ namespace Template10.BootStrap
 
         // clean up the Application overrides
 
-        protected override sealed void OnActivated(IActivatedEventArgs e) { LogThis(); BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate); }
-        protected override sealed void OnCachedFileUpdaterActivated(CachedFileUpdaterActivatedEventArgs e) { LogThis(); BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate); }
-        protected override sealed void OnFileActivated(FileActivatedEventArgs e) { LogThis(); BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate); }
-        protected override sealed void OnFileOpenPickerActivated(FileOpenPickerActivatedEventArgs e) { LogThis(); BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate); }
-        protected override sealed void OnFileSavePickerActivated(FileSavePickerActivatedEventArgs e) { LogThis(); BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate); }
-        protected override sealed void OnSearchActivated(SearchActivatedEventArgs e) { LogThis(); BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate); }
-        protected override sealed void OnShareTargetActivated(ShareTargetActivatedEventArgs e) { LogThis(); BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate); }
-        protected override sealed void OnLaunched(LaunchActivatedEventArgs e) { LogThis(); BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Launch); }
-        protected override sealed void OnBackgroundActivated(BackgroundActivatedEventArgs e) { LogThis(); Central.MessengerService.Send(new Messages.BackgroundActivatedMessage { EventArgs = e }); }
-        protected override sealed void OnWindowCreated(WindowCreatedEventArgs e) { LogThis(); BootStrapperStrategy.OnWindowCreated(e); }
+        protected override sealed void OnActivated(IActivatedEventArgs e) 
+            => LogThis(()=> BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate)); 
+        protected override sealed void OnCachedFileUpdaterActivated(CachedFileUpdaterActivatedEventArgs e) 
+            => LogThis(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate)); 
+        protected override sealed void OnFileActivated(FileActivatedEventArgs e) 
+            => LogThis(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate)); 
+        protected override sealed void OnFileOpenPickerActivated(FileOpenPickerActivatedEventArgs e) 
+            => LogThis(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate)); 
+        protected override sealed void OnFileSavePickerActivated(FileSavePickerActivatedEventArgs e) 
+            => LogThis(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate)); 
+        protected override sealed void OnSearchActivated(SearchActivatedEventArgs e) 
+            => LogThis(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate)); 
+        protected override sealed void OnShareTargetActivated(ShareTargetActivatedEventArgs e) 
+            => LogThis(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate)); 
+        protected override sealed void OnLaunched(LaunchActivatedEventArgs e) 
+            => LogThis(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Launch)); 
+        protected override sealed void OnBackgroundActivated(BackgroundActivatedEventArgs e) 
+            => LogThis(() => Central.MessengerService.Send(new Messages.BackgroundActivatedMessage { EventArgs = e })); 
+        protected override sealed void OnWindowCreated(WindowCreatedEventArgs e) 
+            => LogThis(() => BootStrapperStrategy.OnWindowCreated(e)); 
 
         // clean up the object API
 
