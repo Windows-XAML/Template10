@@ -5,11 +5,10 @@ using Template10.Core;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Sample.ViewModels;
-using System;
-using Windows.UI.Xaml.Controls;
 using Template10.Strategies;
 using Template10.Services.Container;
 using Sample.Views;
+using Sample.Services;
 
 namespace Sample
 {
@@ -51,21 +50,11 @@ namespace Sample
 
         private void RegisterViewModels(IContainerService service)
         {
-            service.Register<IViewModelResolutionStrategy, CustomViewModelResolutionStrategy>();
+            service.Register<ISettingsService, SettingsService>();
+            service.Register<ITemplate10ViewModel, MainPageViewModel>(typeof(MainPage).ToString());
             service.Register<ITemplate10ViewModel, MainPageViewModel>(typeof(MainPage).ToString());
             service.Register<ITemplate10ViewModel, DetailPageViewModel>(typeof(DetailPage).ToString());
             service.Register<ITemplate10ViewModel, SettingsPageViewModel>(typeof(SettingsPage).ToString());
         }
-    }
-
-    public class CustomViewModelResolutionStrategy : IViewModelResolutionStrategy
-    {
-        IContainerService container = ContainerService.Default;
-
-        public async Task<object> ResolveViewModelAsync(Type type)
-            => container.Resolve<ITemplate10ViewModel>(type.ToString());
-
-        public async Task<object> ResolveViewModelAsync(Page page)
-            => await ResolveViewModelAsync(page.GetType());
     }
 }

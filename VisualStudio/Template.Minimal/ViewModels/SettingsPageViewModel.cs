@@ -15,8 +15,11 @@ namespace Sample.ViewModels
 
         public SettingsPageViewModel()
         {
-            _settings = Services.SettingsService.GetInstance();
-            _marketplace = MarketplaceService.Create();
+            if (!Windows.ApplicationModel.DesignMode.DesignModeEnabled)
+            {
+                _settings = Services.SettingsService.GetInstance();
+                _marketplace = MarketplaceService.Create();
+            }
         }
 
         // Settings

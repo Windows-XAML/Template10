@@ -10,18 +10,13 @@ using Windows.UI.Xaml;
 
 namespace Sample.Services
 {
-    public class SettingsService : SettingsServiceBase
+    public class SettingsService : SettingsServiceBase, ISettingsService
     {
-        private static SettingsService _instance;
-        public static SettingsService GetInstance() => _instance;
-        static SettingsService()
-        {
-            _instance = new SettingsService();
-        }
-        private SettingsService()
+        Template10.Services.Logging.ILoggingService _logger;
+        private SettingsService(Template10.Services.Logging.ILoggingService logger)
             : base(Windows.Storage.ApplicationData.Current.LocalSettings, SerializationService)
         {
-            // empty
+            _logger = logger;
         }
 
         public ElementTheme DefaultTheme
@@ -50,6 +45,8 @@ namespace Sample.Services
 
         private new void Write<T>(string key, T value)
         {
+            _logger.WriteLine($"Key:{key} Value:{value}");
+
             // persist it
 
             if (!TryWrite(key, value))
