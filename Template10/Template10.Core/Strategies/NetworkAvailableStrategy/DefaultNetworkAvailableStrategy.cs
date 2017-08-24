@@ -16,6 +16,8 @@ namespace Template10.Strategies
 
     public interface IDefaultNetworkAvailableStrategy
     {
+        void HandleCorrect(NetworkRequirements desired);
+        void HandleIncorrect(NetworkRequirements desired);
     }
 
     public class DefaultNetworkAvailableStrategy : IDefaultNetworkAvailableStrategy
@@ -27,31 +29,31 @@ namespace Template10.Strategies
             _service.AvailabilityChanged += _service_AvailabilityChanged;
         }
 
-        private void _service_AvailabilityChanged(object sender, AvailabilityChangedEventArgs e)
+        private async void _service_AvailabilityChanged(object sender, AvailabilityChangedEventArgs e)
         {
             switch (Settings.NetworkRequirement)
             {
                 case NetworkRequirements.None:
-                    HandleCorrect(NetworkRequirements.None, e.ConnectionType);
+                    HandleCorrect(NetworkRequirements.None);
                     break;
-                case NetworkRequirements.NetworkRequired when (e.ConnectionType == ConnectionTypes.LocalNetwork | e.ConnectionType == ConnectionTypes.Internet):
-                    HandleCorrect(NetworkRequirements.NetworkRequired, e.ConnectionType);
+                case NetworkRequirements.NetworkRequired when (await _service.GetIsNetworkAvailableAsync()):
+                    HandleCorrect(NetworkRequirements.NetworkRequired);
                     break;
-                case NetworkRequirements.InternetRequired when (e.ConnectionType == ConnectionTypes.Internet):
-                    HandleCorrect(NetworkRequirements.InternetRequired, e.ConnectionType);
+                case NetworkRequirements.InternetRequired when (await _service.GetIsInternetAvailableAsync()):
+                    HandleCorrect(NetworkRequirements.InternetRequired);
                     break;
                 default:
-                    HandleIncorrect(Settings.NetworkRequirement, e.ConnectionType);
+                    HandleIncorrect(Settings.NetworkRequirement);
                     break;
             }
         }
 
-        public void HandleCorrect(NetworkRequirements desired, ConnectionTypes actual)
+        public void HandleCorrect(NetworkRequirements desired)
         {
             // TODO
         }
 
-        public void HandleIncorrect(NetworkRequirements desired, ConnectionTypes actual)
+        public void HandleIncorrect(NetworkRequirements desired)
         {
             // TODO
         }
