@@ -107,6 +107,15 @@ namespace Template10.Controls
             DependencyProperty.Register(nameof(PrimaryCommandsVisibility), typeof(Visibility),
                 typeof(PageHeader), new PropertyMetadata(Visibility.Visible));
 
+        public double ContentWidth
+        {
+            get { return (double)GetValue(ContentWidthProperty); }
+            set { SetValue(ContentWidthProperty, value); }
+        }
+        public static readonly DependencyProperty ContentWidthProperty =
+            DependencyProperty.Register(nameof(ContentWidth), typeof(double),
+                typeof(PageHeader), new PropertyMetadata(double.NaN));
+
         public Visibility BackButtonVisibility
         {
             get { return (Visibility)GetValue(BackButtonVisibilityProperty); }
