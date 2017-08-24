@@ -32,11 +32,9 @@ namespace Template10.BootStrap
         {
             // start
 
-            Current = this;
-
-            CreateDependecyInjectionContainer();
+            CreateDependecyContainer();
             try { var c = Central.ContainerService; }
-            catch { throw new Exception($"IContainerService is required but is not registered in DI."); }
+            catch { throw new Exception($"IContainerService is required but is not defined in DI."); }
 
             RegisterDefaultDependencies();
             RegisterCustomDependencies();
@@ -45,20 +43,20 @@ namespace Template10.BootStrap
 
 #if DEBUG
             // test DI
-            var sservice = Container.Resolve<ISessionState>();
-            var lservice = Container.Resolve<ILoggingService>();
-            var xservice = Container.Resolve<ISerializationService>();
-            var bservice = Container.Resolve<IBackButtonService>();
-            var kservice = Container.Resolve<IKeyboardService>();
-            var gservice = Container.Resolve<IGestureService>();
-            var rservice = Container.Resolve<IResourceService>();
-            var bstrategy = Container.Resolve<IBootStrapperStrategy>();
-            var lstrategy = Container.Resolve<ILifecycleStrategy>();
-            var sstrategy = Container.Resolve<INavStateStrategy>();
-            var tstrategy = Container.Resolve<ITitleBarStrategy>();
-            var estrategy = Container.Resolve<IExtendedSessionStrategy>();
-            var astrategy = Container.Resolve<IViewModelActionStrategy>();
-            var rstrategy = Container.Resolve<IViewModelResolutionStrategy>();
+            var sservice = Central.ContainerService.Resolve<ISessionState>();
+            var lservice = Central.ContainerService.Resolve<ILoggingService>();
+            var xservice = Central.ContainerService.Resolve<ISerializationService>();
+            var bservice = Central.ContainerService.Resolve<IBackButtonService>();
+            var kservice = Central.ContainerService.Resolve<IKeyboardService>();
+            var gservice = Central.ContainerService.Resolve<IGestureService>();
+            var rservice = Central.ContainerService.Resolve<IResourceService>();
+            var bstrategy = Central.ContainerService.Resolve<IBootStrapperStrategy>();
+            var lstrategy = Central.ContainerService.Resolve<ILifecycleStrategy>();
+            var sstrategy = Central.ContainerService.Resolve<INavStateStrategy>();
+            var tstrategy = Central.ContainerService.Resolve<ITitleBarStrategy>();
+            var estrategy = Central.ContainerService.Resolve<IExtendedSessionStrategy>();
+            var astrategy = Central.ContainerService.Resolve<IViewModelActionStrategy>();
+            var rstrategy = Central.ContainerService.Resolve<IViewModelResolutionStrategy>();
 #endif
 
             LogThis();
@@ -73,17 +71,25 @@ namespace Template10.BootStrap
             // setup events
 
             Central.MessengerService.Subscribe<WindowCreatedMessage>(this, AfterFirstWindowCreated);
-            Central.MessengerService.Subscribe<AppVisibilityChangedMessage>(this, (e) => Visibility = e.Visibility);
+            Central.MessengerService.Subscribe<AppVisibilityChangedMessage>(this, (e) => Central.AppVisibility = e.Visibility);
+            Central.MessengerService.Subscribe<ExtendedSessionRevokedMessage>(this, (e) =>
+            {
+                if (e.ExtendedExecutionReason == Windows.ApplicationModel.ExtendedExecution.ExtendedExecutionReason.Unspecified
+                    && Central.AppVisibility == AppVisibilities.Foreground)
+                {
+                    OnClose(new ClosedEventArgs(e.TryToExtendAsync));
+                }
+            });
             base.Resuming += BootStrapperStrategy.HandleResuming;
             base.Suspending += BootStrapperStrategy.HandleSuspending;
             base.EnteredBackground += (s, e) =>
             {
-                Visibility = Visibilities.Background;
+                Central.AppVisibility = AppVisibilities.Background;
                 BootStrapperStrategy.HandleEnteredBackground(s, e);
             };
             base.LeavingBackground += (s, e) =>
             {
-                Visibility = Visibilities.Foreground;
+                Central.AppVisibility = AppVisibilities.Foreground;
                 BootStrapperStrategy.HandleLeavingBackground(s, e); ;
             };
             base.UnhandledException += BootStrapperStrategy.HandleUnhandledException;
@@ -95,52 +101,44 @@ namespace Template10.BootStrap
             Central.MessengerService.Unsubscribe<WindowCreatedMessage>(this, AfterFirstWindowCreated);
 
             // these are the things delayed until after the first window is created
-            Container.Resolve<IBackButtonService>().Setup();
-            Container.Resolve<ITitleBarStrategy>().Update();
+            Central.ContainerService.Resolve<IBackButtonService>().Setup();
+            Central.ContainerService.Resolve<ITitleBarStrategy>().Update();
         }
 
-        // redirected properties
+        // isolated properties
 
-        public Visibilities Visibility { get; private set; } = Visibilities.Background;
-        private IBootStrapperStrategy BootStrapperStrategy => Container.Resolve<IBootStrapperStrategy>();
-        public IContainerService Container => Services.Container.ContainerService.Default;
-        public IMessengerService MessengerService => Central.MessengerService;
-        public INavigationService NavigationService => Navigation.NavigationService.Default;
-        public IDispatcherEx Dispatcher => WindowEx.GetDefault().Dispatcher;
-        public ISessionState SessionState => Central.SessionState;
-
-        // net-new properties 
-
-        public new static IBootStrapper Current { get; internal set; }
+        private IBootStrapperStrategy BootStrapperStrategy 
+            => Central.ContainerService.Resolve<IBootStrapperStrategy>();
 
         // implementation methods
 
+        public virtual void OnClose(ClosedEventArgs e) { }
         public virtual Task OnInitializeAsync() => Task.CompletedTask;
         public abstract Task OnStartAsync(IStartArgsEx e);
         public virtual UIElement CreateRootElement(IStartArgsEx e) => null;
         public virtual UIElement CreateSpash(SplashScreen e) => null;
-        public abstract IContainerService CreateDependecyInjectionContainer();
+        public abstract IContainerService CreateDependecyContainer();
         public abstract void RegisterCustomDependencies();
         void RegisterDefaultDependencies()
         {
             // services
-            Container.Register<ISessionState, SessionState>();
-            Container.Register<ILoggingService, LoggingService>();
-            Container.Register<ISerializationService, JsonSerializationService>();
-            Container.Register<IBackButtonService, BackButtonService>();
-            Container.Register<IKeyboardService, KeyboardService>();
-            Container.Register<IGestureService, GestureService>();
-            Container.Register<IResourceService, ResourceService>();
+            Central.ContainerService.Register<ISessionState, SessionState>();
+            Central.ContainerService.Register<ILoggingService, LoggingService>();
+            Central.ContainerService.Register<ISerializationService, JsonSerializationService>();
+            Central.ContainerService.Register<IBackButtonService, BackButtonService>();
+            Central.ContainerService.Register<IKeyboardService, KeyboardService>();
+            Central.ContainerService.Register<IGestureService, GestureService>();
+            Central.ContainerService.Register<IResourceService, ResourceService>();
 
             // strategies
-            Container.RegisterInstance<IBootStrapperShared>(this);
-            Container.Register<IBootStrapperStrategy, DefaultBootStrapperStrategy>();
-            Container.Register<ILifecycleStrategy, DefaultLifecycleStrategy>();
-            Container.Register<INavStateStrategy, DefaultNavStateStrategy>();
-            Container.Register<ITitleBarStrategy, DefaultTitleBarStrategy>();
-            Container.Register<IExtendedSessionStrategy, DefaultExtendedSessionStrategy>();
-            Container.Register<IViewModelActionStrategy, DefaultViewModelActionStrategy>();
-            Container.Register<IViewModelResolutionStrategy, DefaultViewModelResolutionStrategy>();
+            Central.ContainerService.RegisterInstance<IBootStrapperShared>(this);
+            Central.ContainerService.Register<IBootStrapperStrategy, DefaultBootStrapperStrategy>();
+            Central.ContainerService.Register<ILifecycleStrategy, DefaultLifecycleStrategy>();
+            Central.ContainerService.Register<INavStateStrategy, DefaultNavStateStrategy>();
+            Central.ContainerService.Register<ITitleBarStrategy, DefaultTitleBarStrategy>();
+            Central.ContainerService.Register<IExtendedSessionStrategy, DefaultExtendedSessionStrategy>();
+            Central.ContainerService.Register<IViewModelActionStrategy, DefaultViewModelActionStrategy>();
+            Central.ContainerService.Register<IViewModelResolutionStrategy, DefaultViewModelResolutionStrategy>();
         }
 
         // override built-in Application events
@@ -163,7 +161,7 @@ namespace Template10.BootStrap
         protected override sealed void OnSearchActivated(SearchActivatedEventArgs e) { LogThis(); BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate); }
         protected override sealed void OnShareTargetActivated(ShareTargetActivatedEventArgs e) { LogThis(); BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate); }
         protected override sealed void OnLaunched(LaunchActivatedEventArgs e) { LogThis(); BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Launch); }
-        protected override sealed void OnBackgroundActivated(BackgroundActivatedEventArgs e) { LogThis(); MessengerService.Send(new Messages.BackgroundActivatedMessage { EventArgs = e }); }
+        protected override sealed void OnBackgroundActivated(BackgroundActivatedEventArgs e) { LogThis(); Central.MessengerService.Send(new Messages.BackgroundActivatedMessage { EventArgs = e }); }
         protected override sealed void OnWindowCreated(WindowCreatedEventArgs e) { LogThis(); BootStrapperStrategy.OnWindowCreated(e); }
 
         // clean up the object API

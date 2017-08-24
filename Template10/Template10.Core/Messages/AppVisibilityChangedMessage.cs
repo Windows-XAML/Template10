@@ -9,6 +9,6 @@ namespace Template10.Messages
 {
     public class AppVisibilityChangedMessage
     {
-        public Visibilities Visibility { get; set; }
+        public AppVisibilities Visibility { get; set; }
     }
 }

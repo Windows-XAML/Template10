@@ -20,7 +20,7 @@ namespace Template10
     public abstract class BootStrapper
         : BootStrap.BootStrapperBase
     {
-        public sealed override IContainerService CreateDependecyInjectionContainer()
+        public sealed override IContainerService CreateDependecyContainer()
         {
             return new MvvmLightContainerService();
         }

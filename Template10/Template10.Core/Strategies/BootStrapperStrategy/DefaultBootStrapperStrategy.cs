@@ -73,14 +73,14 @@ namespace Template10.Strategies
         {
             LogThis();
             _messengerService.Send(new Messages.EnteredBackgroundMessage { EventArgs = e });
-            _messengerService.Send(new Messages.AppVisibilityChangedMessage{ Visibility = Visibilities.Background });
+            _messengerService.Send(new Messages.AppVisibilityChangedMessage{ Visibility = AppVisibilities.Background });
         }
 
         public void HandleLeavingBackground(object sender, LeavingBackgroundEventArgs e)
         {
             LogThis();
             _messengerService.Send(new Messages.LeavingBackgroundMessage { EventArgs = e });
-            _messengerService.Send(new Messages.AppVisibilityChangedMessage { Visibility = Visibilities.Foreground });
+            _messengerService.Send(new Messages.AppVisibilityChangedMessage { Visibility = AppVisibilities.Foreground });
         }
 
         public void HandleUnhandledException(object sender, UnhandledExceptionEventArgs e)

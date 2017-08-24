@@ -1,11 +1,5 @@
 ﻿namespace Template10.BootStrap
 {
-    public enum Visibilities
-    {
-        Foreground,
-        Background
-    }
-
     public enum BootstrapperStates
     {
         None,

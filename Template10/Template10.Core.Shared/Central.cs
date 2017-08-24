@@ -6,18 +6,28 @@ using System.Threading.Tasks;
 
 namespace Template10
 {
+    public enum AppVisibilities
+    {
+        Foreground,
+        Background,
+        Unknown
+    }
+
     public static class Central
     {
-        public static Services.Container.IContainerService ContainerService 
+        public static AppVisibilities AppVisibility { get; set; } 
+            = AppVisibilities.Unknown;
+
+        public static Services.Container.IContainerService ContainerService
             => Services.Container.ContainerService.Default;
 
-        public static Services.Messenger.IMessengerService MessengerService 
+        public static Services.Messenger.IMessengerService MessengerService
             => ContainerService.Resolve<Services.Messenger.IMessengerService>();
 
-        public static Services.Serialization.ISerializationService SerializationService 
+        public static Services.Serialization.ISerializationService SerializationService
             => ContainerService.Resolve<Services.Serialization.ISerializationService>();
 
-        public static Services.Logging.ILoggingService LoggingService 
+        public static Services.Logging.ILoggingService LoggingService
             => ContainerService.Resolve<Services.Logging.ILoggingService>();
 
         public static Services.Gesture.IGestureService GestureService
