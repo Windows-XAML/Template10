@@ -14,13 +14,13 @@ namespace Template10.Strategies
         public static NetworkRequirements NetworkRequirement { get; set; } = NetworkRequirements.None;
     }
 
-    public interface IDefaultNetworkAvailableStrategy
+    public interface INetworkAvailableStrategy
     {
         void HandleCorrect(NetworkRequirements desired);
         void HandleIncorrect(NetworkRequirements desired);
     }
 
-    public class DefaultNetworkAvailableStrategy : IDefaultNetworkAvailableStrategy
+    public class DefaultNetworkAvailableStrategy : INetworkAvailableStrategy
     {
         private INetworkAvailableService _service;
         public DefaultNetworkAvailableStrategy(INetworkAvailableService service)

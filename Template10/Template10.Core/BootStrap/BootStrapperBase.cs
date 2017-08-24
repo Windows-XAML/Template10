@@ -108,6 +108,7 @@ namespace Template10.BootStrap
             Central.ContainerService.Register<IExtendedSessionStrategy, DefaultExtendedSessionStrategy>();
             Central.ContainerService.Register<IViewModelActionStrategy, DefaultViewModelActionStrategy>();
             Central.ContainerService.Register<IViewModelResolutionStrategy, DefaultViewModelResolutionStrategy>();
+            Central.ContainerService.Register<INetworkAvailableStrategy, DefaultNetworkAvailableStrategy>();
         }
 
         // clean up the Application overrides
@@ -194,6 +195,7 @@ namespace Template10.BootStrap
             var estrategy = Central.ContainerService.Resolve<IExtendedSessionStrategy>();
             var astrategy = Central.ContainerService.Resolve<IViewModelActionStrategy>();
             var rstrategy = Central.ContainerService.Resolve<IViewModelResolutionStrategy>();
+            var nstrategy = Central.ContainerService.Resolve<INetworkAvailableStrategy>();
         }
     }
 
