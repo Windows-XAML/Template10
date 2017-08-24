@@ -1,10 +1,8 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Template10.Mvvm;
+﻿using System.Threading.Tasks;
 using Template10.Extensions;
-using Windows.UI.Xaml.Controls;
+using Template10.Mvvm;
 using Template10.Navigation;
+using Windows.UI.Xaml.Controls;
 
 namespace Sample.ViewModels
 {
