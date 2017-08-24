@@ -6,6 +6,7 @@ using Template10.Services.Container;
 using Template10.Services.Messenger;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace Template10.Core
 {
@@ -18,5 +19,9 @@ namespace Template10.Core
         UIElement CreateSpash(SplashScreen e);
         IContainerService CreateDependecyContainer();
         void RegisterCustomDependencies();
+
+        DataTemplate BusyIndicatorTemplate { get; set; }
+        DataTemplate SplashScreenTemplate { get; set; }
+        DataTemplate NetworkRequiredTemplate { get; set; }
     }
 }

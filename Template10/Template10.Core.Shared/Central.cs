@@ -30,6 +30,9 @@ namespace Template10
         public static Services.Resources.IResourceService ResourceService
             => ContainerService.Resolve<Services.Resources.ResourceService>();
 
+        public static Services.Network.INetworkAvailableService NetworkAvailableService
+            => ContainerService.Resolve<Services.Network.INetworkAvailableService>();
+
         public static Services.Logging.ILoggingService LoggingService
             => ContainerService.Resolve<Services.Logging.ILoggingService>();
 

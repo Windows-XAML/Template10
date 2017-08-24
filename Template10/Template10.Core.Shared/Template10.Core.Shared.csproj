@@ -148,6 +148,10 @@
       <Project>{E14BCD62-B2A4-4AA2-95A8-6A556A31FB29}</Project>
       <Name>Template10.Services.Messaging.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.NetworkService\Service\Template10.Services.Network.Service.csproj">
+      <Project>{8da5a8e8-ee4a-40f1-9752-1185cb4bbb53}</Project>
+      <Name>Template10.Services.Network.Service</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Services\Template10.Services.SerializationService\Service\Template10.Services.Serialization.Service.csproj">
       <Project>{d3a94520-4cd4-4d56-b30b-7e54face64bb}</Project>
       <Name>Template10.Services.Serialization.Service</Name>
