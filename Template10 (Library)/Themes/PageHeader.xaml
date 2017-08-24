@@ -888,6 +888,7 @@
                                                 VerticalAlignment="Top"
                                                 HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                 VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                Width="{TemplateBinding ContentWidth}"
                                                 Content="{TemplateBinding Content}"
                                                 ContentTemplate="{TemplateBinding ContentTemplate}"
                                                 ContentTransitions="{TemplateBinding ContentTransitions}"
