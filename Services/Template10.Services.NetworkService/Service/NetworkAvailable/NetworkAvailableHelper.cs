@@ -27,7 +27,7 @@ namespace Template10.Services.Network
 
         public Action<ConnectionTypes> AvailabilityChanged { get; set; }
 
-        public Task<bool> IsInternetAvailable()
+        public Task<bool> GetIsInternetAvailableAsync()
         {
             var _Profile = NetworkInformation.GetInternetConnectionProfile();
             if (_Profile == null)
@@ -36,7 +36,7 @@ namespace Template10.Services.Network
             return Task.FromResult<bool>(_Profile.GetNetworkConnectivityLevel().Equals(net));
         }
 
-        public Task<bool> IsNetworkAvailable()
+        public Task<bool> GetIsNetworkAvailableAsync()
         {
             var _Profile = NetworkInformation.GetInternetConnectionProfile();
             if (_Profile == null)
