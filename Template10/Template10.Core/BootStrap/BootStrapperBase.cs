@@ -117,7 +117,7 @@ namespace Template10.BootStrap
 
         // implementation methods
 
-        public virtual void OnClose(ClosedEventArgs e) { }
+        public virtual void OnClose(ClosedEventArgs e) { /* empty */ }
         public virtual Task OnInitializeAsync() => Task.CompletedTask;
         public abstract Task OnStartAsync(IStartArgsEx e);
         public virtual UIElement CreateRootElement(IStartArgsEx e) => null;
