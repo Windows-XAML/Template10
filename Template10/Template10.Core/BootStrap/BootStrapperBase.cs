@@ -119,11 +119,11 @@ namespace Template10.BootStrap
 
         public virtual void OnClose(ClosedEventArgs e) { /* empty */ }
         public virtual Task OnInitializeAsync() => Task.CompletedTask;
-        public abstract Task OnStartAsync(IStartArgsEx e);
         public virtual UIElement CreateRootElement(IStartArgsEx e) => null;
         public virtual UIElement CreateSpash(SplashScreen e) => null;
-        public abstract IContainerService CreateDependecyContainer();
-        public abstract void RegisterCustomDependencies();
+        public abstract Task OnStartAsync(IStartArgsEx e);
+        protected abstract IContainerService CreateDependecyContainer();
+        protected abstract void RegisterCustomDependencies();
         void RegisterDefaultDependencies()
         {
             // services
@@ -136,7 +136,7 @@ namespace Template10.BootStrap
             Central.ContainerService.Register<IResourceService, ResourceService>();
 
             // strategies
-            Central.ContainerService.RegisterInstance<IBootStrapperShared>(this);
+            Central.ContainerService.RegisterInstance<IBootStrapper>(this);
             Central.ContainerService.Register<IBootStrapperStrategy, DefaultBootStrapperStrategy>();
             Central.ContainerService.Register<ILifecycleStrategy, DefaultLifecycleStrategy>();
             Central.ContainerService.Register<INavStateStrategy, DefaultNavStateStrategy>();

@@ -115,7 +115,6 @@
   <ItemGroup>
     <Compile Include="BootStrap\BootStrapperBase.cs" />
     <Compile Include="BootStrap\BootstrapperStates.cs" />
-    <Compile Include="BootStrap\ClosedEventArgs.cs" />
     <Compile Include="Messages\AppVisibilityChangedMessage.cs" />
     <Compile Include="Messages\BackgroundActivatedMessage.cs" />
     <Compile Include="Messages\BackRequestedMessage.cs" />
@@ -130,7 +129,6 @@
     <Compile Include="Messages\UnhandledExceptionMessage.cs" />
     <Compile Include="Messages\WindowCreatedMessage.cs" />
     <Compile Include="Strategies\BootStrapperStrategy\DefaultBootStrapperStrategy.cs" />
-    <Compile Include="BootStrap\IBootStrapper.cs" />
     <Compile Include="Strategies\BootStrapperStrategy\IBootStrapperStrategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />

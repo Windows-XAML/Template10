@@ -15,7 +15,7 @@ namespace Template10
 
     public static class Central
     {
-        public static AppVisibilities AppVisibility { get; set; } 
+        public static AppVisibilities AppVisibility { get; set; }
             = AppVisibilities.Unknown;
 
         public static Services.Container.IContainerService ContainerService
@@ -27,6 +27,9 @@ namespace Template10
         public static Services.Serialization.ISerializationService SerializationService
             => ContainerService.Resolve<Services.Serialization.ISerializationService>();
 
+        public static Services.Resources.IResourceService ResourceService
+            => ContainerService.Resolve<Services.Resources.ResourceService>();
+
         public static Services.Logging.ILoggingService LoggingService
             => ContainerService.Resolve<Services.Logging.ILoggingService>();
 
@@ -35,5 +38,8 @@ namespace Template10
 
         public static Core.ISessionState SessionState
             => ContainerService.Resolve<Core.ISessionState>();
+
+        public static Core.IBootStrapper BootStrapper
+            => ContainerService.Resolve<Core.IBootStrapper>();
     }
 }
