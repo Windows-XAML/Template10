@@ -5,6 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 
+namespace Template10
+{
+    public class BusyIndicatorDataContext
+    {
+        public string Text { get; set; }
+    }
+}
+
 namespace Template10.Strategies
 {
     public static partial class Settings

@@ -9,6 +9,8 @@ namespace Template10.BootStrap
         public ClosedEventArgs(Func<Action, Task<bool>> tryToExtendAsync)
             => _tryToExtendAsync = tryToExtendAsync;
         public async Task<bool> TryToExtendAsync()
-            => await _tryToExtendAsync(null);
+            => await _tryToExtendAsync?.Invoke(null);
+        public async Task<bool> TryToExtendAsync(Action revoked)
+            => await _tryToExtendAsync?.Invoke(revoked);
     }
 }

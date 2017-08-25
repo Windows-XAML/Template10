@@ -6,17 +6,25 @@ namespace Sample.Views
 {
     public sealed partial class Splash : UserControl
     {
+        public SplashScreen SplashScreen { get; set; }
+
+        public Splash()
+        {
+            // empty
+        }
+
         public Splash(SplashScreen splashScreen)
         {
+            DataContext = splashScreen;
             InitializeComponent();
-            Window.Current.SizeChanged += (s, e) => Resize(splashScreen);
-            Resize(splashScreen);
+            Window.Current.SizeChanged += (s, e) => Resize();
+            Resize();
             Opacity = 0;
         }
 
-        private void Resize(SplashScreen splashScreen)
+        private void Resize()
         {
-            if (splashScreen.ImageLocation.Top == 0)
+            if (SplashScreen.ImageLocation.Top == 0)
             {
                 splashImage.Visibility = Visibility.Collapsed;
                 return;
@@ -26,10 +34,10 @@ namespace Sample.Views
                 rootCanvas.Background = null;
                 splashImage.Visibility = Visibility.Visible;
             }
-            splashImage.Height = splashScreen.ImageLocation.Height;
-            splashImage.Width = splashScreen.ImageLocation.Width;
-            splashImage.SetValue(Canvas.TopProperty, splashScreen.ImageLocation.Top);
-            splashImage.SetValue(Canvas.LeftProperty, splashScreen.ImageLocation.Left);
+            splashImage.Height = SplashScreen.ImageLocation.Height;
+            splashImage.Width = SplashScreen.ImageLocation.Width;
+            splashImage.SetValue(Canvas.TopProperty, SplashScreen.ImageLocation.Top);
+            splashImage.SetValue(Canvas.LeftProperty, SplashScreen.ImageLocation.Left);
             ProgressTransform.TranslateY = splashImage.Height / 2 + 10;
         }
 

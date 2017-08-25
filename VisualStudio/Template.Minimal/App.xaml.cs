@@ -10,6 +10,7 @@ using Windows.UI.Xaml.Controls;
 using Template10.Strategies;
 using Template10.Services.Container;
 using Sample.Views;
+using Template10.Navigation;
 
 namespace Sample
 {
@@ -34,9 +35,9 @@ namespace Sample
             Template10.Settings.CacheMaxDuration = settings.CacheMaxDuration;
         }
 
-        public override async Task OnStartAsync(IStartArgsEx e)
+        public override async Task OnStartAsync(IStartArgsEx e, INavigationService navService, IContainerConsumer container)
         {
-            await NavigationService.NavigateAsync(typeof(Views.MainPage));
+            await navService.NavigateAsync(typeof(Views.MainPage));
         }
     }
 }

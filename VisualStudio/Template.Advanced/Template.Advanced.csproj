@@ -183,6 +183,10 @@
       <Project>{5cc9c9d2-2103-4e03-b425-7fd58a7a2a2e}</Project>
       <Name>Template10.Controls.CustomTitleBar</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Controls\Template10.Controls.Hamburger\Template10.Controls.Hamburger.Control.csproj">
+      <Project>{5144566e-80eb-4375-9fe2-415808e2051d}</Project>
+      <Name>Template10.Controls.Hamburger.Control</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Controls\Template10.Controls.ImageEx\Control\Template10.Controls.ImageEx.Control.csproj">
       <Project>{6db25e07-b9ee-4e75-8923-cd802cb9aff6}</Project>
       <Name>Template10.Controls.ImageEx.Control</Name>

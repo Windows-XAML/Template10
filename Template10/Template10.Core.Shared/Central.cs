@@ -41,8 +41,5 @@ namespace Template10
 
         public static Core.ISessionState SessionState
             => ContainerService.Resolve<Core.ISessionState>();
-
-        public static Core.IBootStrapper BootStrapper
-            => ContainerService.Resolve<Core.IBootStrapper>();
     }
 }

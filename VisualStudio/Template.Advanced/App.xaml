@@ -2,15 +2,29 @@
     x:Class="Sample.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:t10="using:Template10">
+    xmlns:t10="using:Template10"
+    xmlns:views="using:Sample.Views">
+
+    <t10:BootStrapper.BusyIndicatorTemplate>
+        <DataTemplate x:DataType="t10:BusyIndicatorDataContext">
+            <views:Busy BusyText="{x:Bind Text}" />
+        </DataTemplate>
+    </t10:BootStrapper.BusyIndicatorTemplate>
+
+    <t10:BootStrapper.SplashScreenTemplate>
+        <DataTemplate x:DataType="t10:SplashScreenDataContext">
+            <views:Splash SplashScreen="{x:Bind SplashScreen}" />
+        </DataTemplate>
+    </t10:BootStrapper.SplashScreenTemplate>
 
     <Application.Resources>
         <ResourceDictionary>
+
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles\Custom.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <!--  custom resources go here  -->
+            <!--  more, custom resources  -->
 
         </ResourceDictionary>
     </Application.Resources>

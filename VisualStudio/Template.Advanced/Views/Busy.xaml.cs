@@ -19,43 +19,7 @@ namespace Sample.Views
             set { SetValue(BusyTextProperty, value); }
         }
         public static readonly DependencyProperty BusyTextProperty =
-            DependencyProperty.Register(nameof(BusyText), typeof(string), typeof(Busy), new PropertyMetadata("Please wait..."));
-
-        public bool IsBusy
-        {
-            get { return (bool)GetValue(IsBusyProperty); }
-            set { SetValue(IsBusyProperty, value); }
-        }
-        public static readonly DependencyProperty IsBusyProperty =
-            DependencyProperty.Register(nameof(IsBusy), typeof(bool), typeof(Busy), new PropertyMetadata(false));
-
-        // hide and show busy dialog
-        public static void ShowBusyFor(string text = null, int milliseconds = int.MaxValue)
-        {
-            WindowEx.Current().Dispatcher.Dispatch(() =>
-            {
-                var modal = Window.Current.Content as ModalDialog;
-                var view = modal.ModalContent as Busy;
-                if (view == null)
-                    modal.ModalContent = view = new Busy();
-                modal.IsModal = view.IsBusy = true;
-                view.BusyText = text;
-            });
-            WindowEx.Current().Dispatcher.Dispatch(() =>
-            {
-                HideBusy();
-            }, milliseconds);
-        }
-
-        public static void HideBusy()
-        {
-            WindowEx.Current().Dispatcher.Dispatch(() =>
-            {
-                var modal = Window.Current.Content as ModalDialog;
-                var view = modal.ModalContent as Busy;
-                if (view != null)
-                    modal.IsModal = view.IsBusy = false;
-            });
-        }
+            DependencyProperty.Register(nameof(BusyText), typeof(string), 
+                typeof(Busy), new PropertyMetadata("DEFAULT_STRING"));
     }
 }

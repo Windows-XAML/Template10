@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Controls;
 using Template10.Services.Messenger;
 using Template10.Services.Gesture;
 using Template10.BootStrap;
+using Template10.Navigation;
 
 namespace Template10.Strategies
 {
@@ -177,9 +178,7 @@ namespace Template10.Strategies
 
         public Func<IStartArgsEx, UIElement> CreateRootElementDelegate { get; set; }
 
-        public Func<SplashScreen, UIElement> CreateSpashDelegate { get; set; }
-
-        public Func<IStartArgsEx, Task> OnStartAsyncDelegate { get; set; } = null;
+        public Func<IStartArgsEx, INavigationService, ISessionState, Task> OnStartAsyncDelegate { get; set; } = null;
 
         public Func<Task> OnInitAsyncDelegate { get; set; } = null;
 
