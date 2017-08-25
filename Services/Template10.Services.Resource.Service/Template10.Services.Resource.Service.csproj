@@ -7,8 +7,8 @@
     <ProjectGuid>{BB62AC27-62C0-41C6-B8DA-0E3D12FE3D48}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Template10.Services.Resources.Service</RootNamespace>
-    <AssemblyName>Template10.Services.Resources.Service</AssemblyName>
+    <RootNamespace>Template10.Services.Resource.Service</RootNamespace>
+    <AssemblyName>Template10.Services.Resource.Service</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.15063.0</TargetPlatformVersion>
@@ -107,9 +107,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResourcesService\IResourcesService.cs" />
-    <Compile Include="ResourcesService\ResourcesHelper.cs" />
-    <Compile Include="ResourcesService\ResourcesService.cs" />
+    <Compile Include="ResourceService\IResourceService.cs" />
+    <Compile Include="ResourceService\ResourceHelper.cs" />
+    <Compile Include="ResourceService\ResourceService.cs" />
     <EmbeddedResource Include="Properties\Template10.Services.Resource.Service.rd.xml" />
   </ItemGroup>
   <ItemGroup>

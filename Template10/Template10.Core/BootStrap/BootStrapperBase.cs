@@ -51,7 +51,7 @@ namespace Template10.BootStrap
             var bservice = Container.Resolve<IBackButtonService>();
             var kservice = Container.Resolve<IKeyboardService>();
             var gservice = Container.Resolve<IGestureService>();
-            var rservice = Container.Resolve<IResourcesService>();
+            var rservice = Container.Resolve<IResourceService>();
             var bstrategy = Container.Resolve<IBootStrapperStrategy>();
             var lstrategy = Container.Resolve<ILifecycleStrategy>();
             var sstrategy = Container.Resolve<INavStateStrategy>();
@@ -130,7 +130,7 @@ namespace Template10.BootStrap
             Container.Register<IBackButtonService, BackButtonService>();
             Container.Register<IKeyboardService, KeyboardService>();
             Container.Register<IGestureService, GestureService>();
-            Container.Register<IResourcesService, ResourcesService>();
+            Container.Register<IResourceService, ResourceService>();
 
             // strategies
             Container.RegisterInstance<IBootStrapperShared>(this);

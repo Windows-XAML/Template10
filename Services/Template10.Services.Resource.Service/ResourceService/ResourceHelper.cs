@@ -7,7 +7,7 @@ using Windows.Globalization;
 
 namespace Template10.Services.Resources
 {
-    public class ResourcesHelper
+    public class ResourceHelper
     {
         private ResourceLoader Loader = ResourceLoader.GetForCurrentView();
 

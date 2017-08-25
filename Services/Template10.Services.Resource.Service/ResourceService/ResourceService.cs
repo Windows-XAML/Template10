@@ -4,10 +4,10 @@ using System.Globalization;
 
 namespace Template10.Services.Resources
 {
-    public class ResourcesService : IResourcesService
+    public class ResourceService : IResourceService
     {
-        private ResourcesHelper _helper;
-        protected ResourcesHelper Helper => _helper ?? (_helper = new ResourcesHelper());
+        private ResourceHelper _helper;
+        protected ResourceHelper Helper => _helper ?? (_helper = new ResourceHelper());
 
         public IReadOnlyList<string> SupportedLanguages => Helper.SupportedLanguages;
 

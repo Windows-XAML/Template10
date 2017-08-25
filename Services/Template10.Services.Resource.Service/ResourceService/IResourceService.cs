@@ -4,7 +4,7 @@ using System.Globalization;
 
 namespace Template10.Services.Resources
 {
-    public interface IResourcesService
+    public interface IResourceService
     {
 
         /// <summary> 
