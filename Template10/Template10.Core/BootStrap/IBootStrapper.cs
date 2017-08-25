@@ -14,7 +14,7 @@ namespace Template10.Core
     public interface IBootStrapperDependecyInjection
     {
         IContainerService CreateDependecyContainer();
-        void RegisterCustomDependencies(IContainerContributor container);
+        void RegisterCustomDependencies(IContainerBuilder container);
     }
 
     public interface IBootStrapperStartup

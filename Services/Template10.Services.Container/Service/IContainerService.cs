@@ -13,7 +13,7 @@ namespace Template10.Services.Container
         TInterface Resolve<TInterface>(string key)
             where TInterface : class;
     }
-    public interface IContainerContributor : IContainerConsumer
+    public interface IContainerBuilder : IContainerConsumer
     {
         void Register<TInterface, TClass>(string key)
            where TInterface : class
@@ -27,7 +27,7 @@ namespace Template10.Services.Container
             where TInterface : class
             where TClass : class, TInterface;
     }
-    public interface IContainerService : IContainerConsumer, IContainerContributor
+    public interface IContainerService : IContainerConsumer, IContainerBuilder
     {
         // empty
     }

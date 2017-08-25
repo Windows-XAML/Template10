@@ -17,7 +17,7 @@ namespace Template10
             return new MvvmLightContainerService();
         }
 
-        public sealed override void RegisterCustomDependencies(IContainerContributor container)
+        public sealed override void RegisterCustomDependencies(IContainerBuilder container)
         {
             container.Register<IMessengerService, MvvmLightMessengerService>();
         }

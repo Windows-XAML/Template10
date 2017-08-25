@@ -116,9 +116,9 @@ namespace Template10.BootStrap
     public abstract partial class BootStrapperBase : IBootStrapperDependecyInjection
     {
         public abstract IContainerService CreateDependecyContainer();
-        public abstract void RegisterCustomDependencies(IContainerContributor container);
+        public abstract void RegisterCustomDependencies(IContainerBuilder container);
 
-        void RegisterDefaultDependencies(IContainerContributor container)
+        void RegisterDefaultDependencies(IContainerBuilder container)
         {
             // services
             container.Register<ISessionState, SessionState>();
