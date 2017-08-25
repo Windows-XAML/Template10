@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 
 namespace Template10.Services.Container
 {
-    public interface IContainerService
+    public interface IContainerConsumer
     {
         TInterface Resolve<TInterface>()
             where TInterface : class;
         TInterface Resolve<TInterface>(string key)
             where TInterface : class;
+    }
+    public interface IContainerContributor : IContainerConsumer
+    {
         void Register<TInterface, TClass>(string key)
            where TInterface : class
            where TClass : class, TInterface;
@@ -23,5 +26,9 @@ namespace Template10.Services.Container
         void RegisterInstance<TInterface, TClass>(TClass instance)
             where TInterface : class
             where TClass : class, TInterface;
+    }
+    public interface IContainerService : IContainerConsumer, IContainerContributor
+    {
+        // empty
     }
 }
