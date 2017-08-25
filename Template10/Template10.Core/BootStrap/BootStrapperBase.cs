@@ -109,30 +109,41 @@ namespace Template10.BootStrap
             Central.ContainerService.Register<IViewModelActionStrategy, DefaultViewModelActionStrategy>();
             Central.ContainerService.Register<IViewModelResolutionStrategy, DefaultViewModelResolutionStrategy>();
             Central.ContainerService.Register<INetworkAvailableStrategy, DefaultNetworkAvailableStrategy>();
+            Central.ContainerService.Register<ISplashStrategy, DefaultSplashStrategy>();
+        }
+
+        private static void TestDependecyInjection()
+        {
+            Central.ContainerService.Resolve<ISessionState>();
+            Central.ContainerService.Resolve<ILoggingService>();
+            Central.ContainerService.Resolve<ISerializationService>();
+            Central.ContainerService.Resolve<IBackButtonService>();
+            Central.ContainerService.Resolve<IKeyboardService>();
+            Central.ContainerService.Resolve<IGestureService>();
+            Central.ContainerService.Resolve<IResourceService>();
+            Central.ContainerService.Resolve<IBootStrapperStrategy>();
+            Central.ContainerService.Resolve<ILifecycleStrategy>();
+            Central.ContainerService.Resolve<INavStateStrategy>();
+            Central.ContainerService.Resolve<ITitleBarStrategy>();
+            Central.ContainerService.Resolve<IExtendedSessionStrategy>();
+            Central.ContainerService.Resolve<IViewModelActionStrategy>();
+            Central.ContainerService.Resolve<IViewModelResolutionStrategy>();
+            Central.ContainerService.Resolve<INetworkAvailableStrategy>();
+            Central.ContainerService.Resolve<ISplashStrategy>();
         }
 
         // clean up the Application overrides
 
-        protected override sealed void OnActivated(IActivatedEventArgs e)
-            => LogThis(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate));
-        protected override sealed void OnCachedFileUpdaterActivated(CachedFileUpdaterActivatedEventArgs e)
-            => LogThis(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate));
-        protected override sealed void OnFileActivated(FileActivatedEventArgs e)
-            => LogThis(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate));
-        protected override sealed void OnFileOpenPickerActivated(FileOpenPickerActivatedEventArgs e)
-            => LogThis(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate));
-        protected override sealed void OnFileSavePickerActivated(FileSavePickerActivatedEventArgs e)
-            => LogThis(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate));
-        protected override sealed void OnSearchActivated(SearchActivatedEventArgs e)
-            => LogThis(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate));
-        protected override sealed void OnShareTargetActivated(ShareTargetActivatedEventArgs e)
-            => LogThis(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate));
-        protected override sealed void OnLaunched(LaunchActivatedEventArgs e)
-            => LogThis(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Launch));
-        protected override sealed void OnBackgroundActivated(BackgroundActivatedEventArgs e)
-            => LogThis(() => Central.MessengerService.Send(new Messages.BackgroundActivatedMessage { EventArgs = e }));
-        protected override sealed void OnWindowCreated(WindowCreatedEventArgs e)
-            => LogThis(() => BootStrapperStrategy.OnWindowCreated(e));
+        protected override sealed void OnActivated(IActivatedEventArgs e) => LogThis(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate));
+        protected override sealed void OnCachedFileUpdaterActivated(CachedFileUpdaterActivatedEventArgs e) => LogThis(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate));
+        protected override sealed void OnFileActivated(FileActivatedEventArgs e) => LogThis(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate));
+        protected override sealed void OnFileOpenPickerActivated(FileOpenPickerActivatedEventArgs e) => LogThis(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate));
+        protected override sealed void OnFileSavePickerActivated(FileSavePickerActivatedEventArgs e) => LogThis(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate));
+        protected override sealed void OnSearchActivated(SearchActivatedEventArgs e) => LogThis(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate));
+        protected override sealed void OnShareTargetActivated(ShareTargetActivatedEventArgs e) => LogThis(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate));
+        protected override sealed void OnLaunched(LaunchActivatedEventArgs e) => LogThis(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Launch));
+        protected override sealed void OnBackgroundActivated(BackgroundActivatedEventArgs e) => LogThis(() => Central.MessengerService.Send(new Messages.BackgroundActivatedMessage { EventArgs = e }));
+        protected override sealed void OnWindowCreated(WindowCreatedEventArgs e) => LogThis(() => BootStrapperStrategy.OnWindowCreated(e));
 
         private void SetupMessages()
         {
@@ -176,26 +187,6 @@ namespace Template10.BootStrap
             base.Resuming += BootStrapperStrategy.HandleResuming;
             base.Suspending += BootStrapperStrategy.HandleSuspending;
             base.UnhandledException += BootStrapperStrategy.HandleUnhandledException;
-        }
-
-        private static void TestDependecyInjection()
-        {
-            // test DI
-            var sservice = Central.ContainerService.Resolve<ISessionState>();
-            var lservice = Central.ContainerService.Resolve<ILoggingService>();
-            var xservice = Central.ContainerService.Resolve<ISerializationService>();
-            var bservice = Central.ContainerService.Resolve<IBackButtonService>();
-            var kservice = Central.ContainerService.Resolve<IKeyboardService>();
-            var gservice = Central.ContainerService.Resolve<IGestureService>();
-            var rservice = Central.ContainerService.Resolve<IResourceService>();
-            var bstrategy = Central.ContainerService.Resolve<IBootStrapperStrategy>();
-            var lstrategy = Central.ContainerService.Resolve<ILifecycleStrategy>();
-            var sstrategy = Central.ContainerService.Resolve<INavStateStrategy>();
-            var tstrategy = Central.ContainerService.Resolve<ITitleBarStrategy>();
-            var estrategy = Central.ContainerService.Resolve<IExtendedSessionStrategy>();
-            var astrategy = Central.ContainerService.Resolve<IViewModelActionStrategy>();
-            var rstrategy = Central.ContainerService.Resolve<IViewModelResolutionStrategy>();
-            var nstrategy = Central.ContainerService.Resolve<INetworkAvailableStrategy>();
         }
     }
 

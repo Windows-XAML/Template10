@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Template10.Services.Network;
+using Windows.UI.Xaml;
 
 namespace Template10.Strategies
 {
@@ -16,6 +17,7 @@ namespace Template10.Strategies
 
     public interface INetworkAvailableStrategy
     {
+        DataTemplate DataTemplate { get; set; }
         void HandleCorrect(NetworkRequirements desired);
         void HandleIncorrect(NetworkRequirements desired);
     }
@@ -25,8 +27,7 @@ namespace Template10.Strategies
         private INetworkAvailableService _service;
         public DefaultNetworkAvailableStrategy(INetworkAvailableService service)
         {
-            _service = service;
-            _service.AvailabilityChanged += _service_AvailabilityChanged;
+            (_service = service).AvailabilityChanged += _service_AvailabilityChanged;
         }
 
         private async void _service_AvailabilityChanged(object sender, AvailabilityChangedEventArgs e)
@@ -47,6 +48,8 @@ namespace Template10.Strategies
                     break;
             }
         }
+
+        public DataTemplate DataTemplate { get; set; }
 
         public void HandleCorrect(NetworkRequirements desired)
         {

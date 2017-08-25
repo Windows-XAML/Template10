@@ -132,6 +132,7 @@
     <Compile Include="Strategies\BootStrapperStrategy\IBootStrapperStrategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="Strategies\BusyStrategy\DefaultBusyStrategy.cs" />
     <Compile Include="Strategies\ExtendedSessionStrategy\DefaultExtendedSessionStrategy.cs" />
     <Compile Include="Strategies\ExtendedSessionStrategy\IExtendedSessionStrategy.cs" />
     <Compile Include="Strategies\ExtendedSessionStrategy\IExtendedSessionStrategy2.cs" />
@@ -140,6 +141,7 @@
     <Compile Include="Strategies\LifecycleStrategy\ILifecycleStrategy.cs" />
     <Compile Include="Strategies\LifecycleStrategy\Settings.cs" />
     <Compile Include="Strategies\NetworkAvailableStrategy\DefaultNetworkAvailableStrategy.cs" />
+    <Compile Include="Strategies\SplashStrategy\DefaultSplashStrategy.cs" />
     <Compile Include="Strategies\TitleBarStrategy\DefaultTitleBarStrategy.cs" />
     <Compile Include="Strategies\TitleBarStrategy\ITitleBarStrategy.cs" />
     <Compile Include="Strategies\TitleBarStrategy\Settings.cs" />
