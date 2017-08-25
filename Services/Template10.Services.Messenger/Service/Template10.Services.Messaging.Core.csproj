@@ -121,6 +121,16 @@
       <Version>5.3.0</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Template10.Services.Container\Service\Template10.Services.Container.Core.csproj">
+      <Project>{b4c8a753-3376-4c55-aff1-326f2d1cfcbc}</Project>
+      <Name>Template10.Services.Container.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Template10.Services.LoggingService\Service\Template10.Services.Logging.Core.csproj">
+      <Project>{eadde808-bf0d-4ebc-b4ca-9fda63b53862}</Project>
+      <Name>Template10.Services.Logging.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
