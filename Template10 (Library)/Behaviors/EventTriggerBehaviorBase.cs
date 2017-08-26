@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Microsoft.Xaml.Interactivity;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
-using Microsoft.Xaml.Interactivity;
 
 namespace Template10.Behaviors
 {

@@ -1,5 +1,5 @@
-﻿using Prism.Events;
-using System;
+﻿using System;
+using Prism.Events;
 
 namespace Template10.Samples.MessagingSample.Messages
 {

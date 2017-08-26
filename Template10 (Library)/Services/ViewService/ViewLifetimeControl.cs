@@ -22,11 +22,11 @@
 
 using System;
 using System.Collections.Concurrent;
+using Template10.Common;
+using Template10.Services.NavigationService;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
-using Template10.Common;
-using Template10.Services.NavigationService;
 
 namespace Template10.Services.ViewService
 {
@@ -135,8 +135,7 @@ namespace Template10.Services.ViewService
             {
                 UnregisterForEvents();
                 InternalReleased?.Invoke(this, new EventArgs());
-                ViewLifetimeControl removed;
-                WindowControlsMap.TryRemove(Id, out removed);
+                WindowControlsMap.TryRemove(Id, out ViewLifetimeControl removed);
             }
         }
 
@@ -158,9 +157,8 @@ namespace Template10.Services.ViewService
         /// <returns>Instance of <see cref="ViewLifetimeControl"/> that is associated with current window or <value>null</value> if no calls to <see cref="GetForCurrentView"/> were made
         /// before.</returns>
         public static ViewLifetimeControl TryGetForCurrentView()
-        {
-            ViewLifetimeControl res;            
-            WindowControlsMap.TryGetValue(ApplicationView.GetApplicationViewIdForWindow(Window.Current.CoreWindow), out res);
+        {       
+            WindowControlsMap.TryGetValue(ApplicationView.GetApplicationViewIdForWindow(Window.Current.CoreWindow), out ViewLifetimeControl res);
             return res;
         }             
 

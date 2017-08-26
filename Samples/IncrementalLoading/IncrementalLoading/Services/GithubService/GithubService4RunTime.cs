@@ -1,9 +1,9 @@
-﻿using Newtonsoft.Json;
-using Template10.Samples.IncrementalLoadingSample.Extensions;
-using Template10.Samples.IncrementalLoadingSample.Models;
-using System;
+﻿using System;
 using System.Net;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Template10.Samples.IncrementalLoadingSample.Extensions;
+using Template10.Samples.IncrementalLoadingSample.Models;
 using Windows.Web.Http;
 
 namespace Template10.Samples.IncrementalLoadingSample.Services.GithubService

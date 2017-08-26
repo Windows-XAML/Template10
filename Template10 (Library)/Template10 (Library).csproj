@@ -132,7 +132,6 @@
     <Compile Include="Behaviors\CloseFlyoutAction.cs" />
     <Compile Include="Behaviors\DeviceDispositionBehavior.cs" />
     <Compile Include="Common\Bootstrapper\ActivateWindowSources.enum.cs" />
-    <Compile Include="Common\Bootstrapper\Settings.cs" />
     <Compile Include="Common\Bootstrapper\BootstrapperStates.enum.cs" />
     <Compile Include="Common\Bootstrapper\LifecycleLogic.cs" />
     <Compile Include="Common\Bootstrapper\WindowLogic.cs" />
@@ -206,6 +205,7 @@
     <Compile Include="Services\NavigationService\AlternativeNavigationEventArgs.cs" />
     <Compile Include="Services\NavigationService\Extensions.cs" />
     <Compile Include="Services\NavigationService\INavigationService.cs" />
+    <Compile Include="Services\NavigationService\JournalEntry.cs" />
     <Compile Include="Services\NavigationService\NavigationLogic.cs" />
     <Compile Include="Services\NavigationService\NavigationServiceList.cs" />
     <Compile Include="Services\NavigationService\SuspensionStateLogic.cs" />
@@ -242,6 +242,7 @@
     <Compile Include="Utils\ExpressionUtils.cs" />
     <Compile Include="Utils\IEnumerableExtensions.cs" />
     <Compile Include="Utils\InkExtensions.cs" />
+    <Compile Include="Utils\LinqUtils.cs" />
     <Compile Include="Utils\MonitorUtils.cs" />
     <Compile Include="Utils\Template10Utils.cs" />
     <Compile Include="Controls\HamburgerMenu.xaml.cs">

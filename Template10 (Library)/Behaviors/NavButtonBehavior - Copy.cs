@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using Microsoft.Xaml.Interactivity;
 using Template10.Common;
+using Template10.Controls;
 using Template10.Utils;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -109,13 +110,13 @@ namespace Template10.Behaviors
                 {
                     case Directions.Back:
                         {
-                            nav.GoBack();
-                            break;
+							nav.GoBack();
+							break;
                         }
                     case Directions.Forward:
                         {
-                            nav.GoForward();
-                            break;
+							nav.GoForward();
+							break;
                         }
                 }
             }
@@ -134,6 +135,45 @@ namespace Template10.Behaviors
                 {
                     case Directions.Back:
                         {
+                            var isLocalNav = false; // If true, it's localized navigation for a MasterDetail pattern.
+                            var isVisible = false;
+                            var ph = (Frame?.Content as Page)?.FirstChild<PageHeader>();
+                            var abb = ph?.FirstChild<AppBarButton>(); // Back button always assumed to be in AppBarButton
+                            if (abb != null)
+                            {
+                                var symbIcon = abb.Icon as SymbolIcon; //To check if Back button is as SymbolIcon
+
+                                // With regard to nav, no strong reason to opt for FontIcon based "Back" button in 
+                                // preference to the simpler SymbolIcon but does no harm to accommodate this.
+                                // Side note: SymbolIcon (Segoe UI Symbols) is from Windows 8 while 
+                                // FontIcon (Segoe MDL2 Assets) is from Windows 10, and this may tip the choice.
+
+                                var fontIcon = abb.Content as FontIcon; //To check if Back button is as FontIcon
+
+                                if (symbIcon != null)
+                                {
+                                    isLocalNav = (symbIcon.Symbol == Symbol.Back);
+                                }
+                                else if (fontIcon != null)
+                                {
+                                    var glyphHexString = fontIcon.GlyphToHexString();
+
+                                    // Check for all possibe Back Glyph codes. Why so many Back Glyphs, one wonders ;-) ?
+
+                                    isLocalNav = (glyphHexString.Length == 4) && "E0A6 E0C4 E0D5 E112 E72B E830".Contains(glyphHexString);
+                                }
+
+                               // isVisible = abb.Visibility == Visibility.Visible;
+                            }
+
+                            // Finally, if a developer puts an AppBarButton container for a Back symbol, it MUST be
+                            // a localized navigation for MasterDetail; what else can it be?
+                            // This is a ROBUST test and breaks nothing. If isLocalNav is false, we're at where we started!
+                            // If true, the developer is setting the required Back visibility, presumably with VisualState.
+
+                           var visibility = NavButtonsHelper.CalculateBackVisibility(Frame);  // this checks for hardware button
+
+                            //ButtonElement.Visibility = (isLocalNav && isVisible) ? Visibility.Collapsed : visibility;
                             ButtonElement.Visibility = NavButtonsHelper.CalculateBackVisibility(Frame);
                             break;
                         }

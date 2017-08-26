@@ -1,20 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation.Collections;
+﻿using Template10.Utils;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Documents;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Markup;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
-using Template10.Utils;
-using System.Collections.Specialized;
-using System.Collections;
 
 // The Templated Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234235
 
@@ -30,8 +18,7 @@ namespace Template10.Controls
             // behaviors
             var behavior = new Behaviors.EllipsisBehavior();
             RegisterPropertyChangedCallback(EllipsisVisibilityProperty, (s, e) => behavior.Visibility = EllipsisVisibility);
-            var collection = new Microsoft.Xaml.Interactivity.BehaviorCollection();
-            collection.Add(behavior);
+            var collection = new Microsoft.Xaml.Interactivity.BehaviorCollection() { behavior };
             SetValue(Microsoft.Xaml.Interactivity.Interaction.BehaviorsProperty, collection);
 
             TabIndex = 5000;

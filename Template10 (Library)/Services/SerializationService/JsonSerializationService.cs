@@ -1,6 +1,6 @@
 using System;
-using Newtonsoft.Json;
 using System.Runtime.CompilerServices;
+using Newtonsoft.Json;
 
 namespace Template10.Services.SerializationService
 {

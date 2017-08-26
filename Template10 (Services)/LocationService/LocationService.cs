@@ -1,8 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Text;
-using Windows.Devices.Geolocation;
+﻿using Windows.Devices.Geolocation;
 
 namespace Template10.Services.LocationService
 {

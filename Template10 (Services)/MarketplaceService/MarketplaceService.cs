@@ -1,9 +1,7 @@
 ﻿using System.Threading.Tasks;
-
-using Windows.ApplicationModel;
-
-using Template10.Services.NagService;
 using Template10.Services.FileService;
+using Template10.Services.NagService;
+using Windows.ApplicationModel;
 
 namespace Template10.Services.MarketplaceService
 {

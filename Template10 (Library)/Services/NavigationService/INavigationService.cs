@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Core;
 using Template10.Common;
+using Template10.Services.SerializationService;
+using Template10.Services.ViewService;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
-using Template10.Services.ViewService;
-using Template10.Services.SerializationService;
-using Classic = Template10.Services.NavigationService;
 using Portable = Template10.Mobile.Services.NavigationService;
 
 namespace Template10.Services.NavigationService

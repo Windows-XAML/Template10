@@ -1,11 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System;
 using Template10.Mvvm;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.DataTransfer.ShareTarget;
-using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Media.Imaging;
+using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Samples.ShareTargetSample.ViewModels
 {

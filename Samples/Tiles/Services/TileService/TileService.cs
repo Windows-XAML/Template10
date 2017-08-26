@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Template10.Samples.TilesSample.ViewModels;
-using Windows.UI.StartScreen;
-using Windows.UI.Notifications;
 using NotificationsExtensions.Tiles;
 using NotificationsExtensions.Toasts;
+using Template10.Samples.TilesSample.ViewModels;
+using Windows.UI.Notifications;
+using Windows.UI.StartScreen;
 
 namespace Template10.Samples.TilesSample.Services.TileService
 {
@@ -22,13 +22,12 @@ namespace Template10.Samples.TilesSample.Services.TileService
             var name = "Tiles sample";
             var title = "Template 10";
             var body = detailPageViewModel.Value;
-            var image = "https://raw.githubusercontent.com/Windows-XAML/Template10/master/Assets/Template10.png";
 
             var bindingContent = new TileBindingContentAdaptive()
             {
                 PeekImage = new TilePeekImage()
                 {
-                    Source = new TileImageSource(image)
+                    Source = "https://raw.githubusercontent.com/Windows-XAML/Template10/master/Assets/Template10.png"
                 },
 
                 Children =

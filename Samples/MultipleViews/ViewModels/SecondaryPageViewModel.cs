@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Windows.UI.ViewManagement;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Template10.Common;
-using Template10.Services.NavigationService;
+using Windows.UI.ViewManagement;
 
 namespace Sample.ViewModels
 {

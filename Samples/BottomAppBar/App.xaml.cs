@@ -1,6 +1,6 @@
-﻿using Windows.UI.Xaml;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
+using Windows.UI.Xaml;
 
 namespace Template10.Samples.BottomAppBarSample
 {

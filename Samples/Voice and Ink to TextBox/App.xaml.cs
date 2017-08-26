@@ -1,9 +1,8 @@
-using System;
-using Windows.UI.Xaml;
 using System.Threading.Tasks;
 using Template10.Samples.VoiceAndInkSample.Services.SettingsServices;
-using Windows.ApplicationModel.Activation;
 using Template10.Services.NavigationService;
+using Windows.ApplicationModel.Activation;
+using Windows.UI.Xaml;
 
 namespace Template10.Samples.VoiceAndInkSample
 {

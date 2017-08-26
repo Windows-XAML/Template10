@@ -1,9 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI.StartScreen;
-using Windows.UI.Xaml;
-using System.Linq;
 
 namespace Template10.Services.SecondaryTileService
 {

@@ -1,7 +1,7 @@
-﻿using Template10.Samples.TilesSample.Services.TileService;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Template10.Samples.TilesSample.Services.TileService;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;

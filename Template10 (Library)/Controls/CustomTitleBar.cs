@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.ApplicationModel.Core;
+﻿using Windows.ApplicationModel.Core;
+using Windows.Foundation.Metadata;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.Foundation.Metadata;
 
 namespace Template10.Controls
 {
@@ -160,11 +155,10 @@ namespace Template10.Controls
             foreach (var resource in Application.Current.Resources)
             {
                 var k = resource.Key;
-                if (k == typeof(Controls.CustomTitleBar))
+                if (k == typeof(CustomTitleBar))
                 {
                     var s = resource.Value as Style;
-                    var t = new Controls.CustomTitleBar();
-                    t.Style = s;
+                    var t = new CustomTitleBar() { Style = s };
                 }
                 count--;
                 if (count == 0) break;

@@ -1,9 +1,9 @@
 ﻿{
   "dependencies": {
-    "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
-    "Microsoft.Xaml.Behaviors.Uwp.Managed": "1.1.0",
+    "Microsoft.NETCore.UniversalWindowsPlatform": "5.4.0",
+    "Microsoft.Xaml.Behaviors.Uwp.Managed": "2.0.0",
     "MvvmLightLibs": "5.3.0",
-    "Newtonsoft.Json": "9.0.1"
+    "Newtonsoft.Json": "10.0.3"
   },
   "frameworks": {
     "uap10.0": {}

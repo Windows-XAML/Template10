@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Template10.Services.PrimaryTileService
+﻿namespace Template10.Services.PrimaryTileService
 {
     public interface IPrimaryTileService
     {

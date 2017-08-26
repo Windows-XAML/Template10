@@ -1,7 +1,7 @@
-﻿using Windows.UI.Xaml;
-using Windows.UI.Xaml.Markup;
-using Microsoft.Xaml.Interactivity;
+﻿using Microsoft.Xaml.Interactivity;
 using Template10.Common;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Markup;
 
 namespace Template10.Behaviors
 {

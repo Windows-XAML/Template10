@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Template10.Services.ToastService
+﻿namespace Template10.Services.ToastService
 {
 
     // http://msdn.microsoft.com/en-us/library/windows/apps/Hh761494.aspx

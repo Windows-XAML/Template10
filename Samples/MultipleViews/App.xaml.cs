@@ -1,9 +1,6 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
-using Windows.ApplicationModel.Core;
 using Windows.UI.Xaml.Data;
-using Template10.Services.ViewService;
 
 namespace Sample
 {

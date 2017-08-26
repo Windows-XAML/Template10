@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Template10.Services.ToastService
+﻿namespace Template10.Services.ToastService
 {
     public interface IToastService
     {

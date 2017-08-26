@@ -5,7 +5,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Template10.Samples.PageHeaderSample.Views
 {
-	public sealed partial class MainPage : Page
+    public sealed partial class MainPage : Page
 	{
 		public MainPage()
 		{

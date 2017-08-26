@@ -1,4 +1,3 @@
-using System;
 using Windows.Foundation.Metadata;
 
 namespace Template10.Utils

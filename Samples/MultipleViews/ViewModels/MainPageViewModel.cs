@@ -1,24 +1,21 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Windows.UI.Xaml;
-using Template10.Mvvm;
-using Template10.Services.NavigationService;
-using Windows.UI.Xaml.Navigation;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Sample.Views;
 using Template10.Common;
 using Template10.Services.ViewService;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Navigation;
 
 namespace Sample.ViewModels
 {
     public class MainPageViewModel : BaseViewModel
     {
-        private readonly WindowWrapper wrapper = WindowWrapper.Current();
+        private readonly IWindowWrapper wrapper = WindowWrapper.Current();
         public IList<string> Messages { get; }=new ObservableCollection<string>();
         public ICommand OpenViewCommand { get; }
 
