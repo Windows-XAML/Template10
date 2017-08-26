@@ -9,6 +9,8 @@ using Template10.Core;
 using Template10.Extensions;
 using Template10.Common;
 using Template10.Services.Container;
+using Template10.Services.Resources;
+using Template10.Services.Logging;
 
 namespace Template10.Mvvm
 {
@@ -37,7 +39,7 @@ namespace Template10.Mvvm
         public IDispatcherEx Dispatcher => Window.Dispatcher;
 
         [JsonIgnore]
-        public ISessionState SessionState => ContainerService.Default.Resolve<ISessionState>();
+        public ISessionState SessionState => Central.SessionState;
 
         // remove bindable overrides
 

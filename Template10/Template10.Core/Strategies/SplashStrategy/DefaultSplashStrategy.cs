@@ -24,24 +24,25 @@ namespace Template10.Strategies
     public interface ISplashStrategy
     {
         DataTemplate DataTemplate { get; set; }
-        void ShowSplash(SplashScreen splashScreen);
-        void HideSplash();
+        bool ShowSplash(SplashScreen splashScreen);
+        bool HideSplash();
     }
 
     public class DefaultSplashStrategy : ISplashStrategy
     {
         public DataTemplate DataTemplate { get; set; }
-        public void ShowSplash(SplashScreen splashScreen)
+        public bool ShowSplash(SplashScreen splashScreen)
         {
             if (Settings.ShowExtendedSplashScreen && DataTemplate != null)
             {
                 // DataContext = splashScreen;
             }
+            return false;
         }
 
-        public void HideSplash()
+        public bool HideSplash()
         {
-            // TODO
+            return false;
         }
     }
 }

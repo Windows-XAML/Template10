@@ -25,16 +25,16 @@ namespace Template10.BootStrap
             // start
 
             CreateDependecyContainer();
-            try { var c = Central.ContainerService; }
+            try { var c = Central.Container; }
             catch { throw new Exception($"IContainerService is required but is not defined in DI."); }
 
-            RegisterDefaultDependencies(Central.ContainerService);
-            RegisterCustomDependencies(Central.ContainerService);
-            try { var m = Central.MessengerService; }
+            RegisterDefaultDependencies(Central.Container);
+            RegisterCustomDependencies(Central.Container);
+            try { var m = Central.Messenger; }
             catch { throw new Exception($"IMessengerService is required but is not registered in DI."); }
 
 #if DEBUG
-            TestDependecyInjection(Central.ContainerService);
+            TestDependecyInjection(Central.Container);
 #endif
 
             LogThis();
@@ -47,7 +47,7 @@ namespace Template10.BootStrap
         }
 
         private IBootStrapperStrategy BootStrapperStrategy
-            => Central.ContainerService.Resolve<IBootStrapperStrategy>();
+            => Central.Container.Resolve<IBootStrapperStrategy>();
 
         private void ForwardMethods()
         {
@@ -60,12 +60,12 @@ namespace Template10.BootStrap
         private void SetupMessages()
         {
             LogThis();
-            Central.MessengerService.Subscribe<WindowCreatedMessage>(this, HandleAfterFirstWindowCreated);
-            Central.MessengerService.Subscribe<AppVisibilityChangedMessage>(this, (e) => Central.AppVisibility = e.Visibility);
-            Central.MessengerService.Subscribe<ExtendedSessionRevokedMessage>(this, (e) =>
+            Central.Messenger.Subscribe<WindowCreatedMessage>(this, HandleAfterFirstWindowCreated);
+            Central.Messenger.Subscribe<AppVisibilityChangedMessage>(this, (e) => Central.Visibility = e.Visibility);
+            Central.Messenger.Subscribe<ExtendedSessionRevokedMessage>(this, (e) =>
             {
                 var isUnspecified = e.ExtendedExecutionReason == Windows.ApplicationModel.ExtendedExecution.ExtendedExecutionReason.Unspecified;
-                var isForeground = Central.AppVisibility == AppVisibilities.Foreground;
+                var isForeground = Central.Visibility == AppVisibilities.Foreground;
                 if (isUnspecified && isForeground) // && Revoked
                 {
                     OnClose(new ClosedEventArgs(e.TryToExtendAsync));
@@ -78,11 +78,11 @@ namespace Template10.BootStrap
             LogThis();
             
             // unsubscribe so this is only called a single time
-            Central.MessengerService.Unsubscribe<WindowCreatedMessage>(this, HandleAfterFirstWindowCreated);
+            Central.Messenger.Unsubscribe<WindowCreatedMessage>(this, HandleAfterFirstWindowCreated);
 
             // these are the things delayed until after the first window is created
-            Central.ContainerService.Resolve<IBackButtonService>().Setup();
-            Central.ContainerService.Resolve<ITitleBarStrategy>().Update();
+            Central.Container.Resolve<IBackButtonService>().Setup();
+            Central.Container.Resolve<ITitleBarStrategy>().Update();
         }
 
         private void SetupEvents()
@@ -90,12 +90,12 @@ namespace Template10.BootStrap
             LogThis();
             base.EnteredBackground += (s, e) =>
             {
-                Central.AppVisibility = AppVisibilities.Background;
+                Central.Visibility = AppVisibilities.Background;
                 BootStrapperStrategy.HandleEnteredBackground(s, e);
             };
             base.LeavingBackground += (s, e) =>
             {
-                Central.AppVisibility = AppVisibilities.Foreground;
+                Central.Visibility = AppVisibilities.Foreground;
                 BootStrapperStrategy.HandleLeavingBackground(s, e); ;
             };
             base.Resuming += BootStrapperStrategy.HandleResuming;
@@ -186,7 +186,7 @@ namespace Template10.BootStrap
         protected override sealed void OnSearchActivated(SearchActivatedEventArgs e) => LogThis(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate));
         protected override sealed void OnShareTargetActivated(ShareTargetActivatedEventArgs e) => LogThis(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate));
         protected override sealed void OnLaunched(LaunchActivatedEventArgs e) => LogThis(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Launch));
-        protected override sealed void OnBackgroundActivated(BackgroundActivatedEventArgs e) => LogThis(() => Central.MessengerService.Send(new Messages.BackgroundActivatedMessage { EventArgs = e }));
+        protected override sealed void OnBackgroundActivated(BackgroundActivatedEventArgs e) => LogThis(() => Central.Messenger.Send(new Messages.BackgroundActivatedMessage { EventArgs = e }));
         protected override sealed void OnWindowCreated(WindowCreatedEventArgs e) => LogThis(() => BootStrapperStrategy.OnWindowCreated(e));
 
         // override built-in Application events
@@ -208,7 +208,7 @@ namespace Template10.BootStrap
 
     public abstract partial class BootStrapperBase : ILoggable
     {
-        ILoggingService ILoggable.LoggingService => Central.LoggingService;
+        ILoggingService ILoggable.LoggingService => Central.Logging;
         void LogThis(Action action, string text = null, Severities severity = Severities.Template10, [CallerMemberName]string caller = null)
         {
             action();

@@ -9,6 +9,8 @@ using Template10.Strategies;
 using Template10.Services.Container;
 using Sample.Views;
 using Sample.Services;
+using System;
+using Template10.Navigation;
 
 namespace Sample
 {
@@ -20,41 +22,33 @@ namespace Sample
             InitializeComponent();
         }
 
-        public override UIElement CreateSpash(SplashScreen e)
-        {
-            return new Views.Splash(e);
-        }
-
-        public override UIElement CreateRootElement(IStartArgsEx e)
-        {
-            return base.CreateRootElement(e);
-        }
+        public enum PageKeys { MainPage, DetailPage, SettingsPage }
 
         public override async Task OnInitializeAsync()
         {
-            RegisterViewModels(Container);
-            LoadSettings(Services.SettingsService.GetInstance());
-        }
+            var page_keys = Template10.Navigation.Settings.PageKeys<PageKeys>();
+            page_keys.Add(PageKeys.MainPage, typeof(MainPage));
+            page_keys.Add(PageKeys.DetailPage, typeof(DetailPage));
+            page_keys.Add(PageKeys.SettingsPage, typeof(SettingsPage));
 
-        public override async Task OnStartAsync(IStartArgsEx e)
-        {
-            await NavigationService.NavigateAsync(typeof(Views.MainPage));
-        }
-
-        private static void LoadSettings(Services.SettingsService settings)
-        {
+            var settings = Central.Container.Resolve<ISettingsService>();
             Template10.Settings.DefaultTheme = settings.DefaultTheme;
             Template10.Settings.ShellBackButtonPreference = settings.ShellBackButtonPreference;
             Template10.Settings.CacheMaxDuration = settings.CacheMaxDuration;
         }
 
-        private void RegisterViewModels(IContainerService service)
+        public override async Task OnStartAsync(IStartArgsEx e, INavigationService navService, ISessionState sessionState)
         {
-            service.Register<ISettingsService, SettingsService>();
-            service.Register<ITemplate10ViewModel, MainPageViewModel>(typeof(MainPage).ToString());
-            service.Register<ITemplate10ViewModel, MainPageViewModel>(typeof(MainPage).ToString());
-            service.Register<ITemplate10ViewModel, DetailPageViewModel>(typeof(DetailPage).ToString());
-            service.Register<ITemplate10ViewModel, SettingsPageViewModel>(typeof(SettingsPage).ToString());
+            await navService.NavigateAsync(typeof(Views.MainPage));
+        }
+
+        public override void RegisterDependencies(IContainerBuilder container)
+        {
+            container.Register<ISettingsService, SettingsService>();
+            container.Register<ITemplate10ViewModel, MainPageViewModel>(typeof(MainPage).ToString());
+            container.Register<ITemplate10ViewModel, MainPageViewModel>(typeof(MainPage).ToString());
+            container.Register<ITemplate10ViewModel, DetailPageViewModel>(typeof(DetailPage).ToString());
+            container.Register<ITemplate10ViewModel, SettingsPageViewModel>(typeof(SettingsPage).ToString());
         }
     }
 }

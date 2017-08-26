@@ -6,7 +6,7 @@ namespace Template10.Core
 {
     partial class SecondaryViewSynchronizationContextDecorator : ILoggable
     {
-        ILoggingService ILoggable.LoggingService => Central.LoggingService;
+        ILoggingService ILoggable.LoggingService => Central.Logging;
         void LogThis(string text = null, Severities severity = Severities.Template10, [System.Runtime.CompilerServices.CallerMemberName]string caller = null)
             => (this as ILoggable).LogThis(text, severity, caller: $"{caller}");
         void ILoggable.LogThis(string text, Severities severity, string caller)

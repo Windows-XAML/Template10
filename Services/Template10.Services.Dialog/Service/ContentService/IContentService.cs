@@ -24,7 +24,7 @@ namespace Template10.Services.Dialog
     public interface IContentService
     {
         Task<ContentDialogResult> ShowAsync(
-            UIElement content,
+            object content,
             object title = null,
             ContentOrientations orientation = ContentOrientations.Fill,
             ContentButtonInfo primaryButton = null,
@@ -37,7 +37,8 @@ namespace Template10.Services.Dialog
 
     public class ContentService : IContentService
     {
-        public Task<ContentDialogResult> ShowAsync(UIElement content,
+        public Task<ContentDialogResult> ShowAsync(
+            object content,
             object title = null,
             ContentOrientations orientation = ContentOrientations.Fill,
             ContentButtonInfo primaryButton = null,

@@ -23,18 +23,21 @@ namespace Template10.Strategies
         IExtendedSessionStrategy _extendedSessionStrategy;
         IBackButtonService _backButtonService;
         ITitleBarStrategy _titleBarStrategy;
+        ISplashStrategy _splashStrategy;
         public DefaultBootStrapperStrategy(
             ILifecycleStrategy lifecycleStrategy,
             IMessengerService messengerService,
             IExtendedSessionStrategy extendedSessionStrategy,
             IBackButtonService backButtonService,
-            ITitleBarStrategy titleBarStrategy)
+            ITitleBarStrategy titleBarStrategy,
+ISplashStrategy splashStrategy)
         {
             _lifecycleStrategy = lifecycleStrategy;
             _messengerService = messengerService;
             _extendedSessionStrategy = extendedSessionStrategy;
             _backButtonService = backButtonService;
             _titleBarStrategy = titleBarStrategy;
+            _splashStrategy = splashStrategy;
             _status = new ValueWithHistory<BootstrapperStates>(BootstrapperStates.None, (date, before, after) =>
             {
                 LogThis($"{nameof(Status)} changed from {before} to {after}", caller: $"{nameof(DefaultBootStrapperStrategy)}");
@@ -74,7 +77,7 @@ namespace Template10.Strategies
         {
             LogThis();
             _messengerService.Send(new Messages.EnteredBackgroundMessage { EventArgs = e });
-            _messengerService.Send(new Messages.AppVisibilityChangedMessage{ Visibility = AppVisibilities.Background });
+            _messengerService.Send(new Messages.AppVisibilityChangedMessage { Visibility = AppVisibilities.Background });
         }
 
         public void HandleLeavingBackground(object sender, LeavingBackgroundEventArgs e)
@@ -132,48 +135,6 @@ namespace Template10.Strategies
             }
         }
 
-        public UIElement CreateSpash(SplashScreen e)
-            => LogThis(() => CreateSpashDelegate.Invoke(e));
-
-        public bool ShowSplash(IStartArgsEx e)
-        {
-            var splash = CreateSpash(e.LaunchActivatedEventArgs.SplashScreen);
-            if (splash == null)
-            {
-                LogThis("No splash to show.");
-                return false;
-            }
-            else
-            {
-                OperationWrapper(BootstrapperStates.ShowingSplash, () =>
-                {
-                    var window = Window.Current;
-                    window.Content = splash;
-                    window.Activate();
-                }, BootstrapperStates.ShowedSplash);
-                return true;
-            }
-        }
-
-        public bool HideSplash()
-        {
-            var window = Window.Current;
-            if (window.Content.Equals(_rootElement))
-            {
-                LogThis("No splash to hide.");
-                return false;
-            }
-            else
-            {
-                OperationWrapper(BootstrapperStates.HidingSplash, () =>
-                {
-                    window.Content = _rootElement;
-                    window.Activate();
-                }, BootstrapperStates.HiddenSplash);
-                return true;
-            }
-        }
-
         // public properties
 
         public Func<IStartArgsEx, UIElement> CreateRootElementDelegate { get; set; }
@@ -191,7 +152,6 @@ namespace Template10.Strategies
 
         // core logic
 
-        UIElement _rootElement;
         static SemaphoreSlim StartOrchestrationAsyncSemaphore = new SemaphoreSlim(1, 1);
         public async void StartOrchestrationAsync(IActivatedEventArgs e, StartArgsEx.StartKinds kind)
         {
@@ -220,44 +180,48 @@ namespace Template10.Strategies
 
                     await OperationWrapperAsync(BootstrapperStates.Launching, async () =>
                     {
-                        if (ShowSplash(args))
+                        OperationWrapper(BootstrapperStates.ShowingSplash, () =>
                         {
-                            _rootElement = CreateRoot(args);
-                        }
-                        else
+                            _splashStrategy.ShowSplash(args.LaunchActivatedEventArgs.SplashScreen);
+                        }, BootstrapperStates.ShowedSplash);
+
+                        OperationWrapper(BootstrapperStates.CreatingRootElement, () =>
                         {
-                            var window = Window.Current;
-                            window.Content = _rootElement = CreateRoot(args);
-                        }
+                            Window.Current.Content = CreateRoot(args);
+                        }, BootstrapperStates.CreatedRootElement);
 
                         if (args.LaunchActivatedEventArgs?.PrelaunchActivated ?? false)
                         {
                             await OperationWrapperAsync(BootstrapperStates.Prelaunching, async () =>
                             {
-                                await OnStartAsyncDelegate?.Invoke(args);
+                                await OnStartAsyncDelegate?.Invoke(args, NavigationService.Default, Central.SessionState);
                             }, BootstrapperStates.Prelaunched);
                         }
                         else
                         {
                             var restored = false;
+
                             if (_lifecycleStrategy.IsResuming(args))
                             {
                                 await OperationWrapperAsync(BootstrapperStates.Restoring, async () =>
                                 {
-                                    var strategy = _lifecycleStrategy;
-                                    restored = await strategy.ResumeAsync(args);
+                                    restored = await _lifecycleStrategy.ResumeAsync(args);
                                 }, BootstrapperStates.Restored);
                             }
+
                             if (!restored)
                             {
                                 await OperationWrapperAsync(BootstrapperStates.Starting, async () =>
                                 {
-                                    await OnStartAsyncDelegate?.Invoke(args);
+                                    await OnStartAsyncDelegate?.Invoke(args, NavigationService.Default, Central.SessionState);
                                 }, BootstrapperStates.Started);
                             }
                         }
 
-                        HideSplash();
+                        OperationWrapper(BootstrapperStates.HidingSplash, () =>
+                        {
+                            _splashStrategy.HideSplash();
+                        }, BootstrapperStates.HiddenSplash);
 
                     }, BootstrapperStates.Launched);
 
@@ -269,7 +233,7 @@ namespace Template10.Strategies
                 {
                     await OperationWrapperAsync(BootstrapperStates.Activating, async () =>
                     {
-                        await OnStartAsyncDelegate?.Invoke(args);
+                        await OnStartAsyncDelegate?.Invoke(args, NavigationService.Default, Central.SessionState);
                     }, BootstrapperStates.Activated);
                 }
             }

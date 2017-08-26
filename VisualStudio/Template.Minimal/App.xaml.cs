@@ -22,11 +22,6 @@ namespace Sample
             InitializeComponent();
         }
 
-        public override UIElement CreateSpash(SplashScreen e)
-        {
-            return new Views.Splash(e);
-        }
-
         public override async Task OnInitializeAsync()
         {
             var settings = Services.SettingsService.GetInstance();
@@ -35,7 +30,7 @@ namespace Sample
             Template10.Settings.CacheMaxDuration = settings.CacheMaxDuration;
         }
 
-        public override async Task OnStartAsync(IStartArgsEx e, INavigationService navService, IContainerConsumer container)
+        public override async Task OnStartAsync(IStartArgsEx e, INavigationService navService, ISessionState sessionState)
         {
             await navService.NavigateAsync(typeof(Views.MainPage));
         }

@@ -71,8 +71,8 @@ namespace Sample.ViewModels
             var result = await _content.ShowAsync(
                 content: "Are you sure?",
                 title: "Confirmation",
-                primaryButton: new Template10.Services.Dialog.ContentButtonInfo("Continue"),
-                secondaryButton: new Template10.Services.Dialog.ContentButtonInfo("Cancel"));
+                primaryButton: new Template10.Services.Dialog.ContentButtonInfo("Continue", null),
+                secondaryButton: new Template10.Services.Dialog.ContentButtonInfo("Cancel", null));
             return result == ContentDialogResult.Primary;
         }
 

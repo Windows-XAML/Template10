@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +23,7 @@ namespace Template10.Strategies
     public interface IBusyStrategy
     {
         DataTemplate DataTemplate { get; set; }
+        bool IsShowing { get; }
         void Show(TimeSpan timeout, params string[] param);
         void Hide();
     }
@@ -29,13 +31,31 @@ namespace Template10.Strategies
     public class DefaultBusyStrategy : IBusyStrategy
     {
         public DataTemplate DataTemplate { get; set; }
+        public bool IsShowing { get; private set; } = false;
         public void Show(TimeSpan timeout, params string[] param)
         {
-            // TODO
+            if (IsShowing)
+            {
+                Hide();
+            }
+            try
+            {
+                // TODO
+            }
+            catch { Debugger.Break(); }
+            finally { IsShowing = true; }
         }
         public void Hide()
         {
-            // TODO
+            if (IsShowing)
+            {
+                try
+                {
+                    // TODO
+                }
+                catch { Debugger.Break(); }
+                finally { IsShowing = false; }
+            }
         }
     }
 }

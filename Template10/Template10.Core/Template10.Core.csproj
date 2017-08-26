@@ -117,19 +117,6 @@
     <Compile Include="BootStrap\BootstrapperStates.cs" />
     <Compile Include="BootStrap\ClosedEventArgs.cs" />
     <Compile Include="BootStrap\IBootStrapper.cs" />
-    <Compile Include="Messages\AppVisibilityChangedMessage.cs" />
-    <Compile Include="Messages\BackgroundActivatedMessage.cs" />
-    <Compile Include="Messages\BackRequestedMessage.cs" />
-    <Compile Include="Messages\EnteredBackgroundMessage.cs" />
-    <Compile Include="Messages\ExtendedSessionRevokedMessage.cs" />
-    <Compile Include="Messages\ExtendedSessionStartedMessage.cs" />
-    <Compile Include="Messages\LeavingBackgroundMessage.cs" />
-    <Compile Include="Messages\NavigationServiceCreatedMessage.cs" />
-    <Compile Include="Messages\ResumedMessage.cs" />
-    <Compile Include="Messages\ResumingMessage.cs" />
-    <Compile Include="Messages\SuspendingMessage.cs" />
-    <Compile Include="Messages\UnhandledExceptionMessage.cs" />
-    <Compile Include="Messages\WindowCreatedMessage.cs" />
     <Compile Include="Strategies\BootStrapperStrategy\DefaultBootStrapperStrategy.cs" />
     <Compile Include="Strategies\BootStrapperStrategy\IBootStrapperStrategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -178,7 +165,7 @@
       <Project>{e14bcd62-b2a4-4aa2-95a8-6a556a31fb29}</Project>
       <Name>Template10.Services.Messaging.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Services\Template10.Services.Resource.Service\Template10.Services.Resource.Service.csproj">
+    <ProjectReference Include="..\..\Services\Template10.Services.Resource\Service\Template10.Services.Resource.Service.csproj">
       <Project>{BB62AC27-62C0-41C6-B8DA-0E3D12FE3D48}</Project>
       <Name>Template10.Services.Resource.Service</Name>
     </ProjectReference>

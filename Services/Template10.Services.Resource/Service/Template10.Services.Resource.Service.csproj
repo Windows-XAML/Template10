@@ -107,9 +107,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResourceService\IResourceService.cs" />
-    <Compile Include="ResourceService\ResourceHelper.cs" />
-    <Compile Include="ResourceService\ResourceService.cs" />
+    <Compile Include="IResourceService.cs" />
+    <Compile Include="ResourceHelper.cs" />
+    <Compile Include="ResourceService.cs" />
     <EmbeddedResource Include="Properties\Template10.Services.Resource.Service.rd.xml" />
   </ItemGroup>
   <ItemGroup>

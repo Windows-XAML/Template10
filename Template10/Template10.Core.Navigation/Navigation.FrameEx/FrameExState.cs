@@ -11,7 +11,7 @@ namespace Template10.Navigation
         public FrameExState(IPropertyBagEx store)
         {
             this.store = store;
-            _SerializationService = Central.SerializationService;
+            _SerializationService = Central.Serialization;
         }
 
         public async Task ClearAsync() => await store.ClearAsync();

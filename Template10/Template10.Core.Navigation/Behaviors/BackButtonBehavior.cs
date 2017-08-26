@@ -18,7 +18,7 @@ namespace Template10.Behaviors
         Services.Gesture.IGestureService _GestureService;
         public BackButtonBehavior()
         {
-            _GestureService = Central.GestureService;
+            _GestureService = Central.Gesture;
         }
 
         private IDispatcherEx _dispatcher;

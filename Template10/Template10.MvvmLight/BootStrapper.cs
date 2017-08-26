@@ -20,6 +20,12 @@ namespace Template10
         public sealed override void RegisterCustomDependencies(IContainerBuilder container)
         {
             container.Register<IMessengerService, MvvmLightMessengerService>();
+            RegisterDependencies(container);
+        }
+
+        public virtual void RegisterDependencies(IContainerBuilder container)
+        {
+            // empty
         }
     }
 }

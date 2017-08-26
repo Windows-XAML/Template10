@@ -71,7 +71,7 @@ namespace Template10.Navigation
             }
             Instances.Add(service);
 
-            Central.MessengerService.Send(new Messages.NavigationServiceCreatedMessage
+            Central.Messenger.Send(new Messages.NavigationServiceCreatedMessage
             {
                 NavigationService = service,
                 BackButtonHandling = backButton,
@@ -84,20 +84,6 @@ namespace Template10.Navigation
         static ISerializationService SerializationService => Services.Container.ContainerService.Default.Resolve<ISerializationService>();
         static IViewModelActionStrategy ViewModelActionStrategy => Services.Container.ContainerService.Default.Resolve<IViewModelActionStrategy>();
         static IViewModelResolutionStrategy ViewModelResolutionStrategy => Services.Container.ContainerService.Default.Resolve<IViewModelResolutionStrategy>();
-
-        private static object _PageKeys;
-        public static Dictionary<T, Type> PageKeys<T>() where T : struct, IConvertible
-        {
-            if (!typeof(T).GetTypeInfo().IsEnum)
-            {
-                throw new ArgumentException("T must be an enumerated type");
-            }
-            if (_PageKeys != null && _PageKeys is Dictionary<T, Type>)
-            {
-                return _PageKeys as Dictionary<T, Type>;
-            }
-            return (_PageKeys = new Dictionary<T, Type>()) as Dictionary<T, Type>;
-        }
 
         public static INavigationService Default { get; set; }
         public static NavigationServiceList Instances { get; } = new NavigationServiceList();
@@ -207,7 +193,7 @@ namespace Template10.Navigation
         {
             LogThis($"Key: {key}, Parameter: {parameter}, NavigationTransitionInfo: {infoOverride}");
 
-            var keys = PageKeys<T>();
+            var keys = Settings.PageKeys<T>();
             if (!keys.TryGetValue(key, out var page))
             {
                 throw new KeyNotFoundException(key.ToString());

@@ -263,6 +263,10 @@
       <Project>{a6c44279-e015-46db-8b3d-7430a2ab29a5}</Project>
       <Name>Template10.Services.Profile.Service</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.Resource\Service\Template10.Services.Resource.Service.csproj">
+      <Project>{bb62ac27-62c0-41c6-b8da-0e3d12fe3d48}</Project>
+      <Name>Template10.Services.Resource.Service</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Services\Template10.Services.SecretService\Service\Template10.Services.Secrets.Service.csproj">
       <Project>{e49c6577-6309-43cc-a617-7d813c7a0d94}</Project>
       <Name>Template10.Services.Secrets.Service</Name>

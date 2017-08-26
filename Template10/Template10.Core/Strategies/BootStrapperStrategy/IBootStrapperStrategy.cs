@@ -22,7 +22,6 @@ namespace Template10.Strategies
         Func<IStartArgsEx, UIElement> CreateRootElementDelegate { get; set; }
 
         UIElement CreateRoot(IStartArgsEx e);
-        UIElement CreateSpash(SplashScreen e);
 
         void HandleEnteredBackground(object sender, EnteredBackgroundEventArgs e);
         void HandleLeavingBackground(object sender, LeavingBackgroundEventArgs e);
