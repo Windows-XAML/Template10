@@ -6,8 +6,7 @@ namespace Template10.Common
     {
         public T Get<T>(string key)
         {
-            object tryGetValue;
-            if (TryGetValue(key, out tryGetValue))
+            if (TryGetValue(key, out object tryGetValue))
             {
                 return (T)tryGetValue;
             }
@@ -16,9 +15,8 @@ namespace Template10.Common
 
         public bool TryGet<T>(string key, out T value)
         {
-            object tryGetValue;
             bool success = false;
-            if (success = TryGetValue(key, out tryGetValue))
+            if (success = TryGetValue(key, out object tryGetValue))
             {
                 value = (T)tryGetValue;
             }

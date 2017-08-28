@@ -107,7 +107,7 @@
 //                Read
 //                Container: Not applicable on blob container.
 //                Blob: Gives the ability to read the contents of the blob. Also gives the ability to read the metadata and properties of the blob as well.
- 
+
 //                Write
 //                Container: Gives the ability to upload one or more blobs in blob container. Also gives the ability to update properties, metadata and create snapshots of a blob.
 //                Blob: Give the ability to upload a new blob (by the same name) or overwrite an existing blob (by the same name). Also gives the ability to update properties, metadata and create snapshots of a blob.
@@ -115,7 +115,7 @@
 //                List
 //                Container: Lists the blobs in the blob container.
 //                Blob: Not applicable on blobs.
- 
+
 //                Delete
 //                Container: Not applicable on blob container.
 //                Blob: Gives the ability to delete the blob.

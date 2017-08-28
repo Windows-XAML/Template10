@@ -1,8 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:behaviors="using:Template10.Behaviors"
-                    xmlns:controls="using:Template10.Controls"
-                    xmlns:interactivity="using:Microsoft.Xaml.Interactivity">
+                    xmlns:controls="using:Template10.Controls">
 
     <Style TargetType="controls:Resizer">
         <Setter Property="GrabberBrush" Value="{ThemeResource SystemAccentColor}" />

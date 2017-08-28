@@ -1,5 +1,5 @@
-﻿using Microsoft.Xaml.Interactivity;
-using System;
+﻿using System;
+using Microsoft.Xaml.Interactivity;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Markup;
 

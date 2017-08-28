@@ -2,12 +2,12 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using Windows.UI.Xaml.Navigation;
-using Template10.Samples.MasterDetailSample.Models;
-using Template10.Samples.MasterDetailSample.Views;
 using Template10.Common;
 using Template10.Mvvm;
+using Template10.Samples.MasterDetailSample.Models;
+using Template10.Samples.MasterDetailSample.Views;
 using Template10.Utils;
+using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Samples.MasterDetailSample.ViewModels
 {

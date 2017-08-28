@@ -1,18 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Build.Framework;
-using Microsoft.Build.Utilities;
 using System.IO;
-using System.Xml.Linq;
-using System.Collections;
-using System.Xml.XPath;
-using System.Xml;
+using System.IO.Compression;
+using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using System.IO.Compression;
+using System.Xml.Linq;
+using Microsoft.Build.Framework;
 
 namespace Template10.MSBUILD
 {

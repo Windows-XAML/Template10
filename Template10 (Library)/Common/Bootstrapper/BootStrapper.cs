@@ -6,15 +6,14 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Template10.Services.NavigationService;
+using Template10.Services.ViewService;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.ExtendedExecution;
 using Windows.Foundation.Metadata;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Template10.Services.ViewService;
-using System.Threading;
-using Windows.ApplicationModel.ExtendedExecution;
 
 namespace Template10.Common
 {
@@ -269,8 +268,7 @@ namespace Template10.Common
                     return nav as INavigationService;
             }
 
-            var navigationService = new NavigationService(frame);
-            navigationService.BackButtonHandling = backButton;
+            var navigationService = new NavigationService(frame) { BackButtonHandling = backButton };
             WindowWrapper.Current().NavigationServices.Add(navigationService);
 
             if (backButton == BackButton.Attach)
@@ -288,10 +286,10 @@ namespace Template10.Common
 
             // this is always okay to check, default or not
             // expire any state (based on expiry)
-            DateTime cacheDate;
             // default the cache age to very fresh if not known
+
             var otherwise = DateTime.MinValue.ToString();
-            if (DateTime.TryParse(navigationService.Suspension.GetFrameState().Read(CacheDateKey, otherwise), out cacheDate))
+            if (DateTime.TryParse(navigationService.Suspension.GetFrameState().Read(CacheDateKey, otherwise), out DateTime cacheDate))
             {
                 var cacheAge = DateTime.Now.Subtract(cacheDate);
                 if (cacheAge >= CacheMaxDuration)
@@ -549,8 +547,7 @@ namespace Template10.Common
                 // handle if pre-launch (no UI)
                 if (IsPrelaunch)
                 {
-                    var runOnStartAsync = false;
-                    await OnPrelaunchAsync(e, out runOnStartAsync);
+                    await OnPrelaunchAsync(e, out bool runOnStartAsync);
                     CurrentState = BootstrapperStates.Prelaunched;
                     if (!runOnStartAsync)
                     {
@@ -667,8 +664,7 @@ namespace Template10.Common
                 if (key == typeof(Controls.CustomTitleBar))
                 {
                     var style = resource.Value as Style;
-                    var title = new Controls.CustomTitleBar();
-                    title.Style = style;
+                    var title = new Controls.CustomTitleBar() { Style = style };
                 }
                 count--;
                 if (count == 0) break;

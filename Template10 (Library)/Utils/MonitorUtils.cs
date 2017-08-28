@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Template10.Common;
-using Windows.Devices.Input;
 using Windows.Graphics.Display;
 using Windows.UI.ViewManagement;
 

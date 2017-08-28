@@ -1,5 +1,5 @@
-﻿using Template10.Samples.IncrementalLoadingSample.Models;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Template10.Samples.IncrementalLoadingSample.Models;
 
 namespace Template10.Samples.IncrementalLoadingSample.Services.GithubService
 {

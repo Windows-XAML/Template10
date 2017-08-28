@@ -1,18 +1,18 @@
-﻿using Portable = Template10.Mobile.Services.NavigationService;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Template10.Common;
+using Template10.Services.SerializationService;
+using Template10.Services.ViewService;
+using Template10.Utils;
 using Windows.ApplicationModel.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
-using Template10.Services.SerializationService;
-using Template10.Services.ViewService;
-using Template10.Utils;
+using Portable = Template10.Mobile.Services.NavigationService;
 
 namespace Template10.Services.NavigationService
 {
@@ -127,9 +127,8 @@ namespace Template10.Services.NavigationService
         {
             DebugWrite($"Key: {key}, Parameter: {parameter}, NavigationTransitionInfo: {infoOverride}");
 
-            Type page;
             var keys = BootStrapper.Current.PageKeys<T>();
-            if (!keys.TryGetValue(key, out page))
+            if (!keys.TryGetValue(key, out Type page))
             {
                 throw new KeyNotFoundException(key.ToString());
             }

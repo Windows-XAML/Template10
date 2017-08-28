@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using Template10.Utils;
 using Windows.UI;
 using Windows.UI.Xaml.Data;
-using System.Text.RegularExpressions;
 
 namespace Template10.Samples.BottomAppBarSample.Converters
 {

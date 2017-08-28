@@ -1,13 +1,7 @@
-﻿using System.ComponentModel;
-using System.Linq;
-using System;
-using Template10.Common;
-using Template10.Controls;
+﻿using Template10.Controls;
 using Template10.Services.NavigationService;
-using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Template10.Mvvm;
 
 namespace Template10.Samples.MasterDetailSample.Views
 {

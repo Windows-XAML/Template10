@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Windows.UI.Xaml.Navigation;
 using Template10.Common;
+using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Services.NavigationService
 {

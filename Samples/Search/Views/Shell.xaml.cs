@@ -10,7 +10,7 @@ namespace Template10.Samples.SearchSample.Views
     public sealed partial class Shell : Page
     {
         public static Shell Instance { get; set; }
-        private static WindowWrapper Window { get; set; }
+        private static IWindowWrapper Window { get; set; }
         public Shell(INavigationService navigationService)
         {
             Instance = this;
@@ -21,7 +21,7 @@ namespace Template10.Samples.SearchSample.Views
             MyHamburgerMenu.NavigationService = navigationService;
 
             // any nav change, reset to normal
-            navigationService.FrameFacade.Navigated += (s, e) =>
+            navigationService.Frame.Navigated += (s, e) =>
                 BusyModal.IsModal = SearchModal.IsModal = LoginModal.IsModal = false;
         }
 

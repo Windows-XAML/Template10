@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Samples.MvvmLightSample.Mvvm

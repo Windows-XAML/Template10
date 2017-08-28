@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
@@ -280,30 +276,28 @@ namespace Template10.Controls
             }
 
             var pathGeometry = new PathGeometry();
-            var pathFigure = new PathFigure();
-            pathFigure.IsClosed = true;
+            var pathFigure = new PathFigure() { IsClosed = true };
 
             var center =
-                this.Center ??
-                new Point(
+                this.Center ?? new Point(
                     outerRadius + this.StrokeThickness / 2,
                     outerRadius + this.StrokeThickness / 2);
 
             // Starting Point
-            pathFigure.StartPoint =
-                new Point(
+            pathFigure.StartPoint = new Point(
                     center.X + Math.Sin(StartAngle * Math.PI / 180) * innerRadius,
                     center.Y - Math.Cos(StartAngle * Math.PI / 180) * innerRadius);
 
             // Inner Arc
-            var innerArcSegment = new ArcSegment();
-            innerArcSegment.IsLargeArc = (EndAngle - StartAngle) >= 180.0;
-            innerArcSegment.Point =
-                new Point(
+            var innerArcSegment = new ArcSegment()
+            {
+                IsLargeArc = (EndAngle - StartAngle) >= 180.0,
+                Size = new Size(innerRadius, innerRadius),
+                SweepDirection = SweepDirection.Clockwise,
+                Point = new Point(
                     center.X + Math.Sin(EndAngle * Math.PI / 180) * innerRadius,
-                    center.Y - Math.Cos(EndAngle * Math.PI / 180) * innerRadius);
-            innerArcSegment.Size = new Size(innerRadius, innerRadius);
-            innerArcSegment.SweepDirection = SweepDirection.Clockwise;
+                    center.Y - Math.Cos(EndAngle * Math.PI / 180) * innerRadius)
+            };
 
             var lineSegment =
                 new LineSegment
@@ -314,14 +308,15 @@ namespace Template10.Controls
                 };
 
             // Outer Arc
-            var outerArcSegment = new ArcSegment();
-            outerArcSegment.IsLargeArc = (EndAngle - StartAngle) >= 180.0;
-            outerArcSegment.Point =
-                new Point(
+            var outerArcSegment = new ArcSegment()
+            {
+                IsLargeArc = (EndAngle - StartAngle) >= 180.0,
+                Size = new Size(outerRadius, outerRadius),
+                SweepDirection = SweepDirection.Counterclockwise,
+                Point = new Point(
                         center.X + Math.Sin(StartAngle * Math.PI / 180) * outerRadius,
-                        center.Y - Math.Cos(StartAngle * Math.PI / 180) * outerRadius);
-            outerArcSegment.Size = new Size(outerRadius, outerRadius);
-            outerArcSegment.SweepDirection = SweepDirection.Counterclockwise;
+                        center.Y - Math.Cos(StartAngle * Math.PI / 180) * outerRadius)
+            };
 
             pathFigure.Segments.Add(innerArcSegment);
             pathFigure.Segments.Add(lineSegment);

@@ -1,12 +1,11 @@
-﻿using Microsoft.Xaml.Interactivity;
+﻿using System.Linq;
+using Microsoft.Xaml.Interactivity;
+using Template10.Controls;
+using Template10.Utils;
+using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Template10.Utils;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml.Media;
-using Template10.Controls;
 
 namespace Template10.Behaviors
 {

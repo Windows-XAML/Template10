@@ -1,9 +1,9 @@
-﻿using Template10.Samples.IncrementalLoadingSample.Extensions;
+﻿using System;
+using Template10.Mvvm;
+using Template10.Samples.IncrementalLoadingSample.Extensions;
 using Template10.Samples.IncrementalLoadingSample.Models;
 using Template10.Samples.IncrementalLoadingSample.Services.GithubService;
 using Template10.Samples.IncrementalLoadingSample.Shared;
-using System;
-using Template10.Mvvm;
 using Windows.System;
 
 namespace Template10.Samples.IncrementalLoadingSample.ViewModels

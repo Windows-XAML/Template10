@@ -1,6 +1,6 @@
 ﻿using Template10.Samples.TilesSample.ViewModels;
-using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Samples.TilesSample.Views
 {

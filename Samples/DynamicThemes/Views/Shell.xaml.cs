@@ -16,7 +16,7 @@ using Windows.UI.Xaml.Shapes;
 
 namespace Sample.Views
 {
-	public sealed partial class Shell : Page, INotifyPropertyChanged
+    public sealed partial class Shell : Page, INotifyPropertyChanged
 	{
 		public event PropertyChangedEventHandler PropertyChanged;
 		public static Shell Instance { get; set; }

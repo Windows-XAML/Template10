@@ -1,5 +1,5 @@
-﻿using Template10.Samples.IncrementalLoadingSample.Services.GithubService;
-using System;
+﻿using System;
+using Template10.Samples.IncrementalLoadingSample.Services.GithubService;
 using Windows.ApplicationModel;
 
 namespace Template10.Samples.IncrementalLoadingSample.ViewModels

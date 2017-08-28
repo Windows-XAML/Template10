@@ -2,9 +2,9 @@ using System;
 using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
-using Windows.UI.Xaml;
 using Template10.Common;
 using Template10.Utils;
+using Windows.UI.Xaml;
 
 namespace Template10.Mvvm
 {

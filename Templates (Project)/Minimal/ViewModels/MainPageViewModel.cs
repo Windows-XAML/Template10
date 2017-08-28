@@ -1,17 +1,9 @@
-﻿using Template10.Mvvm;
-using System.Collections.Generic;
-using System;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Template10.Mvvm;
 using Template10.Services.NavigationService;
 using Windows.UI.Xaml.Navigation;
-using Windows.UI.Xaml.Controls;
-using System.Threading;
-using Template10.Common;
-using Windows.UI.Core;
-using System.Diagnostics;
-using Windows.UI.Popups;
-using Template10.Utils;
 
 namespace Sample.ViewModels
 {
@@ -48,27 +40,21 @@ namespace Sample.ViewModels
 
         public override async Task OnNavigatingFromAsync(NavigatingEventArgs args)
         {
-            var goingToDetails = args.TargetPageType == typeof(Views.DetailPage);
-            if (goingToDetails)
-            {
-                var dialog = new ContentDialog
-                {
-                    Title = "Confirmation",
-                    Content = "Are you sure?",
-                    PrimaryButtonText = "Continue",
-                    SecondaryButtonText = "Cancel",
-                };
-                var result = await dialog.ShowAsyncEx();
-                args.Cancel = result == ContentDialogResult.Secondary;
-            }
+            args.Cancel = false;
+            await Task.CompletedTask;
         }
 
-        public void GotoDetailsPage() => NavigationService.Navigate(typeof(Views.DetailPage), Value);
+        public void GotoDetailsPage() =>
+            NavigationService.Navigate(typeof(Views.DetailPage), Value);
 
-        public void GotoSettings() => NavigationService.Navigate(typeof(Views.SettingsPage), 0);
+        public void GotoSettings() =>
+            NavigationService.Navigate(typeof(Views.SettingsPage), 0);
 
-        public void GotoPrivacy() => NavigationService.Navigate(typeof(Views.SettingsPage), 1);
+        public void GotoPrivacy() =>
+            NavigationService.Navigate(typeof(Views.SettingsPage), 1);
 
-        public void GotoAbout() => NavigationService.Navigate(typeof(Views.SettingsPage), 2);
+        public void GotoAbout() =>
+            NavigationService.Navigate(typeof(Views.SettingsPage), 2);
+
     }
 }

@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Windows.Web.Http;
 using Windows.Web.Http.Headers;
 

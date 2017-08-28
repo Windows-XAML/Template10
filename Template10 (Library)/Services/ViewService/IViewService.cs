@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 
 namespace Template10.Services.ViewService

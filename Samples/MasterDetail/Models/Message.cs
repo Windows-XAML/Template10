@@ -3,7 +3,7 @@ using Template10.Mvvm;
 
 namespace Template10.Samples.MasterDetailSample.Models
 {
-   public class Message : BindableBase
+    public class Message : BindableBase
     {
         string _Id = default(string);
         public string Id { get { return _Id; } set { Set(ref _Id, value); } }

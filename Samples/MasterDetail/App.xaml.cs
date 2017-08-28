@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using Windows.ApplicationModel.Activation;
-using Template10.Samples.MasterDetailSample.Views;
-using Windows.UI.Xaml;
 using Template10.Controls;
+using Template10.Samples.MasterDetailSample.Views;
+using Windows.ApplicationModel.Activation;
+using Windows.UI.Xaml;
 
 namespace Template10.Samples.MasterDetailSample
 {

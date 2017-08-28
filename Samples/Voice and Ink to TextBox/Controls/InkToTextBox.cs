@@ -1,9 +1,9 @@
-﻿using Template10.Samples.VoiceAndInkSample.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Template10.Samples.VoiceAndInkSample.Common;
 using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Input.Inking;

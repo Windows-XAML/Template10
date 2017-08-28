@@ -1,13 +1,12 @@
-﻿using Classic = Template10.Services.NavigationService;
-using Portable = Template10.Mobile.Services.NavigationService;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Template10.Common;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
-using System.Runtime.CompilerServices;
+using Portable = Template10.Mobile.Services.NavigationService;
 
 namespace Template10.Services.NavigationService
 {

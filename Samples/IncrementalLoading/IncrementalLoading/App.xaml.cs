@@ -1,6 +1,6 @@
-﻿using Template10.Samples.IncrementalLoadingSample.Views;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Template10.Common;
+using Template10.Samples.IncrementalLoadingSample.Views;
 using Windows.ApplicationModel.Activation;
 
 namespace Template10.Samples.IncrementalLoadingSample

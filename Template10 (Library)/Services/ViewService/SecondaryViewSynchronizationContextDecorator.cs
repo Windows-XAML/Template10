@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using Logging=Template10.Services.LoggingService.LoggingService;
+using Logging = Template10.Services.LoggingService.LoggingService;
 
 namespace Template10.Services.ViewService
 {
