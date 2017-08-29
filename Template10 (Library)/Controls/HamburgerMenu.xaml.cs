@@ -367,13 +367,13 @@ namespace Template10.Controls
         {
             // If splash screen then continue showing until navigated once
             if (e.NewValue.FrameFacade.BackStackDepth == 0
-                && e.NewValue.Frame.Content != null
+                && e.NewValue.FrameFacade.Content != null
                 && BootStrapper.Current.SplashFactory != null
                 && BootStrapper.Current.OriginalActivatedArgs.PreviousExecutionState != Windows.ApplicationModel.Activation.ApplicationExecutionState.Terminated)
             {
                 var once = false;
                 UpdateControl(true);
-                e.NewValue.FrameFacade.Navigated += (s, args) =>
+                e.NewValue.Navigated += (s, args) =>
                 {
                     if (!once)
                     {
