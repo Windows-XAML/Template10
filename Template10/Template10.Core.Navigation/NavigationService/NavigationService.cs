@@ -360,7 +360,6 @@ namespace Template10.Navigation
 
         public async Task<bool> RefreshAsync(object param)
         {
-            var history = FrameEx.BackStack.Last();
             return await NavigationOrchestratorAsync(CurrentPageType, param, NavigationMode.Refresh, () =>
             {
                 Windows.ApplicationModel.Resources.Core.ResourceContext.GetForCurrentView().Reset();
