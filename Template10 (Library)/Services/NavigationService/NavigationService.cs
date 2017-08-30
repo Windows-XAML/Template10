@@ -379,7 +379,6 @@ namespace Template10.Services.NavigationService
 
         public async Task<bool> RefreshAsync(object param)
         {
-            var history = FrameFacade.BackStack.Last();
             return await NavigationOrchestratorAsync(CurrentPageType, param, NavigationMode.Refresh, () =>
             {
                 Windows.ApplicationModel.Resources.Core.ResourceContext.GetForCurrentView().Reset();

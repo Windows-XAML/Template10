@@ -201,8 +201,7 @@ namespace Template10.Behaviors
             }
             else if (!this.isLoadedEventRegistered)
             {
-                FrameworkElement element = this.resolvedSource as FrameworkElement;
-                if (element != null && !EventTriggerBehaviorBase.IsElementLoaded(element))
+                if (this.resolvedSource is FrameworkElement element && !EventTriggerBehaviorBase.IsElementLoaded(element))
                 {
                     this.isLoadedEventRegistered = true;
                     element.Loaded += this.OnEvent;
