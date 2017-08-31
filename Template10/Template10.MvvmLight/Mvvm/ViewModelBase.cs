@@ -27,7 +27,7 @@ namespace Template10.Mvvm
 
         public async virtual Task<bool> CanNavigateAsync(IConfirmNavigationParameters parameters) => true;
 
-        // add helper properties
+        // add helper properties / ITemplate10ViewModel
 
         [JsonIgnore]
         public INavigationService NavigationService { get; set; }

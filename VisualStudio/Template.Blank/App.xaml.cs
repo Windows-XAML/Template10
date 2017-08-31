@@ -1,11 +1,11 @@
 ﻿using System;
 using Template10.Core;
 using Template10.Common;
-using Template10.Core;
 using Template10.Extensions;
 using Windows.ApplicationModel.Activation;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
+using Template10.Navigation;
 
 namespace Sample
 {
@@ -16,9 +16,10 @@ namespace Sample
             InitializeComponent();
         }
 
-        public override async Task OnStartAsync(IStartArgsEx e)
+
+        public override async Task OnStartAsync(IStartArgsEx e, INavigationService navService, ISessionState sessionState)
         {
-            await NavigationService.NavigateAsync(typeof(Views.MainPage));
+            await navService.NavigateAsync(typeof(Views.MainPage));
         }
     }
 }

@@ -68,7 +68,7 @@ namespace Template10.BootStrap
                 var isForeground = Central.Visibility == AppVisibilities.Foreground;
                 if (isUnspecified && isForeground) // && Revoked
                 {
-                    OnClose(new ClosedEventArgs(e.TryToExtendAsync));
+                    OnClose(new ClosedEventArgs());
                 }
             });
         }

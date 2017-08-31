@@ -17,6 +17,11 @@
     </d:Page.DataContext>
 
     <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <TextBox Margin="126,256,0,0" />
+
+        
+
         <controls:PageHeader
             x:Name="pageHeader"
             RelativePanel.AlignLeftWithPanel="True"
