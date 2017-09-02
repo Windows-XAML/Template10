@@ -17,7 +17,7 @@ namespace Sample.ViewModels
         {
             if (!Windows.ApplicationModel.DesignMode.DesignModeEnabled)
             {
-                _settings = Services.SettingsService.GetInstance();
+                _settings = new Services.SettingsService();
                 _marketplace = MarketplaceService.Create();
             }
         }

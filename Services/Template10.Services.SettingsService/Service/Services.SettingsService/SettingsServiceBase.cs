@@ -9,10 +9,10 @@ namespace Template10.Services.Settings
     {
         ApplicationDataContainer _DataContainer;
         ISerializationService _SerializationService;
-        public SettingsServiceBase(ApplicationDataContainer data, ISerializationService serializer)
+        public SettingsServiceBase(ApplicationDataContainer data, ISerializationService serializer = null)
         {
             _DataContainer = data;
-            _SerializationService = serializer;
+            _SerializationService = serializer = new JsonSerializationService();
         }
 
         protected T Read<T>(string key, T otherwise) => TryRead<T>(key, out var value) ? value : otherwise;

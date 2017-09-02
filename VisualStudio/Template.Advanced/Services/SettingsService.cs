@@ -14,7 +14,7 @@ namespace Sample.Services
     {
         Template10.Services.Logging.ILoggingService _logger;
         private SettingsService(Template10.Services.Logging.ILoggingService logger)
-            : base(Windows.Storage.ApplicationData.Current.LocalSettings, SerializationService)
+            : base(Windows.Storage.ApplicationData.Current.LocalSettings)
         {
             _logger = logger;
         }
@@ -25,22 +25,16 @@ namespace Sample.Services
             set => Write(nameof(DefaultTheme), value.ToString());
         }
 
-        public TimeSpan CacheMaxDuration
+        public ShellBackButtonPreferences ShellBackButtonPreference
         {
-            get => Read(nameof(CacheMaxDuration), TimeSpan.FromHours(1));
-            set => Write(nameof(CacheMaxDuration), value);
+            get => Read(nameof(ShellBackButtonPreference), ShellBackButtonPreferences.AutoShowInShell);
+            set => Write(nameof(ShellBackButtonPreference), value);
         }
 
         public string BusyText
         {
             get => Read(nameof(BusyText), "Please wait...");
             set => Write(nameof(BusyText), value);
-        }
-
-        public ShellBackButtonPreferences ShellBackButtonPreference
-        {
-            get => Read(nameof(ShellBackButtonPreference), ShellBackButtonPreferences.AutoShowInShell);
-            set => Write(nameof(ShellBackButtonPreference), value);
         }
 
         private new void Write<T>(string key, T value)
@@ -58,26 +52,11 @@ namespace Sample.Services
 
             WindowEx.Current().Dispatcher.Dispatch(() =>
             {
-                switch (key)
+                if (key == nameof(DefaultTheme))
                 {
-                    case nameof(ShellBackButtonPreference):
-                        // hide/show let the service handle it
-                        BackButtonService.UpdateBackButton(NavigationService.Default.CanGoBack);
-                        break;
-                    case nameof(DefaultTheme):
-                        // update the requested theme
-                        (Window.Current.Content as FrameworkElement).RequestedTheme = DefaultTheme;
-                        break;
-                    case nameof(CacheMaxDuration):
-                        // update the navigation setting
-                        Template10.Navigation.Settings.CacheMaxDuration = CacheMaxDuration;
-                        break;
+                    (Window.Current.Content as FrameworkElement).RequestedTheme = DefaultTheme;
                 }
             });
         }
-
-        public static IContainerService ContainerService => Template10.Services.Container.ContainerService.Default;
-        public static IBackButtonService BackButtonService => ContainerService.Resolve<IBackButtonService>();
-        public static ISerializationService SerializationService => ContainerService.Resolve<ISerializationService>();
     }
 }

@@ -11,6 +11,7 @@ using Template10.Strategies;
 using Template10.Services.Container;
 using Sample.Views;
 using Template10.Navigation;
+using Sample.Services;
 
 namespace Sample
 {
@@ -24,17 +25,18 @@ namespace Sample
 
         public override Task OnInitializeAsync()
         {
-            SetupSettings(Services.SettingsService.GetInstance());
+            SetupSettings(new SettingsService());
             return base.OnInitializeAsync();
         }
 
-        private void SetupSettings(Services.SettingsService settings)
+        private void SetupSettings(ISettingsService settings)
         {
             Template10.Settings.DefaultTheme = settings.DefaultTheme;
             Template10.Settings.ShellBackButtonPreference = settings.ShellBackButtonPreference;
-            Template10.Settings.CacheMaxDuration = settings.CacheMaxDuration;
+            Template10.Settings.CacheMaxDuration = TimeSpan.FromDays(2);
             Template10.Settings.RequireSerializableParameters = true;
-            Template10.Navigation.Settings.PageKeys
+            Template10.Settings.ShowExtendedSplashScreen = true;
+        }
 
         public override async Task OnStartAsync(IStartArgsEx e, INavigationService navService, ISessionState sessionState)
         {
