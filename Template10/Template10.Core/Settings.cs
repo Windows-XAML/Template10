@@ -48,12 +48,6 @@ namespace Template10
             set => Strategies.Settings.AppAlwaysResumes = value;
         }
 
-        public static bool EnableCustomTitleBar
-        {
-            get => Strategies.Settings.EnableCustomTitleBar;
-            set => Strategies.Settings.EnableCustomTitleBar = value;
-        }
-
         public static bool EnableExtendedSessionStrategy
         {
             get => Strategies.Settings.EnableExtendedSessionStrategy;

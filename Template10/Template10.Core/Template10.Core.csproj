@@ -131,9 +131,6 @@
     <Compile Include="Strategies\LifecycleStrategy\Settings.cs" />
     <Compile Include="Strategies\NetworkAvailableStrategy\DefaultNetworkAvailableStrategy.cs" />
     <Compile Include="Strategies\SplashStrategy\DefaultSplashStrategy.cs" />
-    <Compile Include="Strategies\TitleBarStrategy\DefaultTitleBarStrategy.cs" />
-    <Compile Include="Strategies\TitleBarStrategy\ITitleBarStrategy.cs" />
-    <Compile Include="Strategies\TitleBarStrategy\Settings.cs" />
     <EmbeddedResource Include="Properties\Template10.Core.rd.xml" />
   </ItemGroup>
   <ItemGroup>
