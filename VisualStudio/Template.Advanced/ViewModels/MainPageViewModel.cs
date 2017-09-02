@@ -5,23 +5,23 @@ using Template10.Mvvm;
 using Template10.Extensions;
 using Windows.UI.Xaml.Controls;
 using Template10.Navigation;
+using Template10.Services.Dialog;
+using Template10.Services.Logging;
+using Template10.Services.Resources;
 
 namespace Sample.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
-        Template10.Services.Logging.ILoggingService _logger;
-        Template10.Services.Dialog.IContentService _content;
-        Template10.Services.Resources.IResourceService _resources;
+        ILoggingService _loggingService;
+        IDialogService _dialogService;
+        IResourceService _resourceService;
 
-        public MainPageViewModel(
-            Template10.Services.Dialog.IContentService content,
-            Template10.Services.Logging.ILoggingService logger,
-            Template10.Services.Resources.IResourceService resources)
+        public MainPageViewModel(IDialogService dialog, ILoggingService logger, IResourceService resources)
         {
-            _logger = logger;
-            _content = content;
-            _resources = resources;
+            _loggingService = logger;
+            _dialogService = dialog;
+            _resourceService = resources;
         }
 
         static string _Value = "Gas";
@@ -56,32 +56,21 @@ namespace Sample.ViewModels
 
         public async override Task<bool> CanNavigateAsync(IConfirmNavigationParameters parameters)
         {
-            if (parameters.ToNavigationInfo.PageType == typeof(Views.DetailPage))
-            {
-                return await PromptAreYouSureAsync();
-            }
-            else
-            {
-                return true;
-            }
+            var prompt = _resourceService.TryGetLocalizedString("AreYouSure", out var value) ? value : "Are you sure?";
+            var result = await _dialogService.PromptAsync(prompt);
+            return result == MessageBoxResult.Yes;
         }
 
-        private async Task<bool> PromptAreYouSureAsync()
-        {
-            var result = await _content.ShowAsync(
-                content: "Are you sure?",
-                title: "Confirmation",
-                primaryButton: new Template10.Services.Dialog.ContentButtonInfo("Continue", null),
-                secondaryButton: new Template10.Services.Dialog.ContentButtonInfo("Cancel", null));
-            return result == ContentDialogResult.Primary;
-        }
+        public void GotoDetailsPage()
+            => NavigationService.Navigate(typeof(Views.DetailPage), Value);
 
-        public void GotoDetailsPage() => NavigationService.Navigate(typeof(Views.DetailPage), Value);
+        public void GotoSettings()
+            => NavigationService.Navigate(typeof(Views.SettingsPage), 0);
 
-        public void GotoSettings() => NavigationService.Navigate(typeof(Views.SettingsPage), 0);
+        public void GotoPrivacy()
+            => NavigationService.Navigate(typeof(Views.SettingsPage), 1);
 
-        public void GotoPrivacy() => NavigationService.Navigate(typeof(Views.SettingsPage), 1);
-
-        public void GotoAbout() => NavigationService.Navigate(typeof(Views.SettingsPage), 2);
+        public void GotoAbout()
+            => NavigationService.Navigate(typeof(Views.SettingsPage), 2);
     }
 }

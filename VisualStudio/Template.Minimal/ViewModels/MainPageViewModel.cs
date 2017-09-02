@@ -2,17 +2,24 @@
 using Template10.Extensions;
 using Template10.Mvvm;
 using Template10.Navigation;
+using Template10.Services.Dialog;
 using Windows.UI.Xaml.Controls;
 
 namespace Sample.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
+        IDialogService _DialogService;
+
         public MainPageViewModel()
         {
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
             {
                 Value = "Designtime value";
+            }
+            else
+            {
+                _DialogService = new DialogService();
             }
         }
 
@@ -38,23 +45,8 @@ namespace Sample.ViewModels
 
         public async override Task<bool> CanNavigateAsync(IConfirmNavigationParameters parameters)
         {
-            var goingToDetails = parameters.ToNavigationInfo.PageType == typeof(Views.DetailPage);
-            if (goingToDetails)
-            {
-                var dialog = new ContentDialog
-                {
-                    Title = "Confirmation",
-                    Content = "Are you sure?",
-                    PrimaryButtonText = "Continue",
-                    SecondaryButtonText = "Cancel",
-                };
-                var result = await dialog.ShowAsyncEx();
-                return result != ContentDialogResult.Secondary;
-            }
-            else
-            {
-                return true;
-            }
+            var result = await _DialogService.PromptAsync("Are you sure?");
+            return result == MessageBoxResult.Yes;
         }
 
         public void GotoDetailsPage() => NavigationService.Navigate(typeof(Views.DetailPage), Value);

@@ -10,6 +10,8 @@ namespace Template10.Core
         IPropertySet settings;
         public SettingsPropertyBagPersistenceStrategy(IPropertySet settings) => this.settings = settings;
 
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+
         public async Task ClearAsync() => settings.Clear();
 
         public async Task<string[]> GetKeysAsync() => settings.Keys.ToArray();
@@ -17,5 +19,7 @@ namespace Template10.Core
         public async Task<object> LoadAsync(string key) => settings[key] as string;
 
         public async Task SaveAsync(string key, object value) => settings[key] = value as string;
+
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
     }
 }

@@ -106,12 +106,21 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Controls\MessageBoxEx2.cs" />
+    <Compile Include="Controls\MessageBoxResult.cs" />
+    <Compile Include="Controls\MessageBoxType.cs" />
     <Compile Include="DialogManager.cs" />
+    <Compile Include="Controls\ContentDialogEx.cs" />
     <Compile Include="DialogService\DialogService.cs" />
+    <Compile Include="Controls\MessageBoxEx.cs" />
+    <Compile Include="Extensions\FluentExtensions.cs" />
     <Compile Include="DialogService\IDialogService.cs" />
-    <Compile Include="Extensions\DialogExtensions.cs" />
-    <Compile Include="ContentService\IContentService.cs" />
+    <Compile Include="Extensions\Extensions.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resolver\DefaultResourceResolver.cs" />
+    <Compile Include="Resolver\IResourceResolver.cs" />
+    <Compile Include="Resolver\ResourceTypes.cs" />
     <EmbeddedResource Include="Properties\Service.rd.xml" />
   </ItemGroup>
   <ItemGroup>

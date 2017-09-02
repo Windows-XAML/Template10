@@ -19,6 +19,19 @@ namespace Template10.Services.Resources
 
         public string GetLocalizedString(string key) => Helper.GetLocalizedStringAsync(key);
 
+        public bool TryGetLocalizedString(string key, out string value)
+        {
+            try
+            {
+                value = Helper.GetLocalizedStringAsync(key);
+                return true;
+            }
+            catch (Exception)
+            {
+                value = default(string);
+                return false;
+            }
+        }
 
         public string GetLocalizedString(Uri uri) => Helper.GetLocalizedStringAsync(uri);
 

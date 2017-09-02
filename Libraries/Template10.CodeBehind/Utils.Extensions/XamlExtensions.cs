@@ -8,11 +8,15 @@ namespace Template10.Extensions
 {
     public static class XamlExtensions
     {
+#pragma warning disable CS0618 // Type or member is obsolete
+
         public static void UpdateBindings(this Page page) => XamlUtils.UpdateBindings(page);
 
         public static void InitializeBindings(this Page page) => XamlUtils.InitializeBindings(page);
 
         public static void StopTrackingBindings(this Page page) => XamlUtils.StopTrackingBindings(page);
+
+#pragma warning restore CS0618 // Type or member is obsolete
 
         public static T FirstAncestor<T>(this DependencyObject control) where T : DependencyObject
         {

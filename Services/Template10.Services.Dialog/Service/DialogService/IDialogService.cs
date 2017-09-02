@@ -5,7 +5,7 @@ namespace Template10.Services.Dialog
 {
     public interface IDialogService
     {
-        Task<IUICommand> ShowAsync(string content, string title = default(string));
-        Task<IUICommand> ShowAsync(string content, string title, params IUICommand[] commands);
+        Task<MessageBoxResult> AlertAsync(string content, IResourceResolver resolver = null);
+        Task<MessageBoxResult> PromptAsync(string content, MessageBoxType type = MessageBoxType.YesNo, IResourceResolver resolver = null);
     }
 }

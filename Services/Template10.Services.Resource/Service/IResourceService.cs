@@ -26,6 +26,8 @@ namespace Template10.Services.Resources
         /// <returns></returns> 
         string GetLocalizedString(string key);
 
+        bool TryGetLocalizedString(string key, out string value);
+        
         /// <summary> 
         /// Get a localized string by Uri 
         /// </summary> 

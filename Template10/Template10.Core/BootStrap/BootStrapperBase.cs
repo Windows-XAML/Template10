@@ -15,6 +15,7 @@ using Template10.Services.Gesture;
 using Template10.Messages;
 using Template10.Services.Resources;
 using Template10.Services.Network;
+using Template10.Services.Dialog;
 
 namespace Template10.BootStrap
 {
@@ -76,7 +77,7 @@ namespace Template10.BootStrap
         private void HandleAfterFirstWindowCreated(WindowCreatedMessage message)
         {
             LogThis();
-            
+
             // unsubscribe so this is only called a single time
             Central.Messenger.Unsubscribe<WindowCreatedMessage>(this, HandleAfterFirstWindowCreated);
 
@@ -129,6 +130,7 @@ namespace Template10.BootStrap
             container.Register<IGestureService, GestureService>();
             container.Register<IResourceService, ResourceService>();
             container.Register<INetworkAvailableService, NetworkAvailableService>();
+            container.Register<IDialogService, DialogService>();
 
             // strategies
             container.RegisterInstance<IBootStrapperXaml>(this);
@@ -176,7 +178,7 @@ namespace Template10.BootStrap
 
     public abstract partial class BootStrapperBase : Application
     {
-        // clean up the Application overrides
+        // hide the Application overrides
 
         protected override sealed void OnActivated(IActivatedEventArgs e) => LogThis(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate));
         protected override sealed void OnCachedFileUpdaterActivated(CachedFileUpdaterActivatedEventArgs e) => LogThis(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate));
@@ -189,7 +191,7 @@ namespace Template10.BootStrap
         protected override sealed void OnBackgroundActivated(BackgroundActivatedEventArgs e) => LogThis(() => Central.Messenger.Send(new Messages.BackgroundActivatedMessage { EventArgs = e }));
         protected override sealed void OnWindowCreated(WindowCreatedEventArgs e) => LogThis(() => BootStrapperStrategy.OnWindowCreated(e));
 
-        // override built-in Application events
+        // hide built-in Application events
 
 #pragma warning disable CS0067
         private new event EventHandler<object> Resuming;
@@ -199,7 +201,7 @@ namespace Template10.BootStrap
         private new event LeavingBackgroundEventHandler LeavingBackground;
 #pragma warning restore CS0067
 
-        // clean up the object API
+        // hide the object API
 
         public sealed override bool Equals(object obj) => base.Equals(obj);
         public sealed override int GetHashCode() => base.GetHashCode();
@@ -209,12 +211,12 @@ namespace Template10.BootStrap
     public abstract partial class BootStrapperBase : ILoggable
     {
         ILoggingService ILoggable.LoggingService => Central.Logging;
-        void LogThis(Action action, string text = null, Severities severity = Severities.Template10, [CallerMemberName]string caller = null)
+        public void LogThis(Action action, string text = null, Severities severity = Severities.Template10, [CallerMemberName]string caller = null)
         {
             action();
             (this as ILoggable).LogThis(text, severity, caller: $"{caller}");
         }
-        void LogThis(string text = null, Severities severity = Severities.Template10, [CallerMemberName]string caller = null)
+        public void LogThis(string text = null, Severities severity = Severities.Template10, [CallerMemberName]string caller = null)
             => (this as ILoggable).LogThis(text, severity, caller: $"{caller}");
         void ILoggable.LogThis(string text, Severities severity, string caller)
             => (this as ILoggable).LoggingService.WriteLine(text, severity, caller: $"{caller}");

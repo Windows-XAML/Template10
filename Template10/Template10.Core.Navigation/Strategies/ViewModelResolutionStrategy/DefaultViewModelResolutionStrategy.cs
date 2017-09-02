@@ -6,6 +6,8 @@ namespace Template10.Strategies
 {
     public class DefaultViewModelResolutionStrategy : IViewModelResolutionStrategy
     {
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+
         public async Task<object> ResolveViewModelAsync(Type type)
         {
             return null;
@@ -15,5 +17,7 @@ namespace Template10.Strategies
         {
             return null;
         }
+
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
     }
 }

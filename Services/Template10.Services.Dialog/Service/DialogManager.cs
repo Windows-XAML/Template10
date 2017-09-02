@@ -9,18 +9,17 @@ namespace Template10.Services.Dialog
 {
     internal static class DialogManager
     {
-        static SemaphoreSlim _OnlyOneAsync = new SemaphoreSlim(1, 1);
-        internal static async Task<T> OnlyOneAsync<T>(Func<Task<T>> show)
+        static SemaphoreSlim _OneAtATimeAsync = new SemaphoreSlim(1, 1);
+        internal static async Task<T> OneAtATimeAsync<T>(Func<Task<T>> show, TimeSpan? timeout, CancellationToken? token)
         {
-            await _OnlyOneAsync.WaitAsync();
-            try
+            if (!await _OneAtATimeAsync.WaitAsync(timeout ?? TimeSpan.MaxValue, token ?? new CancellationToken(false)))
             {
-                return await show();
+                throw new Exception($"{nameof(DialogManager)}.{nameof(OneAtATimeAsync)} has timed out.");
             }
-            finally
-            {
-                _OnlyOneAsync.Release();
-            }
+            try { return await show(); }
+            finally { _OneAtATimeAsync.Release(); }
         }
+
+
     }
 }

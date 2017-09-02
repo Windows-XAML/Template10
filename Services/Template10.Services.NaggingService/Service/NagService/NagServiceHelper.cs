@@ -7,6 +7,11 @@ using Windows.UI.Popups;
 
 namespace Template10.Services.Nag
 {
+    public static class Settings
+    {
+        public static IResourceResolver CustomResolver { get; set; } = null;
+    }
+
     public class NagServiceHelper
     {
         readonly IDialogService _dialogService;
@@ -138,22 +143,22 @@ namespace Template10.Services.Nag
 
         private async Task<NagResponse> ShowNag(NagObject nag)
         {
-            var response = NagResponse.NoResponse;
+            MessageBoxResult result = MessageBoxResult.Cancel;
             if (nag.AllowDefer)
             {
-                await _dialogService.ShowAsync(nag.Message, nag.Title,
-                    new UICommand(nag.AcceptText, command => response = NagResponse.Accept),
-                    new UICommand(nag.DeclineText, command => response = NagResponse.Decline),
-                    new UICommand(nag.DeferText, command => response = NagResponse.Defer));
+                result = await _dialogService.PromptAsync(nag.Message, MessageBoxType.YesNoCancel, Settings.CustomResolver);
             }
             else
             {
-                await _dialogService.ShowAsync(nag.Message, nag.Title,
-                    new UICommand(nag.AcceptText, command => response = NagResponse.Accept),
-                    new UICommand(nag.DeclineText, command => response = NagResponse.Decline));
+                result = await _dialogService.PromptAsync(nag.Message, MessageBoxType.YesNo, Settings.CustomResolver);
             }
-
-            return response;
+            switch (result)
+            {
+                case MessageBoxResult.Cancel: return NagResponse.Defer;
+                case MessageBoxResult.No: return NagResponse.Decline;
+                case MessageBoxResult.Yes: return NagResponse.Accept;
+                default: return NagResponse.NoResponse;
+            }
         }
 
         private static string GetFileName(string nagId)
