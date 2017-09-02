@@ -22,21 +22,18 @@ namespace Template10.Strategies
         IMessengerService _messengerService;
         IExtendedSessionStrategy _extendedSessionStrategy;
         IBackButtonService _backButtonService;
-        ITitleBarStrategy _titleBarStrategy;
         ISplashStrategy _splashStrategy;
         public DefaultBootStrapperStrategy(
             ILifecycleStrategy lifecycleStrategy,
             IMessengerService messengerService,
             IExtendedSessionStrategy extendedSessionStrategy,
             IBackButtonService backButtonService,
-            ITitleBarStrategy titleBarStrategy,
 ISplashStrategy splashStrategy)
         {
             _lifecycleStrategy = lifecycleStrategy;
             _messengerService = messengerService;
             _extendedSessionStrategy = extendedSessionStrategy;
             _backButtonService = backButtonService;
-            _titleBarStrategy = titleBarStrategy;
             _splashStrategy = splashStrategy;
             _status = new ValueWithHistory<BootstrapperStates>(BootstrapperStates.None, (date, before, after) =>
             {
@@ -224,8 +221,6 @@ ISplashStrategy splashStrategy)
                         }, BootstrapperStates.HiddenSplash);
 
                     }, BootstrapperStates.Launched);
-
-                    _titleBarStrategy.Update();
 
                     await _extendedSessionStrategy.StartupAsync(args);
                 }

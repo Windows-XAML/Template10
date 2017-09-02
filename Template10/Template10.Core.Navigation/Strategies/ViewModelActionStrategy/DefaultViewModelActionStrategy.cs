@@ -9,18 +9,19 @@ using Template10.Extensions;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using T10v2 = Template10.Navigation;
+using Template10.Core;
 
 namespace Template10.Strategies
 {
 
     public class DefaultViewModelActionStrategy : Services.Logging.Loggable, IViewModelActionStrategy
     {
-        public DefaultViewModelActionStrategy(Core.ISessionState sessionState)
+        public DefaultViewModelActionStrategy(ISessionState sessionState)
         {
             this.SessionState = sessionState;
         }
 
-        public Core.ISessionState SessionState { get; private set; }
+        public ISessionState SessionState { get; private set; }
 
         public async Task<bool> NavigatingToAsync((object ViewModel, NavigationMode NavigationMode, bool Resuming) operation, INavigationInfo from, INavigationInfo to, INavigationService nav)
         {
@@ -28,7 +29,7 @@ namespace Template10.Strategies
 
             if (operation.ViewModel is T10v2.INavigatingToAwareAsync vm && vm != null)
             {
-                var parameters = new T10v2.NavigatingToParameters(operation.NavigationMode.ToPortableNavigationMode(), from, to, operation.Resuming, SessionState);
+                var parameters = new T10v2.NavigatingToParameters(operation.NavigationMode.ToPortableNavigationMode(), from, to, operation.Resuming, this.SessionState);
                 return await vm.OnNavigatingToAsync(parameters);
             }
             else

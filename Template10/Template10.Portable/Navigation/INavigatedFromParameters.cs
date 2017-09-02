@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Template10.Common;
+using Template10.Core;
 
 namespace Template10.Navigation
 {
@@ -13,7 +14,7 @@ namespace Template10.Navigation
 
     public class NavigatedFromParameters : NavigationParametersBase, INavigatedFromParameters
     {
-        public NavigatedFromParameters(bool suspending, INavigationInfo from, INavigationInfo to, IPropertyBagEx sessionState)
+        public NavigatedFromParameters(bool suspending, INavigationInfo from, INavigationInfo to, ISessionState sessionState)
             : base(from, to, sessionState)
         {
             Suspending = suspending;

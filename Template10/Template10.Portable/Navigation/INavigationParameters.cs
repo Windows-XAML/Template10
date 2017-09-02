@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Template10.Common;
+using Template10.Core;
 
 namespace Template10.Navigation
 {
@@ -12,7 +13,7 @@ namespace Template10.Navigation
 
     public abstract class NavigationParametersBase : INavigationParameters
     {
-        public NavigationParametersBase(INavigationInfo from, INavigationInfo to, IPropertyBagEx sessionState)
+        public NavigationParametersBase(INavigationInfo from, INavigationInfo to, ISessionState sessionState)
         {
             FromNavigationInfo = from;
             ToNavigationInfo = to;

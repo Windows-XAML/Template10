@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Template10.Common;
+using Template10.Core;
 
 namespace Template10.Navigation
 {
@@ -11,7 +12,8 @@ namespace Template10.Navigation
 
     public class ConfirmNavigationParameters : NavigationParametersBase, IConfirmNavigationParameters
     {
-        public ConfirmNavigationParameters(INavigationInfo from, INavigationInfo to, IPropertyBagEx sessionState) : base(from, to, sessionState)
+        public ConfirmNavigationParameters(INavigationInfo from, INavigationInfo to, ISessionState sessionState) 
+            : base(from, to, sessionState)
         {
             // empty
         }
