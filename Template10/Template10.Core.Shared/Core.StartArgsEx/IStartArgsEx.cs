@@ -11,7 +11,7 @@ namespace Template10.Core
 
         object EventArgs { get; }
 
-        Windows.ApplicationModel.Activation.BackgroundActivatedEventArgs BackgroundActivatedEventArgs { get; }
+        BackgroundActivatedEventArgs BackgroundActivatedEventArgs { get; }
         CachedFileUpdaterActivatedEventArgs CachedFileUpdaterActivatedEventArgs { get; }
         FileActivatedEventArgs FileActivatedEventArgs { get; }
         FileOpenPickerActivatedEventArgs FileOpenPickerActivatedEventArgs { get; }

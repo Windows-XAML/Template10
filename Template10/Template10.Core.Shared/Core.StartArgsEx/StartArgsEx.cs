@@ -58,7 +58,7 @@ namespace Template10.Core
         public LaunchActivatedEventArgs LaunchActivatedEventArgs => EventArgs as LaunchActivatedEventArgs;
         public BackgroundActivatedEventArgs BackgroundActivatedEventArgs => EventArgs as BackgroundActivatedEventArgs;
 
-        public StartArgsEx.StartCauses StartCause
+        public StartCauses StartCause
         {
             get
             {
@@ -66,33 +66,33 @@ namespace Template10.Core
                 {
                     case IBackgroundActivatedEventArgs e:
                         {
-                            return StartArgsEx.StartCauses.BackgroundTrigger;
+                            return StartCauses.BackgroundTrigger;
                         }
                     case IToastNotificationActivatedEventArgs e:
                         {
-                            return StartArgsEx.StartCauses.Toast;
+                            return StartCauses.Toast;
                         }
                     // starting in RS3
                     // https://blogs.windows.com/buildingapps/2017/07/28/restart-app-programmatically/#1sGJmiirzC2MtROE.97
                     case IActivatedEventArgs e when (e != null && e.Kind == ActivationKind.Launch && e.PreviousExecutionState == ApplicationExecutionState.Terminated):
                         {
-                            return StartArgsEx.StartCauses.Restart;
+                            return StartCauses.Restart;
                         }
                     // TODO for RS3: ICommandLine
                     case ILaunchActivatedEventArgs e when (e != null):
                         switch (e.TileId)
                         {
                             case "App" when string.IsNullOrEmpty(e?.Arguments):
-                                return StartArgsEx.StartCauses.Primary;
+                                return StartCauses.Primary;
                             case "App" when !string.IsNullOrEmpty(e?.Arguments):
-                                return StartArgsEx.StartCauses.JumpListItem;
+                                return StartCauses.JumpListItem;
                             case string id when !string.IsNullOrEmpty(id):
-                                return StartArgsEx.StartCauses.SecondaryTile;
+                                return StartCauses.SecondaryTile;
                             default:
-                                return StartArgsEx.StartCauses.Undetermined;
+                                return StartCauses.Undetermined;
                         }
                     default:
-                        return StartArgsEx.StartCauses.Undetermined;
+                        return StartCauses.Undetermined;
                 }
             }
         }
