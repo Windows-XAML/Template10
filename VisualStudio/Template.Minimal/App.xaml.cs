@@ -22,17 +22,24 @@ namespace Sample
             InitializeComponent();
         }
 
-        public override async Task OnInitializeAsync()
+        public override Task OnInitializeAsync()
         {
-            var settings = Services.SettingsService.GetInstance();
+            SetupSettings(Services.SettingsService.GetInstance());
+            return base.OnInitializeAsync();
+        }
+
+        private void SetupSettings(Services.SettingsService settings)
+        {
             Template10.Settings.DefaultTheme = settings.DefaultTheme;
             Template10.Settings.ShellBackButtonPreference = settings.ShellBackButtonPreference;
             Template10.Settings.CacheMaxDuration = settings.CacheMaxDuration;
-        }
+            Template10.Settings.RequireSerializableParameters = true;
+            Template10.Navigation.Settings.PageKeys
 
         public override async Task OnStartAsync(IStartArgsEx e, INavigationService navService, ISessionState sessionState)
         {
-            await navService.NavigateAsync(typeof(Views.MainPage));
+            var args = e.LaunchActivatedEventArgs?.Arguments;
+            await navService.NavigateAsync(typeof(MainPage), args);
         }
     }
 }

@@ -25,36 +25,41 @@ namespace Sample
             InitializeComponent();
         }
 
-        //public override void RegisterDependencies(IContainerBuilder container)
-        //{
-        //    // setup services
-        //    container.Register<ISettingsService, SettingsService>();
+        public /*override*/ void SetupPageKeys(IDictionary<PageKeys, Type> keys)
+        {
+            keys.Add(PageKeys.MainPage, typeof(MainPage));
+            keys.Add(PageKeys.DetailPage, typeof(DetailPage));
+            keys.Add(PageKeys.SettingsPage, typeof(SettingsPage));
+        }
 
-        //    // setup view-models
-        //    container.Register<ITemplate10ViewModel, MainPageViewModel>(typeof(MainPage).ToString());
-        //    container.Register<ITemplate10ViewModel, MainPageViewModel>(typeof(MainPage).ToString());
-        //    container.Register<ITemplate10ViewModel, DetailPageViewModel>(typeof(DetailPage).ToString());
-        //    container.Register<ITemplate10ViewModel, SettingsPageViewModel>(typeof(SettingsPage).ToString());
-        //}
+        public /*override*/ void RegisterDependencies(IContainerBuilder container)
+        {
+            // setup services
+            container.Register<ISettingsService, SettingsService>();
 
-        //public override async Task OnInitializeAsync()
-        //{
-        //    // setup page keys
-        //    var page_keys = Template10.Navigation.Settings.PageKeys<PageKeys>();
-        //    page_keys.Add(PageKeys.MainPage, typeof(MainPage));
-        //    page_keys.Add(PageKeys.DetailPage, typeof(DetailPage));
-        //    page_keys.Add(PageKeys.SettingsPage, typeof(SettingsPage));
+            // setup view-models
+            container.Register<ITemplate10ViewModel, MainPageViewModel>(typeof(MainPage).ToString());
+            container.Register<ITemplate10ViewModel, MainPageViewModel>(typeof(MainPage).ToString());
+            container.Register<ITemplate10ViewModel, DetailPageViewModel>(typeof(DetailPage).ToString());
+            container.Register<ITemplate10ViewModel, SettingsPageViewModel>(typeof(SettingsPage).ToString());
+        }
 
-        //    // setup settings
-        //    var settings = Central.Container.Resolve<ISettingsService>();
-        //    Template10.Settings.DefaultTheme = settings.DefaultTheme;
-        //    Template10.Settings.ShellBackButtonPreference = settings.ShellBackButtonPreference;
-        //    Template10.Settings.CacheMaxDuration = settings.CacheMaxDuration;
-        //}
+        public /*override*/ Task OnInitializeAsync()
+        {
+            SetupSettings(Central.Container.Resolve<ISettingsService>());
+            return base.OnInitializeAsync();
+        }
 
-        //public override async Task OnStartAsync(IStartArgsEx e, INavigationService navService, ISessionState sessionState)
-        //{
-        //    await navService.NavigateAsync(typeof(Views.MainPage));
-        //}
+        private void SetupSettings(ISettingsService settings)
+        {
+            Template10.Settings.DefaultTheme = settings.DefaultTheme;
+            Template10.Settings.ShellBackButtonPreference = settings.ShellBackButtonPreference;
+            Template10.Settings.CacheMaxDuration = settings.CacheMaxDuration;
+        }
+
+        public /*override*/ async Task OnStartAsync(IStartArgsEx e, INavigationService navService, ISessionState sessionState)
+        {
+            await navService.NavigateAsync(typeof(Views.MainPage));
+        }
     }
 }

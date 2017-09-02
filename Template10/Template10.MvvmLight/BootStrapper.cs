@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Threading.Tasks;
 using Template10.BootStrap;
 using Template10.Core;
+using Template10.Navigation;
 using Template10.Services.Container;
 using Template10.Services.Gesture;
 using Template10.Services.Logging;
@@ -12,12 +12,9 @@ using Template10.Strategies;
 
 namespace Template10
 {
-    public abstract class BootStrapper<T> : BootStrapper
-    {
-        public abstract void SetupPageKeys(IDictionary<T, Type> keys);
-    }
 
-    public abstract class BootStrapper : BootStrapperBase
+    public abstract class BootStrapper
+        : BootStrapperBase
     {
         public sealed override IContainerService CreateDependecyContainer()
         {
