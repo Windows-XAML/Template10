@@ -153,7 +153,7 @@ namespace Template10.Navigation
 
             return await NavigationOrchestratorAsync(page, parameter, NavigationMode.New, () =>
             {
-                if (Settings.SerializeParameters)
+                if (Settings.RequireSerializableParameters)
                 {
                     var serializedParameter = parameter.TrySerializeEx(out var result) ? result : throw new Exception("Parameter cannot be serialized.");
                     return FrameEx2.Navigate(page, serializedParameter, infoOverride);
@@ -558,7 +558,7 @@ namespace Template10.Navigation
                 if (viewModel != null)
                 {
                     CurrentPageParam = FrameEx.BackStack.Last().Parameter;
-                    if (CurrentPageParam != null && Settings.SerializeParameters)
+                    if (CurrentPageParam != null && Settings.RequireSerializableParameters)
                     {
                         CurrentPageParam = CurrentPageParam.ToString().DeserializeEx();
                     }

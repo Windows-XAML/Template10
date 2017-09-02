@@ -13,7 +13,7 @@ namespace Template10.Navigation
 {
     public static partial class Settings
     {
-        public static bool SerializeParameters { get; set; } = true;
+        public static bool RequireSerializableParameters { get; set; } = true;
 
         public static TimeSpan CacheMaxDuration
         {

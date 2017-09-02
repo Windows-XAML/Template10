@@ -56,7 +56,7 @@ namespace Template10.Navigation
             {
                 return;
             }
-            if (Settings.SerializeParameters)
+            if (Settings.RequireSerializableParameters)
             {
                 try
                 {
