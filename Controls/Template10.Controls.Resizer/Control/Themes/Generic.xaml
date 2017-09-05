@@ -1,0 +1,49 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Template10.Controls">
+
+    <Style TargetType="controls:Resizer">
+        <Setter Property="GrabberSize" Value="24" />
+        <Setter Property="GrabberBrush" Value="{ThemeResource ThumbBackgroundThemeBrush}" />
+        <Setter Property="GrabberVisibility" Value="Visible" />
+        <Setter Property="GrabberTransform">
+            <Setter.Value>
+                <TranslateTransform X="8" Y="8" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:Resizer">
+                    <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <ContentControl
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Content="{TemplateBinding ElementControl}" />
+                        <Grid
+                            Width="{TemplateBinding GrabberSize}"
+                            Height="{TemplateBinding GrabberSize}"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Bottom"
+                            RenderTransform="{TemplateBinding GrabberTransform}"
+                            Visibility="{TemplateBinding GrabberVisibility}">
+                            <Thumb
+                                x:Name="PART_THUMB"
+                                AutomationProperties.AccessibilityView="Raw"
+                                Background="Transparent"
+                                BorderBrush="Transparent" />
+                            <Viewbox Margin="4">
+                                <Path
+                                    Data="M 126,2.28882e-005L -9.68492e-006,126L 126,126Z"
+                                    Fill="{TemplateBinding GrabberBrush}"
+                                    IsHitTestVisible="False"
+                                    Stretch="Uniform" />
+                            </Viewbox>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

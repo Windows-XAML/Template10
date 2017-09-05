@@ -1,0 +1,50 @@
+﻿<Page
+    x:Class="Demo.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Demo"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="400" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.Resources>
+            <Style TargetType="Button">
+                <Setter Property="Margin" Value="4,8,4,8" />
+            </Style>
+        </Grid.Resources>
+
+        <StackPanel Orientation="Vertical" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" BorderBrush="Gray" BorderThickness="1" Padding="16" Width="500">
+            <TextBlock Text="Template10.Services.Dialog.DialogService : IDialogService" Style="{StaticResource CaptionTextBlockStyle}" Foreground="Gray" />
+            <TextBox Header="Prompt text" Text="The quick brown fox jumps over the lazy dog. " x:Name="AlertTextBox" Width="450" TextWrapping="Wrap" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Click="Alert">Simle Alert</Button>
+                <Button Click="PromptYesNo">Prompt (YesNo)</Button>
+                <Button Click="PromptYesNoCancel">Prompt (YesNoCancel)</Button>
+            </StackPanel>
+            <CheckBox Content="Use custom string resolver (cat, dog, bird, horse)" x:Name="UseCustomResourceResolver" />
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" BorderBrush="Gray" BorderThickness="1" Padding="16" Width="500">
+            <TextBlock Text="Template10.Services.Dialog.ContentDialogEx" Grid.Row="1" Style="{StaticResource CaptionTextBlockStyle}" Foreground="Gray" />
+            <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Button Click="Splash">Extended Splash</Button>
+                <Button Click="Busy">Busy</Button>
+            </StackPanel>
+        </StackPanel>
+
+        <TextBlock Grid.Column="1" Grid.RowSpan="2" TextWrapping="NoWrap" Text="{x:Bind OutputText, Mode=OneWay}" Margin="16, 24" />
+
+    </Grid>
+</Page>

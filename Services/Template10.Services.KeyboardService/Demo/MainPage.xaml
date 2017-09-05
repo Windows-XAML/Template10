@@ -1,0 +1,27 @@
+﻿<Page
+    x:Class="Template10.Demo.KeyboardServiceDemo.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <ListView x:Name="MyListView" Grid.Row="1">
+            <ListView.ItemContainerTransitions>
+                <TransitionCollection>
+                    <RepositionThemeTransition IsStaggeringEnabled="False" /> <!-- Change this 2 true! -->
+                </TransitionCollection>
+            </ListView.ItemContainerTransitions>
+        </ListView>
+        <Rectangle Fill="CornflowerBlue"></Rectangle>
+        <StackPanel Grid.Row="0" Margin="16">
+            <TextBlock Style="{StaticResource SubheaderTextBlockStyle}">Keyboard Service Demo App</TextBlock>
+            <TextBlock Style="{StaticResource CaptionTextBlockStyle}">Type Any Key...</TextBlock>
+        </StackPanel>
+    </Grid>
+</Page>

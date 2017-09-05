@@ -1,0 +1,177 @@
+﻿<Page x:Class="Template10.Demo.NetworkServiceDemo.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:cv="using:Template10.Demo.NetworkServiceDemo.Converters"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d">
+
+	<Page.Resources>
+		<cv:IconForegroundToStatusVisibility x:Key="IconForegroundToStatusVisibility" />
+	</Page.Resources>
+
+	<Grid x:Name="RootGrid"
+	      Margin="0"
+	      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+
+		<Grid x:Name="ContentGrid"
+		      Grid.Row="1"
+		      MaxWidth="500"
+		      Margin="0,48"
+		      HorizontalAlignment="Center">
+
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
+
+			<RelativePanel Grid.Row="0"
+			               Width="280"
+			               Height="96"
+			               Margin="12,18"
+			               Padding="12"
+			               HorizontalAlignment="Center"
+			               BorderBrush="Silver"
+			               BorderThickness="1">
+
+				<FontIcon x:Name="InternetIcon"
+				          FontFamily="Segoe MDL2 Assets"
+				          FontSize="48"
+				          Foreground="{x:Bind InternetFontIconForeground, Mode=OneWay}"
+				          Glyph="&#xEC27;"
+				          RelativePanel.AlignLeftWithPanel="True"
+				          RelativePanel.AlignVerticalCenterWithPanel="True" />
+
+
+				<TextBlock RelativePanel.AlignRightWithPanel="True"
+				           RelativePanel.AlignVerticalCenterWithPanel="True"
+				           Text="Internet access is off"
+				           Visibility="{Binding ElementName=InternetIcon, Path=Foreground, Converter={StaticResource IconForegroundToStatusVisibility}, ConverterParameter=Off, Mode=OneWay}" />
+				<TextBlock RelativePanel.AlignRightWithPanel="True"
+				           RelativePanel.AlignVerticalCenterWithPanel="True"
+				           Text="Local and Internet access."
+				           Visibility="{Binding ElementName=InternetIcon, Path=Foreground, Converter={StaticResource IconForegroundToStatusVisibility}, ConverterParameter=On, Mode=OneWay}" />
+			</RelativePanel>
+
+			<RelativePanel Grid.Row="1"
+			               Width="280"
+			               Height="96"
+			               Margin="12,18"
+			               Padding="12"
+			               HorizontalAlignment="Center"
+			               BorderBrush="Silver"
+			               BorderThickness="1">
+
+				<FontIcon x:Name="LocalNetworkIcon"
+				          FontFamily="Segoe MDL2 Assets"
+				          FontSize="48"
+				          Foreground="{x:Bind LocalNetworkFontIconForeground, Mode=OneWay}"
+				          Glyph="&#xEDA3;"
+				          RelativePanel.AlignLeftWithPanel="True"
+				          RelativePanel.AlignVerticalCenterWithPanel="True" />
+
+				<TextBlock RelativePanel.AlignRightWithPanel="True"
+				           RelativePanel.AlignVerticalCenterWithPanel="True"
+				           Text="No connectivity"
+				           Visibility="{Binding ElementName=LocalNetworkIcon, Path=Foreground, Converter={StaticResource IconForegroundToStatusVisibility}, ConverterParameter=Off, Mode=OneWay}" />
+				<TextBlock RelativePanel.AlignRightWithPanel="True"
+				           RelativePanel.AlignVerticalCenterWithPanel="True"
+				           Text="Local access available."
+				           Visibility="{Binding ElementName=LocalNetworkIcon, Path=Foreground, Converter={StaticResource IconForegroundToStatusVisibility}, ConverterParameter=On, Mode=OneWay}" />
+			</RelativePanel>
+
+			<RelativePanel Grid.Row="2"
+			               MinWidth="320"
+			               MaxWidth="500"
+			               Margin="6,18"
+			               Padding="12,6"
+			               HorizontalAlignment="Center"
+			               BorderBrush="Silver"
+			               BorderThickness="1">
+				<RelativePanel.Resources>
+
+					<Style x:Key="tb" TargetType="TextBlock">
+						<Setter Property="TextWrapping" Value="Wrap" />
+						<Setter Property="Opacity" Value="0.8" />
+						<Setter Property="FontFamily" Value="Segoe WP Light" />
+					</Style>
+
+					<DataTemplate x:Key="BulletedText">
+						<Grid Margin="0,12,0,0">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition />
+							</Grid.ColumnDefinitions>
+
+							<Ellipse Grid.Column="0"
+							         Width="10"
+							         Height="10"
+							         Margin="12,6"
+							         VerticalAlignment="Top"
+							         Fill="DodgerBlue"
+							         Opacity="0.6" />
+
+							<TextBlock Grid.Column="1"
+							           VerticalAlignment="Top"
+							           Style="{StaticResource tb}"
+							           Text="{Binding}" />
+						</Grid>
+					</DataTemplate>
+				</RelativePanel.Resources>
+
+				<ContentPresenter x:Name="parag1"
+				                  HorizontalAlignment="Stretch"
+				                  Content="To see the Internet access status change, set your network Flight mode On/Off. When Internet access is available, the top icon color is set to Green, otherwise to Gray."
+				                  ContentTemplate="{StaticResource BulletedText}"
+				                  RelativePanel.AlignLeftWithPanel="True"
+				                  RelativePanel.AlignRightWithPanel="True"
+				                  RelativePanel.AlignTopWithPanel="True" />
+
+				<ContentPresenter x:Name="parag2"
+				                  HorizontalAlignment="Stretch"
+				                  Content="To see a 'No connectivity' status, indicated by the second icon,  disable all your network connections (by right-clicking on each network adapter and selecting Disable). To see no connectivity status, you also need to disable Virtual Ethernet adapter switches for emulators."
+				                  ContentTemplate="{StaticResource BulletedText}"
+				                  RelativePanel.AlignLeftWithPanel="True"
+				                  RelativePanel.AlignRightWithPanel="True"
+				                  RelativePanel.Below="parag1" />
+
+				<ContentPresenter x:Name="parag3"
+				                  HorizontalAlignment="Stretch"
+				                  Content="To toggle the Flight Mode or enable/disable network adapters, you can access network settings by tapping on the link below."
+				                  ContentTemplate="{StaticResource BulletedText}"
+				                  RelativePanel.AlignLeftWithPanel="True"
+				                  RelativePanel.AlignRightWithPanel="True"
+				                  RelativePanel.Below="parag2" />
+
+
+				<TextBlock x:Name="parag4"
+				           Margin="0"
+				           HorizontalAlignment="Center"
+				           RelativePanel.AlignLeftWithPanel="True"
+				           RelativePanel.AlignRightWithPanel="True"
+				           RelativePanel.Below="parag3"
+				           TextWrapping="Wrap">
+					<Hyperlink NavigateUri="ms-settings:network">
+						<Run Text="tap here" />
+					</Hyperlink>
+				</TextBlock>
+
+				<ContentPresenter x:Name="parag5"
+				                  HorizontalAlignment="Stretch"
+				                  Content="Reply Yes to the pop-up message to launch the Network Settings page. You can see the status update as you make changes on the Network Settings page, so [if on desktop] resize and position the settings page so that you can also view the demo page update itself."
+				                  ContentTemplate="{StaticResource BulletedText}"
+				                  RelativePanel.AlignLeftWithPanel="True"
+				                  RelativePanel.AlignRightWithPanel="True"
+				                  RelativePanel.Below="parag4" />
+			</RelativePanel>
+		</Grid>
+	</Grid>
+</Page>
