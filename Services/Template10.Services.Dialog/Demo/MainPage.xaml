@@ -25,7 +25,7 @@
             </Style>
         </Grid.Resources>
 
-        <StackPanel Orientation="Vertical" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" BorderBrush="Gray" BorderThickness="1" Padding="16">
+        <StackPanel Orientation="Vertical" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" BorderBrush="Gray" BorderThickness="1" Padding="16" Width="500">
             <TextBlock Text="Template10.Services.Dialog.DialogService : IDialogService" Style="{StaticResource CaptionTextBlockStyle}" Foreground="Gray" />
             <TextBox Header="Prompt text" Text="The quick brown fox jumps over the lazy dog. " x:Name="AlertTextBox" Width="450" TextWrapping="Wrap" />
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -36,10 +36,12 @@
             <CheckBox Content="Use custom string resolver (cat, dog, bird, horse)" x:Name="UseCustomResourceResolver" />
         </StackPanel>
 
-        <TextBlock Text="Template10.Services.Dialog.ContentDialogEx" Grid.Row="1" Style="{StaticResource TitleTextBlockStyle}" />
-        <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Button Click="Splash">Extended Splash</Button>
-            <Button Click="Busy">Busy</Button>
+        <StackPanel Orientation="Vertical" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" BorderBrush="Gray" BorderThickness="1" Padding="16" Width="500">
+            <TextBlock Text="Template10.Services.Dialog.ContentDialogEx" Grid.Row="1" Style="{StaticResource CaptionTextBlockStyle}" Foreground="Gray" />
+            <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Button Click="Splash">Extended Splash</Button>
+                <Button Click="Busy">Busy</Button>
+            </StackPanel>
         </StackPanel>
 
         <TextBlock Grid.Column="1" Grid.RowSpan="2" TextWrapping="NoWrap" Text="{x:Bind OutputText, Mode=OneWay}" Margin="16, 24" />
