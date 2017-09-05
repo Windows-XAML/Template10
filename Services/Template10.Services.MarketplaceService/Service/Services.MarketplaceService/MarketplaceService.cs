@@ -8,13 +8,8 @@ namespace Template10.Services.Marketplace
 {
     public sealed class MarketplaceService : IMarketplaceService
     {
-        public static MarketplaceService Create()
-        {
-            return new MarketplaceService();
-        }
-
         readonly MarketplaceHelper _helper;
-        private MarketplaceService()
+        public MarketplaceService()
         {
             _helper = new MarketplaceHelper();
         }

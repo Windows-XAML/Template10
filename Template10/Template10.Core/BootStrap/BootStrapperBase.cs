@@ -16,6 +16,7 @@ using Template10.Messages;
 using Template10.Services.Resources;
 using Template10.Services.Network;
 using Template10.Services.Dialog;
+using Template10.Services.Marketplace;
 
 namespace Template10.BootStrap
 {
@@ -121,15 +122,16 @@ namespace Template10.BootStrap
         void RegisterDefaultDependencies(IContainerBuilder container)
         {
             // services
-            container.Register<ISessionState, SessionState>();
-            container.Register<ILoggingService, LoggingService>();
-            container.Register<ISerializationService, JsonSerializationService>();
-            container.Register<IBackButtonService, BackButtonService>();
-            container.Register<IKeyboardService, KeyboardService>();
-            container.Register<IGestureService, GestureService>();
-            container.Register<IResourceService, ResourceService>();
-            container.Register<INetworkAvailableService, NetworkAvailableService>();
-            container.Register<IDialogService, DialogService>();
+container.Register<ISessionState, SessionState>();
+container.Register<ILoggingService, LoggingService>();
+container.Register<ISerializationService, JsonSerializationService>();
+container.Register<IBackButtonService, BackButtonService>();
+container.Register<IKeyboardService, KeyboardService>();
+container.Register<IGestureService, GestureService>();
+container.Register<IResourceService, ResourceService>();
+container.Register<INetworkAvailableService, NetworkAvailableService>();
+container.Register<IDialogService, DialogService>();
+container.Register<IMarketplaceService, MarketplaceService>();
 
             // strategies
             container.RegisterInstance<IBootStrapperXaml>(this);

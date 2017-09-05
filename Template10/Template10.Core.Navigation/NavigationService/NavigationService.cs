@@ -153,14 +153,22 @@ namespace Template10.Navigation
 
             return await NavigationOrchestratorAsync(page, parameter, NavigationMode.New, () =>
             {
-                if (Settings.RequireSerializableParameters)
+                try
                 {
-                    var serializedParameter = parameter.TrySerializeEx(out var result) ? result : throw new Exception("Parameter cannot be serialized.");
-                    return FrameEx2.Navigate(page, serializedParameter, infoOverride);
+                    if (Settings.RequireSerializableParameters)
+                    {
+                        var serializedParameter = parameter.TrySerializeEx(out var result) ? result : throw new Exception("Parameter cannot be serialized.");
+                        return FrameEx2.Navigate(page, serializedParameter, infoOverride);
+                    }
+                    else
+                    {
+                        return FrameEx2.Navigate(page, parameter, infoOverride);
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    return FrameEx2.Navigate(page, parameter, infoOverride);
+                    Debugger.Break();
+                    throw;
                 }
             });
         }

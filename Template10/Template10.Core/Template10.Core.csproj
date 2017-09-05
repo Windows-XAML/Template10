@@ -159,6 +159,10 @@
       <Project>{eadde808-bf0d-4ebc-b4ca-9fda63b53862}</Project>
       <Name>Template10.Services.Logging.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Services\Template10.Services.MarketplaceService\Service\Template10.Services.Marketplace.Service.csproj">
+      <Project>{80E5B1C6-DD8E-4B06-A693-DD2D11F9C32A}</Project>
+      <Name>Template10.Services.Marketplace.Service</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Services\Template10.Services.Messenger\Service\Template10.Services.Messaging.Core.csproj">
       <Project>{e14bcd62-b2a4-4aa2-95a8-6a556a31fb29}</Project>
       <Name>Template10.Services.Messaging.Core</Name>

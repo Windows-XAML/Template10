@@ -14,6 +14,8 @@ using System;
 using Template10.Navigation;
 using System.Collections.Generic;
 using Template10.Services.Gesture;
+using Template10.Services.Marketplace;
+using Template10.Services.Dialog;
 
 namespace Sample
 {
@@ -33,6 +35,8 @@ namespace Sample
             container.Register<IViewModelResolutionStrategy, CustomViewModelResolutionStrategy>();
 
             // setup services
+            container.Register<IDialogService, DialogService>();
+            container.Register<IMarketplaceService, MarketplaceService>();
             container.Register<ISettingsService, SettingsService>();
 
             // setup view-models
