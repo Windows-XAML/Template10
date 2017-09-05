@@ -35,7 +35,6 @@ namespace Sample
             container.Register<IViewModelResolutionStrategy, CustomViewModelResolutionStrategy>();
 
             // setup services
-            container.Register<IDialogService, DialogService>();
             container.Register<IMarketplaceService, MarketplaceService>();
             container.Register<ISettingsService, SettingsService>();
 

@@ -122,16 +122,17 @@ namespace Template10.BootStrap
         void RegisterDefaultDependencies(IContainerBuilder container)
         {
             // services
-container.Register<ISessionState, SessionState>();
-container.Register<ILoggingService, LoggingService>();
-container.Register<ISerializationService, JsonSerializationService>();
-container.Register<IBackButtonService, BackButtonService>();
-container.Register<IKeyboardService, KeyboardService>();
-container.Register<IGestureService, GestureService>();
-container.Register<IResourceService, ResourceService>();
-container.Register<INetworkAvailableService, NetworkAvailableService>();
-container.Register<IDialogService, DialogService>();
-container.Register<IMarketplaceService, MarketplaceService>();
+            container.Register<ISessionState, SessionState>();
+            container.Register<ILoggingService, LoggingService>();
+            container.Register<ISerializationService, JsonSerializationService>();
+            container.Register<IBackButtonService, BackButtonService>();
+            container.Register<IKeyboardService, KeyboardService>();
+            container.Register<IGestureService, GestureService>();
+            container.Register<IResourceService, ResourceService>();
+            container.Register<INetworkAvailableService, NetworkAvailableService>();
+            container.Register<IDialogService, DialogService>();
+            container.Register<IMarketplaceService, MarketplaceService>();
+            container.Register<IDialogService, DialogService>();
 
             // strategies
             container.RegisterInstance<IBootStrapperXaml>(this);
@@ -154,6 +155,8 @@ container.Register<IMarketplaceService, MarketplaceService>();
             container.Resolve<IKeyboardService>();
             container.Resolve<IGestureService>();
             container.Resolve<IResourceService>();
+            container.Resolve<IDialogService>();
+
             container.Resolve<IBootStrapperStrategy>();
             container.Resolve<ILifecycleStrategy>();
             container.Resolve<INavStateStrategy>();
