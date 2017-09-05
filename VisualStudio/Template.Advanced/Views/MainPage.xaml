@@ -13,14 +13,12 @@
     mc:Ignorable="d">
 
     <d:Page.DataContext>
-        <vm:MainPageViewModel x:Name="ViewModel" />
+        <vm:MainPageViewModel />
     </d:Page.DataContext>
 
     <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
         <TextBox Margin="126,256,0,0" />
-
-        
 
         <controls:PageHeader
             x:Name="pageHeader"

@@ -209,14 +209,10 @@ namespace Template10.Navigation
         static SemaphoreSlim navigationOrchestratorAsyncSemaphore = new SemaphoreSlim(1, 1);
         private async Task<bool> NavigationOrchestratorAsync(Type page, object parameter, NavigationMode mode, Func<bool> navigate)
         {
-            if (!await navigationOrchestratorAsyncSemaphore.WaitAsync(TimeSpan.FromSeconds(10)))
-            {
-                throw new TimeoutException("Semaphore wait ellapsed");
-            }
-
-            // using (var locker = await LockAsync.Create(navigationLock))
             try
             {
+                await navigationOrchestratorAsyncSemaphore.WaitAsync();
+
                 LogThis($"Page: {page}, Parameter: {parameter}, NavigationMode: {mode}");
 
                 if (page == null) throw new ArgumentNullException(nameof(page));
@@ -319,7 +315,8 @@ namespace Template10.Navigation
             }
             catch (Exception ex)
             {
-                LogThis(ex.Message);
+                LogThis(ex.Message, Severities.Error);
+                Debugger.Break();
                 throw;
             }
             finally

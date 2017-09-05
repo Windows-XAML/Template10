@@ -83,7 +83,6 @@ namespace Template10.BootStrap
 
             // these are the things delayed until after the first window is created
             Central.Container.Resolve<IBackButtonService>().Setup();
-            Central.Container.Resolve<ITitleBarStrategy>().Update();
         }
 
         private void SetupEvents()
@@ -137,7 +136,6 @@ namespace Template10.BootStrap
             container.Register<IBootStrapperStrategy, DefaultBootStrapperStrategy>();
             container.Register<ILifecycleStrategy, DefaultLifecycleStrategy>();
             container.Register<INavStateStrategy, DefaultNavStateStrategy>();
-            container.Register<ITitleBarStrategy, DefaultTitleBarStrategy>();
             container.Register<IExtendedSessionStrategy, DefaultExtendedSessionStrategy>();
             container.Register<IViewModelActionStrategy, DefaultViewModelActionStrategy>();
             container.Register<IViewModelResolutionStrategy, DefaultViewModelResolutionStrategy>();
@@ -157,7 +155,6 @@ namespace Template10.BootStrap
             container.Resolve<IBootStrapperStrategy>();
             container.Resolve<ILifecycleStrategy>();
             container.Resolve<INavStateStrategy>();
-            container.Resolve<ITitleBarStrategy>();
             container.Resolve<IExtendedSessionStrategy>();
             container.Resolve<IViewModelActionStrategy>();
             container.Resolve<IViewModelResolutionStrategy>();

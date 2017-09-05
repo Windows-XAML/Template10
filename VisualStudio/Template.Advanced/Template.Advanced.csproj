@@ -175,7 +175,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>5.2.3</Version>
+      <Version>5.4.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -210,6 +210,10 @@
     <ProjectReference Include="..\..\Libraries\Template10.CodeBehind\Template10.Common.CodeBehind.Library.csproj">
       <Project>{b3a4e50e-9dca-457e-bed5-b71d97b957f3}</Project>
       <Name>Template10.Common.CodeBehind.Library</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Template10.XAML\Template10.Common.XAML.Library.csproj">
+      <Project>{af4f2a41-d0e8-4cb2-950f-ed523c29b19c}</Project>
+      <Name>Template10.Common.XAML.Library</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Services\Template10.Services.BackService\Template10.Services.Gesture.csproj">
       <Project>{8564f764-99d9-4473-b5e4-ac62cda73977}</Project>

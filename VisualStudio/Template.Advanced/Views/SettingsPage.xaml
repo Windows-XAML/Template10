@@ -10,7 +10,7 @@
     mc:Ignorable="d">
 
     <d:Page.DataContext>
-        <vm:SettingsPageViewModel x:Name="ViewModel" />
+        <vm:SettingsPageViewModel />
     </d:Page.DataContext>
 
 

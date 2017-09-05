@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Windows.UI.Xaml.Data;
 using Template10;
+using Template10.Extensions;
 using Template10.Core;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
@@ -19,36 +20,39 @@ namespace Sample
     public enum PageKeys { MainPage, DetailPage, SettingsPage }
 
     [Bindable]
-    sealed partial class App : BootStrapper<PageKeys>
+    sealed partial class App : BootStrapper
     {
         public App()
         {
             InitializeComponent();
         }
 
-        public /*override*/ void SetupPageKeys(IDictionary<PageKeys, Type> keys)
+        public override void SetupDependencies(IContainerBuilder container)
         {
-            keys.Add(PageKeys.MainPage, typeof(MainPage));
-            keys.Add(PageKeys.DetailPage, typeof(DetailPage));
-            keys.Add(PageKeys.SettingsPage, typeof(SettingsPage));
-        }
+            // setup strategies
+            container.Register<IViewModelResolutionStrategy, CustomViewModelResolutionStrategy>();
 
-        public /*override*/ void RegisterDependencies(IContainerBuilder container)
-        {
             // setup services
             container.Register<ISettingsService, SettingsService>();
 
             // setup view-models
             container.Register<ITemplate10ViewModel, MainPageViewModel>(typeof(MainPage).ToString());
-            container.Register<ITemplate10ViewModel, MainPageViewModel>(typeof(MainPage).ToString());
             container.Register<ITemplate10ViewModel, DetailPageViewModel>(typeof(DetailPage).ToString());
             container.Register<ITemplate10ViewModel, SettingsPageViewModel>(typeof(SettingsPage).ToString());
         }
 
-        public /*override*/ Task OnInitializeAsync()
+        public override Task OnInitializeAsync()
         {
-            SetupSettings(Central.Container.Resolve<ISettingsService>());
+            SetupPageKeys(this.PageKeys<PageKeys>());
+            SetupSettings(this.Resolve<ISettingsService>());
             return base.OnInitializeAsync();
+        }
+
+        private void SetupPageKeys(IDictionary<PageKeys, Type> keys)
+        {
+            keys.Add(PageKeys.MainPage, typeof(MainPage));
+            keys.Add(PageKeys.DetailPage, typeof(DetailPage));
+            keys.Add(PageKeys.SettingsPage, typeof(SettingsPage));
         }
 
         private void SetupSettings(ISettingsService settings)
@@ -60,7 +64,7 @@ namespace Sample
             Template10.Settings.ShowExtendedSplashScreen = true;
         }
 
-        public /*override*/ async Task OnStartAsync(IStartArgsEx e, INavigationService navService, ISessionState sessionState)
+        public override async Task OnStartAsync(IStartArgsEx e, INavigationService navService, ISessionState sessionState)
         {
             await navService.NavigateAsync(typeof(Views.MainPage));
         }

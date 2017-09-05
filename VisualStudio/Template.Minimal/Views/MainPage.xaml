@@ -12,9 +12,9 @@
     xmlns:vm="using:Sample.ViewModels"
     mc:Ignorable="d">
 
-    <d:Page.DataContext>
+    <Page.DataContext>
         <vm:MainPageViewModel x:Name="ViewModel" />
-    </d:Page.DataContext>
+    </Page.DataContext>
 
     <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <controls:PageHeader

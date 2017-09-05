@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Template10.Services.Container
 {
@@ -18,6 +19,11 @@ namespace Template10.Services.Container
             where TInterface : class
             where TClass : class, TInterface
         {
+            if (key_map.ContainsKey(key))
+            {
+                throw new Exception($"Container.Register<{typeof(TInterface).Name},{typeof(TClass).Name}({key}) " +
+                    $"but, this key is already registered.");
+            }
             _container.Register<TClass>();
             key_map.Add(key, typeof(TClass));
         }

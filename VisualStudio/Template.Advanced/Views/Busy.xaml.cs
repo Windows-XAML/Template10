@@ -11,7 +11,18 @@ namespace Sample.Views
         public Busy()
         {
             InitializeComponent();
+            Loaded += (s, e) => IsBusy = true;
+            Unloaded += (s, e) => IsBusy = false;
         }
+
+        public bool IsBusy
+        {
+            get { return (bool)GetValue(IsBusyProperty); }
+            set { SetValue(IsBusyProperty, value); }
+        }
+        public static readonly DependencyProperty IsBusyProperty =
+            DependencyProperty.Register(nameof(IsBusy), typeof(bool),
+                typeof(Busy), new PropertyMetadata(false));
 
         public string BusyText
         {
@@ -19,7 +30,7 @@ namespace Sample.Views
             set { SetValue(BusyTextProperty, value); }
         }
         public static readonly DependencyProperty BusyTextProperty =
-            DependencyProperty.Register(nameof(BusyText), typeof(string), 
+            DependencyProperty.Register(nameof(BusyText), typeof(string),
                 typeof(Busy), new PropertyMetadata("DEFAULT_STRING"));
     }
 }

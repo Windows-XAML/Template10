@@ -13,9 +13,9 @@
     x:Name="ThisPage"
     mc:Ignorable="d">
 
-    <d:Page.DataContext>
+    <Page.DataContext>
         <vm:DetailPageViewModel x:Name="ViewModel" />
-    </d:Page.DataContext>
+    </Page.DataContext>
 
     <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <!--  header  -->

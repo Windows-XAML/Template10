@@ -12,8 +12,8 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <ProgressRing Width="16" Height="16" Foreground="White"
-                          IsActive="{x:Bind IsBusy, Mode=OneWay}" />
+            <!--<ProgressRing Width="16" Height="16" Foreground="White"
+                          IsActive="{x:Bind IsBusy, Mode=OneWay}" />-->
             <TextBlock Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center"
                        Foreground="White"
                        Text="{x:Bind BusyText, Mode=OneWay, FallbackValue='BusyText'}" />

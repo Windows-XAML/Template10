@@ -12,9 +12,6 @@ namespace Sample.Views
             InitializeComponent();
         }
 
-        public ViewModels.SettingsPageViewModel ViewModel
-            => DataContext as ViewModels.SettingsPageViewModel;
-
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             if (e.Parameter is string s && s != null)

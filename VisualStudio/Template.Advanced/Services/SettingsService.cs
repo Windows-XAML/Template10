@@ -13,7 +13,7 @@ namespace Sample.Services
     public class SettingsService : SettingsServiceBase, ISettingsService
     {
         Template10.Services.Logging.ILoggingService _logger;
-        private SettingsService(Template10.Services.Logging.ILoggingService logger)
+        public SettingsService(Template10.Services.Logging.ILoggingService logger)
             : base(Windows.Storage.ApplicationData.Current.LocalSettings)
         {
             _logger = logger;

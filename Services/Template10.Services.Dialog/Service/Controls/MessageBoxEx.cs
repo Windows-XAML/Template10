@@ -145,7 +145,7 @@ namespace Template10.Services.Dialog
         /// </exception>
         internal async Task<MessageBoxResult> ShowAsync()
         {
-            var result = await _contentDialogEx.QueueAsync();
+            var result = await _contentDialogEx.ShowAsync();
             switch (result)
             {
                 case ContentDialogResult.None:

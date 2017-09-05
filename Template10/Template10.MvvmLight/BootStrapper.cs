@@ -1,18 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
 using Template10.BootStrap;
-using Template10.Core;
-using Template10.Navigation;
 using Template10.Services.Container;
-using Template10.Services.Gesture;
-using Template10.Services.Logging;
 using Template10.Services.Messenger;
-using Template10.Services.Resources;
-using Template10.Services.Serialization;
-using Template10.Strategies;
 
 namespace Template10
 {
-
     public abstract class BootStrapper
         : BootStrapperBase
     {
@@ -24,12 +17,10 @@ namespace Template10
         public sealed override void RegisterCustomDependencies(IContainerBuilder container)
         {
             container.Register<IMessengerService, MvvmLightMessengerService>();
-            RegisterDependencies(container);
+            SetupDependencies(container);
         }
 
-        public virtual void RegisterDependencies(IContainerBuilder container)
-        {
-            // empty
-        }
+        public virtual void SetupDependencies(IContainerBuilder container) { /* empty */ }
     }
 }
+
