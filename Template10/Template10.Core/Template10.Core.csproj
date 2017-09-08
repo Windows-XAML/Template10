@@ -115,7 +115,7 @@
   <ItemGroup>
     <Compile Include="BootStrap\BootStrapperBase.cs" />
     <Compile Include="BootStrap\BootstrapperStates.cs" />
-    <Compile Include="BootStrap\ClosedEventArgs.cs" />
+    <Compile Include="BootStrap\BusyPopup.cs" />
     <Compile Include="BootStrap\Extensions.cs" />
     <Compile Include="BootStrap\IBootStrapper.cs" />
     <Compile Include="Strategies\BootStrapperStrategy\DefaultBootStrapperStrategy.cs" />

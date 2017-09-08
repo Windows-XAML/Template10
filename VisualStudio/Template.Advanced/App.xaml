@@ -5,19 +5,11 @@
     xmlns:t10="using:Template10"
     xmlns:views="using:Sample.Views">
 
-    <!--<t10:BootStrapper.BusyIndicatorTemplate>
-        <DataTemplate x:DataType="t10:BusyIndicatorDataContext">
-            --><!--<views:Busy BusyText="{x:Bind Text}" />--><!--
-            <views:Busy />
-        </DataTemplate>
-    </t10:BootStrapper.BusyIndicatorTemplate>
-
-    <t10:BootStrapper.SplashScreenTemplate>
-        <DataTemplate x:DataType="t10:SplashScreenDataContext">
-            --><!--<views:Splash SplashScreen="{x:Bind SplashScreen}" />--><!--
-            <views:Splash />
-        </DataTemplate>
-    </t10:BootStrapper.SplashScreenTemplate>-->
+    <t10:BootStrapper.Popups>
+        <!--<t10:BootStrapperBusy/>-->
+        <!--<t10:BootStrapperSplash/>
+        <t10:BootStrapperNetwork/>-->
+    </t10:BootStrapper.Popups>
 
     <Application.Resources>
         <ResourceDictionary>
@@ -26,7 +18,7 @@
                 <ResourceDictionary Source="Styles\Custom.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <!--  more, custom resources  -->
+            <!--more, custom resources-->
 
         </ResourceDictionary>
     </Application.Resources>

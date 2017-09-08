@@ -11,6 +11,11 @@ using Template10.Services.Resources;
 
 namespace Sample.ViewModels
 {
+    public class MainPageViewModel_Designtime : MainPageViewModel
+    {
+        public MainPageViewModel_Designtime() : base(null, null, null) { }
+    }
+
     public class MainPageViewModel : ViewModelBase
     {
         ILoggingService _loggingService;
@@ -19,9 +24,16 @@ namespace Sample.ViewModels
 
         public MainPageViewModel(IDialogService dialog, ILoggingService logger, IResourceService resources)
         {
-            _loggingService = logger;
-            _dialogService = dialog;
-            _resourceService = resources;
+            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
+            {
+                // design-time
+            }
+            else
+            {
+                _loggingService = logger;
+                _dialogService = dialog;
+                _resourceService = resources;
+            }
         }
 
         static string _Value = "Gas";

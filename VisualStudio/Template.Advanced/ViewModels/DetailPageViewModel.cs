@@ -3,16 +3,28 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Template10.Mvvm;
 using Template10.Navigation;
+using Template10.Services.Logging;
 
 namespace Sample.ViewModels
 {
+    public class DetailPageViewModel_DesignTime : DetailPageViewModel
+    {
+        public DetailPageViewModel_DesignTime()
+            : base(null) { }
+    }
+
     public class DetailPageViewModel : ViewModelBase
     {
-        public DetailPageViewModel()
+        ILoggingService _loggingService;
+        public DetailPageViewModel(ILoggingService loggingService)
         {
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
             {
                 Value = "Designtime value";
+            }
+            else
+            {
+                _loggingService = loggingService;
             }
         }
 
@@ -37,7 +49,7 @@ namespace Sample.ViewModels
 
         public async override Task OnNavigatedFromAsync(INavigatedFromParameters parameters)
         {
-             if (parameters.Suspending)
+            if (parameters.Suspending)
             {
                 await parameters.PageState.TrySetAsync(nameof(Value), Value);
             }

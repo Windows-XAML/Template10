@@ -22,13 +22,10 @@ namespace Template10.Core
         Task OnInitializeAsync();
         UIElement CreateRootElement(IStartArgsEx e);
         Task OnStartAsync(IStartArgsEx e, INavigationService navService, ISessionState sessionState);
-        void OnClose(ClosedEventArgs e);
     }
 
-    public interface IBootStrapperXaml 
+    public interface IBootStraperPopup
     {
-        DataTemplate BusyIndicatorTemplate { get; set; }
-        DataTemplate SplashScreenTemplate { get; set; }
-        DataTemplate NetworkRequiredTemplate { get; set; }
+        IList<IBootStraperPopupItem> Popups { get; }
     }
 }

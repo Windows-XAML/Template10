@@ -22,15 +22,15 @@ namespace Template10.Navigation
     public partial class NavigationService : Loggable
     {
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-                              /// <summary>
-                              /// Creates a new NavigationService from the gived Frame to the
-                              /// WindowWrapper collection. In addition, it optionally will setup the
-                              /// shell back button to react to the nav of the Frame.
-                              /// A developer should call this when creating a new/secondary frame.
-                              /// </summary>
-                              /// <remarks>
-                              /// The shell back button should only be setup one time.
-                              /// </remarks>
+        /// <summary>
+        /// Creates a new NavigationService from the gived Frame to the
+        /// WindowWrapper collection. In addition, it optionally will setup the
+        /// shell back button to react to the nav of the Frame.
+        /// A developer should call this when creating a new/secondary frame.
+        /// </summary>
+        /// <remarks>
+        /// The shell back button should only be setup one time.
+        /// </remarks>
         public static async Task<INavigationService> CreateAsync(BackButton backButton, Frame frame = null)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
@@ -269,6 +269,10 @@ namespace Template10.Navigation
                 newViewModel = await ViewModelResolutionStrategy.ResolveViewModelAsync(page);
                 if (newViewModel != null)
                 {
+                    if (newViewModel is ITemplate10ViewModel t)
+                    {
+                        t.NavigationService = this;
+                    }
                     await ViewModelActionStrategy.NavigatingToAsync((newViewModel, mode, false), from, to, this);
                 }
 

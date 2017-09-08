@@ -3,22 +3,32 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Template10.Mvvm;
 using Template10.Services.Gesture;
+using Template10.Services.Logging;
 using Template10.Services.Marketplace;
 using Windows.UI.Xaml;
 
 namespace Sample.ViewModels
 {
+    public class SettingsPageViewModel_DesignTime : SettingsPageViewModel
+    {
+        public SettingsPageViewModel_DesignTime()
+            : base(null, null, null) { }
+    }
+
     public class SettingsPageViewModel : ViewModelBase
     {
+        ILoggingService _loggingService;
         Services.ISettingsService _settings;
         IMarketplaceService _marketplace;
 
         public SettingsPageViewModel(
+            ILoggingService loggingService,
             Services.ISettingsService settings,
             IMarketplaceService marketplace)
         {
             _settings = settings;
             _marketplace = marketplace;
+            _loggingService = loggingService;
         }
 
         // Settings

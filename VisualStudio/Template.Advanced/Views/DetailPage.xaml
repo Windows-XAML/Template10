@@ -14,7 +14,7 @@
     mc:Ignorable="d">
 
     <d:Page.DataContext>
-        <vm:DetailPageViewModel />
+        <vm:DetailPageViewModel_DesignTime />
     </d:Page.DataContext>
 
     <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">

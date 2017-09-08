@@ -10,7 +10,7 @@
     mc:Ignorable="d">
 
     <d:Page.DataContext>
-        <vm:SettingsPageViewModel />
+        <vm:SettingsPageViewModel_DesignTime />
     </d:Page.DataContext>
 
 

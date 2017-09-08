@@ -17,9 +17,16 @@ using Template10.Services.Resources;
 using Template10.Services.Network;
 using Template10.Services.Dialog;
 using Template10.Services.Marketplace;
+using System.Collections.Generic;
 
 namespace Template10.BootStrap
 {
+    public abstract partial class BootStrapperBase : IBootStraperPopup
+    {
+        // intended for XAML, properties
+        public IList<IBootStraperPopupItem> Popups { get; }
+    }
+
     public abstract partial class BootStrapperBase
     {
         public BootStrapperBase()
@@ -64,15 +71,6 @@ namespace Template10.BootStrap
             LogThis();
             Central.Messenger.Subscribe<WindowCreatedMessage>(this, HandleAfterFirstWindowCreated);
             Central.Messenger.Subscribe<AppVisibilityChangedMessage>(this, (e) => Central.Visibility = e.Visibility);
-            Central.Messenger.Subscribe<ExtendedSessionRevokedMessage>(this, (e) =>
-            {
-                var isUnspecified = e.ExtendedExecutionReason == Windows.ApplicationModel.ExtendedExecution.ExtendedExecutionReason.Unspecified;
-                var isForeground = Central.Visibility == AppVisibilities.Foreground;
-                if (isUnspecified && isForeground) // && Revoked
-                {
-                    OnClose(new ClosedEventArgs());
-                }
-            });
         }
 
         private void HandleAfterFirstWindowCreated(WindowCreatedMessage message)
@@ -105,15 +103,6 @@ namespace Template10.BootStrap
         }
     }
 
-    public abstract partial class BootStrapperBase : IBootStrapperXaml
-    {
-        // intended for XAML, properties
-
-        public DataTemplate BusyIndicatorTemplate { get; set; }
-        public DataTemplate SplashScreenTemplate { get; set; }
-        public DataTemplate NetworkRequiredTemplate { get; set; }
-    }
-
     public abstract partial class BootStrapperBase : IBootStrapperDependecyInjection
     {
         public abstract IContainerService CreateDependecyContainer();
@@ -121,6 +110,11 @@ namespace Template10.BootStrap
 
         void RegisterDefaultDependencies(IContainerBuilder container)
         {
+            // boostrappers
+            container.RegisterInstance<IBootStrapperDependecyInjection>(this);
+            container.RegisterInstance<IBootStrapperStartup>(this);
+            container.RegisterInstance<IBootStraperPopup>(this);
+
             // services
             container.Register<ISessionState, SessionState>();
             container.Register<ILoggingService, LoggingService>();
@@ -135,7 +129,6 @@ namespace Template10.BootStrap
             container.Register<IDialogService, DialogService>();
 
             // strategies
-            container.RegisterInstance<IBootStrapperXaml>(this);
             container.Register<IBootStrapperStrategy, DefaultBootStrapperStrategy>();
             container.Register<ILifecycleStrategy, DefaultLifecycleStrategy>();
             container.Register<INavStateStrategy, DefaultNavStateStrategy>();
@@ -175,7 +168,6 @@ namespace Template10.BootStrap
         public virtual Task OnInitializeAsync() => Task.CompletedTask;
         public virtual UIElement CreateRootElement(IStartArgsEx e) => null;
         public abstract Task OnStartAsync(IStartArgsEx e, INavigationService navService, ISessionState sessionState);
-        public virtual void OnClose(ClosedEventArgs e) { /* empty */ }
     }
 
     public abstract partial class BootStrapperBase : Application
