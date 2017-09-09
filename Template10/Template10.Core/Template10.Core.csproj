@@ -115,14 +115,19 @@
   <ItemGroup>
     <Compile Include="BootStrap\BootStrapperBase.cs" />
     <Compile Include="BootStrap\BootstrapperStates.cs" />
-    <Compile Include="BootStrap\BusyPopup.cs" />
+    <Compile Include="Popup\Default\BusyPopup.cs" />
     <Compile Include="BootStrap\Extensions.cs" />
     <Compile Include="BootStrap\IBootStrapper.cs" />
+    <Compile Include="Popup\Default\ErrorPopup.cs" />
+    <Compile Include="Popup\Extensions.cs" />
+    <Compile Include="Popup\IPopupItem.cs" />
+    <Compile Include="Popup\Default\NetworkPopup.cs" />
+    <Compile Include="Popup\PopupItemBase.cs" />
+    <Compile Include="Popup\Default\SplashPopup.cs" />
     <Compile Include="Strategies\BootStrapperStrategy\DefaultBootStrapperStrategy.cs" />
     <Compile Include="Strategies\BootStrapperStrategy\IBootStrapperStrategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="Strategies\BusyStrategy\DefaultBusyStrategy.cs" />
     <Compile Include="Strategies\ExtendedSessionStrategy\DefaultExtendedSessionStrategy.cs" />
     <Compile Include="Strategies\ExtendedSessionStrategy\IExtendedSessionStrategy.cs" />
     <Compile Include="Strategies\ExtendedSessionStrategy\IExtendedSessionStrategy2.cs" />
@@ -130,8 +135,6 @@
     <Compile Include="Strategies\LifecycleStrategy\DefaultLifecycleStrategy.cs" />
     <Compile Include="Strategies\LifecycleStrategy\ILifecycleStrategy.cs" />
     <Compile Include="Strategies\LifecycleStrategy\Settings.cs" />
-    <Compile Include="Strategies\NetworkAvailableStrategy\DefaultNetworkAvailableStrategy.cs" />
-    <Compile Include="Strategies\SplashStrategy\DefaultSplashStrategy.cs" />
     <EmbeddedResource Include="Properties\Template10.Core.rd.xml" />
   </ItemGroup>
   <ItemGroup>

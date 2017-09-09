@@ -116,6 +116,7 @@
     <Compile Include="Extensions\FluentExtensions.cs" />
     <Compile Include="DialogService\IDialogService.cs" />
     <Compile Include="Extensions\Extensions.cs" />
+    <Compile Include="Popup\PopupEx.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resolver\DefaultResourceResolver.cs" />

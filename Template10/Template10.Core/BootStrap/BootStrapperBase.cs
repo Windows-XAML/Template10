@@ -18,13 +18,23 @@ using Template10.Services.Network;
 using Template10.Services.Dialog;
 using Template10.Services.Marketplace;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Template10.BootStrap
 {
-    public abstract partial class BootStrapperBase : IBootStraperPopup
+    public abstract partial class BootStrapperBase : IBootStrapperPopup
     {
-        // intended for XAML, properties
-        public IList<IBootStraperPopupItem> Popups { get; }
+        protected void InitializePopups()
+        {
+            foreach (var popup in Popups)
+            {
+                popup.Initialize();
+            }
+        }
+
+        public IEnumerable<Popup.IPopupItem> Popups => Resources
+            .Where(x => x.Value is Popup.IPopupItem)
+            .Select(x => x.Value as Popup.IPopupItem);
     }
 
     public abstract partial class BootStrapperBase
@@ -76,12 +86,9 @@ namespace Template10.BootStrap
         private void HandleAfterFirstWindowCreated(WindowCreatedMessage message)
         {
             LogThis();
-
-            // unsubscribe so this is only called a single time
             Central.Messenger.Unsubscribe<WindowCreatedMessage>(this, HandleAfterFirstWindowCreated);
-
-            // these are the things delayed until after the first window is created
             Central.Container.Resolve<IBackButtonService>().Setup();
+            InitializePopups();
         }
 
         private void SetupEvents()
@@ -113,7 +120,7 @@ namespace Template10.BootStrap
             // boostrappers
             container.RegisterInstance<IBootStrapperDependecyInjection>(this);
             container.RegisterInstance<IBootStrapperStartup>(this);
-            container.RegisterInstance<IBootStraperPopup>(this);
+            container.RegisterInstance<IBootStrapperPopup>(this);
 
             // services
             container.Register<ISessionState, SessionState>();
@@ -135,8 +142,6 @@ namespace Template10.BootStrap
             container.Register<IExtendedSessionStrategy, DefaultExtendedSessionStrategy>();
             container.Register<IViewModelActionStrategy, DefaultViewModelActionStrategy>();
             container.Register<IViewModelResolutionStrategy, DefaultViewModelResolutionStrategy>();
-            container.Register<INetworkAvailableStrategy, DefaultNetworkAvailableStrategy>();
-            container.Register<ISplashStrategy, DefaultSplashStrategy>();
         }
 
         private static void TestDependecyInjection(IContainerConsumer container)
@@ -156,8 +161,6 @@ namespace Template10.BootStrap
             container.Resolve<IExtendedSessionStrategy>();
             container.Resolve<IViewModelActionStrategy>();
             container.Resolve<IViewModelResolutionStrategy>();
-            container.Resolve<INetworkAvailableStrategy>();
-            container.Resolve<ISplashStrategy>();
         }
     }
 
@@ -187,7 +190,7 @@ namespace Template10.BootStrap
 
         // hide built-in Application events
 
-#pragma warning disable CS0067
+#pragma warning disable CS0067 // unused events
         private new event EventHandler<object> Resuming;
         private new event SuspendingEventHandler Suspending;
         private new event UnhandledExceptionEventHandler UnhandledException;

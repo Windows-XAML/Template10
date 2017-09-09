@@ -24,8 +24,8 @@ namespace Template10.Core
         Task OnStartAsync(IStartArgsEx e, INavigationService navService, ISessionState sessionState);
     }
 
-    public interface IBootStraperPopup
+    public interface IBootStrapperPopup
     {
-        IList<IBootStraperPopupItem> Popups { get; }
+        IEnumerable<Popup.IPopupItem> Popups { get; }
     }
 }

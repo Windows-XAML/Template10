@@ -6,11 +6,11 @@ namespace Template10.Portable.Common
     public class ValueWithHistory<T> : IValueWithHistory<T>
     {
         public ValueWithHistory(T initial) => Value = initial;
-        public ValueWithHistory(T initial, Action<DateTime, T, T> callback)
+        public ValueWithHistory(T initial, Action<string, T, T> callback)
             : this(initial) => _callback = callback;
 
         T _value;
-        Action<DateTime, T, T> _callback;
+        Action<string, T, T> _callback;
 
         public T Value
         {
@@ -19,12 +19,13 @@ namespace Template10.Portable.Common
             {
                 var old = _value;
                 _value = value;
-                _callback?.Invoke(DateTime.UtcNow, old, value);
-                History.Add(DateTime.UtcNow, value);
+                var key = $"{DateTime.UtcNow}+{Guid.NewGuid()}";
+                _callback?.Invoke(key, old, value);
+                History.Add(key, value);
             }
         }
 
         public bool ContainsValue(T value) => History.ContainsValue(value);
-        public Dictionary<DateTime, T> History { get; } = new Dictionary<DateTime, T>();
+        public Dictionary<string, T> History { get; } = new Dictionary<string, T>();
     }
 }

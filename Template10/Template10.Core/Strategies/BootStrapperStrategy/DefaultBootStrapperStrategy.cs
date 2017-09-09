@@ -13,6 +13,7 @@ using Template10.Services.Messenger;
 using Template10.Services.Gesture;
 using Template10.BootStrap;
 using Template10.Navigation;
+using Template10.Popup;
 
 namespace Template10.Strategies
 {
@@ -22,19 +23,16 @@ namespace Template10.Strategies
         IMessengerService _messengerService;
         IExtendedSessionStrategy _extendedSessionStrategy;
         IBackButtonService _backButtonService;
-        ISplashStrategy _splashStrategy;
         public DefaultBootStrapperStrategy(
             ILifecycleStrategy lifecycleStrategy,
             IMessengerService messengerService,
             IExtendedSessionStrategy extendedSessionStrategy,
-            IBackButtonService backButtonService,
-ISplashStrategy splashStrategy)
+            IBackButtonService backButtonService)
         {
             _lifecycleStrategy = lifecycleStrategy;
             _messengerService = messengerService;
             _extendedSessionStrategy = extendedSessionStrategy;
             _backButtonService = backButtonService;
-            _splashStrategy = splashStrategy;
             _status = new ValueWithHistory<BootstrapperStates>(BootstrapperStates.None, (date, before, after) =>
             {
                 LogThis($"{nameof(Status)} changed from {before} to {after}", caller: $"{nameof(DefaultBootStrapperStrategy)}");
@@ -61,7 +59,7 @@ ISplashStrategy splashStrategy)
                     await _lifecycleStrategy.SuspendAsync(e);
                     await _extendedSessionStrategy.SuspendingAsync();
                     _messengerService.Send(new Messages.SuspendingMessage { EventArgs = e });
-                }, BootstrapperStates.Suspended);
+                }, BootstrapperStates.Suspended, "Problem in the LifecycleStrategy.Suspend/Suspending implementation.");
             }
             finally
             {
@@ -173,54 +171,41 @@ ISplashStrategy splashStrategy)
                     await OperationWrapperAsync(BootstrapperStates.Initializing, async () =>
                     {
                         await OnInitAsyncDelegate?.Invoke();
-                    }, BootstrapperStates.Initialized);
+                    }, BootstrapperStates.Initialized, "Problem in your custom OnInitizedAsync() implementation.");
 
                     await OperationWrapperAsync(BootstrapperStates.Launching, async () =>
                     {
-                        OperationWrapper(BootstrapperStates.ShowingSplash, () =>
-                        {
-                            _splashStrategy.ShowSplash(args.LaunchActivatedEventArgs.SplashScreen);
-                        }, BootstrapperStates.ShowedSplash);
+                        ShowSplash(args);
 
                         OperationWrapper(BootstrapperStates.CreatingRootElement, () =>
                         {
                             Window.Current.Content = CreateRoot(args);
-                        }, BootstrapperStates.CreatedRootElement);
+                        }, BootstrapperStates.CreatedRootElement, "Problem in your custom CreateRoot() implementation.");
 
                         if (args.LaunchActivatedEventArgs?.PrelaunchActivated ?? false)
                         {
                             await OperationWrapperAsync(BootstrapperStates.Prelaunching, async () =>
                             {
                                 await OnStartAsyncDelegate?.Invoke(args, NavigationService.Default, Central.SessionState);
-                            }, BootstrapperStates.Prelaunched);
+                            }, BootstrapperStates.Prelaunched, "Problem in your custom OnStartAsync() implementation.");
                         }
                         else
                         {
                             var restored = false;
-
-                            if (_lifecycleStrategy.IsResuming(args))
-                            {
-                                await OperationWrapperAsync(BootstrapperStates.Restoring, async () =>
-                                {
-                                    restored = await _lifecycleStrategy.ResumeAsync(args);
-                                }, BootstrapperStates.Restored);
-                            }
+                            restored = await Restore(args);
 
                             if (!restored)
                             {
                                 await OperationWrapperAsync(BootstrapperStates.Starting, async () =>
                                 {
                                     await OnStartAsyncDelegate?.Invoke(args, NavigationService.Default, Central.SessionState);
-                                }, BootstrapperStates.Started);
+                                }, BootstrapperStates.Started, "Problem in your custom OnStartAsync() implementation.");
                             }
                         }
 
-                        OperationWrapper(BootstrapperStates.HidingSplash, () =>
-                        {
-                            _splashStrategy.HideSplash();
-                        }, BootstrapperStates.HiddenSplash);
+                        HideSplash();
 
-                    }, BootstrapperStates.Launched);
+                    }, BootstrapperStates.Launched, "Problem in the subprocesses of Launch.");
 
                     await _extendedSessionStrategy.StartupAsync(args);
                 }
@@ -229,7 +214,7 @@ ISplashStrategy splashStrategy)
                     await OperationWrapperAsync(BootstrapperStates.Activating, async () =>
                     {
                         await OnStartAsyncDelegate?.Invoke(args, NavigationService.Default, Central.SessionState);
-                    }, BootstrapperStates.Activated);
+                    }, BootstrapperStates.Activated, "Problem in your custom OnStartAsync() implementation.");
                 }
             }
             catch (Exception ex)
@@ -243,32 +228,91 @@ ISplashStrategy splashStrategy)
                 Window.Current.Activate();
             }
         }
+
+        private async Task<bool> Restore(IStartArgsEx args)
+        {
+            var restored = false;
+            if (_lifecycleStrategy.IsResuming(args))
+            {
+                await OperationWrapperAsync(BootstrapperStates.Restoring, async () =>
+                {
+                    restored = await _lifecycleStrategy.ResumeAsync(args);
+                }, BootstrapperStates.Restored, "Problem in the LifecycleStrategy.ResumeAsync() implementation.");
+            }
+            return restored;
+        }
+
+        private void ShowSplash(IStartArgsEx args)
+        {
+            if (Template10.Settings.ShowExtendedSplashScreen)
+            {
+                OperationWrapper(BootstrapperStates.ShowingSplash, () =>
+                {
+                    if (PopupExtensions.TryGetPopup<SplashPopup>(out var splash))
+                    {
+                        Window.Current.Content = new ContentPresenter();
+                        Window.Current.Activate();
+                        splash.Content = args.LaunchActivatedEventArgs.SplashScreen;
+                        splash.IsShowing = true;
+                    }
+                    else
+                    {
+                        throw new Exception($"Cannot locate {nameof(SplashPopup)}");
+                    }
+                }, BootstrapperStates.ShowedSplash, "Problem setting SplashPopup.IsShowing=true;");
+            }
+        }
+
+        private void HideSplash()
+        {
+            if (Template10.Settings.ShowExtendedSplashScreen && Template10.Settings.AutoHideExtendedSplashScreen)
+            {
+                OperationWrapper(BootstrapperStates.HidingSplash, () =>
+                {
+                    if (PopupExtensions.TryGetPopup<SplashPopup>(out var splash))
+                    {
+                        if (splash.IsShowing)
+                        {
+                            LogThis("SplashPopup is not showing, nothing to hide.");
+                        }
+                        else
+                        {
+                            splash.IsShowing = false;
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception($"Cannot locate {nameof(SplashPopup)}");
+                    }
+                }, BootstrapperStates.HiddenSplash, "Problem setting SplashPopup.IsShowing=false;");
+            }
+        }
     }
 
     public partial class DefaultBootStrapperStrategy : Services.Logging.Loggable
     {
         // internal
 
-        void OperationWrapper(BootstrapperStates before, Action method, BootstrapperStates after)
+        void OperationWrapper(BootstrapperStates before, Action method, BootstrapperStates after, string message)
         {
             Status = before;
             try { method(); }
             catch (Exception ex)
             {
-                var message = $"Error in {GetType()}.{nameof(OperationWrapper)} while {before}. Exception;{ex.Message}";
+                // message += $"\r\nError in {GetType()}.{nameof(OperationWrapper)} while {before}. Exception:{ex.Message}";
                 LogThis(message, severity: Services.Logging.Severities.Error);
                 throw new Exception(message, ex);
             }
             finally { Status = after; }
         }
 
-        async Task OperationWrapperAsync(BootstrapperStates before, Func<Task> method, BootstrapperStates after)
+        async Task OperationWrapperAsync(BootstrapperStates before, Func<Task> method, BootstrapperStates after, string message)
         {
             Status = before;
             try { await method(); }
             catch (Exception ex)
             {
-                var message = $"Error in {GetType()}.{nameof(OperationWrapperAsync)} while {before}. Exception:{ex.Message}";
+                // message += $"\r\nError in {GetType()}.{nameof(OperationWrapperAsync)} while {before}. Exception:{ex.Message}";
                 LogThis(message, severity: Services.Logging.Severities.Error);
                 throw new Exception(message, ex);
             }

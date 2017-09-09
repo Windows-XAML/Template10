@@ -6,6 +6,8 @@ using Windows.UI.Xaml;
 
 namespace Template10
 {
+    public enum NetworkRequirements { None, NetworkRequired, InternetRequired }
+
     public static partial class Settings
     {
         // navigation settings
@@ -30,17 +32,10 @@ namespace Template10
 
         // strategy settings
 
-        public static NetworkRequirements NetworkRequirement
-        {
-            get => Strategies.Settings.NetworkRequirement;
-            set => Strategies.Settings.NetworkRequirement = value;
-        }
+        public static NetworkRequirements NetworkRequirement { get; set; } = NetworkRequirements.None;
 
-        public static bool ShowExtendedSplashScreen
-        {
-            get => Strategies.Settings.ShowExtendedSplashScreen;
-            set => Strategies.Settings.ShowExtendedSplashScreen = value;
-        }
+        public static bool ShowExtendedSplashScreen { get; set; } = true;
+        public static bool AutoHideExtendedSplashScreen { get; set; } = true;
 
         public static bool AppAlwaysResumes
         {

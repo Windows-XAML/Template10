@@ -3,8 +3,6 @@ using Windows.UI.Xaml.Data;
 using Template10;
 using Template10.Extensions;
 using Template10.Core;
-using Windows.ApplicationModel.Activation;
-using Windows.UI.Xaml;
 using Sample.ViewModels;
 using Template10.Strategies;
 using Template10.Services.Container;
@@ -13,9 +11,9 @@ using Sample.Services;
 using System;
 using Template10.Navigation;
 using System.Collections.Generic;
-using Template10.Services.Gesture;
 using Template10.Services.Marketplace;
-using Template10.Services.Dialog;
+using Template10.Messages;
+using Template10.Popup;
 
 namespace Sample
 {
@@ -29,26 +27,32 @@ namespace Sample
             InitializeComponent();
         }
 
-        public override void SetupDependencies(IContainerBuilder container)
-        {
-            // setup strategies
-            container.Register<IViewModelResolutionStrategy, CustomViewModelResolutionStrategy>();
-
-            // setup services
-            container.Register<IMarketplaceService, MarketplaceService>();
-            container.Register<ISettingsService, SettingsService>();
-
-            // setup view-models
-            container.Register<ITemplate10ViewModel, MainPageViewModel>(typeof(MainPage).ToString());
-            container.Register<ITemplate10ViewModel, DetailPageViewModel>(typeof(DetailPage).ToString());
-            container.Register<ITemplate10ViewModel, SettingsPageViewModel>(typeof(SettingsPage).ToString());
-        }
-
         public override Task OnInitializeAsync()
         {
             SetupPageKeys(this.PageKeys<PageKeys>());
             SetupSettings(this.Resolve<ISettingsService>());
+            Central.Messenger.Subscribe<UnhandledExceptionMessage>(this, OnUnhandledException);
             return base.OnInitializeAsync();
+        }
+
+        public override async Task OnStartAsync(IStartArgsEx e, INavigationService navService, ISessionState sessionState)
+        {
+            await Task.Delay(5000);
+
+            if (await navService.NavigateAsync(typeof(MainPage)))
+            {
+                HideSplash();
+            }
+        }
+
+        public override void SetupDependencies(IContainerBuilder container)
+        {
+            container.Register<IViewModelResolutionStrategy, CustomViewModelResolutionStrategy>();
+            container.Register<IMarketplaceService, MarketplaceService>();
+            container.Register<ISettingsService, SettingsService>();
+            container.Register<ITemplate10ViewModel, MainPageViewModel>(typeof(MainPage).ToString());
+            container.Register<ITemplate10ViewModel, DetailPageViewModel>(typeof(DetailPage).ToString());
+            container.Register<ITemplate10ViewModel, SettingsPageViewModel>(typeof(SettingsPage).ToString());
         }
 
         private void SetupPageKeys(IDictionary<PageKeys, Type> keys)
@@ -67,9 +71,45 @@ namespace Sample
             Template10.Settings.ShowExtendedSplashScreen = true;
         }
 
-        public override async Task OnStartAsync(IStartArgsEx e, INavigationService navService, ISessionState sessionState)
+        public void OnUnhandledException(UnhandledExceptionMessage m)
         {
-            await navService.NavigateAsync(typeof(Views.MainPage));
+            ShowError(m.EventArgs.Exception);
+        }
+    }
+
+    sealed partial class App : BootStrapper
+    {
+        public static void ShowError(Exception ex)
+        {
+            if (PopupExtensions.TryGetPopup<SplashPopup>(out var busy))
+            {
+                busy.IsShowing = false;
+            }
+        }
+
+        public static void HideSplash()
+        {
+            if (PopupExtensions.TryGetPopup<SplashPopup>(out var busy))
+            {
+                busy.IsShowing = false;
+            }
+        }
+
+        public static void ShowBusy(object content)
+        {
+            if (PopupExtensions.TryGetPopup<BusyPopup>(out var busy))
+            {
+                busy.Content = content;
+                busy.IsShowing = true;
+            }
+        }
+
+        public static void HideBusy()
+        {
+            if (PopupExtensions.TryGetPopup<BusyPopup>(out var busy))
+            {
+                busy.IsShowing = false;
+            }
         }
     }
 }
