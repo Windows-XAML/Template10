@@ -13,7 +13,7 @@ using Template10.Navigation;
 using System.Collections.Generic;
 using Template10.Services.Marketplace;
 using Template10.Messages;
-using Template10.Popup;
+using Template10.Popups;
 
 namespace Sample
 {
@@ -68,7 +68,6 @@ namespace Sample
             Template10.Settings.ShellBackButtonPreference = settings.ShellBackButtonPreference;
             Template10.Settings.CacheMaxDuration = TimeSpan.FromDays(2);
             Template10.Settings.RequireSerializableParameters = true;
-            Template10.Settings.ShowExtendedSplashScreen = true;
         }
 
         public void OnUnhandledException(UnhandledExceptionMessage m)
@@ -81,7 +80,7 @@ namespace Sample
     {
         public static void ShowError(Exception ex)
         {
-            if (PopupExtensions.TryGetPopup<SplashPopup>(out var busy))
+            if (PopupsExtensions.TryGetPopup<SplashPopup>(out var busy))
             {
                 busy.IsShowing = false;
             }
@@ -89,7 +88,7 @@ namespace Sample
 
         public static void HideSplash()
         {
-            if (PopupExtensions.TryGetPopup<SplashPopup>(out var busy))
+            if (PopupsExtensions.TryGetPopup<SplashPopup>(out var busy))
             {
                 busy.IsShowing = false;
             }
@@ -97,17 +96,18 @@ namespace Sample
 
         public static void ShowBusy(object content)
         {
-            if (PopupExtensions.TryGetPopup<BusyPopup>(out var busy))
+            if (PopupsExtensions.TryGetPopup<BusyPopup>(out var busy))
             {
-                busy.Content = content;
+                busy.Content = new BusyPopupData { Text = content?.ToString() };
                 busy.IsShowing = true;
             }
         }
 
         public static void HideBusy()
         {
-            if (PopupExtensions.TryGetPopup<BusyPopup>(out var busy))
+            if (PopupsExtensions.TryGetPopup<BusyPopup>(out var busy))
             {
+                busy.Content = new BusyPopupData { Text = string.Empty };
                 busy.IsShowing = false;
             }
         }

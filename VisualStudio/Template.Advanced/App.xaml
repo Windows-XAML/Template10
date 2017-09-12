@@ -3,15 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:t10="using:Template10"
-    xmlns:pop="using:Template10.Popup"
-    xmlns:views="using:Sample.Views">
-
-    <!--<t10:BootStrapper.Popups>
-        <t10:BusyPopup />
-        --><!--<t10:BusyPopup />-->
-        <!--<t10:SplashPopup/>
-        <t10:NetworkPopup/>--><!--
-    </t10:BootStrapper.Popups>-->
+    xmlns:pop="using:Template10.Popups">
 
     <Application.Resources>
         <ResourceDictionary>
@@ -26,11 +18,20 @@
                 </DataTemplate>
             </pop:BusyPopup>
 
-            <pop:SplashPopup x:Key="SplashPopup">
+            <pop:SplashPopup x:Key="SplashPopup" AutoHide="false">
+                <pop:SplashPopup.BackgroundBrush>
+                    <SolidColorBrush Color="Green" />
+                </pop:SplashPopup.BackgroundBrush>
                 <DataTemplate>
-                    <TextBlock Text="Splash..." />
+                    <TextBlock Foreground="White" Text="Splash..." />
                 </DataTemplate>
             </pop:SplashPopup>
+
+            <pop:NetworkPopup x:Key="NetworkPopup" Requirement="None">
+                <DataTemplate>
+                    <TextBlock Text="Network required..." />
+                </DataTemplate>
+            </pop:NetworkPopup>
 
         </ResourceDictionary>
     </Application.Resources>

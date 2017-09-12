@@ -32,9 +32,9 @@ namespace Template10.BootStrap
             }
         }
 
-        public IEnumerable<Popup.IPopupItem> Popups => Resources
-            .Where(x => x.Value is Popup.IPopupItem)
-            .Select(x => x.Value as Popup.IPopupItem);
+        public IEnumerable<Popups.IPopupItem> Popups => Resources
+            .Where(x => x.Value is Popups.IPopupItem)
+            .Select(x => x.Value as Popups.IPopupItem);
     }
 
     public abstract partial class BootStrapperBase

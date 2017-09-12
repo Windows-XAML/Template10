@@ -1,18 +1,12 @@
 ﻿using System;
 using System.Linq;
 using Template10.Core;
-using Template10.Popup;
+using Template10.Popups;
 
 namespace Template10.Extensions
 {
-    public static class PopupExtensions
+    public static class PopupsExtensions
     {
-        public static bool TryGetBusyPopup(this IBootStrapperPopup b, out BusyPopup popup)
-            => TryGetPopupItem(b, out popup);
-
-        public static bool TryGetPopup<T>(this IBootStrapperPopup b, out T popup) where T : IPopupItem
-            => TryGetPopupItem<T>(b, out popup);
-
         public static bool TryGetPopup<T>(out T popup) where T : IPopupItem
             => TryGetPopupItem(Central.Container.Resolve<IBootStrapperPopup>(), out popup);
 

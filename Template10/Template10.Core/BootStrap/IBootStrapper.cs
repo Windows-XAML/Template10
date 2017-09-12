@@ -26,6 +26,6 @@ namespace Template10.Core
 
     public interface IBootStrapperPopup
     {
-        IEnumerable<Popup.IPopupItem> Popups { get; }
+        IEnumerable<Popups.IPopupItem> Popups { get; }
     }
 }

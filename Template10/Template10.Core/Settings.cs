@@ -32,11 +32,6 @@ namespace Template10
 
         // strategy settings
 
-        public static NetworkRequirements NetworkRequirement { get; set; } = NetworkRequirements.None;
-
-        public static bool ShowExtendedSplashScreen { get; set; } = true;
-        public static bool AutoHideExtendedSplashScreen { get; set; } = true;
-
         public static bool AppAlwaysResumes
         {
             get => Strategies.Settings.AppAlwaysResumes;

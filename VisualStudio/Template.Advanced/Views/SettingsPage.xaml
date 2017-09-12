@@ -13,7 +13,6 @@
         <vm:SettingsPageViewModel_DesignTime />
     </d:Page.DataContext>
 
-
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
         <Grid.RowDefinitions>
@@ -67,12 +66,12 @@
                             Text="{Binding BusyText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
 
-                        <!--<Button
+                        <Button
                             Margin="12,0,0,0"
-                            Command="{x:Bind ViewModel.ShowBusy}"
+                            Click="{x:Bind ViewModel.ShowBusy}"
                             Content="Show Busy"
                             RelativePanel.AlignBottomWith="BusyTextTextBox"
-                            RelativePanel.RightOf="BusyTextTextBox" />-->
+                            RelativePanel.RightOf="BusyTextTextBox" />
 
 
                     </RelativePanel>

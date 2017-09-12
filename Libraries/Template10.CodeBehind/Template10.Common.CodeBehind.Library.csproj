@@ -123,6 +123,7 @@
     <Compile Include="Common.WeakReference\WeakReferenceT.cs" />
     <Compile Include="Common\EventThrottleHelper.cs" />
     <Compile Include="Common\LockAsync.cs" />
+    <Compile Include="Common\Timeout.cs" />
     <Compile Include="Common\TypedEventHandler.cs" />
     <Compile Include="Mvvm\AwaitableDelegateCommand.cs" />
     <Compile Include="Mvvm\ChangedCommandAdapter.cs" />

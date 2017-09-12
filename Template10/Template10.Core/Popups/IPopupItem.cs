@@ -2,7 +2,7 @@
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 
-namespace Template10.Popup
+namespace Template10.Popups
 {
     public interface IPopupItem
     {

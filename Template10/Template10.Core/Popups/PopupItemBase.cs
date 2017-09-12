@@ -7,7 +7,7 @@ using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 
-namespace Template10.Popup
+namespace Template10.Popups
 {
     [ContentProperty(Name = nameof(Template))]
     public abstract class PopupItemBase : IPopupItem
@@ -36,14 +36,6 @@ namespace Template10.Popup
             {
                 if (value && !IsShowing)
                 {
-                    var b = Central.Container.Resolve<IBootStrapperPopup>();
-                    if (b.Popups.Any(x => x.IsShowing))
-                    {
-                        foreach (var popup in b.Popups)
-                        {
-                            popup.IsShowing = false;
-                        }
-                    }
                     Popup.Template = Template ?? Popup.Template;
                     Popup.TransitionCollection = TransitionCollection ?? Popup.TransitionCollection;
                     Popup.BackgroundBrush = BackgroundBrush ?? Popup.BackgroundBrush;

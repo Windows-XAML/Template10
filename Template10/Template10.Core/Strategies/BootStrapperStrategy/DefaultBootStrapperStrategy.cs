@@ -13,7 +13,7 @@ using Template10.Services.Messenger;
 using Template10.Services.Gesture;
 using Template10.BootStrap;
 using Template10.Navigation;
-using Template10.Popup;
+using Template10.Popups;
 
 namespace Template10.Strategies
 {
@@ -244,47 +244,53 @@ namespace Template10.Strategies
 
         private void ShowSplash(IStartArgsEx args)
         {
-            if (Template10.Settings.ShowExtendedSplashScreen)
+            if (PopupsExtensions.TryGetPopup<SplashPopup>(out var splash))
             {
-                OperationWrapper(BootstrapperStates.ShowingSplash, () =>
+                if (splash.AutoShow)
                 {
-                    if (PopupExtensions.TryGetPopup<SplashPopup>(out var splash))
+                    OperationWrapper(BootstrapperStates.ShowingSplash, () =>
                     {
-                        Window.Current.Content = new ContentPresenter();
-                        Window.Current.Activate();
-                        splash.Content = args.LaunchActivatedEventArgs.SplashScreen;
+                        splash.Content = new SplashPopupData { SplashScreen = args.LaunchActivatedEventArgs.SplashScreen };
                         splash.IsShowing = true;
-                    }
-                    else
-                    {
-                        throw new Exception($"Cannot locate {nameof(SplashPopup)}");
-                    }
-                }, BootstrapperStates.ShowedSplash, "Problem setting SplashPopup.IsShowing=true;");
+                    }, BootstrapperStates.ShowedSplash, "Problem setting SplashPopup.IsShowing=true;");
+                }
+                else
+                {
+                    LogThis("SplashPopup is set to AutoShow=false;, developer will show it.");
+                }
+            }
+            else
+            {
+                LogThis("SplashPopup is not found, nothing to show.");
             }
         }
 
         private void HideSplash()
         {
-            if (Template10.Settings.ShowExtendedSplashScreen && Template10.Settings.AutoHideExtendedSplashScreen)
+            if (PopupsExtensions.TryGetPopup<SplashPopup>(out var splash))
             {
-                OperationWrapper(BootstrapperStates.HidingSplash, () =>
+                if (splash.AutoHide)
                 {
-                    if (PopupExtensions.TryGetPopup<SplashPopup>(out var splash))
+                    if (splash.IsShowing)
                     {
-                        if (splash.IsShowing)
-                        {
-                            LogThis("SplashPopup is not showing, nothing to hide.");
-                        }
-                        else
+                        OperationWrapper(BootstrapperStates.HidingSplash, () =>
                         {
                             splash.IsShowing = false;
-                        }
+                        }, BootstrapperStates.HiddenSplash, "Problem setting SplashPopup.IsShowing=false;");
                     }
                     else
                     {
-                        throw new Exception($"Cannot locate {nameof(SplashPopup)}");
+                        LogThis("SplashPopup is not showing, nothing to hide.");
                     }
-                }, BootstrapperStates.HiddenSplash, "Problem setting SplashPopup.IsShowing=false;");
+                }
+                else
+                {
+                    LogThis("SplashPopup is set to AutoHide=false;, developer will hide it.");
+                }
+            }
+            else
+            {
+                LogThis("SplashPopup is not found, nothing to hide.");
             }
         }
     }
