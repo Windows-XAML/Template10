@@ -14,7 +14,10 @@
 
             <pop:BusyPopup x:Key="BusyPopup">
                 <DataTemplate>
-                    <TextBlock Text="{Binding}" />
+                    <StackPanel>
+                        <TextBlock Text="{Binding Text}" />
+                        <Button Command="{Binding Close}">Close</Button>
+                    </StackPanel>
                 </DataTemplate>
             </pop:BusyPopup>
 
@@ -23,15 +26,30 @@
                     <SolidColorBrush Color="Green" />
                 </pop:SplashPopup.BackgroundBrush>
                 <DataTemplate>
-                    <TextBlock Foreground="White" Text="Splash..." />
+                    <StackPanel>
+                        <TextBlock Foreground="White" Text="Splash..." />
+                        <Button Command="{Binding Close}">Close</Button>
+                    </StackPanel>
                 </DataTemplate>
             </pop:SplashPopup>
 
             <pop:NetworkPopup x:Key="NetworkPopup" Requirement="None">
                 <DataTemplate>
-                    <TextBlock Text="Network required..." />
+                    <StackPanel>
+                        <TextBlock Text="Network" />
+                        <Button Command="{Binding Close}">Close</Button>
+                    </StackPanel>
                 </DataTemplate>
             </pop:NetworkPopup>
+
+            <pop:ErrorPopup x:Key="ErrorPopup">
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Error.Message}" />
+                        <Button Command="{Binding Close}">Close</Button>
+                    </StackPanel>
+                </DataTemplate>
+            </pop:ErrorPopup>
 
         </ResourceDictionary>
     </Application.Resources>

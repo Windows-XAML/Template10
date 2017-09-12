@@ -250,7 +250,7 @@ namespace Template10.Strategies
                 {
                     OperationWrapper(BootstrapperStates.ShowingSplash, () =>
                     {
-                        splash.Content = new SplashPopupData { SplashScreen = args.LaunchActivatedEventArgs.SplashScreen };
+                        splash.Content.SplashScreen = args.LaunchActivatedEventArgs.SplashScreen;
                         splash.IsShowing = true;
                     }, BootstrapperStates.ShowedSplash, "Problem setting SplashPopup.IsShowing=true;");
                 }

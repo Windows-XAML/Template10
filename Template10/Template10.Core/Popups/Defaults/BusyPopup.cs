@@ -1,10 +1,21 @@
-﻿using System.ComponentModel;
+﻿using System;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Markup;
 
 namespace Template10.Popups
 {
-    public class BusyPopupData : INotifyPropertyChanged
+    public class BusyPopupData : Bindable
     {
+        private Action _close;
+
+        internal BusyPopupData(Action close, Windows.UI.Core.CoreDispatcher dispatcher)
+            : base(dispatcher)
+        {
+            Close = new Command(close);
+        }
+
+        public System.Windows.Input.ICommand Close { get; }
+
         private string _text;
         public string Text
         {
@@ -12,16 +23,19 @@ namespace Template10.Popups
             set
             {
                 _text = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Text)));
+                RaisePropertyChanged();
             }
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
     }
 
     [ContentProperty(Name = nameof(Template))]
     public class BusyPopup : PopupItemBase
     {
+        public BusyPopup()
+        {
+            Content = new BusyPopupData(() => IsShowing = false, Window.Current.Dispatcher);
+        }
+
         public new BusyPopupData Content
         {
             get => base.Content as BusyPopupData;

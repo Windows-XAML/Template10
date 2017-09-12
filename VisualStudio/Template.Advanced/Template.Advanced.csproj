@@ -102,6 +102,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ISettingsService.cs" />
     <Compile Include="Services\SettingsService.cs" />
+    <Compile Include="Styles\Custom.xaml.cs">
+      <DependentUpon>Custom.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\DetailPageViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\SettingsPageViewModel.cs" />

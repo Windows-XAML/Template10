@@ -1,11 +1,26 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using Windows.ApplicationModel.Activation;
+using Windows.UI.Core;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Markup;
 
 namespace Template10.Popups
 {
-    public class SplashPopupData : INotifyPropertyChanged
+    public class SplashPopupData : Bindable
     {
+        private Action _close;
+        private CoreDispatcher _dispatcher;
+
+        internal SplashPopupData(Action close, CoreDispatcher dispatcher)
+            : base(dispatcher)
+        {
+            Close = new Command(close);
+        }
+
+        public System.Windows.Input.ICommand Close { get; }
+
         private SplashScreen _splashScreen;
         public SplashScreen SplashScreen
         {
@@ -13,11 +28,9 @@ namespace Template10.Popups
             set
             {
                 _splashScreen = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SplashScreen)));
+                RaisePropertyChanged();
             }
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
     }
 
     [ContentProperty(Name = nameof(Template))]
@@ -28,7 +41,7 @@ namespace Template10.Popups
 
         public override void Initialize()
         {
-            // empty
+            Content = new SplashPopupData(() => IsShowing = false, Window.Current.Dispatcher);
         }
 
         public new SplashPopupData Content

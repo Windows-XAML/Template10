@@ -37,8 +37,7 @@ namespace Sample
 
         public override async Task OnStartAsync(IStartArgsEx e, INavigationService navService, ISessionState sessionState)
         {
-            await Task.Delay(5000);
-
+            await Task.Delay(0);
             if (await navService.NavigateAsync(typeof(MainPage)))
             {
                 HideSplash();
@@ -98,7 +97,7 @@ namespace Sample
         {
             if (PopupsExtensions.TryGetPopup<BusyPopup>(out var busy))
             {
-                busy.Content = new BusyPopupData { Text = content?.ToString() };
+                busy.Content.Text = content?.ToString();
                 busy.IsShowing = true;
             }
         }
@@ -107,7 +106,7 @@ namespace Sample
         {
             if (PopupsExtensions.TryGetPopup<BusyPopup>(out var busy))
             {
-                busy.Content = new BusyPopupData { Text = string.Empty };
+                busy.Content.Text = string.Empty;
                 busy.IsShowing = false;
             }
         }

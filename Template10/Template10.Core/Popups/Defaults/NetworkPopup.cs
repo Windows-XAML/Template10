@@ -1,29 +1,48 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using Template10.Services.Network;
+using Windows.UI.Core;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Markup;
 
 namespace Template10.Popups
 {
-    public class NetworkPopupData : INotifyPropertyChanged
+    public class NetworkPopupData : Bindable
     {
+        private Action _close;
+        private CoreDispatcher _dispatcher;
+
+        internal NetworkPopupData(Action close, CoreDispatcher dispatcher)
+         : base(dispatcher)
+        {
+            Close = new Command(close);
+        }
+
+        public System.Windows.Input.ICommand Close { get; }
+
         public NetworkRequirements Requirement { get; set; } = NetworkRequirements.None;
 
-        private NetworkRequirements _actual;
-        public NetworkRequirements Actual
+        private ConnectionTypes _actual;
+        public ConnectionTypes Actual
         {
             get { return _actual; }
             set
             {
                 _actual = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Actual)));
+                RaisePropertyChanged();
             }
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
     }
 
     [ContentProperty(Name = nameof(Template))]
     public class NetworkPopup : PopupItemBase
     {
+        public NetworkPopup()
+        {
+            Content = new NetworkPopupData(() => IsShowing = false, Window.Current.Dispatcher);
+        }
+
         public NetworkRequirements Requirement { get; set; } = NetworkRequirements.None;
 
         public override void Initialize()
@@ -55,6 +74,8 @@ namespace Template10.Popups
                     showing = false;
                     break;
             }
+            Content.Requirement = Requirement;
+            Content.Actual = e.ConnectionType;
             IsShowing = showing;
         }
     }
