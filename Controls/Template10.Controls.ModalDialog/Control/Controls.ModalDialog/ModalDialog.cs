@@ -1,4 +1,5 @@
 ﻿using System;
+using Template10.Services.Gesture;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -11,8 +12,8 @@ namespace Template10.Controls
         // TODO: what if Default is null and it is custom?
         public Services.Container.IContainerService ContainerService { get; set; } 
             = Services.Container.ContainerService.Default;
-        Services.Gesture.IBackButtonService _BackButtonService 
-            => ContainerService.Resolve<Services.Gesture.IBackButtonService>();
+        Services.Gesture.IBackButtonService2 _BackButtonService 
+            => ContainerService.Resolve<Services.Gesture.IBackButtonService>() as IBackButtonService2;
 
         public ModalDialog()
         {
