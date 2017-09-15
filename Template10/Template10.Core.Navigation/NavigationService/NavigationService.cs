@@ -82,7 +82,7 @@ namespace Template10.Navigation
             });
         }
 
-        static IBackButtonService BackButtonService => Services.Container.ContainerService.Default.Resolve<IBackButtonService>();
+        static IBackButtonService2 BackButtonService => Services.Container.ContainerService.Default.Resolve<IBackButtonService>() as IBackButtonService2;
         static ISerializationService SerializationService => Services.Container.ContainerService.Default.Resolve<ISerializationService>();
         static IViewModelActionStrategy ViewModelActionStrategy => Services.Container.ContainerService.Default.Resolve<IViewModelActionStrategy>();
         static IViewModelResolutionStrategy ViewModelResolutionStrategy => Services.Container.ContainerService.Default.Resolve<IViewModelResolutionStrategy>();

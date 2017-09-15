@@ -22,17 +22,17 @@ namespace Template10.Strategies
         ILifecycleStrategy _lifecycleStrategy;
         IMessengerService _messengerService;
         IExtendedSessionStrategy _extendedSessionStrategy;
-        IBackButtonService _backButtonService;
+        IGestureService _gestureService;
         public DefaultBootStrapperStrategy(
             ILifecycleStrategy lifecycleStrategy,
             IMessengerService messengerService,
             IExtendedSessionStrategy extendedSessionStrategy,
-            IBackButtonService backButtonService)
+            IGestureService gestureService)
         {
             _lifecycleStrategy = lifecycleStrategy;
             _messengerService = messengerService;
             _extendedSessionStrategy = extendedSessionStrategy;
-            _backButtonService = backButtonService;
+            _gestureService = gestureService;
             _status = new ValueWithHistory<BootstrapperStates>(BootstrapperStates.None, (date, before, after) =>
             {
                 LogThis($"{nameof(Status)} changed from {before} to {after}", caller: $"{nameof(DefaultBootStrapperStrategy)}");
@@ -122,7 +122,7 @@ namespace Template10.Strategies
             {
                 _windowSetup = true;
                 LogThis("OneTimeWindowSetup");
-                _backButtonService.BackRequested += (s, e) =>
+                _gestureService.BackRequested += (s, e) =>
                 {
                     LogThis("BackButtonService.BackRequested");
                     _messengerService.Send(new Messages.BackRequestedMessage { });

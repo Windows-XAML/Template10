@@ -33,14 +33,22 @@
                 </DataTemplate>
             </pop:SplashPopup>
 
-            <pop:NetworkPopup x:Key="NetworkPopup" Requirement="None">
+            <pop:NetworkPopup x:Key="NetworkPopup" Requirement="Internet">
                 <DataTemplate>
                     <StackPanel>
-                        <TextBlock Text="Network" />
+                        <TextBlock Text="Network os required." />
                         <Button Command="{Binding Close}">Close</Button>
                     </StackPanel>
                 </DataTemplate>
             </pop:NetworkPopup>
+
+            <pop:NarrowPopup x:Key="NarrowPopup" SmallerThan="420">
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="Too narrow." />
+                    </StackPanel>
+                </DataTemplate>
+            </pop:NarrowPopup>
 
             <pop:ErrorPopup x:Key="ErrorPopup">
                 <DataTemplate>
