@@ -9,7 +9,7 @@ namespace Template10.Popups
 {
     public class ErrorPopupData : PopupDataBase
     {
-        internal ErrorPopupData(Action close, CoreDispatcher dispatcher) : base(close, dispatcher)
+        public ErrorPopupData(Action close, CoreDispatcher dispatcher) : base(close, dispatcher)
         {
             // empty
         }

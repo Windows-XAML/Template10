@@ -7,7 +7,7 @@ namespace Template10.Popups
 {
     public class BusyPopupData : PopupDataBase
     {
-        internal BusyPopupData(Action close, CoreDispatcher dispatcher) : base(close, dispatcher)
+        public BusyPopupData(Action close, CoreDispatcher dispatcher) : base(close, dispatcher)
         {
             // empty
         }

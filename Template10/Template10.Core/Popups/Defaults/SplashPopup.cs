@@ -10,7 +10,7 @@ namespace Template10.Popups
 {
     public class SplashPopupData : PopupDataBase
     {
-        internal SplashPopupData(Action close, CoreDispatcher dispatcher) : base(close, dispatcher)
+        public SplashPopupData(Action close, CoreDispatcher dispatcher) : base(close, dispatcher)
         {
             // empty
         }

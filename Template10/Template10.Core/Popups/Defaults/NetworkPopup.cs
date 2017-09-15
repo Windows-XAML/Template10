@@ -10,7 +10,7 @@ namespace Template10.Popups
 {
     public class NetworkPopupData : PopupDataBase
     {
-        internal NetworkPopupData(Action close, CoreDispatcher dispatcher) : base(close, dispatcher)
+        public NetworkPopupData(Action close, CoreDispatcher dispatcher) : base(close, dispatcher)
         {
             // empty 
         }
