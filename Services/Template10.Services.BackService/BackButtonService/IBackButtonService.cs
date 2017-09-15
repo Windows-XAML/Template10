@@ -16,7 +16,7 @@ namespace Template10.Services.Gesture
         event TypedEventHandler<CancelEventArgs> BeforeForwardRequested;
         event TypedEventHandler<HandledEventArgs> ForwardRequested;
 
-        // void Setup();
+        void Setup();
         HandledEventArgs RaiseBackRequested();
         HandledEventArgs RaiseForwardRequested();
         void UpdateBackButton(bool canGoBack, bool canGoForward = false);

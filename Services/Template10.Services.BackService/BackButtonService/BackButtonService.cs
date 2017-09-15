@@ -13,10 +13,9 @@ namespace Template10.Services.Gesture
         public BackButtonService(IKeyboardService keyboardService)
         {
             _keyboardService = keyboardService as IKeyboardService2;
-            Setup();
         }
 
-        void Setup()
+        void IBackButtonService2.Setup()
         {
             _keyboardService.AfterKeyDown += (s, e) =>
             {

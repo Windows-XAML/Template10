@@ -10,7 +10,7 @@ namespace Template10.Services.Gesture
 {
     public interface IGestureService
     {
-        // void Setup();
+        void Setup();
 
         bool AllowBackRequested { get; set; }
         bool AllowForwardRequested { get; set; }
@@ -33,6 +33,12 @@ namespace Template10.Services.Gesture
 
     public class GestureService : IGestureService, IGestureService2
     {
+        public void Setup()
+        {
+            Two.KeyService.Setup();
+            Two.BackService.Setup();
+        }
+
         internal static IGestureService GetDefault()
         {
             var container = Services.Container.ContainerService.Default;

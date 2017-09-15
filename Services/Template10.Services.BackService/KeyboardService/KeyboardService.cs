@@ -6,17 +6,12 @@ namespace Template10.Services.Gesture
 {
     public class KeyboardService : IKeyboardService, IKeyboardService2
     {
-        public KeyboardService()
-        {
-            Setup();
-        }
-
         KeyboardHelper _helper;
 
         /// <remarks>
         /// This must be called AFTER the first window is created.
         /// </remarks>
-        private void Setup()
+        void IKeyboardService2.Setup()
         {
             _helper = new KeyboardHelper();
             _helper.KeyDown = (e) =>
