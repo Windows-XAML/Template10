@@ -6,7 +6,7 @@ using Windows.UI.Xaml;
 
 namespace Template10
 {
-    public enum NetworkRequirements { None, NetworkRequired, InternetRequired }
+    public enum NetworkRequirements { None, Network, Internet }
 
     public static partial class Settings
     {

@@ -8,33 +8,23 @@ using Windows.UI.Xaml.Markup;
 
 namespace Template10.Popups
 {
-    public class SplashPopupData : Bindable
+    public class SplashPopupData : PopupDataBase
     {
-        private Action _close;
-        private CoreDispatcher _dispatcher;
-
-        internal SplashPopupData(Action close, CoreDispatcher dispatcher)
-            : base(dispatcher)
+        internal SplashPopupData(Action close, CoreDispatcher dispatcher) : base(close, dispatcher)
         {
-            Close = new Command(close);
+            // empty
         }
-
-        public System.Windows.Input.ICommand Close { get; }
 
         private SplashScreen _splashScreen;
         public SplashScreen SplashScreen
         {
-            get { return _splashScreen; }
-            set
-            {
-                _splashScreen = value;
-                RaisePropertyChanged();
-            }
+            get => _splashScreen;
+            set => RaisePropertyChanged(() => _splashScreen = value);
         }
     }
 
     [ContentProperty(Name = nameof(Template))]
-    public class SplashPopup : PopupItemBase
+    public class SplashPopup : PopupItemBase<SplashPopupData>
     {
         public bool AutoShow { get; set; } = true;
         public bool AutoHide { get; set; } = true;
@@ -42,12 +32,6 @@ namespace Template10.Popups
         public override void Initialize()
         {
             Content = new SplashPopupData(() => IsShowing = false, Window.Current.Dispatcher);
-        }
-
-        public new SplashPopupData Content
-        {
-            get => base.Content as SplashPopupData;
-            set => base.Content = value;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml;
+﻿using Template10.Controls.Dialog;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 
@@ -11,5 +12,15 @@ namespace Template10.Popups
         TransitionCollection TransitionCollection { get; set; }
         Brush BackgroundBrush { get; set; }
         bool IsShowing { get; set; }
+    }
+
+    public interface IPopupItem2
+    {
+        PopupEx Popup { get; set; }
+    }
+
+    public interface IPopupItem<T>  where T : class, IPopupData
+    {
+        T Content { get; set; }
     }
 }

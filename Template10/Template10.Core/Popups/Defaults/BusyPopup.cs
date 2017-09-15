@@ -1,50 +1,37 @@
 ﻿using System;
-using Windows.UI.Xaml;
+using System.Windows.Input;
+using Windows.UI.Core;
 using Windows.UI.Xaml.Markup;
 
 namespace Template10.Popups
 {
-    public class BusyPopupData : Bindable
+    public class BusyPopupData : PopupDataBase
     {
-        private Action _close;
-
-        internal BusyPopupData(Action close, Windows.UI.Core.CoreDispatcher dispatcher)
-            : base(dispatcher)
+        internal BusyPopupData(Action close, CoreDispatcher dispatcher) : base(close, dispatcher)
         {
-            Close = new Command(close);
+            // empty
         }
 
-        public System.Windows.Input.ICommand Close { get; }
-
-        private string _text;
-        public string Text
+        private bool _isActive = false;
+        public bool IsActive
         {
-            get { return _text; }
-            set
-            {
-                _text = value;
-                RaisePropertyChanged();
-            }
+            get => _isActive;
+            set => RaisePropertyChanged(() => _isActive = value);
         }
     }
 
     [ContentProperty(Name = nameof(Template))]
-    public class BusyPopup : PopupItemBase
+    public class BusyPopup : PopupItemBase<BusyPopupData>
     {
-        public BusyPopup()
-        {
-            Content = new BusyPopupData(() => IsShowing = false, Window.Current.Dispatcher);
-        }
-
-        public new BusyPopupData Content
-        {
-            get => base.Content as BusyPopupData;
-            set => base.Content = value;
-        }
-
         public override void Initialize()
         {
             // empty
+        }
+
+        public new bool IsShowing
+        {
+            get => base.IsShowing;
+            set => base.IsShowing = Content.IsActive = value;
         }
     }
 }

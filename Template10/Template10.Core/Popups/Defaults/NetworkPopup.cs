@@ -8,75 +8,57 @@ using Windows.UI.Xaml.Markup;
 
 namespace Template10.Popups
 {
-    public class NetworkPopupData : Bindable
+    public class NetworkPopupData : PopupDataBase
     {
-        private Action _close;
-        private CoreDispatcher _dispatcher;
-
-        internal NetworkPopupData(Action close, CoreDispatcher dispatcher)
-         : base(dispatcher)
+        internal NetworkPopupData(Action close, CoreDispatcher dispatcher) : base(close, dispatcher)
         {
-            Close = new Command(close);
+            // empty 
         }
 
-        public System.Windows.Input.ICommand Close { get; }
-
-        public NetworkRequirements Requirement { get; set; } = NetworkRequirements.None;
+        private NetworkRequirements _requirement;
+        public NetworkRequirements Requirement
+        {
+            get => _requirement;
+            set => RaisePropertyChanged(() => _requirement = value);
+        }
 
         private ConnectionTypes _actual;
         public ConnectionTypes Actual
         {
-            get { return _actual; }
-            set
-            {
-                _actual = value;
-                RaisePropertyChanged();
-            }
+            get => _actual; 
+            set=> RaisePropertyChanged(() => _actual = value);
         }
     }
 
     [ContentProperty(Name = nameof(Template))]
-    public class NetworkPopup : PopupItemBase
+    public class NetworkPopup : PopupItemBase<NetworkPopupData>
     {
-        public NetworkPopup()
-        {
-            Content = new NetworkPopupData(() => IsShowing = false, Window.Current.Dispatcher);
-        }
-
         public NetworkRequirements Requirement { get; set; } = NetworkRequirements.None;
 
         public override void Initialize()
         {
-            Central.Network.AvailabilityChanged += Network_AvailabilityChanged;
-        }
-
-        public new NetworkPopupData Content
-        {
-            get => base.Content as NetworkPopupData;
-            set => base.Content = value;
-        }
-
-        private void Network_AvailabilityChanged(object sender, Services.Network.AvailabilityChangedEventArgs e)
-        {
-            var showing = false;
-            switch (Requirement)
+            Central.Network.AvailabilityChanged += (s, e) =>
             {
-                case NetworkRequirements.None:
-                    showing = true;
-                    break;
-                case NetworkRequirements.NetworkRequired when (e.ConnectionType == Services.Network.ConnectionTypes.LocalNetwork):
-                    showing = true;
-                    break;
-                case NetworkRequirements.InternetRequired when (e.ConnectionType == Services.Network.ConnectionTypes.Internet):
-                    showing = true;
-                    break;
-                default:
-                    showing = false;
-                    break;
-            }
-            Content.Requirement = Requirement;
-            Content.Actual = e.ConnectionType;
-            IsShowing = showing;
+                var showing = false;
+                switch (Requirement)
+                {
+                    case NetworkRequirements.None:
+                        showing = true;
+                        break;
+                    case NetworkRequirements.Network when (e.ConnectionType == Services.Network.ConnectionTypes.LocalNetwork):
+                        showing = true;
+                        break;
+                    case NetworkRequirements.Internet when (e.ConnectionType == Services.Network.ConnectionTypes.Internet):
+                        showing = true;
+                        break;
+                    default:
+                        showing = false;
+                        break;
+                }
+                Content.Requirement = Requirement;
+                Content.Actual = e.ConnectionType;
+                IsShowing = showing;
+            };
         }
     }
 }

@@ -7,52 +7,34 @@ using Windows.UI.Xaml.Markup;
 
 namespace Template10.Popups
 {
-    public class ErrorPopupData : Bindable
+    public class ErrorPopupData : PopupDataBase
     {
-        private Action _close;
-        private CoreDispatcher _dispatcher;
-
-        internal ErrorPopupData(Action close, CoreDispatcher dispatcher)
-          : base(dispatcher)
+        internal ErrorPopupData(Action close, CoreDispatcher dispatcher) : base(close, dispatcher)
         {
-            Close = new Command(close);
+            // empty
         }
-
-        public System.Windows.Input.ICommand Close { get; }
 
         private Exception _error;
         public Exception Error
         {
-            get { return _error; }
-            set
-            {
-                _error = value;
-                RaisePropertyChanged();
-            }
+            get => _error;
+            set => RaisePropertyChanged(() => _error = value);
         }
     }
 
     [ContentProperty(Name = nameof(Template))]
-    public class ErrorPopup : PopupItemBase
+    public class ErrorPopup : PopupItemBase<ErrorPopupData>
     {
-        public ErrorPopup()
-        {
-            Content = new ErrorPopupData(() => IsShowing = false, Window.Current.Dispatcher);
-        }
+        public bool Handled { get; set; } = true;
 
         public override void Initialize()
         {
             Central.Messenger.Subscribe<Messages.UnhandledExceptionMessage>(this, e =>
             {
                 Content.Error = e.EventArgs.Exception;
+                e.EventArgs.Handled = Handled;
                 IsShowing = true;
             });
-        }
-
-        public new ErrorPopupData Content
-        {
-            get => base.Content as ErrorPopupData;
-            set => base.Content = value;
         }
     }
 }

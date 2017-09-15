@@ -115,12 +115,14 @@
   <ItemGroup>
     <Compile Include="BootStrap\BootStrapperBase.cs" />
     <Compile Include="BootStrap\BootstrapperStates.cs" />
-    <Compile Include="Popups\Bindable.cs" />
     <Compile Include="Popups\Defaults\BusyPopup.cs" />
     <Compile Include="BootStrap\Extensions.cs" />
     <Compile Include="BootStrap\IBootStrapper.cs" />
     <Compile Include="Popups\Command.cs" />
     <Compile Include="Popups\Defaults\ErrorPopup.cs" />
+    <Compile Include="Popups\Defaults\NarrowPopup.cs" />
+    <Compile Include="Popups\IPopupData.cs" />
+    <Compile Include="Popups\PopupDataBase.cs" />
     <Compile Include="Popups\Extensions.cs" />
     <Compile Include="Popups\IPopupItem.cs" />
     <Compile Include="Popups\Defaults\NetworkPopup.cs" />
