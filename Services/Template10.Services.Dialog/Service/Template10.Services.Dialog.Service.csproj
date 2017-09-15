@@ -106,11 +106,9 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Controls\MessageBoxEx2.cs" />
     <Compile Include="Controls\MessageBoxResult.cs" />
     <Compile Include="Controls\MessageBoxType.cs" />
     <Compile Include="DialogManager.cs" />
-    <Compile Include="Controls\ContentDialogEx.cs" />
     <Compile Include="DialogService\DialogService.cs" />
     <Compile Include="Controls\MessageBoxEx.cs" />
     <Compile Include="Extensions\FluentExtensions.cs" />
@@ -128,13 +126,6 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>5.4.0</Version>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Themes\Generic.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Template10.Services.BackService\Template10.Services.Gesture.csproj">

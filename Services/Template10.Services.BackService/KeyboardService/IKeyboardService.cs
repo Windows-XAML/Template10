@@ -6,7 +6,11 @@ namespace Template10.Services.Gesture
 {
     public interface IKeyboardService
     {
-        void Setup();
+    }
+
+    public interface IKeyboardService2
+    {
+        // void Setup();
         event EventHandler AfterSearchGesture;
         event EventHandler AfterMenuGesture;
         event TypedEventHandler<KeyboardEventArgs> AfterKeyDown;

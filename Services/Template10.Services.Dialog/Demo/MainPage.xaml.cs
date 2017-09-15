@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Template10.Controls.Dialog;
 using Template10.Services.Dialog;
+using Template10.Services.Gesture;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -29,6 +31,13 @@ namespace Demo
         {
             this.InitializeComponent();
             _dialog = new DialogService();
+            new KeyboardService().AfterKeyDown += (s, e) =>
+            {
+                if (e.VirtualKey == Windows.System.VirtualKey.Escape)
+                {
+                    _popup?.Hide();
+                }
+            };
         }
 
         public string OutputText
@@ -57,7 +66,7 @@ namespace Demo
         {
             Log("Showing prompt(YesNo)");
             var resolver = UseCustomResourceResolver.IsChecked.Value ? new CustomResolver() : null;
-            var result = await _dialog.PromptAsync(AlertTextBox.Text, MessageBoxType.YesNo , resolver);
+            var result = await _dialog.PromptAsync(AlertTextBox.Text, MessageBoxType.YesNo, resolver);
             Log($"Prompt(YesNo) result: {result}");
         }
 
@@ -69,15 +78,48 @@ namespace Demo
             Log($"Prompt(YesNoCancel) result: {result}");
         }
 
+
+        PopupEx _popup;
         private void Splash(object sender, RoutedEventArgs e)
         {
-
+            Log("Showing Splash");
+            _popup?.Hide();
+            _popup = new PopupEx
+            {
+                Placement = GetPopupPlacement(),
+                CloseButtonVisibility = PopupCloseButtonVisibile.IsChecked.Value ? Visibility.Visible : Visibility.Collapsed,
+                AllowBackClose = PopupCloseButtonBackCloses.IsChecked.Value,
+                Template = SplashTemplate,
+            };
+            _popup.Show(null, ()=> Log("Hidding Splash"));
         }
 
         private void Busy(object sender, RoutedEventArgs e)
         {
-
+            Log("Showing Busy");
+            _popup?.Hide();
+            _popup = new PopupEx
+            {
+                Placement = GetPopupPlacement(),
+                CloseButtonVisibility = PopupCloseButtonVisibile.IsChecked.Value ? Visibility.Visible : Visibility.Collapsed,
+                AllowBackClose = PopupCloseButtonBackCloses.IsChecked.Value,
+                Template = BusyTemplate,
+            };
+            _popup.Show(null, ()=> Log("Hidding Busy"));
+            
         }
+
+        PopupEx.Placements GetPopupPlacement()
+        {
+            if (PopupPlacementLeft.IsChecked.Value) return PopupEx.Placements.Left;
+            else if (PopupPlacementTop.IsChecked.Value) return PopupEx.Placements.Top;
+            else if (PopupPlacementRight.IsChecked.Value) return PopupEx.Placements.Right;
+            else if (PopupPlacementBottom.IsChecked.Value) return PopupEx.Placements.Bottom;
+            else if (PopupPlacementFill.IsChecked.Value) return PopupEx.Placements.Fill;
+            else if (PopupPlacementCenter.IsChecked.Value) return PopupEx.Placements.Center;
+            else return PopupEx.Placements.Center;
+        }
+
     }
 
     public class CustomResolver : IResourceResolver

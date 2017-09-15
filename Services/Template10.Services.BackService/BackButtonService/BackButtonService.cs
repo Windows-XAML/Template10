@@ -7,21 +7,17 @@ using Windows.UI.Xaml;
 
 namespace Template10.Services.Gesture
 {
-    public class BackButtonService : IBackButtonService
+    public class BackButtonService : IBackButtonService, IBackButtonService2
     {
-        IKeyboardService _keyboardService;
+        IKeyboardService2 _keyboardService;
         public BackButtonService(IKeyboardService keyboardService)
         {
-            _keyboardService = keyboardService;
+            _keyboardService = keyboardService as IKeyboardService2;
+            Setup();
         }
 
-        private static bool setup = false;
-        public void Setup()
+        void Setup()
         {
-            if (setup) return;
-            else setup = true;
-
-            _keyboardService.Setup();
             _keyboardService.AfterKeyDown += (s, e) =>
             {
                 e.Handled = true;

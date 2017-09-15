@@ -4,24 +4,20 @@ using Windows.Foundation;
 
 namespace Template10.Services.Gesture
 {
-    public class KeyboardService : IKeyboardService
+    public class KeyboardService : IKeyboardService, IKeyboardService2
     {
         public KeyboardService()
         {
-            // empty
+            Setup();
         }
 
         KeyboardHelper _helper;
 
-        bool _Setup = false;
         /// <remarks>
         /// This must be called AFTER the first window is created.
         /// </remarks>
-        public void Setup()
+        private void Setup()
         {
-            if (_Setup) throw new Exception("KeyboardService.Setup can only be called one time");
-            else _Setup = true;
-
             _helper = new KeyboardHelper();
             _helper.KeyDown = (e) =>
                 {

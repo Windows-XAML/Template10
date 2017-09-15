@@ -23,6 +23,7 @@ namespace Template10.Services.Dialog
         None
     }
 
+    [Obsolete("", true)]
     public sealed class ContentDialogEx : ContentDialog
     {
         private bool _programmaticCloseRequested;

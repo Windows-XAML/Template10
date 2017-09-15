@@ -20,6 +20,7 @@ namespace Template10.Controls.Dialog
 
         IGestureService _GestureService;
         CoreDispatcher _diaptcher;
+        private Action ClosedCallback;
 
         public PopupEx()
         {
@@ -74,7 +75,7 @@ namespace Template10.Controls.Dialog
             Opacity = .5d,
         };
 
-        public void Show(object content)
+        public void Show(object content, Action callback = null)
         {
             var style = new Style
             {
@@ -85,11 +86,12 @@ namespace Template10.Controls.Dialog
                 Property = Grid.BackgroundProperty,
                 Value = BackgroundBrush,
             });
-            Show(content, style);
+            Show(content, style, callback);
         }
 
-        public void Show(object content, Style gridStyle)
+        public void Show(object content, Style gridStyle, Action callback = null)
         {
+            ClosedCallback = callback;
             RunSafe(() =>
             {
                 _child = new Grid
@@ -102,18 +104,18 @@ namespace Template10.Controls.Dialog
                 {
                     Width = Window.Current.Bounds.Width,
                     Height = Window.Current.Bounds.Height,
-                    VerticalContentAlignment = VerticalAlignment.Center,
-                    HorizontalContentAlignment = HorizontalAlignment.Center,
                     ContentTemplate = Template,
                     Content = content,
                 };
+                SetupPlacement(_presenter);
                 if (TransitionCollection != null)
                 {
                     _presenter.ContentTransitions = TransitionCollection;
                 }
-            (_child as Grid).Children.Add(_presenter);
+                (_child as Grid).Children.Add(_presenter);
                 var _focus = new TextBox
                 {
+                    Name = "Hidden_Focus_Grabbing_TextBox",
                     RenderTransform = new ScaleTransform { ScaleX = .01, ScaleY = .01 },
                     PreventKeyboardDisplayOnProgrammaticFocus = true,
                     HorizontalAlignment = HorizontalAlignment.Right,
@@ -126,6 +128,18 @@ namespace Template10.Controls.Dialog
                     Width = 1d,
                 };
                 (_child as Grid).Children.Add(_focus);
+                var close = new Button
+                {
+                    Content = new SymbolIcon { Symbol = Symbol.Cancel },
+                    VerticalAlignment = VerticalAlignment.Top,
+                    HorizontalAlignment = HorizontalAlignment.Right,
+                    Margin = new Thickness(16),
+                    Padding = new Thickness(16),
+                    Visibility = CloseButtonVisibility,
+                    RequestedTheme = ElementTheme.Dark,
+                };
+                close.Click += (s, e) => Hide();
+                (_child as Grid).Children.Add(close);
                 _popup = new Windows.UI.Xaml.Controls.Primitives.Popup
                 {
                     Child = _child,
@@ -138,6 +152,51 @@ namespace Template10.Controls.Dialog
                 Window.Current.SizeChanged += Resize;
                 _popup.IsOpen = IsShowing = true;
             });
+        }
+
+        private void SetupPlacement(ContentPresenter presenter)
+        {
+            switch (Placement)
+            {
+                case Placements.Left:
+                    presenter.HorizontalContentAlignment = HorizontalAlignment.Left;
+                    presenter.VerticalContentAlignment = VerticalAlignment.Stretch;
+                    _child.HorizontalAlignment = HorizontalAlignment.Left;
+                    _child.VerticalAlignment = VerticalAlignment.Stretch;
+                    break;
+                case Placements.Right:
+                    presenter.HorizontalContentAlignment = HorizontalAlignment.Right;
+                    presenter.VerticalContentAlignment = VerticalAlignment.Stretch;
+                    _child.HorizontalAlignment = HorizontalAlignment.Right;
+                    _child.VerticalAlignment = VerticalAlignment.Stretch;
+                    break;
+                case Placements.Top:
+                    presenter.HorizontalContentAlignment = HorizontalAlignment.Stretch;
+                    presenter.VerticalContentAlignment = VerticalAlignment.Top;
+                    _child.HorizontalAlignment = HorizontalAlignment.Stretch;
+                    _child.VerticalAlignment = VerticalAlignment.Top;
+                    break;
+                case Placements.Bottom:
+                    presenter.HorizontalContentAlignment = HorizontalAlignment.Stretch;
+                    presenter.VerticalContentAlignment = VerticalAlignment.Bottom;
+                    _child.HorizontalAlignment = HorizontalAlignment.Stretch;
+                    _child.VerticalAlignment = VerticalAlignment.Bottom;
+                    break;
+                case Placements.Center:
+                    presenter.HorizontalContentAlignment = HorizontalAlignment.Center;
+                    presenter.VerticalContentAlignment = VerticalAlignment.Center;
+                    _child.HorizontalAlignment = HorizontalAlignment.Center;
+                    _child.VerticalAlignment = VerticalAlignment.Center;
+                    break;
+                case Placements.Fill:
+                    presenter.HorizontalContentAlignment = HorizontalAlignment.Stretch;
+                    presenter.VerticalContentAlignment = VerticalAlignment.Stretch;
+                    _child.HorizontalAlignment = HorizontalAlignment.Stretch;
+                    _child.VerticalAlignment = VerticalAlignment.Stretch;
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void Resize(object sender, WindowSizeChangedEventArgs e)
@@ -156,6 +215,8 @@ namespace Template10.Controls.Dialog
                 _popup.IsOpen = IsShowing = false;
                 Window.Current.SizeChanged -= Resize;
                 Closed?.Invoke(this, EventArgs.Empty);
+                ClosedCallback?.Invoke();
+                ClosedCallback = null;
             });
         }
 

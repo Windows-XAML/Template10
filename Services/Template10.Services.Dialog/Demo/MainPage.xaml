@@ -7,6 +7,28 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <Page.Resources>
+
+        <DataTemplate x:Name="SplashTemplate">
+            <Grid Background="Green" RequestedTheme="Dark">
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Image Source="Assets/SplashScreen.png" Stretch="None" />
+                    <ProgressRing IsActive="True" Foreground="White" HorizontalAlignment="Center" Margin="16" />
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Name="BusyTemplate">
+            <Grid RequestedTheme="Dark">
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
+                    <ProgressRing IsActive="True" Margin="16" />
+                    <TextBlock Text="Loading..." VerticalAlignment="Center" />
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+
+    </Page.Resources>
+
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
         <Grid.RowDefinitions>
@@ -37,11 +59,22 @@
         </StackPanel>
 
         <StackPanel Orientation="Vertical" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" BorderBrush="Gray" BorderThickness="1" Padding="16" Width="500">
-            <TextBlock Text="Template10.Services.Dialog.ContentDialogEx" Grid.Row="1" Style="{StaticResource CaptionTextBlockStyle}" Foreground="Gray" />
+            <TextBlock Text="Template10.Services.Dialog.PopupEx" Grid.Row="1" Style="{StaticResource CaptionTextBlockStyle}" Foreground="Gray" />
             <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <Button Click="Splash">Extended Splash</Button>
                 <Button Click="Busy">Busy</Button>
             </StackPanel>
+            <CheckBox x:Name="PopupCloseButtonVisibile" Content="Close button visible" IsChecked="True" />
+            <CheckBox x:Name="PopupCloseButtonBackCloses" Content="Back button/gesture closes" IsChecked="True" />
+            <CheckBox Content="Close with Escape (for demo purposes only)" IsChecked="True" IsEnabled="False" />
+            <VariableSizedWrapGrid Orientation="Horizontal">
+                <RadioButton GroupName="PopupPlacement" x:Name="PopupPlacementLeft" Content="Place Left" />
+                <RadioButton GroupName="PopupPlacement" x:Name="PopupPlacementTop" Content="Place Top" />
+                <RadioButton GroupName="PopupPlacement" x:Name="PopupPlacementRight" Content="Place Right" />
+                <RadioButton GroupName="PopupPlacement" x:Name="PopupPlacementBottom" Content="Place Bottom" />
+                <RadioButton GroupName="PopupPlacement" x:Name="PopupPlacementFill" Content="Place Fill" />
+                <RadioButton GroupName="PopupPlacement" x:Name="PopupPlacementCenter" Content="Place Center" IsChecked="True" />
+            </VariableSizedWrapGrid>
         </StackPanel>
 
         <TextBlock Grid.Column="1" Grid.RowSpan="2" TextWrapping="NoWrap" Text="{x:Bind OutputText, Mode=OneWay}" Margin="16, 24" />

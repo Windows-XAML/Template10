@@ -13,12 +13,12 @@ namespace Template10.Services.Dialog
 
         public async Task<MessageBoxResult> AlertAsync(string content, IResourceResolver resolver = null)
         {
-            return await new MessageBoxEx(content, MessageBoxType.Ok, resolver).QueueAsync();
+            return await new MessageBoxEx(content, MessageBoxType.Ok, resolver).ShowAsync();
         }
 
         public async Task<MessageBoxResult> PromptAsync(string content, MessageBoxType type = MessageBoxType.YesNo, IResourceResolver resolver = null)
         {
-            return await new MessageBoxEx(content, type, resolver).QueueAsync();
+            return await new MessageBoxEx(content, type, resolver).ShowAsync();
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Template10.Services.Gesture
 {
     public interface IGestureService
     {
-        void Setup();
+        // void Setup();
 
         bool AllowBackRequested { get; set; }
         bool AllowForwardRequested { get; set; }
@@ -25,8 +25,8 @@ namespace Template10.Services.Gesture
 
     public interface IGestureService2
     {
-        IBackButtonService BackService { get; set; }
-        IKeyboardService KeyService { get; set; }
+        IBackButtonService2 BackService { get; set; }
+        IKeyboardService2 KeyService { get; set; }
         event EventHandler BackRequested2;
         event EventHandler ForwardRequested2;
     }
@@ -51,8 +51,8 @@ namespace Template10.Services.Gesture
 
         public GestureService(IBackButtonService backService, IKeyboardService keyService)
         {
-            Two.BackService = backService;
-            backService.BackRequested += (s, e) =>
+            Two.BackService = backService as IBackButtonService2;
+            Two.BackService.BackRequested += (s, e) =>
             {
                 BackRequested2?.Invoke(s, e);
                 if (AllowBackRequested)
@@ -61,7 +61,7 @@ namespace Template10.Services.Gesture
                 }
             };
 
-            backService.ForwardRequested += (s, e) =>
+            Two.BackService.ForwardRequested += (s, e) =>
             {
                 ForwardRequested2?.Invoke(s, e);
                 if (AllowForwardRequested)
@@ -70,21 +70,15 @@ namespace Template10.Services.Gesture
                 }
             };
 
-            Two.KeyService = keyService;
-            keyService.AfterSearchGesture += (s, e) => AfterSearchGesture?.Invoke(s, e);
-            keyService.AfterMenuGesture += (s, e) => AfterMenuGesture?.Invoke(s, e);
-            keyService.AfterKeyDown += (s, e) => AfterKeyDown?.Invoke(s, e);
+            Two.KeyService = keyService as IKeyboardService2;
+            Two.KeyService.AfterSearchGesture += (s, e) => AfterSearchGesture?.Invoke(s, e);
+            Two.KeyService.AfterMenuGesture += (s, e) => AfterMenuGesture?.Invoke(s, e);
+            Two.KeyService.AfterKeyDown += (s, e) => AfterKeyDown?.Invoke(s, e);
         }
 
-        IBackButtonService IGestureService2.BackService { get; set; }
-        IKeyboardService IGestureService2.KeyService { get; set; }
+        IBackButtonService2 IGestureService2.BackService { get; set; }
+        IKeyboardService2 IGestureService2.KeyService { get; set; }
         IGestureService2 Two => this as IGestureService2;
-
-        public void Setup()
-        {
-            Two.BackService.Setup();
-            Two.KeyService.Setup();
-        }
 
         public event TypedEventHandler<HandledEventArgs> BackRequested;
         public event TypedEventHandler<HandledEventArgs> ForwardRequested;

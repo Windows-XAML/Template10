@@ -132,6 +132,14 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Libraries\Template10.CodeBehind\Template10.Common.CodeBehind.Library.csproj">
+      <Project>{B3A4E50E-9DCA-457E-BED5-B71D97B957F3}</Project>
+      <Name>Template10.Common.CodeBehind.Library</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Template10.Services.BackService\Template10.Services.Gesture.csproj">
+      <Project>{8564F764-99D9-4473-B5E4-AC62CDA73977}</Project>
+      <Name>Template10.Services.Gesture</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Service\Template10.Services.Dialog.Service.csproj">
       <Project>{9daacea0-6905-46f8-aed1-c6b566c83cdc}</Project>
       <Name>Template10.Services.Dialog.Service</Name>
