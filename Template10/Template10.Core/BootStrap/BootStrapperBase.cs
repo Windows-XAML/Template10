@@ -87,7 +87,7 @@ namespace Template10.BootStrap
         {
             LogThis();
             Central.Messenger.Unsubscribe<WindowCreatedMessage>(this, HandleAfterFirstWindowCreated);
-            Central.Container.Resolve<IBackButtonService>().Setup();
+            Central.Container.Resolve<IGestureService>().Setup();
             InitializePopups();
         }
 
