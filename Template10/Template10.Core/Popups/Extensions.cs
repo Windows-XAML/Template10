@@ -7,6 +7,9 @@ namespace Template10.Extensions
 {
     public static class PopupsExtensions
     {
+        public static bool TryGetPopup<T>(this object item, out T popup) where T : IPopupItem
+            => TryGetPopup<T>(out popup);
+
         public static bool TryGetPopup<T>(out T popup) where T : IPopupItem
             => TryGetPopupItem(Central.Container.Resolve<IBootStrapperPopup>(), out popup);
 

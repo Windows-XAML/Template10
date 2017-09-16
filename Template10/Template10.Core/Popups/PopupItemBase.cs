@@ -51,6 +51,7 @@ namespace Template10.Popups
                 {
                     Two.Popup.Hide();
                 }
+                Content.IsActive = value;
             }
         }
     }

@@ -9,6 +9,11 @@ namespace Template10.Popups
 {
     public class ErrorPopupData : PopupDataBase
     {
+        public ErrorPopupData() : base(null, null)
+        {
+            // invalid
+        }
+
         public ErrorPopupData(Action close, CoreDispatcher dispatcher) : base(close, dispatcher)
         {
             // empty

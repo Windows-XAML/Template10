@@ -7,16 +7,14 @@ namespace Template10.Popups
 {
     public class BusyPopupData : PopupDataBase
     {
+        public BusyPopupData() : base(null, null)
+        {
+            // invalid
+        }
+
         public BusyPopupData(Action close, CoreDispatcher dispatcher) : base(close, dispatcher)
         {
             // empty
-        }
-
-        private bool _isActive = false;
-        public bool IsActive
-        {
-            get => _isActive;
-            set => RaisePropertyChanged(() => _isActive = value);
         }
     }
 
@@ -26,12 +24,6 @@ namespace Template10.Popups
         public override void Initialize()
         {
             // empty
-        }
-
-        public new bool IsShowing
-        {
-            get => base.IsShowing;
-            set => base.IsShowing = Content.IsActive = value;
         }
     }
 }

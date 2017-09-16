@@ -106,11 +106,11 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Controls\MessageBoxResult.cs" />
-    <Compile Include="Controls\MessageBoxType.cs" />
+    <Compile Include="MessageBox\MessageBoxResult.cs" />
+    <Compile Include="MessageBox\MessageBoxType.cs" />
     <Compile Include="DialogManager.cs" />
     <Compile Include="DialogService\DialogService.cs" />
-    <Compile Include="Controls\MessageBoxEx.cs" />
+    <Compile Include="MessageBox\MessageBoxEx.cs" />
     <Compile Include="Extensions\FluentExtensions.cs" />
     <Compile Include="DialogService\IDialogService.cs" />
     <Compile Include="Extensions\Extensions.cs" />

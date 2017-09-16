@@ -6,5 +6,6 @@ namespace Template10.Popups
     {
         System.Windows.Input.ICommand Close { get; }
         string Text { get; set; }
+        bool IsActive { get; set; }
     }
 }

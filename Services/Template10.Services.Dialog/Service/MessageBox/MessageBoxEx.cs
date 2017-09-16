@@ -12,6 +12,7 @@ namespace Template10.Services.Dialog
         IResourceResolver Resolver { get; set; }
         MessageBoxType Type { get; set; }
         string Text { get; set; }
+        ElementTheme RequestedTheme { get; set; }
     }
 
     /// <summary>
@@ -19,6 +20,8 @@ namespace Template10.Services.Dialog
     /// </summary>
     public partial class MessageBoxEx : IMessageBoxEx
     {
+        public ElementTheme RequestedTheme { get; set; } = ElementTheme.Light;
+
         public MessageBoxEx(string text, MessageBoxType messageBoxType = MessageBoxType.Ok, IResourceResolver resolver = null)
         {
             Text = text;
@@ -32,7 +35,11 @@ namespace Template10.Services.Dialog
 
         public async Task<MessageBoxResult> ShowAsync(TimeSpan? timeout = null, CancellationToken? token = null)
         {
-            var dialog = new ContentDialog { Content = Text };
+            var dialog = new ContentDialog
+            {
+                Content = Text,
+                RequestedTheme = RequestedTheme,
+            };
             SetupButtons(dialog);
             var result = await DialogManager.OneAtATimeAsync(async () => await dialog.ShowAsync(), timeout, token);
             return DetermineResult(result);

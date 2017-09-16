@@ -10,6 +10,11 @@ namespace Template10.Popups
 {
     public class SplashPopupData : PopupDataBase
     {
+        public SplashPopupData() : base(null, null)
+        {
+            // invalid
+        }
+
         public SplashPopupData(Action close, CoreDispatcher dispatcher) : base(close, dispatcher)
         {
             // empty

@@ -24,7 +24,7 @@ namespace Template10.Services.Resources
             try
             {
                 value = Helper.GetLocalizedStringAsync(key);
-                return true;
+                return !string.IsNullOrEmpty(value);
             }
             catch (Exception)
             {

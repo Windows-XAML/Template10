@@ -10,6 +10,11 @@ namespace Template10.Popups
 {
     public class NetworkPopupData : PopupDataBase
     {
+        public NetworkPopupData() : base(null, null)
+        {
+            // invalid
+        }
+
         public NetworkPopupData(Action close, CoreDispatcher dispatcher) : base(close, dispatcher)
         {
             // empty 

@@ -20,5 +20,10 @@ namespace Template10.Services.Dialog
         {
             return await new MessageBoxEx(content, type, resolver).ShowAsync();
         }
+
+        public async Task<bool> PromptAsync(string content, MessageBoxType type, MessageBoxResult expected, IResourceResolver resolver = null)
+        {
+            return (await PromptAsync(content, type, resolver)).Equals(expected);
+        }
     }
 }

@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Template10.Mvvm;
+using Template10.Extensions;
 using Template10.Services.Gesture;
 using Template10.Services.Logging;
 using Template10.Services.Marketplace;
@@ -53,10 +54,11 @@ namespace Sample.ViewModels
 
         public void ShowBusy()
         {
-            if (Template10.Extensions.PopupsExtensions.TryGetPopup<Template10.Popups.BusyPopup>(out var busy))
+            if (this.TryGetPopup<Template10.Popups.BusyPopup>(out var busy))
             {
                 busy.Content.Text = BusyText;
                 busy.IsShowing = true;
+                Template10.Common.Timeout.InvokeAfter(() => busy.IsShowing = false, TimeSpan.FromSeconds(5));
             }
         }
 

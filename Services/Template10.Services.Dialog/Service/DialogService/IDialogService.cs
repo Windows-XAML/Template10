@@ -7,5 +7,6 @@ namespace Template10.Services.Dialog
     {
         Task<MessageBoxResult> AlertAsync(string content, IResourceResolver resolver = null);
         Task<MessageBoxResult> PromptAsync(string content, MessageBoxType type = MessageBoxType.YesNo, IResourceResolver resolver = null);
+        Task<bool> PromptAsync(string content, MessageBoxType type, MessageBoxResult expected, IResourceResolver resolver = null);
     }
 }

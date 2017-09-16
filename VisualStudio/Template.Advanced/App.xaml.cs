@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using Template10.Services.Marketplace;
 using Template10.Messages;
 using Template10.Popups;
+using Template10.Services.Messenger;
 
 namespace Sample
 {
@@ -31,7 +32,7 @@ namespace Sample
         {
             SetupPageKeys(this.PageKeys<PageKeys>());
             SetupSettings(this.Resolve<ISettingsService>());
-            Central.Messenger.Subscribe<UnhandledExceptionMessage>(this, OnUnhandledException);
+            SetupListeners(Central.Messenger);
             return base.OnInitializeAsync();
         }
 
@@ -69,9 +70,9 @@ namespace Sample
             Template10.Settings.RequireSerializableParameters = true;
         }
 
-        public void OnUnhandledException(UnhandledExceptionMessage m)
+        private void SetupListeners(IMessengerService messenger)
         {
-            ShowError(m.EventArgs.Exception);
+            messenger.Subscribe<UnhandledExceptionMessage>(this, m => ShowError(m.EventArgs.Exception));
         }
     }
 

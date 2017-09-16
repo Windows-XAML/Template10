@@ -7,6 +7,11 @@ namespace Template10.Popups
 {
     public class NarrowPopupData : PopupDataBase
     {
+        public NarrowPopupData() : base(null, null)
+        {
+            // invalid
+        }
+
         public NarrowPopupData(Action close, CoreDispatcher dispatcher) : base(close, dispatcher)
         {
             // empty

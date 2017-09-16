@@ -24,6 +24,13 @@ namespace Template10.Popups
             set => RaisePropertyChanged(() => _text = value);
         }
 
+        private bool _isActive = false;
+        public bool IsActive
+        {
+            get => _isActive;
+            set => RaisePropertyChanged(() => _isActive = value);
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected async void RaisePropertyChanged(Action action, [CallerMemberName] string property = null)

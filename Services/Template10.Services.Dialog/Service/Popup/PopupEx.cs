@@ -57,7 +57,7 @@ namespace Template10.Controls.Dialog
 
         public bool IsShowing { get; private set; } = false;
 
-        public Visibility CloseButtonVisibility { get; set; } = Visibility.Visible;
+        public Visibility CloseButtonVisibility { get; set; } = Visibility.Collapsed;
 
         public TransitionCollection TransitionCollection { get; set; }
 

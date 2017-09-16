@@ -15,7 +15,7 @@
             <pop:BusyPopup x:Key="BusyPopup">
                 <DataTemplate>
                     <StackPanel>
-                        <TextBlock Text="{Binding Text}" />
+                        <TextBlock Text="{Binding Text}" Margin="0,16" />
                         <Button Command="{Binding Close}">Close</Button>
                     </StackPanel>
                 </DataTemplate>
@@ -27,8 +27,9 @@
                 </pop:SplashPopup.BackgroundBrush>
                 <DataTemplate>
                     <StackPanel>
-                        <TextBlock Foreground="White" Text="Splash..." />
-                        <Button Command="{Binding Close}">Close</Button>
+                        <TextBlock Foreground="White" Text="Splash..." Margin="0,16" />
+                        <ProgressRing IsActive="{Binding IsActive}" HorizontalAlignment="Center" 
+                                      Foreground="White" Height="100" Width="100" />
                     </StackPanel>
                 </DataTemplate>
             </pop:SplashPopup>
@@ -36,7 +37,7 @@
             <pop:NetworkPopup x:Key="NetworkPopup" Requirement="Internet">
                 <DataTemplate>
                     <StackPanel>
-                        <TextBlock Text="Network os required." />
+                        <TextBlock Text="Network os required." Margin="0,16" />
                         <Button Command="{Binding Close}">Close</Button>
                     </StackPanel>
                 </DataTemplate>

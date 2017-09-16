@@ -68,17 +68,19 @@ namespace Sample.ViewModels
 
         public async override Task<bool> CanNavigateAsync(IConfirmNavigationParameters parameters)
         {
-            if (parameters.ToNavigationInfo.PageType != typeof(Views.DetailPage))
+            if (parameters.ToNavigationInfo.PageType == typeof(Views.DetailPage))
+            {
+                var prompt = _resourceService.TryGetLocalizedString("AreYouSure", out var value) ? value : "Are you sure?";
+                return await _dialogService.PromptAsync(prompt, MessageBoxType.YesNo, MessageBoxResult.Yes);
+            }
+            else
             {
                 return true;
             }
-            var prompt = _resourceService.TryGetLocalizedString("AreYouSure", out var value) ? value : "Are you sure?";
-            var result = await _dialogService.PromptAsync(prompt);
-            return result == MessageBoxResult.Yes;
         }
 
         public void GotoDetailsPage()
-            => NavigationService.Navigate(typeof(Views.DetailPage), Value);
+                => NavigationService.Navigate(typeof(Views.DetailPage), Value);
 
         public void GotoSettings()
             => NavigationService.Navigate(typeof(Views.SettingsPage), 0);
