@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Template10.Common;
 using Template10.Core;
@@ -7,7 +8,7 @@ namespace Template10.Navigation
 {
     public interface IConfirmNavigationParameters : INavigationParameters
     {
-        // empty
+        bool GoingTo(Type type);
     }
 
     public class ConfirmNavigationParameters : NavigationParametersBase, IConfirmNavigationParameters
@@ -17,5 +18,7 @@ namespace Template10.Navigation
         {
             // empty
         }
+
+        public bool GoingTo(Type type) => ToNavigationInfo?.PageType?.Equals(type) ?? false;
     }
 }
