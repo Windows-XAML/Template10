@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Practices.Unity;
 
-namespace Template10.Services.Container
+namespace Template10.Services.Dependency
 {
     public class UnityContainerAdapter : IContainerAdapter
     {

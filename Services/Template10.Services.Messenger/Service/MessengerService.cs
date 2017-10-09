@@ -23,7 +23,7 @@ namespace Template10.Services.Messenger
             var message = $"{nameof(MessengerService)}.Send({typeof(T)})";
             try
             {
-                var container = Container.ContainerService.Default;
+                var container = Dependency.DependencyService.Default;
                 var logger = container.Resolve<Logging.ILoggingService>();
                 logger.WriteLine(message);
             }

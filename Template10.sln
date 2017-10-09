@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26823.1
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{F8B66765-EFAD-45EE-911F-8815B9C9E297}"
 	ProjectSection(SolutionItems) = preProject
@@ -59,7 +59,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Controls.CustomT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Controls.PageHeader.Control", "Controls\Template10.Controls.PageHeader\Template10.Controls.PageHeader.Control.csproj", "{509386D0-711E-4345-83AD-F71998EFBDD7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{D1B54308-4CA7-4E2F-8707-98D27060612E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Accelerators", "Accelerators", "{D1B54308-4CA7-4E2F-8707-98D27060612E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Controls", "Controls", "{866CAE3A-91A3-43CC-B7F8-C6A43F54B3D3}"
 EndProject
@@ -128,11 +128,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.Messagi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Core", "Template10\Template10.Core\Template10.Core.csproj", "{43417386-DDD5-422A-A563-CB666857C59C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.Container.Core", "Services\Template10.Services.Container\Service\Template10.Services.Container.Core.csproj", "{B4C8A753-3376-4C55-AFF1-326F2D1CFCBC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.Dependency.Core", "Services\Template10.Services.Container\Service\Template10.Services.Dependency.Core.csproj", "{B4C8A753-3376-4C55-AFF1-326F2D1CFCBC}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Container (Adaptable)", "Container (Adaptable)", "{8BE7C2DA-A08C-436D-88A0-7DE838AF5C66}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DependecyInjection (Adaptable)", "DependecyInjection (Adaptable)", "{8BE7C2DA-A08C-436D-88A0-7DE838AF5C66}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.Container.Unity", "Services\Template10.Services.Container\UnityAdapter\Template10.Services.Container.Unity.csproj", "{524D4BCB-21A1-44F6-B5B2-2712A3E7718D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.Dependency.Unity", "Services\Template10.Services.Container\UnityAdapter\Template10.Services.Dependency.Unity.csproj", "{524D4BCB-21A1-44F6-B5B2-2712A3E7718D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Messaging (Adaptable)", "Messaging (Adaptable)", "{C211BD02-11C8-42AD-9A3C-035C3B6E6CAF}"
 EndProject
@@ -154,7 +154,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.Dialog.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.BootStrapper.MvvmLight", "Template10\Template10.MvvmLight\Template10.BootStrapper.MvvmLight.csproj", "{FFD32A47-5ED4-4BE4-9C09-C4B9E9F895BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.Container.MvvmLight", "Services\Template10.Services.Container\MvvmLightAdapter\Template10.Services.Container.MvvmLight.csproj", "{F5077709-6D92-483C-A263-C4124274BCB8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.Dependency.MvvmLight", "Services\Template10.Services.Container\MvvmLightAdapter\Template10.Services.Dependency.MvvmLight.csproj", "{F5077709-6D92-483C-A263-C4124274BCB8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SecretService", "SecretService", "{8D496587-9EA5-4D4B-AB03-F58E99F84F52}"
 EndProject

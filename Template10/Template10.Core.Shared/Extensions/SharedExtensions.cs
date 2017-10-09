@@ -11,7 +11,7 @@ namespace Template10.Extensions
     public static class SharedExtensions
     {
         private static ISerializationService SerializationService
-            => Services.Container.ContainerService.Default.Resolve<ISerializationService>();
+            => Services.Dependency.DependencyService.Default.Resolve<ISerializationService>();
 
         public static object DeserializeEx(this string parameter, ISerializationService serializer = null)
             => (serializer ?? SerializationService).Deserialize(parameter);

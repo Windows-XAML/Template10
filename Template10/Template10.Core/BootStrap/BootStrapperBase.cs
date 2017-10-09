@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using Template10.Services.Container;
+using Template10.Services.Dependency;
 using Template10.Services.Logging;
 using Template10.Navigation;
 using Template10.Core;
@@ -43,17 +43,17 @@ namespace Template10.BootStrap
         {
             // start
 
-            CreateDependecyContainer();
-            try { var c = Central.Container; }
+            CreateDependecyService();
+            try { var c = Central.DependencyService; }
             catch { throw new Exception($"IContainerService is required but is not defined in DI."); }
 
-            RegisterDefaultDependencies(Central.Container);
-            RegisterCustomDependencies(Central.Container);
+            RegisterDefaultDependencies(Central.DependencyService);
+            RegisterCustomDependencies(Central.DependencyService);
             try { var m = Central.Messenger; }
             catch { throw new Exception($"IMessengerService is required but is not registered in DI."); }
 
 #if DEBUG
-            TestDependecyInjection(Central.Container);
+            TestDependecyInjection(Central.DependencyService);
 #endif
 
             LogThis();
@@ -66,7 +66,7 @@ namespace Template10.BootStrap
         }
 
         private IBootStrapperStrategy BootStrapperStrategy
-            => Central.Container.Resolve<IBootStrapperStrategy>();
+            => Central.DependencyService.Resolve<IBootStrapperStrategy>();
 
         private void ForwardMethods()
         {
@@ -87,7 +87,7 @@ namespace Template10.BootStrap
         {
             LogThis();
             Central.Messenger.Unsubscribe<WindowCreatedMessage>(this, HandleAfterFirstWindowCreated);
-            Central.Container.Resolve<IGestureService>().Setup();
+            Central.DependencyService.Resolve<IGestureService>().Setup();
             InitializePopups();
         }
 
@@ -112,8 +112,8 @@ namespace Template10.BootStrap
 
     public abstract partial class BootStrapperBase : IBootStrapperDependecyInjection
     {
-        public abstract IContainerService CreateDependecyContainer();
-        public abstract void RegisterCustomDependencies(IContainerBuilder container);
+        public abstract IDependencyService CreateDependecyService();
+        public abstract void RegisterCustomDependencies(IDependencyService dependencyService);
 
         void RegisterDefaultDependencies(IContainerBuilder container)
         {

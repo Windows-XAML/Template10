@@ -1,7 +1,9 @@
-﻿namespace Template10.Services.Dialog
+﻿using System;
+
+namespace Template10.Services.Dialog
 {
     public interface IResourceResolver
     {
-        string Resolve(ResourceTypes resource);
+        Func<ResourceTypes, string> Resolve { get; set; }
     }
 }

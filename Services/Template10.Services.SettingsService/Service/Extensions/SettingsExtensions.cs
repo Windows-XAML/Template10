@@ -5,7 +5,7 @@
     {
         static Services.Serialization.ISerializationService GetDefaultSerializer()
         {
-            var container = Services.Container.ContainerService.Default;
+            var container = Services.Dependency.DependencyService.Default;
             return container.Resolve<Services.Serialization.ISerializationService>();
         }
 

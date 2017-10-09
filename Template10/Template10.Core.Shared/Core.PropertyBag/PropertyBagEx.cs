@@ -24,7 +24,7 @@ namespace Template10.Core
         {
             if (serializer == null)
             {
-                var container = Services.Container.ContainerService.Default;
+                var container = Services.Dependency.DependencyService.Default;
                 serializer = container.Resolve<Services.Serialization.ISerializationService>();
             }
             return new PropertyBagEx
@@ -38,7 +38,7 @@ namespace Template10.Core
         {
             if (serializer == null)
             {
-                var container = Services.Container.ContainerService.Default;
+                var container = Services.Dependency.DependencyService.Default;
                 serializer = container.Resolve<Services.Serialization.ISerializationService>();
             }
             return new PropertyBagEx

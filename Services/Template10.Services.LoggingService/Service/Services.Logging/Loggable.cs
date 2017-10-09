@@ -6,7 +6,7 @@ namespace Template10.Services.Logging
 {
     public abstract class Loggable : ILoggable
     {
-        ILoggingService ILoggable.LoggingService => Container.ContainerService.Default.Resolve<ILoggingService>();
+        ILoggingService ILoggable.LoggingService => Dependency.DependencyService.Default.Resolve<ILoggingService>();
         protected void LogThis(System.Action action, string text = null, Severities severity = Severities.Template10, [CallerMemberName]string caller = null)
         {
             (this as ILoggable).LogThis(text, severity, caller: $"{caller}");

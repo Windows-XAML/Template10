@@ -82,10 +82,10 @@ namespace Template10.Navigation
             });
         }
 
-        static IBackButtonService2 BackButtonService => Services.Container.ContainerService.Default.Resolve<IBackButtonService>() as IBackButtonService2;
-        static ISerializationService SerializationService => Services.Container.ContainerService.Default.Resolve<ISerializationService>();
-        static IViewModelActionStrategy ViewModelActionStrategy => Services.Container.ContainerService.Default.Resolve<IViewModelActionStrategy>();
-        static IViewModelResolutionStrategy ViewModelResolutionStrategy => Services.Container.ContainerService.Default.Resolve<IViewModelResolutionStrategy>();
+        static IBackButtonService2 BackButtonService => Services.Dependency.DependencyService.Default.Resolve<IBackButtonService>() as IBackButtonService2;
+        static ISerializationService SerializationService => Services.Dependency.DependencyService.Default.Resolve<ISerializationService>();
+        static IViewModelActionStrategy ViewModelActionStrategy => Services.Dependency.DependencyService.Default.Resolve<IViewModelActionStrategy>();
+        static IViewModelResolutionStrategy ViewModelResolutionStrategy => Services.Dependency.DependencyService.Default.Resolve<IViewModelResolutionStrategy>();
 
         public static INavigationService Default { get; set; }
         public static NavigationServiceList Instances { get; } = new NavigationServiceList();

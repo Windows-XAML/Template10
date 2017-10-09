@@ -1,5 +1,5 @@
 ﻿using System;
-using Template10.Services.Container;
+using Template10.Services.Dependency;
 using Template10.Services.Serialization;
 using Template10.Core;
 using Template10.Extensions;

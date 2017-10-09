@@ -20,28 +20,28 @@ namespace Template10
             = AppVisibilities.Unknown;
 
         public static ISessionState SessionState
-            => Container.Resolve<ISessionState>();
+            => DependencyService.Resolve<ISessionState>();
 
-        public static Template10.Services.Container.IContainerService Container
-            => Template10.Services.Container.ContainerService.Default;
+        public static Template10.Services.Dependency.IDependencyService DependencyService
+            => Template10.Services.Dependency.DependencyService.Default;
 
         public static Template10.Services.Messenger.IMessengerService Messenger
-            => Container.Resolve<Template10.Services.Messenger.IMessengerService>();
+            => DependencyService.Resolve<Template10.Services.Messenger.IMessengerService>();
 
         public static Template10.Services.Serialization.ISerializationService Serialization
-            => Container.Resolve<Template10.Services.Serialization.ISerializationService>();
+            => DependencyService.Resolve<Template10.Services.Serialization.ISerializationService>();
 
         public static Template10.Services.Resources.IResourceService Resource
-            => Container.Resolve<Template10.Services.Resources.ResourceService>();
+            => DependencyService.Resolve<Template10.Services.Resources.ResourceService>();
 
         public static Template10.Services.Network.INetworkAvailableService Network
-            => Container.Resolve<Template10.Services.Network.INetworkAvailableService>();
+            => DependencyService.Resolve<Template10.Services.Network.INetworkAvailableService>();
 
         public static Template10.Services.Logging.ILoggingService Logging
-            => Container.Resolve<Template10.Services.Logging.ILoggingService>();
+            => DependencyService.Resolve<Template10.Services.Logging.ILoggingService>();
 
         public static Template10.Services.Gesture.IGestureService Gesture
-            => Container.Resolve<Template10.Services.Gesture.IGestureService>();
+            => DependencyService.Resolve<Template10.Services.Gesture.IGestureService>();
 
         public static IWindowEx Window
             => WindowManager.Instances.First(x => x.Window.CoreWindow == Windows.UI.Core.CoreWindow.GetForCurrentThread());

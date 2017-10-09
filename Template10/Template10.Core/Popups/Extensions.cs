@@ -11,7 +11,7 @@ namespace Template10.Extensions
             => TryGetPopup<T>(out popup);
 
         public static bool TryGetPopup<T>(out T popup) where T : IPopupItem
-            => TryGetPopupItem(Central.Container.Resolve<IBootStrapperPopup>(), out popup);
+            => TryGetPopupItem(Central.DependencyService.Resolve<IBootStrapperPopup>(), out popup);
 
         private static bool TryGetPopupItem<T>(IBootStrapperPopup b, out T popup) where T : IPopupItem
         {

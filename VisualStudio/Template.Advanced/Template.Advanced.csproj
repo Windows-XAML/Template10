@@ -106,6 +106,8 @@
       <DependentUpon>Custom.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\DetailPageViewModel.cs" />
+    <Compile Include="Services\ILocalDialogService.cs" />
+    <Compile Include="Services\LocalDialogService.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\SettingsPageViewModel.cs" />
     <Compile Include="Views\Busy.xaml.cs">
@@ -218,13 +220,13 @@
       <Project>{8564f764-99d9-4473-b5e4-ac62cda73977}</Project>
       <Name>Template10.Services.Gesture</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Services\Template10.Services.Container\MvvmLightAdapter\Template10.Services.Container.MvvmLight.csproj">
+    <ProjectReference Include="..\..\Services\Template10.Services.Container\MvvmLightAdapter\Template10.Services.Dependency.MvvmLight.csproj">
       <Project>{f5077709-6d92-483c-a263-c4124274bcb8}</Project>
-      <Name>Template10.Services.Container.MvvmLight</Name>
+      <Name>Template10.Services.Dependency.MvvmLight</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Services\Template10.Services.Container\Service\Template10.Services.Container.Core.csproj">
+    <ProjectReference Include="..\..\Services\Template10.Services.Container\Service\Template10.Services.Dependency.Core.csproj">
       <Project>{b4c8a753-3376-4c55-aff1-326f2d1cfcbc}</Project>
-      <Name>Template10.Services.Container.Core</Name>
+      <Name>Template10.Services.Dependency.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Services\Template10.Services.Dialog\Service\Template10.Services.Dialog.Service.csproj">
       <Project>{9daacea0-6905-46f8-aed1-c6b566c83cdc}</Project>

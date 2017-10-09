@@ -1,4 +1,4 @@
-﻿namespace Template10.Services.Container
+﻿namespace Template10.Services.Dependency
 {
     public interface IContainerAdapter
     {

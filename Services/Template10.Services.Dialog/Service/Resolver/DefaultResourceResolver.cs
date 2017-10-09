@@ -6,14 +6,12 @@ using System.Threading.Tasks;
 
 namespace Template10.Services.Dialog
 {
-    public class DefaultResourceResolver : IResourceResolver
+
+    public class DefaultResourceResolver : EmptyResourceResolver
     {
-        /// <summary>
-        ///     Resolves the resource.
-        /// </summary>
-        /// <param name="resourceName">Name of the resource.</param>
-        /// <returns>The string value of the resource.</returns>
-        public string Resolve(ResourceTypes resource)
+        public DefaultResourceResolver() => Resolve = ResolveImplementation;
+
+        public string ResolveImplementation(ResourceTypes resource)
         {
             switch (resource)
             {

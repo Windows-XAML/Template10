@@ -22,14 +22,16 @@ namespace Template10.Services.Dialog
     {
         public ElementTheme RequestedTheme { get; set; } = ElementTheme.Light;
 
-        public MessageBoxEx(string text, MessageBoxType messageBoxType = MessageBoxType.Ok, IResourceResolver resolver = null)
+        public MessageBoxEx(string title, string text, MessageBoxType messageBoxType = MessageBoxType.Ok, IResourceResolver resolver = null)
         {
             Text = text;
+            Title = title;
             Type = messageBoxType;
             Resolver = resolver ?? Settings.DefaultResolver;
         }
 
         public string Text { get; set; }
+        public string Title { get; set; }
         public MessageBoxType Type { get; set; }
         public IResourceResolver Resolver { get; set; }
 
@@ -37,6 +39,7 @@ namespace Template10.Services.Dialog
         {
             var dialog = new ContentDialog
             {
+                Title = Title,
                 Content = Text,
                 RequestedTheme = RequestedTheme,
             };

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Template10.BootStrap;
-using Template10.Services.Container;
+using Template10.Services.Dependency;
 using Template10.Services.Messenger;
 
 namespace Template10
@@ -9,18 +9,18 @@ namespace Template10
     public abstract class BootStrapper
         : BootStrapperBase
     {
-        public sealed override IContainerService CreateDependecyContainer()
+        public sealed override IDependencyService CreateDependecyService()
         {
-            return new MvvmLightContainerService();
+            return new MvvmLightDependencyService();
         }
 
-        public sealed override void RegisterCustomDependencies(IContainerBuilder container)
+        public sealed override void RegisterCustomDependencies(IDependencyService dependencyService)
         {
-            container.Register<IMessengerService, MvvmLightMessengerService>();
-            SetupDependencies(container);
+            dependencyService.Register<IMessengerService, MvvmLightMessengerService>();
+            SetupDependencies(dependencyService);
         }
 
-        public virtual void SetupDependencies(IContainerBuilder container) { /* empty */ }
+        public virtual void SetupDependencies(IContainerBuilder containerBuilder) { /* empty */ }
     }
 }
 

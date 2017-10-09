@@ -8,7 +8,7 @@ using Template10.Navigation;
 using Template10.Core;
 using Template10.Extensions;
 using Template10.Common;
-using Template10.Services.Container;
+using Template10.Services.Dependency;
 using Template10.Services.Resources;
 using Template10.Services.Logging;
 

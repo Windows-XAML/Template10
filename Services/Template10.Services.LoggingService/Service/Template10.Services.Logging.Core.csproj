@@ -117,9 +117,9 @@
     <EmbeddedResource Include="Properties\Template10.Services.LoggingService.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Template10.Services.Container\Service\Template10.Services.Container.Core.csproj">
+    <ProjectReference Include="..\..\Template10.Services.Container\Service\Template10.Services.Dependency.Core.csproj">
       <Project>{b4c8a753-3376-4c55-aff1-326f2d1cfcbc}</Project>
-      <Name>Template10.Services.Container.Core</Name>
+      <Name>Template10.Services.Dependency.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

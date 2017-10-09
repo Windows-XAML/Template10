@@ -126,9 +126,9 @@
       <Project>{8564f764-99d9-4473-b5e4-ac62cda73977}</Project>
       <Name>Template10.Services.Gesture</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Services\Template10.Services.Container\Service\Template10.Services.Container.Core.csproj">
+    <ProjectReference Include="..\..\..\Services\Template10.Services.Container\Service\Template10.Services.Dependency.Core.csproj">
       <Project>{b4c8a753-3376-4c55-aff1-326f2d1cfcbc}</Project>
-      <Name>Template10.Services.Container.Core</Name>
+      <Name>Template10.Services.Dependency.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Template10\Template10.Portable\Template10.Portable.csproj">
       <Project>{2b6903df-396a-4d97-bf29-45bc6dd72dbe}</Project>

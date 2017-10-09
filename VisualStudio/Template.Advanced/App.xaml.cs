@@ -5,7 +5,7 @@ using Template10.Extensions;
 using Template10.Core;
 using Sample.ViewModels;
 using Template10.Strategies;
-using Template10.Services.Container;
+using Template10.Services.Dependency;
 using Sample.Views;
 using Sample.Services;
 using System;

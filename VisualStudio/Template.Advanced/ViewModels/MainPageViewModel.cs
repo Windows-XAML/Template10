@@ -8,21 +8,21 @@ using Template10.Navigation;
 using Template10.Services.Dialog;
 using Template10.Services.Logging;
 using Template10.Services.Resources;
+using Sample.Services;
 
 namespace Sample.ViewModels
 {
     public class MainPageViewModel_Designtime : MainPageViewModel
     {
-        public MainPageViewModel_Designtime() : base(null, null, null) { }
+        public MainPageViewModel_Designtime() : base(null, null) { }
     }
 
     public class MainPageViewModel : ViewModelBase
     {
         ILoggingService _loggingService;
-        IDialogService _dialogService;
-        IResourceService _resourceService;
+        ILocalDialogService _dialogService;
 
-        public MainPageViewModel(IDialogService dialog, ILoggingService logger, IResourceService resources)
+        public MainPageViewModel(ILocalDialogService dialog, ILoggingService logger)
         {
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
             {
@@ -32,7 +32,6 @@ namespace Sample.ViewModels
             {
                 _loggingService = logger;
                 _dialogService = dialog;
-                _resourceService = resources;
             }
         }
 
@@ -68,10 +67,9 @@ namespace Sample.ViewModels
 
         public async override Task<bool> CanNavigateAsync(IConfirmNavigationParameters parameters)
         {
-            if (parameters.ToNavigationInfo.PageType == typeof(Views.DetailPage))
+            if (parameters.GoingTo(typeof(Views.DetailPage)))
             {
-                var prompt = _resourceService.TryGetLocalizedString("AreYouSure", out var value) ? value : "Are you sure?";
-                return await _dialogService.PromptAsync(prompt, MessageBoxType.YesNo, MessageBoxResult.Yes);
+                return await _dialogService.AreYouSureAsync();
             }
             else
             {

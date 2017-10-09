@@ -1,20 +1,20 @@
 ﻿using System;
 
-namespace Template10.Services.Container
+namespace Template10.Services.Dependency
 {
-    public abstract class ContainerService : IContainerService
+    public abstract class DependencyService : IDependencyService
     {
-        static IContainerService _Default;
+        static IDependencyService _Default;
 
         protected IContainerAdapter Adapter { get; set; }
 
-        public static IContainerService Default
+        public static IDependencyService Default
         {
             get => _Default;
             set => _Default = value;
         }
 
-        public ContainerService(IContainerAdapter adapter, bool setAsDefault = true)
+        public DependencyService(IContainerAdapter adapter, bool setAsDefault = true)
         {
             if (setAsDefault && _Default != null)
             {

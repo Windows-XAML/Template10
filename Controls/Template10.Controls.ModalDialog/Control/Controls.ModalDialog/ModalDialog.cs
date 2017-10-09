@@ -10,10 +10,10 @@ namespace Template10.Controls
     public sealed class ModalDialog : ContentControl
     {
         // TODO: what if Default is null and it is custom?
-        public Services.Container.IContainerService ContainerService { get; set; } 
-            = Services.Container.ContainerService.Default;
+        public Services.Dependency.IDependencyService DependencyService { get; set; } 
+            = Services.Dependency.DependencyService.Default;
         Services.Gesture.IBackButtonService2 _BackButtonService 
-            => ContainerService.Resolve<Services.Gesture.IBackButtonService>() as IBackButtonService2;
+            => DependencyService.Resolve<Services.Gesture.IBackButtonService>() as IBackButtonService2;
 
         public ModalDialog()
         {
