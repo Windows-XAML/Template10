@@ -107,13 +107,14 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Services.Logging\ILoggable.cs" />
-    <Compile Include="Services.Logging\ILoggingService.cs" />
-    <Compile Include="Services.Logging\Loggable.cs" />
-    <Compile Include="Services.Logging\LoggingService.cs" />
+    <Compile Include="Adapter\DefaultAdapter.cs" />
+    <Compile Include="Loggable\ILoggable.cs" />
+    <Compile Include="Adapter\ILoggingAdapter.cs" />
+    <Compile Include="Service\ILoggingService.cs" />
+    <Compile Include="Loggable\Loggable.cs" />
+    <Compile Include="Service\LoggingService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services.Logging\Severities.cs" />
-    <Compile Include="Services.Logging\Targets.cs" />
+    <Compile Include="Severities.cs" />
     <EmbeddedResource Include="Properties\Template10.Services.LoggingService.rd.xml" />
   </ItemGroup>
   <ItemGroup>

@@ -73,7 +73,7 @@ namespace Template10.Navigation
 
         public void ClearNavigationCache(bool removeCachedPagesInBackStack = false)
         {
-            LogThis($"Frame: {FrameId}");
+            Log($"Frame: {FrameId}");
 
             var frame = Two.Frame;
 

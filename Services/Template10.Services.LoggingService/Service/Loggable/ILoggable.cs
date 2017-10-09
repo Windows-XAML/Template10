@@ -5,6 +5,6 @@ namespace Template10.Services.Logging
     public interface ILoggable
     {
         ILoggingService LoggingService { get; }
-        void LogThis(string text, Severities severity, [CallerMemberName]string caller = null);
+        void Log(string text, Severities severity, [CallerMemberName]string caller = null);
     }
 }

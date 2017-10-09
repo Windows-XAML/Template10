@@ -136,7 +136,7 @@ namespace Template10.Navigation
 
         public Task<IViewLifetimeControl> OpenAsync(Type page, object parameter = null, string title = null, ViewSizePreference size = ViewSizePreference.UseHalf)
         {
-            LogThis($"Page: {page}, Parameter: {parameter}, Title: {title}, Size: {size}");
+            Log($"Page: {page}, Parameter: {parameter}, Title: {title}, Size: {size}");
 
             var frame = new Frame();
             var nav = new NavigationService(frame);
@@ -149,7 +149,7 @@ namespace Template10.Navigation
 
         public async Task<bool> NavigateAsync(Type page, object parameter = null, NavigationTransitionInfo infoOverride = null)
         {
-            LogThis($"Page: {page}, Parameter: {parameter ?? "null"}, NavigationTransitionInfo: {infoOverride}");
+            Log($"Page: {page}, Parameter: {parameter ?? "null"}, NavigationTransitionInfo: {infoOverride}");
 
             return await NavigationOrchestratorAsync(page, parameter, NavigationMode.New, () =>
             {
@@ -201,7 +201,7 @@ namespace Template10.Navigation
         public async Task<bool> NavigateAsync<T>(T key, object parameter = null, NavigationTransitionInfo infoOverride = null)
             where T : struct, IConvertible
         {
-            LogThis($"Key: {key}, Parameter: {parameter}, NavigationTransitionInfo: {infoOverride}");
+            Log($"Key: {key}, Parameter: {parameter}, NavigationTransitionInfo: {infoOverride}");
 
             var keys = Settings.PageKeys<T>();
             if (!keys.TryGetValue(key, out var page))
@@ -221,7 +221,7 @@ namespace Template10.Navigation
             {
                 await navigationOrchestratorAsyncSemaphore.WaitAsync();
 
-                LogThis($"Page: {page}, Parameter: {parameter}, NavigationMode: {mode}");
+                Log($"Page: {page}, Parameter: {parameter}, NavigationMode: {mode}");
 
                 if (page == null) throw new ArgumentNullException(nameof(page));
                 if (navigate == null) throw new ArgumentNullException(nameof(navigate));
@@ -327,7 +327,7 @@ namespace Template10.Navigation
             }
             catch (Exception ex)
             {
-                LogThis(ex.Message, Severities.Error);
+                Log(ex.Message, Severities.Error);
                 Debugger.Break();
                 throw;
             }
@@ -478,7 +478,7 @@ namespace Template10.Navigation
         {
             // save navigation state into settings
 
-            LogThis($"Frame: {FrameEx.FrameId}");
+            Log($"Frame: {FrameEx.FrameId}");
 
             if (CurrentPageType == null) return;
             Two.RaiseBeforeSavingNavigation(out var cancel);
@@ -500,7 +500,7 @@ namespace Template10.Navigation
             await frameState.SetNavigationStateAsync(navigationState);
 
             var writtenState = await frameState.TryGetNavigationStateAsync();
-            LogThis($"navigationState:{navigationState} writtenState:{writtenState}");
+            Log($"navigationState:{navigationState} writtenState:{writtenState}");
             Debug.Assert(navigationState.Equals(writtenState.Value), "Checking frame nav state save");
 
             await Task.CompletedTask;
@@ -508,7 +508,7 @@ namespace Template10.Navigation
 
         async Task<bool> INavigationService2.LoadAsync(bool navigateTo, NavigationMode mode)
         {
-            LogThis($"Frame: {FrameEx.FrameId}");
+            Log($"Frame: {FrameEx.FrameId}");
 
             try
             {
@@ -516,7 +516,7 @@ namespace Template10.Navigation
                 var frameState = await FrameEx2.GetFrameStateAsync();
                 {
                     var state = await frameState.TryGetNavigationStateAsync();
-                    LogThis($"After TryGetNavigationStateAsync; state: {state.Value ?? "Null"}");
+                    Log($"After TryGetNavigationStateAsync; state: {state.Value ?? "Null"}");
                     if (state.Success && !string.IsNullOrEmpty(state.Value?.ToString()))
                     {
                         FrameEx2.SetNavigationState(state.Value.ToString());
@@ -585,7 +585,7 @@ namespace Template10.Navigation
 
         async Task INavigationService2.SuspendAsync()
         {
-            LogThis($"Frame: {FrameEx.FrameId}");
+            Log($"Frame: {FrameEx.FrameId}");
 
             var dispatcher = this.Window.Dispatcher;
             await dispatcher.DispatchAsync(async () =>
