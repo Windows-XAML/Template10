@@ -268,7 +268,8 @@ namespace Template10.Common
                     return nav as INavigationService;
             }
 
-            var navigationService = new NavigationService(frame) { BackButtonHandling = backButton };
+            var navigationService = CreateNavigationService(frame);
+            navigationService.BackButtonHandling = backButton;
             WindowWrapper.Current().NavigationServices.Add(navigationService);
 
             if (backButton == BackButton.Attach)
@@ -308,6 +309,13 @@ namespace Template10.Common
             return navigationService;
         }
 
+        /// <summary>
+        /// Creates the NavigationService instance for given Frame.
+        /// </summary>
+        protected virtual INavigationService CreateNavigationService(Frame frame)
+        {
+            return new NavigationService(frame);
+        }
 
         private BootstrapperStates _currentState = BootstrapperStates.None;
         public BootstrapperStates CurrentState
