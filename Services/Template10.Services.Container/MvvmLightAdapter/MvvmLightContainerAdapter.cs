@@ -47,7 +47,30 @@ namespace Template10.Services.Dependency
 
         public TInterface Resolve<TInterface>()
             where TInterface : class
-            => _container.GetInstance<TInterface>() as TInterface;
+        {
+            try
+            {
+                if (_container.GetInstance<TInterface>() is TInterface t)
+                {
+                    if (t == null)
+                    {
+                        throw new InvalidCastException($"Resolve() failed for {typeof(TInterface)}");
+                    }
+                    else
+                    {
+                        return t;
+                    }
+                }
+                else
+                {
+                    throw new InvalidCastException($"Resolve() failed for {typeof(TInterface)}");
+                }
+            }
+            catch(Exception ex)
+            {
+                throw new InvalidCastException($"Resolve() failed for {typeof(TInterface)}", ex);
+            }
+        }
 
         public void Register<TInterface, TClass>()
             where TInterface : class
