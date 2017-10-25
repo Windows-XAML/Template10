@@ -91,7 +91,7 @@ namespace Demo
                 AllowBackClose = PopupCloseButtonBackCloses.IsChecked.Value,
                 Template = SplashTemplate,
             };
-            _popup.Show(null, ()=> Log("Hidding Splash"));
+            _popup.Show(null, () => Log("Hidding Splash"));
         }
 
         private void Busy(object sender, RoutedEventArgs e)
@@ -105,8 +105,8 @@ namespace Demo
                 AllowBackClose = PopupCloseButtonBackCloses.IsChecked.Value,
                 Template = BusyTemplate,
             };
-            _popup.Show(null, ()=> Log("Hidding Busy"));
-            
+            _popup.Show(null, () => Log("Hidding Busy"));
+
         }
 
         PopupEx.Placements GetPopupPlacement()
@@ -124,7 +124,7 @@ namespace Demo
 
     public class CustomResolver : IResourceResolver
     {
-        public string Resolve(ResourceTypes resource)
+        public Func<ResourceTypes, string> Resolve { get; set; } = (resource) =>
         {
             switch (resource)
             {
@@ -139,6 +139,6 @@ namespace Demo
                 default:
                     throw new NotSupportedException($"{resource}");
             }
-        }
+        };
     }
 }

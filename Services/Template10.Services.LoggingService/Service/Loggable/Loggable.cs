@@ -1,30 +1,40 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
+using Template10.Services.Logging;
 
-namespace Template10.Services.Logging
+namespace Template10.Extensions
 {
-    public abstract class Loggable : ILoggable
+    public static class LogExtensions
     {
-        ILoggingService ILoggable.LoggingService => Dependency.DependencyService.Default.Resolve<ILoggingService>();
-        protected void Log(System.Action action, string text = null, Severities severity = Severities.Template10, [CallerMemberName]string caller = null)
+        private static ILoggingService LoggingService
         {
-            (this as ILoggable).Log(text, severity, caller: $"{caller}");
+            get => Services.Dependency.DependencyService.Default.Resolve<ILoggingService>();
+        }
+
+        private static void LogPrivate(string text, Severities severity, string caller)
+        {
+            LoggingService.Log(text, severity, caller: $"{caller}");
+        }
+
+        public static void Log(this object sender, Action action, string text = null, Severities severity = Severities.Template10, [CallerMemberName]string caller = null)
+        {
+            LogPrivate(text, severity, caller: $"{caller}");
             action.Invoke();
         }
-        protected T Log<T>(System.Func<T> action, string text = null, Severities severity = Severities.Template10, [CallerMemberName]string caller = null)
+        public static T Log<T>(this object sender, Func<T> action, string text = null, Severities severity = Severities.Template10, [CallerMemberName]string caller = null)
         {
-            (this as ILoggable).Log(text, severity, caller: $".{caller}");
+            LogPrivate(text, severity, caller: $".{caller}");
             return action.Invoke();
         }
-        protected async Task<T> Log<T>(Func<Task<T>> action, string text = null, Severities severity = Severities.Template10, [CallerMemberName]string caller = null)
+        public static async Task<T> Log<T>(this object sender, Func<Task<T>> action, string text = null, Severities severity = Severities.Template10, [CallerMemberName]string caller = null)
         {
-            (this as ILoggable).Log(text, severity, caller: $".{caller}");
+            LogPrivate(text, severity, caller: $".{caller}");
             return await action.Invoke();
         }
-        protected void Log(string text = null, Severities severity = Severities.Template10, [CallerMemberName]string caller = null)
-            => (this as ILoggable).Log(text, severity, caller: $"{caller}");
-        void ILoggable.Log(string text, Severities severity, string caller)
-            => (this as ILoggable).LoggingService.Log(text, severity, caller: $"{GetType()}.{caller}");
+        public static void Log(this object sender, string text = null, Severities severity = Severities.Template10, [CallerMemberName]string caller = null)
+        {
+            LogPrivate(text, severity, caller: $"{caller}");
+        }
     }
 }

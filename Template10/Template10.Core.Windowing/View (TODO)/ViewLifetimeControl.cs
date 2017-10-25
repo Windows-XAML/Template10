@@ -22,6 +22,8 @@
 
 using System;
 using System.Collections.Concurrent;
+using Template10.Extensions;
+using Template10.Services.Logging;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -31,7 +33,7 @@ namespace Template10.Core
     // A ViewLifetimeControl is instantiated for every secondary view. ViewLifetimeControl's reference count
     // keeps track of when the secondary view thinks it's in use and when the main view is interacting with the secondary view (about to show
     // it to the user, etc.) When the reference count drops to zero, the secondary view is closed.
-    public sealed partial class ViewLifetimeControl : Services.Logging.Loggable, IViewLifetimeControl
+    public sealed partial class ViewLifetimeControl : IViewLifetimeControl
     {
         private static readonly ConcurrentDictionary<int, IViewLifetimeControl> WindowControlsMap = new ConcurrentDictionary<int, IViewLifetimeControl>();
 
@@ -171,7 +173,7 @@ namespace Template10.Core
                     refCountCopy = ++refCount;                    
                 }
             }
-            LogThis("Start:" + refCountCopy);
+            this.Log("Start:" + refCountCopy);
             if (releasedCopy)
             {
                 throw new ViewLifeTimeException("This view is being disposed");
@@ -210,7 +212,7 @@ namespace Template10.Core
                     }
                 }
             }
-            LogThis("Stop:" + refCountCopy);
+            this.Log("Stop:" + refCountCopy);
             if (releasedCopy)
             {
                 throw new ViewLifeTimeException("This view is being disposed");

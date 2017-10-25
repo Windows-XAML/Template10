@@ -35,7 +35,7 @@ namespace Template10.Strategies
             _gestureService = gestureService;
             _status = new ValueWithHistory<BootstrapperStates>(BootstrapperStates.None, (date, before, after) =>
             {
-                LogThis($"{nameof(Status)} changed from {before} to {after}", caller: $"{nameof(DefaultBootStrapperStrategy)}");
+                this.Log($"{nameof(Status)} changed from {before} to {after}", caller: $"{nameof(DefaultBootStrapperStrategy)}");
             });
         }
 
@@ -43,14 +43,14 @@ namespace Template10.Strategies
 
         public async void HandleResuming(object sender, object e)
         {
-            LogThis();
+            this.Log();
             await _lifecycleStrategy.ResumingAsync();
             _messengerService.Send(new Messages.ResumingMessage());
         }
 
         public async void HandleSuspending(object sender, SuspendingEventArgs e)
         {
-            LogThis();
+            this.Log();
             var deferral = e.SuspendingOperation.GetDeferral();
             try
             {
@@ -70,26 +70,26 @@ namespace Template10.Strategies
 
         public void HandleEnteredBackground(object sender, EnteredBackgroundEventArgs e)
         {
-            LogThis();
+            this.Log();
             _messengerService.Send(new Messages.EnteredBackgroundMessage { EventArgs = e });
             _messengerService.Send(new Messages.AppVisibilityChangedMessage { Visibility = AppVisibilities.Background });
         }
 
         public void HandleLeavingBackground(object sender, LeavingBackgroundEventArgs e)
         {
-            LogThis();
+            this.Log();
             _messengerService.Send(new Messages.LeavingBackgroundMessage { EventArgs = e });
             _messengerService.Send(new Messages.AppVisibilityChangedMessage { Visibility = AppVisibilities.Foreground });
         }
 
         public void HandleUnhandledException(object sender, UnhandledExceptionEventArgs e)
-            => LogThis(() => _messengerService.Send(new Messages.UnhandledExceptionMessage { EventArgs = e }));
+            => this.Log(() => _messengerService.Send(new Messages.UnhandledExceptionMessage { EventArgs = e }));
 
         // public methods
 
         public UIElement CreateRoot(IStartArgsEx e)
         {
-            LogThis();
+            this.Log();
             if (CreateRootElementDelegate?.Invoke(e) is UIElement result && result != null)
             {
                 return result;
@@ -114,17 +114,17 @@ namespace Template10.Strategies
         bool _windowSetup = false;
         public void OnWindowCreated(WindowCreatedEventArgs args)
         {
-            LogThis();
+            this.Log();
             var window = WindowEx.Create(args);
             _messengerService.Send(new Messages.WindowCreatedMessage { EventArgs = args });
 
             if (!_windowSetup && window.IsMainView)
             {
                 _windowSetup = true;
-                LogThis("OneTimeWindowSetup");
+                this.Log("OneTimeWindowSetup");
                 _gestureService.BackRequested += (s, e) =>
                 {
-                    LogThis("BackButtonService.BackRequested");
+                    this.Log("BackButtonService.BackRequested");
                     _messengerService.Send(new Messages.BackRequestedMessage { });
                 };
             }
@@ -150,21 +150,21 @@ namespace Template10.Strategies
         static SemaphoreSlim StartOrchestrationAsyncSemaphore = new SemaphoreSlim(1, 1);
         public async void StartOrchestrationAsync(IActivatedEventArgs e, StartArgsEx.StartKinds kind)
         {
-            LogThis($"Type:{e} Kind:{kind}");
+            this.Log($"Type:{e} Kind:{kind}");
 
             await StartOrchestrationAsyncSemaphore.WaitAsync();
 
             try
             {
-                LogThis();
+                this.Log();
                 var args = StartArgsEx.Create(e, kind);
 
-                LogThis($"args.StartKind:{args.StartKind} ");
-                LogThis($"args.StartCause:{args.StartCause} ");
-                LogThis($"args.ThisIsFirstStart:{args.ThisIsFirstStart} ");
-                LogThis($"args.PreviousExecutionState:{args.PreviousExecutionState} ");
-                LogThis($"args.LaunchActivatedEventArgs?.PrelaunchActivated:{args.LaunchActivatedEventArgs?.PrelaunchActivated}");
-                LogThis($"_lifecycleStrategy.IsResuming(args):{_lifecycleStrategy.IsResuming(args)}");
+                this.Log($"args.StartKind:{args.StartKind} ");
+                this.Log($"args.StartCause:{args.StartCause} ");
+                this.Log($"args.ThisIsFirstStart:{args.ThisIsFirstStart} ");
+                this.Log($"args.PreviousExecutionState:{args.PreviousExecutionState} ");
+                this.Log($"args.LaunchActivatedEventArgs?.PrelaunchActivated:{args.LaunchActivatedEventArgs?.PrelaunchActivated}");
+                this.Log($"_lifecycleStrategy.IsResuming(args):{_lifecycleStrategy.IsResuming(args)}");
 
                 if (args.ThisIsFirstStart)
                 {
@@ -219,7 +219,7 @@ namespace Template10.Strategies
             }
             catch (Exception ex)
             {
-                LogThis($"Exception:{ex.Message}");
+                this.Log($"Exception:{ex.Message}");
                 throw;
             }
             finally
@@ -256,12 +256,12 @@ namespace Template10.Strategies
                 }
                 else
                 {
-                    LogThis("SplashPopup is set to AutoShow=false;, developer will show it.");
+                    this.Log("SplashPopup is set to AutoShow=false;, developer will show it.");
                 }
             }
             else
             {
-                LogThis("SplashPopup is not found, nothing to show.");
+                this.Log("SplashPopup is not found, nothing to show.");
             }
         }
 
@@ -280,22 +280,22 @@ namespace Template10.Strategies
                     }
                     else
                     {
-                        LogThis("SplashPopup is not showing, nothing to hide.");
+                        this.Log("SplashPopup is not showing, nothing to hide.");
                     }
                 }
                 else
                 {
-                    LogThis("SplashPopup is set to AutoHide=false;, developer will hide it.");
+                    this.Log("SplashPopup is set to AutoHide=false;, developer will hide it.");
                 }
             }
             else
             {
-                LogThis("SplashPopup is not found, nothing to hide.");
+                this.Log("SplashPopup is not found, nothing to hide.");
             }
         }
     }
 
-    public partial class DefaultBootStrapperStrategy : Services.Logging.Loggable
+    public partial class DefaultBootStrapperStrategy 
     {
         // internal
 
@@ -306,7 +306,7 @@ namespace Template10.Strategies
             catch (Exception ex)
             {
                 // message += $"\r\nError in {GetType()}.{nameof(OperationWrapper)} while {before}. Exception:{ex.Message}";
-                LogThis(message, severity: Services.Logging.Severities.Error);
+                this.Log(message, severity: Services.Logging.Severities.Error);
                 throw new Exception(message, ex);
             }
             finally { Status = after; }
@@ -319,7 +319,7 @@ namespace Template10.Strategies
             catch (Exception ex)
             {
                 // message += $"\r\nError in {GetType()}.{nameof(OperationWrapperAsync)} while {before}. Exception:{ex.Message}";
-                LogThis(message, severity: Services.Logging.Severities.Error);
+                this.Log(message, severity: Services.Logging.Severities.Error);
                 throw new Exception(message, ex);
             }
             finally { Status = after; }

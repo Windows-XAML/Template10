@@ -11,6 +11,7 @@ using Windows.UI.Xaml;
 
 namespace Template10.Core
 {
+    using Template10.Extensions;
     using Template10.Services.Logging;
 
     public partial class WindowEx : IWindowEx2
@@ -20,7 +21,7 @@ namespace Template10.Core
         Window IWindowEx2.Window { get; set; }
     }
 
-    public partial class WindowEx : Loggable, IWindowEx
+    public partial class WindowEx : IWindowEx
     {
         public static IWindowEx Create(WindowCreatedEventArgs args)
         {
@@ -41,7 +42,7 @@ namespace Template10.Core
 
         private WindowEx(Window window)
         {
-            LogThis();
+            this.Log();
 
             Two.Window = window;
             Dispatcher = DispatcherEx.Create(window.Dispatcher);

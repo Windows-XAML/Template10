@@ -14,7 +14,7 @@ using Template10.Core;
 namespace Template10.Strategies
 {
 
-    public class DefaultViewModelActionStrategy : Services.Logging.Loggable, IViewModelActionStrategy
+    public class DefaultViewModelActionStrategy : IViewModelActionStrategy
     {
         public DefaultViewModelActionStrategy(ISessionState sessionState)
         {
@@ -25,7 +25,7 @@ namespace Template10.Strategies
 
         public async Task<bool> NavigatingToAsync((object ViewModel, NavigationMode NavigationMode, bool Resuming) operation, INavigationInfo from, INavigationInfo to, INavigationService nav)
         {
-            Log($"{operation.ViewModel}");
+            this.Log($"{operation.ViewModel}");
 
             if (operation.ViewModel is T10v2.INavigatingToAwareAsync vm && vm != null)
             {
@@ -40,7 +40,7 @@ namespace Template10.Strategies
 
         public async Task NavigatedToAsync((object ViewModel, NavigationMode NavigationMode, bool Resuming) operation, INavigationInfo from, INavigationInfo to, INavigationService nav)
         {
-            Log($"{operation.ViewModel}");
+            this.Log($"{operation.ViewModel}");
 
             if (operation.ViewModel is T10v2.INavigatedToAwareAsync vm && vm != null)
             {
@@ -52,7 +52,7 @@ namespace Template10.Strategies
 
         public async Task<ContinueResult> NavigatingFromAsync((object ViewModel, NavigationMode NavigationMode, bool Suspending) operation, INavigationInfo from, INavigationInfo to, INavigationService nav)
         {
-            Log($"{operation.ViewModel}");
+            this.Log($"{operation.ViewModel}");
 
             if (!operation.Suspending && operation.ViewModel is T10v2.IConfirmNavigationAsync confirm && confirm != null)
             {
@@ -73,7 +73,7 @@ namespace Template10.Strategies
 
         public async Task NavigatedFromAsync((object ViewModel, NavigationMode NavigationMode, bool Suspending) operation, INavigationInfo from, INavigationInfo to, INavigationService nav)
         {
-            Log($"{operation.ViewModel}");
+            this.Log($"{operation.ViewModel}");
 
             if (operation.ViewModel is T10v2.INavigatedFromAwareAsync vm && vm != null)
             {

@@ -1,18 +1,10 @@
 ﻿using System;
 using System.Threading;
+using Template10.Extensions;
 using Template10.Services.Logging;
 
 namespace Template10.Core
 {
-    partial class SecondaryViewSynchronizationContextDecorator : ILoggable
-    {
-        ILoggingService ILoggable.LoggingService => Central.Logging;
-        void LogThis(string text = null, Severities severity = Severities.Template10, [System.Runtime.CompilerServices.CallerMemberName]string caller = null)
-            => (this as ILoggable).LogThis(text, severity, caller: $"{caller}");
-        void ILoggable.LogThis(string text, Severities severity, string caller)
-            => (this as ILoggable).LoggingService.WriteLine(text, severity, caller: $"{caller}");
-    }
-
     partial class SecondaryViewSynchronizationContextDecorator : SynchronizationContext
     {
         private readonly IViewLifetimeControl control;
@@ -30,7 +22,7 @@ namespace Template10.Core
             try
             {
                 var count = control.StartViewInUse();
-                LogThis("SecondaryViewSynchronizationContextDecorator : OperationStarted: " + count);
+                this.Log("SecondaryViewSynchronizationContextDecorator : OperationStarted: " + count);
                 context.OperationStarted();
             }
             catch (ViewLifeTimeException)
@@ -56,7 +48,7 @@ namespace Template10.Core
             {
                 context.OperationCompleted();
                 var count = control.StopViewInUse();
-                LogThis("SecondaryViewSynchronizationContextDecorator : OperationCompleted: " + count);
+                this.Log("SecondaryViewSynchronizationContextDecorator : OperationCompleted: " + count);
             }
             catch (ViewLifeTimeException)
             {

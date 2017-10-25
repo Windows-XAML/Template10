@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Template10.Common;
 using Template10.Core;
+using Template10.Extensions;
 using Template10.Services.Logging;
 using Windows.Storage;
 using Windows.UI.Xaml;
@@ -15,7 +16,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Navigation
 {
-    public partial class FrameEx : Loggable, IFrameEx
+    public partial class FrameEx : IFrameEx
     {
         internal static IFrameEx Create(Frame frame, INavigationService navigationService)
         {
@@ -73,7 +74,7 @@ namespace Template10.Navigation
 
         public void ClearNavigationCache(bool removeCachedPagesInBackStack = false)
         {
-            Log($"Frame: {FrameId}");
+            this.Log($"Frame: {FrameId}");
 
             var frame = Two.Frame;
 

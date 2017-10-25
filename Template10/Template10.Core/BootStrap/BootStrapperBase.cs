@@ -19,6 +19,7 @@ using Template10.Services.Dialog;
 using Template10.Services.Marketplace;
 using System.Collections.Generic;
 using System.Linq;
+using Template10.Extensions;
 
 namespace Template10.BootStrap
 {
@@ -56,7 +57,7 @@ namespace Template10.BootStrap
             TestDependecyInjection(Central.DependencyService);
 #endif
 
-            LogThis();
+            this.Log();
 
             ForwardMethods();
 
@@ -70,7 +71,7 @@ namespace Template10.BootStrap
 
         private void ForwardMethods()
         {
-            LogThis();
+            this.Log();
             BootStrapperStrategy.OnStartAsyncDelegate = OnStartAsync;
             BootStrapperStrategy.OnInitAsyncDelegate = OnInitializeAsync;
             BootStrapperStrategy.CreateRootElementDelegate = CreateRootElement;
@@ -78,14 +79,14 @@ namespace Template10.BootStrap
 
         private void SetupMessages()
         {
-            LogThis();
+            this.Log();
             Central.Messenger.Subscribe<WindowCreatedMessage>(this, HandleAfterFirstWindowCreated);
             Central.Messenger.Subscribe<AppVisibilityChangedMessage>(this, (e) => Central.Visibility = e.Visibility);
         }
 
         private void HandleAfterFirstWindowCreated(WindowCreatedMessage message)
         {
-            LogThis();
+            this.Log();
             Central.Messenger.Unsubscribe<WindowCreatedMessage>(this, HandleAfterFirstWindowCreated);
             Central.DependencyService.Resolve<IGestureService>().Setup();
             InitializePopups();
@@ -93,7 +94,7 @@ namespace Template10.BootStrap
 
         private void SetupEvents()
         {
-            LogThis();
+            this.Log();
             base.EnteredBackground += (s, e) =>
             {
                 Central.Visibility = AppVisibilities.Background;
@@ -177,16 +178,16 @@ namespace Template10.BootStrap
     {
         // hide the Application overrides
 
-        protected override sealed void OnActivated(IActivatedEventArgs e) => LogThis(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate));
-        protected override sealed void OnCachedFileUpdaterActivated(CachedFileUpdaterActivatedEventArgs e) => LogThis(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate));
-        protected override sealed void OnFileActivated(FileActivatedEventArgs e) => LogThis(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate));
-        protected override sealed void OnFileOpenPickerActivated(FileOpenPickerActivatedEventArgs e) => LogThis(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate));
-        protected override sealed void OnFileSavePickerActivated(FileSavePickerActivatedEventArgs e) => LogThis(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate));
-        protected override sealed void OnSearchActivated(SearchActivatedEventArgs e) => LogThis(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate));
-        protected override sealed void OnShareTargetActivated(ShareTargetActivatedEventArgs e) => LogThis(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate));
-        protected override sealed void OnLaunched(LaunchActivatedEventArgs e) => LogThis(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Launch));
-        protected override sealed void OnBackgroundActivated(BackgroundActivatedEventArgs e) => LogThis(() => Central.Messenger.Send(new Messages.BackgroundActivatedMessage { EventArgs = e }));
-        protected override sealed void OnWindowCreated(WindowCreatedEventArgs e) => LogThis(() => BootStrapperStrategy.OnWindowCreated(e));
+        protected override sealed void OnActivated(IActivatedEventArgs e) => this.Log(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate));
+        protected override sealed void OnCachedFileUpdaterActivated(CachedFileUpdaterActivatedEventArgs e) => this.Log(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate));
+        protected override sealed void OnFileActivated(FileActivatedEventArgs e) => this.Log(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate));
+        protected override sealed void OnFileOpenPickerActivated(FileOpenPickerActivatedEventArgs e) => this.Log(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate));
+        protected override sealed void OnFileSavePickerActivated(FileSavePickerActivatedEventArgs e) => this.Log(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate));
+        protected override sealed void OnSearchActivated(SearchActivatedEventArgs e) => this.Log(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate));
+        protected override sealed void OnShareTargetActivated(ShareTargetActivatedEventArgs e) => this.Log(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Activate));
+        protected override sealed void OnLaunched(LaunchActivatedEventArgs e) => this.Log(() => BootStrapperStrategy.StartOrchestrationAsync(e, StartKinds.Launch));
+        protected override sealed void OnBackgroundActivated(BackgroundActivatedEventArgs e) => this.Log(() => Central.Messenger.Send(new Messages.BackgroundActivatedMessage { EventArgs = e }));
+        protected override sealed void OnWindowCreated(WindowCreatedEventArgs e) => this.Log(() => BootStrapperStrategy.OnWindowCreated(e));
 
         // hide built-in Application events
 
@@ -203,19 +204,5 @@ namespace Template10.BootStrap
         public sealed override bool Equals(object obj) => base.Equals(obj);
         public sealed override int GetHashCode() => base.GetHashCode();
         public sealed override string ToString() => base.ToString();
-    }
-
-    public abstract partial class BootStrapperBase : ILoggable
-    {
-        ILoggingService ILoggable.LoggingService => Central.Logging;
-        public void LogThis(Action action, string text = null, Severities severity = Severities.Template10, [CallerMemberName]string caller = null)
-        {
-            action();
-            (this as ILoggable).LogThis(text, severity, caller: $"{caller}");
-        }
-        public void LogThis(string text = null, Severities severity = Severities.Template10, [CallerMemberName]string caller = null)
-            => (this as ILoggable).LogThis(text, severity, caller: $"{caller}");
-        void ILoggable.LogThis(string text, Severities severity, string caller)
-            => (this as ILoggable).LoggingService.WriteLine(text, severity, caller: $"{caller}");
     }
 }

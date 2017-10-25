@@ -7,6 +7,7 @@ using Windows.UI.Core;
 
 namespace Template10.Core
 {
+    using Template10.Extensions;
     using Template10.Services.Logging;
 
     public partial class DispatcherEx : IDispatcherEx2
@@ -16,7 +17,7 @@ namespace Template10.Core
         CoreDispatcher IDispatcherEx2.CoreDispatcher { get; set; }
     }
 
-    public partial class DispatcherEx : Loggable, IDispatcherEx
+    public partial class DispatcherEx : IDispatcherEx
     {
 
         public static IDispatcherEx Create(CoreDispatcher dispatcher)
@@ -26,7 +27,7 @@ namespace Template10.Core
 
         private DispatcherEx(CoreDispatcher dispatcher)
         {
-            LogThis();
+            this.Log();
 
             Two.CoreDispatcher = dispatcher;
         }

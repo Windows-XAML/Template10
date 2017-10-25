@@ -12,11 +12,10 @@ namespace Sample.Services
 {
     public class SettingsService : SettingsServiceBase, ISettingsService
     {
-        Template10.Services.Logging.ILoggingService _logger;
-        public SettingsService(Template10.Services.Logging.ILoggingService logger)
+        public SettingsService()
             : base(Windows.Storage.ApplicationData.Current.LocalSettings)
         {
-            _logger = logger;
+            // empty
         }
 
         public ElementTheme DefaultTheme
@@ -39,7 +38,7 @@ namespace Sample.Services
 
         private new void Write<T>(string key, T value)
         {
-            _logger.WriteLine($"Key:{key} Value:{value}");
+            this.Log($"Key:{key} Value:{value}");
 
             // persist it
 

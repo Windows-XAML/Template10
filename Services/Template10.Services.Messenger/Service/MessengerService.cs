@@ -25,7 +25,7 @@ namespace Template10.Services.Messenger
             {
                 var container = Dependency.DependencyService.Default;
                 var logger = container.Resolve<Logging.ILoggingService>();
-                logger.WriteLine(message);
+                logger.Log(message);
             }
             catch (Exception)
             {
