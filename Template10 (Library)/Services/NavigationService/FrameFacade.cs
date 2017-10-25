@@ -87,9 +87,9 @@ namespace Template10.Services.NavigationService
 
         internal bool Navigate(Type page, object parameter) => _Frame.Navigate(page, parameter);
 
-        internal IList<PageStackEntry> BackStack => _Frame.BackStack;
+        public IList<PageStackEntry> BackStack => _Frame.BackStack;
 
-        internal IList<PageStackEntry> ForwardStack => _Frame.ForwardStack;
+        public IList<PageStackEntry> ForwardStack => _Frame.ForwardStack;
 
         // Obsolete properties/methods
 
