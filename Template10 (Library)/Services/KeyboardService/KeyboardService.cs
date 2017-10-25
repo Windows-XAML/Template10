@@ -19,7 +19,7 @@ namespace Template10.Services.KeyboardService
         private KeyboardService()
         {
             _helper = new KeyboardHelper();
-            _helper.KeyDown = async (e) =>
+            _helper.KeyDown = (e) =>
             {
                 e.Handled = true;
 
@@ -87,30 +87,6 @@ namespace Template10.Services.KeyboardService
                 {
                     DebugWrite("Alt+Right", caller: nameof(AfterForwardGesture));
                     AfterForwardGesture?.Invoke();
-                }
-
-                // about
-                else if (e.AltKey && e.ControlKey && e.ShiftKey && e.VirtualKey == Windows.System.VirtualKey.F12)
-                {
-                    var about = new Windows.UI.Xaml.Controls.ContentDialog
-                    {
-                        Title = "Template 10",
-                        PrimaryButtonText = "Info",
-                        SecondaryButtonText = "Close"
-                    };
-
-                    try
-                    {
-                        var result = await about.ShowAsync();
-                        if (result == Windows.UI.Xaml.Controls.ContentDialogResult.Primary)
-                        {
-                            await Windows.System.Launcher.LaunchUriAsync(new Uri("http://aka.ms/template10"));
-                        }
-                    }
-                    catch (System.Runtime.InteropServices.COMException)
-                    {
-                        DebugWrite("About dialog already showing");
-                    }
                 }
 
                 // anything else
