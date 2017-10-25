@@ -9,12 +9,22 @@ namespace Template10.Extensions
     {
         private static ILoggingService LoggingService
         {
-            get => Services.Dependency.DependencyService.Default.Resolve<ILoggingService>();
+            get
+            {
+                try
+                {
+                    return Services.Dependency.DependencyService.Default.Resolve<ILoggingService>();
+                }
+                catch
+                {
+                    return null;
+                }
+            }
         }
 
         private static void LogPrivate(string text, Severities severity, string caller)
         {
-            LoggingService.Log(text, severity, caller: $"{caller}");
+            LoggingService?.Log(text, severity, caller: $"{caller}");
         }
 
         public static void Log(this object sender, Action action, string text = null, Severities severity = Severities.Template10, [CallerMemberName]string caller = null)

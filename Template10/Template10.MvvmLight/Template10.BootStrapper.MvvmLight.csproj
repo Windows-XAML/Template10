@@ -107,7 +107,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BootStrapper.cs" />
-    <Compile Include="BootStrapperT.cs" />
     <Compile Include="Mvvm\BindableBase.cs" />
     <Compile Include="Mvvm\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

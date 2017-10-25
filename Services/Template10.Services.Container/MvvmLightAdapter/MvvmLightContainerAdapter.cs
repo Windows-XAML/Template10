@@ -19,24 +19,27 @@ namespace Template10.Services.Dependency
             where TInterface : class
             where TClass : class, TInterface
         {
+            Debug.WriteLine($"Container registering instance {typeof(TClass)} as {typeof(TInterface)} with key {key}.");
             if (key_map.ContainsKey(key))
             {
                 throw new Exception($"Container.Register<{typeof(TInterface).Name},{typeof(TClass).Name}({key}) " +
                     $"but, this key is already registered.");
             }
-            _container.Register<TClass>();
             key_map.Add(key, typeof(TClass));
+            _container.Register<TClass>();
         }
 
         public TInterface Resolve<TInterface>(string key)
             where TInterface : class
         {
+            Debug.WriteLine($"Container resolving {typeof(TInterface)} with key {key}.");
             if (!key_map.ContainsKey(key))
             {
                 throw new KeyNotFoundException($"Cannot resolve to {typeof(TInterface)} " +
                     $"because key[{key}] is not registered.");
             }
-            var result = _container.GetInstance(key_map[key]);
+            var type = key_map[key];
+            var result = _container.GetInstance(type);
             if (!(result is TInterface))
             {
                 throw new InvalidCastException($"Cannot resolve key[{key}] " +
@@ -48,6 +51,7 @@ namespace Template10.Services.Dependency
         public TInterface Resolve<TInterface>()
             where TInterface : class
         {
+            Debug.WriteLine($"Container resolving {typeof(TInterface)}.");
             try
             {
                 if (_container.GetInstance<TInterface>() is TInterface t)
@@ -66,7 +70,7 @@ namespace Template10.Services.Dependency
                     throw new InvalidCastException($"Resolve() failed for {typeof(TInterface)}");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new InvalidCastException($"Resolve() failed for {typeof(TInterface)}", ex);
             }
@@ -76,8 +80,10 @@ namespace Template10.Services.Dependency
             where TInterface : class
             where TClass : class, TInterface
         {
+            Debug.WriteLine($"Container registering {typeof(TClass)} as type {typeof(TInterface)}.");
             if (_container.IsRegistered<TInterface>())
             {
+                Debug.WriteLine($"Unregistering pre-existing registation {typeof(TClass)} as {typeof(TInterface)}.");
                 _container.Unregister<TInterface>();
             }
             _container.Register<TInterface, TClass>();
@@ -85,17 +91,24 @@ namespace Template10.Services.Dependency
 
         public void RegisterInstance<TClass>(TClass instance)
             where TClass : class
-            => _container.Register<TClass>(() => instance);
+        {
+            Debug.WriteLine($"Container registering instance {typeof(TClass)}.");
+            _container.Register<TClass>(() => instance);
+        }
 
         public void RegisterInstance<TInterface, TClass>(TClass instance)
             where TInterface : class
             where TClass : class, TInterface
-            => _container.Register<TInterface>(() => instance);
+        {
+            Debug.WriteLine($"Container registering instance {typeof(TClass)} as {typeof(TInterface)}.");
+            _container.Register<TInterface>(() => instance);
+        }
 
         TInterface QuickResolve<TInterface, TClass>()
             where TInterface : class
             where TClass : class, TInterface
         {
+            Debug.WriteLine($"Container quick-resolving {typeof(TClass)} as {typeof(TInterface)}. Type must not be registered.");
             try
             {
                 _container.Register<TInterface, TClass>();

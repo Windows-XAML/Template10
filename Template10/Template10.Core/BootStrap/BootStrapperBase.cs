@@ -59,17 +59,17 @@ namespace Template10.BootStrap
 
             this.Log();
 
-            ForwardMethods();
+            ForwardMethodsToStrategy();
 
-            SetupMessages();
+            SetupMessageListeners();
 
-            SetupEvents();
+            SetupEventHandlers();
         }
 
         private IBootStrapperStrategy BootStrapperStrategy
             => Central.DependencyService.Resolve<IBootStrapperStrategy>();
 
-        private void ForwardMethods()
+        private void ForwardMethodsToStrategy()
         {
             this.Log();
             BootStrapperStrategy.OnStartAsyncDelegate = OnStartAsync;
@@ -77,7 +77,7 @@ namespace Template10.BootStrap
             BootStrapperStrategy.CreateRootElementDelegate = CreateRootElement;
         }
 
-        private void SetupMessages()
+        private void SetupMessageListeners()
         {
             this.Log();
             Central.Messenger.Subscribe<WindowCreatedMessage>(this, HandleAfterFirstWindowCreated);
@@ -92,7 +92,7 @@ namespace Template10.BootStrap
             InitializePopups();
         }
 
-        private void SetupEvents()
+        private void SetupEventHandlers()
         {
             this.Log();
             base.EnteredBackground += (s, e) =>
@@ -125,6 +125,7 @@ namespace Template10.BootStrap
 
             // services
             container.Register<ISessionState, SessionState>();
+            container.Register<ILoggingAdapter, DefaultAdapter>();
             container.Register<ILoggingService, LoggingService>();
             container.Register<ISerializationService, JsonSerializationService>();
             container.Register<IBackButtonService, BackButtonService>();

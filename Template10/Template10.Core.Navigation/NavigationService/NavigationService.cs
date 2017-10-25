@@ -208,7 +208,7 @@ namespace Template10.Navigation
             {
                 throw new KeyNotFoundException(key.ToString());
             }
-            return await NavigateAsync(page, parameter, infoOverride).ConfigureAwait(true);
+            return await NavigateAsync(page, parameter, infoOverride);
         }
 
         public void Navigate<T>(T key, object parameter = null, NavigationTransitionInfo infoOverride = null)
@@ -265,8 +265,7 @@ namespace Template10.Navigation
                 }
 
                 // try to resolve the view-model before navigation
-                var newViewModel = default(object);
-                newViewModel = await ViewModelResolutionStrategy.ResolveViewModelAsync(page);
+                var newViewModel = await ViewModelResolutionStrategy.ResolveViewModelAsync(page);
                 if (newViewModel != null)
                 {
                     if (newViewModel is ITemplate10ViewModel t)

@@ -39,7 +39,7 @@ namespace Sample
         public override async Task OnStartAsync(IStartArgsEx e, INavigationService navService, ISessionState sessionState)
         {
             await Task.Delay(0);
-            if (await navService.NavigateAsync(typeof(MainPage)))
+            if (await navService.NavigateAsync(PageKeys.MainPage))
             {
                 HideSplash();
             }
@@ -49,6 +49,7 @@ namespace Sample
         {
             container.Register<IViewModelResolutionStrategy, CustomViewModelResolutionStrategy>();
             container.Register<IMarketplaceService, MarketplaceService>();
+            container.Register<ILocalDialogService, LocalDialogService>();
             container.Register<ISettingsService, SettingsService>();
             container.Register<ITemplate10ViewModel, MainPageViewModel>(typeof(MainPage).ToString());
             container.Register<ITemplate10ViewModel, DetailPageViewModel>(typeof(DetailPage).ToString());
@@ -74,10 +75,7 @@ namespace Sample
         {
             messenger.Subscribe<UnhandledExceptionMessage>(this, m => ShowError(m.EventArgs.Exception));
         }
-    }
-
-    sealed partial class App : BootStrapper
-    {
+   
         public static void ShowError(Exception ex)
         {
             if (PopupsExtensions.TryGetPopup<SplashPopup>(out var busy))
@@ -85,6 +83,8 @@ namespace Sample
                 busy.IsShowing = false;
             }
         }
+
+        // 
 
         public static void HideSplash()
         {
