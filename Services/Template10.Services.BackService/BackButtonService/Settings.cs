@@ -4,6 +4,7 @@ namespace Template10.Services.Gesture
 {
     public static partial class Settings
     {
+        // not meant for external, ever
         internal static bool ShellBackButtonVisible
         {
             get => SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility == AppViewBackButtonVisibility.Visible ? true : false;

@@ -15,6 +15,10 @@ namespace Template10.Navigation
     {
         public static bool RequireSerializableParameters { get; set; } = true;
 
+        public enum NavigationMethods { Type, Key, Any }
+
+        public static NavigationMethods NavigationMethod { get; set; } = NavigationMethods.Any;
+
         public static TimeSpan CacheMaxDuration
         {
             get => Windows.Storage.ApplicationData.Current.LocalSettings

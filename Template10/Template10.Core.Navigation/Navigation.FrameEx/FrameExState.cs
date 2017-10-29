@@ -56,22 +56,7 @@ namespace Template10.Navigation
             {
                 return;
             }
-            if (Settings.RequireSerializableParameters)
-            {
-                try
-                {
-                    var text = Serialize(value);
-                    await store.TrySetAsync("CurrentPageParameter", text);
-                }
-                catch
-                {
-                    throw new Exception("Page parameter failed to serialize; all parameters must be serializable.");
-                }
-            }
-            else
-            {
-                await store.TrySetAsync("CurrentPageParameter", value);
-            }
+            await store.TrySetAsync("CurrentPageParameter", value);
         }
 
         public async Task<(bool Success, string Value)> TryGetNavigationStateAsync() => await store.TryGetStringAsync("NavigationState");

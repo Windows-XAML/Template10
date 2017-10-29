@@ -107,6 +107,8 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BackButtonService\BackButtonService2.cs" />
+    <Compile Include="BackButtonService\IBackButtonService2.cs" />
     <Compile Include="GestureService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BackButtonService\BackButtonService.cs" />

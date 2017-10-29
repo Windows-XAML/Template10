@@ -119,6 +119,7 @@
     <Compile Include="NavigationService\BackButton.enum.cs" />
     <Compile Include="Common\NavButtonsHelper.cs" />
     <Compile Include="Mvvm\ITemplate10ViewModel.cs" />
+    <Compile Include="NavigationService\NavigationService2.cs" />
     <Compile Include="NavigationService\Settings.cs" />
     <Compile Include="Strategies\StateStrategy\DefaultNavStateStrategy.cs" />
     <Compile Include="Strategies\StateStrategy\INavStateStrategy.cs" />

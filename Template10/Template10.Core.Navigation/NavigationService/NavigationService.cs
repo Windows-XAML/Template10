@@ -19,18 +19,12 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Navigation
 {
-    public partial class NavigationService 
+    public partial class NavigationService
     {
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        /// <summary>
-        /// Creates a new NavigationService from the gived Frame to the
-        /// WindowWrapper collection. In addition, it optionally will setup the
-        /// shell back button to react to the nav of the Frame.
-        /// A developer should call this when creating a new/secondary frame.
-        /// </summary>
         /// <remarks>
         /// The shell back button should only be setup one time.
         /// </remarks>
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public static async Task<INavigationService> CreateAsync(BackButton backButton, Frame frame = null)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
@@ -62,9 +56,14 @@ namespace Template10.Navigation
 
             if (backButton == BackButton.Attach)
             {
-                // frame.RegisterPropertyChangedCallback(Frame.BackStackDepthProperty, (s, args) => BackButtonService.GetInstance().UpdateBackButton(service.CanGoBack));
-                frame.Navigated += (s, args) => BackButtonService.UpdateBackButton(service.CanGoBack);
-                BackButtonService.BackRequested += async (s, e) => e.Handled = await service.GoBackAsync();
+                frame.RegisterPropertyChangedCallback(Frame.CanGoBackProperty, (s, args) 
+                    => BackButtonService.UpdateBackButton(service.CanGoBack));
+                // frame.Navigated += (s, args) => BackButtonService.UpdateBackButton(service.CanGoBack);
+                // BackButtonService.BackRequested += async (s, e) => e.Handled = await service.GoBackAsync();
+                Central.Messenger.Subscribe<Messages.BackRequestedMessage>(frame, async m =>
+                {
+                    await service.GoBackAsync();
+                });
             }
 
             if (!Instances.Any())
@@ -155,15 +154,7 @@ namespace Template10.Navigation
             {
                 try
                 {
-                    if (Settings.RequireSerializableParameters)
-                    {
-                        var serializedParameter = parameter.TrySerializeEx(out var result) ? result : throw new Exception("Parameter cannot be serialized.");
-                        return FrameEx2.Navigate(page, serializedParameter, infoOverride);
-                    }
-                    else
-                    {
-                        return FrameEx2.Navigate(page, parameter, infoOverride);
-                    }
+                    return FrameEx2.Navigate(page, parameter, infoOverride);
                 }
                 catch (Exception)
                 {
@@ -174,7 +165,14 @@ namespace Template10.Navigation
         }
 
         public void Navigate(Type page, object parameter = null, NavigationTransitionInfo infoOverride = null)
-            => NavigateAsync(page, parameter, infoOverride).ConfigureAwait(true);
+        {
+            this.Log($"Type: {page}, Parameter: {parameter}, NavigationTransitionInfo: {infoOverride}");
+            if (Settings.NavigationMethod == Settings.NavigationMethods.Key)
+            {
+                throw new InvalidOperationException("Navigation settings prevent navigation by type.");
+            }
+            NavigateAsync(page, parameter, infoOverride).ConfigureAwait(true);
+        }
 
         /// <summary>
         /// Navigate<T> allows developers to navigate using a
@@ -202,7 +200,10 @@ namespace Template10.Navigation
             where T : struct, IConvertible
         {
             this.Log($"Key: {key}, Parameter: {parameter}, NavigationTransitionInfo: {infoOverride}");
-
+            if (Settings.NavigationMethod == Settings.NavigationMethods.Type)
+            {
+                throw new InvalidOperationException("Navigation settings prevent navigation by key.");
+            }
             var keys = Settings.PageKeys<T>();
             if (!keys.TryGetValue(key, out var page))
             {
@@ -223,8 +224,15 @@ namespace Template10.Navigation
 
                 this.Log($"Page: {page}, Parameter: {parameter}, NavigationMode: {mode}");
 
-                if (page == null) throw new ArgumentNullException(nameof(page));
-                if (navigate == null) throw new ArgumentNullException(nameof(navigate));
+                if (page == null)
+                {
+                    throw new ArgumentNullException(nameof(page));
+                }
+
+                if (navigate == null)
+                {
+                    throw new ArgumentNullException(nameof(navigate));
+                }
 
                 // this cannot be used for duplicate navigation, except for refresh
                 if (!Equals(mode, NavigationMode.Refresh))
@@ -250,16 +258,16 @@ namespace Template10.Navigation
                 var toPageState = await FrameEx2.GetPageStateAsync(toPageName);
                 var to = new NavigationInfo(page, parameter, toPageState);
 
-                // call oldViewModel.OnNavigatingFromAsync()
-                var result = await ViewModelActionStrategy.NavigatingFromAsync((fromViewModel, mode, false), from, to, this);
-                if (result == ContinueResult.Stop)
+                // call fromViewModel.OnNavigatingFromAsync()
+                var NavigatingFromAsyncResult = await ViewModelActionStrategy.NavigatingFromAsync((fromViewModel, mode, false), from, to, this);
+                if (NavigatingFromAsyncResult == ContinueResult.Stop)
                 {
                     return false;
                 }
 
                 // raise Navigating event
-                Two.RaiseNavigatingCancels(parameter, false, mode, to, out var cancel);
-                if (cancel)
+                Two.RaiseNavigatingCancels(parameter, false, mode, to, out var RaiseNavigatingCancelsResult);
+                if (RaiseNavigatingCancelsResult == ContinueResult.Stop)
                 {
                     return false;
                 }
@@ -309,10 +317,10 @@ namespace Template10.Navigation
                     PageType = newPage?.GetType(),
                 });
 
-                // call oldViewModel.OnNavigatedFrom()
+                // call fromViewModel.OnNavigatedFrom()
                 await ViewModelActionStrategy.NavigatedFromAsync((fromViewModel, mode, false), from, to, this);
 
-                // call newTemplate10ViewModel.Properties
+                // call toTemplate10ViewModel.Properties
                 if (newViewModel is ITemplate10ViewModel vm)
                 {
                     vm.NavigationService = this;
@@ -425,175 +433,6 @@ namespace Template10.Navigation
         public event EventHandler<HandledEventArgs> BackRequested;
         public event EventHandler<HandledEventArgs> ForwardRequested;
         public event EventHandler<CancelEventArgs<Type>> BeforeSavingNavigation;
-    }
-
-    public partial class NavigationService : INavigationService2
-    {
-        INavigationService2 Two => this as INavigationService2;
-
-        void INavigationService2.RaiseNavigated(NavigatedEventArgs e)
-        {
-            Navigated?.Invoke(this, e);
-        }
-
-        void INavigationService2.RaiseNavigatingCancels(object parameter, bool suspending, NavigationMode mode, NavigationInfo toInfo, out bool cancel)
-        {
-            var navigatingDeferral = new Common.DeferralManager();
-            var navigatingEventArgs = new NavigatingEventArgs(navigatingDeferral)
-            {
-                Parameter = parameter,
-                Suspending = suspending,
-                NavigationMode = mode,
-                TargetPageType = toInfo.PageType,
-                TargetPageParameter = toInfo.Parameter,
-            };
-            Navigating?.Invoke(this, navigatingEventArgs);
-            cancel = navigatingEventArgs.Cancel;
-        }
-
-        void INavigationService2.RaiseBeforeSavingNavigation(out bool cancel)
-        {
-            var args = new CancelEventArgs<Type>(CurrentPageType);
-            BeforeSavingNavigation?.Invoke(this, args);
-            cancel = args.Cancel;
-        }
-        void INavigationService2.RaiseAfterRestoreSavedNavigation()
-            => afterRestoreSavedNavigation?.Invoke(this, CurrentPageType);
-
-        void INavigationService2.RaiseBackRequested(HandledEventArgs args)
-            => BackRequested?.Invoke(this, args);
-
-        void INavigationService2.RaiseForwardRequested(HandledEventArgs args)
-            => ForwardRequested?.Invoke(this, args);
-
-        TypedEventHandler<Type> afterRestoreSavedNavigation;
-        event TypedEventHandler<Type> INavigationService2.AfterRestoreSavedNavigation
-        {
-            add => afterRestoreSavedNavigation += value;
-            remove => afterRestoreSavedNavigation -= value;
-        }
-
-        async Task INavigationService2.SaveAsync(bool navigateFrom)
-        {
-            // save navigation state into settings
-
-            this.Log($"Frame: {FrameEx.FrameId}");
-
-            if (CurrentPageType == null) return;
-            Two.RaiseBeforeSavingNavigation(out var cancel);
-            if (cancel)
-            {
-                return;
-            }
-
-            if (navigateFrom)
-            {
-                var vm = (FrameEx.Content as Page)?.DataContext;
-                var fromInfo = new NavigationInfo(CurrentPageType, CurrentPageParam, await FrameEx2.GetPageStateAsync(CurrentPageType));
-                await ViewModelActionStrategy.NavigatingFromAsync((vm, NavigationMode.New, true), fromInfo, null, this);
-                await ViewModelActionStrategy.NavigatedFromAsync((vm, NavigationMode.New, true), fromInfo, null, this);
-            }
-
-            var frameState = await FrameEx2.GetFrameStateAsync();
-            var navigationState = FrameEx2.GetNavigationState();
-            await frameState.SetNavigationStateAsync(navigationState);
-
-            var writtenState = await frameState.TryGetNavigationStateAsync();
-            this.Log($"navigationState:{navigationState} writtenState:{writtenState}");
-            Debug.Assert(navigationState.Equals(writtenState.Value), "Checking frame nav state save");
-
-            await Task.CompletedTask;
-        }
-
-        async Task<bool> INavigationService2.LoadAsync(bool navigateTo, NavigationMode mode)
-        {
-            this.Log($"Frame: {FrameEx.FrameId}");
-
-            try
-            {
-                // load navigation state from settings
-                var frameState = await FrameEx2.GetFrameStateAsync();
-                {
-                    var state = await frameState.TryGetNavigationStateAsync();
-                    this.Log($"After TryGetNavigationStateAsync; state: {state.Value ?? "Null"}");
-                    if (state.Success && !string.IsNullOrEmpty(state.Value?.ToString()))
-                    {
-                        FrameEx2.SetNavigationState(state.Value.ToString());
-                        await frameState.SetNavigationStateAsync(string.Empty);
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-
-                // is there a page there?
-                var newPage = FrameEx.Content as Page;
-                if (newPage == null)
-                {
-                    return false;
-                }
-                else
-                {
-                    CurrentPageType = newPage.GetType();
-                }
-
-
-                // continue?
-
-                if (!navigateTo)
-                {
-                    return true;
-                }
-
-                // resolve?
-
-                var viewModel = await ViewModelResolutionStrategy.ResolveViewModelAsync(newPage);
-                if (viewModel == null)
-                {
-                    viewModel = newPage?.DataContext;
-                }
-
-                // known?
-
-                if (viewModel is ITemplate10ViewModel vm && vm != null)
-                {
-                    vm.NavigationService = this;
-                }
-
-                // setup?
-
-                if (viewModel != null)
-                {
-                    CurrentPageParam = FrameEx.BackStack.Last().Parameter;
-                    if (CurrentPageParam != null && Settings.RequireSerializableParameters)
-                    {
-                        CurrentPageParam = CurrentPageParam.ToString().DeserializeEx();
-                    }
-                    var toState = await FrameEx2.GetPageStateAsync(CurrentPageType);
-                    var toInfo = new NavigationInfo(CurrentPageType, CurrentPageParam, toState);
-                    await ViewModelActionStrategy.NavigatingToAsync((viewModel, mode, true), null, toInfo, this);
-                    await ViewModelActionStrategy.NavigatedToAsync((viewModel, mode, true), null, toInfo, this);
-                }
-
-                return true;
-            }
-            catch { return false; }
-            finally { Two.RaiseAfterRestoreSavedNavigation(); }
-        }
-
-        async Task INavigationService2.SuspendAsync()
-        {
-            this.Log($"Frame: {FrameEx.FrameId}");
-
-            var dispatcher = this.Window.Dispatcher;
-            await dispatcher.DispatchAsync(async () =>
-            {
-                var vm = (FrameEx.Content as Page)?.DataContext;
-                var fromInfo = new NavigationInfo(CurrentPageType, CurrentPageParam, await FrameEx2.GetPageStateAsync(CurrentPageType));
-                await ViewModelActionStrategy.NavigatedFromAsync((vm, NavigationMode.New, true), fromInfo, null, this);
-            });
-        }
     }
 }
 

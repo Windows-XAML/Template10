@@ -31,18 +31,7 @@ namespace Template10.Navigation
         internal FrameEx(Frame frame, INavigationService navigationService)
         {
             Two.Frame = frame;
-            frame.Navigating += (s, e) =>
-            {
-                //if (!BackStack.Any() && string.IsNullOrEmpty(FrameId))
-                //{
-                //    // auto-assign the FrameId if it isn't assigned
-                //    FrameId = e.SourcePageType.ToString();
-                //}
-            };
-
             Two.NavigationService = navigationService;
-
-            // setup animations
             SetupAnimations();
         }
 
@@ -107,7 +96,32 @@ namespace Template10.Navigation
             }
         }
 
-        internal bool Navigate(Type page, object parameter) => Two.Frame.Navigate(page, parameter);
+        internal bool Navigate(Type page, object parameter)
+        {
+            parameter = SerializeParameter(parameter);
+            return Two.Frame.Navigate(page, parameter);
+        }
+
+        private object SerializeParameter(object parameter)
+        {
+            if (Settings.RequireSerializableParameters)
+            {
+                if (Central.Serialization.TrySerialize(parameter, out var serialized_parameter))
+                {
+                    this.Log($"Parameter serialized by Settings: {serialized_parameter}");
+                    return serialized_parameter;
+                }
+                else
+                {
+                    throw new InvalidOperationException("Navigation settings require serializable parameter.");
+                }
+            }
+            else
+            {
+                this.Log($"Parameter not serialized by Settings.");
+                return parameter;
+            }
+        }
 
         public void PurgeNavigationState() => Two.Frame.SetNavigationState("1,0");
 

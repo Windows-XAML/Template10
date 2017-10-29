@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Template10.Common;
+using Template10.Strategies;
 using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Navigation
@@ -13,7 +14,7 @@ namespace Template10.Navigation
         void RaiseForwardRequested(HandledEventArgs args);
         void RaiseBackRequested(HandledEventArgs args);
         void RaiseNavigated(NavigatedEventArgs e);
-        void RaiseNavigatingCancels(object parameter, bool suspending, NavigationMode mode, NavigationInfo toInfo, out bool cancel);
+        void RaiseNavigatingCancels(object parameter, bool suspending, NavigationMode mode, NavigationInfo toInfo, out ContinueResult result);
         void RaiseBeforeSavingNavigation(out bool cancel);
         void RaiseAfterRestoreSavedNavigation();
 
