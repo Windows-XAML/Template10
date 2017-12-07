@@ -1,0 +1,9 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+
+    <!--<ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="ImageEx.xaml" />
+        <ResourceDictionary Source="Resizer.xaml" />
+        <ResourceDictionary Source="NavViewEx.xaml" />
+    </ResourceDictionary.MergedDictionaries>-->
+
+</ResourceDictionary>

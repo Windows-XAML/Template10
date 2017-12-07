@@ -1,0 +1,220 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{63025C8D-27A4-4C7C-B613-53CD63130F52}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Template10.Services.Library</RootNamespace>
+    <AssemblyName>Template10.Services.Library</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.16299.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.15063.0</TargetPlatformMinVersion>
+    <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <PlatformTarget>ARM</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <PlatformTarget>ARM</PlatformTarget>
+    <OutputPath>bin\ARM\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Compression\Extensions\CompressionExtensions.cs" />
+    <Compile Include="Compression\Extensions\CompressionMethods.enum.cs" />
+    <Compile Include="DependencyInjection\Abstractions\IContainerBuilder.cs" />
+    <Compile Include="DependencyInjection\Abstractions\IContainerConsumer.cs" />
+    <Compile Include="DependencyInjection\Abstractions\IDependencyService.cs" />
+    <Compile Include="DependencyInjection\Abstractions\IDependencyService2.cs" />
+    <Compile Include="DependencyInjection\Default\DependecyService.cs" />
+    <Compile Include="DependencyInjection\Default\Settings.cs" />
+    <Compile Include="DependencyInjection\Extensions\DependecyExtensions.cs" />
+    <Compile Include="Dialog\Abstractions\IDialogService.cs" />
+    <Compile Include="Dialog\Abstractions\MessageBoxResult.enum.cs" />
+    <Compile Include="Dialog\Abstractions\MessageBoxType.enum.cs" />
+    <Compile Include="Dialog\Abstractions\ResourceTypes.enum.cs" />
+    <Compile Include="Dialog\Default\DefaultDialogResourceResolver.cs" />
+    <Compile Include="Dialog\Default\DialogManager.cs" />
+    <Compile Include="Dialog\Default\DialogService.cs" />
+    <Compile Include="Dialog\Abstractions\IMessageBoxEx.cs" />
+    <Compile Include="Dialog\Controls\MessageBoxEx.cs" />
+    <Compile Include="Dialog\Controls\PopupEx.cs" />
+    <Compile Include="Dialog\Abstractions\IDialogResourceResolver.cs" />
+    <Compile Include="Dialog\Default\Settings.cs" />
+    <Compile Include="Dialog\Extensions\DialogExtensions.cs" />
+    <Compile Include="File\Abstractions\IFileService.cs" />
+    <Compile Include="File\Abstractions\StorageStrategies.enum.cs" />
+    <Compile Include="File\Default\FileService.cs" />
+    <Compile Include="Gesture\Abstractions\HandledEventArgs.cs" />
+    <Compile Include="Gesture\Abstractions\IBackButtonService.cs" />
+    <Compile Include="Gesture\Abstractions\IBackButtonService2.cs" />
+    <Compile Include="Gesture\Abstractions\IGestureService.cs" />
+    <Compile Include="Gesture\Abstractions\IGestureService2.cs" />
+    <Compile Include="Gesture\Abstractions\IKeyboardService.cs" />
+    <Compile Include="Gesture\Abstractions\KeyboardEventArgs.cs" />
+    <Compile Include="Gesture\Default\BackButtonService.cs" />
+    <Compile Include="Gesture\Default\BackButtonService2.cs" />
+    <Compile Include="Gesture\Default\GestureService.cs" />
+    <Compile Include="Gesture\Default\GestureService2.cs" />
+    <Compile Include="Gesture\Default\KeyboardHelper.cs" />
+    <Compile Include="Gesture\Default\KeyboardService.cs" />
+    <Compile Include="Gesture\Default\Settings.cs" />
+    <Compile Include="Gesture\Messages\AfterBackRequestedMessage.cs" />
+    <Compile Include="Logging\Abstractions\ILoggingService.cs" />
+    <Compile Include="Logging\Abstractions\Severities.enum.cs" />
+    <Compile Include="Logging\Default\DebugLoggingService.cs" />
+    <Compile Include="Logging\Extensions\LogExtensions.cs" />
+    <Compile Include="Marketplace\Abstractions\IMarketplaceService.cs" />
+    <Compile Include="Marketplace\Default\MarketplaceHelper.cs" />
+    <Compile Include="Marketplace\Default\MarketplaceService.cs" />
+    <Compile Include="Messaging\Abstractions\IMessengerService.cs" />
+    <Compile Include="Messaging\Default\MessengerService.cs" />
+    <Compile Include="Nag\Abstractions\INagService.cs" />
+    <Compile Include="Nag\Abstractions\NagEx.cs" />
+    <Compile Include="Nag\Abstractions\NagResponse.enum.cs" />
+    <Compile Include="Nag\Abstractions\NagResponseInfo.cs" />
+    <Compile Include="Nag\Abstractions\NagStorageStrategies.enum.cs" />
+    <Compile Include="Nag\Default\NagService.cs" />
+    <Compile Include="Nag\Default\NagServiceHelper.cs" />
+    <Compile Include="Nag\Default\Settings.cs" />
+    <Compile Include="Nag\Extensions\NagExtensions.cs" />
+    <Compile Include="Network\Abstractions\AvailabilityChangedEventArgs.cs" />
+    <Compile Include="Network\Abstractions\ConnectionTypes.enum.cs" />
+    <Compile Include="Network\Abstractions\INetworkService.cs" />
+    <Compile Include="Network\Default\NetworkAvailableHelper.cs" />
+    <Compile Include="Network\Default\NetworkService.cs" />
+    <Compile Include="Network\Messages\NetworkAvailabilityChangedMessage.cs" />
+    <Compile Include="Profile %28under review%29\Abstractions\IUserEx.cs" />
+    <Compile Include="Profile %28under review%29\Abstractions\IUserService.cs" />
+    <Compile Include="Profile %28under review%29\Abstractions\UserEx.cs" />
+    <Compile Include="Profile %28under review%29\Default\UserService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Abstractions\IResourceService.cs" />
+    <Compile Include="Resources\Default\ResourceHelper.cs" />
+    <Compile Include="Resources\Default\ResourceService.cs" />
+    <Compile Include="Secrets\Abstractions\ISecretService.cs" />
+    <Compile Include="Secrets\Abstractions\SecretServiceBase.cs" />
+    <Compile Include="Secrets\Default\SecretHelper.cs" />
+    <Compile Include="Secrets\Default\SecretService.cs" />
+    <Compile Include="Serialization\Abstractions\ISerializationService.cs" />
+    <Compile Include="Serialization\Default\NullSerializationService.cs" />
+    <Compile Include="Settings\Abstractions\ISettingsAdapter.cs" />
+    <Compile Include="Settings\Abstractions\ISettingsHelper.cs" />
+    <Compile Include="Settings\Abstractions\SettingsServiceBase.cs" />
+    <Compile Include="Settings\Adapters\LocalFileSettingsAdapter.cs" />
+    <Compile Include="Settings\Adapters\LocalSettingsAdapter.cs" />
+    <Compile Include="Settings\Adapters\RoamingFileSettingsAdapter.cs" />
+    <Compile Include="Settings\Adapters\RoamingSettingsAdapter.cs" />
+    <Compile Include="Settings\Default\SettingsHelper.cs" />
+    <Compile Include="Settings\Default\SettingsService.cs" />
+    <Compile Include="Settings\Extensions\SettingsExtensions.cs" />
+    <Compile Include="Web\Abstractions\IWebApiAdapter.cs" />
+    <Compile Include="Web\Abstractions\IWebApiService.cs" />
+    <Compile Include="Web\Default\WebApiService.cs" />
+    <Compile Include="Web\Default\WindowsHttpClientAdapter.cs" />
+    <EmbeddedResource Include="Properties\Template10.Services.Library.rd.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
+      <Version>6.0.1</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup />
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
+    <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

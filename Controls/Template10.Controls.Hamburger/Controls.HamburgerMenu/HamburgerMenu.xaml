@@ -498,5 +498,10 @@
 
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
+
+    <ToggleSwitch x:Name="MySwitch" />
+    <TextBlock Text="Hello world" Visibility="{x:Bind MySwitch.IsOn}" />
+
+
     </RelativePanel>
 </UserControl>

@@ -1,5 +1,5 @@
 ﻿using System;
-using Template10.Core;
+using Template10.Common;
 using Template10.Services.Gesture;
 using Template10.Strategies;
 using Windows.UI.Xaml;

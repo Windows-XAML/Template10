@@ -1,0 +1,36 @@
+﻿using System;
+
+namespace Template10.Services.Messenger
+{
+    public abstract class MessengerServiceBase : IMessengerService
+    { 
+        public MessengerServiceBase(IMessengerAdapter adapter)
+        {
+            _adapter = adapter;
+        }
+        IMessengerAdapter _adapter { get; set; }
+        public void Send<T>(T message)
+        {
+            LogThis<T>();
+            _adapter.Send(message);
+        }
+        public void Subscribe<T>(object subscriber, Action<T> callback) => _adapter.Subscribe(subscriber, callback);
+        public void Unsubscribe<T>(object subscriber, Action<T> callback) => _adapter.Unsubscribe(subscriber, callback);
+        public void Unsubscribe(object subscriber) => _adapter.Unsubscribe(subscriber);
+
+        private static void LogThis<T>()
+        {
+            var message = $"{nameof(MessengerServiceBase)}.Send({typeof(T)})";
+            try
+            {
+                var container = DependencyInjection.DependencyServiceBase.Default;
+                var logger = container.Resolve<Logging.ILoggingService>();
+                logger.Log(message);
+            }
+            catch (Exception)
+            {
+                System.Diagnostics.Debug.WriteLine($"LOGGING> {message}");
+            }
+        }
+    }
+}

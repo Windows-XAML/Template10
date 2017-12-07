@@ -58,7 +58,7 @@ namespace Sample.ViewModels
             {
                 busy.Content.Text = BusyText;
                 busy.IsShowing = true;
-                Template10.Common.Timeout.InvokeAfter(() => busy.IsShowing = false, TimeSpan.FromSeconds(5));
+                Template10.Common.TimeoutEx.InvokeAfter(() => busy.IsShowing = false, TimeSpan.FromSeconds(5));
             }
         }
 

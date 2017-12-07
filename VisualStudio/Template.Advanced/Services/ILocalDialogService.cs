@@ -4,6 +4,6 @@ namespace Sample.Services
 {
     public interface ILocalDialogService
     {
-        Task<bool> AreYouSureAsync();
+        Task<bool> ShowAreYouSureAsync();
     }
 }

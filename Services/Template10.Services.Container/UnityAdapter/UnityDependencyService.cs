@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.Practices.Unity;
 
-namespace Template10.Services.Dependency
+namespace Template10.Services.DependencyInjection
 {
-    public class UnityDependencyService : DependencyService, IDependencyService2<IUnityContainer>
+    public class UnityDependencyService : DependencyServiceBase, IDependencyService2<IUnityContainer>
     {
         public IUnityContainer Container 
             => (Adapter as UnityContainerAdapter)._container;

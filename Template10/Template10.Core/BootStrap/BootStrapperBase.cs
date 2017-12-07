@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using Template10.Services.Dependency;
+using Template10.Services.DependencyInjection;
 using Template10.Services.Logging;
 using Template10.Navigation;
-using Template10.Core;
+using Template10.Common;
 using Template10.Strategies;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
-using static Template10.Core.StartArgsEx;
-using Template10.Services.Messenger;
+using static Template10.Common.StartArgsEx;
 using Template10.Services.Serialization;
 using Template10.Services.Gesture;
 using Template10.Messages;
@@ -20,6 +19,7 @@ using Template10.Services.Marketplace;
 using System.Collections.Generic;
 using System.Linq;
 using Template10.Extensions;
+using Template10.Services.FileService;
 
 namespace Template10.BootStrap
 {
@@ -88,7 +88,7 @@ namespace Template10.BootStrap
         {
             this.Log();
             Central.Messenger.Unsubscribe<WindowCreatedMessage>(this, HandleAfterFirstWindowCreated);
-            Central.DependencyService.Resolve<IGestureService>().Setup();
+            (Central.DependencyService.Resolve<IGestureService>() as IGestureService2).Setup();
             InitializePopups();
         }
 
@@ -123,17 +123,16 @@ namespace Template10.BootStrap
             container.RegisterInstance<IBootStrapperStartup>(this);
             container.RegisterInstance<IBootStrapperPopup>(this);
 
-            // services
+            // internal
             container.Register<ISessionState, SessionState>();
-            container.Register<ILoggingAdapter, DefaultAdapter>();
-            container.Register<ILoggingService, LoggingService>();
-            container.Register<ISerializationService, JsonSerializationService>();
-            container.Register<IBackButtonService, BackButtonService>();
-            container.Register<IKeyboardService, KeyboardService>();
+
+            // services
+            container.Register<IFileService, FileService>();
+            container.Register<ILoggingService, DebugLoggingService>();
+            container.Register<ISerializationService, NullSerializationService>();
             container.Register<IGestureService, GestureService>();
             container.Register<IResourceService, ResourceService>();
-            container.Register<INetworkAvailableService, NetworkAvailableService>();
-            container.Register<IDialogService, DialogService>();
+            container.Register<INetworkService, NetworkService>();
             container.Register<IMarketplaceService, MarketplaceService>();
             container.Register<IDialogService, DialogService>();
 
@@ -148,7 +147,13 @@ namespace Template10.BootStrap
 
         private static void TestDependecyInjection(IContainerConsumer container)
         {
+            container.Resolve<IBootStrapperDependecyInjection>();
+            container.Resolve<IBootStrapperStartup>();
+            container.Resolve<IBootStrapperPopup>();
+
             container.Resolve<ISessionState>();
+
+            container.Resolve<IFileService>();
             container.Resolve<ILoggingService>();
             container.Resolve<ISerializationService>();
             container.Resolve<IBackButtonService>();

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using Template10.Core;
+using Template10.Common;
 using Template10.Popups;
 
 namespace Template10.Extensions

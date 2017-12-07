@@ -11,8 +11,8 @@
     <AssemblyName>Template10.Controls.ModalDialog</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.15063.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.14393.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.16299.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -125,10 +125,6 @@
     <ProjectReference Include="..\..\..\Services\Template10.Services.BackService\Template10.Services.Gesture.csproj">
       <Project>{8564f764-99d9-4473-b5e4-ac62cda73977}</Project>
       <Name>Template10.Services.Gesture</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Services\Template10.Services.Container\Service\Template10.Services.Dependency.Core.csproj">
-      <Project>{b4c8a753-3376-4c55-aff1-326f2d1cfcbc}</Project>
-      <Name>Template10.Services.Dependency.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Template10\Template10.Portable\Template10.Portable.csproj">
       <Project>{2b6903df-396a-4d97-bf29-45bc6dd72dbe}</Project>

@@ -30,8 +30,8 @@ namespace Template10.Popups
         private ConnectionTypes _actual;
         public ConnectionTypes Actual
         {
-            get => _actual; 
-            set=> RaisePropertyChanged(() => _actual = value);
+            get => _actual;
+            set => RaisePropertyChanged(() => _actual = value);
         }
     }
 
@@ -42,7 +42,7 @@ namespace Template10.Popups
 
         public override void Initialize()
         {
-            Central.Network.AvailabilityChanged += (s, e) =>
+            Central.Messenger.Subscribe<Messages.NetworkAvailabilityChangedMessage>(this, e =>
             {
                 var showing = false;
                 switch (Requirement)
@@ -63,7 +63,7 @@ namespace Template10.Popups
                 Content.Requirement = Requirement;
                 Content.Actual = e.ConnectionType;
                 IsShowing = showing;
-            };
+            });
         }
     }
 }

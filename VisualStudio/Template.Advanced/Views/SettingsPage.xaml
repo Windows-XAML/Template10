@@ -22,7 +22,7 @@
 
         <!--  header  -->
 
-        <controls:PageHeader Content="Settings Page" Frame="{x:Bind Frame}" />
+        <!--<controls:PageHeader Content="Settings Page" Frame="{x:Bind Frame}" />-->
 
         <!--  content  -->
 

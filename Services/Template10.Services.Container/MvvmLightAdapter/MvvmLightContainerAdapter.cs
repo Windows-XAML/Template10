@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace Template10.Services.Dependency
+namespace Template10.Services.DependencyInjection
 {
     public class MvvmLightContainerAdapter : IContainerAdapter
     {

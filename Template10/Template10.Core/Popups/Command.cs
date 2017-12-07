@@ -20,7 +20,14 @@ namespace Template10.Popups
 
         public void Execute(object parameter)
         {
-            _command();
+            try
+            {
+                _command();
+            }
+            finally
+            {
+                CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+            }
         }
     }
 }

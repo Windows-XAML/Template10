@@ -1,9 +1,9 @@
 ﻿using System;
 using GalaSoft.MvvmLight.Ioc;
 
-namespace Template10.Services.Dependency
+namespace Template10.Services.DependencyInjection
 {
-    public class MvvmLightDependencyService : DependencyService, IDependencyService2<ISimpleIoc>
+    public class MvvmLightDependencyService : DependencyServiceBase, IDependencyService2<ISimpleIoc>
     {
         ISimpleIoc IDependencyService2<ISimpleIoc>.Container
             => (Adapter as MvvmLightContainerAdapter)._container;

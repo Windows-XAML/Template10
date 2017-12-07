@@ -13,19 +13,19 @@
     x:Name="ThisPage"
     mc:Ignorable="d">
 
-    <d:Page.DataContext>
+    <!--<d:Page.DataContext>
         <vm:DetailPageViewModel_DesignTime />
-    </d:Page.DataContext>
+    </d:Page.DataContext>-->
 
     <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <!--  header  -->
-        <controls:PageHeader
+        <!-- <controls:PageHeader
             x:Name="pageHeader"
             Frame="{x:Bind Frame}"
             RelativePanel.AlignLeftWithPanel="True"
             RelativePanel.AlignRightWithPanel="True"
             RelativePanel.AlignTopWithPanel="True"
-            Text="Detail Page" />
+            Text="Detail Page" />-->
 
         <!--  EntranceNavigationTransitionInfo.IsTargetElement="True"  -->
 

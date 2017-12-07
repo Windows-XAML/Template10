@@ -41,13 +41,13 @@ namespace Template10.Services.Gesture
 
         internal static IGestureService GetDefault()
         {
-            var container = Services.Dependency.DependencyService.Default;
+            var container = Services.DependencyInjection.DependencyService.Current;
             return container.Resolve<IGestureService>();
         }
 
         internal static IGestureService2 GetDefault2()
         {
-            var container = Services.Dependency.DependencyService.Default;
+            var container = Services.DependencyInjection.DependencyService.Current;
             return container.Resolve<IGestureService2>();
         }
 

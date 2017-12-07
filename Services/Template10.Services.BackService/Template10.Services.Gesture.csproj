@@ -7,15 +7,16 @@
     <ProjectGuid>{8564F764-99D9-4473-B5E4-AC62CDA73977}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Template10.Services.BackButton</RootNamespace>
-    <AssemblyName>Template10.Services.BackButton</AssemblyName>
+    <RootNamespace>Template10.Services.GestureService</RootNamespace>
+    <AssemblyName>Template10.Services.GestureService</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.15063.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.14393.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.16299.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <RuntimeIdentifiers>win10-arm;win10-arm-aot;win10-x86;win10-x86-aot;win10-x64;win10-x64-aot</RuntimeIdentifiers>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -103,10 +104,6 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <None Include="project.json" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="BackButtonService\BackButtonService2.cs" />
     <Compile Include="BackButtonService\IBackButtonService2.cs" />
     <Compile Include="GestureService.cs" />
@@ -125,10 +122,15 @@
       <Project>{b3a4e50e-9dca-457e-bed5-b71d97b957f3}</Project>
       <Name>Template10.Common.CodeBehind.Library</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Template10.Services.Container\Service\Template10.Services.Dependency.Core.csproj">
-      <Project>{b4c8a753-3376-4c55-aff1-326f2d1cfcbc}</Project>
-      <Name>Template10.Services.Dependency.Core</Name>
+    <ProjectReference Include="..\Template10.Services.Container\Template10.Services.DepdencyInjection.Abstractions\Template10.Services.DependencyInjection.Abstractions.csproj">
+      <Project>{cdb2f6c2-ee53-4b37-8a5a-d592071ca3b1}</Project>
+      <Name>Template10.Services.DependencyInjection.Abstractions</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
+      <Version>5.4.0</Version>
+    </PackageReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

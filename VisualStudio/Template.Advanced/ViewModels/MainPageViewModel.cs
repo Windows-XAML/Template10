@@ -65,11 +65,12 @@ namespace Sample.ViewModels
             await parameters.PageState.TrySetAsync(nameof(Value), Value);
         }
 
+
         public async override Task<bool> CanNavigateAsync(IConfirmNavigationParameters parameters)
         {
             if (parameters.GoingTo(typeof(Views.DetailPage)))
             {
-                return await _dialogService.AreYouSureAsync();
+                return await _dialogService.ShowAreYouSureAsync();
             }
             else
             {

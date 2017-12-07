@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Template10.BootStrap;
-using Template10.Services.Dependency;
-using Template10.Services.Messenger;
+﻿using Template10.BootStrap;
+using Template10.Services.DependencyInjection;
+using Template10.Services.Messaging;
+using Template10.Services.Serialization;
 
 namespace Template10
 {
@@ -11,12 +10,13 @@ namespace Template10
     {
         public sealed override IDependencyService CreateDependecyService()
         {
-            return new MvvmLightDependencyService();
+            return new DefaultDependencyService();
         }
 
         public sealed override void RegisterCustomDependencies(IDependencyService dependencyService)
         {
-            dependencyService.Register<IMessengerService, MvvmLightMessengerService>();
+            dependencyService.Register<IMessengerService, DefaultMessengerService>();
+            dependencyService.Register<ISerializationService, DefaultSerializationService>();
             SetupDependencies(dependencyService);
         }
 

@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Template10.BootStrap;
 using Template10.Navigation;
-using Template10.Services.Dependency;
-using Template10.Services.Messenger;
+using Template10.Services.DependencyInjection;
+using Template10.Services.Messaging;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Template10.Core
+namespace Template10.Common
 {
     public interface IBootStrapperDependecyInjection
     {

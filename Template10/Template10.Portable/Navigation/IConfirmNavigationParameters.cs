@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Template10.Common;
-using Template10.Core;
+using Template10.Common;
 
 namespace Template10.Navigation
 {

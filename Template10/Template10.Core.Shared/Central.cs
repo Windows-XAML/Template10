@@ -22,11 +22,11 @@ namespace Template10
         public static ISessionState SessionState
             => DependencyService.Resolve<ISessionState>();
 
-        public static Template10.Services.Dependency.IDependencyService DependencyService
-            => Template10.Services.Dependency.DependencyService.Default;
+        public static Template10.Services.DependencyInjection.IDependencyService DependencyService
+            => Template10.Services.DependencyInjection.Settings.Current;
 
-        public static Template10.Services.Messenger.IMessengerService Messenger
-            => DependencyService.Resolve<Template10.Services.Messenger.IMessengerService>();
+        public static Template10.Services.Messaging.IMessengerService Messenger
+            => DependencyService.Resolve<Template10.Services.Messaging.IMessengerService>();
 
         public static Template10.Services.Serialization.ISerializationService Serialization
             => DependencyService.Resolve<Template10.Services.Serialization.ISerializationService>();
@@ -34,8 +34,8 @@ namespace Template10
         public static Template10.Services.Resources.IResourceService Resource
             => DependencyService.Resolve<Template10.Services.Resources.ResourceService>();
 
-        public static Template10.Services.Network.INetworkAvailableService Network
-            => DependencyService.Resolve<Template10.Services.Network.INetworkAvailableService>();
+        public static Template10.Services.Network.INetworkService Network
+            => DependencyService.Resolve<Template10.Services.Network.INetworkService>();
 
         public static Template10.Services.Logging.ILoggingService Logging
             => DependencyService.Resolve<Template10.Services.Logging.ILoggingService>();

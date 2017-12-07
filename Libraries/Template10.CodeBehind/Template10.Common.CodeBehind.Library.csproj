@@ -11,8 +11,8 @@
     <AssemblyName>Template10.CodeBehind</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.15063.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.14393.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.16299.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -107,47 +107,10 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common.Deferral\Deferral.cs" />
-    <Compile Include="Common.Deferral\DeferralManager.cs" />
-    <Compile Include="Common.EventArgs\ChangedEventArgs.cs" />
-    <Compile Include="Common.EventArgs\HandledEventArgs.cs" />
-    <Compile Include="Common.EventArgs\ItemPropertyChangedEventArgs.cs" />
-    <Compile Include="Common.Exceptions\TemplatePartNotFoundException.cs" />
-    <Compile Include="Common.ObservableDictionary\IObservableDictionary.cs" />
-    <Compile Include="Common.ObservableDictionary\ObservableDictionary.cs" />
-    <Compile Include="Common.ObservableItemCollection\IObservableItemCollection.cs" />
-    <Compile Include="Common.ObservableItemCollection\ObservableItemCollection.cs" />
-    <Compile Include="Common.Queue\IQueue.cs" />
-    <Compile Include="Common.Queue\Queue.cs" />
-    <Compile Include="Common.WeakReference\WeakReference.cs" />
-    <Compile Include="Common.WeakReference\WeakReferenceT.cs" />
-    <Compile Include="Common\EventThrottleHelper.cs" />
-    <Compile Include="Common\LockAsync.cs" />
-    <Compile Include="Common\Timeout.cs" />
-    <Compile Include="Common\TypedEventHandler.cs" />
-    <Compile Include="Mvvm\AwaitableDelegateCommand.cs" />
-    <Compile Include="Mvvm\ChangedCommandAdapter.cs" />
-    <Compile Include="Mvvm\DelegateCommand.cs" />
-    <Compile Include="Mvvm\IChangedCommand.cs" />
-    <Compile Include="Utils.Extensions\IEnumerableExtensions.cs" />
-    <Compile Include="Utils.Extensions\InkExtensions.cs" />
-    <Compile Include="Utils.Extensions\UriExtensions.cs" />
-    <Compile Include="Utils.Extensions\XamlExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utilities\ApiUtils.cs" />
-    <Compile Include="Utilities\AudioUtils.cs" />
-    <Compile Include="Utilities\ExpressionUtils.cs" />
-    <Compile Include="Utilities\TypeUtils.cs" />
-    <Compile Include="Utilities\XamlUtils.cs" />
-    <Compile Include="Common.ValueWithHistory\IValueWithHistory.cs" />
-    <Compile Include="Common.ValueWithHistory\ValueWithHistory.cs" />
     <EmbeddedResource Include="Properties\Template10.Utilities.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Services\Template10.Services.SerializationService\Service\Template10.Services.Serialization.Service.csproj">
-      <Project>{d3a94520-4cd4-4d56-b30b-7e54face64bb}</Project>
-      <Name>Template10.Services.Serialization.Service</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Template10\Template10.Portable\Template10.Portable.csproj">
       <Project>{2b6903df-396a-4d97-bf29-45bc6dd72dbe}</Project>
       <Name>Template10.Portable</Name>

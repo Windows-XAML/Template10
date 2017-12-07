@@ -19,7 +19,8 @@ namespace Sample.Views
         {
             if (e.Parameter is string s && s != null)
             {
-                var parameter = s.DeserializeEx().ToString();
+                var serial = Template10.Central.Serialization;
+                var parameter = serial.Deserialize().ToString();
                 if (int.TryParse(parameter, out var index))
                 {
                     MyPivot.SelectedIndex = index;

@@ -11,8 +11,8 @@
     <AssemblyName>Template10.XAML</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.15063.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.14393.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.16299.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -107,23 +107,6 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Behaviors\ChangeCursorAction.cs" />
-    <Compile Include="Behaviors\CloseFlyoutAction.cs" />
-    <Compile Include="Behaviors\ConditionalAction.cs" />
-    <Compile Include="Behaviors\EllipsisBehavior.cs" />
-    <Compile Include="Behaviors\EventTriggerBehaviorBase.cs" />
-    <Compile Include="Behaviors\FocusAction.cs" />
-    <Compile Include="Behaviors\KeyBehavior.cs" />
-    <Compile Include="Behaviors\MessageDialogAction.cs" />
-    <Compile Include="Behaviors\OpenFlyoutAction.cs" />
-    <Compile Include="Behaviors\TextBoxEnterKeyBehavior.cs" />
-    <Compile Include="Behaviors\ThrottledEventTriggerBehavior.cs" />
-    <Compile Include="Behaviors\TimeoutAction.cs" />
-    <Compile Include="Common\EventThrottleHelper.cs" />
-    <Compile Include="Converters\ChangeTypeConverter.cs" />
-    <Compile Include="Converters\DateTimeOffsetConverter.cs" />
-    <Compile Include="Converters\StringFormatConverter.cs" />
-    <Compile Include="Converters\ValueWhenConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Template10.XAML.rd.xml" />
   </ItemGroup>

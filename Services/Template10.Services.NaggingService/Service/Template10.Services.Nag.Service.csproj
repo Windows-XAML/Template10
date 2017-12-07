@@ -11,8 +11,8 @@
     <AssemblyName>Windows.Services.Dialog.Service</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.15063.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.14393.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.16299.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -116,16 +116,6 @@
     <Compile Include="NagService\NagServiceHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Windows.Services.NagService.rd.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Template10.Services.Dialog\Service\Template10.Services.Dialog.Service.csproj">
-      <Project>{9daacea0-6905-46f8-aed1-c6b566c83cdc}</Project>
-      <Name>Template10.Services.Dialog.Service</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Template10.Services.FileService\Service\Template10.Services.FileService.csproj">
-      <Project>{fd4892b4-4cf8-4c74-b28f-ad7623e405e6}</Project>
-      <Name>Template10.Services.FileService</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

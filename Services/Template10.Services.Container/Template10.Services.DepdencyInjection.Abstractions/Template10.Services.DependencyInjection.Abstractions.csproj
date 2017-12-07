@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.0</TargetFramework>
+    <AssemblyName>Template10.Services.DependencyInjection.Abstractions</AssemblyName>
+    <RootNamespace>Template10.Services.DependencyInjection.Abstractions</RootNamespace>
+    <Authors>jerrynixon</Authors>
+    <Company>Template10</Company>
+    <Product>Template10</Product>
+  </PropertyGroup>
+
+</Project>

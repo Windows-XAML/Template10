@@ -6,6 +6,7 @@
     xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:controls="using:Template10.Controls"
+    controls:NavProperties.Header="This is the main page"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:Sample.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -18,21 +19,21 @@
 
     <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-        <controls:PageHeader
+        <!--<controls:PageHeader
             x:Name="pageHeader"
             RelativePanel.AlignLeftWithPanel="True"
             RelativePanel.AlignRightWithPanel="True"
             RelativePanel.AlignTopWithPanel="True"
             Text="Main Page">
 
-            <!--  secondary commands  -->
+            --><!--  secondary commands  --><!--
             <controls:PageHeader.SecondaryCommands>
                 <AppBarButton Click="{x:Bind ViewModel.GotoSettings}" Label="Settings" />
                 <AppBarButton Click="{x:Bind ViewModel.GotoPrivacy}" Label="Privacy" />
                 <AppBarButton Click="{x:Bind ViewModel.GotoAbout}" Label="About" />
             </controls:PageHeader.SecondaryCommands>
 
-        </controls:PageHeader>
+        </controls:PageHeader>-->
 
         <RelativePanel
             RelativePanel.AlignBottomWithPanel="True"

@@ -2,10 +2,9 @@
 using Windows.UI.Xaml.Data;
 using Template10;
 using Template10.Extensions;
-using Template10.Core;
+using Template10.Common;
 using Sample.ViewModels;
 using Template10.Strategies;
-using Template10.Services.Dependency;
 using Sample.Views;
 using Sample.Services;
 using System;
@@ -14,7 +13,9 @@ using System.Collections.Generic;
 using Template10.Services.Marketplace;
 using Template10.Messages;
 using Template10.Popups;
-using Template10.Services.Messenger;
+using Template10.Services.DependencyInjection;
+using Template10.Services.Messaging;
+using Windows.UI.Xaml.Controls;
 
 namespace Sample
 {
@@ -47,10 +48,12 @@ namespace Sample
 
         public override void SetupDependencies(IContainerBuilder container)
         {
+            // setup custom services
             container.Register<IViewModelResolutionStrategy, CustomViewModelResolutionStrategy>();
-            container.Register<IMarketplaceService, MarketplaceService>();
             container.Register<ILocalDialogService, LocalDialogService>();
-            container.Register<ISettingsService, SettingsService>();
+            container.Register<ISettingsService, Services.SettingsService>();
+
+            // view models
             container.Register<ITemplate10ViewModel, MainPageViewModel>(typeof(MainPage).ToString());
             container.Register<ITemplate10ViewModel, DetailPageViewModel>(typeof(DetailPage).ToString());
             container.Register<ITemplate10ViewModel, SettingsPageViewModel>(typeof(SettingsPage).ToString());
@@ -75,8 +78,8 @@ namespace Sample
         {
             messenger.Subscribe<UnhandledExceptionMessage>(this, m => ShowError(m.EventArgs.Exception));
         }
-   
-        public static void ShowError(Exception ex)
+
+        private static void ShowError(Exception ex)
         {
             if (PopupsExtensions.TryGetPopup<SplashPopup>(out var busy))
             {
@@ -88,28 +91,50 @@ namespace Sample
 
         public static void HideSplash()
         {
-            if (PopupsExtensions.TryGetPopup<SplashPopup>(out var busy))
+            if (PopupsExtensions.TryGetPopup<SplashPopup>(out var pop) && pop.IsShowing)
             {
-                busy.IsShowing = false;
+                pop.IsShowing = false;
             }
         }
 
         public static void ShowBusy(object content)
         {
-            if (PopupsExtensions.TryGetPopup<BusyPopup>(out var busy))
+            if (PopupsExtensions.TryGetPopup<BusyPopup>(out var pop))
             {
-                busy.Content.Text = content?.ToString();
-                busy.IsShowing = true;
+                pop.Content.Text = content?.ToString();
+                pop.IsShowing = true;
             }
         }
 
         public static void HideBusy()
         {
-            if (PopupsExtensions.TryGetPopup<BusyPopup>(out var busy))
+            if (PopupsExtensions.TryGetPopup<BusyPopup>(out var pop) && pop.IsShowing)
             {
-                busy.Content.Text = string.Empty;
-                busy.IsShowing = false;
+                pop.Content.Text = string.Empty;
+                pop.IsShowing = false;
             }
+        }
+    }
+
+    public class CustomViewModelResolutionStrategy : IViewModelResolutionStrategy
+    {
+        static IDependencyService _dependencyService;
+
+        static CustomViewModelResolutionStrategy()
+        {
+            _dependencyService = Central.DependencyService;
+        }
+
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        public async Task<object> ResolveViewModelAsync(Type type)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+        {
+            return _dependencyService.Resolve<ITemplate10ViewModel>(type.ToString());
+        }
+
+        public async Task<object> ResolveViewModelAsync(Page page)
+        {
+            return await ResolveViewModelAsync(page.GetType());
         }
     }
 }

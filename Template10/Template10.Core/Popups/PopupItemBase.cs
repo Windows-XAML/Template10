@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Template10.Controls.Dialog;
-using Template10.Core;
+using Template10.Common;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Markup;

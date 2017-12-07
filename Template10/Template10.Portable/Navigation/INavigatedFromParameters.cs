@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Template10.Common;
-using Template10.Core;
+using Template10.Common;
 
 namespace Template10.Navigation
 {

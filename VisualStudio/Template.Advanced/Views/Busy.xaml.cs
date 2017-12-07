@@ -1,6 +1,6 @@
 ﻿using System;
 using Template10.Controls;
-using Template10.Core;
+using Template10.Common;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
