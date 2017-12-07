@@ -27,7 +27,7 @@ namespace Template10.Behaviors
         public void Attach(DependencyObject associatedObject)
         {
             AssociatedObject = associatedObject;
-            _dispatcher = WindowEx2.Current().Dispatcher;
+            _dispatcher = WindowExManager.Current().Dispatcher;
             Central.Messenger.Subscribe<Messages.BackRequestedMessage>(this, e =>
             {
                 Interaction.ExecuteActions(AssociatedObject, Actions, null);

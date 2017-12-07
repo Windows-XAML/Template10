@@ -84,7 +84,7 @@ namespace Template10.Common
         private ViewLifetimeControl(CoreWindow newWindow)
         {
             CoreDispatcher = newWindow.Dispatcher;
-            WindowWrapper = WindowEx2.Current();
+            WindowWrapper = WindowExManager.Current();
             Id = ApplicationView.GetApplicationViewIdForWindow(newWindow);
 
             // This class will automatically tell the view when its time to close

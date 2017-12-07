@@ -130,7 +130,7 @@ namespace Template10.Navigation
 
         internal NavigationService()
         {
-            Window = WindowEx2.Current();
+            Window = WindowExManager.Current();
         }
 
         internal NavigationService(Frame frame) : this()
@@ -172,7 +172,7 @@ namespace Template10.Navigation
         public void Navigate(Type page, object parameter = null, NavigationTransitionInfo infoOverride = null)
         {
             this.Log($"Type: {page}, Parameter: {parameter}, NavigationTransitionInfo: {infoOverride}");
-            if (Settings.NavigationMethod == Settings.NavigationMethods.Key)
+            if (Settings.NavigationMethod == NavigationMethods.Key)
             {
                 throw new InvalidOperationException("Navigation settings prevent navigation by type.");
             }
@@ -182,7 +182,7 @@ namespace Template10.Navigation
         public async Task<bool> NavigateAsync(string key, object parameter = null, NavigationTransitionInfo infoOverride = null)
         {
             this.Log($"Key: {key}, Parameter: {parameter}, NavigationTransitionInfo: {infoOverride}");
-            if (Settings.NavigationMethod == Settings.NavigationMethods.Type)
+            if (Settings.NavigationMethod == NavigationMethods.Type)
             {
                 throw new InvalidOperationException("Navigation settings prevent navigation by key.");
             }

@@ -25,7 +25,8 @@ namespace Template10.Navigation
 
         IFrameEx2 Two => this as IFrameEx2;
 
-        Strategies.INavStateStrategy IFrameEx2.StateStrategy { get; set; } = new Strategies.DefaultNavStateStrategy();
+        Strategies.INavStateStrategy IFrameEx2.StateStrategy 
+            => Central.DependencyService.Resolve<Strategies.INavStateStrategy>();
 
 
         internal FrameEx(Frame frame, INavigationService navigationService)
@@ -137,7 +138,7 @@ namespace Template10.Navigation
 
         string FrameStateKey => $"Frame-{FrameId}";
 
-        async Task<FrameExState> IFrameEx2.GetFrameStateAsync() => await Two.StateStrategy.GetFrameStateAsync(FrameId);
+        async Task<IFrameExState> IFrameEx2.GetFrameStateAsync() => await Two.StateStrategy.GetFrameStateAsync(FrameId);
 
         async Task<IPropertyBagEx> IFrameEx2.GetPageStateAsync(Type page) => await Two.GetPageStateAsync(page?.ToString());
 

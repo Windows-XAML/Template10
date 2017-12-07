@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Template10.Common;
 using Template10.Services.Messaging;
 using Template10.Navigation;
-using Template10.Common;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 
@@ -26,7 +25,7 @@ namespace Template10.Strategies
 
         public async Task SuspendAsync(ISuspendingEventArgs e)
         {
-            Settings.LastSuspended = DateTime.Now;
+            Navigation.Settings.LastSuspended = DateTime.Now;
 
             if (Settings.EnableLifecycleStrategy)
             {

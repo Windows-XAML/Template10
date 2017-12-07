@@ -2,9 +2,9 @@
 
 namespace Template10.Common
 {
-    public partial class WindowEx : IWindowEx2
+    public partial class WindowEx : IWindowEx
     {
-        IWindowEx2 Two => this as IWindowEx2;
+        IWindowEx Two => this as IWindowEx;
 
         Window IWindowEx2.Window { get; set; }
     }

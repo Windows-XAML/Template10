@@ -3,6 +3,11 @@ using System.Collections.Generic;
 
 namespace Template10.Navigation
 {
-    public class PageKeyRegistry : Dictionary<string, Type> { }
+    public interface IPageKeyRegistry
+    {
+        void Add(string key, Type type);
+    }
+
+    public class PageKeyRegistry : Dictionary<string, Type>, IPageKeyRegistry { }
 }
 

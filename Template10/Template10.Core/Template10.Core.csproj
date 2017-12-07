@@ -192,7 +192,8 @@
     <Compile Include="Windowing\WindowEx\IWindowEx2.cs" />
     <Compile Include="Windowing\WindowEx\WindowEx.cs" />
     <Compile Include="Windowing\WindowEx\WindowEx2.cs" />
-    <Compile Include="Windowing\WindowEx\WindowManager.cs" />
+    <Compile Include="Windowing\WindowEx\WindowExFactory.cs" />
+    <Compile Include="Windowing\WindowEx\WindowExManager.cs" />
     <EmbeddedResource Include="Properties\Template10.Core.rd.xml" />
   </ItemGroup>
   <ItemGroup>

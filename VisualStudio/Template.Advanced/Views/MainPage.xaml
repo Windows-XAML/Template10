@@ -39,7 +39,7 @@
             RelativePanel.AlignBottomWithPanel="True"
             RelativePanel.AlignLeftWithPanel="True"
             RelativePanel.AlignRightWithPanel="True"
-            RelativePanel.Below="pageHeader">
+            >
 
 
             <controls:Resizer x:Name="parameterResizer" Margin="16,16,16,0">

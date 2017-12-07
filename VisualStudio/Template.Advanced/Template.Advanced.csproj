@@ -184,6 +184,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\Services\Template10.Services.Library\Template10.Services.csproj">
       <Project>{63025c8d-27a4-4c7c-b613-53cd63130f52}</Project>
       <Name>Template10.Services</Name>
@@ -208,9 +211,6 @@
       <Project>{96766253-7f52-43e2-8d7d-5c439c19dde4}</Project>
       <Name>Template10.Portable</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

@@ -27,12 +27,12 @@ namespace Template10.Navigation
 
         bool Navigate(Type page, object parameter, NavigationTransitionInfo info);
 
-        Task<FrameExState> GetFrameStateAsync();
+        Task<IFrameExState> GetFrameStateAsync();
         Task<IPropertyBagEx> GetPageStateAsync(Type page);
         Task<IPropertyBagEx> GetPageStateAsync(string page);
 
         void ClearNavigationCache(bool removeCachedPagesInBackStack = false);
 
-        Strategies.INavStateStrategy StateStrategy { get; set; }
+        Strategies.INavStateStrategy StateStrategy { get; }
     }
 }

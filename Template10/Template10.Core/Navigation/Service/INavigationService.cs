@@ -31,7 +31,7 @@ namespace Template10.Navigation
         Task<bool> GoBackAsync(NavigationTransitionInfo infoOverride = null);
         Task<bool> GoForwardAsync();
         Task<bool> NavigateAsync(Type page, object parameter = null, NavigationTransitionInfo infoOverride = null);
-        Task<bool> NavigateAsync(string key, object parameter = null, NavigationTransitionInfo infoOverride = null) where T : struct, IConvertible;
+        Task<bool> NavigateAsync(string key, object parameter = null, NavigationTransitionInfo infoOverride = null);
         Task<bool> RefreshAsync();
         Task<bool> RefreshAsync(object param);
         Task<IViewLifetimeControl> OpenAsync(Type page, object parameter = null, string title = null, ViewSizePreference size = ViewSizePreference.UseHalf);
@@ -42,7 +42,7 @@ namespace Template10.Navigation
         void GoBack(NavigationTransitionInfo infoOverride = null);
         void GoForward();
         void Navigate(Type page, object parameter = null, NavigationTransitionInfo infoOverride = null);
-        void Navigate(string key, object parameter = null, NavigationTransitionInfo infoOverride = null) where T : struct, IConvertible;
+        void Navigate(string key, object parameter = null, NavigationTransitionInfo infoOverride = null);
         void Refresh();
         void Refresh(object param);
     }

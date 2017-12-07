@@ -2,6 +2,7 @@
 using Template10.Services.DependencyInjection;
 using Template10.Services.Messaging;
 using Template10.Services.Serialization;
+using Template10.Strategies;
 
 namespace Template10
 {
@@ -15,12 +16,23 @@ namespace Template10
 
         public sealed override void RegisterCustomDependencies(IDependencyService dependencyService)
         {
+            // required services
             dependencyService.Register<IMessengerService, DefaultMessengerService>();
             dependencyService.Register<ISerializationService, DefaultSerializationService>();
-            SetupDependencies(dependencyService);
+
+            // required strategies
+            dependencyService.Register<IBootStrapperStrategy, DefaultBootStrapperStrategy>();
+            dependencyService.Register<ILifecycleStrategy, DefaultLifecycleStrategy>();
+            dependencyService.Register<INavStateStrategy, DefaultNavStateStrategy>();
+            dependencyService.Register<IExtendedSessionStrategy, DefaultExtendedSessionStrategy>();
+            dependencyService.Register<IViewModelActionStrategy, DefaultViewModelActionStrategy>();
+            dependencyService.Register<IViewModelResolutionStrategy, DefaultViewModelResolutionStrategy>();
+
+            // custom
+            RegisterDependencies(dependencyService);
         }
 
-        public virtual void SetupDependencies(IContainerBuilder containerBuilder) { /* empty */ }
+        public virtual void RegisterDependencies(IContainerBuilder containerBuilder) { /* empty */ }
     }
 }
 

@@ -34,14 +34,14 @@ namespace Template10.Strategies
         public async Task<IFrameExState> GetFrameStateAsync(string frameId)
         {
             var folder = await GetFrameRootAsync(frameId);
-            var store = PropertyBagEx.Create(folder);
+            var store = PropertyBagFactory.Create(folder);
             return new FrameExState(store);
         }
 
         public async Task<IPropertyBagEx> GetPageStateAsync(string frameId, string pageId)
         {
             var folder = await GetPageRootAsync(frameId, pageId);
-            return PropertyBagEx.Create(folder);
+            return PropertyBagFactory.Create(folder);
         }
 
         public async Task ClearAsync()

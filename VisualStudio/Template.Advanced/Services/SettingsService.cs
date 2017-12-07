@@ -13,8 +13,8 @@ namespace Sample.Services
 {
     public class SettingsService : SettingsServiceBase, ISettingsService
     {
-        public SettingsService(ISettingsAdapter adapter, ISerializationService serial)
-            : base(adapter, serial)
+        public SettingsService(ISerializationService serial)
+            : base(new LocalFileSettingsAdapter(serial), serial)
         {
             // empty
         }
@@ -57,7 +57,7 @@ namespace Sample.Services
 
             // implement it
 
-            WindowEx2.Current().Dispatcher.Dispatch(() =>
+            WindowExManager.Current().Dispatcher.Dispatch(() =>
             {
                 if (key == nameof(DefaultTheme))
                 {

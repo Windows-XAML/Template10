@@ -31,7 +31,7 @@ namespace Sample
 
         public override Task OnInitializeAsync()
         {
-            SetupPageKeys(this.PageKeys<PageKeys>());
+            SetupPageKeys(this.PageKeyRegistry());
             SetupSettings(this.Resolve<ISettingsService>());
             SetupListeners(Central.Messenger);
             return base.OnInitializeAsync();
@@ -40,13 +40,13 @@ namespace Sample
         public override async Task OnStartAsync(IStartArgsEx e, INavigationService navService, ISessionState sessionState)
         {
             await Task.Delay(0);
-            if (await navService.NavigateAsync(PageKeys.MainPage))
+            if (await navService.NavigateAsync(PageKeys.MainPage.ToString()))
             {
                 HideSplash();
             }
         }
 
-        public override void SetupDependencies(IContainerBuilder container)
+        public override void RegisterDependencies(IContainerBuilder container)
         {
             // setup custom services
             container.Register<IViewModelResolutionStrategy, CustomViewModelResolutionStrategy>();
@@ -59,11 +59,11 @@ namespace Sample
             container.Register<ITemplate10ViewModel, SettingsPageViewModel>(typeof(SettingsPage).ToString());
         }
 
-        private void SetupPageKeys(IDictionary<PageKeys, Type> keys)
+        private void SetupPageKeys(IPageKeyRegistry keys)
         {
-            keys.Add(PageKeys.MainPage, typeof(MainPage));
-            keys.Add(PageKeys.DetailPage, typeof(DetailPage));
-            keys.Add(PageKeys.SettingsPage, typeof(SettingsPage));
+            keys.Add(PageKeys.MainPage.ToString(), typeof(MainPage));
+            keys.Add(PageKeys.DetailPage.ToString(), typeof(DetailPage));
+            keys.Add(PageKeys.SettingsPage.ToString(), typeof(SettingsPage));
         }
 
         private void SetupSettings(ISettingsService settings)

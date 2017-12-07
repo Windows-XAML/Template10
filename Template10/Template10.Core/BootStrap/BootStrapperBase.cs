@@ -48,7 +48,7 @@ namespace Template10.BootStrap
             try { var c = Central.DependencyService; }
             catch { throw new Exception($"IContainerService is required but is not defined in DI."); }
 
-            RegisterDefaultDependencies(Central.DependencyService);
+            RegisterInternalDependencies(Central.DependencyService);
             RegisterCustomDependencies(Central.DependencyService);
             try { var m = Central.Messenger; }
             catch { throw new Exception($"IMessengerService is required but is not registered in DI."); }
@@ -116,7 +116,7 @@ namespace Template10.BootStrap
         public abstract IDependencyService CreateDependecyService();
         public abstract void RegisterCustomDependencies(IDependencyService dependencyService);
 
-        void RegisterDefaultDependencies(IContainerBuilder container)
+        void RegisterInternalDependencies(IContainerBuilder container)
         {
             // boostrappers
             container.RegisterInstance<IBootStrapperDependecyInjection>(this);
@@ -135,33 +135,27 @@ namespace Template10.BootStrap
             container.Register<INetworkService, NetworkService>();
             container.Register<IMarketplaceService, MarketplaceService>();
             container.Register<IDialogService, DialogService>();
-
-            // strategies
-            container.Register<IBootStrapperStrategy, DefaultBootStrapperStrategy>();
-            container.Register<ILifecycleStrategy, DefaultLifecycleStrategy>();
-            container.Register<INavStateStrategy, DefaultNavStateStrategy>();
-            container.Register<IExtendedSessionStrategy, DefaultExtendedSessionStrategy>();
-            container.Register<IViewModelActionStrategy, DefaultViewModelActionStrategy>();
-            container.Register<IViewModelResolutionStrategy, DefaultViewModelResolutionStrategy>();
         }
 
         private static void TestDependecyInjection(IContainerConsumer container)
         {
+            // bootstrappers
             container.Resolve<IBootStrapperDependecyInjection>();
             container.Resolve<IBootStrapperStartup>();
             container.Resolve<IBootStrapperPopup>();
 
+            // internal
             container.Resolve<ISessionState>();
 
+            // services
             container.Resolve<IFileService>();
             container.Resolve<ILoggingService>();
             container.Resolve<ISerializationService>();
-            container.Resolve<IBackButtonService>();
-            container.Resolve<IKeyboardService>();
             container.Resolve<IGestureService>();
             container.Resolve<IResourceService>();
             container.Resolve<IDialogService>();
 
+            // strategies
             container.Resolve<IBootStrapperStrategy>();
             container.Resolve<ILifecycleStrategy>();
             container.Resolve<INavStateStrategy>();
@@ -200,7 +194,7 @@ namespace Template10.BootStrap
 #pragma warning disable CS0067 // unused events
         private new event EventHandler<object> Resuming;
         private new event SuspendingEventHandler Suspending;
-        private new event UnhandledExceptionEventHandler UnhandledException;
+        private new event Windows.UI.Xaml.UnhandledExceptionEventHandler UnhandledException;
         private new event EnteredBackgroundEventHandler EnteredBackground;
         private new event LeavingBackgroundEventHandler LeavingBackground;
 #pragma warning restore CS0067

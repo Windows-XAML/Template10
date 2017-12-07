@@ -17,7 +17,7 @@ namespace Template10.Behaviors
         public void Attach(DependencyObject associatedObject)
         {
             AssociatedObject = associatedObject;
-            _deviceUtils = DeviceUtils.Current(WindowEx2.Current());
+            _deviceUtils = DeviceUtils.Current(WindowExManager.Current());
             if (_deviceUtils != null) _deviceUtils.Changed += DeviceDispositionBehavior_Changed;
             Update();
             _ready = true;
@@ -41,7 +41,7 @@ namespace Template10.Behaviors
 
         private void Update()
         {
-            var w = WindowEx2.Current();
+            var w = WindowExManager.Current();
             var d = DeviceUtils.Current(w);
             switch (d.DeviceDisposition())
             {

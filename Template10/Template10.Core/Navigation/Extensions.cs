@@ -25,7 +25,7 @@ namespace Template10.Extensions
         public static async Task<bool> NavigateAsyncEx(this Frame frame, Type page, object parameter = null, NavigationTransitionInfo infoOverride = null)
             => await frame.GetNavigationService().NavigateAsync(page, parameter, infoOverride);
 
-        public static async Task<bool> NavigateAsyncEx<T>(this Frame frame, T key, object parameter = null, NavigationTransitionInfo infoOverride = null) where T : struct, IConvertible
+        public static async Task<bool> NavigateAsyncEx(this Frame frame, string key, object parameter = null, NavigationTransitionInfo infoOverride = null) 
             => await frame.GetNavigationService().NavigateAsync(key, parameter, infoOverride);
 
         public static NavMode ToPortableNavigationMode(this NavigationMode mode)

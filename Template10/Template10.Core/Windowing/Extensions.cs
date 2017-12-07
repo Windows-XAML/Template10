@@ -7,7 +7,7 @@ namespace Template10.Extensions
     {
         public static IWindowEx Create(this WindowCreatedEventArgs args)
         {
-            return WindowEx2.Create(args);
+            return WindowExFactory.Create(args);
         }
     }
 }

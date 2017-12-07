@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -83,7 +82,7 @@ namespace Template10.Strategies
             _messengerService.Send(new Messages.AppVisibilityChangedMessage { Visibility = AppVisibilities.Foreground });
         }
 
-        public void HandleUnhandledException(object sender, UnhandledExceptionEventArgs e)
+        public void HandleUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
             => this.Log(() => _messengerService.Send(new Messages.UnhandledExceptionMessage { EventArgs = e }));
 
         // public methods
@@ -116,7 +115,7 @@ namespace Template10.Strategies
         public void OnWindowCreated(WindowCreatedEventArgs args)
         {
             this.Log();
-            var window = WindowEx2.Create(args);
+            var window = WindowExFactory.Create(args);
             _messengerService.Send(new Messages.WindowCreatedMessage { EventArgs = args });
 
             if (!_windowSetup && window.IsMainView)

@@ -13,26 +13,6 @@ namespace Template10.Common
 {
     using Template10.Extensions;
 
-    public static class WindowExFactory
-    {
-        public static IWindowEx Create(WindowCreatedEventArgs args)
-        {
-            return Create(args.Window);
-        }
-
-        public static IWindowEx Create(Window window)
-        {
-            if (WindowManager.Instances.Any(x => x.Window.Equals(window)))
-            {
-                throw new Exception("Windows already has a wrapper; use Current(window) to fetch.");
-            }
-            var wrapper = new WindowEx(window);
-            WindowManager.Instances.Add(wrapper);
-            ViewService.OnWindowCreated();
-            return wrapper;
-        }
-    }
-
     public partial class WindowEx : IWindowEx
     {
         internal WindowEx(Window window)
@@ -41,8 +21,8 @@ namespace Template10.Common
 
             Two.Window = window;
             Dispatcher = DispatcherEx.Create(window.Dispatcher);
-            window.CoreWindow.Closed += (s, e) => WindowManager.Instances.Remove(this);
-            window.Closed += (s, e) => WindowManager.Instances.Remove(this);
+            window.CoreWindow.Closed += (s, e) => WindowExManager.Instances.Remove(this);
+            window.Closed += (s, e) => WindowExManager.Instances.Remove(this);
             window.Activate();
 
             IsMainView = CoreApplication.MainView == CoreApplication.GetCurrentView();
@@ -63,31 +43,6 @@ namespace Template10.Common
                 return Dispatcher.Dispatch(() => UIViewSettings.GetForCurrentView());
             });
         }
-
-        public static IWindowEx GetDefault()
-        {
-            try
-            {
-                // this cannot be called from a background thread.
-                var mainDispatcher = CoreApplication.MainView.Dispatcher;
-                return WindowManager.Instances.FirstOrDefault(x => x.Window.Dispatcher == mainDispatcher) ??
-                        WindowManager.Instances.FirstOrDefault();
-            }
-            catch (COMException)
-            {
-                // MainView might exist but still be not accessible
-                return WindowManager.Instances.FirstOrDefault();
-            }
-        }
-
-        public static IWindowEx Current()
-            => WindowManager.Instances.FirstOrDefault(x => x.Window == Window.Current) ?? GetDefault();
-
-        public static IWindowEx Current(Window window)
-            => WindowManager.Instances.FirstOrDefault(x => x.Window == window);
-
-        public static IWindowEx Main()
-            => WindowManager.Instances.FirstOrDefault(x => x.IsMainView);
 
         public bool IsMainView { get; private set; }
 

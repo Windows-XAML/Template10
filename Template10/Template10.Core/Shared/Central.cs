@@ -37,7 +37,7 @@ namespace Template10
             => DependencyService.Resolve<Template10.Services.Gesture.IGestureService>();
 
         public static IWindowEx Window
-            => WindowManager.Instances.First(x => x.Window.CoreWindow == Windows.UI.Core.CoreWindow.GetForCurrentThread());
+            => WindowExManager.Instances.First(x => x.Window.CoreWindow == Windows.UI.Core.CoreWindow.GetForCurrentThread());
 
         public static IDispatcherEx Dispatcher
             => Window.Dispatcher;

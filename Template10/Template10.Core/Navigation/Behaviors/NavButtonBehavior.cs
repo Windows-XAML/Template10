@@ -27,7 +27,7 @@ namespace Template10.Behaviors
         {
             if (!Windows.ApplicationModel.DesignMode.DesignModeEnabled)
             {
-                _dispatcher = WindowEx2.Current().Dispatcher;
+                _dispatcher = WindowExManager.Current().Dispatcher;
                 _throttleHelper = new EventThrottleHelper { Throttle = 1000 };
             }
         }
@@ -62,7 +62,7 @@ namespace Template10.Behaviors
                 // if (Locator.BootStrapper.Instance != null) Locator.BootStrapper.Instance.ShellBackButtonUpdated += Current_ShellBackButtonUpdated;
 
 
-                _deviceUtils = DeviceUtils.Current(WindowEx2.Current());
+                _deviceUtils = DeviceUtils.Current(WindowExManager.Current());
                 if (_deviceUtils != null) _deviceUtils.Changed += DispositionChanged;
             }
         }

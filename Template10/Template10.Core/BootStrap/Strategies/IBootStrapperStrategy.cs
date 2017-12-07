@@ -25,6 +25,6 @@ namespace Template10.Strategies
 
         void HandleEnteredBackground(object sender, EnteredBackgroundEventArgs e);
         void HandleLeavingBackground(object sender, LeavingBackgroundEventArgs e);
-        void HandleUnhandledException(object sender, System.UnhandledExceptionEventArgs e);
+        void HandleUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e);
     }
 }
