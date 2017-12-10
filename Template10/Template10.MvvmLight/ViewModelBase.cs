@@ -1,15 +1,12 @@
 ﻿using System.Threading.Tasks;
 using Newtonsoft.Json;
-using System.Runtime.CompilerServices;
-using System;
-using System.Linq.Expressions;
 using Template10.Navigation;
 using Template10.Common;
 using Template10.Extensions;
 
 namespace Template10.Mvvm
 {
-    public abstract class ViewModelBase : GalaSoft.MvvmLight.ObservableObject, INavigatedToAwareAsync, INavigatedFromAwareAsync, IConfirmNavigationAsync, ITemplate10ViewModel
+    public abstract class ViewModelBase : BindableBase, INavigatedToAwareAsync, INavigatedFromAwareAsync, IConfirmNavigationAsync, ITemplate10ViewModel
     {
         /// <remarks>
         /// It is not necessary to call base.OnNavigatedToAsync in the concrete override
@@ -37,28 +34,6 @@ namespace Template10.Mvvm
 
         [JsonIgnore]
         public ISessionState SessionState => Central.SessionState;
-
-        // remove bindable overrides, just to simplify
-
-        public sealed override void RaisePropertyChanged([CallerMemberName] string propertyName = null) => base.RaisePropertyChanged(propertyName);
-
-        public sealed override void RaisePropertyChanged<T>(Expression<Func<T>> propertyExpression) => base.RaisePropertyChanged(propertyExpression);
-
-        public new bool Set<T>(Expression<Func<T>> propertyExpression, ref T storage, T value) => base.Set(propertyExpression, ref storage, value);
-
-        protected new bool Set<T>(ref T storage, T value, [CallerMemberName] string propertyName = null) => base.Set(ref storage, value, propertyName);
-
-        public void Set(Action action, [CallerMemberName] string propertyName = null)
-        {
-            try
-            {
-                action.Invoke();
-            }
-            finally
-            {
-                RaisePropertyChanged(propertyName);
-            }
-        }
 
         // remove object overrides, just to simplify
 

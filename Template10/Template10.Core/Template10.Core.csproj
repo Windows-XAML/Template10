@@ -127,11 +127,10 @@
     <Compile Include="Navigation\Service\INavigationService2.cs" />
     <Compile Include="Navigation\Service\NavigatedEventArgs.cs" />
     <Compile Include="Navigation\Service\NavigatingEventArgs.cs" />
-    <Compile Include="Navigation\Service\NavigationMethods.enum.cs" />
     <Compile Include="Navigation\Service\NavigationService.cs" />
     <Compile Include="Navigation\Service\NavigationService2.cs" />
-    <Compile Include="Navigation\Service\NavigationServiceList.cs" />
     <Compile Include="Navigation\PageKeyRegistry.cs" />
+    <Compile Include="Navigation\Service\NavigationServiceRegistry.cs" />
     <Compile Include="Navigation\Service\Settings.cs" />
     <Compile Include="Navigation\Strategies\INavStateStrategy.cs" />
     <Compile Include="Navigation\Strategies\IViewModelActionStrategy.cs" />

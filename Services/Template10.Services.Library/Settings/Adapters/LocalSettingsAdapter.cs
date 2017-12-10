@@ -1,4 +1,6 @@
-﻿using Windows.Storage;
+﻿using System;
+using Template10.Services.Serialization;
+using Windows.Storage;
 
 namespace Template10.Services.Settings
 {
@@ -6,8 +8,13 @@ namespace Template10.Services.Settings
     {
         private ApplicationDataContainer _container;
 
-        public LocalSettingsAdapter()
-            => _container = ApplicationData.Current.LocalSettings;
+        public LocalSettingsAdapter(ISerializationService serializationService)
+        {
+            _container = ApplicationData.Current.LocalSettings;
+            SerializationService = serializationService;
+        }
+
+        public ISerializationService SerializationService { get; }
 
         public string ReadString(string key)
             => _container.Values[key].ToString();

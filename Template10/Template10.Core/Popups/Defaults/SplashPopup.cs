@@ -31,12 +31,9 @@ namespace Template10.Popups
     [ContentProperty(Name = nameof(Template))]
     public class SplashPopup : PopupItemBase<SplashPopupData>
     {
-        public bool AutoShow { get; set; } = true;
-        public bool AutoHide { get; set; } = true;
-
         public override void Initialize()
         {
-            Content = new SplashPopupData(() => IsShowing = false, Window.Current.Dispatcher);
+            Data = new SplashPopupData(() => IsShowing = false, Window.Current.Dispatcher);
         }
     }
 }

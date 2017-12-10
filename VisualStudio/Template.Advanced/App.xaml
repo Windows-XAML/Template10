@@ -21,7 +21,7 @@
                 </DataTemplate>
             </pop:BusyPopup>
 
-            <pop:SplashPopup x:Key="SplashPopup" AutoHide="false">
+            <pop:SplashPopup x:Key="SplashPopup">
                 <pop:SplashPopup.BackgroundBrush>
                     <SolidColorBrush Color="Green" />
                 </pop:SplashPopup.BackgroundBrush>

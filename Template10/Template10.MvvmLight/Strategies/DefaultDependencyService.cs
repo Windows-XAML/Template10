@@ -41,13 +41,30 @@ namespace Template10
                     $"because key[{key}] is not registered.");
             }
             var type = _key_map[key];
-            var result = _container.GetInstance(type);
-            if (!(result is TInterface))
+            Debug.WriteLine($"Container KeyMap found key {key} as {type}.");
+            try
             {
-                throw new InvalidCastException($"Cannot resolve key[{key}] " +
-                    $"because {result.GetType()} cannot cast to {typeof(TInterface)}.");
+                var result = _container.GetInstance(type);
+                if (!(result is TInterface))
+                {
+                    throw new InvalidCastException($"Cannot resolve key[{key}] " +
+                        $"because {result.GetType()} cannot cast to {typeof(TInterface)}.");
+                }
+                return (TInterface)result;
             }
-            return (TInterface)result;
+            catch (Exception ex)
+            {
+                //  var ctors = typeof(TInterface).GetConstructors();
+                //  // assuming class A has only one constructor
+                //  var ctor = ctors[0];
+                //  foreach (var param in ctor.GetParameters())
+                //  {
+                //      Debug.WriteLine(string.Format(
+                //          "Param {0} is named {1} and is of type {2}",
+                //          param.Position, param.Name, param.ParameterType));
+                //  }
+                throw;
+            }
         }
 
         public TInterface Resolve<TInterface>()

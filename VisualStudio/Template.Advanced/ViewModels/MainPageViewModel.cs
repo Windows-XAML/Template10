@@ -9,62 +9,49 @@ using Template10.Services.Dialog;
 using Template10.Services.Logging;
 using Template10.Services.Resources;
 using Sample.Services;
+using System.Windows.Input;
 
 namespace Sample.ViewModels
 {
-    public class MainPageViewModel_Designtime : MainPageViewModel
-    {
-        public MainPageViewModel_Designtime() : base(null, null) { }
-    }
-
     public class MainPageViewModel : ViewModelBase
     {
-        ILoggingService _loggingService;
-        ILocalDialogService _dialogService;
+        private ILocalDialogService _dialogService;
+        private IProfileRepository _profileRepository;
 
-        public MainPageViewModel(ILocalDialogService dialog, ILoggingService logger)
+        public MainPageViewModel(ILocalDialogService dialog, IProfileRepository profileRepository)
         {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-            {
-                // design-time
-            }
-            else
-            {
-                _loggingService = logger;
-                _dialogService = dialog;
-            }
+            _dialogService = dialog;
+            _profileRepository = profileRepository;
         }
 
-        static string _Value = "Gas";
-        public string Value { get { return _Value; } set { Set(ref _Value, value); } }
+        Models.Profile _profile;
+        public Models.Profile Profile
+        {
+            get => _profile;
+            set => Set(ref _profile, value);
+        }
 
         public async override Task OnNavigatedToAsync(INavigatedToParameters parameter)
         {
-            if (parameter.NavigationMode == NavMode.Back | parameter.Resuming)
+            if (parameter.NavigationMode != NavMode.Back)
             {
-                await RestoreDataAsync(parameter);
+                if (!await TryRestoreViewModelAsync(parameter))
+                {
+                    Profile = new Models.Profile
+                    {
+                        FirstName = "Jerry",
+                        LastName = "Nixon",
+                        Email = "jerry.nixon@microsoft.com",
+                        Web = "http://jerrynixon.com"
+                    };
+                }
             }
         }
 
         public async override Task OnNavigatedFromAsync(INavigatedFromParameters parameters)
         {
-            await SaveDataAsync(parameters);
+            await PersistViewModelAsync(parameters);
         }
-
-        private async Task RestoreDataAsync(INavigatedToParameters parameter)
-        {
-            var item = await parameter.ToNavigationInfo.PageState.TryGetAsync<string>(nameof(Value));
-            if (item.Success)
-            {
-                Value = item.Value;
-            }
-        }
-
-        private async Task SaveDataAsync(INavigatedFromParameters parameters)
-        {
-            await parameters.PageState.TrySetAsync(nameof(Value), Value);
-        }
-
 
         public async override Task<bool> CanNavigateAsync(IConfirmNavigationParameters parameters)
         {
@@ -78,16 +65,43 @@ namespace Sample.ViewModels
             }
         }
 
-        public void GotoDetailsPage()
-                => NavigationService.Navigate(typeof(Views.DetailPage), Value);
+        private ICommand _submitCommand;
+        public ICommand SubmitCommand
+        {
+            get
+            {
+                if (_submitCommand == null)
+                {
+                    _submitCommand = new GalaSoft.MvvmLight.Command.RelayCommand(SubmitCommandExecute);
+                }
+                return _submitCommand;
+            }
+        }
+        private async void SubmitCommandExecute()
+        {
+            await NavigationService.NavigateAsync(PageKeys.DetailPage.ToString());
+        }
 
-        public void GotoSettings()
-            => NavigationService.Navigate(typeof(Views.SettingsPage), 0);
+        private async Task<bool> TryRestoreViewModelAsync(INavigatedToParameters parameter)
+        {
+            var state = parameter.ToNavigationInfo.PageState;
+            var result = await state.TryGetAsync<string>(nameof(Profile));
+            if (result.Success)
+            {
+                Profile = await _profileRepository.LoadAsync(result.Value);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
-        public void GotoPrivacy()
-            => NavigationService.Navigate(typeof(Views.SettingsPage), 1);
-
-        public void GotoAbout()
-            => NavigationService.Navigate(typeof(Views.SettingsPage), 2);
+        private async Task PersistViewModelAsync(INavigatedFromParameters parameters)
+        {
+            var state = parameters.PageState;
+            await _profileRepository.SaveAsync(Profile);
+            await state.TrySetAsync(nameof(Profile), Profile.Key);
+        }
     }
 }

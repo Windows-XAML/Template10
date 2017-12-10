@@ -22,9 +22,7 @@ namespace Template10.Navigation
         /// <remarks>
         /// The shell back button should only be setup one time.
         /// </remarks>
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        public static async Task<INavigationService> CreateAsync(BackButton backButton, Frame frame = null)
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
+        public static INavigationService Create(BackButton backButton, Frame frame = null)
         {
             frame = frame ?? new Frame();
 
@@ -36,12 +34,12 @@ namespace Template10.Navigation
 
             var service = new NavigationService(frame);
 
-            FinishCreatingAsync(backButton, frame, service);
+            FinishCreatingAsyncVoid(backButton, frame, service);
 
             return service;
         }
 
-        private static async void FinishCreatingAsync(BackButton backButton, Frame frame, NavigationService service)
+        private static async void FinishCreatingAsyncVoid(BackButton backButton, Frame frame, NavigationService service)
         {
             await Task.CompletedTask;
 
@@ -50,14 +48,10 @@ namespace Template10.Navigation
 
             service.BackButtonHandling = backButton;
 
-            frame.RequestedTheme = Settings.DefaultTheme;
-
             if (backButton == BackButton.Attach)
             {
                 frame.RegisterPropertyChangedCallback(Frame.CanGoBackProperty, (s, args)
-                    => BackButtonService.UpdateBackButton(service.CanGoBack));
-                // frame.Navigated += (s, args) => BackButtonService.UpdateBackButton(service.CanGoBack);
-                // BackButtonService.BackRequested += async (s, e) => e.Handled = await service.GoBackAsync();
+                    => GestureService.UpdateBackButton(service.CanGoBack));
                 Central.Messenger.Subscribe<Messages.BackRequestedMessage>(frame, async m =>
                 {
                     await service.GoBackAsync();
@@ -68,7 +62,7 @@ namespace Template10.Navigation
             {
                 Default = service;
             }
-            Instances.Add(service);
+            Instances.Register(service);
 
             Central.Messenger.Send(new Messages.NavigationServiceCreatedMessage
             {
@@ -79,8 +73,10 @@ namespace Template10.Navigation
             });
         }
 
-        static IBackButtonService2 BackButtonService
-            => Central.DependencyService.Resolve<IBackButtonService>() as IBackButtonService2;
+        #region simplifiers
+
+        static IGestureService GestureService
+            => Central.DependencyService.Resolve<IGestureService>();
 
         static ISerializationService SerializationService
             => Central.DependencyService.Resolve<ISerializationService>();
@@ -91,26 +87,29 @@ namespace Template10.Navigation
         static IViewModelResolutionStrategy ViewModelResolutionStrategy
             => Central.DependencyService.Resolve<IViewModelResolutionStrategy>();
 
+        #endregion
+
         public static INavigationService Default { get; set; }
 
-        public static NavigationServiceList Instances { get; } = new NavigationServiceList();
+        public static NavigationServiceRegistry Instances { get; } = new NavigationServiceRegistry();
 
         async static Task ClearExpiredCacheAsync(INavigationService service)
         {
-            // this is always okay to check, default or not, 
-            // expire any state (based on expiry delta from today)
-
-            // default the cache age to very fresh if not known
-            var lastSuspended = Settings.LastSuspended;
-            var cacheAge = DateTime.Now.Subtract(lastSuspended);
-
-            // clear state in every nav service in every view
-            if (cacheAge >= Settings.CacheMaxDuration)
+            // this is always okay to check
+            if (IsCacheExpired())
             {
+                // clear state in every nav service in every view
                 var facade = service.FrameEx as IFrameEx2;
                 var state = await facade.GetFrameStateAsync();
                 await state.ClearAsync();
             }
+        }
+
+        static bool IsCacheExpired()
+        {
+            var lastSuspended = Settings.LastSuspended;
+            var cacheAge = DateTime.Now.Subtract(lastSuspended);
+            return cacheAge >= Settings.CacheMaxDuration;
         }
 
         Lazy<IViewService> _viewService = new Lazy<IViewService>(() => new ViewService());
@@ -172,7 +171,7 @@ namespace Template10.Navigation
         public void Navigate(Type page, object parameter = null, NavigationTransitionInfo infoOverride = null)
         {
             this.Log($"Type: {page}, Parameter: {parameter}, NavigationTransitionInfo: {infoOverride}");
-            if (Settings.NavigationMethod == NavigationMethods.Key)
+            if (Settings.NavigationBehavior == NavigationBehaviors.Key)
             {
                 throw new InvalidOperationException("Navigation settings prevent navigation by type.");
             }
@@ -182,7 +181,7 @@ namespace Template10.Navigation
         public async Task<bool> NavigateAsync(string key, object parameter = null, NavigationTransitionInfo infoOverride = null)
         {
             this.Log($"Key: {key}, Parameter: {parameter}, NavigationTransitionInfo: {infoOverride}");
-            if (Settings.NavigationMethod == NavigationMethods.Type)
+            if (Settings.NavigationBehavior == NavigationBehaviors.Type)
             {
                 throw new InvalidOperationException("Navigation settings prevent navigation by key.");
             }

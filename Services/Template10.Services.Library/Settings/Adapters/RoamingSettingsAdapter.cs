@@ -1,4 +1,6 @@
-﻿using Windows.Storage;
+﻿using System;
+using Template10.Services.Serialization;
+using Windows.Storage;
 
 namespace Template10.Services.Settings
 {
@@ -6,11 +8,16 @@ namespace Template10.Services.Settings
     {
         private ApplicationDataContainer _container;
 
-        public RoamingSettingsAdapter()
-            => _container = ApplicationData.Current.RoamingSettings;
+        public RoamingSettingsAdapter(ISerializationService serializationService)
+        {
+            _container = ApplicationData.Current.RoamingSettings;
+            SerializationService = serializationService;
+        }
+
+        public ISerializationService SerializationService { get; }
 
         public string ReadString(string key)
-            => _container.Values[key].ToString();
+                => _container.Values[key].ToString();
 
         public void WriteString(string key, string value)
             => _container.Values[key] = value;

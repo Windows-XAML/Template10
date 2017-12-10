@@ -106,6 +106,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="BindableBase.cs" />
     <Compile Include="BootStrapper.cs" />
     <Compile Include="Strategies\DefaultBootStrapperStrategy.cs" />
     <Compile Include="Strategies\DefaultDependencyService.cs" />
@@ -126,6 +127,9 @@
     </PackageReference>
     <PackageReference Include="MvvmLightLibs">
       <Version>5.3.0</Version>
+    </PackageReference>
+    <PackageReference Include="Prism.Core">
+      <Version>6.3.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

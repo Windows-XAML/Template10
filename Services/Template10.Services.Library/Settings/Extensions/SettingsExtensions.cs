@@ -10,7 +10,7 @@
             return DependecyExtensions.Resolve<ISerializationService>();
         }
 
-        [Obsolete]
+        //[Obsolete]
         public static bool TryRead<T>(this ApplicationDataContainer container, string key, out T value, bool decompress = true, ISerializationService serializer = null)
         {
             if (!container.Values.ContainsKey(key))
@@ -33,7 +33,7 @@
             }
         }
 
-        [Obsolete]
+        //[Obsolete]
         public static bool TryWrite<T>(this ApplicationDataContainer container, string key, T value, bool compress = true, ISerializationService serializer = null)
         {
             try

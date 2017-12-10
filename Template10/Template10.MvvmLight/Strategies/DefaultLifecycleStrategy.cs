@@ -44,8 +44,12 @@ namespace Template10.Strategies
 
         public bool IsResuming(IStartArgsEx e)
         {
-            if (Settings.AppAlwaysResumes
-                && e?.StartKind == StartArgsEx.StartKinds.Launch
+            if (Template10.Settings.AppResumeBehavior == ResumeBehaviors.Never)
+            {
+                return false;
+            }
+
+            if (e?.StartKind == StartArgsEx.StartKinds.Launch
                 && e?.StartCause == StartArgsEx.StartCauses.Primary)
             {
                 return true;
@@ -102,7 +106,7 @@ namespace Template10.Strategies
                 {
                     if (await nav.LoadAsync(true, Windows.UI.Xaml.Navigation.NavigationMode.New))
                     {
-                        // 
+                        continue;
                     }
                     else
                     {

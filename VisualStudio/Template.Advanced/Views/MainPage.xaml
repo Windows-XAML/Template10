@@ -13,84 +13,107 @@
     xmlns:vm="using:Sample.ViewModels"
     mc:Ignorable="d">
 
-    <!--<d:Page.DataContext>
-        <vm:MainPageViewModel_Designtime />
-    </d:Page.DataContext>-->
+    <Page.Resources>
+        <Style TargetType="TextBox" x:Key="StandardTextBox">
+            <Setter Property="MinWidth" Value="150" />
+            <Setter Property="MinHeight" Value="62" />
+        </Style>
+        <Style TargetType="TextBox" x:Key="ResizableTextBox" BasedOn="{StaticResource StandardTextBox}">
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="AcceptsReturn" Value="True" />
+        </Style>
+    </Page.Resources>
 
-    <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <RelativePanel Padding="32" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-        <!--<controls:PageHeader
-            x:Name="pageHeader"
-            RelativePanel.AlignLeftWithPanel="True"
-            RelativePanel.AlignRightWithPanel="True"
-            RelativePanel.AlignTopWithPanel="True"
-            Text="Main Page">
+        <TextBox 
+                Margin="0,0,0,0"
+                Header="First name"
+                x:Name="FirstNameTextBox"
+                Style="{StaticResource ResizableTextBox}"
+                Text="{x:Bind ViewModel.Profile.FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 
-            --><!--  secondary commands  --><!--
-            <controls:PageHeader.SecondaryCommands>
-                <AppBarButton Click="{x:Bind ViewModel.GotoSettings}" Label="Settings" />
-                <AppBarButton Click="{x:Bind ViewModel.GotoPrivacy}" Label="Privacy" />
-                <AppBarButton Click="{x:Bind ViewModel.GotoAbout}" Label="About" />
-            </controls:PageHeader.SecondaryCommands>
+            <Interactivity:Interaction.Behaviors>
+                <Behaviors:KeyBehavior Event="KeyDown" Key="Enter">
+                    <Core:InvokeCommandAction Command="{x:Bind ViewModel.SubmitCommand}" />
+                </Behaviors:KeyBehavior>
+                <Core:EventTriggerBehavior EventName="Loaded">
+                    <Behaviors:FocusAction />
+                </Core:EventTriggerBehavior>
+            </Interactivity:Interaction.Behaviors>
 
-        </controls:PageHeader>-->
+        </TextBox>
 
-        <RelativePanel
-            RelativePanel.AlignBottomWithPanel="True"
-            RelativePanel.AlignLeftWithPanel="True"
-            RelativePanel.AlignRightWithPanel="True"
-            >
+        <Grid Height="20" Width="20" RelativePanel.AlignBottomWith="FirstNameTextBox" RelativePanel.AlignRightWith="FirstNameTextBox" Margin="0,0,8,8">
+            <Ellipse Fill="Red" />
+            <TextBlock Text="!" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="18" Padding="0,0,0,2" FontWeight="Bold" />
+        </Grid>
 
+        <TextBox 
+                Margin="8,0,0,0"
+                Header="Last name"
+                x:Name="LastNameTextBox" 
+                Style="{StaticResource StandardTextBox}"
+                Text="{Binding ViewModel.Profile.LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                RelativePanel.RightOf="FirstNameTextBox" />
 
-            <controls:Resizer x:Name="parameterResizer" Margin="16,16,16,0">
+        <Grid Height="20" Width="20" RelativePanel.AlignBottomWith="LastNameTextBox" RelativePanel.AlignRightWith="LastNameTextBox" Margin="0,0,8,8">
+            <Ellipse Fill="Red" />
+            <TextBlock Text="!" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="18" Padding="0,0,0,2" FontWeight="Bold" />
+        </Grid>
 
-                <TextBox
-                    MinWidth="150"
-                    MinHeight="62"
-                    Header="Parameter to pass"
-                    Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    TextWrapping="Wrap">
-                    <Interactivity:Interaction.Behaviors>
+        <TextBox 
+                Margin="0,16,0,0"
+                Header="Email address"
+                x:Name="EmailTextBox" 
+                Style="{StaticResource StandardTextBox}"
+                Text="{Binding ViewModel.Profile.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                RelativePanel.AlignLeftWith="FirstNameTextBox"
+                RelativePanel.AlignRightWith="LastNameTextBox"
+                RelativePanel.Below="FirstNameTextBox" />
 
-                        <!--  enable submit on enter key  -->
-                        <Behaviors:KeyBehavior Key="Enter">
-                            <Core:CallMethodAction MethodName="GotoDetailsPage" TargetObject="{Binding}" />
-                        </Behaviors:KeyBehavior>
+        <Grid Height="20" Width="20" RelativePanel.AlignBottomWith="EmailTextBox" RelativePanel.AlignRightWith="EmailTextBox" Margin="0,0,8,8">
+            <Ellipse Fill="Red" />
+            <TextBlock Text="!" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="18" Padding="0,0,0,2" FontWeight="Bold" />
+        </Grid>
 
-                        <!--  focus on textbox when page loads  -->
-                        <Core:EventTriggerBehavior>
-                            <Behaviors:FocusAction />
-                        </Core:EventTriggerBehavior>
+        <TextBox 
+                Margin="0,16,0,0"
+                Header="Web address"
+                x:Name="WebTextBox" 
+                Style="{StaticResource StandardTextBox}"
+                Text="{Binding ViewModel.Profile.Web, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                RelativePanel.AlignLeftWith="FirstNameTextBox"
+                RelativePanel.AlignRightWith="LastNameTextBox"
+                RelativePanel.Below="EmailTextBox" />
 
-                    </Interactivity:Interaction.Behaviors>
-                </TextBox>
+        <Grid Height="20" Width="20" RelativePanel.AlignBottomWith="WebTextBox" RelativePanel.AlignRightWith="WebTextBox" Margin="0,0,8,8">
+            <Ellipse Fill="Red" />
+            <TextBlock Text="!" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="18" Padding="0,0,0,2" FontWeight="Bold" />
+        </Grid>
 
-            </controls:Resizer>
+        <Button 
+                Margin="8,0,0,0"
+                RelativePanel.RightOf="WebTextBox"
+                RelativePanel.AlignBottomWith="WebTextBox"
+                Command="{x:Bind ViewModel.SubmitCommand}" 
+                Content="Submit" />
 
-            <Button
-                x:Name="submitButton"
-                Click="{x:Bind ViewModel.GotoDetailsPage}"
-                Content="Submit"
-                RelativePanel.AlignBottomWith="parameterResizer"
-                RelativePanel.RightOf="parameterResizer" />
-
-            <TextBlock
+        <TextBlock
                 x:Name="stateTextBox"
-                Margin="16,16,0,0"
-                RelativePanel.AlignLeftWith="parameterResizer"
-                RelativePanel.Below="parameterResizer"
-                Text="Current Visual State" />
+                RelativePanel.Below="WebTextBox"
+                Margin="0,16,0,0" />
 
-        </RelativePanel>
-
-        <VisualStateManager.VisualStateGroups>
+        <!--<VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
                 <VisualState x:Name="VisualStateNarrow">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="{StaticResource NarrowMinWidth}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <!--  TODO: change properties for narrow view  -->
+                        -->
+        <!--  TODO: change properties for narrow view  -->
+        <!--
                         <Setter Target="stateTextBox.Text" Value="Narrow Visual State" />
                     </VisualState.Setters>
                 </VisualState>
@@ -99,7 +122,9 @@
                         <AdaptiveTrigger MinWindowWidth="{StaticResource NormalMinWidth}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <!--  TODO: change properties for normal view  -->
+                        -->
+        <!--  TODO: change properties for normal view  -->
+        <!--
                         <Setter Target="stateTextBox.Text" Value="Normal Visual State" />
                     </VisualState.Setters>
                 </VisualState>
@@ -108,11 +133,15 @@
                         <AdaptiveTrigger MinWindowWidth="{StaticResource WideMinWidth}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <!--  TODO: change properties for wide view  -->
+                        -->
+        <!--  TODO: change properties for wide view  -->
+        <!--
                         <Setter Target="stateTextBox.Text" Value="Wide Visual State" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
+        </VisualStateManager.VisualStateGroups>-->
+
     </RelativePanel>
+
 </Page>

@@ -1,5 +1,6 @@
 ﻿using System;
 using Template10.Common;
+using Template10.Navigation;
 using Template10.Services.Gesture;
 using Template10.Strategies;
 using Windows.UI.Xaml;
@@ -8,15 +9,15 @@ namespace Template10
 {
     public enum NetworkRequirements { None, Network, Internet }
 
+    public enum SplashShowBehaviors { Auto, Manual }
+
+    public enum SplashHideBehaviors { Auto, Manual }
+
+    public enum ResumeBehaviors { Always, Never, Auto }
+
     public static partial class Settings
     {
         // navigation settings
-
-        public static ElementTheme DefaultTheme
-        {
-            get => Navigation.Settings.DefaultTheme;
-            set => Navigation.Settings.DefaultTheme = value;
-        }
 
         public static TimeSpan CacheMaxDuration
         {
@@ -24,31 +25,32 @@ namespace Template10
             set => Navigation.Settings.CacheMaxDuration = value;
         }
 
-        public static bool RequireSerializableParameters
+        public static ParameterBehaviors ParameterBehavior
         {
-            get => Navigation.Settings.RequireSerializableParameters;
-            set => Navigation.Settings.RequireSerializableParameters = value;
+            get => Navigation.Settings.ParameterBehavior;
+            set => Navigation.Settings.ParameterBehavior = value;
         }
 
-        // strategy settings
-
-        public static bool AppAlwaysResumes
+        public static NavigationBehaviors NavigationBehavior
         {
-            get => Strategies.Settings.AppAlwaysResumes;
-            set => Strategies.Settings.AppAlwaysResumes = value;
+            get => Navigation.Settings.NavigationBehavior;
+            set => Navigation.Settings.NavigationBehavior = value;
         }
 
-        public static bool EnableExtendedSessionStrategy
-        {
-            get => Strategies.Settings.EnableExtendedSessionStrategy;
-            set => Strategies.Settings.EnableExtendedSessionStrategy = value;
-        }
+        /// <summary>
+        /// What should happen to the SplashPopup at load is started?
+        /// </summary>
+        public static SplashShowBehaviors SplashShowBehavior { get; set; } = SplashShowBehaviors.Auto;
 
-        public static bool EnableLifecycleStrategy
-        {
-            get => Strategies.Settings.EnableLifecycleStrategy;
-            set => Strategies.Settings.EnableLifecycleStrategy = value;
-        }
+        /// <summary>
+        /// What should happen to the SplashPopup at load is completed?
+        /// </summary>
+        public static SplashHideBehaviors SplashHideBehavior { get; set; } = SplashHideBehaviors.Auto;
+
+        /// <summary>
+        /// Every time the app starts, try to resume, ignore previous state
+        /// </summary>
+        public static ResumeBehaviors AppResumeBehavior { get; set; } = ResumeBehaviors.Auto;
 
         // services settings
 

@@ -60,8 +60,8 @@ namespace Template10.Popups
                         showing = false;
                         break;
                 }
-                Content.Requirement = Requirement;
-                Content.Actual = e.ConnectionType;
+                Data.Requirement = Requirement;
+                Data.Actual = e.ConnectionType;
                 IsShowing = showing;
             });
         }

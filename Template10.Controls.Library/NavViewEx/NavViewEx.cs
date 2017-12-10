@@ -11,7 +11,7 @@ namespace Template10.Controls
 {
     public class NavViewEx : NavigationView
     {
-        Frame _frame;
+        public Frame Frame { get; }
 
         public Type SettingsPageType { get; set; }
         public event EventHandler SettingsInvoked;
@@ -19,8 +19,8 @@ namespace Template10.Controls
         public NavViewEx()
         {
             //DefaultStyleKey = typeof(NavigationView);
-            Content = _frame = new Frame();
-            _frame.Navigated += Frame_Navigated;
+            Content = Frame = new Frame();
+            Frame.Navigated += Frame_Navigated;
             ItemInvoked += NavViewEx_ItemInvoked;
             SystemNavigationManager.GetForCurrentView().BackRequested += ShellPage_BackRequested;
             RegisterPropertyChangedCallback(IsPaneOpenProperty, IsPaneOpenChanged);
@@ -31,7 +31,7 @@ namespace Template10.Controls
         {
             if (FindStart() is NavigationViewItem i && i != null)
             {
-                Navigate.Invoke(_frame, i.GetValue(NavProperties.PageTypeProperty) as Type);
+                Navigate.Invoke(Frame, i.GetValue(NavProperties.PageTypeProperty) as Type);
             }
             IsPaneOpenChanged(this, null);
             UpdateBackButton();
@@ -52,17 +52,17 @@ namespace Template10.Controls
                     {
                         if (SettingsPageType != null)
                         {
-                            Navigate(_frame, SettingsPageType);
+                            Navigate(Frame, SettingsPageType);
                             base.SelectedItem = value;
-                            _frame.BackStack.Clear();
+                            Frame.BackStack.Clear();
                         }
                         SettingsInvoked?.Invoke(this, EventArgs.Empty);
                     }
                     else if (value is NavigationViewItem i && i != null)
                     {
-                        Navigate(_frame, i.GetValue(NavProperties.PageTypeProperty) as Type);
+                        Navigate(Frame, i.GetValue(NavProperties.PageTypeProperty) as Type);
                         base.SelectedItem = value;
-                        _frame.BackStack.Clear();
+                        Frame.BackStack.Clear();
                     }
                 }
                 UpdateBackButton();
@@ -79,8 +79,9 @@ namespace Template10.Controls
 
         protected virtual void UpdateBackButton()
         {
+            // TODO: use the service?
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
-                    (_frame.CanGoBack) ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
+                    (Frame.CanGoBack) ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
         }
 
         private NavigationViewItem FindStart()
@@ -119,7 +120,7 @@ namespace Template10.Controls
 
         private void UpdateHeader()
         {
-            if (_frame.Content is Page p && p.GetValue(NavProperties.HeaderProperty) is string s && !string.IsNullOrEmpty(s))
+            if (Frame.Content is Page p && p.GetValue(NavProperties.HeaderProperty) is string s && !string.IsNullOrEmpty(s))
             {
                 Header = s;
             }
@@ -127,9 +128,9 @@ namespace Template10.Controls
 
         private void ShellPage_BackRequested(object sender, BackRequestedEventArgs e)
         {
-            if (_frame.CanGoBack)
+            if (Frame.CanGoBack)
             {
-                _frame.GoBack();
+                Frame.GoBack();
             }
         }
 

@@ -4,24 +4,24 @@ using Windows.Storage;
 
 namespace Template10.Services.Settings
 {
-    public abstract class SettingsServiceBase
-    {
-        protected ISettingsHelper Helper { get; private set; }
+    //public abstract class SettingsServiceBase
+    //{
+    //    protected ISettingsHelper Helper { get; private set; }
 
-        protected bool EnableCompression
-        {
-            get => Helper.EnableCompression;
-            set => Helper.EnableCompression = value;
-        }
+    //    protected bool EnableCompression
+    //    {
+    //        get => Helper.EnableCompression;
+    //        set => Helper.EnableCompression = value;
+    //    }
 
-        public SettingsServiceBase(ISettingsAdapter adapter, ISerializationService serial)
-        {
-            Helper = new SettingsHelper(adapter, serial);
-        }
+    //    public SettingsServiceBase(ISettingsAdapter adapter, ISerializationService serial)
+    //    {
+    //        Helper = new SettingsHelper(adapter, serial);
+    //    }
 
-        public SettingsServiceBase(ISettingsHelper helper)
-        {
-            Helper = helper;
-        }
-    }
+    //    public SettingsServiceBase(ISettingsHelper helper)
+    //    {
+    //        Helper = helper;
+    //    }
+    //}
 }

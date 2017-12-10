@@ -10,19 +10,27 @@ namespace Template10.Extensions
 {
     public static class BootStrapperDependecyExtensions
     {
-        public static TInterface Resolve<TInterface>(this Common.IBootStrapperDependecyInjection boot) where TInterface : class
+        /// <summary>
+        /// Resolve an object registered with the Dependency Container.
+        /// </summary>
+        /// <typeparam name="TInterface">The type (generally interface) of the desired object</typeparam>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public static TInterface Resolve<TInterface>(this object obj) where TInterface : class
         {
             return Central.DependencyService.Resolve<TInterface>();
         }
 
-        public static TInterface Resolve<TInterface>(this Common.IBootStrapperDependecyInjection boot, string key) where TInterface : class
+        /// <summary>
+        /// Resolve an object registered with the Dependency Container.
+        /// </summary>
+        /// <typeparam name="TInterface">The type (generally interface) of the desired object</typeparam>
+        /// <param name="obj"></param>
+        /// <param name="key">Specific key, if keys were used during registration</param>
+        /// <returns></returns>
+        public static TInterface Resolve<TInterface>(this object obj, string key) where TInterface : class
         {
             return Central.DependencyService.Resolve<TInterface>(key);
-        }
-
-        public static PageKeyRegistry  PageKeyRegistry(this Common.IBootStrapperDependecyInjection boot) 
-        {
-            return Navigation.Settings.PageKeyRegistry;
         }
     }
 }

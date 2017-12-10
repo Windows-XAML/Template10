@@ -7,7 +7,9 @@ namespace Template10.Services.Gesture
 
     public interface IGestureService
     {
+        event EventHandler BackButtonUpdated;
         EventModes BackRequestedMode { get; set; }
         EventModes BackForwardRequestedMode { get; set; }
+        void UpdateBackButton(bool canGoBack, bool canGoForward = false);
     }
 }

@@ -95,16 +95,17 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Profile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\ISettingsService.cs" />
-    <Compile Include="Services\LocalDialogResourceResolver.cs" />
-    <Compile Include="Services\SettingsService.cs" />
+    <Compile Include="Services\LocalDialogService\ILocalDialogService.cs" />
+    <Compile Include="Services\LocalDialogService\LocalDialogService.cs" />
+    <Compile Include="Services\ProfileRepository\IProfileRepository.cs" />
+    <Compile Include="Services\ProfileRepository\ProfileRepository.cs" />
+    <Compile Include="Services\SettingsService\SettingsService.cs" />
     <Compile Include="Styles\Custom.xaml.cs">
       <DependentUpon>Custom.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\DetailPageViewModel.cs" />
-    <Compile Include="Services\ILocalDialogService.cs" />
-    <Compile Include="Services\LocalDialogService.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\SettingsPageViewModel.cs" />
     <Compile Include="Views\Busy.xaml.cs">
@@ -130,7 +131,6 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <PRIResource Include="Strings\en-us\Resources.resw" />
     <None Include="Template.Advanced_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -182,10 +182,11 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.0.1</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed">
+      <Version>2.0.0</Version>
+    </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\Services\Template10.Services.Library\Template10.Services.csproj">
       <Project>{63025c8d-27a4-4c7c-b613-53cd63130f52}</Project>

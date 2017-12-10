@@ -223,6 +223,11 @@ namespace Template10.Strategies
                 Window.Current.Activate();
             }
         }
+    }
+
+    public partial class DefaultBootStrapperStrategy 
+    {
+        // internal
 
         private async Task<bool> Restore(IStartArgsEx args)
         {
@@ -241,17 +246,17 @@ namespace Template10.Strategies
         {
             if (PopupsExtensions.TryGetPopup<SplashPopup>(out var splash))
             {
-                if (splash.AutoShow)
+                if (Template10.Settings.SplashShowBehavior == SplashShowBehaviors.Auto)
                 {
                     OperationWrapper(BootstrapperStates.ShowingSplash, () =>
                     {
-                        splash.Content.SplashScreen = args.LaunchActivatedEventArgs.SplashScreen;
+                        splash.Data.SplashScreen = args.LaunchActivatedEventArgs.SplashScreen;
                         splash.IsShowing = true;
                     }, BootstrapperStates.ShowedSplash, "Problem setting SplashPopup.IsShowing=true;");
                 }
                 else
                 {
-                    this.Log("SplashPopup is set to AutoShow=false;, developer will show it.");
+                    this.Log("SplashPopup is set to SplashShowBehavior=Auto;, developer will show it.");
                 }
             }
             else
@@ -264,7 +269,7 @@ namespace Template10.Strategies
         {
             if (PopupsExtensions.TryGetPopup<SplashPopup>(out var splash))
             {
-                if (splash.AutoHide)
+                if (Template10.Settings.SplashHideBehavior == SplashHideBehaviors.Auto)
                 {
                     if (splash.IsShowing)
                     {
@@ -280,7 +285,7 @@ namespace Template10.Strategies
                 }
                 else
                 {
-                    this.Log("SplashPopup is set to AutoHide=false;, developer will hide it.");
+                    this.Log("SplashPopup is set to SplashHideBehavior=Manual;, developer will hide it.");
                 }
             }
             else
@@ -288,13 +293,8 @@ namespace Template10.Strategies
                 this.Log("SplashPopup is not found, nothing to hide.");
             }
         }
-    }
 
-    public partial class DefaultBootStrapperStrategy 
-    {
-        // internal
-
-        void OperationWrapper(BootstrapperStates before, Action method, BootstrapperStates after, string message)
+        private void OperationWrapper(BootstrapperStates before, Action method, BootstrapperStates after, string message)
         {
             Status = before;
             try { method(); }
@@ -307,7 +307,7 @@ namespace Template10.Strategies
             finally { Status = after; }
         }
 
-        async Task OperationWrapperAsync(BootstrapperStates before, Func<Task> method, BootstrapperStates after, string message)
+        private async Task OperationWrapperAsync(BootstrapperStates before, Func<Task> method, BootstrapperStates after, string message)
         {
             Status = before;
             try { await method(); }

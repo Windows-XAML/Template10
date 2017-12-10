@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Template10.Common;
-using Template10.Common;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;

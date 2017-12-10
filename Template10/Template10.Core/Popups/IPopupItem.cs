@@ -21,6 +21,6 @@ namespace Template10.Popups
 
     public interface IPopupItem<T>  where T : class, IPopupData
     {
-        T Content { get; set; }
+        T Data { get; set; }
     }
 }

@@ -16,12 +16,15 @@ namespace Template10.Services.Gesture
         private IKeyboardService2 _keyService2;
         private IMessengerService _messenger;
 
+        public event EventHandler BackButtonUpdated;
+
         public GestureService(IMessengerService messengerService)
         {
             _keyService2 = new KeyboardService() as IKeyboardService2;
             InitKeyServiceEvents();
 
             _backService2 = new BackButtonService(_keyService2 as IKeyboardService) as IBackButtonService2;
+            _backService2.BackButtonUpdated += (s, e) => BackButtonUpdated?.Invoke(s, e);
             InitBackServiceEvents();
 
             _messenger = messengerService;
@@ -31,6 +34,11 @@ namespace Template10.Services.Gesture
         {
             _keyService2.Setup();
             _backService2.Setup();
+        }
+
+        public void UpdateBackButton(bool canGoBack, bool canGoForward = false)
+        {
+            _backService2.UpdateBackButton(canGoBack, canGoForward);
         }
 
         public EventModes BackRequestedMode { get; set; } = EventModes.Allow;

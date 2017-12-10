@@ -18,7 +18,7 @@ namespace Template10.Popups
             Two.Popup = new PopupEx();
 
             var action = new Action(() => { IsShowing = false; });
-            Content = Activator.CreateInstance(typeof(T), new object[] { action, Window.Current.Dispatcher }) as T;
+            Data = Activator.CreateInstance(typeof(T), new object[] { action, Window.Current.Dispatcher }) as T;
         }
 
         IPopupItem2 Two => this as IPopupItem2;
@@ -27,7 +27,7 @@ namespace Template10.Popups
 
         PopupEx IPopupItem2.Popup { get; set; }
 
-        public T Content { get; set; }
+        public T Data { get; set; }
 
         public DataTemplate Template { get; set; }
 
@@ -45,13 +45,13 @@ namespace Template10.Popups
                     Two.Popup.Template = Template ?? Two.Popup.Template;
                     Two.Popup.TransitionCollection = TransitionCollection ?? Two.Popup.TransitionCollection;
                     Two.Popup.BackgroundBrush = BackgroundBrush ?? Two.Popup.BackgroundBrush;
-                    Two.Popup.Show(Content);
+                    Two.Popup.Show(Data);
                 }
                 else if (!value && IsShowing)
                 {
                     Two.Popup.Hide();
                 }
-                Content.IsActive = value;
+                Data.IsActive = value;
             }
         }
     }

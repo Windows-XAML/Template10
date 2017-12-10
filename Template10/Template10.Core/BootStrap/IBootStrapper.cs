@@ -22,6 +22,7 @@ namespace Template10.Common
         Task OnInitializeAsync();
         UIElement CreateRootElement(IStartArgsEx e);
         Task OnStartAsync(IStartArgsEx e, INavigationService navService, ISessionState sessionState);
+        // IPageKeyRegistry PageKeyRegistry { get; }
     }
 
     public interface IBootStrapperPopup

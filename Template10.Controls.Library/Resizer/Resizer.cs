@@ -12,7 +12,9 @@ namespace Template10.Controls
     [ContentProperty(Name = nameof(ElementControl))]
     public sealed class Resizer : ContentControl
     {
+#pragma warning disable IDE1006 // Naming Styles
         private Thumb PART_THUMB;
+#pragma warning restore IDE1006 // Naming Styles
 
         private Size _originalSize;
         public Resizer()

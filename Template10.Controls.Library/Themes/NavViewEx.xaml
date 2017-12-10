@@ -1,6 +1,9 @@
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Template10.Controls">
 
-    <!--<Style TargetType="controls:NavViewEx">
+    <Style TargetType="controls:NavViewEx">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:NavViewEx">
@@ -12,6 +15,6 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>-->
+    </Style>
     
 </ResourceDictionary>

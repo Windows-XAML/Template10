@@ -56,7 +56,7 @@ namespace Sample.ViewModels
         {
             if (this.TryGetPopup<Template10.Popups.BusyPopup>(out var busy))
             {
-                busy.Content.Text = BusyText;
+                busy.Data.Text = BusyText;
                 busy.IsShowing = true;
                 Template10.Common.TimeoutEx.InvokeAfter(() => busy.IsShowing = false, TimeSpan.FromSeconds(5));
             }

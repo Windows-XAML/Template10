@@ -16,6 +16,7 @@ using Template10.Popups;
 using Template10.Services.DependencyInjection;
 using Template10.Services.Messaging;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml;
 
 namespace Sample
 {
@@ -29,11 +30,60 @@ namespace Sample
             InitializeComponent();
         }
 
+        public override UIElement CreateRootElement(IStartArgsEx e)
+        {
+            var shellPage = new ShellPage();
+            shellPage.MainNavView.Frame.RegisterNavigationService();
+            return shellPage;
+        }
+
         public override Task OnInitializeAsync()
         {
-            SetupPageKeys(this.PageKeyRegistry());
-            SetupSettings(this.Resolve<ISettingsService>());
-            SetupListeners(Central.Messenger);
+            // setup custom services
+            var container = Central.DependencyService;
+            container.Register<IViewModelResolutionStrategy, LocalViewModelResolutionStrategy>();
+            container.Register<ILocalDialogService, LocalDialogService>();
+            container.Register<ISettingsService, SettingsService>();
+            container.Register<IProfileRepository, ProfileRepository>();
+
+            // setup pages
+            var registry = Template10.Navigation.Settings.PageKeyRegistry;
+            registry.Add(PageKeys.MainPage.ToString(), typeof(MainPage));
+            container.Register<ITemplate10ViewModel, MainPageViewModel>(typeof(MainPage).ToString());
+            registry.Add(PageKeys.DetailPage.ToString(), typeof(DetailPage));
+            container.Register<ITemplate10ViewModel, DetailPageViewModel>(typeof(DetailPage).ToString());
+            registry.Add(PageKeys.SettingsPage.ToString(), typeof(SettingsPage));
+            container.Register<ITemplate10ViewModel, SettingsPageViewModel>(typeof(SettingsPage).ToString());
+
+            // setup settings
+            var settings = this.Resolve<ISettingsService>();
+            Template10.Settings.ShellBackButtonPreference = settings.ShellBackButtonPreference;
+            Template10.Settings.CacheMaxDuration = TimeSpan.FromDays(2);
+            Template10.Settings.NavigationBehavior = NavigationBehaviors.Key;
+            Template10.Settings.AppResumeBehavior = ResumeBehaviors.Auto;
+            Template10.Settings.ParameterBehavior = ParameterBehaviors.Serialize;
+
+            // // setup listener for unhandled exception
+            // Central.Messenger.Subscribe<UnhandledExceptionMessage>(this, m =>
+            // {
+            //     if (PopupsExtensions.TryGetPopup<ErrorPopup>(out var error))
+            //     {
+            //         error.Data.Error = m.EventArgs.Exception;
+            //         error.IsShowing = true;
+            //     }
+            // });
+
+            UnhandledException += (s, e) =>
+            {
+                this.Log($"{nameof(UnhandledException)} :: {e.Exception.Message}");
+                if (PopupsExtensions.TryGetPopup<ErrorPopup>(out var error))
+                {
+                    error.Data.Error = e.Exception;
+                    error.IsShowing = true;
+                }
+            };
+
+            // ensure return type
             return base.OnInitializeAsync();
         }
 
@@ -42,66 +92,20 @@ namespace Sample
             await Task.Delay(0);
             if (await navService.NavigateAsync(PageKeys.MainPage.ToString()))
             {
-                HideSplash();
+                if (PopupsExtensions.TryGetPopup<SplashPopup>(out var splash) && splash.IsShowing)
+                {
+                    splash.IsShowing = false;
+                }
             }
         }
 
-        public override void RegisterDependencies(IContainerBuilder container)
-        {
-            // setup custom services
-            container.Register<IViewModelResolutionStrategy, CustomViewModelResolutionStrategy>();
-            container.Register<ILocalDialogService, LocalDialogService>();
-            container.Register<ISettingsService, Services.SettingsService>();
-
-            // view models
-            container.Register<ITemplate10ViewModel, MainPageViewModel>(typeof(MainPage).ToString());
-            container.Register<ITemplate10ViewModel, DetailPageViewModel>(typeof(DetailPage).ToString());
-            container.Register<ITemplate10ViewModel, SettingsPageViewModel>(typeof(SettingsPage).ToString());
-        }
-
-        private void SetupPageKeys(IPageKeyRegistry keys)
-        {
-            keys.Add(PageKeys.MainPage.ToString(), typeof(MainPage));
-            keys.Add(PageKeys.DetailPage.ToString(), typeof(DetailPage));
-            keys.Add(PageKeys.SettingsPage.ToString(), typeof(SettingsPage));
-        }
-
-        private void SetupSettings(ISettingsService settings)
-        {
-            Template10.Settings.DefaultTheme = settings.DefaultTheme;
-            Template10.Settings.ShellBackButtonPreference = settings.ShellBackButtonPreference;
-            Template10.Settings.CacheMaxDuration = TimeSpan.FromDays(2);
-            Template10.Settings.RequireSerializableParameters = true;
-        }
-
-        private void SetupListeners(IMessengerService messenger)
-        {
-            messenger.Subscribe<UnhandledExceptionMessage>(this, m => ShowError(m.EventArgs.Exception));
-        }
-
-        private static void ShowError(Exception ex)
-        {
-            if (PopupsExtensions.TryGetPopup<SplashPopup>(out var busy))
-            {
-                busy.IsShowing = false;
-            }
-        }
-
-        // 
-
-        public static void HideSplash()
-        {
-            if (PopupsExtensions.TryGetPopup<SplashPopup>(out var pop) && pop.IsShowing)
-            {
-                pop.IsShowing = false;
-            }
-        }
+        #region handy, popup methods
 
         public static void ShowBusy(object content)
         {
             if (PopupsExtensions.TryGetPopup<BusyPopup>(out var pop))
             {
-                pop.Content.Text = content?.ToString();
+                pop.Data.Text = content?.ToString();
                 pop.IsShowing = true;
             }
         }
@@ -110,31 +114,23 @@ namespace Sample
         {
             if (PopupsExtensions.TryGetPopup<BusyPopup>(out var pop) && pop.IsShowing)
             {
-                pop.Content.Text = string.Empty;
+                pop.Data.Text = string.Empty;
                 pop.IsShowing = false;
             }
         }
+
+        #endregion  
     }
 
-    public class CustomViewModelResolutionStrategy : IViewModelResolutionStrategy
+    public class LocalViewModelResolutionStrategy : IViewModelResolutionStrategy
     {
-        static IDependencyService _dependencyService;
-
-        static CustomViewModelResolutionStrategy()
-        {
-            _dependencyService = Central.DependencyService;
-        }
-
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        public async Task<object> ResolveViewModelAsync(Type type)
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
-        {
-            return _dependencyService.Resolve<ITemplate10ViewModel>(type.ToString());
-        }
-
         public async Task<object> ResolveViewModelAsync(Page page)
+            => await ResolveViewModelAsync(page.GetType());
+
+        public async Task<object> ResolveViewModelAsync(Type type)
         {
-            return await ResolveViewModelAsync(page.GetType());
+            await Task.CompletedTask;
+            return this.Resolve<ITemplate10ViewModel>(type.ToString());
         }
     }
 }

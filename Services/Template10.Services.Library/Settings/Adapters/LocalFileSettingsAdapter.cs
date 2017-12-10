@@ -12,7 +12,10 @@ namespace Template10.Services.Settings
         public LocalFileSettingsAdapter(ISerializationService serializationService)
         {
             _helper = new FileService.FileService(serializationService);
+            SerializationService = serializationService;
         }
+
+        public ISerializationService SerializationService { get; }
 
         public LocalFileSettingsAdapter(IFileService fileService)
         {

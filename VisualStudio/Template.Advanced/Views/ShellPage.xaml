@@ -9,7 +9,8 @@
     mc:Ignorable="d">
 
     <controls:NavViewEx Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" 
-                        SettingsPageType="views:SettingsPage">
+                        SettingsPageType="views:SettingsPage" 
+                        x:Name="MainNavView" x:FieldModifier="Public">
 
         <NavigationView.HeaderTemplate>
             <DataTemplate>

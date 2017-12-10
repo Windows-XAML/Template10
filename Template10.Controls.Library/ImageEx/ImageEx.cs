@@ -47,10 +47,12 @@ namespace Template10.Controls
             DependencyProperty.Register(nameof(Stretch), typeof(Stretch),
                 typeof(ImageEx), new PropertyMetadata(Stretch.UniformToFill));
 
-        #endregion  
+        #endregion
 
+#pragma warning disable IDE1006 // Naming Styles
         Image part_imageForeground;
         Image part_imageBackground;
+#pragma warning restore IDE1006 // Naming Styles
 
         protected override void OnApplyTemplate()
         {

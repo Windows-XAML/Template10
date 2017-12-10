@@ -105,7 +105,7 @@ namespace Template10.Navigation
 
         private object SerializeParameter(object parameter)
         {
-            if (Settings.RequireSerializableParameters)
+            if (Settings.ParameterBehavior == ParameterBehaviors.Serialize)
             {
                 if (Central.Serialization.TrySerialize(parameter, out var serialized_parameter))
                 {

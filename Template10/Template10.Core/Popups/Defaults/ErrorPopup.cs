@@ -36,7 +36,7 @@ namespace Template10.Popups
         {
             Central.Messenger.Subscribe<Messages.UnhandledExceptionMessage>(this, e =>
             {
-                Content.Error = e.EventArgs.Exception;
+                Data.Error = e.EventArgs.Exception;
                 e.EventArgs.Handled = Handled;
                 IsShowing = true;
             });

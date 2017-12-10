@@ -169,6 +169,7 @@ namespace Template10.BootStrap
     {
         // methods intended for override
 
+        // public IPageKeyRegistry PageKeyRegistry => Navigation.Settings.PageKeyRegistry;
         public virtual Task OnInitializeAsync() => Task.CompletedTask;
         public virtual UIElement CreateRootElement(IStartArgsEx e) => null;
         public abstract Task OnStartAsync(IStartArgsEx e, INavigationService navService, ISessionState sessionState);
