@@ -40,7 +40,7 @@ namespace Template10.Common
                 if (delayms > 0)
                     await Task.Delay(delayms).ConfigureAwait(false);
                 var tcs = new TaskCompletionSource<T>();
-                dispatcher.RunAsync(priority, async delegate
+                await dispatcher.RunAsync(priority, async delegate
                 {
                     try
                     {
@@ -69,7 +69,7 @@ namespace Template10.Common
                 if (delayms > 0)
                     await Task.Delay(delayms).ConfigureAwait(false);
                 var tcs = new TaskCompletionSource<object>();
-                dispatcher.RunAsync(priority, delegate
+                await dispatcher.RunAsync(priority, delegate
                 {
                     try
                     {
@@ -98,7 +98,7 @@ namespace Template10.Common
                 if (delayms > 0)
                     await Task.Delay(delayms).ConfigureAwait(false);
                 var tcs = new TaskCompletionSource<object>();
-                dispatcher.RunAsync(priority, async delegate
+                await dispatcher.RunAsync(priority, async delegate
                 {
                     try
                     {
@@ -127,7 +127,7 @@ namespace Template10.Common
                 if (delayms > 0)
                     await Task.Delay(delayms).ConfigureAwait(false);
                 var tcs = new TaskCompletionSource<T>();
-                dispatcher.RunAsync(priority, delegate
+                await dispatcher.RunAsync(priority, delegate
                 {
                     try
                     {
@@ -191,7 +191,7 @@ namespace Template10.Common
                 if (delayms > 0)
                     await Task.Delay(delayms).ConfigureAwait(false);
                 var tcs = new TaskCompletionSource<object>();
-                dispatcher.RunIdleAsync(delegate
+                await dispatcher.RunIdleAsync(delegate
                 {
                     try
                     {
@@ -220,7 +220,7 @@ namespace Template10.Common
                 if (delayms > 0)
                     await Task.Delay(delayms).ConfigureAwait(false);
                 var tcs = new TaskCompletionSource<object>();
-                dispatcher.RunIdleAsync(async delegate
+                await dispatcher.RunIdleAsync(async delegate
                 {
                     try
                     {
