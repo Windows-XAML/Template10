@@ -256,6 +256,27 @@ namespace Template10.Common
             return await tcs.Task.ConfigureAwait(false);
         }
 
+        public async Task<T> DispatchIdleAsync<T>(Func<Task<T>> func, int delayms = 0)
+        {
+            if (delayms > 0)
+                await Task.Delay(delayms).ConfigureAwait(this.dispatcher.HasThreadAccess);
+
+            var tcs = new TaskCompletionSource<T>();
+            dispatcher.RunIdleAsync(async delegate
+            {
+                try
+                {
+                    var result = await func().ConfigureAwait(false);
+                    tcs.TrySetResult(result);
+                }
+                catch (Exception ex)
+                {
+                    tcs.TrySetException(ex);
+                }
+            });
+            return await tcs.Task.ConfigureAwait(false);
+        }
+
         public void DispatchIdle(Action action, int delayms = 0)
         {
             if (delayms > 0)

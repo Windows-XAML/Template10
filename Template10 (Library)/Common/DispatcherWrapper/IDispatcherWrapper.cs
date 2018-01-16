@@ -19,6 +19,7 @@ namespace Template10.Common
         Task DispatchIdleAsync(Func<Task> func, int delayms = 0);
         Task DispatchIdleAsync(Action action, int delayms = 0);
         Task<T> DispatchIdleAsync<T>(Func<T> func, int delayms = 0);
+        Task<T> DispatchIdleAsync<T>(Func<Task<T>> func, int delayms = 0);
 
         bool HasThreadAccess();
     }
