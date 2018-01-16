@@ -144,10 +144,12 @@ namespace Template10.Common
 
         public void Dispatch(Action action, int delayms = 0, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal)
         {
-            if (delayms > 0)
-                Task.Delay(delayms).ConfigureAwait(false).GetAwaiter().GetResult();
-
-            dispatcher.RunAsync(priority, () => action());
+            dispatcher.RunAsync(priority, async delegate
+			{
+				if (delayms > 0)
+					await Task.Delay(delayms).ConfigureAwait(true);
+				action();
+			});
         }
 
         public T Dispatch<T>(Func<T> action, int delayms = 0, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal)
@@ -279,10 +281,12 @@ namespace Template10.Common
 
         public void DispatchIdle(Action action, int delayms = 0)
         {
-            if (delayms > 0)
-                Task.Delay(delayms).ConfigureAwait(false).GetAwaiter().GetResult();
-
-            dispatcher.RunIdleAsync(args => action());
+            dispatcher.RunIdleAsync(async delegate
+			{
+				if (delayms > 0)
+					await Task.Delay(delayms).ConfigureAwait(true);
+				action();
+			});
         }
 
         public T DispatchIdle<T>(Func<T> action, int delayms = 0) where T : class
