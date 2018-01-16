@@ -93,7 +93,16 @@ namespace Template10.Services.NavigationService
 
             return await NavigationOrchestratorAsync(page, parameter, NavigationMode.New, () =>
             {
+                try
+                {
                 return FrameFacade.Navigate(page, serializedParameter, infoOverride);
+                }
+                catch (Exception ex)
+                {
+                    // Catch and ignore exceptions
+                    DebugWrite(ex.Message, Severities.Error);
+                    return false;
+                }
             });
         }
 
@@ -371,9 +380,18 @@ namespace Template10.Services.NavigationService
         {
             return await NavigationOrchestratorAsync(CurrentPageType, CurrentPageParam, NavigationMode.Refresh, () =>
             {
+                try
+                {
                 Windows.ApplicationModel.Resources.Core.ResourceContext.GetForCurrentView().Reset();
                 FrameFacade.SetNavigationState(FrameFacade.GetNavigationState());
                 return true;
+                }
+                catch (Exception ex)
+                {
+                    // Catch and ignore exceptions
+                    DebugWrite(ex.Message, Severities.Error);
+                    return false;
+                }
             });
         }
 
@@ -381,9 +399,18 @@ namespace Template10.Services.NavigationService
         {
             return await NavigationOrchestratorAsync(CurrentPageType, param, NavigationMode.Refresh, () =>
             {
+                try
+                {
                 Windows.ApplicationModel.Resources.Core.ResourceContext.GetForCurrentView().Reset();
                 FrameFacade.SetNavigationState(FrameFacade.GetNavigationState());
                 return true;
+                }
+                catch (Exception ex)
+                {
+                    // Catch and ignore exceptions
+                    DebugWrite(ex.Message, Severities.Error);
+                    return false;
+                }
             });
         }
 
@@ -405,8 +432,17 @@ namespace Template10.Services.NavigationService
             var parameter = SerializationService.Deserialize(previous.Parameter?.ToString());
             return await NavigationOrchestratorAsync(previous.SourcePageType, parameter, NavigationMode.Back, () =>
             {
+                try
+                {
                 FrameFacade.GoBack(infoOverride);
                 return true;
+                }
+                catch (Exception ex)
+                {
+                    // Catch and ignore exceptions
+                    DebugWrite(ex.Message, Severities.Error);
+                    return false;
+                }
             });
         }
 
@@ -428,8 +464,17 @@ namespace Template10.Services.NavigationService
             var parameter = SerializationService.Deserialize(next.Parameter?.ToString());
             return await NavigationOrchestratorAsync(next.SourcePageType, parameter, NavigationMode.Forward, () =>
             {
+                try
+                {
                 FrameFacade.GoForward();
                 return true;
+                }
+                catch (Exception ex)
+                {
+                    // Catch and ignore exceptions
+                    DebugWrite(ex.Message, Severities.Error);
+                    return false;
+                }
             });
         }
 
