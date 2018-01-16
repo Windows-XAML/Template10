@@ -153,8 +153,8 @@ namespace Template10.Services.NavigationService
 
             // this cannot be used for duplicate navigation, except for refresh
             if ((mode != NavigationMode.Refresh)
-                && (page.FullName == CurrentPageType?.GetType().FullName)
-                && (parameter?.Equals(CurrentPageParam) ?? false))
+                && (string.Equals(page.FullName, CurrentPageType?.FullName))
+                && (ReferenceEquals(parameter, CurrentPageParam) || (parameter?.Equals(CurrentPageParam) ?? false)))
             {
                 return false;
             }
