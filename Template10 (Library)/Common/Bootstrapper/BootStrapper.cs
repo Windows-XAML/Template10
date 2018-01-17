@@ -336,6 +336,11 @@ namespace Template10.Common
         /// </summary>
         public static AdditionalKinds DetermineStartCause(IActivatedEventArgs args)
         {
+            if (args == null)
+            {
+                return AdditionalKinds.Other;
+            }
+
             DebugWrite($"{nameof(IActivatedEventArgs)}:{args.Kind}");
 
             if (args is ToastNotificationActivatedEventArgs)
