@@ -524,7 +524,7 @@ namespace Template10.Common
                 SetupLifecycleListeners();
                 SetupSystemListeners();
                 SetupCustomTitleBar();
-                SetupExtendedSession();
+                await SetupExtendedSessionAsync();
 
                 await OnInitializeAsync(e);
                 CurrentState = BootstrapperStates.Initialized;
@@ -576,7 +576,7 @@ namespace Template10.Common
             }
         }
 
-        private async void SetupExtendedSession()
+        private async Task SetupExtendedSessionAsync()
         {
             var session = new ExtendedExecutionSession
             {
