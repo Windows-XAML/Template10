@@ -10,6 +10,7 @@ namespace Sample.Views
         public MainPage()
         {
             InitializeComponent();
+            DataContextChanged += (s, e) => Bindings.Update();
         }
 
         public ViewModels.MainPageViewModel ViewModel

@@ -11,98 +11,152 @@
     xmlns:local="using:Sample.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:Sample.ViewModels"
+    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d">
 
     <Page.Resources>
-        <Style TargetType="TextBox" x:Key="StandardTextBox">
+        <Style TargetType="TextBox" x:Key="ValidTextBox">
             <Setter Property="MinWidth" Value="150" />
             <Setter Property="MinHeight" Value="62" />
-        </Style>
-        <Style TargetType="TextBox" x:Key="ResizableTextBox" BasedOn="{StaticResource StandardTextBox}">
-            <Setter Property="TextWrapping" Value="Wrap" />
-            <Setter Property="AcceptsReturn" Value="True" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Grid>
+                            <TextBox 
+                                MinWidth="{TemplateBinding MinWidth}" 
+                                MinHeight="{TemplateBinding MinHeight}"
+                                Header="{TemplateBinding Header}"
+                                Style="{TemplateBinding Style}"
+                                Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                            <Grid Height="20" Width="20" Margin="0,0,8,8"
+                                  HorizontalAlignment="Right" 
+                                  VerticalAlignment="Bottom">
+                                <Ellipse Fill="Red" />
+                                <TextBlock Text="!" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="18" Padding="0,0,0,2" FontWeight="Bold" />
+                            </Grid>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>            
         </Style>
     </Page.Resources>
 
     <RelativePanel Padding="32" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-        <TextBox 
-                Margin="0,0,0,0"
-                Header="First name"
-                x:Name="FirstNameTextBox"
-                Style="{StaticResource ResizableTextBox}"
-                Text="{x:Bind ViewModel.Profile.FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+        <RelativePanel x:Name="EditorContainer">
 
-            <Interactivity:Interaction.Behaviors>
-                <Behaviors:KeyBehavior Event="KeyDown" Key="Enter">
-                    <Core:InvokeCommandAction Command="{x:Bind ViewModel.SubmitCommand}" />
-                </Behaviors:KeyBehavior>
-                <Core:EventTriggerBehavior EventName="Loaded">
-                    <Behaviors:FocusAction />
-                </Core:EventTriggerBehavior>
-            </Interactivity:Interaction.Behaviors>
+            <TextBlock 
+                Margin="0,0,0,8"
+                x:Uid="EditorHeader"
+                x:Name="EditorHeader"
+                Text="Editor" 
+                Style="{StaticResource HeaderTextBlockStyle}" />
 
-        </TextBox>
+            <TextBox Style="{StaticResource ValidTextBox}"
+                    Margin="0,0,0,0"
+                    Header="First name"
+                    x:Uid="FirstNameTextBox"
+                    x:Name="FirstNameTextBox"
+                    RelativePanel.Below="EditorHeader"
+                    Text="Test">
 
-        <Grid Height="20" Width="20" RelativePanel.AlignBottomWith="FirstNameTextBox" RelativePanel.AlignRightWith="FirstNameTextBox" Margin="0,0,8,8">
-            <Ellipse Fill="Red" />
-            <TextBlock Text="!" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="18" Padding="0,0,0,2" FontWeight="Bold" />
-        </Grid>
+                <Interactivity:Interaction.Behaviors>
+                    <Behaviors:KeyBehavior Event="KeyDown" Key="Enter">
+                        <Core:InvokeCommandAction Command="{x:Bind ViewModel.SubmitCommand}" />
+                    </Behaviors:KeyBehavior>
+                    <Core:EventTriggerBehavior EventName="Loaded">
+                        <Behaviors:FocusAction />
+                    </Core:EventTriggerBehavior>
+                </Interactivity:Interaction.Behaviors>
 
-        <TextBox 
-                Margin="8,0,0,0"
-                Header="Last name"
-                x:Name="LastNameTextBox" 
-                Style="{StaticResource StandardTextBox}"
-                Text="{Binding ViewModel.Profile.LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                RelativePanel.RightOf="FirstNameTextBox" />
+            </TextBox>
 
-        <Grid Height="20" Width="20" RelativePanel.AlignBottomWith="LastNameTextBox" RelativePanel.AlignRightWith="LastNameTextBox" Margin="0,0,8,8">
-            <Ellipse Fill="Red" />
-            <TextBlock Text="!" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="18" Padding="0,0,0,2" FontWeight="Bold" />
-        </Grid>
+            <TextBox Style="{StaticResource ValidTextBox}"
+                    Margin="8,0,0,0"
+                    Header="Last name"
+                    x:Uid="LastNameTextBox" 
+                    x:Name="LastNameTextBox" 
+                    Text="{x:Bind ViewModel.Profile.LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    RelativePanel.AlignBottomWith="FirstNameTextBox"
+                    RelativePanel.RightOf="FirstNameTextBox" />
 
-        <TextBox 
-                Margin="0,16,0,0"
-                Header="Email address"
-                x:Name="EmailTextBox" 
-                Style="{StaticResource StandardTextBox}"
-                Text="{Binding ViewModel.Profile.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                RelativePanel.AlignLeftWith="FirstNameTextBox"
-                RelativePanel.AlignRightWith="LastNameTextBox"
-                RelativePanel.Below="FirstNameTextBox" />
+            <TextBox Style="{StaticResource ValidTextBox}"
+                    Margin="0,16,0,0"
+                    Header="Email address"
+                    x:Uid="EmailTextBox" 
+                    x:Name="EmailTextBox" 
+                    Text="{x:Bind ViewModel.Profile.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    RelativePanel.AlignLeftWith="FirstNameTextBox"
+                    RelativePanel.AlignRightWith="LastNameTextBox"
+                    RelativePanel.Below="FirstNameTextBox" />
 
-        <Grid Height="20" Width="20" RelativePanel.AlignBottomWith="EmailTextBox" RelativePanel.AlignRightWith="EmailTextBox" Margin="0,0,8,8">
-            <Ellipse Fill="Red" />
-            <TextBlock Text="!" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="18" Padding="0,0,0,2" FontWeight="Bold" />
-        </Grid>
+            <TextBox Style="{StaticResource ValidTextBox}"
+                    Margin="0,16,0,0"
+                    Header="Web address"
+                    x:Uid="WebTextBox" 
+                    x:Name="WebTextBox" 
+                    Text="{x:Bind ViewModel.Profile.Web, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    RelativePanel.AlignLeftWith="FirstNameTextBox"
+                    RelativePanel.AlignRightWith="LastNameTextBox"
+                    RelativePanel.Below="EmailTextBox" />
 
-        <TextBox 
-                Margin="0,16,0,0"
-                Header="Web address"
-                x:Name="WebTextBox" 
-                Style="{StaticResource StandardTextBox}"
-                Text="{Binding ViewModel.Profile.Web, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                RelativePanel.AlignLeftWith="FirstNameTextBox"
-                RelativePanel.AlignRightWith="LastNameTextBox"
-                RelativePanel.Below="EmailTextBox" />
+            <Button 
+                    Margin="8,8,0,0" 
+                    x:Uid="SubmitButton"
+                    x:Name="SubmitButton"
+                    RelativePanel.Below="WebTextBox"
+                    RelativePanel.AlignRightWith="WebTextBox"
+                    Command="{x:Bind ViewModel.SubmitCommand}" 
+                    Content="Submit" />
 
-        <Grid Height="20" Width="20" RelativePanel.AlignBottomWith="WebTextBox" RelativePanel.AlignRightWith="WebTextBox" Margin="0,0,8,8">
-            <Ellipse Fill="Red" />
-            <TextBlock Text="!" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="18" Padding="0,0,0,2" FontWeight="Bold" />
-        </Grid>
+            <Button 
+                    Margin="0,8,0,0" 
+                    x:Uid="ClearButton"
+                    x:Name="ClearButton"
+                    RelativePanel.LeftOf="SubmitButton"
+                    RelativePanel.Below="WebTextBox"
+                    Content="Clear" />
 
-        <Button 
-                Margin="8,0,0,0"
-                RelativePanel.RightOf="WebTextBox"
-                RelativePanel.AlignBottomWith="WebTextBox"
-                Command="{x:Bind ViewModel.SubmitCommand}" 
-                Content="Submit" />
+            <TextBlock
+                    x:Name="stateTextBox"
+                    RelativePanel.Below="WebTextBox"
+                    Margin="0,16,0,0" />
 
-        <TextBlock
-                x:Name="stateTextBox"
-                RelativePanel.Below="WebTextBox"
-                Margin="0,16,0,0" />
+        </RelativePanel>
+
+        <!--<StackPanel x:Name="ViewersContainer" 
+                    Margin="32,74,0,0" Padding="32"
+                    RelativePanel.RightOf="EditorContainer">
+
+            <StackPanel.Background>
+                <SolidColorBrush Color="White" Opacity=".1" />
+            </StackPanel.Background>
+
+            <StackPanel.Resources>
+                <Thickness x:Key="ViewerItemMargin">0,0,0,30</Thickness>
+            </StackPanel.Resources>
+
+            <TextBlock 
+                Margin="0,-108,0,0"
+                Text="Review" 
+                Style="{StaticResource HeaderTextBlockStyle}" />
+
+            <toolkit:HeaderedTextBlock
+                    Margin="{StaticResource ViewerItemMargin}"
+                    Text="{x:Bind ViewModel.Profile.FirstName, Mode=OneWay}"
+                    Header="Name" />
+
+            <toolkit:HeaderedTextBlock
+                    Margin="{StaticResource ViewerItemMargin}"
+                    Header="Email address"
+                    Text="{x:Bind ViewModel.Profile.Email, Mode=OneWay}" />
+
+            <toolkit:HeaderedTextBlock
+                    Margin="{StaticResource ViewerItemMargin}"
+                    Header="Web address"
+                    Text="{x:Bind ViewModel.Profile.Web, Mode=OneWay}" />
+
+        </StackPanel>-->
 
         <!--<VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveVisualStateGroup">

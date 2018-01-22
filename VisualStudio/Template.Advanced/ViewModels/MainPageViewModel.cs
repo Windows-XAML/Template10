@@ -33,24 +33,15 @@ namespace Sample.ViewModels
 
         public async override Task OnNavigatedToAsync(INavigatedToParameters parameter)
         {
-            if (parameter.NavigationMode != NavMode.Back)
+            if (parameter.NavigationMode != NavMode.Back && !await TryLoadViewModelAsync(parameter))
             {
-                if (!await TryRestoreViewModelAsync(parameter))
-                {
-                    Profile = new Models.Profile
-                    {
-                        FirstName = "Jerry",
-                        LastName = "Nixon",
-                        Email = "jerry.nixon@microsoft.com",
-                        Web = "http://jerrynixon.com"
-                    };
-                }
+                CreateDefaultProfile();
             }
         }
 
         public async override Task OnNavigatedFromAsync(INavigatedFromParameters parameters)
         {
-            await PersistViewModelAsync(parameters);
+            await SaveViewModelAsync(parameters);
         }
 
         public async override Task<bool> CanNavigateAsync(IConfirmNavigationParameters parameters)
@@ -59,10 +50,7 @@ namespace Sample.ViewModels
             {
                 return await _dialogService.ShowAreYouSureAsync();
             }
-            else
-            {
-                return true;
-            }
+            return true;
         }
 
         private ICommand _submitCommand;
@@ -72,17 +60,19 @@ namespace Sample.ViewModels
             {
                 if (_submitCommand == null)
                 {
-                    _submitCommand = new GalaSoft.MvvmLight.Command.RelayCommand(SubmitCommandExecute);
+                    _submitCommand = new GalaSoft.MvvmLight.Command.RelayCommand(async () =>
+                    {
+                        await NavigationService.NavigateAsync(PageKeys.DetailPage.ToString());
+                    }, () =>
+                    {
+                        return true;
+                    });
                 }
                 return _submitCommand;
             }
         }
-        private async void SubmitCommandExecute()
-        {
-            await NavigationService.NavigateAsync(PageKeys.DetailPage.ToString());
-        }
 
-        private async Task<bool> TryRestoreViewModelAsync(INavigatedToParameters parameter)
+        private async Task<bool> TryLoadViewModelAsync(INavigatedToParameters parameter)
         {
             var state = parameter.ToNavigationInfo.PageState;
             var result = await state.TryGetAsync<string>(nameof(Profile));
@@ -91,17 +81,25 @@ namespace Sample.ViewModels
                 Profile = await _profileRepository.LoadAsync(result.Value);
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
-        private async Task PersistViewModelAsync(INavigatedFromParameters parameters)
+        private async Task SaveViewModelAsync(INavigatedFromParameters parameters)
         {
             var state = parameters.PageState;
             await _profileRepository.SaveAsync(Profile);
             await state.TrySetAsync(nameof(Profile), Profile.Key);
+        }
+
+        private void CreateDefaultProfile()
+        {
+            Profile = new Models.Profile
+            {
+                FirstName = "Jerry",
+                LastName = "Nixon",
+                Email = "jerry.nixon@microsoft.com",
+                Web = "http://jerrynixon.com"
+            };
         }
     }
 }
