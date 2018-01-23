@@ -10,6 +10,9 @@ namespace Prism.Navigation
     public interface INavigationParametersInteral
     {
         void AddInternalParameter(string key, object value);
+        T GetValue<T>(string key);
+        IEnumerable<T> GetValues<T>(string key);
+        bool TryGetInternalParameter<T>(string key, out T value);
     }
 
     public interface INavigationParameters
@@ -27,4 +30,5 @@ namespace Prism.Navigation
 
         object this[string key] { get; }
     }
+
 }
