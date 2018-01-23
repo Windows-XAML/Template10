@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Prism.Navigation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Windows.Foundation;
 
-namespace Prism.Navigation
+namespace Template10.Navigation
 {
     public class NavigationParameters : INavigationParameters, INavigationParametersInteral
     {
@@ -22,7 +24,7 @@ namespace Prism.Navigation
             }
             if (Uri.TryCreate(path, UriKind.Absolute, out var uri))
             {
-                var query = new Windows.Foundation.WwwFormUrlDecoder(uri.Query);
+                var query = new WwwFormUrlDecoder(uri.Query);
                 foreach (var item in query)
                 {
                     Add(item.Name, item.Value);

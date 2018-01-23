@@ -2,10 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Prism.Navigation
+namespace Template10.Navigation
 {
     public class PageRegistry : Dictionary<string, (Type Page, Type ViewModel)>
     {
+        internal PageRegistry()
+        {
+            // empty
+        }
+
         public bool TryGetPageInfoType(string path, out (Type Page, Type ViewModel) info)
         {
             try

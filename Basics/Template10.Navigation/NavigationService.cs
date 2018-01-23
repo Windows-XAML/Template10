@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Prism.Navigation;
+using System;
 using System.Collections;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 
-namespace Prism.Navigation
+namespace Template10.Navigation
 {
     public class NavigationService : INavigationServiceUwp
     {
@@ -12,7 +14,7 @@ namespace Prism.Navigation
 
         private readonly IFrameFacade _frame;
 
-        public NavigationService(Windows.UI.Xaml.Controls.Frame frame)
+        public NavigationService(Frame frame)
         {
             _frame = new FrameFacade(frame, this);
             _frame.CanGoBackChanged += (s, e) =>

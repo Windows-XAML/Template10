@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Prism.Navigation;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
-using Windows.UI.Xaml.Navigation;
 
-namespace Prism.Navigation
+namespace Template10.Navigation
 {
     public interface IFrameFacade
     {
@@ -205,7 +205,7 @@ namespace Prism.Navigation
             // navigate
 
             var failed = default(Exception);
-            NavigationFailedEventHandler handler = (s, e) =>
+            Windows.UI.Xaml.Navigation.NavigationFailedEventHandler handler = (s, e) =>
             {
                 failed = e.Exception;
             };

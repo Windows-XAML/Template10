@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Prism.Navigation;
+using System;
 
-namespace Prism.Navigation
+namespace Template10.Navigation
 {
     public class NavigationResult : INavigationResult
     {

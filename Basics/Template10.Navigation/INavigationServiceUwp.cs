@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Prism.Navigation;
+using System;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Media.Animation;
 
-namespace Prism.Navigation
+namespace Template10.Navigation
 {
     public interface INavigationServiceUwp : INavigationService
     {
