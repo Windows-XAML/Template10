@@ -652,7 +652,7 @@ namespace Template10.Controls
             Header.Visibility = opacity == 1 ? Visibility.Visible : Visibility.Collapsed;
 
             HamburgerButton.Opacity = opacity;
-            HamburgerBackground.Opacity = opacity;
+            HeaderBackground.Opacity = opacity;
             PaneContent.Opacity = opacity;
 
             // update tabstop settings
