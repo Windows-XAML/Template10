@@ -4,7 +4,7 @@ using Windows.UI.Xaml;
 
 namespace Template10.Application
 {
-    public abstract partial class Template10Application : Windows.UI.Xaml.Application
+    public abstract partial class BootStrapper : Windows.UI.Xaml.Application
     {
 #pragma warning disable CS0067 // unused events
         new event EventHandler<object> Resuming;

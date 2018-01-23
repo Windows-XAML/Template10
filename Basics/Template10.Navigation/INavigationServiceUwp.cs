@@ -1,5 +1,6 @@
 ﻿using Prism.Navigation;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Media.Animation;
 
@@ -18,5 +19,8 @@ namespace Template10.Navigation
         Task<INavigationResult> GoBackAsync(INavigationParameters parameters, NavigationTransitionInfo infoOverride);
         Task<INavigationResult> NavigateAsync(string path, INavigationParameters parameter, NavigationTransitionInfo infoOverride);
         Task<INavigationResult> NavigateAsync(Uri path, INavigationParameters parameter, NavigationTransitionInfo infoOverride);
+
+        Dictionary<string, object> SessionState { get; }
+
     }
 }

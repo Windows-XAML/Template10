@@ -11,7 +11,7 @@ namespace Template10.Application
         event LeavingBackgroundEventHandler LeavingBackground;
     }
 
-    public abstract partial class Template10Application2 : ITemplate10ApplicationEvents
+    public abstract partial class BootStrapper : ITemplate10ApplicationEvents
     {
         EventHandler<object> _resuming;
         event EventHandler<object> ITemplate10ApplicationEvents.Resuming

@@ -1,6 +1,7 @@
 ﻿using Prism.Navigation;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
@@ -22,6 +23,8 @@ namespace Template10.Navigation
             _frame.CanGoForwardChanged += (s, e) =>
                 CanGoForwardChanged?.Invoke(this, EventArgs.Empty);
         }
+
+        public Dictionary<string, object> SessionState { get; } = new Dictionary<string, object>();
 
         public async Task RefreshAsync()
             => await _frame.RefreshAsync();

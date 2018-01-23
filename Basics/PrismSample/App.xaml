@@ -1,0 +1,14 @@
+﻿<T10:BootStrapper
+    x:Class="PrismSample.App"
+    xmlns:T10="using:Template10.Application"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    RequestedTheme="Light">
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <!-- styles -->
+        </ResourceDictionary>
+    </Application.Resources>
+
+</T10:BootStrapper>

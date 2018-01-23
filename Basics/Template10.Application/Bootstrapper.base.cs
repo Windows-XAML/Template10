@@ -10,21 +10,19 @@ using Windows.UI.Xaml.Controls;
 
 namespace Template10.Application
 {
-    public interface ITemplate10Application
-    {
-        Task InitializeAsync(StartArgs args);
-        Task StartAsync(StartArgs args, StartKinds activate);
-    }
 
-    public enum StartKinds { Prelaunch, Launch, Activate, Background }
-
-    public abstract partial class Template10Application : ITemplate10Application
+    public abstract partial class BootStrapper : IBootStrapper
     {
+        private bool _hasInitializeAsync;
+
+        private static SemaphoreSlim _startSemaphore = new SemaphoreSlim(1, 1);
+
+        public virtual void Initialize(StartArgs args) { /* empty */ }
+
         public virtual Task InitializeAsync(StartArgs args) => Task.CompletedTask;
+
         public abstract Task StartAsync(StartArgs args, StartKinds activate);
 
-        private bool _hasInitializeAsync;
-        private static SemaphoreSlim _startSemaphore = new SemaphoreSlim(1, 1);
         private async Task OrchestrateAsync(StartArgs startArgs, StartKinds activate)
         {
             await _startSemaphore.WaitAsync();
@@ -33,6 +31,7 @@ namespace Template10.Application
                 if (!_hasInitializeAsync)
                 {
                     _hasInitializeAsync = true;
+                    Initialize(startArgs);
                     await InitializeAsync(startArgs);
                 }
                 await StartAsync(startArgs, activate);
