@@ -4,15 +4,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Template10.Controls"
     mc:Ignorable="d">
 
-    <NavigationView Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <controls:NavViewEx x:Name="ShellView" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <NavigationView.MenuItems>
-            <NavigationViewItem Icon="Add" Content="One" />
+            <NavigationViewItem Icon="Add" Content="Items" controls:NavViewProps.NavigationUri="/MainPage" />
             <NavigationViewItem Icon="Add" Content="Two" />
             <NavigationViewItemSeparator />
-            <NavigationViewItem Icon="Add" Content="Three" />
-            <NavigationViewItem Icon="Add" Content="Four" />
+            <NavigationViewItem Icon="Add" Content="Calendar" />
+            <NavigationViewItem Icon="Add" Content="Forum" />
         </NavigationView.MenuItems>
         <NavigationView.PaneFooter>
             <StackPanel>
@@ -20,9 +21,6 @@
                 <NavigationViewItem Icon="Flag" Content="Feedback" />
             </StackPanel>
         </NavigationView.PaneFooter>
-        <NavigationView.Content>
-            <Frame x:Name="ContentFrame" />
-        </NavigationView.Content>
-    </NavigationView>
+    </controls:NavViewEx>
 
 </Page>

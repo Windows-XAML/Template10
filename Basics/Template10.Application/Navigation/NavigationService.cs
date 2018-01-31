@@ -72,7 +72,7 @@ namespace Template10.Navigation
                 infoOverride: default(NavigationTransitionInfo));
 
         public async Task<INavigationResult> NavigateAsync(string path, INavigationParameters parameter, NavigationTransitionInfo infoOverride)
-            => await _frame.NavigateAsync(
+            => await NavigateAsync(
                 uri: new Uri(path, UriKind.RelativeOrAbsolute),
                 parameter: parameter,
                 infoOverride: infoOverride);
@@ -92,9 +92,12 @@ namespace Template10.Navigation
                 infoOverride: default(NavigationTransitionInfo));
 
         public async Task<INavigationResult> NavigateAsync(Uri uri, INavigationParameters parameter, NavigationTransitionInfo infoOverride)
-            => await _frame.NavigateAsync(
+        {
+            System.Diagnostics.Debug.WriteLine($"{nameof(NavigationService)}.{nameof(NavigateAsync)}({uri})");
+            return await _frame.NavigateAsync(
                 uri: uri,
                 parameter: parameter,
                 infoOverride: infoOverride);
+        }
     }
 }

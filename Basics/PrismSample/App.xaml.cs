@@ -1,4 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
+using PrismSample.Views;
 using Template10.Application;
 using Template10.Navigation;
 using Windows.Foundation;
@@ -6,30 +10,32 @@ using Windows.UI.Xaml;
 
 namespace PrismSample
 {
-    public enum Pages { MainPage }
-
     sealed partial class App : BootStrapper
     {
+        private ShellPage _shell;
+        private INavigationServiceUwp _navigationService;
+
         public App()
         {
             InitializeComponent();
         }
 
-        public static NavigationService NavigationService;
-
         public override void Initialize(StartArgs args)
         {
-            Window.Current.Content = new Views.ShellPage(out NavigationService);
-            NavigationService.PageRegistry.Add(Pages.MainPage.ToString(), (typeof(Views.MainPage), null));
+            Window.Current.Content = _shell = new ShellPage(out _navigationService);
+            PageNavigationRegistry.Register(nameof(MainPage), typeof(MainPage));
         }
 
         public override async Task StartAsync(StartArgs args, StartKinds activate)
         {
-            NavigationService.SessionState.Add("Identity", new object());
-            var path = new NavigationPath(Pages.MainPage.ToString(), true)
-                .AddParameter(("Value", "123"), ("Key", "234"), ("Id", "345"))
-                .AddParameter((nameof(NavigationService.SessionState), "Identity"));
-            await NavigationService.NavigateAsync(path.ToString());
+            return;
+
+            var path = NavigationPathBuilder
+                .Create(true, nameof(MainPage), ("Record", "123"))
+                .Append(nameof(MainPage), ("Record", "234"))
+                .Append(nameof(MainPage), ("Record", "345"))
+                .ToString();
+            await _navigationService.NavigateAsync(path);
         }
     }
 }

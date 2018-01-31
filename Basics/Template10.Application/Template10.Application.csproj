@@ -106,19 +106,45 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="IBootStrapper.cs" />
-    <Compile Include="IStartArgs.cs" />
-    <Compile Include="StartArgs.cs" />
-    <Compile Include="BootStrapper.base.cs" />
+    <Compile Include="Application\IBootStrapper.cs" />
+    <Compile Include="Application\IStartArgs.cs" />
+    <Compile Include="Controls\NavViewEx.cs" />
+    <Compile Include="Controls\NavViewProps.cs" />
+    <Compile Include="Navigation\Extensions.cs" />
+    <Compile Include="Navigation\FrameFacade.cs" />
+    <Compile Include="Navigation\IFrameFacade.cs" />
+    <Compile Include="Navigation\INavigationServiceUwp.cs" />
+    <Compile Include="Navigation\IPageProvider.cs" />
+    <Compile Include="Navigation\IViewModelProvider.cs" />
+    <Compile Include="Navigation\NavigationPathBuilder.cs" />
+    <Compile Include="Navigation\NavigationResult.cs" />
+    <Compile Include="Navigation\NavigationService.cs" />
+    <Compile Include="Navigation\PageNavigationInfo.cs" />
+    <Compile Include="Navigation\NavigationQueue.cs" />
+    <Compile Include="Navigation\PageNavigationRegistry.cs" />
+    <Compile Include="Navigation\PageProvider.cs" />
+    <Compile Include="Navigation\SessionState.cs" />
+    <Compile Include="Navigation\ViewModelBase.cs" />
+    <Compile Include="Navigation\ViewModelProvider.cs" />
+    <Compile Include="Prism\INavigatedAwareAsync.cs" />
+    <Compile Include="Prism\NavigationMode.cs" />
+    <Compile Include="Navigation\NavigationParameters.cs" />
+    <Compile Include="Services\GestureService.cs" />
+    <Compile Include="Services\KeyDownEventArgs.cs" />
+    <Compile Include="Application\StartArgs.cs" />
+    <Compile Include="Application\BootStrapper.base.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="BootStrapper.events.cs" />
-    <Compile Include="BootStrapper.xaml.cs" />
-    <Compile Include="StartKinds.enum.cs" />
+    <Compile Include="Application\BootStrapper.events.cs" />
+    <Compile Include="Application\BootStrapper.xaml.cs" />
+    <Compile Include="Application\StartKinds.enum.cs" />
     <EmbeddedResource Include="Properties\Template10.Application.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.0.6</Version>
+    </PackageReference>
+    <PackageReference Include="Prism.Core">
+      <Version>7.0.0.415-ci</Version>
     </PackageReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
+using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Navigation
 {
@@ -45,7 +46,7 @@ namespace Template10.Navigation
                     return true;
                 };
 
-                return await Orchestrate(
+                return await OrchestrateNavigation(
                   parameters: parameters,
                   mode: NavigationMode.Back,
                   navigate: navigate);
@@ -71,7 +72,7 @@ namespace Template10.Navigation
                     return true;
                 };
 
-                return await Orchestrate(
+                return await OrchestrateNavigation(
                     parameters: null,
                     mode: NavigationMode.Forward,
                     navigate: navigate);
@@ -92,7 +93,7 @@ namespace Template10.Navigation
                     return !_frame.BackStack.Any();
                 };
 
-                return await Orchestrate(
+                return await OrchestrateNavigation(
                     parameters: null,
                     mode: NavigationMode.Refresh,
                     navigate: navigate);
@@ -103,21 +104,35 @@ namespace Template10.Navigation
             }
         }
 
+        async Task<INavigationResult> NavigateAsync(string path, INavigationParameters parameter, NavigationTransitionInfo infoOverride)
+           => await NavigateAsync(new Uri(path, UriKind.Relative), parameter, infoOverride);
+
         public async Task<INavigationResult> NavigateAsync(Uri uri, INavigationParameters parameter, NavigationTransitionInfo infoOverride)
         {
             try
             {
-                if (uri.ToString().StartsWith("/"))
+                var queue = PageNavigationRegistry.ParsePath(uri, parameter);
+
+                if (queue.ClearBackStack)
                 {
-                    _frame.SetNavigationState((new Frame()).GetNavigationState());
+                    _frame.SetNavigationState(new Frame().GetNavigationState());
                 }
 
-                foreach (var path in uri.ToString().Split("/").Where(x => !string.IsNullOrEmpty(x)))
+                while (queue.Count > 0)
                 {
-                    var result = await NavigateAsync(
-                        path: path,
-                        parameter: parameter,
-                        infoOverride: infoOverride);
+                    var pageNavigationInfo = queue.Dequeue();
+
+                    Func<bool> navigate = () => _frame.Navigate(
+                       sourcePageType: pageNavigationInfo.Page,
+                       parameter: pageNavigationInfo.Parameters,
+                       infoOverride: infoOverride);
+
+                    Func<Task<INavigationResult>> orchestrate = async () => await OrchestrateNavigation(
+                        parameters: parameter,
+                        mode: NavigationMode.New,
+                        navigate: navigate);
+
+                    var result = await orchestrate();
 
                     if (!result.Success)
                     {
@@ -133,35 +148,21 @@ namespace Template10.Navigation
             }
         }
 
-        async Task<INavigationResult> NavigateAsync(string path, INavigationParameters parameter, NavigationTransitionInfo infoOverride)
+        private async Task<INavigationResult> OrchestrateNavigation(INavigationParameters parameters, Prism.Navigation.NavigationMode mode, Func<bool> navigate)
         {
-            if (!NavigationService.PageRegistry.TryGetPageInfoType(path, out var info))
-            {
-                return NavigationResult.Failure($"Path [{path}] failed to get info from {nameof(PageRegistry)}.");
-            }
+            // default parameters
 
-            Func<bool> navigate = () => _frame.Navigate(
-                    sourcePageType: info.Page,
-                    parameter: new NavigationParameters(path),
-                    infoOverride: infoOverride);
-
-            Func<Task<INavigationResult>> orchestrate = async () => await Orchestrate(
-                parameters: parameter,
-                mode: NavigationMode.New,
-                navigate: navigate);
-
-            return await orchestrate();
-        }
-
-        private async Task<INavigationResult> Orchestrate(INavigationParameters parameters, NavigationMode mode, Func<bool> navigate)
-        {
             parameters = parameters ?? new NavigationParameters();
             parameters.SetNavigationMode(mode);
             parameters.SetNavigationService(_navigationService);
 
+            // hold prev vm
+
+            var old_vm = (_frame.Content as Page)?.DataContext;
+
             // CanNavigateAsync
 
-            if ((_frame.Content as Page)?.DataContext is IConfirmNavigationAsync old_vm_confirma)
+            if (old_vm is IConfirmNavigationAsync old_vm_confirma)
             {
                 if (!await old_vm_confirma.CanNavigateAsync(parameters))
                 {
@@ -171,7 +172,7 @@ namespace Template10.Navigation
 
             // CanNavigate
 
-            if ((_frame.Content as Page)?.DataContext is IConfirmNavigation old_vm_confirms)
+            if (old_vm is IConfirmNavigation old_vm_confirms)
             {
                 if (!old_vm_confirms.CanNavigate(parameters))
                 {
@@ -179,56 +180,56 @@ namespace Template10.Navigation
                 }
             }
 
+            // navigate
+
+            await NavigateInternalAsync(navigate);
+
             // OnNavigatedFrom
 
-            if ((_frame.Content as Page)?.DataContext is INavigatedAware old_vm_ed)
+            if (old_vm is INavigatedAware old_vm_ed)
             {
                 old_vm_ed.OnNavigatedFrom(parameters);
             }
 
-            // navigate
+            // hold new vm
 
-            var failed = default(Exception);
-            Windows.UI.Xaml.Navigation.NavigationFailedEventHandler handler = (s, e) =>
-            {
-                failed = e.Exception;
-            };
-            _frame.NavigationFailed += handler;
-            try
-            {
-                if (!navigate())
-                {
-                    throw new Exception("False returned at FrameFacade.Orchestrate().Navigate()");
-                }
-                else if (failed != null)
-                {
-                    throw failed;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Exception raised during FrameFacade.Orchestrate().Navigate()", ex);
-            }
-            finally
-            {
-                _frame.NavigationFailed -= handler;
-            }
+            var new_vm = (_frame.Content as Page)?.DataContext;
 
             // OnNavigatingTo
 
-            if ((_frame.Content as Page)?.DataContext is INavigatingAware new_vm_ing)
+            if (new_vm is INavigatingAware new_vm_ing)
             {
                 new_vm_ing.OnNavigatingTo(parameters);
             }
 
             // OnNavigatedTo
 
-            if ((_frame.Content as Page)?.DataContext is INavigatedAware new_vm_ed)
+            if (new_vm is INavigatedAware new_vm_ed)
             {
                 new_vm_ed.OnNavigatedTo(parameters);
             }
 
+            // finally
+
             return NavigationResult.Successful();
+        }
+
+        private async Task NavigateInternalAsync(Func<bool> navigate)
+        {
+            void failed(object s, NavigationFailedEventArgs e) => throw e.Exception;
+            try
+            {
+                _frame.NavigationFailed += failed;
+                await Task.Run(navigate);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Exception in FrameFacade.NavigateInternalAsync()/navigate().", ex);
+            }
+            finally
+            {
+                _frame.NavigationFailed -= failed;
+            }
         }
     }
 }

@@ -110,23 +110,16 @@
     <Compile Include="FrameFacade.cs" />
     <Compile Include="IFrameFacade.cs" />
     <Compile Include="INavigationServiceUwp.cs" />
-    <Compile Include="NavigationParameters.cs" />
     <Compile Include="NavigationResult.cs" />
     <Compile Include="NavigationService.cs" />
-    <Compile Include="PageRegistry.cs" />
-    <Compile Include="Path.cs" />
-    <Compile Include="Prism\IConfirmNavigation.cs" />
-    <Compile Include="Prism\IConfirmNavigationAsync.cs" />
-    <Compile Include="Prism\IDestructible.cs" />
-    <Compile Include="Prism\INavigatedAware.cs" />
+    <Compile Include="PageNavigationInfo.cs" />
+    <Compile Include="PageNavigationRegistry.cs" />
+    <Compile Include="PageNavigationQueue.cs" />
     <Compile Include="Prism\INavigatedAwareAsync.cs" />
-    <Compile Include="Prism\INavigatingAware.cs" />
-    <Compile Include="Prism\INavigationAware.cs" />
-    <Compile Include="Prism\INavigationResult.cs" />
-    <Compile Include="Prism\INavigationService.cs" />
     <Compile Include="Prism\NavigationMode.cs" />
-    <Compile Include="Prism\INavigationParameters.cs" />
+    <Compile Include="Prism\NavigationParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SessionState.cs" />
     <Compile Include="ViewModelBase.cs" />
     <EmbeddedResource Include="Properties\Template10.Navigation.rd.xml" />
   </ItemGroup>
@@ -134,8 +127,13 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.0.6</Version>
     </PackageReference>
+    <PackageReference Include="Prism.Core">
+      <Version>7.0.0.415-ci</Version>
+    </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="NavigationService\" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

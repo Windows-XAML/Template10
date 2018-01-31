@@ -16,12 +16,9 @@ namespace Template10.Navigation
 
         bool CanGoForward();
         event EventHandler CanGoForwardChanged;
-        Task GoForwardAsync();
+        Task<INavigationResult> GoForwardAsync();
 
         Task<INavigationResult> NavigateAsync(string path, INavigationParameters parameter, NavigationTransitionInfo infoOverride);
         Task<INavigationResult> NavigateAsync(Uri path, INavigationParameters parameter, NavigationTransitionInfo infoOverride);
-
-        SessionState SessionState { get; }
-        PageNavigationRegistry PageRegistry { get; }
     }
 }

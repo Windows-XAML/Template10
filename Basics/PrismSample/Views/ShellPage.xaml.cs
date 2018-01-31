@@ -5,12 +5,10 @@ namespace PrismSample.Views
 {
     public sealed partial class ShellPage : Page
     {
-        private NavigationService _navigationService;
-
-        public ShellPage(out NavigationService service)
+        public ShellPage(out INavigationServiceUwp navigationService)
         {
             InitializeComponent();
-            _navigationService = service = new NavigationService(ContentFrame);
+            navigationService = ShellView.Start();
         }
     }
 }

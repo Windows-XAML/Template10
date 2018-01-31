@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Prism.Navigation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Prism.Navigation;
 using Template10.Navigation;
 
 namespace PrismSample.ViewModels
@@ -31,12 +31,12 @@ namespace PrismSample.ViewModels
         public string Value
         {
             get => _value;
-            set => Set(ref _value, value);
+            set => SetProperty(ref _value, value);
         }
 
         public async void Go()
         {
-            var path = $"nameof(MainPage)?Value={Value}";
+            var path = $"/{nameof(Views.MainPage)}?Value={Value}";
             await NavigationService.NavigateAsync(path);
         }
 

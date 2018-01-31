@@ -95,10 +95,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="NavigationPath.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
@@ -129,10 +125,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Views\MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -147,7 +139,7 @@
       <Version>6.0.6</Version>
     </PackageReference>
     <PackageReference Include="Prism.Core">
-      <Version>7.0.0.396</Version>
+      <Version>7.0.0.415-ci</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -155,11 +147,8 @@
       <Project>{9b2bf0dd-6978-4896-93bb-0f863b96d0ce}</Project>
       <Name>Template10.Application</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Template10.Navigation\Template10.Navigation.csproj">
-      <Project>{0452adc2-d13e-40a1-9be5-6dbf295178f8}</Project>
-      <Name>Template10.Navigation</Name>
-    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
