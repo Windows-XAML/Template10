@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace Template10.Controls
+namespace Prism.Windows.Controls
 {
     public partial class NavViewProps : DependencyObject
     {

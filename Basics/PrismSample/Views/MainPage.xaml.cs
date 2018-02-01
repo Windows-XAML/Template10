@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-using Template10.Navigation;
+using Prism.Windows.Navigation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -26,7 +26,7 @@ namespace PrismSample.Views
 
         private void SetupVerticalScrollBar()
         {
-            var children = Template10.Utilities.XamlUtilities.RecurseChildren(MainGridView);
+            var children = Prism.Windows.Utilities.XamlUtilities.RecurseChildren(MainGridView);
             var child = children.Single(x => x.Name == "VerticalScrollBar") as ScrollBar;
             child.Margin = new Thickness(0, 48, 0, 0);
         }

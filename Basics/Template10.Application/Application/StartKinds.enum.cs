@@ -1,4 +1,4 @@
-﻿namespace Template10.Application
+﻿namespace Prism.Windows
 {
     public enum StartKinds { Prelaunch, Launch, Activate, Background }
 }

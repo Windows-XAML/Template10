@@ -1,4 +1,5 @@
 ﻿using Prism.Navigation;
+using Prism.Ioc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,15 +7,20 @@ using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using Prism.Windows.Mvvm;
 
-namespace Template10.Navigation
+namespace Prism.Windows.Navigation
 {
-    public class NavigationQueue : Queue<NavigationInfo>
+    public class NavigationQueue : Queue<IPathInfo>
     {
-        private static PageProvider _pageProvider;
-        private static ViewModelProvider _viewModelProvider;
+        private static IMvvmLocator _locator;
 
-        public NavigationQueue(IEnumerable<NavigationInfo> collection)
+        static NavigationQueue()
+        {
+            _locator = PrismApplicationBase.Container.Resolve<IMvvmLocator>();
+        }
+
+        public NavigationQueue(IEnumerable<IPathInfo> collection)
             : base(collection.OrderBy(x => x.Index))
         {
             // empty
@@ -26,12 +32,6 @@ namespace Template10.Navigation
         {
             var prefix = ClearBackStack ? "/" : string.Empty;
             return $"{prefix}{string.Join("/", ToArray().Select(x => x.ToString()))}";
-        }
-
-        static NavigationQueue()
-        {
-            _pageProvider = new PageProvider();
-            _viewModelProvider = new ViewModelProvider();
         }
 
         public static NavigationQueue Parse(string path, INavigationParameters parameters)
@@ -75,11 +75,11 @@ namespace Template10.Navigation
             var groups = path.OriginalString
                 .Split("/")
                 .Where(x => !string.IsNullOrEmpty(x))
-                .Select((x, index) => new NavigationInfo(x, parameters)
+                .Select((x, index) => new PathInfo(x, parameters)
                 {
                     Index = index,
-                    PageType = _pageProvider.Provider?.Invoke(x.Split('?').First()),
-                    ViewModelType = _viewModelProvider.Provider?.Invoke(x.Split('?').First()),
+                    PageType = _locator.FindView?.Invoke(x.Split('?').First()),
+                    ViewModelType = _locator.FindViewModel?.Invoke(_locator.FindView?.Invoke(x.Split('?').First())),
                 });
 
             queue = new NavigationQueue(groups)

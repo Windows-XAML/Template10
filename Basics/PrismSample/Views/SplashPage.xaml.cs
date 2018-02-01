@@ -22,7 +22,7 @@ namespace PrismSample.Views
     /// </summary>
     public sealed partial class SplashPage : Page
     {
-        public SplashPage()
+        public SplashPage(Windows.ApplicationModel.Activation.SplashScreen splashScreen)
         {
             this.InitializeComponent();
         }

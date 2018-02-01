@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 
-namespace Template10.Utilities
+namespace Prism.Windows.Utilities
 {
     public static class XamlUtilities
     {

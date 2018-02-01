@@ -1,36 +1,41 @@
-﻿using System;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using PrismSample.Views;
-using Template10.Application;
-using Template10.Application.Services;
-using Template10.Navigation;
-using Windows.Foundation;
-using Windows.UI.Core;
+using Prism.Windows;
+using Prism.Windows.Navigation;
 using Windows.UI.Xaml;
+using Prism.Ioc;
+using PrismSample.ViewModels;
+using Windows.ApplicationModel.Activation;
 
 namespace PrismSample
 {
-    sealed partial class App : BootStrapper
+    sealed partial class App : PrismApplication
     {
-        private ShellPage _shell;
-
         public App()
+            : base()
         {
             InitializeComponent();
         }
 
-        public override void Initialize(StartArgs args)
+        public override void RegisterTypes(IContainerRegistry container)
         {
-            Window.Current.Content = new SplashPage();
-
-            _shell = new ShellPage();
-            NavigationRegistry.Register(nameof(MainPage), typeof(MainPage));
+            container.RegisterSingleton<ShellPage, ShellPage>();
+            container.RegisterForNavigation<MainPage, MainPageViewModel>();
         }
 
-        public override async Task StartAsync(StartArgs args, StartKinds activate)
+        public override async Task OnStartAsync(StartArgs args, StartKinds activate)
         {
+            switch (activate)
+            {
+                case StartKinds.Launch when (args.Arguments is LaunchActivatedEventArgs e):
+                    Window.Current.Content = new SplashPage(e.SplashScreen);
+                    break;
+                case StartKinds.Prelaunch:
+                case StartKinds.Activate:
+                case StartKinds.Background:
+                    break;
+            }
+
             var path = PathBuilder
                 .Create(true, nameof(MainPage), ("Record", "123"))
                 .Append(nameof(MainPage), ("Record", "234"))
@@ -38,8 +43,10 @@ namespace PrismSample
                 .Append(nameof(MainPage), ("Record", "456"))
                 .Append(nameof(MainPage), ("Record", "567"))
                 .ToString();
-            await _shell.ShellView.NavigationService.NavigateAsync(path);
-            Window.Current.Content = _shell;
+
+            var shell = Resolve<ShellPage>();
+            await shell.ShellView.NavigationService.NavigateAsync(path);
+            Window.Current.Content = shell;
         }
     }
 }

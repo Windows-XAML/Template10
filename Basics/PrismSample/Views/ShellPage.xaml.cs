@@ -1,18 +1,26 @@
-﻿using Template10.Application.Services;
-using Template10.Navigation;
+﻿using Prism.Windows.Services;
+using Prism.Windows.Navigation;
 using Windows.ApplicationModel.Core;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Prism.Windows.Services.DialogService;
 
 namespace PrismSample.Views
 {
     public sealed partial class ShellPage : Page
     {
-        public ShellPage()
+        private IGestureService _gestureService;
+        private IDialogService _dialogService;
+
+        public ShellPage(IGestureService gestureService, IDialogService dialogService)
         {
+            _gestureService = gestureService;
+            _dialogService = dialogService;
+
             InitializeComponent();
+
             ShellView.Start();
             SetupGestures();
             SetupTitleBar();
@@ -20,11 +28,11 @@ namespace PrismSample.Views
 
         private void SetupGestures()
         {
-            GestureService.BackRequested += async (s, e) => await ShellView.NavigationService.GoBackAsync();
-            GestureService.ForwardRequested += async (s, e) => await ShellView.NavigationService.GoForwardAsync();
-            GestureService.RefreshRequested += async (s, e) => await ShellView.NavigationService.RefreshAsync();
-            GestureService.MenuRequested += (s, e) => ShellView.IsPaneOpen = true;
-            GestureService.SearchRequested += (s, e) =>
+            _gestureService.BackRequested += async (s, e) => await ShellView.NavigationService.GoBackAsync();
+            _gestureService.ForwardRequested += async (s, e) => await ShellView.NavigationService.GoForwardAsync();
+            _gestureService.RefreshRequested += async (s, e) => await ShellView.NavigationService.RefreshAsync();
+            _gestureService.MenuRequested += (s, e) => ShellView.IsPaneOpen = true;
+            _gestureService.SearchRequested += (s, e) =>
             {
                 ShellView.IsPaneOpen = true;
                 ShellView.AutoSuggestBox?.Focus(FocusState.Programmatic);
@@ -49,9 +57,9 @@ namespace PrismSample.Views
             });
         }
 
-        private void ProfileItem_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        private async void ProfileItem_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            // TODO
+            await _dialogService.AlertAsync("Show user profile.");
         }
 
         private void FeedbackItem_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)

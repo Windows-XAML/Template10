@@ -4,18 +4,27 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Template10.Application.Services;
-using Template10.Navigation;
+using Prism.Windows.Services;
+using Prism.Windows.Navigation;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Prism.Windows.Mvvm;
+using Prism.Ioc;
 
-namespace Template10.Controls
+namespace Prism.Windows.Controls
 {
     public class NavViewEx : NavigationView
     {
+        private static IPageRegistry _registry;
+
+        static NavViewEx()
+        {
+            _registry = PrismApplicationBase.Container.Resolve<IPageRegistry>();
+        }
+
         public IPlatformNavigationService NavigationService { get; }
 
         private CoreDispatcher _dispatcher;
@@ -209,7 +218,7 @@ namespace Template10.Controls
         {
             // registered?
 
-            if (!NavigationRegistry.TryGetInfo(type, out var info))
+            if (!_registry.TryGetInfo(type, out var info))
             {
                 item = null;
                 return false;

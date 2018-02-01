@@ -1,0 +1,31 @@
+﻿using Prism.Navigation;
+using System;
+using System.Threading.Tasks;
+using Windows.UI.Xaml.Media.Animation;
+
+namespace Prism.Windows.Navigation
+{
+    public static partial class Extensions
+    {
+        public static Task RefreshAsync(this INavigationService service)
+            => (service as IPlatformNavigationService).RefreshAsync();
+
+        public static bool CanGoBack(this INavigationService service)
+            => (service as IPlatformNavigationService).CanGoBack();
+
+        public static Task GoBackAsync(this INavigationService service, INavigationParameters parameters, NavigationTransitionInfo infoOverride)
+            => (service as IPlatformNavigationService).RefreshAsync();
+
+        public static bool CanGoForward(this INavigationService service)
+            => (service as IPlatformNavigationService).CanGoForward();
+
+        public static Task GoForwardAsync(this INavigationService service)
+            => (service as IPlatformNavigationService).GoForwardAsync();
+
+        public static Task<INavigationResult> NavigateAsync(this INavigationService service, string path, INavigationParameters parameter, NavigationTransitionInfo infoOverride)
+            => (service as IPlatformNavigationService).GoForwardAsync();
+
+        public static Task<INavigationResult> NavigateAsync(this INavigationService service, Uri path, INavigationParameters parameter, NavigationTransitionInfo infoOverride)
+            => (service as IPlatformNavigationService).GoForwardAsync();
+    }
+}

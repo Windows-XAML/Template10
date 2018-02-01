@@ -4,12 +4,12 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 
-namespace Template10.Navigation
+namespace Prism.Windows.Navigation
 {
     public class PathBuilder
     {
         private string _value;
-        public PathBuilder(string value)
+        private PathBuilder(string value)
         {
             _value = value;
         }

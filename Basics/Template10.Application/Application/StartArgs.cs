@@ -1,6 +1,7 @@
 ﻿using Windows.ApplicationModel.Activation;
 
-namespace Template10.Application
+
+namespace Prism.Windows
 {
     public class StartArgs : IStartArgs
     {
