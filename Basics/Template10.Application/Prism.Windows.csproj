@@ -199,6 +199,22 @@
     <Compile Include="Services\Web\Default\WebApiService.cs" />
     <Compile Include="Services\Web\Default\WindowsHttpClientAdapter.cs" />
     <Compile Include="Utilities\XamlUtilities.cs" />
+    <Compile Include="Xaml.Behaviors\ChangeCursorAction.cs" />
+    <Compile Include="Xaml.Behaviors\CloseFlyoutAction.cs" />
+    <Compile Include="Xaml.Behaviors\ConditionalAction.cs" />
+    <Compile Include="Xaml.Behaviors\EllipsisBehavior.cs" />
+    <Compile Include="Xaml.Behaviors\EventTriggerBehaviorBase.cs" />
+    <Compile Include="Xaml.Behaviors\FocusAction.cs" />
+    <Compile Include="Xaml.Behaviors\KeyBehavior.cs" />
+    <Compile Include="Xaml.Behaviors\MessageDialogAction.cs" />
+    <Compile Include="Xaml.Behaviors\OpenFlyoutAction.cs" />
+    <Compile Include="Xaml.Behaviors\TextBoxEnterKeyBehavior.cs" />
+    <Compile Include="Xaml.Behaviors\ThrottledEventTriggerBehavior.cs" />
+    <Compile Include="Xaml.Behaviors\TimeoutAction.cs" />
+    <Compile Include="Xaml.Converters\ChangeTypeConverter.cs" />
+    <Compile Include="Xaml.Converters\DateTimeOffsetConverter.cs" />
+    <Compile Include="Xaml.Converters\StringFormatConverter.cs" />
+    <Compile Include="Xaml.Converters\ValueWhenConverter.cs" />
     <EmbeddedResource Include="Properties\Template10.Application.rd.xml" />
   </ItemGroup>
   <ItemGroup>
