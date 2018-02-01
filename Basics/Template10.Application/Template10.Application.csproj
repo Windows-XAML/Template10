@@ -113,7 +113,7 @@
     <Compile Include="Navigation\Extensions.cs" />
     <Compile Include="Navigation\FrameFacade.cs" />
     <Compile Include="Navigation\IFrameFacade.cs" />
-    <Compile Include="Navigation\INavigationServiceUwp.cs" />
+    <Compile Include="Navigation\INavigationService.cs" />
     <Compile Include="Providers\IPageProvider.cs" />
     <Compile Include="Providers\IViewModelProvider.cs" />
     <Compile Include="Navigation\PathBuilder.cs" />

@@ -16,9 +16,9 @@ namespace Template10.Navigation
         private readonly CoreDispatcher _dispatcher;
         public event EventHandler CanGoBackChanged;
         public event EventHandler CanGoForwardChanged;
-        private readonly INavigationServiceUwp _navigationService;
+        private readonly IPlatformNavigationService _navigationService;
 
-        internal FrameFacade(Frame frame, INavigationServiceUwp navigationService)
+        internal FrameFacade(Frame frame, IPlatformNavigationService navigationService)
         {
             _frame = frame;
             _frame.ContentTransitions = new TransitionCollection();

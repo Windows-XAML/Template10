@@ -11,7 +11,7 @@ namespace Template10.Navigation
         {
             (parameters as INavigationParametersInternal).Add(nameof(NavigationMode), mode);
         }
-        internal static void SetNavigationService(this INavigationParameters parameters, INavigationServiceUwp service)
+        internal static void SetNavigationService(this INavigationParameters parameters, IPlatformNavigationService service)
         {
             (parameters as INavigationParametersInternal).Add(nameof(NavigationService), service);
         }

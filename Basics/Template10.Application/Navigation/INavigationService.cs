@@ -6,7 +6,7 @@ using Windows.UI.Xaml.Media.Animation;
 
 namespace Template10.Navigation
 {
-    public interface INavigationServiceUwp : INavigationService
+    public interface IPlatformNavigationService : INavigationService
     {
         Task RefreshAsync();
 

@@ -9,7 +9,7 @@ using Windows.UI.Xaml.Media.Animation;
 
 namespace Template10.Navigation
 {
-    public class NavigationService : INavigationServiceUwp
+    public class NavigationService : IPlatformNavigationService
     {
         private readonly IFrameFacade _frame;
 

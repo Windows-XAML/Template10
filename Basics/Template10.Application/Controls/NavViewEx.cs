@@ -16,7 +16,7 @@ namespace Template10.Controls
 {
     public class NavViewEx : NavigationView
     {
-        public INavigationServiceUwp NavigationService { get; }
+        public IPlatformNavigationService NavigationService { get; }
 
         private CoreDispatcher _dispatcher;
 
@@ -54,7 +54,7 @@ namespace Template10.Controls
             };
         }
 
-        public INavigationServiceUwp Start()
+        public IPlatformNavigationService Start()
         {
             var first = MenuItems
                 .OfType<NavigationViewItem>()
