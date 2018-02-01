@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Template10.Navigation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -19,7 +20,24 @@ namespace PrismSample.Views
     {
         public MainPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
+            Loaded += (s, e) => SetupVerticalScrollBar();
+        }
+
+        private void SetupVerticalScrollBar()
+        {
+            var children = Template10.Utilities.XamlUtilities.RecurseChildren(MainGridView);
+            var child = children.Single(x => x.Name == "VerticalScrollBar") as ScrollBar;
+            child.Margin = new Thickness(0, 48, 0, 0);
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            if (e.TryGetParameter<int>("Record", out var value))
+            {
+                HeaderTextBlock.Text = $"Record: {value}";
+            }
+            SubHeaderTextBlock.Text = DateTime.Now.ToLongTimeString();
         }
     }
 }

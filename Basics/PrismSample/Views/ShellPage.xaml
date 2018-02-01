@@ -5,22 +5,68 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Template10.Controls"
+    xmlns:media="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     mc:Ignorable="d">
 
-    <controls:NavViewEx x:Name="ShellView" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <NavigationView.MenuItems>
-            <NavigationViewItem Icon="Add" Content="Items" controls:NavViewProps.NavigationUri="/MainPage" />
-            <NavigationViewItem Icon="Add" Content="Two" />
-            <NavigationViewItemSeparator />
-            <NavigationViewItem Icon="Add" Content="Calendar" />
-            <NavigationViewItem Icon="Add" Content="Forum" />
-        </NavigationView.MenuItems>
-        <NavigationView.PaneFooter>
-            <StackPanel>
-                <NavigationViewItem Icon="Contact" Content="Profile" />
-                <NavigationViewItem Icon="Flag" Content="Feedback" />
-            </StackPanel>
-        </NavigationView.PaneFooter>
-    </controls:NavViewEx>
+    <Page.Resources>
+        <media:AcrylicBrush x:Key="CustomAcrylicBrush" BackgroundSource="Backdrop" TintOpacity="0.5" />
+    </Page.Resources>
+
+    <Grid>
+
+        <TextBlock x:Name="AppTitle" Style="{StaticResource CaptionTextBlockStyle}" Text="{x:Bind appmodel:Package.Current.DisplayName}" 
+                   xmlns:appmodel="using:Windows.ApplicationModel" IsHitTestVisible="False" Canvas.ZIndex="1"/>
+        
+        <controls:NavViewEx x:Name="ShellView" x:FieldModifier="Public" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" PageHeaderBehavior="Behind">
+
+            <NavigationView.HeaderTemplate>
+                <DataTemplate>
+                    <Grid Background="{StaticResource CustomAcrylicBrush}">
+                        
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="140" />
+                        </Grid.ColumnDefinitions>
+
+                        <CommandBar OverflowButtonVisibility="Collapsed" Background="Transparent">
+                            <CommandBar.Content>
+                                <Grid Margin="12,5,0,11" VerticalAlignment="Stretch">
+                                    <TextBlock Text="{Binding}" Style="{StaticResource TitleTextBlockStyle}" TextWrapping="NoWrap" VerticalAlignment="Bottom"/>
+                                </Grid>
+                            </CommandBar.Content>
+                            <AppBarButton Icon="Add" />
+                        </CommandBar>
+                        
+                    </Grid>
+                </DataTemplate>
+            </NavigationView.HeaderTemplate>
+
+            <NavigationView.AutoSuggestBox>
+                <AutoSuggestBox />
+            </NavigationView.AutoSuggestBox>
+            
+            <NavigationView.MenuItems>
+                <NavigationViewItem Icon="Add" Content="Items" controls:NavViewProps.NavigationUri="/MainPage" />
+                <NavigationViewItem Icon="Add" Content="Two" />
+                <NavigationViewItemSeparator />
+                <NavigationViewItem Icon="Add" Content="Calendar" />
+                <NavigationViewItem Icon="Add" Content="Forum" />
+            </NavigationView.MenuItems>
+            
+            <NavigationView.PaneFooter>
+                <StackPanel>
+                    <NavigationViewItem Tapped="ProfileItem_Tapped">
+                        <StackPanel Orientation="Horizontal">
+                            <PersonPicture ProfilePicture="https://pbs.twimg.com/profile_images/937749470908792832/S2f8GeBy_normal.jpg" Height="18" />
+                            <TextBlock VerticalAlignment="Center" Text="Jerry Nixon" Margin="16,0,0,0" />
+                        </StackPanel>
+                    </NavigationViewItem>
+                    <NavigationViewItem Icon="Flag" Content="Feedback" Tapped="FeedbackItem_Tapped" />
+                </StackPanel>
+            </NavigationView.PaneFooter>
+            
+        </controls:NavViewEx>
+
+    </Grid>
 
 </Page>

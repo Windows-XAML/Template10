@@ -9,20 +9,27 @@ using Template10.Navigation;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Controls
 {
     public class NavViewEx : NavigationView
     {
-        private INavigationServiceUwp _navigationService;
+        public INavigationServiceUwp NavigationService { get; }
+
+        private CoreDispatcher _dispatcher;
+
+        private Frame _frame;
 
         public NavViewEx()
         {
             DefaultStyleKey = typeof(NavigationView);
 
-            Content = Frame = new Frame();
-            Frame.Navigated += (s, e) =>
+            Content = _frame = new Frame();
+            _dispatcher = _frame.Dispatcher;
+
+            _frame.Navigated += (s, e) =>
             {
                 if (TryFindItem(e.SourcePageType, out var item))
                 {
@@ -30,8 +37,8 @@ namespace Template10.Controls
                 }
             };
 
-            _navigationService = new NavigationService(Frame);
-            _navigationService.CanGoBackChanged += (s, e) =>
+            NavigationService = new NavigationService(_frame);
+            NavigationService.CanGoBackChanged += (s, e) =>
             {
                 UpdateBackButton();
             };
@@ -39,12 +46,11 @@ namespace Template10.Controls
             ItemInvoked += (s, e) => SelectedItem = (e.IsSettingsInvoked) ? SettingsItem : Find(e.InvokedItem.ToString());
             RegisterPropertyChangedCallback(IsPaneOpenProperty, (s, e) => UpdatePaneHeaders());
 
-            GestureService.BackRequested += (s, e) =>
+            Loaded += (s, e) =>
             {
-                if (Frame.CanGoBack)
-                {
-                    Frame.GoBack();
-                }
+                UpdatePaneHeaders();
+                UpdateBackButton();
+                UpdatePageHeader();
             };
         }
 
@@ -57,21 +63,20 @@ namespace Template10.Controls
             {
                 SetSelectedItem(first);
             }
-            UpdatePaneHeaders();
-            UpdateBackButton();
-            UpdatePageHeader();
-            return _navigationService;
+            return NavigationService;
         }
 
         public enum BackButtonBehaviors { Auto, Visible, Collapsed }
 
         public BackButtonBehaviors BackButtonBehavior { get; set; } = BackButtonBehaviors.Auto;
 
-        public enum PaneHeadersBehaviors { Hide, Remove, None }
+        public enum ItemHeaderBehaviors { Hide, Remove, None }
 
-        public PaneHeadersBehaviors PaneHeadersBehavior { get; set; } = PaneHeadersBehaviors.Remove;
+        public ItemHeaderBehaviors ItemHeaderBehavior { get; set; } = ItemHeaderBehaviors.Remove;
 
-        public Frame Frame { get; }
+        public enum PageHeaderBehaviors { Below, Behind, Remove }
+
+        public PageHeaderBehaviors PageHeaderBehavior { get; set; } = PageHeaderBehaviors.Below;
 
         public Uri SettingsNavigationUri { get; set; }
 
@@ -79,13 +84,7 @@ namespace Template10.Controls
 
         public new object SelectedItem
         {
-            set
-            {
-                SetSelectedItem(value);
-                UpdatePaneHeaders();
-                UpdateBackButton();
-                UpdatePageHeader();
-            }
+            set => SetSelectedItem(value);
             get => base.SelectedItem;
         }
 
@@ -103,7 +102,7 @@ namespace Template10.Controls
             {
                 if (SettingsNavigationUri != null)
                 {
-                    _navigationService.NavigateAsync(SettingsNavigationUri).RunSynchronously();
+                    await NavigationService.NavigateAsync(SettingsNavigationUri);
                     base.SelectedItem = selectedItem;
                 }
                 SettingsInvoked?.Invoke(this, EventArgs.Empty);
@@ -112,7 +111,7 @@ namespace Template10.Controls
             {
                 if (item.GetValue(NavViewProps.NavigationUriProperty) is string path)
                 {
-                    if ((await _navigationService.NavigateAsync(path)).Success)
+                    if ((await NavigationService.NavigateAsync(path)).Success)
                     {
                         base.SelectedItem = selectedItem;
                     }
@@ -126,6 +125,9 @@ namespace Template10.Controls
                     Debug.WriteLine($"{selectedItem}.{nameof(NavViewProps.NavigationUriProperty)} is not valid Uri");
                 }
             }
+            UpdatePaneHeaders();
+            UpdateBackButton();
+            UpdatePageHeader();
         }
 
         private void UpdateBackButton()
@@ -134,7 +136,7 @@ namespace Template10.Controls
             {
                 case BackButtonBehaviors.Auto:
                     SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
-                            (Frame.CanGoBack)
+                            (_frame.CanGoBack)
                             ? AppViewBackButtonVisibility.Visible
                             : AppViewBackButtonVisibility.Collapsed;
                     break;
@@ -151,17 +153,54 @@ namespace Template10.Controls
         {
             foreach (var item in MenuItems.OfType<NavigationViewItemHeader>())
             {
-                switch (PaneHeadersBehavior)
+                switch (ItemHeaderBehavior)
                 {
-                    case PaneHeadersBehaviors.Hide:
+                    case ItemHeaderBehaviors.Hide:
                         item.Opacity = IsPaneOpen ? 1 : 0;
                         break;
-                    case PaneHeadersBehaviors.Remove:
+                    case ItemHeaderBehaviors.Remove:
                         item.Visibility = IsPaneOpen ? Visibility.Visible : Visibility.Collapsed;
                         break;
-                    case PaneHeadersBehaviors.None:
+                    case ItemHeaderBehaviors.None:
                         // empty
                         break;
+                }
+            }
+        }
+
+        private void UpdatePageHeader()
+        {
+            if (_frame.Content is Page p && p.GetValue(NavViewProps.HeaderTextProperty) is string s && !string.IsNullOrEmpty(s))
+            {
+                Header = s;
+            }
+
+            var children = Utilities.XamlUtilities.RecurseChildren(this);
+            if (children.Any())
+            {
+                var child = children.Single(x => x.Name == "ContentGrid");
+                if (child is Grid grid && grid != null)
+                {
+                    var presenter = grid.Children.OfType<ContentPresenter>().Single();
+                    var header = grid.Children.OfType<ContentControl>().Single();
+                    switch (PageHeaderBehavior)
+                    {
+                        case PageHeaderBehaviors.Below:
+                            header.Visibility = Visibility.Visible;
+                            presenter.SetValue(Grid.RowProperty, 1);
+                            presenter.SetValue(Grid.RowSpanProperty, 1);
+                            presenter.SetValue(Canvas.ZIndexProperty, 0);
+                            break;
+                        case PageHeaderBehaviors.Behind:
+                            header.Visibility = Visibility.Visible;
+                            presenter.SetValue(Grid.RowProperty, 0);
+                            presenter.SetValue(Grid.RowSpanProperty, 2);
+                            presenter.SetValue(Canvas.ZIndexProperty, -1);
+                            break;
+                        case PageHeaderBehaviors.Remove:
+                            header.Visibility = Visibility.Collapsed;
+                            break;
+                    }
                 }
             }
         }
@@ -170,7 +209,7 @@ namespace Template10.Controls
         {
             // registered?
 
-            if (!PageNavigationRegistry.TryGetInfo(type, out var info))
+            if (!NavigationRegistry.TryGetInfo(type, out var info))
             {
                 item = null;
                 return false;
@@ -218,14 +257,6 @@ namespace Template10.Controls
 
             item = null;
             return false;
-        }
-
-        private void UpdatePageHeader()
-        {
-            if (Frame.Content is Page p && p.GetValue(NavViewProps.HeaderTextProperty) is string s && !string.IsNullOrEmpty(s))
-            {
-                Header = s;
-            }
         }
 
         private NavigationViewItem Find(string content)

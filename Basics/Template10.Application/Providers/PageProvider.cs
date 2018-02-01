@@ -15,7 +15,7 @@ namespace Template10.Navigation
 
         private Type DefaultProvider(string pageKey)
         {
-            if (PageNavigationRegistry.TryGetInfo(pageKey, out var info) && info.PageType != null)
+            if (NavigationRegistry.TryGetInfo(pageKey, out var info) && info.PageType != null)
             {
                 return info.PageType;
             }

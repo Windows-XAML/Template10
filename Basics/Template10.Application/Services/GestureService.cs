@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Devices.Input;
 using Windows.Foundation;
 using Windows.System;
 using Windows.UI.Core;
@@ -9,11 +11,13 @@ using Windows.UI.Xaml;
 
 namespace Template10.Application.Services
 {
+
     public static class GestureService
     {
         public static event EventHandler MenuRequested;
         public static event EventHandler BackRequested;
         public static event EventHandler SearchRequested;
+        public static event EventHandler RefreshRequested;
         public static event EventHandler ForwardRequested;
         public static event TypedEventHandler<object, KeyDownEventArgs> KeyDown;
 
@@ -21,6 +25,7 @@ namespace Template10.Application.Services
         {
             Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated += Dispatcher_AcceleratorKeyActivated;
             Window.Current.CoreWindow.PointerPressed += CoreWindow_PointerPressed;
+            SystemNavigationManager.GetForCurrentView().BackRequested += (s, e) => BackRequested?.Invoke(null, EventArgs.Empty);
         }
 
         private static void CoreWindow_PointerPressed(CoreWindow sender, PointerEventArgs e)
@@ -45,6 +50,7 @@ namespace Template10.Application.Services
             {
                 EventArgs = e
             };
+
             TestForSearchRequested(args);
             TestForMenuRequested(args);
             TestForNavigateRequested(args);
@@ -60,6 +66,7 @@ namespace Template10.Application.Services
              || (e.OnlyAlt && e.VirtualKey == VirtualKey.Back)
              || (e.OnlyAlt && e.VirtualKey == VirtualKey.Left))
             {
+                Debug.WriteLine($"{nameof(GestureService)}.{nameof(BackRequested)}");
                 BackRequested?.Invoke(null, EventArgs.Empty);
             }
             else if ((e.VirtualKey == VirtualKey.GoForward)
@@ -67,7 +74,14 @@ namespace Template10.Application.Services
              || (e.VirtualKey == VirtualKey.GamepadRightShoulder)
              || (e.OnlyAlt && e.VirtualKey == VirtualKey.Right))
             {
+                Debug.WriteLine($"{nameof(GestureService)}.{nameof(ForwardRequested)}");
                 ForwardRequested?.Invoke(null, EventArgs.Empty);
+            }
+            else if ((e.VirtualKey == VirtualKey.Refresh)
+             || (e.VirtualKey == VirtualKey.F5))
+            {
+                Debug.WriteLine($"{nameof(GestureService)}.{nameof(RefreshRequested)}");
+                RefreshRequested?.Invoke(null, EventArgs.Empty);
             }
         }
 
@@ -81,10 +95,12 @@ namespace Template10.Application.Services
                 e.Handled = true;
                 if (backPressed)
                 {
+                    Debug.WriteLine($"{nameof(GestureService)}.{nameof(BackRequested)}");
                     BackRequested?.Invoke(null, EventArgs.Empty);
                 }
                 else if (forwardPressed)
                 {
+                    Debug.WriteLine($"{nameof(GestureService)}.{nameof(ForwardRequested)}");
                     ForwardRequested?.Invoke(null, EventArgs.Empty);
                 }
             }
@@ -94,6 +110,7 @@ namespace Template10.Application.Services
         {
             if (args.VirtualKey == VirtualKey.GamepadMenu)
             {
+                Debug.WriteLine($"{nameof(GestureService)}.{nameof(MenuRequested)}");
                 MenuRequested?.Invoke(null, EventArgs.Empty);
             }
         }
@@ -102,6 +119,7 @@ namespace Template10.Application.Services
         {
             if (args.OnlyControl && args.Character.ToString().ToLower().Equals("e"))
             {
+                Debug.WriteLine($"{nameof(GestureService)}.{nameof(SearchRequested)}");
                 SearchRequested?.Invoke(null, EventArgs.Empty);
             }
         }

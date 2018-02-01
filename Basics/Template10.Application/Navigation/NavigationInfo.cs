@@ -5,17 +5,25 @@ using Windows.Foundation;
 
 namespace Template10.Navigation
 {
-    public class PageNavigationInfo
+    public class NavigationInfo
     {
         private string _originalString;
 
-        public PageNavigationInfo(string originalString, INavigationParameters parameters)
+        public string QueryString { get; }
+
+        public NavigationInfo(string originalString, INavigationParameters parameters)
         {
             _originalString = originalString;
 
             // parse name/key
 
             PageKey = originalString.Split('?').First();
+
+            var queryString = originalString.Split('?').Last();
+            if (queryString != PageKey)
+            {
+                QueryString = queryString;
+            }
 
             // parse parameters
 

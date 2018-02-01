@@ -1,4 +1,5 @@
 ﻿using System;
+using Template10.Application.Services;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.UI.Core;
@@ -25,11 +26,9 @@ namespace Template10.Application
         protected override sealed async void OnLaunched(LaunchActivatedEventArgs e) => await InternalStartAsync(new StartArgs(e), StartKinds.Launch);
         protected override sealed async void OnBackgroundActivated(BackgroundActivatedEventArgs e) => await InternalStartAsync(new StartArgs(e), StartKinds.Background);
 
-        private CoreDispatcher _dispatcher;
         protected override void OnWindowCreated(WindowCreatedEventArgs args)
         {
             base.OnWindowCreated(args);
-            _dispatcher = _dispatcher ?? args.Window.Dispatcher;
             _windowCreated?.Invoke(this, args);
         }
     }

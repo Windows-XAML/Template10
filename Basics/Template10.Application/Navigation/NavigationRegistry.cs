@@ -8,7 +8,7 @@ using Windows.Foundation;
 
 namespace Template10.Navigation
 {
-    public static class PageNavigationRegistry
+    public static class NavigationRegistry
     {
         static Dictionary<string, Type> _internal = new Dictionary<string, Type>();
 

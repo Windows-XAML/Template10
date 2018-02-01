@@ -6,15 +6,15 @@ using System.Reflection;
 
 namespace Template10.Navigation
 {
-    public class NavigationPathBuilder
+    public class PathBuilder
     {
         private string _value;
-        public NavigationPathBuilder(string value)
+        public PathBuilder(string value)
         {
             _value = value;
         }
 
-        public static NavigationPathBuilder Create(bool clear, string page, params (string Name, string Value)[] parameters)
+        public static PathBuilder Create(bool clear, string page, params (string Name, string Value)[] parameters)
         {
             if (string.IsNullOrEmpty(page))
             {
@@ -22,10 +22,10 @@ namespace Template10.Navigation
             }
             var prefix = clear ? "/" : string.Empty;
             var value = Build(prefix, page, parameters);
-            return new NavigationPathBuilder(value);
+            return new PathBuilder(value);
         }
 
-        public NavigationPathBuilder Append(string page, params (string Name, string Value)[] parameters)
+        public PathBuilder Append(string page, params (string Name, string Value)[] parameters)
         {
             if (string.IsNullOrEmpty(page))
             {

@@ -7,9 +7,17 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Template10.Navigation
+namespace Template10.Mvvm
 {
-    public abstract class ViewModelBase : Prism.Mvvm.BindableBase, INavigatedAware, INavigatedAwareAsync, INavigatingAware, IConfirmNavigationAsync, IConfirmNavigation, INotifyPropertyChanged, IDestructible
+    public abstract class ViewModelBase
+        : Prism.Mvvm.BindableBase,
+            INavigatedAware,
+            INavigatedAwareAsync,
+            INavigatingAware,
+            IConfirmNavigationAsync,
+            IConfirmNavigation,
+            INotifyPropertyChanged,
+            IDestructible
     {
         // INavigatingAware
 

@@ -18,15 +18,18 @@ namespace Template10.Navigation
         public event EventHandler CanGoForwardChanged;
         private readonly INavigationServiceUwp _navigationService;
 
-        public FrameFacade(Frame frame, INavigationServiceUwp navigationService)
+        internal FrameFacade(Frame frame, INavigationServiceUwp navigationService)
         {
             _frame = frame;
-            _dispatcher = frame.Dispatcher;
-            _navigationService = navigationService;
+            _frame.ContentTransitions = new TransitionCollection();
+            _frame.ContentTransitions.Add(new NavigationThemeTransition());
             _frame.RegisterPropertyChangedCallback(Frame.CanGoBackProperty, (s, p)
                 => CanGoBackChanged?.Invoke(this, EventArgs.Empty));
             _frame.RegisterPropertyChangedCallback(Frame.CanGoForwardProperty, (s, p)
                 => CanGoForwardChanged?.Invoke(this, EventArgs.Empty));
+
+            _dispatcher = frame.Dispatcher;
+            _navigationService = navigationService;
         }
 
         public bool CanGoBack()
@@ -43,7 +46,7 @@ namespace Template10.Navigation
                 return NavigationResult.Failure($"{nameof(CanGoBack)} is false.");
             }
 
-            return await NavigateAsync(
+            return await OrchestrateAsync(
               parameters: parameters,
               mode: Prism.Navigation.NavigationMode.Back,
               navigate: async () =>
@@ -60,7 +63,7 @@ namespace Template10.Navigation
                 return NavigationResult.Failure($"{nameof(CanGoForward)} is false.");
             }
 
-            return await NavigateAsync(
+            return await OrchestrateAsync(
                 parameters: null,
                 mode: Prism.Navigation.NavigationMode.Forward,
                 navigate: async () =>
@@ -72,13 +75,15 @@ namespace Template10.Navigation
 
         public async Task<INavigationResult> RefreshAsync()
         {
-            return await NavigateAsync(
+            return await OrchestrateAsync(
                 parameters: null,
                 mode: Prism.Navigation.NavigationMode.Refresh,
                 navigate: async () =>
                 {
-                    _frame.SetNavigationState(_frame.GetNavigationState());
-                    return !_frame.BackStack.Any();
+                    var original = _frame.BackStackDepth;
+                    var state = _frame.GetNavigationState();
+                    _frame.SetNavigationState(state);
+                    return Equals(_frame.BackStackDepth, original);
                 });
         }
 
@@ -108,11 +113,14 @@ namespace Template10.Navigation
         {
             Debug.WriteLine($"{nameof(FrameFacade)}.{nameof(NavigateAsync)}({queue})");
 
+            // clear stack, if requested
+
             if (queue.ClearBackStack)
             {
-                // create Clear()
                 _frame.SetNavigationState(new Frame().GetNavigationState());
             }
+
+            // iterate through queue
 
             while (queue.Count > 0)
             {
@@ -122,157 +130,11 @@ namespace Template10.Navigation
                     pageNavInfo: pageNavinfo,
                     infoOverride: infoOverride);
 
+                // do not continue on failure
+
                 if (!result.Success)
                 {
                     return result;
-                }
-            }
-
-            return NavigationResult.Successful();
-        }
-
-        private async Task<INavigationResult> NavigateAsync(
-            PageNavigationInfo pageNavInfo,
-            NavigationTransitionInfo infoOverride)
-        {
-            Debug.WriteLine($"{nameof(FrameFacade)}.{nameof(NavigateAsync)}({pageNavInfo})");
-
-            return await NavigateAsync(
-                parameters: pageNavInfo.Parameters,
-                mode: Prism.Navigation.NavigationMode.New,
-                navigate: async () =>
-                {
-                    if (_dispatcher.HasThreadAccess)
-                    {
-                        return _frame.Navigate(
-                          sourcePageType: pageNavInfo.PageType,
-                          parameter: pageNavInfo.Parameters,
-                          infoOverride: infoOverride);
-                    }
-                    else
-                    {
-                        var result = false;
-                        await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                        {
-                            result = _frame.Navigate(
-                              sourcePageType: pageNavInfo.PageType,
-                              parameter: pageNavInfo.Parameters,
-                              infoOverride: infoOverride);
-                        });
-                        return result;
-                    }
-                });
-        }
-
-        private async Task<INavigationResult> NavigateAsync(
-            INavigationParameters parameters,
-            Prism.Navigation.NavigationMode mode,
-            Func<Task<bool>> navigate)
-        {
-            // default parameters
-
-            parameters = CreateDefaultParameters(parameters, mode);
-
-            // hold prev vm
-
-            var old_vm = (_frame.Content as Page)?.DataContext;
-            if (old_vm == null)
-            {
-                Debug.WriteLine($"[From]View-Model is null.");
-            }
-            else
-            {
-                // CanNavigateAsync
-
-                if (old_vm is IConfirmNavigationAsync old_vm_confirma)
-                {
-                    Debug.WriteLine($"[From]{old_vm_confirma}.{nameof(IConfirmNavigationAsync)} calling.");
-                    var confirm = await old_vm_confirma.CanNavigateAsync(parameters);
-                    Debug.WriteLine($"[From]{old_vm_confirma}.{nameof(IConfirmNavigationAsync)} is {confirm}.");
-                    if (!confirm)
-                    {
-                        return NavigationResult.Failure($"[From]{old_vm_confirma}.CanNavigateAsync returned false.");
-                    }
-                }
-                else
-                {
-                    Debug.WriteLine($"[From]{nameof(IConfirmNavigationAsync)} not implemented.");
-                }
-
-                // CanNavigate
-
-                if (old_vm is IConfirmNavigation old_vm_confirms)
-                {
-                    Debug.WriteLine($"[From]{old_vm_confirms}.{nameof(IConfirmNavigation)} calling.");
-                    var confirm = old_vm_confirms.CanNavigate(parameters);
-                    Debug.WriteLine($"[From]{old_vm_confirms}.{nameof(IConfirmNavigation)} is {confirm}.");
-                    if (!confirm)
-                    {
-                        return NavigationResult.Failure($"[From]{old_vm_confirms}.CanNavigate returned false.");
-                    }
-                }
-                else
-                {
-                    Debug.WriteLine($"[From]{nameof(IConfirmNavigation)} not implemented.");
-                }
-            }
-
-            // navigate
-
-            var nav_result = await NavigateFrameAsync(navigate);
-            Debug.WriteLine($"NavigateFrameAsync returned {nav_result}.");
-            if (!nav_result)
-            {
-                return NavigationResult.Failure("Navigate() failed.");
-            }
-
-            // OnNavigatedFrom
-
-            if (old_vm != null)
-            {
-                if (old_vm is INavigatedAware old_vm_ed)
-                {
-                    Debug.WriteLine($"[From]{nameof(INavigatedAware)}.OnNavigatedFrom() calling.");
-                    old_vm_ed.OnNavigatedFrom(parameters);
-                }
-                else
-                {
-                    Debug.WriteLine($"[From]{nameof(INavigatedAware)} not implemented.");
-                }
-            }
-
-            // hold new vm
-
-            var new_vm = (_frame.Content as Page)?.DataContext;
-
-            if (new_vm == null)
-            {
-                Debug.WriteLine($"[To]View-Model is null.");
-            }
-            else
-            {
-                // OnNavigatingTo
-
-                if (new_vm is INavigatingAware new_vm_ing)
-                {
-                    Debug.WriteLine($"[To]{nameof(INavigatingAware)}.OnNavigatingTo() calling.");
-                    new_vm_ing.OnNavigatingTo(parameters);
-                }
-                else
-                {
-                    Debug.WriteLine($"[To]{nameof(INavigatingAware)} not implemented.");
-                }
-
-                // OnNavigatedTo
-
-                if (new_vm is INavigatedAware new_vm_ed)
-                {
-                    Debug.WriteLine($"[To]{nameof(INavigatedAware)}.OnNavigatedTo() calling.");
-                    new_vm_ed.OnNavigatedTo(parameters);
-                }
-                else
-                {
-                    Debug.WriteLine($"[To]{nameof(INavigatedAware)} not implemented.");
                 }
             }
 
@@ -281,16 +143,184 @@ namespace Template10.Navigation
             return NavigationResult.Successful();
         }
 
+        private async Task<INavigationResult> NavigateAsync(
+            NavigationInfo pageNavInfo,
+            NavigationTransitionInfo infoOverride)
+        {
+            Debug.WriteLine($"{nameof(FrameFacade)}.{nameof(NavigateAsync)}({pageNavInfo})");
+
+            return await OrchestrateAsync(
+                parameters: pageNavInfo.Parameters,
+                mode: Prism.Navigation.NavigationMode.New,
+                navigate: async () =>
+                {
+                    /*
+                     * To enable serialization of the frame's state using GetNavigationState, 
+                     * you must pass only basic types to this method, such as string, char, 
+                     * numeric, and GUID types. If you pass an object as a parameter, an entry 
+                     * in the frame's navigation stack holds a reference on the object until the 
+                     * frame is released or that entry is released upon a new navigation that 
+                     * diverges from the stack. In general, we discourage passing a non-basic 
+                     * type as a parameter to Navigate because it can’t be serialized when the 
+                     * application is suspended, and can consume more memory because a reference 
+                     * is held by the frame’s navigation stack to allow the application to go forward and back. 
+                     * https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Controls.Frame#Windows_UI_Xaml_Controls_Frame_Navigate_Windows_UI_Xaml_Interop_TypeName_System_Object_
+                     */
+                    var parameter = pageNavInfo.QueryString;
+                    return _frame.Navigate(
+                      sourcePageType: pageNavInfo.PageType,
+                      parameter: parameter,
+                      infoOverride: infoOverride);
+                });
+        }
+
+        private async Task<INavigationResult> OrchestrateAsync(
+            INavigationParameters parameters,
+            Prism.Navigation.NavigationMode mode,
+            Func<Task<bool>> navigate)
+        {
+            // setup default parameters
+
+            parameters = CreateDefaultParameters(parameters, mode);
+
+            // pre-events
+
+            var old_vm = (_frame.Content as Page)?.DataContext;
+            if (old_vm == null)
+            {
+                Debug.WriteLine($"[From]View-Model is null.");
+            }
+            else if (!await CanNavigateAsync(parameters, old_vm))
+            {
+                return NavigationResult.Failure($"[From]{old_vm}.CanNavigateAsync returned false.");
+            }
+            else if (!CanNavigate(parameters, old_vm))
+            {
+                return NavigationResult.Failure($"[From]{old_vm}.CanNavigate returned false.");
+            }
+
+            // navigate
+
+            var success = await NavigateFrameAsync(navigate);
+            Debug.WriteLine($"{nameof(FrameFacade)}.{nameof(OrchestrateAsync)}.NavigateFrameAsync() returned {success}.");
+            if (!success)
+            {
+                return NavigationResult.Failure("NavigateFrameAsync() returned false.");
+            }
+
+            // post-events
+
+            if (old_vm != null)
+            {
+                OnNavigatedFrom(parameters, old_vm);
+            }
+
+            var new_vm = (_frame.Content as Page)?.DataContext;
+            if (new_vm == null)
+            {
+                Debug.WriteLine($"[To]View-Model is null.");
+            }
+            else
+            {
+                OnNavigatingTo(parameters, new_vm);
+                OnNavigatedTo(parameters, new_vm);
+            }
+
+            // finally
+
+            return NavigationResult.Successful();
+        }
+
+        private static async Task<bool> CanNavigateAsync(INavigationParameters parameters, object vm)
+        {
+            Debug.WriteLine($"Calling {nameof(CanNavigateAsync)}");
+            var confirm = true;
+            if (vm is IConfirmNavigationAsync old_vm_confirma)
+            {
+                confirm = await old_vm_confirma.CanNavigateAsync(parameters);
+                Debug.WriteLine($"[From]{old_vm_confirma}.{nameof(IConfirmNavigationAsync)} is {confirm}.");
+            }
+            else
+            {
+                Debug.WriteLine($"[From]{nameof(IConfirmNavigationAsync)} not implemented.");
+            }
+            return confirm;
+        }
+
+        private static bool CanNavigate(INavigationParameters parameters, object vm)
+        {
+            Debug.WriteLine($"Calling {nameof(CanNavigate)}");
+            var confirm = true;
+            if (vm is IConfirmNavigation old_vm_confirms)
+            {
+                confirm = old_vm_confirms.CanNavigate(parameters);
+                Debug.WriteLine($"[From]{old_vm_confirms}.{nameof(IConfirmNavigation)} is {confirm}.");
+            }
+            else
+            {
+                Debug.WriteLine($"[From]{nameof(IConfirmNavigation)} not implemented.");
+            }
+            return confirm;
+        }
+
+        private static void OnNavigatedFrom(INavigationParameters parameters, object vm)
+        {
+            Debug.WriteLine($"Calling {nameof(OnNavigatedFrom)}");
+            if (vm != null)
+            {
+                if (vm is INavigatedAware old_vm_ed)
+                {
+                    old_vm_ed.OnNavigatedFrom(parameters);
+                    Debug.WriteLine($"{nameof(INavigatedAware)}.OnNavigatedFrom() called.");
+                }
+                else
+                {
+                    Debug.WriteLine($"{nameof(INavigatedAware)} not implemented.");
+                }
+            }
+        }
+
+        private static void OnNavigatingTo(INavigationParameters parameters, object vm)
+        {
+            Debug.WriteLine($"Calling {nameof(OnNavigatingTo)}");
+            if (vm is INavigatingAware new_vm_ing)
+            {
+                new_vm_ing.OnNavigatingTo(parameters);
+                Debug.WriteLine($"{nameof(INavigatingAware)}.OnNavigatingTo() called.");
+            }
+            else
+            {
+                Debug.WriteLine($"{nameof(INavigatingAware)} not implemented.");
+            }
+        }
+
+        private static void OnNavigatedTo(INavigationParameters parameters, object vm)
+        {
+            Debug.WriteLine($"Calling {nameof(OnNavigatedTo)}");
+            if (vm is INavigatedAware new_vm_ed)
+            {
+                new_vm_ed.OnNavigatedTo(parameters);
+                Debug.WriteLine($"{nameof(INavigatedAware)}.OnNavigatedTo() called.");
+            }
+            else
+            {
+                Debug.WriteLine($"{nameof(INavigatedAware)} not implemented.");
+            }
+        }
+
         private INavigationParameters CreateDefaultParameters(INavigationParameters parameters, Prism.Navigation.NavigationMode mode)
         {
             parameters = parameters ?? new NavigationParameters();
             parameters.SetNavigationMode(mode);
             parameters.SetNavigationService(_navigationService);
+            parameters.SetDispatcher(_dispatcher);
             return parameters;
         }
 
         private async Task<bool> NavigateFrameAsync(Func<Task<bool>> navigate)
         {
+            Debug.WriteLine($"{nameof(FrameFacade)}.{nameof(NavigateFrameAsync)} HasThreadAccess: {_dispatcher.HasThreadAccess}");
+
             void failedHandler(object s, NavigationFailedEventArgs e)
             {
                 throw e.Exception;
@@ -298,7 +328,20 @@ namespace Template10.Navigation
             try
             {
                 _frame.NavigationFailed += failedHandler;
-                return await Task.Run(navigate);
+
+                if (_dispatcher.HasThreadAccess)
+                {
+                    return await navigate();
+                }
+                else
+                {
+                    var result = false;
+                    await _dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                    {
+                        result = await navigate();
+                    });
+                    return result;
+                }
             }
             catch (Exception ex)
             {

@@ -9,12 +9,12 @@ using Windows.UI.Xaml.Media;
 
 namespace Template10.Navigation
 {
-    public class NavigationQueue : Queue<PageNavigationInfo>
+    public class NavigationQueue : Queue<NavigationInfo>
     {
         private static PageProvider _pageProvider;
         private static ViewModelProvider _viewModelProvider;
 
-        public NavigationQueue(IEnumerable<PageNavigationInfo> collection)
+        public NavigationQueue(IEnumerable<NavigationInfo> collection)
             : base(collection.OrderBy(x => x.Index))
         {
             // empty
@@ -75,7 +75,7 @@ namespace Template10.Navigation
             var groups = path.OriginalString
                 .Split("/")
                 .Where(x => !string.IsNullOrEmpty(x))
-                .Select((x, index) => new PageNavigationInfo(x, parameters)
+                .Select((x, index) => new NavigationInfo(x, parameters)
                 {
                     Index = index,
                     PageType = _pageProvider.Provider?.Invoke(x.Split('?').First()),

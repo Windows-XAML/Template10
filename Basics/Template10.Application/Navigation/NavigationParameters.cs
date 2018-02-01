@@ -11,7 +11,7 @@ namespace Template10.Navigation
         Dictionary<string, object> _internal = new Dictionary<string, object>();
 
         public object this[string key]
-            => _external[key];
+             => _external[key];
 
         public int Count
             => _external.Count;

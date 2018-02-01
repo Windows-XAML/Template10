@@ -5,13 +5,73 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="using:PrismSample.ViewModels"
+    xmlns:T10="using:Template10.Controls"
+    T10:NavViewProps.HeaderText="Main Page"
     mc:Ignorable="d">
 
     <Page.Resources>
         <viewmodels:MainPageViewModel x:Name="ViewModel" />
     </Page.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <GridView Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Padding="16,48,16,16" x:Name="MainGridView">
 
-    </Grid>
+        <GridView.Header>
+            <StackPanel>
+                <TextBlock Style="{StaticResource HeaderTextBlockStyle}" x:Name="HeaderTextBlock" Text="Default" Margin="16,0,0,0" />
+                <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" x:Name="SubHeaderTextBlock" Text="Default" Margin="16,0,0,8" />
+            </StackPanel>
+        </GridView.Header>
+
+        <GridView.ItemTemplate>
+            <DataTemplate>
+                <StackPanel Height="150" Background="SteelBlue" Width="250" Margin="4" Padding="16">
+                    <Border BorderBrush="White" BorderThickness="0,0,0,1">
+                        <TextBlock Text="{Binding}" Style="{StaticResource TitleTextBlockStyle}" Foreground="White" />
+                    </Border>
+                    <TextBlock TextWrapping="Wrap" Style="{StaticResource SubtitleTextBlockStyle}" Foreground="White">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, eiusmod. 
+                    </TextBlock>
+                </StackPanel>
+            </DataTemplate>
+        </GridView.ItemTemplate>
+
+        <x:String>aware</x:String>
+        <x:String>ball</x:String>
+        <x:String>dislike</x:String>
+        <x:String>crawl</x:String>
+        <x:String>scream</x:String>
+        <x:String>government</x:String>
+        <x:String>soggy</x:String>
+        <x:String>impulse</x:String>
+        <x:String>confess</x:String>
+        <x:String>needless</x:String>
+        <x:String>pocket</x:String>
+        <x:String>somber</x:String>
+        <x:String>destroy</x:String>
+        <x:String>unsightly</x:String>
+        <x:String>settle</x:String>
+        <x:String>fail</x:String>
+        <x:String>abject</x:String>
+        <x:String>wooden</x:String>
+        <x:String>abiding</x:String>
+        <x:String>allow</x:String>
+        <x:String>truculent</x:String>
+        <x:String>voice</x:String>
+        <x:String>teeth</x:String>
+        <x:String>vigorous</x:String>
+        <x:String>overrated</x:String>
+        <x:String>teeny-tiny</x:String>
+        <x:String>mask</x:String>
+        <x:String>tempt</x:String>
+        <x:String>escape</x:String>
+        <x:String>remove</x:String>
+        <x:String>clear</x:String>
+        <x:String>parched</x:String>
+        <x:String>wealth</x:String>
+        <x:String>wound</x:String>
+        <x:String>share</x:String>
+        <x:String>fumbling</x:String>
+
+    </GridView>
+
 </Page>

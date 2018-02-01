@@ -114,18 +114,18 @@
     <Compile Include="Navigation\FrameFacade.cs" />
     <Compile Include="Navigation\IFrameFacade.cs" />
     <Compile Include="Navigation\INavigationServiceUwp.cs" />
-    <Compile Include="Navigation\IPageProvider.cs" />
-    <Compile Include="Navigation\IViewModelProvider.cs" />
-    <Compile Include="Navigation\NavigationPathBuilder.cs" />
+    <Compile Include="Providers\IPageProvider.cs" />
+    <Compile Include="Providers\IViewModelProvider.cs" />
+    <Compile Include="Navigation\PathBuilder.cs" />
     <Compile Include="Navigation\NavigationResult.cs" />
     <Compile Include="Navigation\NavigationService.cs" />
-    <Compile Include="Navigation\PageNavigationInfo.cs" />
+    <Compile Include="Navigation\NavigationInfo.cs" />
     <Compile Include="Navigation\NavigationQueue.cs" />
-    <Compile Include="Navigation\PageNavigationRegistry.cs" />
-    <Compile Include="Navigation\PageProvider.cs" />
+    <Compile Include="Navigation\NavigationRegistry.cs" />
+    <Compile Include="Providers\PageProvider.cs" />
     <Compile Include="Navigation\SessionState.cs" />
-    <Compile Include="Navigation\ViewModelBase.cs" />
-    <Compile Include="Navigation\ViewModelProvider.cs" />
+    <Compile Include="Mvvm\ViewModelBase.cs" />
+    <Compile Include="Providers\ViewModelProvider.cs" />
     <Compile Include="Prism\INavigatedAwareAsync.cs" />
     <Compile Include="Prism\NavigationMode.cs" />
     <Compile Include="Navigation\NavigationParameters.cs" />
@@ -137,6 +137,7 @@
     <Compile Include="Application\BootStrapper.events.cs" />
     <Compile Include="Application\BootStrapper.xaml.cs" />
     <Compile Include="Application\StartKinds.enum.cs" />
+    <Compile Include="Utilities\XamlUtilities.cs" />
     <EmbeddedResource Include="Properties\Template10.Application.rd.xml" />
   </ItemGroup>
   <ItemGroup>
