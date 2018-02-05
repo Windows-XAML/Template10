@@ -4,9 +4,9 @@
     xmlns:controls="using:Template10.Controls">
     
     <ResourceDictionary.MergedDictionaries>
-        
-        <ResourceDictionary Source="ImageEx.xaml" />
-        <ResourceDictionary Source="NavViewEx.xaml" />
+
+        <ResourceDictionary Source="ms-appx:///Template10.Controls.Library/Themes/ImageEx.xaml" />
+        <ResourceDictionary Source="ms-appx:///Template10.Controls.Library/Themes/NavViewEx.xaml" />
         
     </ResourceDictionary.MergedDictionaries>
 
