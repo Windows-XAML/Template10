@@ -41,16 +41,24 @@ namespace PrismSample.Views
 
         private void SetupTitleBar()
         {
-            CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
-            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-            titleBar.ButtonBackgroundColor = Colors.Transparent;
-            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-            titleBar.ButtonForegroundColor = (Color)Resources["SystemBaseHighColor"];
+            var viewTitleBar = ApplicationView.GetForCurrentView().TitleBar;
+            viewTitleBar.ButtonBackgroundColor = Colors.Transparent;
+            viewTitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+            viewTitleBar.ButtonForegroundColor = (Color)Resources["SystemBaseHighColor"];
+
             var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-            coreTitleBar.LayoutMetricsChanged += (s, e) =>
+            coreTitleBar.ExtendViewIntoTitleBar = true;
+
+            void UpdateAppTitle()
             {
-                AppTitle.Margin = new Thickness(CoreApplication.GetCurrentView().TitleBar.SystemOverlayLeftInset + 12, 8, 0, 0);
-            };
+                var full = ApplicationView.GetForCurrentView().IsFullScreenMode;
+                var left = 12 + (full ? 0 : CoreApplication.GetCurrentView().TitleBar.SystemOverlayLeftInset);
+                AppTitle.Margin = new Thickness(left, 8, 0, 0);
+            }
+
+            Window.Current.CoreWindow.SizeChanged += (s, e) => UpdateAppTitle();
+            coreTitleBar.LayoutMetricsChanged += (s, e) => UpdateAppTitle();
+
             ShellView.RegisterPropertyChangedCallback(NavigationView.IsPaneOpenProperty, (s, e) =>
             {
                 AppTitle.Visibility = ShellView.IsPaneOpen ? Visibility.Visible : Visibility.Collapsed;

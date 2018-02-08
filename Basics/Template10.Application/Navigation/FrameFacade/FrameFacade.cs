@@ -1,4 +1,5 @@
 ﻿using Prism.Navigation;
+using Prism.Windows.Utilities;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -222,8 +223,16 @@ namespace Prism.Windows.Navigation
             }
             else
             {
+                await OnNavigatedToAsync(parameters, new_vm);
                 OnNavigatingTo(parameters, new_vm);
                 OnNavigatedTo(parameters, new_vm);
+            }
+
+            // refresh-bindings
+
+            if (_frame.Content is Page new_page)
+            {
+                BindingUtilities.UpdateBindings(new_page);
             }
 
             // finally
@@ -291,6 +300,20 @@ namespace Prism.Windows.Navigation
             else
             {
                 Debug.WriteLine($"{nameof(INavigatingAware)} not implemented.");
+            }
+        }
+
+        private static async Task OnNavigatedToAsync(INavigationParameters parameters, object vm)
+        {
+            Debug.WriteLine($"Calling {nameof(OnNavigatedToAsync)}");
+            if (vm is INavigatedAwareAsync new_vm_ed)
+            {
+                await new_vm_ed.OnNavigatedToAsync(parameters);
+                Debug.WriteLine($"{nameof(INavigatedAwareAsync)}.OnNavigatedToAsync() called.");
+            }
+            else
+            {
+                Debug.WriteLine($"{nameof(INavigatedAwareAsync)} not implemented.");
             }
         }
 

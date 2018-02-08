@@ -13,6 +13,9 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Prism.Windows.Mvvm;
 using Prism.Ioc;
+using System.Collections.ObjectModel;
+using Prism.Windows.Utilities;
+using Windows.UI.ViewManagement;
 
 namespace Prism.Windows.Controls
 {
@@ -52,15 +55,41 @@ namespace Prism.Windows.Controls
                 UpdateBackButton();
             };
 
-            ItemInvoked += (s, e) => SelectedItem = (e.IsSettingsInvoked) ? SettingsItem : Find(e.InvokedItem.ToString());
+            ItemInvoked += (s, e) =>
+            {
+                SelectedItem = (e.IsSettingsInvoked) ? SettingsItem : Find(e.InvokedItem.ToString());
+            };
             RegisterPropertyChangedCallback(IsPaneOpenProperty, (s, e) => UpdatePaneHeaders());
+
+            Window.Current.CoreWindow.SizeChanged += (s, e) =>
+            {
+                UpdatePageHeader();
+            };
 
             Loaded += (s, e) =>
             {
                 UpdatePaneHeaders();
                 UpdateBackButton();
                 UpdatePageHeader();
+                UpdatePageCommands();
             };
+        }
+
+        private void UpdatePageCommands()
+        {
+            //if (_frame.Content is Page page)
+            //{
+            //    var value = page.GetValue(NavViewProps.HeaderCommandsProperty);
+            //    if (value is ObservableCollection<object> list && (list?.Any() ?? false))
+            //    {
+            //        var bar = XamlUtilities.RecurseChildren(this).OfType<CommandBar>().Single();
+            //        bar.PrimaryCommands.Clear();
+            //        foreach (var item in list.OfType<ICommandBarElement>())
+            //        {
+            //            bar.PrimaryCommands.Add(item);
+            //        }
+            //    }
+            //}
         }
 
         public IPlatformNavigationService Start()
@@ -68,27 +97,25 @@ namespace Prism.Windows.Controls
             var first = MenuItems
                 .OfType<NavigationViewItem>()
                 .SingleOrDefault(x => (bool)x.GetValue(NavViewProps.IsStartPageProperty));
+
             if (first != null)
             {
                 SetSelectedItem(first);
             }
+
             return NavigationService;
         }
 
-        public enum BackButtonBehaviors { Auto, Visible, Collapsed }
-
-        public BackButtonBehaviors BackButtonBehavior { get; set; } = BackButtonBehaviors.Auto;
+        public enum BackButtonVisibilities { Auto, Visible, Collapsed }
+        public BackButtonVisibilities BackButtonVisibility { get; set; } = BackButtonVisibilities.Auto;
 
         public enum ItemHeaderBehaviors { Hide, Remove, None }
-
         public ItemHeaderBehaviors ItemHeaderBehavior { get; set; } = ItemHeaderBehaviors.Remove;
 
-        public enum PageHeaderBehaviors { Below, Behind, Remove }
-
-        public PageHeaderBehaviors PageHeaderBehavior { get; set; } = PageHeaderBehaviors.Below;
+        public enum PageHeaderBehaviors { Adjacent, Overlay, Collapsed }
+        public PageHeaderBehaviors PageHeaderBehavior { get; set; } = PageHeaderBehaviors.Adjacent;
 
         public Uri SettingsNavigationUri { get; set; }
-
         public event EventHandler SettingsInvoked;
 
         public new object SelectedItem
@@ -137,22 +164,23 @@ namespace Prism.Windows.Controls
             UpdatePaneHeaders();
             UpdateBackButton();
             UpdatePageHeader();
+            UpdatePageCommands();
         }
 
         private void UpdateBackButton()
         {
-            switch (BackButtonBehavior)
+            switch (BackButtonVisibility)
             {
-                case BackButtonBehaviors.Auto:
+                case BackButtonVisibilities.Auto:
                     SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
                             (_frame.CanGoBack)
                             ? AppViewBackButtonVisibility.Visible
                             : AppViewBackButtonVisibility.Collapsed;
                     break;
-                case BackButtonBehaviors.Visible:
+                case BackButtonVisibilities.Visible:
                     SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
                     break;
-                case BackButtonBehaviors.Collapsed:
+                case BackButtonVisibilities.Collapsed:
                     SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
                     break;
             }
@@ -184,33 +212,34 @@ namespace Prism.Windows.Controls
                 Header = s;
             }
 
-            var children = Utilities.XamlUtilities.RecurseChildren(this);
-            if (children.Any())
+            var children = XamlUtilities.RecurseChildren(this);
+            if (!children.Any())
             {
-                var child = children.Single(x => x.Name == "ContentGrid");
-                if (child is Grid grid && grid != null)
-                {
-                    var presenter = grid.Children.OfType<ContentPresenter>().Single();
-                    var header = grid.Children.OfType<ContentControl>().Single();
-                    switch (PageHeaderBehavior)
-                    {
-                        case PageHeaderBehaviors.Below:
-                            header.Visibility = Visibility.Visible;
-                            presenter.SetValue(Grid.RowProperty, 1);
-                            presenter.SetValue(Grid.RowSpanProperty, 1);
-                            presenter.SetValue(Canvas.ZIndexProperty, 0);
-                            break;
-                        case PageHeaderBehaviors.Behind:
-                            header.Visibility = Visibility.Visible;
-                            presenter.SetValue(Grid.RowProperty, 0);
-                            presenter.SetValue(Grid.RowSpanProperty, 2);
-                            presenter.SetValue(Canvas.ZIndexProperty, -1);
-                            break;
-                        case PageHeaderBehaviors.Remove:
-                            header.Visibility = Visibility.Collapsed;
-                            break;
-                    }
-                }
+                return;
+            }
+
+            var grids = children.OfType<Grid>();
+            var grid = grids.Single(x => x.Name == "ContentGrid");
+            var content = grid.Children.OfType<ContentPresenter>().Single();
+            var header = grid.Children.OfType<ContentControl>().Single();
+
+            switch (PageHeaderBehavior)
+            {
+                case PageHeaderBehaviors.Adjacent:
+                    header.Visibility = Visibility.Visible;
+                    content.SetValue(Grid.RowProperty, 1);
+                    content.SetValue(Grid.RowSpanProperty, 1);
+                    content.SetValue(Canvas.ZIndexProperty, 0);
+                    break;
+                case PageHeaderBehaviors.Overlay:
+                    header.Visibility = Visibility.Visible;
+                    content.SetValue(Grid.RowProperty, 0);
+                    content.SetValue(Grid.RowSpanProperty, 3);
+                    content.SetValue(Canvas.ZIndexProperty, -1);
+                    break;
+                case PageHeaderBehaviors.Collapsed:
+                    header.Visibility = Visibility.Collapsed;
+                    break;
             }
         }
 

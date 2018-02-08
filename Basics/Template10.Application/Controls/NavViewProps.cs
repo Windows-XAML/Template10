@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -39,12 +40,20 @@ namespace Prism.Windows.Controls
 
         // Page custom HeaderText property
 
-        public static IEnumerable<ICommandBarElement> GetHeaderCommands(Page obj)
-            => (IEnumerable<ICommandBarElement>)obj.GetValue(HeaderCommandsProperty);
-        public static void SetHeaderCommands(Page obj, IEnumerable<ICommandBarElement> value)
+        public static ObservableCollection<object> GetHeaderCommands(Page obj)
+        {
+            var value = (ObservableCollection<object>)obj.GetValue(HeaderCommandsProperty);
+            if (value == null)
+            {
+                value = new ObservableCollection<object>();
+            }
+            return value;
+        }
+        public static void SetHeaderCommands(Page obj, ObservableCollection<object> value)
             => obj.SetValue(HeaderCommandsProperty, value);
         public static readonly DependencyProperty HeaderCommandsProperty =
             DependencyProperty.RegisterAttached("HeaderCommands",
-                typeof(IEnumerable<ICommandBarElement>), typeof(NavViewProps), new PropertyMetadata(null));
+                typeof(ObservableCollection<object>),
+                typeof(NavViewProps), new PropertyMetadata(null));
     }
 }

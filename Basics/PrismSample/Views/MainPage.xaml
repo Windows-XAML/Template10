@@ -2,34 +2,65 @@
     x:Class="PrismSample.Views.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Prism.Windows.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="using:PrismSample.ViewModels"
-    xmlns:T10="using:Prism.Windows.Controls"
-    T10:NavViewProps.HeaderText="Main Page"
     mc:Ignorable="d">
+
+    <controls:NavViewProps.HeaderText>
+        <x:String>Main Page</x:String>
+    </controls:NavViewProps.HeaderText>
+
+    <controls:NavViewProps.HeaderCommands>
+        <AppBarButton Icon="Accept" Label="Accept" />
+        <AppBarButton Icon="Account" Label="Account" />
+        <AppBarButton Icon="Add" Label="Add" />
+    </controls:NavViewProps.HeaderCommands>
 
     <Page.Resources>
         <viewmodels:MainPageViewModel x:Name="ViewModel" />
     </Page.Resources>
 
-    <GridView Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Padding="16,48,16,16" x:Name="MainGridView">
+    <GridView
+        x:Name="MainGridView"
+        Padding="16,84,16,16"
+        Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
         <GridView.Header>
             <StackPanel>
-                <TextBlock Style="{StaticResource HeaderTextBlockStyle}" x:Name="HeaderTextBlock" Text="Default" Margin="16,0,0,0" />
-                <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" x:Name="SubHeaderTextBlock" Text="Default" Margin="16,0,0,8" />
+                <TextBlock
+                    x:Name="HeaderTextBlock"
+                    Margin="16,0,0,0"
+                    Style="{StaticResource HeaderTextBlockStyle}"
+                    Text="Default" />
+                <TextBlock
+                    x:Name="SubHeaderTextBlock"
+                    Margin="16,0,0,8"
+                    Style="{StaticResource SubheaderTextBlockStyle}"
+                    Text="Default" />
             </StackPanel>
         </GridView.Header>
 
         <GridView.ItemTemplate>
             <DataTemplate>
-                <StackPanel Height="150" Background="SteelBlue" Width="250" Margin="4" Padding="16">
+                <StackPanel
+                    Width="250"
+                    Height="150"
+                    Margin="4"
+                    Padding="16"
+                    Background="SteelBlue">
                     <Border BorderBrush="White" BorderThickness="0,0,0,1">
-                        <TextBlock Text="{Binding}" Style="{StaticResource TitleTextBlockStyle}" Foreground="White" />
+                        <TextBlock
+                            Foreground="White"
+                            Style="{StaticResource TitleTextBlockStyle}"
+                            Text="{Binding}" />
                     </Border>
-                    <TextBlock TextWrapping="Wrap" Style="{StaticResource SubtitleTextBlockStyle}" Foreground="White">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, eiusmod. 
+                    <TextBlock
+                        Foreground="White"
+                        Style="{StaticResource SubtitleTextBlockStyle}"
+                        TextWrapping="Wrap">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, eiusmod.
                     </TextBlock>
                 </StackPanel>
             </DataTemplate>

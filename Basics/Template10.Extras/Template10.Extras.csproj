@@ -4,15 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C929DB99-B5C8-4C38-85A7-6CF130E42451}</ProjectGuid>
+    <ProjectGuid>{9BB18D4B-BCDD-43C9-A7C2-416D13DD39A6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Prism.Unity.Windows</RootNamespace>
-    <AssemblyName>Prism.Unity.Windows</AssemblyName>
+    <RootNamespace>Template10</RootNamespace>
+    <AssemblyName>Template10.Extras</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.16299.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
+    <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -106,31 +106,13 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="NewtonsoftSerializationService.cs" />
-    <Compile Include="PrismApplication.cs" />
-    <Compile Include="UnityContainerExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\Prism.Unity.Windows.rd.xml" />
+    <EmbeddedResource Include="Properties\Template10.Extras.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.0.6</Version>
     </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>11.0.1-beta3</Version>
-    </PackageReference>
-    <PackageReference Include="Prism.Core">
-      <Version>7.0.0.423-ci</Version>
-    </PackageReference>
-    <PackageReference Include="Unity">
-      <Version>5.5.6</Version>
-    </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Template10.Application\Prism.Windows.csproj">
-      <Project>{9b2bf0dd-6978-4896-93bb-0f863b96d0ce}</Project>
-      <Name>Prism.Windows</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

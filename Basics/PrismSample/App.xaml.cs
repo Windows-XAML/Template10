@@ -12,7 +12,6 @@ namespace PrismSample
     sealed partial class App : PrismApplication
     {
         public App()
-            : base()
         {
             InitializeComponent();
         }

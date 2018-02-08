@@ -1,13 +1,12 @@
 ﻿<prism:PrismApplication
     x:Class="PrismSample.App"
-    xmlns:local="using:PrismSample"
-    xmlns:prism="using:Prism.Windows"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:prism="using:Prism.Windows">
 
     <Application.Resources>
         <ResourceDictionary>
-            <!-- styles -->
+            <!--  styles  -->
         </ResourceDictionary>
     </Application.Resources>
 

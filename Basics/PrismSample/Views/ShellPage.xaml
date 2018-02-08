@@ -2,41 +2,58 @@
     x:Class="PrismSample.Views.ShellPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Prism.Windows.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="using:Prism.Windows.Controls"
-    xmlns:media="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     mc:Ignorable="d">
-
-    <Page.Resources>
-        <media:AcrylicBrush x:Key="CustomAcrylicBrush" BackgroundSource="Backdrop" TintOpacity="0.5" />
-    </Page.Resources>
 
     <Grid>
 
-        <TextBlock x:Name="AppTitle" Style="{StaticResource CaptionTextBlockStyle}" Text="{x:Bind appmodel:Package.Current.DisplayName}" 
-                   xmlns:appmodel="using:Windows.ApplicationModel" IsHitTestVisible="False" Canvas.ZIndex="1"/>
-        
-        <controls:NavViewEx x:Name="ShellView" x:FieldModifier="Public" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" PageHeaderBehavior="Behind">
+        <TextBlock
+            xmlns:appmodel="using:Windows.ApplicationModel"
+            x:Name="AppTitle"
+            Canvas.ZIndex="1"
+            IsHitTestVisible="False"
+            Style="{StaticResource CaptionTextBlockStyle}"
+            Text="{x:Bind appmodel:Package.Current.DisplayName}" />
+
+        <controls:NavViewEx
+            x:Name="ShellView"
+            x:FieldModifier="Public"
+            Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+            PageHeaderBehavior="Overlay">
 
             <NavigationView.HeaderTemplate>
                 <DataTemplate>
-                    <Grid Background="{StaticResource CustomAcrylicBrush}">
-                        
+                    <Grid Padding="0,32,0,0">
+
+                        <Grid.Background>
+                            <AcrylicBrush BackgroundSource="Backdrop" TintOpacity="0.5" />
+                        </Grid.Background>
+
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
-                            <ColumnDefinition Width="140" />
+                            <ColumnDefinition Width="0" />
                         </Grid.ColumnDefinitions>
 
-                        <CommandBar OverflowButtonVisibility="Collapsed" Background="Transparent">
+                        <CommandBar Background="Transparent" OverflowButtonVisibility="Collapsed">
                             <CommandBar.Content>
                                 <Grid Margin="12,5,0,11" VerticalAlignment="Stretch">
-                                    <TextBlock Text="{Binding}" Style="{StaticResource TitleTextBlockStyle}" TextWrapping="NoWrap" VerticalAlignment="Bottom"/>
+                                    <TextBlock
+                                        VerticalAlignment="Bottom"
+                                        Style="{StaticResource TitleTextBlockStyle}"
+                                        Text="{Binding}"
+                                        TextWrapping="NoWrap" />
                                 </Grid>
                             </CommandBar.Content>
-                            <AppBarButton Icon="Add" />
+                            <AppBarButton Icon="Back" />
+                            <AppBarButton Icon="AlignCenter" />
+                            <AppBarButton Icon="Admin" />
+                            <AppBarButton Icon="Contact" />
+                            <AppBarButton Icon="Accept" />
+                            <AppBarButton Icon="Delete" />
                         </CommandBar>
-                        
+
                     </Grid>
                 </DataTemplate>
             </NavigationView.HeaderTemplate>
@@ -44,27 +61,36 @@
             <NavigationView.AutoSuggestBox>
                 <AutoSuggestBox />
             </NavigationView.AutoSuggestBox>
-            
+
             <NavigationView.MenuItems>
-                <NavigationViewItem Icon="Add" Content="Items" controls:NavViewProps.NavigationUri="/MainPage" />
-                <NavigationViewItem Icon="Add" Content="Two" />
+                <NavigationViewItem
+                    controls:NavViewProps.NavigationUri="/MainPage"
+                    Content="Items"
+                    Icon="Add" />
+                <NavigationViewItem Content="Two" Icon="Add" />
                 <NavigationViewItemSeparator />
-                <NavigationViewItem Icon="Add" Content="Calendar" />
-                <NavigationViewItem Icon="Add" Content="Forum" />
+                <NavigationViewItem Content="Calendar" Icon="Add" />
+                <NavigationViewItem Content="Forum" Icon="Add" />
             </NavigationView.MenuItems>
-            
+
             <NavigationView.PaneFooter>
                 <StackPanel>
                     <NavigationViewItem Tapped="ProfileItem_Tapped">
                         <StackPanel Orientation="Horizontal">
-                            <PersonPicture ProfilePicture="https://pbs.twimg.com/profile_images/937749470908792832/S2f8GeBy_normal.jpg" Height="18" />
-                            <TextBlock VerticalAlignment="Center" Text="Jerry Nixon" Margin="16,0,0,0" />
+                            <PersonPicture Height="18" ProfilePicture="https://pbs.twimg.com/profile_images/937749470908792832/S2f8GeBy_normal.jpg" />
+                            <TextBlock
+                                Margin="16,0,0,0"
+                                VerticalAlignment="Center"
+                                Text="Jerry Nixon" />
                         </StackPanel>
                     </NavigationViewItem>
-                    <NavigationViewItem Icon="Flag" Content="Feedback" Tapped="FeedbackItem_Tapped" />
+                    <NavigationViewItem
+                        Content="Feedback"
+                        Icon="Flag"
+                        Tapped="FeedbackItem_Tapped" />
                 </StackPanel>
             </NavigationView.PaneFooter>
-            
+
         </controls:NavViewEx>
 
     </Grid>
