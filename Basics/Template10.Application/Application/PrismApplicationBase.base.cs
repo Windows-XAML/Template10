@@ -111,16 +111,27 @@ namespace Prism.Windows
             {
                 Window.Current.Activate();
 
-                Debug.WriteLine($"{nameof(PrismApplicationBase)}.{nameof(InternalStartAsync)}.{nameof(OnStart)}({startArgs.Arguments}, {activate})");
-                OnStart(startArgs, activate);
+                try
+                {
+                    Debug.WriteLine($"{nameof(PrismApplicationBase)}.{nameof(InternalStartAsync)}.{nameof(OnStart)}({startArgs.Arguments}, {activate})");
+                    OnStart(startArgs, activate);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"{nameof(PrismApplicationBase)}.{nameof(InternalStartAsync)} exception: {ex}/{ex.Message})");
+                    Debugger.Break();
+                }
 
-                Debug.WriteLine($"{nameof(PrismApplicationBase)}.{nameof(InternalStartAsync)}.{nameof(OnStartAsync)}({startArgs.Arguments}, {activate})");
-                await OnStartAsync(startArgs, activate);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"{nameof(PrismApplicationBase)}.{nameof(InternalStartAsync)} exception: {ex}/{ex.Message})");
-                Debugger.Break();
+                try
+                {
+                    Debug.WriteLine($"{nameof(PrismApplicationBase)}.{nameof(InternalStartAsync)}.{nameof(OnStartAsync)}({startArgs.Arguments}, {activate})");
+                    await OnStartAsync(startArgs, activate);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"{nameof(PrismApplicationBase)}.{nameof(OnStartAsync)} exception: {ex}/{ex.Message})");
+                    Debugger.Break();
+                }
             }
             finally
             {

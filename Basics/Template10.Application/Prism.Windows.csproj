@@ -151,9 +151,9 @@
     <Compile Include="Services\File\Abstractions\IFileService.cs" />
     <Compile Include="Services\File\Abstractions\StorageStrategies.enum.cs" />
     <Compile Include="Services\File\Default\FileService.cs" />
-    <Compile Include="Services\GestureService\GestureService.cs" />
-    <Compile Include="Services\GestureService\IGestureService.cs" />
-    <Compile Include="Services\GestureService\KeyDownEventArgs.cs" />
+    <Compile Include="Services\Gesture\GestureService.cs" />
+    <Compile Include="Services\Gesture\IGestureService.cs" />
+    <Compile Include="Services\Gesture\KeyDownEventArgs.cs" />
     <Compile Include="Application\StartArgs.cs" />
     <Compile Include="Application\PrismApplicationBase.base.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

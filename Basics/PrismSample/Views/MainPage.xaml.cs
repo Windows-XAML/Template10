@@ -21,14 +21,6 @@ namespace PrismSample.Views
         public MainPage()
         {
             InitializeComponent();
-            Loaded += (s, e) => SetupVerticalScrollBar();
-        }
-
-        private void SetupVerticalScrollBar()
-        {
-            var children = Prism.Windows.Utilities.XamlUtilities.RecurseChildren(MainGridView);
-            var child = children.Single(x => x.Name == "VerticalScrollBar") as ScrollBar;
-            child.Margin = new Thickness(0, 48, 0, 0);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

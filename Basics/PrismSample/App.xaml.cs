@@ -6,6 +6,7 @@ using Windows.UI.Xaml;
 using Prism.Ioc;
 using PrismSample.ViewModels;
 using Windows.ApplicationModel.Activation;
+using PrismSample.Services;
 
 namespace PrismSample
 {
@@ -19,6 +20,7 @@ namespace PrismSample
         public override void RegisterTypes(IContainerRegistry container)
         {
             container.RegisterSingleton<ShellPage, ShellPage>();
+            container.RegisterSingleton<IDataService, DataService>();
             container.RegisterForNavigation<MainPage, MainPageViewModel>();
         }
 

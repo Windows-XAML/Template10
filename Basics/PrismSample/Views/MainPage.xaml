@@ -19,13 +19,36 @@
     </controls:NavViewProps.HeaderCommands>
 
     <Page.Resources>
-        <viewmodels:MainPageViewModel x:Name="ViewModel" />
+        <DataTemplate x:Key="GridViewItemTemplate">
+            <StackPanel
+                Width="250"
+                Height="150"
+                Margin="4"
+                Padding="16">
+                <StackPanel.Background>
+                    <SolidColorBrush Opacity=".05" Color="White" />
+                </StackPanel.Background>
+                <Border BorderBrush="White" BorderThickness="0,0,0,1">
+                    <TextBlock
+                        Foreground="White"
+                        Style="{StaticResource TitleTextBlockStyle}"
+                        Text="{Binding Title}" />
+                </Border>
+                <TextBlock
+                    Foreground="White"
+                    Style="{StaticResource SubtitleTextBlockStyle}"
+                    Text="{Binding Text}"
+                    TextWrapping="Wrap" />
+            </StackPanel>
+        </DataTemplate>
     </Page.Resources>
 
     <GridView
         x:Name="MainGridView"
-        Padding="16,84,16,16"
-        Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        Padding="16,16,16,16"
+        Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+        ItemTemplate="{StaticResource GridViewItemTemplate}"
+        ItemsSource="{Binding Items}">
 
         <GridView.Header>
             <StackPanel>
@@ -41,67 +64,6 @@
                     Text="Default" />
             </StackPanel>
         </GridView.Header>
-
-        <GridView.ItemTemplate>
-            <DataTemplate>
-                <StackPanel
-                    Width="250"
-                    Height="150"
-                    Margin="4"
-                    Padding="16"
-                    Background="SteelBlue">
-                    <Border BorderBrush="White" BorderThickness="0,0,0,1">
-                        <TextBlock
-                            Foreground="White"
-                            Style="{StaticResource TitleTextBlockStyle}"
-                            Text="{Binding}" />
-                    </Border>
-                    <TextBlock
-                        Foreground="White"
-                        Style="{StaticResource SubtitleTextBlockStyle}"
-                        TextWrapping="Wrap">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, eiusmod.
-                    </TextBlock>
-                </StackPanel>
-            </DataTemplate>
-        </GridView.ItemTemplate>
-
-        <x:String>aware</x:String>
-        <x:String>ball</x:String>
-        <x:String>dislike</x:String>
-        <x:String>crawl</x:String>
-        <x:String>scream</x:String>
-        <x:String>government</x:String>
-        <x:String>soggy</x:String>
-        <x:String>impulse</x:String>
-        <x:String>confess</x:String>
-        <x:String>needless</x:String>
-        <x:String>pocket</x:String>
-        <x:String>somber</x:String>
-        <x:String>destroy</x:String>
-        <x:String>unsightly</x:String>
-        <x:String>settle</x:String>
-        <x:String>fail</x:String>
-        <x:String>abject</x:String>
-        <x:String>wooden</x:String>
-        <x:String>abiding</x:String>
-        <x:String>allow</x:String>
-        <x:String>truculent</x:String>
-        <x:String>voice</x:String>
-        <x:String>teeth</x:String>
-        <x:String>vigorous</x:String>
-        <x:String>overrated</x:String>
-        <x:String>teeny-tiny</x:String>
-        <x:String>mask</x:String>
-        <x:String>tempt</x:String>
-        <x:String>escape</x:String>
-        <x:String>remove</x:String>
-        <x:String>clear</x:String>
-        <x:String>parched</x:String>
-        <x:String>wealth</x:String>
-        <x:String>wound</x:String>
-        <x:String>share</x:String>
-        <x:String>fumbling</x:String>
 
     </GridView>
 

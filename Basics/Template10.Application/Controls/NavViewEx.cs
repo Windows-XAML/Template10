@@ -27,6 +27,12 @@ namespace Prism.Windows.Controls
 
         static NavViewEx()
         {
+            if (win.ApplicationModel.DesignMode.DesignModeEnabled
+                || win.ApplicationModel.DesignMode.DesignMode2Enabled)
+            {
+                return;
+            }
+
             _registry = PrismApplicationBase.Container.Resolve<IPageRegistry>();
         }
 
@@ -58,10 +64,6 @@ namespace Prism.Windows.Controls
             };
 
             NavigationService = new NavigationService(_frame);
-            NavigationService.CanGoBackChanged += (s, e) =>
-            {
-                UpdateBackButton();
-            };
 
             ItemInvoked += (s, e) =>
             {
@@ -77,7 +79,6 @@ namespace Prism.Windows.Controls
             Loaded += (s, e) =>
             {
                 UpdatePaneHeaders();
-                UpdateBackButton();
                 UpdatePageHeader();
             };
         }
@@ -96,14 +97,8 @@ namespace Prism.Windows.Controls
             return NavigationService;
         }
 
-        public enum BackButtonVisibilities { Auto, Visible, Collapsed }
-        public BackButtonVisibilities BackButtonVisibility { get; set; } = BackButtonVisibilities.Auto;
-
         public enum ItemHeaderBehaviors { Hide, Remove, None }
         public ItemHeaderBehaviors ItemHeaderBehavior { get; set; } = ItemHeaderBehaviors.Remove;
-
-        public enum PageHeaderBehaviors { Adjacent, Overlay, Collapsed }
-        public PageHeaderBehaviors PageHeaderBehavior { get; set; } = PageHeaderBehaviors.Adjacent;
 
         public Uri SettingsNavigationUri { get; set; }
         public event EventHandler SettingsInvoked;
@@ -152,27 +147,7 @@ namespace Prism.Windows.Controls
                 }
             }
             UpdatePaneHeaders();
-            UpdateBackButton();
             UpdatePageHeader();
-        }
-
-        private void UpdateBackButton()
-        {
-            switch (BackButtonVisibility)
-            {
-                case BackButtonVisibilities.Auto:
-                    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
-                            (_frame.CanGoBack)
-                            ? AppViewBackButtonVisibility.Visible
-                            : AppViewBackButtonVisibility.Collapsed;
-                    break;
-                case BackButtonVisibilities.Visible:
-                    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-                    break;
-                case BackButtonVisibilities.Collapsed:
-                    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-                    break;
-            }
         }
 
         private void UpdatePaneHeaders()
@@ -199,51 +174,6 @@ namespace Prism.Windows.Controls
         private void UpdatePageHeader()
         {
             _updatePageHeaderSemaphore.Wait();
-
-            bool localTryGetHeaderAndContent(out ContentPresenter content, out ContentControl header)
-            {
-                var children = XamlUtilities.RecurseChildren(this);
-                var grids = children
-                    .OfType<Grid>()
-                    .Where(x => x.Name == "ContentGrid");
-                if (!grids.Any())
-                {
-                    content = default(ContentPresenter);
-                    header = default(ContentControl);
-                    return false;
-                }
-                var grid = grids.Single();
-                content = grid.Children.OfType<ContentPresenter>().Single();
-                header = grid.Children.OfType<ContentControl>().Single();
-                return true;
-            }
-
-            void localUpdatePageHeaderBehavior()
-            {
-                if (!localTryGetHeaderAndContent(out var content, out var header))
-                {
-                    return;
-                }
-
-                switch (PageHeaderBehavior)
-                {
-                    case PageHeaderBehaviors.Adjacent:
-                        header.Visibility = Visibility.Visible;
-                        content.SetValue(Grid.RowProperty, 1);
-                        content.SetValue(Grid.RowSpanProperty, 1);
-                        content.SetValue(Canvas.ZIndexProperty, 0);
-                        break;
-                    case PageHeaderBehaviors.Overlay:
-                        header.Visibility = Visibility.Visible;
-                        content.SetValue(Grid.RowProperty, 0);
-                        content.SetValue(Grid.RowSpanProperty, 3);
-                        content.SetValue(Canvas.ZIndexProperty, -1);
-                        break;
-                    case PageHeaderBehaviors.Collapsed:
-                        header.Visibility = Visibility.Collapsed;
-                        break;
-                }
-            }
 
             bool localTryGetCommandBar(out CommandBar bar)
             {
@@ -290,7 +220,6 @@ namespace Prism.Windows.Controls
                     if (page.GetValue(NavViewProps.HeaderTextProperty) is string headerText && !Equals(Header, headerText))
                     {
                         Header = headerText;
-                        localUpdatePageHeaderBehavior();
                     }
 
                     if (page.GetValue(NavViewProps.HeaderCommandsProperty) is ObservableCollection<object> headerCommands && headerCommands.Any())

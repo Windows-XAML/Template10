@@ -1,4 +1,5 @@
 ﻿using Prism.Windows.Services;
+using win = Windows;
 using Prism.Windows.Navigation;
 using Windows.ApplicationModel.Core;
 using Windows.UI;
@@ -6,6 +7,9 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Prism.Windows.Services.DialogService;
+using Prism.Windows.Utilities;
+using System.Linq;
+using System;
 
 namespace PrismSample.Views
 {
@@ -16,15 +20,84 @@ namespace PrismSample.Views
 
         public ShellPage(IGestureService gestureService, IDialogService dialogService)
         {
+            InitializeComponent();
+
+            if (win.ApplicationModel.DesignMode.DesignModeEnabled
+                || win.ApplicationModel.DesignMode.DesignMode2Enabled)
+            {
+                return;
+            }
 
             _gestureService = gestureService;
             _dialogService = dialogService;
 
-            InitializeComponent();
-
             ShellView.Start();
-            SetupGestures();
-            SetupTitleBar();
+
+            ShellView.Loaded += (s, e) =>
+            {
+                SetupGestures();
+                SetupBackButton();
+                SetupControlBox();
+            };
+        }
+
+        private void SetupControlBox()
+        {
+            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+            titleBar.ButtonBackgroundColor = Colors.Transparent;
+            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+            titleBar.ButtonForegroundColor = (Color)Resources["SystemBaseHighColor"];
+        }
+
+        private void SetupBackButton()
+        {
+            var children = XamlUtilities.RecurseChildren(ShellView);
+            var grids = children.OfType<Grid>();
+            var grid = grids.Single(x => x.Name == "TogglePaneTopPadding");
+            grid.Visibility = Visibility.Collapsed;
+
+            grid = grids.Single(x => x.Name == "ContentPaneTopPadding");
+            grid.RegisterPropertyChangedCallback(HeightProperty, (s, args) =>
+            {
+                if (grid.Height != 44d)
+                {
+                    grid.Height = 44d;
+                }
+            });
+            grid.Height = 44d;
+
+            var buttons = children.OfType<Button>();
+            var button = buttons.Single(x => x.Name == "TogglePaneButton");
+            button.RegisterPropertyChangedCallback(MarginProperty, (s, args) =>
+            {
+                if (button.Margin.Top != 0)
+                {
+                    button.Margin = new Thickness(0, 0, 0, 32);
+                }
+            });
+            button.Margin = new Thickness(0, 0, 0, 32);
+            button.Focus(FocusState.Programmatic);
+
+            var parent = button.Parent as Grid;
+            var backButton = new Button
+            {
+                Name = "BackButton",
+                Content = new SymbolIcon
+                {
+                    Symbol = Symbol.Back,
+                    IsHitTestVisible = false
+                },
+                Style = Resources["PaneToggleButtonStyle"] as Style,
+            };
+            parent.Children.Insert(1, backButton);
+            ShellView.NavigationService.CanGoBackChanged += (s, args) =>
+            {
+                backButton.IsEnabled = ShellView.NavigationService.CanGoBack();
+            };
+            backButton.Click += (s, args) =>
+            {
+                _gestureService.RaiseBackRequested();
+            };
         }
 
         private void SetupGestures()
@@ -38,32 +111,6 @@ namespace PrismSample.Views
                 ShellView.IsPaneOpen = true;
                 ShellView.AutoSuggestBox?.Focus(FocusState.Programmatic);
             };
-        }
-
-        private void SetupTitleBar()
-        {
-            var viewTitleBar = ApplicationView.GetForCurrentView().TitleBar;
-            viewTitleBar.ButtonBackgroundColor = Colors.Transparent;
-            viewTitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-            viewTitleBar.ButtonForegroundColor = (Color)Resources["SystemBaseHighColor"];
-
-            var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-            coreTitleBar.ExtendViewIntoTitleBar = true;
-
-            void UpdateAppTitle()
-            {
-                var full = ApplicationView.GetForCurrentView().IsFullScreenMode;
-                var left = 12 + (full ? 0 : CoreApplication.GetCurrentView().TitleBar.SystemOverlayLeftInset);
-                AppTitle.Margin = new Thickness(left, 8, 0, 0);
-            }
-
-            Window.Current.CoreWindow.SizeChanged += (s, e) => UpdateAppTitle();
-            coreTitleBar.LayoutMetricsChanged += (s, e) => UpdateAppTitle();
-
-            ShellView.RegisterPropertyChangedCallback(NavigationView.IsPaneOpenProperty, (s, e) =>
-            {
-                AppTitle.Visibility = ShellView.IsPaneOpen ? Visibility.Visible : Visibility.Collapsed;
-            });
         }
 
         private async void ProfileItem_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)

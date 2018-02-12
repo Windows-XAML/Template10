@@ -32,12 +32,7 @@
                                 TextWrapping="NoWrap" />
                         </Grid>
                     </CommandBar.Content>
-                    <AppBarButton Icon="Back" />
-                    <AppBarButton Icon="AlignCenter" />
-                    <AppBarButton Icon="Admin" />
-                    <AppBarButton Icon="Contact" />
-                    <AppBarButton Icon="Accept" />
-                    <AppBarButton Icon="Delete" />
+                    <AppBarButton Icon="World" />
                 </CommandBar>
             </Grid>
         </DataTemplate>
@@ -46,19 +41,11 @@
 
     <Grid>
 
-        <TextBlock
-            x:Name="AppTitle"
-            Canvas.ZIndex="1"
-            IsHitTestVisible="False"
-            Style="{StaticResource CaptionTextBlockStyle}"
-            Text="{x:Bind appmodel:Package.Current.DisplayName}" />
-
         <controls:NavViewEx
             x:Name="ShellView"
             x:FieldModifier="Public"
             Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-            HeaderTemplate="{StaticResource NavViewExHeaderTemplate}"
-            PageHeaderBehavior="Overlay">
+            HeaderTemplate="{StaticResource NavViewExHeaderTemplate}">
 
             <NavigationView.AutoSuggestBox>
                 <AutoSuggestBox QueryIcon="Find" />

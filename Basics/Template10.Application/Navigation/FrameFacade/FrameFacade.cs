@@ -1,4 +1,5 @@
 ﻿using Prism.Navigation;
+using Prism.Ioc;
 using Prism.Windows.Utilities;
 using System;
 using System.Diagnostics;
@@ -216,7 +217,25 @@ namespace Prism.Windows.Navigation
                 OnNavigatedFrom(parameters, old_vm);
             }
 
-            var new_vm = (_frame.Content as Page)?.DataContext;
+            var new_page = _frame.Content as Page;
+            var new_vm = new_page?.DataContext;
+            if (new_vm == null)
+            {
+                var regsitry = PrismApplicationBase.Container.Resolve<IPageRegistry>();
+                if (regsitry.TryGetInfo(_frame.CurrentSourcePageType, out var info) && info.ViewModelType != null)
+                {
+                    try
+                    {
+                        new_page.DataContext = new_vm = PrismApplicationBase.Container.Resolve(info.ViewModelType);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debugger.Break();
+                        throw;
+                    }
+                }
+            }
+
             if (new_vm == null)
             {
                 Debug.WriteLine($"[To]View-Model is null.");
@@ -230,10 +249,7 @@ namespace Prism.Windows.Navigation
 
             // refresh-bindings
 
-            if (_frame.Content is Page new_page)
-            {
-                BindingUtilities.UpdateBindings(new_page);
-            }
+            BindingUtilities.UpdateBindings(new_page);
 
             // finally
 

@@ -6,55 +6,62 @@ using System.Text;
 using System.Threading.Tasks;
 using Prism.Windows.Mvvm;
 using Prism.Windows.Navigation;
+using PrismSample.Services;
+using PrismSample.Models;
+using System.Collections.ObjectModel;
 
 namespace PrismSample.ViewModels
 {
     class MainPageViewModel : ViewModelBase
     {
-        NavigationService NavigationService { get; set; }
+        private IDataService _dataService;
+        private NavigationService _navigationService;
 
-        public override async Task OnNavigatedToAsync(INavigationParameters parameters)
+        public MainPageViewModel(IDataService dataService)
         {
-            NavigationService = parameters.GetNavigationService();
-            await LoadData();
+            _dataService = dataService;
         }
 
-        public override async Task<bool> CanNavigateAsync(INavigationParameters parameters)
+        public override void OnNavigatedTo(INavigationParameters parameters)
         {
-            if (await Validate())
+            _navigationService = parameters.GetNavigationService();
+            LoadData();
+        }
+
+        public override bool CanNavigate(INavigationParameters parameters)
+        {
+            if (IsValidate())
             {
-                return await SaveData();
+                return SaveData();
             }
             return false;
         }
 
-        private string _value;
-        public string Value
+        private DataItem _selectedItem;
+        public DataItem SelectedItem
         {
-            get => _value;
-            set => SetProperty(ref _value, value);
+            get => _selectedItem;
+            set => SetProperty(ref _selectedItem, value);
         }
 
-        public async void Go()
+        public ObservableCollection<DataItem> Items { get; } = new ObservableCollection<DataItem>();
+
+        private void LoadData()
         {
-            var path = $"/{nameof(Views.MainPage)}?Value={Value}";
-            await NavigationService.NavigateAsync(path);
+            Items.Clear();
+            foreach (var item in _dataService.GetItems())
+            {
+                Items.Add(item);
+            }
         }
 
-        private async Task LoadData()
+        private bool SaveData()
         {
-            await Task.CompletedTask;
-        }
-
-        private async Task<bool> Validate()
-        {
-            await Task.CompletedTask;
             return true;
         }
 
-        private async Task<bool> SaveData()
+        private bool IsValidate()
         {
-            await Task.CompletedTask;
             return true;
         }
     }

@@ -8,6 +8,10 @@ namespace Prism.Windows.Utilities
     {
         public static void UpdateBindings(Page page)
         {
+            if (page == null)
+            {
+                return;
+            }
             var field = page.GetType().GetTypeInfo().GetDeclaredField("Bindings");
             var bindings = field?.GetValue(page);
             var update = bindings?.GetType().GetRuntimeMethod("Update", new Type[] { });
@@ -16,6 +20,10 @@ namespace Prism.Windows.Utilities
 
         public static void InitializeBindings(Page page)
         {
+            if (page == null)
+            {
+                return;
+            }
             var field = page.GetType().GetTypeInfo().GetDeclaredField("Bindings");
             var bindings = field?.GetValue(page);
             var update = bindings?.GetType().GetRuntimeMethod("Initialize", new Type[] { });
@@ -24,6 +32,10 @@ namespace Prism.Windows.Utilities
 
         public static void StopTrackingBindings(Page page)
         {
+            if (page == null)
+            {
+                return;
+            }
             var field = page.GetType().GetTypeInfo().GetDeclaredField("Bindings");
             var bindings = field?.GetValue(page);
             var update = bindings?.GetType().GetRuntimeMethod("StopTracking", new Type[] { });

@@ -18,8 +18,9 @@ namespace Prism.Windows.Navigation
 
         public static void RegisterForNavigation<TView, TViewModel>(this IContainerRegistry registry, string key)
         {
-            registry.Register<TViewModel>(key);
-            RegisterForNavigation<TView>(registry, key);
+            registry.Register<TView>(key);
+            registry.Register<TViewModel>();
+            _registry.Register(key, typeof(TView), typeof(TViewModel));
         }
 
         public static void RegisterForNavigation<TView>(this IContainerRegistry registry)
@@ -29,6 +30,7 @@ namespace Prism.Windows.Navigation
 
         public static void RegisterForNavigation<TView>(this IContainerRegistry registry, string key)
         {
+            registry.Register<TView>(key);
             _registry.Register(key, typeof(TView), null);
         }
     }
