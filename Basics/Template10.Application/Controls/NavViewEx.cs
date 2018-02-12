@@ -16,6 +16,8 @@ using Prism.Ioc;
 using System.Collections.ObjectModel;
 using Prism.Windows.Utilities;
 using Windows.UI.ViewManagement;
+using win = Windows;
+using System.Threading;
 
 namespace Prism.Windows.Controls
 {
@@ -37,6 +39,12 @@ namespace Prism.Windows.Controls
         public NavViewEx()
         {
             DefaultStyleKey = typeof(NavigationView);
+
+            if (win.ApplicationModel.DesignMode.DesignModeEnabled
+                || win.ApplicationModel.DesignMode.DesignMode2Enabled)
+            {
+                return;
+            }
 
             Content = _frame = new Frame();
             _dispatcher = _frame.Dispatcher;
@@ -71,25 +79,7 @@ namespace Prism.Windows.Controls
                 UpdatePaneHeaders();
                 UpdateBackButton();
                 UpdatePageHeader();
-                UpdatePageCommands();
             };
-        }
-
-        private void UpdatePageCommands()
-        {
-            //if (_frame.Content is Page page)
-            //{
-            //    var value = page.GetValue(NavViewProps.HeaderCommandsProperty);
-            //    if (value is ObservableCollection<object> list && (list?.Any() ?? false))
-            //    {
-            //        var bar = XamlUtilities.RecurseChildren(this).OfType<CommandBar>().Single();
-            //        bar.PrimaryCommands.Clear();
-            //        foreach (var item in list.OfType<ICommandBarElement>())
-            //        {
-            //            bar.PrimaryCommands.Add(item);
-            //        }
-            //    }
-            //}
         }
 
         public IPlatformNavigationService Start()
@@ -164,7 +154,6 @@ namespace Prism.Windows.Controls
             UpdatePaneHeaders();
             UpdateBackButton();
             UpdatePageHeader();
-            UpdatePageCommands();
         }
 
         private void UpdateBackButton()
@@ -205,41 +194,114 @@ namespace Prism.Windows.Controls
             }
         }
 
+        private static SemaphoreSlim _updatePageHeaderSemaphore = new SemaphoreSlim(1, 1);
+
         private void UpdatePageHeader()
         {
-            if (_frame.Content is Page p && p.GetValue(NavViewProps.HeaderTextProperty) is string s && !string.IsNullOrEmpty(s))
+            _updatePageHeaderSemaphore.Wait();
+
+            bool localTryGetHeaderAndContent(out ContentPresenter content, out ContentControl header)
             {
-                Header = s;
+                var children = XamlUtilities.RecurseChildren(this);
+                var grids = children
+                    .OfType<Grid>()
+                    .Where(x => x.Name == "ContentGrid");
+                if (!grids.Any())
+                {
+                    content = default(ContentPresenter);
+                    header = default(ContentControl);
+                    return false;
+                }
+                var grid = grids.Single();
+                content = grid.Children.OfType<ContentPresenter>().Single();
+                header = grid.Children.OfType<ContentControl>().Single();
+                return true;
             }
 
-            var children = XamlUtilities.RecurseChildren(this);
-            if (!children.Any())
+            void localUpdatePageHeaderBehavior()
             {
-                return;
+                if (!localTryGetHeaderAndContent(out var content, out var header))
+                {
+                    return;
+                }
+
+                switch (PageHeaderBehavior)
+                {
+                    case PageHeaderBehaviors.Adjacent:
+                        header.Visibility = Visibility.Visible;
+                        content.SetValue(Grid.RowProperty, 1);
+                        content.SetValue(Grid.RowSpanProperty, 1);
+                        content.SetValue(Canvas.ZIndexProperty, 0);
+                        break;
+                    case PageHeaderBehaviors.Overlay:
+                        header.Visibility = Visibility.Visible;
+                        content.SetValue(Grid.RowProperty, 0);
+                        content.SetValue(Grid.RowSpanProperty, 3);
+                        content.SetValue(Canvas.ZIndexProperty, -1);
+                        break;
+                    case PageHeaderBehaviors.Collapsed:
+                        header.Visibility = Visibility.Collapsed;
+                        break;
+                }
             }
 
-            var grids = children.OfType<Grid>();
-            var grid = grids.Single(x => x.Name == "ContentGrid");
-            var content = grid.Children.OfType<ContentPresenter>().Single();
-            var header = grid.Children.OfType<ContentControl>().Single();
-
-            switch (PageHeaderBehavior)
+            bool localTryGetCommandBar(out CommandBar bar)
             {
-                case PageHeaderBehaviors.Adjacent:
-                    header.Visibility = Visibility.Visible;
-                    content.SetValue(Grid.RowProperty, 1);
-                    content.SetValue(Grid.RowSpanProperty, 1);
-                    content.SetValue(Canvas.ZIndexProperty, 0);
-                    break;
-                case PageHeaderBehaviors.Overlay:
-                    header.Visibility = Visibility.Visible;
-                    content.SetValue(Grid.RowProperty, 0);
-                    content.SetValue(Grid.RowSpanProperty, 3);
-                    content.SetValue(Canvas.ZIndexProperty, -1);
-                    break;
-                case PageHeaderBehaviors.Collapsed:
-                    header.Visibility = Visibility.Collapsed;
-                    break;
+                var children = XamlUtilities.RecurseChildren(this);
+                var bars = children
+                    .Where(x => x.GetValue(NavViewProps.PageHeaderCommandsMergeTargetProperty) is bool value && value)
+                    .OfType<CommandBar>();
+                if (!bars.Any())
+                {
+                    bar = default(CommandBar);
+                    return false;
+                }
+                bar = bars.Single();
+                return true;
+            }
+
+            void localUpdatePageHeaderCommands(ObservableCollection<object> headerCommands)
+            {
+                if (!localTryGetCommandBar(out var bar))
+                {
+                    return;
+                }
+
+                var previous = bar.PrimaryCommands
+                    .OfType<DependencyObject>()
+                    .Where(x => x.GetValue(NavViewProps.PageHeaderCommandDynamicItemProperty) is bool value && value);
+
+                foreach (var command in previous.OfType<ICommandBarElement>().ToArray())
+                {
+                    bar.PrimaryCommands.Remove(command);
+                }
+
+                foreach (var command in headerCommands.Reverse().OfType<DependencyObject>().ToArray())
+                {
+                    command.SetValue(NavViewProps.PageHeaderCommandDynamicItemProperty, true);
+                    bar.PrimaryCommands.Insert(0, command as ICommandBarElement);
+                }
+            }
+
+            try
+            {
+                if (_frame.Content is Page page)
+                {
+                    if (page.GetValue(NavViewProps.HeaderTextProperty) is string headerText && !Equals(Header, headerText))
+                    {
+                        Header = headerText;
+                        localUpdatePageHeaderBehavior();
+                    }
+
+                    if (page.GetValue(NavViewProps.HeaderCommandsProperty) is ObservableCollection<object> headerCommands && headerCommands.Any())
+                    {
+                        localUpdatePageHeaderCommands(headerCommands);
+                    }
+                }
+            }
+            finally
+            {
+                _updatePageHeaderSemaphore.Release();
             }
         }
 

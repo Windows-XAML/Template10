@@ -2,15 +2,51 @@
     x:Class="PrismSample.Views.ShellPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:appmodel="using:Windows.ApplicationModel"
     xmlns:controls="using:Prism.Windows.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <Page.Resources>
+
+        <DataTemplate x:Key="NavViewExHeaderTemplate">
+            <Grid Padding="0,32,0,0">
+                <Grid.Background>
+                    <AcrylicBrush BackgroundSource="Backdrop" TintOpacity="0.5" />
+                </Grid.Background>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="0" />
+                </Grid.ColumnDefinitions>
+                <CommandBar
+                    controls:NavViewProps.PageHeaderCommandsMergeTarget="True"
+                    Background="Transparent"
+                    OverflowButtonVisibility="Visible">
+                    <CommandBar.Content>
+                        <Grid Margin="12,5,0,11" VerticalAlignment="Stretch">
+                            <TextBlock
+                                VerticalAlignment="Bottom"
+                                Style="{StaticResource TitleTextBlockStyle}"
+                                Text="{Binding}"
+                                TextWrapping="NoWrap" />
+                        </Grid>
+                    </CommandBar.Content>
+                    <AppBarButton Icon="Back" />
+                    <AppBarButton Icon="AlignCenter" />
+                    <AppBarButton Icon="Admin" />
+                    <AppBarButton Icon="Contact" />
+                    <AppBarButton Icon="Accept" />
+                    <AppBarButton Icon="Delete" />
+                </CommandBar>
+            </Grid>
+        </DataTemplate>
+
+    </Page.Resources>
+
     <Grid>
 
         <TextBlock
-            xmlns:appmodel="using:Windows.ApplicationModel"
             x:Name="AppTitle"
             Canvas.ZIndex="1"
             IsHitTestVisible="False"
@@ -21,45 +57,11 @@
             x:Name="ShellView"
             x:FieldModifier="Public"
             Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+            HeaderTemplate="{StaticResource NavViewExHeaderTemplate}"
             PageHeaderBehavior="Overlay">
 
-            <NavigationView.HeaderTemplate>
-                <DataTemplate>
-                    <Grid Padding="0,32,0,0">
-
-                        <Grid.Background>
-                            <AcrylicBrush BackgroundSource="Backdrop" TintOpacity="0.5" />
-                        </Grid.Background>
-
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="0" />
-                        </Grid.ColumnDefinitions>
-
-                        <CommandBar Background="Transparent" OverflowButtonVisibility="Collapsed">
-                            <CommandBar.Content>
-                                <Grid Margin="12,5,0,11" VerticalAlignment="Stretch">
-                                    <TextBlock
-                                        VerticalAlignment="Bottom"
-                                        Style="{StaticResource TitleTextBlockStyle}"
-                                        Text="{Binding}"
-                                        TextWrapping="NoWrap" />
-                                </Grid>
-                            </CommandBar.Content>
-                            <AppBarButton Icon="Back" />
-                            <AppBarButton Icon="AlignCenter" />
-                            <AppBarButton Icon="Admin" />
-                            <AppBarButton Icon="Contact" />
-                            <AppBarButton Icon="Accept" />
-                            <AppBarButton Icon="Delete" />
-                        </CommandBar>
-
-                    </Grid>
-                </DataTemplate>
-            </NavigationView.HeaderTemplate>
-
             <NavigationView.AutoSuggestBox>
-                <AutoSuggestBox />
+                <AutoSuggestBox QueryIcon="Find" />
             </NavigationView.AutoSuggestBox>
 
             <NavigationView.MenuItems>

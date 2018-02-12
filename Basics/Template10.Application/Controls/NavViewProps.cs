@@ -38,6 +38,28 @@ namespace Prism.Windows.Controls
             DependencyProperty.RegisterAttached("HeaderText", typeof(string),
                 typeof(NavViewProps), new PropertyMetadata(null));
 
+        // shell CommandBar merge target
+
+        public static bool GetPageHeaderCommandsMergeTarget(CommandBar obj)
+            => (bool)obj.GetValue(PageHeaderCommandsMergeTargetProperty);
+        public static void SetPageHeaderCommandsMergeTarget(CommandBar obj, bool value)
+            => obj.SetValue(PageHeaderCommandsMergeTargetProperty, value);
+        public static readonly DependencyProperty PageHeaderCommandsMergeTargetProperty =
+            DependencyProperty.RegisterAttached("PageHeaderCommandsMergeTarget", typeof(bool),
+                typeof(NavViewProps), new PropertyMetadata(false));
+
+        // shell CommandBar dyanmic item
+
+        internal static bool GetPageHeaderCommandDynamicItem(DependencyObject obj)
+            => (bool)obj.GetValue(PageHeaderCommandDynamicItemProperty);
+        internal static void SetPageHeaderCommandDynamicItem(DependencyObject obj, bool value)
+            => obj.SetValue(PageHeaderCommandDynamicItemProperty, value);
+#pragma warning disable IDE1006 // Naming Styles
+        internal static readonly DependencyProperty PageHeaderCommandDynamicItemProperty =
+#pragma warning disable IDE1006 // Naming Styles
+            DependencyProperty.RegisterAttached("PageHeaderCommandDynamicItem", typeof(bool), 
+                typeof(NavViewProps), new PropertyMetadata(false));
+
         // Page custom HeaderText property
 
         public static ObservableCollection<object> GetHeaderCommands(Page obj)
@@ -45,7 +67,11 @@ namespace Prism.Windows.Controls
             var value = (ObservableCollection<object>)obj.GetValue(HeaderCommandsProperty);
             if (value == null)
             {
-                value = new ObservableCollection<object>();
+                SetHeaderCommands(obj, value = new ObservableCollection<object>());
+                value.CollectionChanged += (s, e) =>
+                {
+                    // TODO
+                };
             }
             return value;
         }

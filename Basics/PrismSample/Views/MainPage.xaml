@@ -13,9 +13,9 @@
     </controls:NavViewProps.HeaderText>
 
     <controls:NavViewProps.HeaderCommands>
-        <AppBarButton Icon="Accept" Label="Accept" />
-        <AppBarButton Icon="Account" Label="Account" />
-        <AppBarButton Icon="Add" Label="Add" />
+        <AppBarButton Icon="Accept" Label="One" />
+        <AppBarButton Icon="Account" Label="Two" />
+        <AppBarButton Icon="Add" Label="Three" />
     </controls:NavViewProps.HeaderCommands>
 
     <Page.Resources>

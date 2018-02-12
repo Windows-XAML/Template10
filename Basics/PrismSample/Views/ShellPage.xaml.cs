@@ -16,6 +16,7 @@ namespace PrismSample.Views
 
         public ShellPage(IGestureService gestureService, IDialogService dialogService)
         {
+
             _gestureService = gestureService;
             _dialogService = dialogService;
 

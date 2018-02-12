@@ -28,6 +28,11 @@ namespace Prism.Windows.Services
             SystemNavigationManager.GetForCurrentView().BackRequested += (s, e) => BackRequested?.Invoke(null, EventArgs.Empty);
         }
 
+        public void RaiseBackRequested()
+        {
+            BackRequested?.Invoke(this, EventArgs.Empty);
+        }
+
         private void CoreWindow_PointerPressed(CoreWindow sender, PointerEventArgs e)
         {
             var properties = e.CurrentPoint.Properties;

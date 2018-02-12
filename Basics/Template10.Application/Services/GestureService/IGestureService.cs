@@ -11,5 +11,7 @@ namespace Prism.Windows.Services
         event EventHandler MenuRequested;
         event EventHandler RefreshRequested;
         event EventHandler SearchRequested;
+
+        void RaiseBackRequested();
     }
 }
