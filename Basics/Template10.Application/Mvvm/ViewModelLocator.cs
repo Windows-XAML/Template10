@@ -3,6 +3,7 @@ using Windows.UI.Xaml;
 
 namespace Prism.Windows.Mvvm
 {
+
     public static class ViewModelLocator
     {
         private static IMvvmLocator _locator;

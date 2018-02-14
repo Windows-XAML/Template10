@@ -10,6 +10,7 @@ using Prism.Windows.Services.DialogService;
 using Prism.Windows.Utilities;
 using System.Linq;
 using System;
+using Windows.UI.Xaml.Media;
 
 namespace PrismSample.Views
 {
@@ -36,7 +37,6 @@ namespace PrismSample.Views
             ShellView.Loaded += (s, e) =>
             {
                 SetupGestures();
-                SetupBackButton();
                 SetupControlBox();
             };
         }
@@ -47,57 +47,6 @@ namespace PrismSample.Views
             titleBar.ButtonBackgroundColor = Colors.Transparent;
             titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
             titleBar.ButtonForegroundColor = (Color)Resources["SystemBaseHighColor"];
-        }
-
-        private void SetupBackButton()
-        {
-            var children = XamlUtilities.RecurseChildren(ShellView);
-            var grids = children.OfType<Grid>();
-            var grid = grids.Single(x => x.Name == "TogglePaneTopPadding");
-            grid.Visibility = Visibility.Collapsed;
-
-            grid = grids.Single(x => x.Name == "ContentPaneTopPadding");
-            grid.RegisterPropertyChangedCallback(HeightProperty, (s, args) =>
-            {
-                if (grid.Height != 44d)
-                {
-                    grid.Height = 44d;
-                }
-            });
-            grid.Height = 44d;
-
-            var buttons = children.OfType<Button>();
-            var button = buttons.Single(x => x.Name == "TogglePaneButton");
-            button.RegisterPropertyChangedCallback(MarginProperty, (s, args) =>
-            {
-                if (button.Margin.Top != 0)
-                {
-                    button.Margin = new Thickness(0, 0, 0, 32);
-                }
-            });
-            button.Margin = new Thickness(0, 0, 0, 32);
-            button.Focus(FocusState.Programmatic);
-
-            var parent = button.Parent as Grid;
-            var backButton = new Button
-            {
-                Name = "BackButton",
-                Content = new SymbolIcon
-                {
-                    Symbol = Symbol.Back,
-                    IsHitTestVisible = false
-                },
-                Style = Resources["PaneToggleButtonStyle"] as Style,
-            };
-            parent.Children.Insert(1, backButton);
-            ShellView.NavigationService.CanGoBackChanged += (s, args) =>
-            {
-                backButton.IsEnabled = ShellView.NavigationService.CanGoBack();
-            };
-            backButton.Click += (s, args) =>
-            {
-                _gestureService.RaiseBackRequested();
-            };
         }
 
         private void SetupGestures()

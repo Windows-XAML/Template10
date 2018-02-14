@@ -32,14 +32,13 @@ namespace Prism.Windows.Controls
             {
                 return;
             }
-
             _registry = PrismApplicationBase.Container.Resolve<IPageRegistry>();
         }
 
-        public IPlatformNavigationService NavigationService { get; }
-
+        private Button _togglePaneButton;
+        private TextBlock _paneTitleTextBlock;
+        private Button _backButton;
         private CoreDispatcher _dispatcher;
-
         private Frame _frame;
 
         public NavViewEx()
@@ -69,17 +68,105 @@ namespace Prism.Windows.Controls
             {
                 SelectedItem = (e.IsSettingsInvoked) ? SettingsItem : Find(e.InvokedItem.ToString());
             };
-            RegisterPropertyChangedCallback(IsPaneOpenProperty, (s, e) => UpdatePaneHeaders());
+
+            RegisterPropertyChangedCallback(IsPaneOpenProperty, (s, e) =>
+            {
+                UpdateAppTitleVisibility();
+                UpdatePaneHeadersVisibility();
+            });
 
             Window.Current.CoreWindow.SizeChanged += (s, e) =>
             {
-                UpdatePageHeader();
+                UpdatePageHeaderContent();
             };
 
             Loaded += (s, e) =>
             {
-                UpdatePaneHeaders();
-                UpdatePageHeader();
+                UpdateAppTitleVisibility();
+                UpdatePaneHeadersVisibility();
+                UpdatePageHeaderContent();
+                SetupBackButton();
+            };
+        }
+
+        public IPlatformNavigationService NavigationService { get; }
+
+        private void SetupBackButton()
+        {
+            var children = XamlUtilities.RecurseChildren(this);
+            var grids = children.OfType<Grid>();
+            var grid = grids.Single(x => x.Name == "TogglePaneTopPadding");
+            grid.Visibility = Visibility.Collapsed;
+
+            grid = grids.Single(x => x.Name == "ContentPaneTopPadding");
+            grid.RegisterPropertyChangedCallback(HeightProperty, (s, args) =>
+            {
+                if (grid.Height != 44d)
+                {
+                    grid.Height = 44d;
+                }
+            });
+            grid.Height = 44d;
+
+            var child_buttons = children.OfType<Button>();
+
+            _togglePaneButton = child_buttons.Single(x => x.Name == "TogglePaneButton");
+            _togglePaneButton.RegisterPropertyChangedCallback(MarginProperty, (s, args) =>
+            {
+                if (_togglePaneButton.Margin.Top != 0)
+                {
+                    _togglePaneButton.Margin = new Thickness(0, 0, 0, 32);
+                }
+            });
+            _togglePaneButton.Margin = new Thickness(0, 0, 0, 32);
+            _togglePaneButton.Focus(FocusState.Programmatic);
+
+            var parent_grid = _togglePaneButton.Parent as Grid;
+            parent_grid.Width = double.NaN;
+            parent_grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(48) });
+            parent_grid.ColumnDefinitions.Add(new ColumnDefinition { });
+            parent_grid.RowDefinitions[0].Height = GridLength.Auto;
+            parent_grid.RowDefinitions[1].Height = GridLength.Auto;
+
+            _paneTitleTextBlock = new TextBlock
+            {
+                Name = "PaneTitleTextBlock",
+                Margin = new Thickness(2, 18, 0, 0),
+                FontSize = 15,
+                FontFamily = new FontFamily("Segoe UI Bold"),
+                TextWrapping = TextWrapping.NoWrap,
+                Foreground = Resources["SystemControlForegroundBaseHighBrush"] as Brush,
+                VerticalAlignment = VerticalAlignment.Top,
+                IsHitTestVisible = false,
+                Text = "Jerry Nixon",
+            };
+            _paneTitleTextBlock.SetValue(Grid.ColumnProperty, 1);
+            _paneTitleTextBlock.SetValue(Grid.RowProperty, 1);
+            _paneTitleTextBlock.SetValue(Canvas.ZIndexProperty, 100);
+            parent_grid.Children.Add(_paneTitleTextBlock);
+
+            _backButton = new Button
+            {
+                Name = "BackButton",
+                Content = new SymbolIcon
+                {
+                    Symbol = Symbol.Back,
+                    IsHitTestVisible = false
+                },
+                Style = Resources["PaneToggleButtonStyle"] as Style,
+            };
+            _backButton.SetValue(Canvas.ZIndexProperty, 100);
+            parent_grid.Children.Insert(1, _backButton);
+
+            NavigationService.CanGoBackChanged += (s, args) =>
+            {
+                _backButton.IsEnabled = NavigationService.CanGoBack();
+            };
+
+            _backButton.Click += (s, args) =>
+            {
+                var gesture_service = PrismApplicationBase.Container.Resolve<IGestureService>();
+                gesture_service.RaiseBackRequested();
             };
         }
 
@@ -146,11 +233,20 @@ namespace Prism.Windows.Controls
                     Debug.WriteLine($"{selectedItem}.{nameof(NavViewProps.NavigationUriProperty)} is not valid Uri");
                 }
             }
-            UpdatePaneHeaders();
-            UpdatePageHeader();
+            UpdatePaneHeadersVisibility();
+            UpdatePageHeaderContent();
         }
 
-        private void UpdatePaneHeaders()
+        private void UpdateAppTitleVisibility()
+        {
+            if (_paneTitleTextBlock != null)
+            {
+                _paneTitleTextBlock.Visibility = IsPaneOpen
+                    ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
+
+        private void UpdatePaneHeadersVisibility()
         {
             foreach (var item in MenuItems.OfType<NavigationViewItemHeader>())
             {
@@ -171,7 +267,7 @@ namespace Prism.Windows.Controls
 
         private static SemaphoreSlim _updatePageHeaderSemaphore = new SemaphoreSlim(1, 1);
 
-        private void UpdatePageHeader()
+        private void UpdatePageHeaderContent()
         {
             _updatePageHeaderSemaphore.Wait();
 
@@ -179,14 +275,13 @@ namespace Prism.Windows.Controls
             {
                 var children = XamlUtilities.RecurseChildren(this);
                 var bars = children
-                    .Where(x => x.GetValue(NavViewProps.PageHeaderCommandsMergeTargetProperty) is bool value && value)
                     .OfType<CommandBar>();
                 if (!bars.Any())
                 {
                     bar = default(CommandBar);
                     return false;
                 }
-                bar = bars.Single();
+                bar = bars.First();
                 return true;
             }
 

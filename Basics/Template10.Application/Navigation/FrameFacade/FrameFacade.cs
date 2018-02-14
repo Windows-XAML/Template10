@@ -9,6 +9,8 @@ using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+using Prism.Windows.Mvvm;
+using System.ComponentModel;
 
 namespace Prism.Windows.Navigation
 {
@@ -210,6 +212,12 @@ namespace Prism.Windows.Navigation
                 return NavigationResult.Failure("NavigateFrameAsync() returned false.");
             }
 
+            var new_page = _frame.Content as Page;
+            if (new_page == null)
+            {
+                throw new Exception("There is no new page in Frame after Navigate.");
+            }
+
             // post-events
 
             if (old_vm != null)
@@ -217,10 +225,61 @@ namespace Prism.Windows.Navigation
                 OnNavigatedFrom(parameters, old_vm);
             }
 
-            var new_page = _frame.Content as Page;
             var new_vm = new_page?.DataContext;
             if (new_vm == null)
             {
+                if (new_page is IView<INavigatedAware> new_INavigatedAware)
+                {
+                    new_INavigatedAware.ViewModel = new_vm as INavigatedAware;
+                }
+                else if (new_page is IView<INavigatedAwareAsync> new_INavigatedAwareAsync)
+                {
+                    new_INavigatedAwareAsync.ViewModel = new_vm as INavigatedAwareAsync;
+                }
+                else if (new_page is IView<INavigatingAware> new_INavigatingAware)
+                {
+                    new_INavigatingAware.ViewModel = new_vm as INavigatingAware;
+                }
+                else if (new_page is IView<IConfirmNavigationAsync> new_IConfirmNavigationAsync)
+                {
+                    new_IConfirmNavigationAsync.ViewModel = new_vm as IConfirmNavigationAsync;
+                }
+                else if (new_page is IView<IConfirmNavigation> new_IConfirmNavigation)
+                {
+                    new_IConfirmNavigation.ViewModel = new_vm as IConfirmNavigation;
+                }
+                else if (new_page is IView<INotifyPropertyChanged> new_INotifyPropertyChanged)
+                {
+                    new_INotifyPropertyChanged.ViewModel = new_vm as INotifyPropertyChanged;
+                }
+
+    //var iViewType = new_page
+    //    .GetType()
+    //    .GetInterfaces()
+    //    .Where(x => x.IsGenericType)
+    //    .Where(x => x.GetGenericTypeDefinition() == typeof(IView<>))
+    //    .SelectMany(x => x.GetGenericArguments())
+    //    .Single();
+
+    //            T localChangeType<T>(object obj, T type)
+    //            {
+    //                try
+    //                {
+    //                    return (T)obj;
+    //                }
+    //                catch
+    //                {
+    //                    return default(T);
+    //                }
+    //            }
+    //            var cast_vm = localChangeType(new_vm, iViewType);
+
+    //            // support IView
+    //            if (new_page is IView<iViewType> view)
+    //            {
+    //                view.ViewModel = new_vm;
+    //            }
+
                 var regsitry = PrismApplicationBase.Container.Resolve<IPageRegistry>();
                 if (regsitry.TryGetInfo(_frame.CurrentSourcePageType, out var info) && info.ViewModelType != null)
                 {

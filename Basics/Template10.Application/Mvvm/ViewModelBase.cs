@@ -16,8 +16,7 @@ namespace Prism.Windows.Mvvm
             INavigatingAware,
             IConfirmNavigationAsync,
             IConfirmNavigation,
-            INotifyPropertyChanged,
-            IDestructible
+            INotifyPropertyChanged
     {
         // INavigatingAware
 
@@ -43,9 +42,5 @@ namespace Prism.Windows.Mvvm
             await Task.CompletedTask;
             return true;
         }
-
-        // IDestructible
-
-        public virtual void Destroy() { /* empty */ }
     }
 }

@@ -1,19 +1,22 @@
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Prism.Windows.Controls">
 
-    <DataTemplate x:Key="NavViewExCommandBarHeaderTemplate">
-        <Grid Padding="0,0,0,0">
+    <Style TargetType="NavigationView">
+        <Setter Property="OpenPaneLength" Value="1000" />
+    </Style>
 
+    <DataTemplate x:Key="NavViewExCommandBarHeaderTemplate2">
+        <Grid Padding="0,32,0,0">
             <Grid.Background>
                 <AcrylicBrush BackgroundSource="Backdrop" TintOpacity="0.5" />
             </Grid.Background>
-
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition Width="0" />
             </Grid.ColumnDefinitions>
-
-            <CommandBar Background="Transparent" OverflowButtonVisibility="Auto">
-
+            <CommandBar Background="Transparent" OverflowButtonVisibility="Visible">
                 <CommandBar.Content>
                     <Grid Margin="12,5,0,11" VerticalAlignment="Stretch">
                         <TextBlock
@@ -23,34 +26,9 @@
                             TextWrapping="NoWrap" />
                     </Grid>
                 </CommandBar.Content>
-
-                <AppBarButton Icon="Back" />
-                <AppBarButton Icon="AlignCenter" />
-                <AppBarButton Icon="Admin" />
-                <AppBarButton Icon="Contact" />
-                <AppBarButton Icon="Accept" />
-                <AppBarButton Icon="Delete" />
-
+                <AppBarButton Icon="World" />
+                <AppBarButton Icon="World" />
             </CommandBar>
-
-        </Grid>
-    </DataTemplate>
-
-    <DataTemplate x:Key="NavViewExTextBlockHeaderTemplate">
-        <Grid Padding="0,0,0,0">
-
-            <Grid.Background>
-                <AcrylicBrush BackgroundSource="Backdrop" TintOpacity="0.5" />
-            </Grid.Background>
-
-            <Grid Margin="12,5,0,11" VerticalAlignment="Stretch">
-                <TextBlock
-                    VerticalAlignment="Bottom"
-                    Style="{StaticResource TitleTextBlockStyle}"
-                    Text="{Binding}"
-                    TextWrapping="NoWrap" />
-            </Grid>
-
         </Grid>
     </DataTemplate>
 

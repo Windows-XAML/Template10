@@ -38,16 +38,6 @@ namespace Prism.Windows.Controls
             DependencyProperty.RegisterAttached("HeaderText", typeof(string),
                 typeof(NavViewProps), new PropertyMetadata(null));
 
-        // shell CommandBar merge target
-
-        public static bool GetPageHeaderCommandsMergeTarget(CommandBar obj)
-            => (bool)obj.GetValue(PageHeaderCommandsMergeTargetProperty);
-        public static void SetPageHeaderCommandsMergeTarget(CommandBar obj, bool value)
-            => obj.SetValue(PageHeaderCommandsMergeTargetProperty, value);
-        public static readonly DependencyProperty PageHeaderCommandsMergeTargetProperty =
-            DependencyProperty.RegisterAttached("PageHeaderCommandsMergeTarget", typeof(bool),
-                typeof(NavViewProps), new PropertyMetadata(false));
-
         // shell CommandBar dyanmic item
 
         internal static bool GetPageHeaderCommandDynamicItem(DependencyObject obj)

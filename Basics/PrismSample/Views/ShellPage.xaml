@@ -19,10 +19,7 @@
                     <ColumnDefinition />
                     <ColumnDefinition Width="0" />
                 </Grid.ColumnDefinitions>
-                <CommandBar
-                    controls:NavViewProps.PageHeaderCommandsMergeTarget="True"
-                    Background="Transparent"
-                    OverflowButtonVisibility="Visible">
+                <CommandBar Background="Transparent" OverflowButtonVisibility="Visible">
                     <CommandBar.Content>
                         <Grid Margin="12,5,0,11" VerticalAlignment="Stretch">
                             <TextBlock
@@ -44,7 +41,6 @@
         <controls:NavViewEx
             x:Name="ShellView"
             x:FieldModifier="Public"
-            Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
             HeaderTemplate="{StaticResource NavViewExHeaderTemplate}">
 
             <NavigationView.AutoSuggestBox>
