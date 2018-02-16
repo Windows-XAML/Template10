@@ -786,7 +786,7 @@ namespace Template10.Controls
             e.Handled = true;
         }
 
-        private void NavButtonChecked(object sender, RoutedEventArgs e)
+        private void NavButton_Checked(object sender, RoutedEventArgs e)
         {
             DebugWrite();
 
@@ -800,7 +800,7 @@ namespace Template10.Controls
             }
         }
 
-        private void NavButtonUnchecked(object sender, RoutedEventArgs e)
+        private void NavButton_Unchecked(object sender, RoutedEventArgs e)
         {
             DebugWrite();
 
