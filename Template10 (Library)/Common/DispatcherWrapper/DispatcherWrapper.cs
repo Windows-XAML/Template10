@@ -40,7 +40,7 @@ namespace Template10.Common
                 if (delayms > 0)
                     await Task.Delay(delayms).ConfigureAwait(false);
                 var tcs = new TaskCompletionSource<T>();
-                dispatcher.RunAsync(priority, async delegate
+                await dispatcher.RunAsync(priority, async delegate
                 {
                     try
                     {
@@ -69,7 +69,7 @@ namespace Template10.Common
                 if (delayms > 0)
                     await Task.Delay(delayms).ConfigureAwait(false);
                 var tcs = new TaskCompletionSource<object>();
-                dispatcher.RunAsync(priority, delegate
+                await dispatcher.RunAsync(priority, delegate
                 {
                     try
                     {
@@ -98,7 +98,7 @@ namespace Template10.Common
                 if (delayms > 0)
                     await Task.Delay(delayms).ConfigureAwait(false);
                 var tcs = new TaskCompletionSource<object>();
-                dispatcher.RunAsync(priority, async delegate
+                await dispatcher.RunAsync(priority, async delegate
                 {
                     try
                     {
@@ -127,7 +127,7 @@ namespace Template10.Common
                 if (delayms > 0)
                     await Task.Delay(delayms).ConfigureAwait(false);
                 var tcs = new TaskCompletionSource<T>();
-                dispatcher.RunAsync(priority, delegate
+                await dispatcher.RunAsync(priority, delegate
                 {
                     try
                     {
@@ -144,10 +144,12 @@ namespace Template10.Common
 
         public void Dispatch(Action action, int delayms = 0, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal)
         {
-            if (delayms > 0)
-                Task.Delay(delayms).ConfigureAwait(false).GetAwaiter().GetResult();
-
-            dispatcher.RunAsync(priority, () => action());
+            dispatcher.RunAsync(priority, async delegate
+			{
+				if (delayms > 0)
+					await Task.Delay(delayms).ConfigureAwait(true);
+				action();
+			});
         }
 
         public T Dispatch<T>(Func<T> action, int delayms = 0, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal)
@@ -191,7 +193,7 @@ namespace Template10.Common
                 if (delayms > 0)
                     await Task.Delay(delayms).ConfigureAwait(false);
                 var tcs = new TaskCompletionSource<object>();
-                dispatcher.RunIdleAsync(delegate
+                await dispatcher.RunIdleAsync(delegate
                 {
                     try
                     {
@@ -220,7 +222,7 @@ namespace Template10.Common
                 if (delayms > 0)
                     await Task.Delay(delayms).ConfigureAwait(false);
                 var tcs = new TaskCompletionSource<object>();
-                dispatcher.RunIdleAsync(async delegate
+                await dispatcher.RunIdleAsync(async delegate
                 {
                     try
                     {
@@ -256,12 +258,35 @@ namespace Template10.Common
             return await tcs.Task.ConfigureAwait(false);
         }
 
-        public void DispatchIdle(Action action, int delayms = 0)
+        public async Task<T> DispatchIdleAsync<T>(Func<Task<T>> func, int delayms = 0)
         {
             if (delayms > 0)
-                Task.Delay(delayms).ConfigureAwait(false).GetAwaiter().GetResult();
+                await Task.Delay(delayms).ConfigureAwait(this.dispatcher.HasThreadAccess);
 
-            dispatcher.RunIdleAsync(args => action());
+            var tcs = new TaskCompletionSource<T>();
+            dispatcher.RunIdleAsync(async delegate
+            {
+                try
+                {
+                    var result = await func().ConfigureAwait(false);
+                    tcs.TrySetResult(result);
+                }
+                catch (Exception ex)
+                {
+                    tcs.TrySetException(ex);
+                }
+            });
+            return await tcs.Task.ConfigureAwait(false);
+        }
+
+        public void DispatchIdle(Action action, int delayms = 0)
+        {
+            dispatcher.RunIdleAsync(async delegate
+			{
+				if (delayms > 0)
+					await Task.Delay(delayms).ConfigureAwait(true);
+				action();
+			});
         }
 
         public T DispatchIdle<T>(Func<T> action, int delayms = 0) where T : class
