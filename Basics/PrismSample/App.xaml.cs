@@ -11,7 +11,7 @@ using System.Diagnostics;
 
 namespace PrismSample
 {
-    sealed partial class App : PrismApplication
+    sealed partial class App : BootStrapper
     {
         public App()
         {
@@ -22,7 +22,7 @@ namespace PrismSample
         {
             container.RegisterSingleton<ShellPage, ShellPage>();
             container.RegisterSingleton<IDataService, DataService>();
-            container.RegisterSingleton<MainPageViewModel, MainPageViewModel>();
+            container.RegisterForNavigation<MainPage, MainPageViewModel>(nameof(MainPage));
         }
 
         public override async Task OnStartAsync(StartArgs args)
@@ -37,7 +37,7 @@ namespace PrismSample
                 .Append(nameof(MainPage), ("Record", "567"))
                 .ToString();
 
-            var shell = Container.Resolve<ShellPage>();
+            var shell = Central.Container.Resolve<ShellPage>();
             await shell.ShellView.NavigationService.NavigateAsync(path);
             Window.Current.Content = shell;
         }

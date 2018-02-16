@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Prism.Windows.Navigation
+namespace Template10
 {
     public interface ISessionState : IDictionary<string, object>
     {

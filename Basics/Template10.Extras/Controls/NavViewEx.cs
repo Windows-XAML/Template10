@@ -322,7 +322,7 @@ namespace Template10.Controls
         {
             // registered?
 
-            if (!Container.PageRegistry.TryGetRegistration(type, out var info))
+            if (!Central.Registry.TryGetRegistration(type, out var info))
             {
                 item = null;
                 return false;

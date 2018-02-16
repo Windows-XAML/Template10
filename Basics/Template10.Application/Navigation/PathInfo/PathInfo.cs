@@ -52,7 +52,7 @@ namespace Prism.Windows.Navigation
 
             // get types
 
-            if (Container.PageRegistry.TryGetRegistration(Key, out var info))
+            if (Central.Registry.TryGetRegistration(Key, out var info))
             {
                 Key = info.Key;
                 View = info.View;

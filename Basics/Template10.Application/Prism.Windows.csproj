@@ -108,7 +108,8 @@
   <ItemGroup>
     <Compile Include="Application\StartCauses.cs" />
     <Compile Include="Application\StartKinds.cs" />
-    <Compile Include="Container.cs" />
+    <Compile Include="Central.cs" />
+    <Compile Include="Mvvm\IViewModelLocator.cs" />
     <Compile Include="Mvvm\ViewModelBase.cs" />
     <Compile Include="Mvvm\ViewModelLocator.cs" />
     <Compile Include="Navigation\NavigationService\Extensions.cs" />
@@ -117,7 +118,6 @@
     <Compile Include="Navigation\PathInfo\PathInfo.cs" />
     <Compile Include="Navigation\PageRegistry\PageRegistry.cs" />
     <Compile Include="Navigation\Prism.Core\Extensions.cs" />
-    <Compile Include="Navigation\SessionState\ISessionState.cs" />
     <Compile Include="Navigation\PageRegistry\IPageRegistry.cs" />
     <Compile Include="Application\IStartArgs.cs" />
     <Compile Include="Navigation\Extensions.cs" />
@@ -128,7 +128,6 @@
     <Compile Include="Navigation\Prism.Core\NavigationResult.cs" />
     <Compile Include="Navigation\NavigationService\NavigationService.cs" />
     <Compile Include="Navigation\NavigationQueue.cs" />
-    <Compile Include="Navigation\SessionState\SessionState.cs" />
     <Compile Include="Prism\INavigatedAwareAsync.cs" />
     <Compile Include="Prism\NavigationMode.cs" />
     <Compile Include="Navigation\Prism.Core\NavigationParameters.cs" />

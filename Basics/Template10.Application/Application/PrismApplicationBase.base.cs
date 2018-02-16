@@ -39,7 +39,7 @@ namespace Prism.Windows
             InternalInitialize();
         }
 
-        public ISessionState SessionState => Container.Resolve<ISessionState>();
+        public ISessionState SessionState => Central.Container.Resolve<ISessionState>();
 
         public abstract IContainerExtension CreateContainer();
 
@@ -56,10 +56,10 @@ namespace Prism.Windows
         private void InternalInitialize()
         {
             Debug.WriteLine($"{nameof(PrismApplicationBase)}.{nameof(InternalInitialize)}");
-            Container.ContainerExtension = CreateContainer();
-            RegisterRequiredTypes(Container.ContainerRegistry);
-            RegisterTypes(Container.ContainerRegistry);
-            Container.ContainerExtension.FinalizeExtension();
+            Central.Container.ContainerExtension = CreateContainer();
+            RegisterRequiredTypes(Central.Container.ContainerRegistry);
+            RegisterTypes(Central.Container.ContainerRegistry);
+            Central.Container.ContainerExtension.FinalizeExtension();
             OnInitialize();
         }
 

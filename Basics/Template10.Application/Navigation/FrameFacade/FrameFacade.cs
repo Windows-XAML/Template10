@@ -227,9 +227,9 @@ namespace Prism.Windows.Navigation
             var new_vm = new_page?.DataContext;
             if (new_vm == null)
             {
-                if (Container.PageRegistry.TryGetRegistration(_frame.CurrentSourcePageType, out var info) && info.ViewModel != null)
+                if (Central.Registry.TryGetRegistration(_frame.CurrentSourcePageType, out var info) && info.ViewModel != null)
                 {
-                    new_page.DataContext = new_vm = Container.Resolve(info.ViewModel);
+                    new_page.DataContext = new_vm = Central.Container.Resolve(info.ViewModel);
                 }
             }
 

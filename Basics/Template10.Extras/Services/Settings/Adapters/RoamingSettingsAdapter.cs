@@ -11,7 +11,7 @@ namespace Template10.Services.Settings
         private ApplicationDataContainer _container;
 
         public RoamingSettingsAdapter()
-           : this(Container.Resolve<ISerializationService>())
+           : this(Central.Container.Resolve<ISerializationService>())
         {
             // empty
         }

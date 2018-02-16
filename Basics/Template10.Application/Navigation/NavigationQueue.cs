@@ -11,7 +11,7 @@ using Prism.Windows.Mvvm;
 
 namespace Prism.Windows.Navigation
 {
-    public class NavigationQueue : Queue<IPathInfo>
+    internal class NavigationQueue : Queue<IPathInfo>
     {
         public NavigationQueue(IEnumerable<IPathInfo> collection)
             : base(collection.OrderBy(x => x.Index))

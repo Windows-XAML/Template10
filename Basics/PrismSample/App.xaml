@@ -1,4 +1,4 @@
-﻿<prism:PrismApplication
+﻿<prism:BootStrapper
     x:Class="PrismSample.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -10,4 +10,4 @@
         </ResourceDictionary>
     </Application.Resources>
 
-</prism:PrismApplication>
+</prism:BootStrapper>

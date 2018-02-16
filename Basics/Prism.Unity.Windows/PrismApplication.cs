@@ -16,16 +16,17 @@ using Template10.Services.Settings;
 using Template10.Services.Web;
 using Microsoft.Extensions.DependencyInjection;
 using Windows.UI.Xaml;
+using Template10;
 
 namespace Prism.Windows
 {
-    public abstract class PrismApplication : PrismApplicationBase
+    public abstract class BootStrapper : PrismApplicationBase
     {
-        public PrismApplication()
-            : base()
+        public BootStrapper() : base()
         {
             (this as IPrismApplicationEvents).WindowCreated += (s, e) =>
             {
+                // doing it this way will make gestures work for each subsequent view
                 Template10.Services.Gesture.GestureService.SetupForCurrentView(e.Window.CoreWindow);
             };
         }
@@ -37,13 +38,14 @@ namespace Prism.Windows
 
         public override void RegisterRequiredTypes(IContainerRegistry container)
         {
-            // identical across prism
+            // standard prism services
 
             container.RegisterSingleton<ILoggerFacade, EmptyLogger>();
             container.RegisterSingleton<IEventAggregator, EventAggregator>();
 
-            // common services
+            // standard template 10 services
 
+            container.RegisterSingleton<ISessionState, SessionState>();
             container.RegisterSingleton<ICompressionService, CompressionService>();
             container.RegisterSingleton<IDialogService, DialogService>();
             container.RegisterSingleton<IFileService, FileService>();
@@ -52,11 +54,10 @@ namespace Prism.Windows
             container.RegisterSingleton<INetworkService, NetworkService>();
             container.RegisterSingleton<IResourceService, ResourceService>();
             container.RegisterSingleton<ISecretService, SecretService>();
-            container.RegisterSingleton<ISerializationService, NullSerializationService>();
             container.RegisterSingleton<ISettingsHelper, SettingsHelper>();
             container.RegisterSingleton<IWebApiService, WebApiService>();
 
-            // custom in this project
+            // custom services
 
             container.RegisterSingleton<ISerializationService, NewtonsoftSerializationService>();
         }

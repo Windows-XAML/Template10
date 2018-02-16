@@ -12,7 +12,7 @@ namespace Template10.Services.Settings
         private readonly IFileService _helper;
 
         public RoamingFileSettingsAdapter()
-          : this(Container.Resolve<ISerializationService>())
+          : this(Central.Container.Resolve<ISerializationService>())
         {
             // empty
         }

@@ -7,8 +7,5 @@ namespace Prism.Windows.Navigation
         void Register(string key, (Type View, Type ViewModel) info);
         bool TryGetRegistration(Type view, out (string Key, Type View, Type ViewModel) info);
         bool TryGetRegistration(string key, out (string Key, Type View, Type ViewModel) info);
-        // bool TryUseFactories(string key, out (string Key, Type View, Type ViewModel) info);
-        Func<string, Type> ViewFactory { get; set; }
-        Func<Type, Type> ViewModelFactory { get; set; }
     }
 }
