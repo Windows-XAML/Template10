@@ -491,8 +491,8 @@ namespace Template10.Controls
                 typeof(HamburgerMenu), new PropertyMetadata(null, (d, e) =>
                 {
                     WriteDebug(nameof(Selected), e);
-                    (d as HamburgerMenu).SelectedChanged?.Invoke(d, e.ToChangedEventArgs<HamburgerButtonInfo>());
                     (d as HamburgerMenu).InternalSelectedChanged(e.ToChangedEventArgs<HamburgerButtonInfo>());
+                    (d as HamburgerMenu).SelectedChanged?.Invoke(d, e.ToChangedEventArgs<HamburgerButtonInfo>());
                 }));
         public event EventHandler<ChangedEventArgs<HamburgerButtonInfo>> SelectedChanged;
         partial void InternalSelectedChanged(ChangedEventArgs<HamburgerButtonInfo> e);

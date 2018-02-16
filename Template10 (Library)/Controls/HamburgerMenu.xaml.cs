@@ -14,6 +14,7 @@ using Windows.Devices.Input;
 using Windows.Foundation;
 using Windows.System;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -306,27 +307,28 @@ namespace Template10.Controls
             UpdatePaneMarginToShowHamburgerButton();
         }
 
-        async partial void InternalSelectedChanged(ChangedEventArgs<HamburgerButtonInfo> e)
+        partial void InternalSelectedChanged(ChangedEventArgs<HamburgerButtonInfo> e)
         {
-            if ((e.NewValue?.Equals(e.OldValue) ?? false))
-            {
-                e.NewValue.IsChecked = (e.NewValue.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
-            }
+            var oldValue = e.OldValue;
+            var newValue = e.NewValue;
 
-            try
+            Dispatcher.RunAsync(CoreDispatcherPriority.High, async delegate
             {
-                await UpdateSelectedAsync(e.OldValue, e.NewValue);
-            }
-            catch (Exception ex)
-            {
-                DebugWrite($"Catch Ex.Message: {ex.Message}", caller: "SelectedPropertyChanged");
-            }
+                try
+                {
+                    await UpdateSelectedAsync(oldValue, newValue);
+                }
+                catch (Exception ex)
+                {
+                    DebugWrite($"Catch Ex.Message: {ex.Message}", caller: "SelectedPropertyChanged");
+                }
+            });
         }
 
         partial void InternalNavigationServiceChanged(ChangedEventArgs<INavigationService> e)
         {
-            e.NewValue.AfterRestoreSavedNavigation += (s, args) => HighlightCorrectButton(NavigationService.CurrentPageType, NavigationService.CurrentPageParam);
-            e.NewValue.FrameFacade.Navigated += (s, args) => HighlightCorrectButton(args.PageType, args.Parameter);
+            e.NewValue.AfterRestoreSavedNavigation += (s, args) => this.HighlightCorrectButtonFromNavigationService();
+            e.NewValue.FrameFacade.Navigated += (s, args) => this.HighlightCorrectButtonFromNavigationService();
             ShellSplitView.Content = e.NewValue.Frame;
             UpdateFullScreenForSplashScreen(e);
         }
@@ -385,6 +387,13 @@ namespace Template10.Controls
                     }
                 };
             }
+        }
+
+        private void HighlightCorrectButtonFromNavigationService()
+        {
+            Type currentPageType = this.NavigationService.CurrentPageType;
+            object currentPageParam = this.NavigationService.CurrentPageParam;
+            HighlightCorrectButton(currentPageType, currentPageParam);
         }
 
         internal void HighlightCorrectButton(Type pageType, object pageParam)
@@ -519,15 +528,37 @@ namespace Template10.Controls
                 previous.RaiseUnselected();
 
                 // Workaround for visual state of ToggleButton not reset correctly
-                if (value != null)
+                var control = LoadedNavButtons.First(x => x.HamburgerButtonInfo == previous).GetElement<Control>();
+                VisualStateManager.GoToState(control, "Normal", true);
+            }
+
+            // that's it if null
+            if (value == null)
+            {
+                return;
+            }
+
+            // check current
+            value.IsChecked = (value.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
+            if (value.IsChecked.Value)
+            {
+                if (previous != value)
                 {
-                    var control = LoadedNavButtons.First(x => x.HamburgerButtonInfo == value).GetElement<Control>();
-                    VisualStateManager.GoToState(control, "Normal", true);
+                    value.RaiseSelected();
                 }
+
+                // Workaround for visual state not set correctly
+                var control = LoadedNavButtons.First(x => x.HamburgerButtonInfo == value).GetElement<Control>();
+                VisualStateManager.GoToState(control, "Checked", true);
+            }
+            else
+            {
+                var control = LoadedNavButtons.First(x => x.HamburgerButtonInfo == value).GetElement<Control>();
+                VisualStateManager.GoToState(control, "Normal", true);
             }
 
             // navigate only when all navigation buttons have been loaded
-            if (AllNavButtonsAreLoaded && value?.PageType != null)
+            if (AllNavButtonsAreLoaded && value.PageType != null)
             {
                 if (await NavigationService.NavigateAsync(value.PageType, value?.PageParameter, value?.NavigationTransitionInfo))
                 {
@@ -544,28 +575,6 @@ namespace Template10.Controls
                         NavigationService.ClearHistory();
                     if (value.ClearCache)
                         NavigationService.ClearCache(true);
-                }
-                else if (NavigationService.CurrentPageType == value.PageType)
-                {
-                    // just check it
-                }
-                else
-                {
-                    return;
-                }
-            }
-
-            // that's it if null
-            if (value == null)
-            {
-                return;
-            }
-            else
-            {
-                value.IsChecked = (value.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
-                if (previous != value)
-                {
-                    value.RaiseSelected();
                 }
             }
         }
@@ -689,6 +698,20 @@ namespace Template10.Controls
                 CommandButttonTapped?.Invoke(commandInfo, null);
             }
         }
+
+        private void ExecuteNavButtonICommand(HamburgerButtonInfo info)
+        {
+            ICommand command = info.Command;
+            if (command != null)
+            {
+                var commandParameter = info.CommandParameter;
+                if (command.CanExecute(commandParameter))
+                {
+                    command.Execute(commandParameter);
+                }
+            }
+        }
+
         #endregion
 
         int NavButtonCount => PrimaryButtons.Count + SecondaryButtons.Count;
@@ -735,7 +758,7 @@ namespace Template10.Controls
                 LoadedNavButtons.Add(button);
                 if (AllNavButtonsAreLoaded)
                 {
-                    HighlightCorrectButton(NavigationService.CurrentPageType, NavigationService.CurrentPageParam);
+                    HighlightCorrectButtonFromNavigationService();
                 }
             }
         }
@@ -750,20 +773,7 @@ namespace Template10.Controls
                 LoadedNavButtons.Remove(LoadedNavButtons.Last(x => x.FrameworkElement == button.FrameworkElement));
                 if (AllNavButtonsAreLoaded)
                 {
-                    HighlightCorrectButton(NavigationService.CurrentPageType, NavigationService.CurrentPageParam);
-                }
-            }
-        }
-
-        private void ExecuteNavButtonICommand(HamburgerButtonInfo info)
-        {
-            ICommand command = info.Command;
-            if (command != null)
-            {
-                var commandParameter = info.CommandParameter;
-                if (command.CanExecute(commandParameter))
-                {
-                    command.Execute(commandParameter);
+                    HighlightCorrectButtonFromNavigationService();
                 }
             }
         }
@@ -793,10 +803,13 @@ namespace Template10.Controls
             var button = new InfoElement(sender);
             if (button.HamburgerButtonInfo.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle)
             {
-                button.HamburgerButtonInfo.IsChecked = (button.HamburgerButtonInfo.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle);
-                if (button.HamburgerButtonInfo.IsChecked ?? true) Selected = button.HamburgerButtonInfo;
-                if (button.HamburgerButtonInfo.IsChecked ?? true) button.HamburgerButtonInfo.RaiseChecked(e);
-                button.FrameworkElement.IsHitTestVisible = !button.HamburgerButtonInfo.IsChecked ?? false;
+                if (!button.HamburgerButtonInfo.IsChecked ?? false)
+                {
+                    button.HamburgerButtonInfo.IsChecked = true;
+                    if (button.HamburgerButtonInfo.IsChecked ?? true) Selected = button.HamburgerButtonInfo;
+                    if (button.HamburgerButtonInfo.IsChecked ?? true) button.HamburgerButtonInfo.RaiseChecked(e);
+                    button.FrameworkElement.IsHitTestVisible = !button.HamburgerButtonInfo.IsChecked ?? false;
+                }
             }
         }
 
@@ -807,9 +820,13 @@ namespace Template10.Controls
             var button = new InfoElement(sender);
             if (button.HamburgerButtonInfo.ButtonType == HamburgerButtonInfo.ButtonTypes.Toggle)
             {
-                button.HamburgerButtonInfo.RaiseUnchecked(e);
-                button.FrameworkElement.IsHitTestVisible = true;
-                VisualStateManager.GoToState(button.ToggleButton, "Normal", true);
+                if (button.HamburgerButtonInfo.IsChecked ?? true)
+                {
+                    button.HamburgerButtonInfo.IsChecked = false;
+                    button.HamburgerButtonInfo.RaiseUnchecked(e);
+                    button.FrameworkElement.IsHitTestVisible = true;
+                    VisualStateManager.GoToState(button.ToggleButton, "Normal", true);
+                }
             }
         }
 
