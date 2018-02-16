@@ -1,0 +1,25 @@
+﻿<common:BootStrapper x:Class="Template10.Samples.PageKeysSample.App" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:common="using:Template10.Common"
+                     xmlns:controls="using:Template10.Controls" xmlns:local="using:Template10.Samples.PageKeysSample">
+
+    <Application.Resources>
+
+        <Style TargetType="controls:CustomTitleBar">
+            <Setter Property="BackgroundColor" Value="SteelBlue" />
+            <Setter Property="ButtonBackgroundColor" Value="Maroon" />
+            <Setter Property="ButtonForegroundColor" Value="White" />
+            <Setter Property="ButtonHoverBackgroundColor" Value="Orange" />
+            <Setter Property="ButtonHoverForegroundColor" Value="White" />
+            <Setter Property="ButtonInactiveBackgroundColor" Value="DimGray" />
+            <Setter Property="ButtonInactiveForegroundColor" Value="White" />
+            <Setter Property="ButtonPressedBackgroundColor" Value="Green" />
+            <Setter Property="ButtonPressedForegroundColor" Value="White" />
+            <Setter Property="Extended" Value="False" />
+            <Setter Property="ForegroundColor" Value="White" />
+            <Setter Property="InactiveBackgroundColor" Value="LightSteelBlue" />
+            <Setter Property="InactiveForegroundColor" Value="DimGray" />
+        </Style>
+
+    </Application.Resources>
+
+</common:BootStrapper>

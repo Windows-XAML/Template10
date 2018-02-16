@@ -1,0 +1,71 @@
+﻿<Page x:ConnectionId='1' x:Class="Template10.Samples.MasterDetailSample.Views.MasterDetailsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:Behaviors="using:Template10.Behaviors"
+      xmlns:Controls="using:Template10.Samples.MasterDetailSample.Controls"
+      xmlns:Converters="using:Template10.Converters"
+      xmlns:Core="using:Microsoft.Xaml.Interactions.Core"
+      xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:viewModels="using:Template10.Samples.MasterDetailSample.ViewModels"
+      x:Name="ThisPage"
+      Background="White"
+      RequestedTheme="Light"
+      mc:Ignorable="d">
+
+    <Page.DataContext>
+        <viewModels:MasterDetailsPageViewModel x:ConnectionId='2' x:Name="ViewModel" />
+    </Page.DataContext>
+
+    <Grid x:ConnectionId='3' x:Name="RootGrid">
+        <Controls:MasterDetailsView x:ConnectionId='4' x:Name="MailList"
+                                    Background="White"
+                                                                                      
+                                    DetailsTemplate="{StaticResource MessageDetailTemplate}"
+                                                                                                       
+                                                                                                     
+                                    ItemContainerStyle="{StaticResource MailListItemContainerStyle}"
+                                    ItemTemplate="{StaticResource MessageListItemTemplate}"
+                                                                                          
+                                                                                           >
+            <Controls:MasterDetailsView.MasterCommandBarContent>
+                <StackPanel Height="48" Orientation="Horizontal">
+                    <TextBlock Margin="12,0,0,0"
+                               VerticalAlignment="Center"
+                               FontSize="24"
+                               FontWeight="Black"
+                               Style="{StaticResource TitleTextBlockStyle}"
+                               Text="INBOX" />
+                    <TextBlock Height="32"
+                               Margin="12,4,0,0"
+                               VerticalAlignment="Center"
+                               Style="{StaticResource SubtitleTextBlockStyle}"
+                               Text="Mail" />
+                </StackPanel>
+            </Controls:MasterDetailsView.MasterCommandBarContent>
+            <Controls:MasterDetailsView.MasterCommands>
+                <AppBarButton x:ConnectionId='5'                                            
+                              Icon="Refresh"
+                              Label="Refresh" />
+                <AppBarButton x:ConnectionId='6'                                                 
+                              Icon="Switch"
+                              Label="Switch" />
+            </Controls:MasterDetailsView.MasterCommands>
+            <Controls:MasterDetailsView.DetailsCommands>
+                <AppBarButton x:ConnectionId='7'                                                          
+                              Icon="Previous"
+                              Label="Newer" />
+                <AppBarButton x:ConnectionId='8'                                                      
+                              Icon="Next"
+                              Label="Older" />
+                <AppBarButton Icon="Delete" Label="Delete" />
+            </Controls:MasterDetailsView.DetailsCommands>
+            <x:String>Sample</x:String>
+            <x:String>Sample</x:String>
+            <x:String>Sample</x:String>
+        </Controls:MasterDetailsView>
+    </Grid>
+</Page>
+
+

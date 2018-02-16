@@ -1,0 +1,13 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="using:Template10.Controls">
+
+    <Style TargetType="controls:HamburgerMenu">
+        <Setter Property="AccentColor" Value="{ThemeResource SystemAccentColor}" />
+        <Setter Property="VisualStateNarrowMinWidth" Value="-1" />
+        <Setter Property="VisualStateNormalMinWidth" Value="-1" />
+        <Setter Property="VisualStateWideMinWidth" Value="-1" />
+    </Style>
+
+</ResourceDictionary>
+

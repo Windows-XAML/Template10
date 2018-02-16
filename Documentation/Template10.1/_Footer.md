@@ -1,1 +1,0 @@
-<http://aka.ms/template10>

@@ -1,0 +1,2 @@
+C:\git.repos\Template10\Samples\PageKeys\PageKeys.csproj;x86
+C:\git.repos\Template10\Template10 (Library)\Template10 (Library).csproj;x86

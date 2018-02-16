@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+  </PropertyGroup>
+  <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Import Project="C:\Program Files (x86)\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.net.uwpcoreruntimesdk\2.1.1\build\runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk.targets" Condition="Exists('C:\Program Files (x86)\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.net.uwpcoreruntimesdk\2.1.1\build\runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk.targets')" />
+    <Import Project="C:\Program Files (x86)\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x64.microsoft.net.uwpcoreruntimesdk\2.1.1\build\runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk.targets" Condition="Exists('C:\Program Files (x86)\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x64.microsoft.net.uwpcoreruntimesdk\2.1.1\build\runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk.targets')" />
+    <Import Project="C:\Program Files (x86)\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-arm.microsoft.net.uwpcoreruntimesdk\2.1.1\build\runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk.targets" Condition="Exists('C:\Program Files (x86)\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-arm.microsoft.net.uwpcoreruntimesdk\2.1.1\build\runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk.targets')" />
+    <Import Project="C:\Program Files (x86)\Microsoft SDKs\NuGetPackagesFallback\netstandard.library\2.0.1\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('C:\Program Files (x86)\Microsoft SDKs\NuGetPackagesFallback\netstandard.library\2.0.1\build\netstandard2.0\NETStandard.Library.targets')" />
+    <Import Project="C:\Program Files (x86)\Microsoft SDKs\NuGetPackagesFallback\microsoft.net.native.sharedlibrary-x86\2.0.0\build\Microsoft.Net.Native.SharedLibrary-x86.targets" Condition="Exists('C:\Program Files (x86)\Microsoft SDKs\NuGetPackagesFallback\microsoft.net.native.sharedlibrary-x86\2.0.0\build\Microsoft.Net.Native.SharedLibrary-x86.targets')" />
+    <Import Project="C:\Program Files (x86)\Microsoft SDKs\NuGetPackagesFallback\microsoft.net.native.sharedlibrary-x64\2.0.0\build\Microsoft.Net.Native.SharedLibrary-x64.targets" Condition="Exists('C:\Program Files (x86)\Microsoft SDKs\NuGetPackagesFallback\microsoft.net.native.sharedlibrary-x64\2.0.0\build\Microsoft.Net.Native.SharedLibrary-x64.targets')" />
+    <Import Project="C:\Program Files (x86)\Microsoft SDKs\NuGetPackagesFallback\microsoft.net.native.sharedlibrary-arm\2.0.0\build\Microsoft.Net.Native.SharedLibrary-arm.targets" Condition="Exists('C:\Program Files (x86)\Microsoft SDKs\NuGetPackagesFallback\microsoft.net.native.sharedlibrary-arm\2.0.0\build\Microsoft.Net.Native.SharedLibrary-arm.targets')" />
+    <Import Project="C:\Program Files (x86)\Microsoft SDKs\NuGetPackagesFallback\microsoft.net.native.compiler\2.0.2\build\Microsoft.Net.Native.Compiler.targets" Condition="Exists('C:\Program Files (x86)\Microsoft SDKs\NuGetPackagesFallback\microsoft.net.native.compiler\2.0.2\build\Microsoft.Net.Native.Compiler.targets')" />
+  </ImportGroup>
+</Project>

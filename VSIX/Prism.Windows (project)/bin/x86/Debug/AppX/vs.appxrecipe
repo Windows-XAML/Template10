@@ -1,0 +1,863 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Machine>NXN-DESKTOP</Machine>
+    <WindowsUser>jerry</WindowsUser>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetOsVersion>10.0</TargetOsVersion>
+    <TargetOsDescription>Windows 10.0</TargetOsDescription>
+    <SolutionConfiguration>Debug|x86</SolutionConfiguration>
+    <PackageArchitecture>x86</PackageArchitecture>
+    <PackageIdentityName>a5ff031f-9002-47b7-90e6-95d71dd0bb99</PackageIdentityName>
+    <PackageIdentityPublisher>CN=jerry</PackageIdentityPublisher>
+    <IntermediateOutputPath>C:\git.repos\Template10\VSIX\Prism.Windows %28project%29\obj\x86\Debug\</IntermediateOutputPath>
+    <RemoteDeploymentType>
+    </RemoteDeploymentType>
+    <PackageRegistrationPath>
+    </PackageRegistrationPath>
+    <RemoveNonLayoutFiles>true</RemoveNonLayoutFiles>
+    <DeployOptionalPackages>false</DeployOptionalPackages>
+    <WindowsSdkPath>C:\Program Files %28x86%29\Windows Kits\10\</WindowsSdkPath>
+    <LayoutDir>C:\git.repos\Template10\VSIX\Prism.Windows %28project%29\bin\x86\Debug\AppX</LayoutDir>
+    <RegisteredManifestChecksum>20DBC0138EAE2CD28B679BF1DFFC5527B8A50C7A42406453CD087CED9C263F7F</RegisteredManifestChecksum>
+    <RegisteredPackageMoniker>a5ff031f-9002-47b7-90e6-95d71dd0bb99_1.0.0.0_x86__dpar4jqn5ebar</RegisteredPackageMoniker>
+    <RegisteredUserModeAppID>a5ff031f-9002-47b7-90e6-95d71dd0bb99_dpar4jqn5ebar!App</RegisteredUserModeAppID>
+    <RegisteredPackageID>a5ff031f-9002-47b7-90e6-95d71dd0bb99</RegisteredPackageID>
+    <RegisteredPackagePublisher>CN=jerry</RegisteredPackagePublisher>
+    <RegisteredVersion>1.0.0.0</RegisteredVersion>
+    <JitOptimizationSuppressed>True</JitOptimizationSuppressed>
+  </PropertyGroup>
+  <ItemGroup>
+    <AppXManifest Include="C:\git.repos\Template10\VSIX\Prism.Windows %28project%29\bin\x86\Debug\Core\AppxManifest.xml">
+      <PackagePath>AppxManifest.xml</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-02-16T21:53:22.896</Modified>
+    </AppXManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxPackagedFile Include="C:\git.repos\Template10\VSIX\Prism.Windows %28project%29\bin\x86\Debug\PrismSample.exe">
+      <PackagePath>entrypoint\PrismSample.exe</PackagePath>
+      <Modified>2018-02-16T21:53:19.970</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\jerry\.nuget\packages\bogus\22.0.2\lib\netstandard2.0\Bogus.dll">
+      <PackagePath>Bogus.dll</PackagePath>
+      <Modified>2018-01-06T04:41:22.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\jerry\.nuget\packages\microsoft.extensions.dependencyinjection\2.0.0\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.dll">
+      <PackagePath>Microsoft.Extensions.DependencyInjection.dll</PackagePath>
+      <Modified>2017-07-25T06:48:04.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\jerry\.nuget\packages\microsoft.extensions.dependencyinjection.abstractions\2.0.0\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll">
+      <PackagePath>Microsoft.Extensions.DependencyInjection.Abstractions.dll</PackagePath>
+      <Modified>2017-07-25T06:48:04.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\jerry\.nuget\packages\microsoft.xaml.behaviors.uwp.managed\2.0.0\lib\uap10.0\Microsoft.Xaml.Interactions.dll">
+      <PackagePath>Microsoft.Xaml.Interactions.dll</PackagePath>
+      <Modified>2016-10-19T23:07:18.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\jerry\.nuget\packages\microsoft.xaml.behaviors.uwp.managed\2.0.0\lib\uap10.0\Microsoft.Xaml.Interactivity.dll">
+      <PackagePath>Microsoft.Xaml.Interactivity.dll</PackagePath>
+      <Modified>2016-10-19T23:07:18.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\jerry\.nuget\packages\newtonsoft.json\11.0.1-beta3\lib\netstandard2.0\Newtonsoft.Json.dll">
+      <PackagePath>Newtonsoft.Json.dll</PackagePath>
+      <Modified>2018-01-03T17:26:16.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\jerry\.nuget\packages\prism.core\7.0.0.423-ci\lib\uap10.0\Prism.dll">
+      <PackagePath>Prism.dll</PackagePath>
+      <Modified>2018-02-01T04:23:04.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\nativeassets\uap10.0.15138\clrcompression.dll">
+      <PackagePath>clrcompression.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\Microsoft.CSharp.dll">
+      <PackagePath>Microsoft.CSharp.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\Microsoft.VisualBasic.dll">
+      <PackagePath>Microsoft.VisualBasic.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\Microsoft.Win32.Primitives.dll">
+      <PackagePath>Microsoft.Win32.Primitives.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.AppContext.dll">
+      <PackagePath>System.AppContext.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Buffers.dll">
+      <PackagePath>System.Buffers.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Collections.Concurrent.dll">
+      <PackagePath>System.Collections.Concurrent.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Collections.Immutable.dll">
+      <PackagePath>System.Collections.Immutable.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Collections.NonGeneric.dll">
+      <PackagePath>System.Collections.NonGeneric.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Collections.Specialized.dll">
+      <PackagePath>System.Collections.Specialized.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Collections.dll">
+      <PackagePath>System.Collections.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.ComponentModel.Annotations.dll">
+      <PackagePath>System.ComponentModel.Annotations.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.ComponentModel.Composition.dll">
+      <PackagePath>System.ComponentModel.Composition.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.ComponentModel.DataAnnotations.dll">
+      <PackagePath>System.ComponentModel.DataAnnotations.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.ComponentModel.EventBasedAsync.dll">
+      <PackagePath>System.ComponentModel.EventBasedAsync.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.ComponentModel.Primitives.dll">
+      <PackagePath>System.ComponentModel.Primitives.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.ComponentModel.TypeConverter.dll">
+      <PackagePath>System.ComponentModel.TypeConverter.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.ComponentModel.dll">
+      <PackagePath>System.ComponentModel.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Configuration.dll">
+      <PackagePath>System.Configuration.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Console.dll">
+      <PackagePath>System.Console.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Core.dll">
+      <PackagePath>System.Core.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Data.Common.dll">
+      <PackagePath>System.Data.Common.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Data.SqlClient.dll">
+      <PackagePath>System.Data.SqlClient.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Data.dll">
+      <PackagePath>System.Data.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Diagnostics.Contracts.dll">
+      <PackagePath>System.Diagnostics.Contracts.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Diagnostics.Debug.dll">
+      <PackagePath>System.Diagnostics.Debug.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Diagnostics.DiagnosticSource.dll">
+      <PackagePath>System.Diagnostics.DiagnosticSource.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Diagnostics.FileVersionInfo.dll">
+      <PackagePath>System.Diagnostics.FileVersionInfo.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Diagnostics.Process.dll">
+      <PackagePath>System.Diagnostics.Process.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Diagnostics.StackTrace.dll">
+      <PackagePath>System.Diagnostics.StackTrace.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Diagnostics.TextWriterTraceListener.dll">
+      <PackagePath>System.Diagnostics.TextWriterTraceListener.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Diagnostics.Tools.dll">
+      <PackagePath>System.Diagnostics.Tools.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Diagnostics.TraceSource.dll">
+      <PackagePath>System.Diagnostics.TraceSource.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Diagnostics.Tracing.dll">
+      <PackagePath>System.Diagnostics.Tracing.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Drawing.Primitives.dll">
+      <PackagePath>System.Drawing.Primitives.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Drawing.dll">
+      <PackagePath>System.Drawing.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Dynamic.Runtime.dll">
+      <PackagePath>System.Dynamic.Runtime.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Globalization.Calendars.dll">
+      <PackagePath>System.Globalization.Calendars.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Globalization.Extensions.dll">
+      <PackagePath>System.Globalization.Extensions.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Globalization.dll">
+      <PackagePath>System.Globalization.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.IO.Compression.FileSystem.dll">
+      <PackagePath>System.IO.Compression.FileSystem.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.IO.Compression.ZipFile.dll">
+      <PackagePath>System.IO.Compression.ZipFile.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.IO.Compression.dll">
+      <PackagePath>System.IO.Compression.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.IO.FileSystem.DriveInfo.dll">
+      <PackagePath>System.IO.FileSystem.DriveInfo.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.IO.FileSystem.Primitives.dll">
+      <PackagePath>System.IO.FileSystem.Primitives.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.IO.FileSystem.Watcher.dll">
+      <PackagePath>System.IO.FileSystem.Watcher.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.IO.FileSystem.dll">
+      <PackagePath>System.IO.FileSystem.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.IO.IsolatedStorage.dll">
+      <PackagePath>System.IO.IsolatedStorage.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.IO.MemoryMappedFiles.dll">
+      <PackagePath>System.IO.MemoryMappedFiles.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.IO.Pipes.dll">
+      <PackagePath>System.IO.Pipes.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.IO.Ports.dll">
+      <PackagePath>System.IO.Ports.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.IO.UnmanagedMemoryStream.dll">
+      <PackagePath>System.IO.UnmanagedMemoryStream.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.IO.dll">
+      <PackagePath>System.IO.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Linq.Expressions.dll">
+      <PackagePath>System.Linq.Expressions.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Linq.Parallel.dll">
+      <PackagePath>System.Linq.Parallel.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Linq.Queryable.dll">
+      <PackagePath>System.Linq.Queryable.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Linq.dll">
+      <PackagePath>System.Linq.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Net.Http.Rtc.dll">
+      <PackagePath>System.Net.Http.Rtc.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Net.Http.dll">
+      <PackagePath>System.Net.Http.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Net.HttpListener.dll">
+      <PackagePath>System.Net.HttpListener.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Net.Mail.dll">
+      <PackagePath>System.Net.Mail.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Net.NameResolution.dll">
+      <PackagePath>System.Net.NameResolution.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Net.NetworkInformation.dll">
+      <PackagePath>System.Net.NetworkInformation.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Net.Ping.dll">
+      <PackagePath>System.Net.Ping.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Net.Primitives.dll">
+      <PackagePath>System.Net.Primitives.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Net.Requests.dll">
+      <PackagePath>System.Net.Requests.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Net.Security.dll">
+      <PackagePath>System.Net.Security.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Net.ServicePoint.dll">
+      <PackagePath>System.Net.ServicePoint.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Net.Sockets.dll">
+      <PackagePath>System.Net.Sockets.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Net.WebClient.dll">
+      <PackagePath>System.Net.WebClient.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Net.WebHeaderCollection.dll">
+      <PackagePath>System.Net.WebHeaderCollection.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Net.WebProxy.dll">
+      <PackagePath>System.Net.WebProxy.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Net.WebSockets.Client.dll">
+      <PackagePath>System.Net.WebSockets.Client.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Net.WebSockets.dll">
+      <PackagePath>System.Net.WebSockets.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Net.dll">
+      <PackagePath>System.Net.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Numerics.Vectors.WindowsRuntime.dll">
+      <PackagePath>System.Numerics.Vectors.WindowsRuntime.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Numerics.Vectors.dll">
+      <PackagePath>System.Numerics.Vectors.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Numerics.dll">
+      <PackagePath>System.Numerics.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.ObjectModel.dll">
+      <PackagePath>System.ObjectModel.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Private.DataContractSerialization.dll">
+      <PackagePath>System.Private.DataContractSerialization.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Private.ServiceModel.dll">
+      <PackagePath>System.Private.ServiceModel.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Private.Uri.dll">
+      <PackagePath>System.Private.Uri.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Private.Xml.Linq.dll">
+      <PackagePath>System.Private.Xml.Linq.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Private.Xml.dll">
+      <PackagePath>System.Private.Xml.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Reflection.Context.dll">
+      <PackagePath>System.Reflection.Context.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Reflection.DispatchProxy.dll">
+      <PackagePath>System.Reflection.DispatchProxy.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Reflection.Emit.ILGeneration.dll">
+      <PackagePath>System.Reflection.Emit.ILGeneration.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Reflection.Emit.Lightweight.dll">
+      <PackagePath>System.Reflection.Emit.Lightweight.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Reflection.Emit.dll">
+      <PackagePath>System.Reflection.Emit.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Reflection.Extensions.dll">
+      <PackagePath>System.Reflection.Extensions.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Reflection.Metadata.dll">
+      <PackagePath>System.Reflection.Metadata.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Reflection.Primitives.dll">
+      <PackagePath>System.Reflection.Primitives.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Reflection.TypeExtensions.dll">
+      <PackagePath>System.Reflection.TypeExtensions.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Reflection.dll">
+      <PackagePath>System.Reflection.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Resources.Reader.dll">
+      <PackagePath>System.Resources.Reader.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Resources.ResourceManager.dll">
+      <PackagePath>System.Resources.ResourceManager.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Resources.Writer.dll">
+      <PackagePath>System.Resources.Writer.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Runtime.CompilerServices.VisualC.dll">
+      <PackagePath>System.Runtime.CompilerServices.VisualC.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Runtime.Extensions.dll">
+      <PackagePath>System.Runtime.Extensions.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Runtime.Handles.dll">
+      <PackagePath>System.Runtime.Handles.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Runtime.InteropServices.RuntimeInformation.dll">
+      <PackagePath>System.Runtime.InteropServices.RuntimeInformation.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Runtime.InteropServices.WindowsRuntime.dll">
+      <PackagePath>System.Runtime.InteropServices.WindowsRuntime.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Runtime.InteropServices.dll">
+      <PackagePath>System.Runtime.InteropServices.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Runtime.Numerics.dll">
+      <PackagePath>System.Runtime.Numerics.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Runtime.Serialization.Formatters.dll">
+      <PackagePath>System.Runtime.Serialization.Formatters.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Runtime.Serialization.Json.dll">
+      <PackagePath>System.Runtime.Serialization.Json.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Runtime.Serialization.Primitives.dll">
+      <PackagePath>System.Runtime.Serialization.Primitives.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Runtime.Serialization.Xml.dll">
+      <PackagePath>System.Runtime.Serialization.Xml.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Runtime.Serialization.dll">
+      <PackagePath>System.Runtime.Serialization.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Runtime.WindowsRuntime.UI.Xaml.dll">
+      <PackagePath>System.Runtime.WindowsRuntime.UI.Xaml.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Runtime.WindowsRuntime.dll">
+      <PackagePath>System.Runtime.WindowsRuntime.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Runtime.dll">
+      <PackagePath>System.Runtime.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Security.AccessControl.dll">
+      <PackagePath>System.Security.AccessControl.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Security.Claims.dll">
+      <PackagePath>System.Security.Claims.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Security.Cryptography.Algorithms.dll">
+      <PackagePath>System.Security.Cryptography.Algorithms.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Security.Cryptography.Cng.dll">
+      <PackagePath>System.Security.Cryptography.Cng.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Security.Cryptography.Csp.dll">
+      <PackagePath>System.Security.Cryptography.Csp.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Security.Cryptography.Encoding.dll">
+      <PackagePath>System.Security.Cryptography.Encoding.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Security.Cryptography.Primitives.dll">
+      <PackagePath>System.Security.Cryptography.Primitives.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Security.Cryptography.X509Certificates.dll">
+      <PackagePath>System.Security.Cryptography.X509Certificates.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Security.Principal.Windows.dll">
+      <PackagePath>System.Security.Principal.Windows.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Security.Principal.dll">
+      <PackagePath>System.Security.Principal.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Security.SecureString.dll">
+      <PackagePath>System.Security.SecureString.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Security.dll">
+      <PackagePath>System.Security.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.ServiceModel.Duplex.dll">
+      <PackagePath>System.ServiceModel.Duplex.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.ServiceModel.Http.dll">
+      <PackagePath>System.ServiceModel.Http.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.ServiceModel.NetTcp.dll">
+      <PackagePath>System.ServiceModel.NetTcp.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.ServiceModel.Primitives.dll">
+      <PackagePath>System.ServiceModel.Primitives.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.ServiceModel.Security.dll">
+      <PackagePath>System.ServiceModel.Security.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.ServiceModel.Web.dll">
+      <PackagePath>System.ServiceModel.Web.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.ServiceModel.dll">
+      <PackagePath>System.ServiceModel.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.ServiceProcess.dll">
+      <PackagePath>System.ServiceProcess.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Text.Encoding.CodePages.dll">
+      <PackagePath>System.Text.Encoding.CodePages.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Text.Encoding.Extensions.dll">
+      <PackagePath>System.Text.Encoding.Extensions.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Text.Encoding.dll">
+      <PackagePath>System.Text.Encoding.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Text.RegularExpressions.dll">
+      <PackagePath>System.Text.RegularExpressions.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Threading.Overlapped.dll">
+      <PackagePath>System.Threading.Overlapped.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Threading.Tasks.Dataflow.dll">
+      <PackagePath>System.Threading.Tasks.Dataflow.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Threading.Tasks.Extensions.dll">
+      <PackagePath>System.Threading.Tasks.Extensions.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Threading.Tasks.Parallel.dll">
+      <PackagePath>System.Threading.Tasks.Parallel.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Threading.Tasks.dll">
+      <PackagePath>System.Threading.Tasks.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Threading.Thread.dll">
+      <PackagePath>System.Threading.Thread.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Threading.ThreadPool.dll">
+      <PackagePath>System.Threading.ThreadPool.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Threading.Timer.dll">
+      <PackagePath>System.Threading.Timer.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Threading.dll">
+      <PackagePath>System.Threading.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Transactions.Local.dll">
+      <PackagePath>System.Transactions.Local.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Transactions.dll">
+      <PackagePath>System.Transactions.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.ValueTuple.dll">
+      <PackagePath>System.ValueTuple.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Web.HttpUtility.dll">
+      <PackagePath>System.Web.HttpUtility.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Web.dll">
+      <PackagePath>System.Web.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Windows.dll">
+      <PackagePath>System.Windows.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Xml.Linq.dll">
+      <PackagePath>System.Xml.Linq.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Xml.ReaderWriter.dll">
+      <PackagePath>System.Xml.ReaderWriter.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Xml.Serialization.dll">
+      <PackagePath>System.Xml.Serialization.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Xml.XDocument.dll">
+      <PackagePath>System.Xml.XDocument.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Xml.XPath.XDocument.dll">
+      <PackagePath>System.Xml.XPath.XDocument.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Xml.XPath.dll">
+      <PackagePath>System.Xml.XPath.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Xml.XmlDocument.dll">
+      <PackagePath>System.Xml.XmlDocument.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Xml.XmlSerializer.dll">
+      <PackagePath>System.Xml.XmlSerializer.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.Xml.dll">
+      <PackagePath>System.Xml.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\System.dll">
+      <PackagePath>System.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\WindowsBase.dll">
+      <PackagePath>WindowsBase.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\mscorlib.dll">
+      <PackagePath>mscorlib.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.0.6\runtimes\win10-x86\lib\uap10.0.15138\netstandard.dll">
+      <PackagePath>netstandard.dll</PackagePath>
+      <Modified>2017-12-22T01:01:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\git.repos\Template10\Source\Prism.Windows.Default\bin\x86\Debug\Prism.Unity.Windows.dll">
+      <PackagePath>Prism.Unity.Windows.dll</PackagePath>
+      <Modified>2018-02-16T21:53:11.629</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\git.repos\Template10\Source\Prism.Windows\bin\x86\Debug\Prism.Windows.dll">
+      <PackagePath>Prism.Windows.dll</PackagePath>
+      <Modified>2018-02-16T21:49:48.782</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\git.repos\Template10\Source\Template10.Extras\bin\x86\Debug\Template10.Extras.dll">
+      <PackagePath>Template10.Extras.dll</PackagePath>
+      <Modified>2018-02-16T21:49:57.370</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\git.repos\Template10\VSIX\Prism.Windows %28project%29\Properties\Default.rd.xml">
+      <PackagePath>Properties\Default.rd.xml</PackagePath>
+      <Modified>2018-01-23T05:34:15.526</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\git.repos\Template10\VSIX\Prism.Windows %28project%29\Assets\LockScreenLogo.scale-200.png">
+      <PackagePath>Assets\LockScreenLogo.scale-200.png</PackagePath>
+      <Modified>2018-01-15T22:14:38.254</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\git.repos\Template10\VSIX\Prism.Windows %28project%29\Assets\SplashScreen.scale-200.png">
+      <PackagePath>Assets\SplashScreen.scale-200.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-01-15T22:14:38.254</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\git.repos\Template10\VSIX\Prism.Windows %28project%29\Assets\Square150x150Logo.scale-200.png">
+      <PackagePath>Assets\Square150x150Logo.scale-200.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-01-15T22:14:38.254</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\git.repos\Template10\VSIX\Prism.Windows %28project%29\Assets\Square44x44Logo.scale-200.png">
+      <PackagePath>Assets\Square44x44Logo.scale-200.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-01-15T22:14:38.254</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\git.repos\Template10\VSIX\Prism.Windows %28project%29\Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
+      <PackagePath>Assets\Square44x44Logo.targetsize-24_altform-unplated.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-01-15T22:14:38.254</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\git.repos\Template10\VSIX\Prism.Windows %28project%29\Assets\StoreLogo.png">
+      <PackagePath>Assets\StoreLogo.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-01-15T22:14:38.254</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\git.repos\Template10\VSIX\Prism.Windows %28project%29\Assets\Wide310x150Logo.scale-200.png">
+      <PackagePath>Assets\Wide310x150Logo.scale-200.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-01-15T22:14:38.254</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\git.repos\Template10\VSIX\Prism.Windows %28project%29\bin\x86\Debug\PrismSample.xr.xml">
+      <PackagePath>PrismSample.xr.xml</PackagePath>
+      <Modified>2018-02-16T21:31:30.957</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\git.repos\Template10\Source\Template10.Extras\bin\x86\Debug\Template10.Extras.xr.xml">
+      <PackagePath>Template10.Extras\Template10.Extras.xr.xml</PackagePath>
+      <Modified>2018-02-16T21:27:47.624</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Windows Kits\10\UnionMetadata\10.0.16299.0\Windows.winmd">
+      <PackagePath>WinMetadata\Windows.winmd</PackagePath>
+      <Modified>2017-09-29T00:28:16.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\git.repos\Template10\VSIX\Prism.Windows %28project%29\bin\x86\Debug\resources.pri">
+      <PackagePath>resources.pri</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2018-02-16T21:53:22.031</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\git.repos\Template10\VSIX\Prism.Windows %28project%29\bin\x86\Debug\Core\PrismSample.exe">
+      <PackagePath>PrismSample.exe</PackagePath>
+      <Modified>2018-02-16T21:53:22.888</Modified>
+    </AppxPackagedFile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResolvedSDKReference Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.net.uwpcoreruntimesdk\2.1.1\build\..\tools\Appx\Microsoft.NET.CoreRuntime.2.1.appx">
+      <Name>Microsoft.NET.CoreRuntime.2.1</Name>
+      <Version>2.1.25801.2</Version>
+      <Architecture>x86</Architecture>
+      <FrameworkIdentity>Name = Microsoft.NET.CoreRuntime.2.1, MinVersion = 2.1.25801.2, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x86.microsoft.net.uwpcoreruntimesdk\2.1.1\build\..\tools\Appx\Microsoft.NET.CoreRuntime.2.1.appx</AppxLocation>
+      <MoreInfo>
+      </MoreInfo>
+    </ResolvedSDKReference>
+    <ResolvedSDKReference Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x64.microsoft.net.uwpcoreruntimesdk\2.1.1\build\..\tools\Appx\Microsoft.NET.CoreRuntime.2.1.appx">
+      <Name>Microsoft.NET.CoreRuntime.2.1</Name>
+      <Version>2.1.25801.2</Version>
+      <Architecture>x64</Architecture>
+      <FrameworkIdentity>Name = Microsoft.NET.CoreRuntime.2.1, MinVersion = 2.1.25801.2, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-x64.microsoft.net.uwpcoreruntimesdk\2.1.1\build\..\tools\Appx\Microsoft.NET.CoreRuntime.2.1.appx</AppxLocation>
+      <MoreInfo>
+      </MoreInfo>
+    </ResolvedSDKReference>
+    <ResolvedSDKReference Include="C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-arm.microsoft.net.uwpcoreruntimesdk\2.1.1\build\..\tools\Appx\Microsoft.NET.CoreRuntime.2.1.appx">
+      <Name>Microsoft.NET.CoreRuntime.2.1</Name>
+      <Version>2.1.25801.2</Version>
+      <Architecture>arm</Architecture>
+      <FrameworkIdentity>Name = Microsoft.NET.CoreRuntime.2.1, MinVersion = 2.1.25801.2, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Program Files %28x86%29\Microsoft SDKs\NuGetPackagesFallback\runtime.win10-arm.microsoft.net.uwpcoreruntimesdk\2.1.1\build\..\tools\Appx\Microsoft.NET.CoreRuntime.2.1.appx</AppxLocation>
+      <MoreInfo>
+      </MoreInfo>
+    </ResolvedSDKReference>
+    <ResolvedSDKReference Include="C:\Program Files %28x86%29\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.VCLibs\14.0\">
+      <Name>Microsoft.VCLibs.140.00.Debug</Name>
+      <Version>14.0.25830.2</Version>
+      <Architecture>ARM</Architecture>
+      <FrameworkIdentity>Name = Microsoft.VCLibs.140.00.Debug, MinVersion = 14.0.25830.2, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Program Files %28x86%29\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.VCLibs\14.0\.\AppX\Debug\ARM\Microsoft.VCLibs.ARM.Debug.14.00.appx</AppxLocation>
+      <MoreInfo>
+      </MoreInfo>
+    </ResolvedSDKReference>
+    <ResolvedSDKReference Include="C:\Program Files %28x86%29\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.VCLibs\14.0\">
+      <Name>Microsoft.VCLibs.140.00.Debug</Name>
+      <Version>14.0.25830.2</Version>
+      <Architecture>ARM64</Architecture>
+      <FrameworkIdentity>Name = Microsoft.VCLibs.140.00.Debug, MinVersion = 14.0.25830.2, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Program Files %28x86%29\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.VCLibs\14.0\.\AppX\Debug\ARM64\Microsoft.VCLibs.ARM64.Debug.14.00.appx</AppxLocation>
+      <MoreInfo>
+      </MoreInfo>
+    </ResolvedSDKReference>
+    <ResolvedSDKReference Include="C:\Program Files %28x86%29\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.VCLibs\14.0\">
+      <Name>Microsoft.VCLibs.140.00.Debug</Name>
+      <Version>14.0.25830.2</Version>
+      <Architecture>x64</Architecture>
+      <FrameworkIdentity>Name = Microsoft.VCLibs.140.00.Debug, MinVersion = 14.0.25830.2, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Program Files %28x86%29\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.VCLibs\14.0\.\AppX\Debug\x64\Microsoft.VCLibs.x64.Debug.14.00.appx</AppxLocation>
+      <MoreInfo>
+      </MoreInfo>
+    </ResolvedSDKReference>
+    <ResolvedSDKReference Include="C:\Program Files %28x86%29\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.VCLibs\14.0\">
+      <Name>Microsoft.VCLibs.140.00.Debug</Name>
+      <Version>14.0.25830.2</Version>
+      <Architecture>x86</Architecture>
+      <FrameworkIdentity>Name = Microsoft.VCLibs.140.00.Debug, MinVersion = 14.0.25830.2, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Program Files %28x86%29\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.VCLibs\14.0\.\AppX\Debug\x86\Microsoft.VCLibs.x86.Debug.14.00.appx</AppxLocation>
+      <MoreInfo>
+      </MoreInfo>
+    </ResolvedSDKReference>
+  </ItemGroup>
+</Project>

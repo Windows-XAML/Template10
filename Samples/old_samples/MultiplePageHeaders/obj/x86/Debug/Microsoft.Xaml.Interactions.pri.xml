@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PriInfo>
+	<ResourceMap name="Microsoft.Xaml.Interactions" version="1.0" primary="true">
+		<Qualifiers>
+			<Language>EN-US,DE-DE,ES-ES,FR-FR,IT-IT,JA-JP,KO-KR,PT-BR,RU-RU,UK-UA,ZH-CN,ZH-TW</Language>
+		</Qualifiers>
+		<ResourceMapSubtree name="Microsoft.Xaml.Interactions">
+			<ResourceMapSubtree name="Strings">
+				<NamedResource name="CallMethodActionValidMethodNotFoundExceptionMessage" uri="ms-resource://Microsoft.Xaml.Interactions/Microsoft.Xaml.Interactions/Strings/CallMethodActionValidMethodNotFoundExceptionMessage">
+					<Candidate qualifiers="Language-ZH-TW" type="String">
+						<Value>在類型 {1} 的物件上找不到符合預期的簽章且名稱為 {0} 的方法。</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-ZH-CN" type="String">
+						<Value>在 {1} 类型的对象上找不到符合正确签名的名为 {0} 的方法。</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-UK-UA" type="String">
+						<Value>Неможливо знайти метод з ім'ям {0} в об'єкті типу {1}, який відповідав би очікуваному підпису.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-RU-RU" type="String">
+						<Value>Невозможно найти метод с именем {0} в объекте типа {1}, который соответствовал бы ожидаемой подписи.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-PT-BR" type="String">
+						<Value>Não é possível encontrar o método de nome {0} no objeto de tipo {1} que corresponda a assinatura esperada.
+</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-KO-KR" type="String">
+						<Value>{1} 형식의 개체에서 예상 시그니처와 일치하는 이름이 {0}인 메서드를 찾을 수 없습니다.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-JA-JP" type="String">
+						<Value>メソッド {0} が、期待される署名と一致する型 {1} のオブジェクトにありません。</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-IT-IT" type="String">
+						<Value>Impossibile trovare il metodo denominato {0} in un oggetto di tipo {1} corrispondente alla firma prevista.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-FR-FR" type="String">
+						<Value>Impossible de trouver la méthode nommée {0} sur l'objet de type {1} qui correspond à la signature attendue.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-ES-ES" type="String">
+						<Value>No se puede encontrar el método denominado {0} en el objeto de tipo {1} que coincida con la signatura esperada.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-EN-US" isDefault="true" type="String">
+						<Value>Cannot find method named {0} on object of type {1} that matches the expected signature.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-DE-DE" type="String">
+						<Value>Keine Methode mit der Bezeichnung {0} im Objekt vom Typ {1} gefunden, die mit der erwarteten Signatur übereinstimmt.</Value>
+					</Candidate>
+				</NamedResource>
+				<NamedResource name="CannotAttachBehaviorMultipleTimesExceptionMessage" uri="ms-resource://Microsoft.Xaml.Interactions/Microsoft.Xaml.Interactions/Strings/CannotAttachBehaviorMultipleTimesExceptionMessage">
+					<Candidate qualifiers="Language-ZH-TW" type="String">
+						<Value>無法一次將行為執行個體附加到多個物件。</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-ZH-CN" type="String">
+						<Value>行为的实例不能一次附加到多个对象。</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-UK-UA" type="String">
+						<Value>Неможливо прикріпити екземпляр поведінки до декількох об'єктів одночасно.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-RU-RU" type="String">
+						<Value>Невозможно прикрепить экземпляр поведения к нескольким объектам одновременно.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-PT-BR" type="String">
+						<Value>Não é possível anexar uma instância de Behavior a mais de um objeto simultaneamente.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-KO-KR" type="String">
+						<Value>동작의 인스턴스 하나를 한 번에 둘 이상의 개체에 연결할 수 없습니다.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-JA-JP" type="String">
+						<Value>ビヘイビアーのインスタンスは、1 度に複数のオブジェクトに追加することはできません。</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-IT-IT" type="String">
+						<Value>Impossibile associare l'istanza di un comportamento a più di un oggetto alla volta.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-FR-FR" type="String">
+						<Value>Une instance de Behavior ne peut pas être attachée à plus d'un objet à la fois.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-ES-ES" type="String">
+						<Value>No se puede adjuntar una instancia de Behavior a más de un objeto simultáneamente.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-EN-US" isDefault="true" type="String">
+						<Value>An instance of a behavior cannot be attached to more than one object at a time.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-DE-DE" type="String">
+						<Value>Eine Instanz eines Verhaltens kann nicht mehreren Objekten gleichzeitig angefügt werden.</Value>
+					</Candidate>
+				</NamedResource>
+				<NamedResource name="CannotFindEventNameExceptionMessage" uri="ms-resource://Microsoft.Xaml.Interactions/Microsoft.Xaml.Interactions/Strings/CannotFindEventNameExceptionMessage">
+					<Candidate qualifiers="Language-ZH-TW" type="String">
+						<Value>在類型 {1} 上找不到名稱為 {0} 的事件。</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-ZH-CN" type="String">
+						<Value>在类型 {1} 上找不到名为 {0} 的事件。</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-UK-UA" type="String">
+						<Value>Неможливо знайти подію з ім'ям {0} в типі {1}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-RU-RU" type="String">
+						<Value>Невозможно найти событие с именем {0} в типе {1}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-PT-BR" type="String">
+						<Value>Não é possível encontrar um evento de nome {0} no tipo {1}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-KO-KR" type="String">
+						<Value>이름이 {0}인 형식 {1}의 이벤트를 찾을 수 없습니다.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-JA-JP" type="String">
+						<Value>名前が {0} (型 {1}) のイベントが見つかりません。</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-IT-IT" type="String">
+						<Value>Impossibile trovare un evento denominato {0} nel tipo {1}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-FR-FR" type="String">
+						<Value>Impossible de trouver un événement nommé {0} sur le type {1}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-ES-ES" type="String">
+						<Value>No se puede encontrar un evento con el nombre {0} en el tipo {1}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-EN-US" isDefault="true" type="String">
+						<Value>Cannot find an event named {0} on type {1}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-DE-DE" type="String">
+						<Value>Kein Ereignis mit der Bezeichnung {0} auf Typ {1} gefunden.</Value>
+					</Candidate>
+				</NamedResource>
+				<NamedResource name="ChangePropertyActionCannotFindPropertyNameExceptionMessage" uri="ms-resource://Microsoft.Xaml.Interactions/Microsoft.Xaml.Interactions/Strings/ChangePropertyActionCannotFindPropertyNameExceptionMessage">
+					<Candidate qualifiers="Language-ZH-TW" type="String">
+						<Value>在類型 {1} 上找不到名稱為 {0} 的屬性。</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-ZH-CN" type="String">
+						<Value>在类型 {1} 上找不到名为 {0} 的属性。</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-UK-UA" type="String">
+						<Value>Неможливо знайти властивість з ім'ям {0} в типі {1}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-RU-RU" type="String">
+						<Value>Невозможно найти свойство с именем {0} в типе {1}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-PT-BR" type="String">
+						<Value>Não é possível encontrar uma propriedade de nome {0} no tipo {1}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-KO-KR" type="String">
+						<Value>이름이 {0}인 형식 {1}의 속성을 찾을 수 없습니다.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-JA-JP" type="String">
+						<Value>名前が {0} (型 {1}) のプロパティが見つかりません。</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-IT-IT" type="String">
+						<Value>Impossibile trovare una proprietà denominata {0} nel tipo {1}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-FR-FR" type="String">
+						<Value>Impossible de trouver une propriété nommée {0} sur le type {1}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-ES-ES" type="String">
+						<Value>No se puede encontrar una propiedad con el nombre {0} en el tipo {1}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-EN-US" isDefault="true" type="String">
+						<Value>Cannot find a property named {0} on type {1}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-DE-DE" type="String">
+						<Value>Keine Eigenschaft mit der Bezeichnung {0} auf Typ {1} gefunden.</Value>
+					</Candidate>
+				</NamedResource>
+				<NamedResource name="ChangePropertyActionCannotSetValueExceptionMessage" uri="ms-resource://Microsoft.Xaml.Interactions/Microsoft.Xaml.Interactions/Strings/ChangePropertyActionCannotSetValueExceptionMessage">
+					<Candidate qualifiers="Language-ZH-TW" type="String">
+						<Value>無法將類型 {0} 的值指派給類型 {2} 的屬性 {1}。只有類型 {2} 的值能夠指派給 {1} 屬性。</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-ZH-CN" type="String">
+						<Value>无法将 {0} 类型的值赋予 {2} 类型的属性 {1}。{1} 属性只可接受 {2} 类型的赋值。</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-UK-UA" type="String">
+						<Value>Неможливо призначити значення типу {0} властивості {1} типу {2}. Властивості {1} можна призначити тільки значення типу {2}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-RU-RU" type="String">
+						<Value>Невозможно назначить значение типа {0} свойству {1} типа {2}. Свойству {1} можно назначить только значения типа {2}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-PT-BR" type="String">
+						<Value>Nao é possível atribuir um valor do tipo {0} à propriedade {1} de tipo {2}. A propriedade {1} pode receber somente valores do tipo {2}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-KO-KR" type="String">
+						<Value>{0} 형식의 값을 {2} 형식의 속성 {1}에 할당할 수 없습니다. {1} 속성에는 {2} 형식의 값만 할당할 수 있습니다.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-JA-JP" type="String">
+						<Value>型 {0} の値をプロパティ {1} (型 {2}) に割り当てることができません。{1} プロパティは、型 {2} の値にのみ割り当てることができます。</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-IT-IT" type="String">
+						<Value>Impossibile assegnare un valore di tipo {0} alla proprietà {1} di tipo {2}. Alla proprietà {1} possono essere assegnati solo valori di tipo {2}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-FR-FR" type="String">
+						<Value>Impossible d'attribuer une valeur de type {0} à la propriété {1} de type {2}. Seules des valeurs de type {2} peuvent être attribuées à la propriété {1}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-ES-ES" type="String">
+						<Value>No se puede asignar un valor del tipo {0} a la propiedad {1} del tipo {2}. A la propiedad {1} solo se le pueden asignar valores del tipo {2}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-EN-US" isDefault="true" type="String">
+						<Value>Cannot assign value of type {0} to property {1} of type {2}. The {1} property can be assigned only values of type {2}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-DE-DE" type="String">
+						<Value>Kann keinen Wert vom Typ {0} zu einer Eigenschaft {1} vom Typ {2} zuweisen. Die Eigenschaft {1} kann nur Werten vom Typ {2} zugewiesen werden.</Value>
+					</Candidate>
+				</NamedResource>
+				<NamedResource name="ChangePropertyActionPropertyIsReadOnlyExceptionMessage" uri="ms-resource://Microsoft.Xaml.Interactions/Microsoft.Xaml.Interactions/Strings/ChangePropertyActionPropertyIsReadOnlyExceptionMessage">
+					<Candidate qualifiers="Language-ZH-TW" type="String">
+						<Value>類型 {1} 所定義的屬性 {0} 未公開 set 方法，因此無法修改。</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-ZH-CN" type="String">
+						<Value>类型 {1} 定义的属性 {0} 不 揭示 set 方法，因此不可修改。</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-UK-UA" type="String">
+						<Value>Властивість {0}, яке визначається типом {1}, не надає заданий метод і, отже, не може бути змінено.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-RU-RU" type="String">
+						<Value>Свойство {0}, определяемое типом {1}, не предоставляет заданный метод и, следовательно, не может быть изменено.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-PT-BR" type="String">
+						<Value>A propriedade {0} definido pelo tipo {1} não expõe um método set e, portanto, não pode ser modificado.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-KO-KR" type="String">
+						<Value>{1} 형식으로 정의된 {0} 속성이 set 메서드를 노출하지 않으므로 수정할 수 없습니다.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-JA-JP" type="String">
+						<Value>プロパティ {0} (型 {1} で定義) は、set メソッドを提示していないため、修正できません。</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-IT-IT" type="String">
+						<Value>La proprietà {0} definita dal tipo {1} non espone un metodo set. Impossibile modificarla.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-FR-FR" type="String">
+						<Value>La propriété {0} définie par le type {1} n'expose pas une méthode set et ne peut, par conséquent, pas être modifiée.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-ES-ES" type="String">
+						<Value>La propiedad {0} definida por el tipo {1} no expone un método establecido y, por lo tanto, no se puede modificar.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-EN-US" isDefault="true" type="String">
+						<Value>Property {0} defined by type {1} does not expose a set method and therefore cannot be modified.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-DE-DE" type="String">
+						<Value>Die vom Typ {1} definierte Eigenschaft {0} gibt keine Methode zum Festlegen an und kann daher nicht geändert werden.</Value>
+					</Candidate>
+				</NamedResource>
+				<NamedResource name="EventNotSupportedExceptionMessage" uri="ms-resource://Microsoft.Xaml.Interactions/Microsoft.Xaml.Interactions/Strings/EventNotSupportedExceptionMessage">
+					<Candidate qualifiers="Language-ZH-TW" type="String">
+						<Value>不支援事件 {0}。請考慮實作自訂的 IBehavior 以回應這個事件。</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-ZH-CN" type="String">
+						<Value>不支持事件 {0}。请考虑实现自定义 IBehavior 以响应此事件。</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-UK-UA" type="String">
+						<Value>Подія {0} не підтримується. Для відгуку на дану подію рекомендується реалізувати користувальницьку поведінку IBehavior.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-RU-RU" type="String">
+						<Value>Событие {0} не поддерживается. Для отклика на данное событие рекомендуется реализовать пользовательское поведение IBehavior.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-PT-BR" type="String">
+						<Value>Evento {0} não é suportado. Considere a implementação de um IBehavior personalizado para responder a este evento.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-KO-KR" type="String">
+						<Value>{0} 이벤트가 지원되지 않습니다. 이 이벤트에 응답하도록 사용자 지정 IBehavior를 구현해 보십시오.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-JA-JP" type="String">
+						<Value>イベント {0} はサポートされていません。カスタム IBehavior を実装して、このイベントに応答することを検討してください。</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-IT-IT" type="String">
+						<Value>L'evento {0} non è supportato. Implementare un elemento IBehavior personalizzato per rispondere a questo evento.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-FR-FR" type="String">
+						<Value>L'événement {0} n'est pas pris en charge. Si possible, implémentez un type iBehavior personnalisé pour répondre à cet événement.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-ES-ES" type="String">
+						<Value>No se admite el evento {0}. Considere implementar un IBehavior personalizado para responder a este evento.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-EN-US" isDefault="true" type="String">
+						<Value>Event {0} is not supported. Consider implementing a custom IBehavior to respond to this event.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-DE-DE" type="String">
+						<Value>Ereignis {0} ist nicht unterstützt. Erwägen Sie die Implementierung eines benutzerdefinierten IBehavior, um auf dieses Ereignis zu reagieren.</Value>
+					</Candidate>
+				</NamedResource>
+				<NamedResource name="GoToStateActionTargetHasNoStateGroups" uri="ms-resource://Microsoft.Xaml.Interactions/Microsoft.Xaml.Interactions/Strings/GoToStateActionTargetHasNoStateGroups">
+					<Candidate qualifiers="Language-ZH-TW" type="String">
+						<Value>目標 {0} 未定義任何 VisualStateGroups。</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-ZH-CN" type="String">
+						<Value>目标 {0} 不定义任何 VisualStateGroups。</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-UK-UA" type="String">
+						<Value>Цільовий об'єкт {0} не визначає ніяких груп VisualStateGroups.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-RU-RU" type="String">
+						<Value>Целевой объект {0} не определяет никаких групп VisualStateGroups.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-PT-BR" type="String">
+						<Value>O destino {0} não define qualquer VisualStateGroups.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-KO-KR" type="String">
+						<Value>대상 {0}이(가) VisualStateGroups를 정의하지 않습니다.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-JA-JP" type="String">
+						<Value>ターゲット {0} は、VisualStateGroups を一切定義していません。</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-IT-IT" type="String">
+						<Value>La destinazione {0} non definisce VisualStateGroups.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-FR-FR" type="String">
+						<Value>La cible {0} ne définit pas de VisualStateGroups.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-ES-ES" type="String">
+						<Value>El destino {0} no define ningún objeto VisualStateGroup.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-EN-US" isDefault="true" type="String">
+						<Value>Target {0} does not define any VisualStateGroups.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-DE-DE" type="String">
+						<Value>Das Ziel {0} definiert keine VisualStateGroups.</Value>
+					</Candidate>
+				</NamedResource>
+				<NamedResource name="InvalidLeftOperand" uri="ms-resource://Microsoft.Xaml.Interactions/Microsoft.Xaml.Interactions/Strings/InvalidLeftOperand">
+					<Candidate qualifiers="Language-ZH-TW" type="String">
+						<Value>類型 {0} 的 Binding 屬性無法搭配運算子 {1} 一起使用。</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-ZH-CN" type="String">
+						<Value>{0} 类型的 Binding 属性无法用于运算符 {1}。</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-UK-UA" type="String">
+						<Value>Властивість прив'язки типу {0} неможливо використовувати з оператором {1}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-RU-RU" type="String">
+						<Value>Свойство привязки типа {0} невозможно использовать с оператором {1}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-PT-BR" type="String">
+						<Value>A propriedade Binding do tipo {0} não pode ser usada com o operador {2}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-KO-KR" type="String">
+						<Value>{0} 형식의 Binding 속성을 {1} 연산자와 함께 사용할 수 없습니다.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-JA-JP" type="String">
+						<Value>型 {0} の Binding プロパティは、演算子 {1} と共に使用できません。</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-IT-IT" type="String">
+						<Value>Impossibile utilizzare la proprietà Binding di tipo {0} con l'operatore {1}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-FR-FR" type="String">
+						<Value>La propriété de liaison de type {0} ne peut pas être utilisée avec l'opérateur {1}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-ES-ES" type="String">
+						<Value>La propiedad Binding del tipo {0} no se puede usar con el operador {1}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-EN-US" isDefault="true" type="String">
+						<Value>Binding property of type {0} cannot be used with operator {1}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-DE-DE" type="String">
+						<Value>Die Bindungseigenschaft vom Typ {0} kann nicht mit dem Operator {1} verwendet werden.</Value>
+					</Candidate>
+				</NamedResource>
+				<NamedResource name="InvalidOperands" uri="ms-resource://Microsoft.Xaml.Interactions/Microsoft.Xaml.Interactions/Strings/InvalidOperands">
+					<Candidate qualifiers="Language-ZH-TW" type="String">
+						<Value>類型 {0} 的 Binding 屬性和類型 {1} 的 Value 屬性無法搭配運算子 {2} 一起使用。</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-ZH-CN" type="String">
+						<Value>{0} 类型的 Binding 属性以及 {1} 类型的 Value 属性无法用于运算符 {2}。</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-UK-UA" type="String">
+						<Value>Властивість прив'язки типу {0} і властивість значення типу {1} неможливо використовувати з оператором {2}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-RU-RU" type="String">
+						<Value>Свойство привязки типа {0} и свойство значения типа {1} невозможно использовать с оператором {2}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-PT-BR" type="String">
+						<Value>A propriedade Binding do tipo {0} e a propriedade Value do tipo {1} não podem ser usadas com o operador {2}.
+
+</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-KO-KR" type="String">
+						<Value>{0} 형식의 Binding 속성과 {1} 형식의 Value 속성을 {2} 연산자와 함께 사용할 수 없습니다.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-JA-JP" type="String">
+						<Value>型 {0} の Binding プロパティと型 {1} の Value プロパティは、演算子 {2} と共に使用できません。</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-IT-IT" type="String">
+						<Value>Impossibile utilizzare la proprietà Binding di tipo {0} e la proprietà Value di tipo {1} con l'operatore {2}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-FR-FR" type="String">
+						<Value>La propriété de liaison de {0} la propriété de valeur de type {1} ne peuvent pas être utilisées avec l'opérateur {2}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-ES-ES" type="String">
+						<Value>La propiedad Binding del tipo {0} y la propiedad Value del tipo {1} no se pueden usar con el operador {2}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-EN-US" isDefault="true" type="String">
+						<Value>Binding property of type {0} and Value property of type {1} cannot be used with operator {2}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-DE-DE" type="String">
+						<Value>Die Bindungseigenschaft vom Typ {0} und die Werteigenschaft vom Typ {1} können nicht mit dem Operator {2} verwendet werden.</Value>
+					</Candidate>
+				</NamedResource>
+				<NamedResource name="InvalidRightOperand" uri="ms-resource://Microsoft.Xaml.Interactions/Microsoft.Xaml.Interactions/Strings/InvalidRightOperand">
+					<Candidate qualifiers="Language-ZH-TW" type="String">
+						<Value>類型 {0} 的 Value 屬性無法搭配運算子 {1} 一起使用。</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-ZH-CN" type="String">
+						<Value>{0} 类型的 Value 属性无法用于运算符 {1}。</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-UK-UA" type="String">
+						<Value>Властивість значення типу {0} неможливо використовувати з оператором {1}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-RU-RU" type="String">
+						<Value>Свойство значения типа {0} невозможно использовать с оператором {1}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-PT-BR" type="String">
+						<Value>A propriedade de valor do tipo {0} não pode ser usada com o operador {1}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-KO-KR" type="String">
+						<Value>{0} 형식의 Value 속성을 {1} 연산자와 함께 사용할 수 없습니다.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-JA-JP" type="String">
+						<Value>型 {0} の Value プロパティは、演算子 {1} と共に使用できません。</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-IT-IT" type="String">
+						<Value>Impossibile utilizzare la proprietà Value di tipo {0} con l'operatore {1}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-FR-FR" type="String">
+						<Value>La propriété de valeur de type {0} ne peut pas être utilisée avec l'opérateur {1}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-ES-ES" type="String">
+						<Value>La propiedad Value del tipo {0} no se puede usar con el operador {1}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-EN-US" isDefault="true" type="String">
+						<Value>Value property of type {0} cannot be used with operator {1}.</Value>
+					</Candidate>
+					<Candidate qualifiers="Language-DE-DE" type="String">
+						<Value>Die Werteigenschaft vom Typ {0} kann nicht mit dem Operator {1} verwendet werden.</Value>
+					</Candidate>
+				</NamedResource>
+			</ResourceMapSubtree>
+		</ResourceMapSubtree>
+	</ResourceMap>
+</PriInfo>

@@ -1,0 +1,47 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:behaviors="using:Template10.Behaviors"
+                    xmlns:controls="using:Template10.Controls"
+                    xmlns:interactivity="using:Microsoft.Xaml.Interactivity">
+
+    <Style TargetType="controls:ModalDialog">
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="ModalBackground">
+            <Setter.Value>
+                <SolidColorBrush Opacity=".8" Color="{ThemeResource SystemAccentColor}" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:ModalDialog">
+                    <Grid>
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="Modal">
+                                    <VisualState.Setters>
+                                        <Setter Target="Part_Modal.Visibility" Value="Visible" />
+                                        <Setter Target="Part_Content.IsHitTestVisible" Value="False" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+
+                        <ContentPresenter x:Name="Part_Content" Content="{TemplateBinding Content}" />
+
+                        <Grid x:Name="Part_Modal" Visibility="Collapsed">
+                            <Grid.Background>
+                                <Binding Path="ModalBackground" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
+                            </Grid.Background>
+                            <ContentPresenter Content="{TemplateBinding ModalContent}" ContentTransitions="{TemplateBinding ModalTransitions}" />
+                        </Grid>
+
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
+

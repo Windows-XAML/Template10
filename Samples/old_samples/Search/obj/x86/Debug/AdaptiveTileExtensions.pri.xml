@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PriInfo>
+	<ResourceMap name="AdaptiveTileExtensions" version="1.0" primary="true">
+		<Qualifiers/>
+		<ResourceMapSubtree name="Files">
+			<ResourceMapSubtree name="AdaptiveTileExtensions">
+				<ResourceMapSubtree name="Properties">
+					<NamedResource name="AdaptiveTileExtensions.rd.xml" uri="ms-resource://AdaptiveTileExtensions/Files/AdaptiveTileExtensions/Properties/AdaptiveTileExtensions.rd.xml">
+						<Candidate type="Path">
+							<Value>AdaptiveTileExtensions\Properties\AdaptiveTileExtensions.rd.xml</Value>
+						</Candidate>
+					</NamedResource>
+				</ResourceMapSubtree>
+			</ResourceMapSubtree>
+		</ResourceMapSubtree>
+	</ResourceMap>
+</PriInfo>

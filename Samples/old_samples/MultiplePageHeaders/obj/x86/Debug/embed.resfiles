@@ -1,0 +1,10 @@
+App.xbf
+Controls\MyUserControl.xbf
+Styles\Custom.xbf
+Views\Busy.xbf
+Views\ContainerPage.xbf
+Views\DetailPage.xbf
+Views\MainPage.xbf
+Views\SettingsPage.xbf
+Views\Shell.xbf
+Views\Splash.xbf
