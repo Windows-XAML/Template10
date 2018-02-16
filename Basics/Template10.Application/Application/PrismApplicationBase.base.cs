@@ -4,18 +4,6 @@ using Prism.Logging;
 using Prism.Navigation;
 using Prism.Windows.Mvvm;
 using Prism.Windows.Navigation;
-using Prism.Windows.Services;
-using Prism.Windows.Services.Compression;
-using Prism.Windows.Services.DialogService;
-using Prism.Windows.Services.FileService;
-using Prism.Windows.Services.Marketplace;
-using Prism.Windows.Services.Nag;
-using Prism.Windows.Services.Network;
-using Prism.Windows.Services.Resources;
-using Prism.Windows.Services.Secrets;
-using Prism.Windows.Services.Serialization;
-using Prism.Windows.Services.Settings;
-using Prism.Windows.Services.Web;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -34,9 +22,9 @@ namespace Prism.Windows
         IContainerExtension CreateContainer();
         void RegisterRequiredTypes(IContainerRegistry container);
         void RegisterTypes(IContainerRegistry container);
-        void OnInitialize(IMvvmLocator locator);
-        void OnStart(StartArgs args, StartKinds activate);
-        Task OnStartAsync(StartArgs args, StartKinds activate);
+        void OnInitialize();
+        void OnStart(StartArgs args);
+        Task OnStartAsync(StartArgs args);
         ISessionState SessionState { get; }
     }
 
@@ -44,7 +32,7 @@ namespace Prism.Windows
     {
         private static SemaphoreSlim _startSemaphore = new SemaphoreSlim(1, 1);
 
-        internal static IContainerExtension Container { get; private set; }
+        // public static IContainerExtension Container { get; private set; }
 
         public PrismApplicationBase()
         {
@@ -55,83 +43,40 @@ namespace Prism.Windows
 
         public abstract IContainerExtension CreateContainer();
 
-        public virtual void RegisterRequiredTypes(IContainerRegistry container)
-        {
-            // identical across Prism
-
-            container.RegisterSingleton<ILoggerFacade, EmptyLogger>();
-            container.RegisterSingleton<IEventAggregator, EventAggregator>();
-
-            // similar across Prism
-
-            container.RegisterSingleton<IGestureService, GestureService>();
-            container.RegisterSingleton<IMvvmLocator, MvvmLocator>();
-            container.RegisterSingleton<IPageRegistry, PageRegistry>();
-
-            // unique to Prism.Windows
-
-            container.RegisterSingleton<ICompressionService, CompressionService>();
-            container.RegisterSingleton<IDialogService, DialogService>();
-            container.RegisterSingleton<IFileService, FileService>();
-            container.RegisterSingleton<IMarketplaceService, MarketplaceService>();
-            container.RegisterSingleton<INagService, NagService>();
-            container.RegisterSingleton<INetworkService, NetworkService>();
-            container.RegisterSingleton<IResourceService, ResourceService>();
-            container.RegisterSingleton<ISecretService, SecretService>();
-            container.RegisterSingleton<ISerializationService, NullSerializationService>();
-            container.RegisterSingleton<ISettingsHelper, SettingsHelper>();
-            container.RegisterSingleton<IWebApiService, WebApiService>();
-        }
+        public abstract void RegisterRequiredTypes(IContainerRegistry container);
 
         public abstract void RegisterTypes(IContainerRegistry container);
 
-        public virtual void OnInitialize(IMvvmLocator locator) { /* empty */ }
+        public virtual void OnInitialize() { /* empty */ }
 
-        public virtual void OnStart(StartArgs args, StartKinds activate) {  /* empty */ }
+        public virtual void OnStart(StartArgs args) {  /* empty */ }
 
-        public virtual Task OnStartAsync(StartArgs args, StartKinds activate) => Task.CompletedTask;
+        public virtual Task OnStartAsync(StartArgs args) => Task.CompletedTask;
 
         private void InternalInitialize()
         {
             Debug.WriteLine($"{nameof(PrismApplicationBase)}.{nameof(InternalInitialize)}");
-
-            Container = CreateContainer();
-            RegisterRequiredTypes(Container);
-            RegisterTypes(Container);
-            OnInitialize(Container.Resolve<IMvvmLocator>());
+            Container.ContainerExtension = CreateContainer();
+            RegisterRequiredTypes(Container.ContainerRegistry);
+            RegisterTypes(Container.ContainerRegistry);
+            Container.ContainerExtension.FinalizeExtension();
+            OnInitialize();
         }
 
-        private async Task InternalStartAsync(StartArgs startArgs, StartKinds activate)
+        private async Task InternalStartAsync(StartArgs startArgs)
         {
-            Debug.WriteLine($"{nameof(PrismApplicationBase)}.{nameof(InternalStartAsync)}({startArgs.Arguments}, {activate})");
-
             await _startSemaphore.WaitAsync();
-
+            Debug.WriteLine($"{nameof(PrismApplicationBase)}.{nameof(InternalStartAsync)}({startArgs})");
             try
             {
                 Window.Current.Activate();
-
-                try
-                {
-                    Debug.WriteLine($"{nameof(PrismApplicationBase)}.{nameof(InternalStartAsync)}.{nameof(OnStart)}({startArgs.Arguments}, {activate})");
-                    OnStart(startArgs, activate);
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine($"{nameof(PrismApplicationBase)}.{nameof(InternalStartAsync)} exception: {ex}/{ex.Message})");
-                    Debugger.Break();
-                }
-
-                try
-                {
-                    Debug.WriteLine($"{nameof(PrismApplicationBase)}.{nameof(InternalStartAsync)}.{nameof(OnStartAsync)}({startArgs.Arguments}, {activate})");
-                    await OnStartAsync(startArgs, activate);
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine($"{nameof(PrismApplicationBase)}.{nameof(OnStartAsync)} exception: {ex}/{ex.Message})");
-                    Debugger.Break();
-                }
+                OnStart(startArgs);
+                await OnStartAsync(startArgs);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"ERROR {ex.Message}");
+                Debugger.Break();
             }
             finally
             {

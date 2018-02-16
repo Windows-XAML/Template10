@@ -1,4 +1,5 @@
 ﻿using Prism.Ioc;
+using Prism.Windows.Navigation;
 using Windows.UI.Xaml;
 
 namespace Prism.Windows.Mvvm
@@ -6,13 +7,6 @@ namespace Prism.Windows.Mvvm
 
     public static class ViewModelLocator
     {
-        private static IMvvmLocator _locator;
-
-        static ViewModelLocator()
-        {
-            _locator = PrismApplicationBase.Container.Resolve<IMvvmLocator>();
-        }
-
         public static bool GetAutowireViewModel(DependencyObject obj)
         {
             return (bool)obj.GetValue(AutowireViewModelProperty);
@@ -29,8 +23,8 @@ namespace Prism.Windows.Mvvm
             var view = d as FrameworkElement;
             if (view != null)
             {
-                var vmType = _locator.FindViewModel(d.GetType());
-                var vmObject = PrismApplicationBase.Container.ResolveViewModelForView(view, vmType);
+                var vmType = Container.PageRegistry.ViewModelFactory(d.GetType());
+                var vmObject = Container.Resolve(vmType);
                 view.DataContext = vmObject;
             }
         }

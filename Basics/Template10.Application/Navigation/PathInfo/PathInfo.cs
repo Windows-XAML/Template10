@@ -11,26 +11,33 @@ namespace Prism.Windows.Navigation
 
         public string QueryString { get; }
 
-        public PathInfo(string originalString, INavigationParameters parameters)
+        public PathInfo(int index, string originalString, INavigationParameters parameters)
         {
+            Index = index;
+
             _originalString = originalString;
 
             // parse name/key
 
-            PageKey = originalString.Split('?').First();
+            Key = originalString.Split('?').First();
+
+            // parse query
 
             var queryString = originalString.Split('?').Last();
-            if (queryString != PageKey)
+            if (queryString != Key)
             {
                 QueryString = queryString;
             }
 
             // parse parameters
 
-            var query = new WwwFormUrlDecoder(originalString.Split('?').Last());
-            foreach (var item in query)
+            if (!string.IsNullOrEmpty(QueryString))
             {
-                Parameters.Add(item.Name, item.Value);
+                var query = new WwwFormUrlDecoder(QueryString);
+                foreach (var item in query)
+                {
+                    Parameters.Add(item.Name, item.Value);
+                }
             }
 
             // merge parameters
@@ -42,21 +49,30 @@ namespace Prism.Windows.Navigation
                     Parameters.Add(item.Key, item.Value);
                 }
             }
+
+            // get types
+
+            if (Container.PageRegistry.TryGetRegistration(Key, out var info))
+            {
+                Key = info.Key;
+                View = info.View;
+                ViewModel = info.ViewModel;
+            }
         }
 
-        public int Index { get; set; }
+        public int Index { get; }
 
         public NavigationParameters Parameters { get; } = new NavigationParameters();
 
-        public string PageKey { get; set; }
+        public string Key { get; }
 
-        public Type PageType { get; internal set; }
+        public Type View { get; }
 
-        public Type ViewModelType { get; internal set; }
+        public Type ViewModel { get; }
 
         public override string ToString()
         {
-            return _originalString;
+            return $"{_originalString} View:{View} ViewModel:{ViewModel}";
         }
     }
 }

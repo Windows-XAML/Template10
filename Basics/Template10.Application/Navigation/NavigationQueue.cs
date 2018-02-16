@@ -13,13 +13,6 @@ namespace Prism.Windows.Navigation
 {
     public class NavigationQueue : Queue<IPathInfo>
     {
-        private static IMvvmLocator _locator;
-
-        static NavigationQueue()
-        {
-            _locator = PrismApplicationBase.Container.Resolve<IMvvmLocator>();
-        }
-
         public NavigationQueue(IEnumerable<IPathInfo> collection)
             : base(collection.OrderBy(x => x.Index))
         {
@@ -59,32 +52,26 @@ namespace Prism.Windows.Navigation
             }
         }
 
-        public static bool TryParse(Uri path, INavigationParameters parameters, out NavigationQueue queue)
+        public static bool TryParse(Uri uri, INavigationParameters parameters, out NavigationQueue queue)
         {
-            if (path == null)
+            if (uri == null)
             {
                 queue = null;
                 return false;
             }
 
-            if (path.IsAbsoluteUri)
+            if (uri.IsAbsoluteUri)
             {
                 throw new Exception("Navigation path must not be absolute Uri.");
             }
 
-            var groups = path.OriginalString
-                .Split("/")
+            var groups = uri.OriginalString.Split("/")
                 .Where(x => !string.IsNullOrEmpty(x))
-                .Select((x, index) => new PathInfo(x, parameters)
-                {
-                    Index = index,
-                    PageType = _locator.FindView?.Invoke(x.Split('?').First()),
-                    ViewModelType = _locator.FindViewModel?.Invoke(_locator.FindView?.Invoke(x.Split('?').First())),
-                });
+                .Select((path, index) => new PathInfo(index, path, parameters));
 
             queue = new NavigationQueue(groups)
             {
-                ClearBackStack = path.OriginalString.StartsWith("/"),
+                ClearBackStack = uri.OriginalString.StartsWith("/"),
             };
 
             return queue.Any();

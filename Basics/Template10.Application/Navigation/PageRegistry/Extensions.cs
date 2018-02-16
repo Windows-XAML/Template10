@@ -1,37 +1,26 @@
 ﻿using Prism.Ioc;
+using System;
 
 namespace Prism.Windows.Navigation
 {
     public static partial class Extensions
     {
-        private static IPageRegistry _registry;
-
-        static Extensions()
+        public static void Register(IContainerRegistry registry, string key, Type view, Type viewModel)
         {
-            _registry = PrismApplicationBase.Container.Resolve<IPageRegistry>();
+            if (viewModel != null)
+            {
+                registry.Register(viewModel);
+            }
+            Container.PageRegistry.Register(key, (view, viewModel));
         }
 
         public static void RegisterForNavigation<TView, TViewModel>(this IContainerRegistry registry)
-        {
-            RegisterForNavigation<TView, TViewModel>(registry, typeof(TView).Name);
-        }
-
+            => Register(registry, typeof(TView).Name, typeof(TView), typeof(TViewModel));
         public static void RegisterForNavigation<TView, TViewModel>(this IContainerRegistry registry, string key)
-        {
-            registry.Register<TView>(key);
-            registry.Register<TViewModel>();
-            _registry.Register(key, typeof(TView), typeof(TViewModel));
-        }
-
+            => Register(registry, key, typeof(TView), typeof(TViewModel));
         public static void RegisterForNavigation<TView>(this IContainerRegistry registry)
-        {
-            RegisterForNavigation<TView>(registry, typeof(TView).Name);
-        }
-
+            => Register(registry, typeof(TView).Name, typeof(TView), null);
         public static void RegisterForNavigation<TView>(this IContainerRegistry registry, string key)
-        {
-            registry.Register<TView>(key);
-            _registry.Register(key, typeof(TView), null);
-        }
+            => Register(registry, key, typeof(TView), null);
     }
 }

@@ -158,13 +158,17 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Prism.Unity.Windows\Prism.Unity.Windows.csproj">
+    <ProjectReference Include="..\Prism.Unity.Windows\Prism.Default.Windows.csproj">
       <Project>{c929db99-b5c8-4c38-85a7-6cf130e42451}</Project>
-      <Name>Prism.Unity.Windows</Name>
+      <Name>Prism.Default.Windows</Name>
     </ProjectReference>
     <ProjectReference Include="..\Template10.Application\Prism.Windows.csproj">
       <Project>{9b2bf0dd-6978-4896-93bb-0f863b96d0ce}</Project>
       <Name>Prism.Windows</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Template10.Extras\Template10.Extras.csproj">
+      <Project>{9bb18d4b-bcdd-43c9-a7c2-416d13dd39a6}</Project>
+      <Name>Template10.Extras</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

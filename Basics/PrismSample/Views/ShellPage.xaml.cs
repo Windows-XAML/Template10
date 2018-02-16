@@ -1,25 +1,26 @@
-﻿using Prism.Windows.Services;
-using win = Windows;
+﻿using win = Windows;
 using Prism.Windows.Navigation;
 using Windows.ApplicationModel.Core;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Prism.Windows.Services.DialogService;
 using Prism.Windows.Utilities;
 using System.Linq;
 using System;
 using Windows.UI.Xaml.Media;
+using Template10.Services;
+using Template10.Services.Dialog;
+using Template10.Services.Gesture;
 
 namespace PrismSample.Views
 {
     public sealed partial class ShellPage : Page
     {
-        private IGestureService _gestureService;
-        private IDialogService _dialogService;
+        private readonly IGestureService _gestureService = GestureService.GetForCurrentView();
+        private readonly IDialogService _dialogService;
 
-        public ShellPage(IGestureService gestureService, IDialogService dialogService)
+        public ShellPage(IDialogService dialogService)
         {
             InitializeComponent();
 
@@ -29,7 +30,6 @@ namespace PrismSample.Views
                 return;
             }
 
-            _gestureService = gestureService;
             _dialogService = dialogService;
 
             ShellView.Start();

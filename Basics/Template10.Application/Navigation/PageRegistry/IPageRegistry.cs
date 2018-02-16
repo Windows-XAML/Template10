@@ -4,8 +4,11 @@ namespace Prism.Windows.Navigation
 {
     public interface IPageRegistry
     {
-        void Register(string pageKey, Type pageType, Type viewModelType);
-        bool TryGetInfo(string pageKey, out (string Key, Type PageType, Type ViewModelType) info);
-        bool TryGetInfo(Type pageType, out (string Key, Type PageType, Type ViewModelType) info);
+        void Register(string key, (Type View, Type ViewModel) info);
+        bool TryGetRegistration(Type view, out (string Key, Type View, Type ViewModel) info);
+        bool TryGetRegistration(string key, out (string Key, Type View, Type ViewModel) info);
+        // bool TryUseFactories(string key, out (string Key, Type View, Type ViewModel) info);
+        Func<string, Type> ViewFactory { get; set; }
+        Func<Type, Type> ViewModelFactory { get; set; }
     }
 }

@@ -14,7 +14,7 @@ namespace PrismSample.ViewModels
 {
     class MainPageViewModel : ViewModelBase
     {
-        private IDataService _dataService;
+        private readonly IDataService _dataService;
         private NavigationService _navigationService;
 
         public MainPageViewModel(IDataService dataService)

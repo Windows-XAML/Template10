@@ -1,6 +1,6 @@
 ﻿using System;
 using Newtonsoft.Json;
-using Prism.Windows.Services.Serialization;
+using Template10.Services.Serialization;
 
 namespace Prism.Windows
 {
