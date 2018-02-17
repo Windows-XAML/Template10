@@ -1,4 +1,5 @@
-﻿using Prism.Events;
+﻿using win = Windows;
+using Prism.Events;
 using Prism.Ioc;
 using Prism.Logging;
 using Prism.Navigation;
@@ -14,6 +15,7 @@ using System.Threading.Tasks;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using System.Linq;
 
 namespace Prism.Windows
 {

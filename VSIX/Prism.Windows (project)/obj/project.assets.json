@@ -11,28 +11,7 @@
           "lib/netstandard2.0/Bogus.dll": {}
         }
       },
-      "Microsoft.Extensions.DependencyInjection/2.0.0": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "2.0.0"
-        },
-        "compile": {
-          "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.dll": {}
-        }
-      },
-      "Microsoft.Extensions.DependencyInjection.Abstractions/2.0.0": {
-        "type": "package",
-        "compile": {
-          "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {}
-        }
-      },
-      "Microsoft.Net.Native.Compiler/2.0.2": {
+      "Microsoft.Net.Native.Compiler/2.0.3": {
         "type": "package",
         "dependencies": {
           "Microsoft.Net.Native.SharedLibrary-arm": "2.0.0",
@@ -65,12 +44,12 @@
           "build/Microsoft.Net.Native.SharedLibrary-x86.targets": {}
         }
       },
-      "Microsoft.Net.UWPCoreRuntimeSdk/2.1.1": {
+      "Microsoft.Net.UWPCoreRuntimeSdk/2.1.2": {
         "type": "package",
         "dependencies": {
-          "runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.1",
-          "runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.1",
-          "runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.1"
+          "runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.2",
+          "runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.2",
+          "runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.2"
         },
         "build": {
           "build/Microsoft.Net.UWPCoreRuntimeSdk.props": {}
@@ -85,12 +64,12 @@
           "lib/netstandard1.0/_._": {}
         }
       },
-      "Microsoft.NETCore.UniversalWindowsPlatform/6.0.6": {
+      "Microsoft.NETCore.UniversalWindowsPlatform/6.0.7": {
         "type": "package",
         "dependencies": {
           "Microsoft.NETCore.Platforms": "2.0.0",
-          "Microsoft.Net.Native.Compiler": "2.0.2",
-          "Microsoft.Net.UWPCoreRuntimeSdk": "2.1.1",
+          "Microsoft.Net.Native.Compiler": "2.0.3",
+          "Microsoft.Net.UWPCoreRuntimeSdk": "2.1.2",
           "NETStandard.Library": "2.0.1"
         },
         "compile": {
@@ -296,34 +275,58 @@
           "lib/uap10.0/Prism.dll": {}
         }
       },
-      "runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk/2.1.1": {
+      "runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk/2.1.2": {
         "type": "package",
         "build": {
           "build/runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk.props": {},
           "build/runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk.targets": {}
         }
       },
-      "runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk/2.1.1": {
+      "runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk/2.1.2": {
         "type": "package",
         "build": {
           "build/runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk.props": {},
           "build/runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk.targets": {}
         }
       },
-      "runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk/2.1.1": {
+      "runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk/2.1.2": {
         "type": "package",
         "build": {
           "build/runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk.props": {},
           "build/runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk.targets": {}
         }
       },
+      "System.ValueTuple/4.4.0": {
+        "type": "package",
+        "compile": {
+          "ref/netstandard2.0/_._": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/_._": {}
+        }
+      },
+      "Unity/5.6.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/CommonServiceLocator.dll": {},
+          "lib/netstandard2.0/Unity.Abstractions.dll": {},
+          "lib/netstandard2.0/Unity.Container.dll": {},
+          "lib/netstandard2.0/Unity.ServiceLocation.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/CommonServiceLocator.dll": {},
+          "lib/netstandard2.0/Unity.Abstractions.dll": {},
+          "lib/netstandard2.0/Unity.Container.dll": {},
+          "lib/netstandard2.0/Unity.ServiceLocation.dll": {}
+        }
+      },
       "Prism.Windows/1.0.0": {
         "type": "project",
-        "framework": "UAP,Version=v10.0.16299",
+        "framework": "UAP,Version=v10.0.10586",
         "dependencies": {
-          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.6",
-          "Microsoft.Xaml.Behaviors.Uwp.Managed": "2.0.0",
-          "Prism.Core": "7.0.0.423-ci"
+          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.7",
+          "Prism.Core": "7.0.0.423-ci",
+          "System.ValueTuple": "4.4.0"
         },
         "compile": {
           "bin/placeholder/Prism.Windows.dll": {}
@@ -332,37 +335,55 @@
           "bin/placeholder/Prism.Windows.dll": {}
         }
       },
-      "Prism.Windows.Default/1.0.0": {
+      "Prism.Windows.Default.10586/1.0.0": {
         "type": "project",
-        "framework": "UAP,Version=v10.0.16299",
+        "framework": "UAP,Version=v10.0.10586",
         "dependencies": {
-          "Microsoft.Extensions.DependencyInjection": "2.0.0",
           "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.6",
           "Newtonsoft.Json": "11.0.1-beta3",
           "Prism.Core": "7.0.0.423-ci",
           "Prism.Windows": "1.0.0",
-          "Template10.Extras": "1.0.0"
+          "Template10.Extras.10586": "1.0.0",
+          "Unity": "5.6.0"
         },
         "compile": {
-          "bin/placeholder/Prism.Windows.Default.dll": {}
+          "bin/placeholder/Prism.Windows.Default.10586.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Prism.Windows.Default.dll": {}
+          "bin/placeholder/Prism.Windows.Default.10586.dll": {}
         }
       },
-      "Template10.Extras/1.0.0": {
+      "Template10.Extras.10586/1.0.0": {
         "type": "project",
-        "framework": "UAP,Version=v10.0.16299",
+        "framework": "UAP,Version=v10.0.10586",
         "dependencies": {
-          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.6",
+          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.7",
+          "Microsoft.Xaml.Behaviors.Uwp.Managed": "2.0.0",
           "Prism.Core": "7.0.0.423-ci",
           "Prism.Windows": "1.0.0"
         },
         "compile": {
-          "bin/placeholder/Template10.Extras.dll": {}
+          "bin/placeholder/Template10.Extras.10586.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Template10.Extras.dll": {}
+          "bin/placeholder/Template10.Extras.10586.dll": {}
+        }
+      },
+      "Template10.Extras.16299/1.0.0": {
+        "type": "project",
+        "framework": "UAP,Version=v10.0.16299",
+        "dependencies": {
+          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.7",
+          "Prism.Core": "7.0.0.423-ci",
+          "Prism.Windows": "1.0.0",
+          "Prism.Windows.Default.10586": "1.0.0",
+          "Template10.Extras.10586": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Template10.Extras.16299.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Template10.Extras.16299.dll": {}
         }
       }
     },
@@ -376,28 +397,7 @@
           "lib/netstandard2.0/Bogus.dll": {}
         }
       },
-      "Microsoft.Extensions.DependencyInjection/2.0.0": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "2.0.0"
-        },
-        "compile": {
-          "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.dll": {}
-        }
-      },
-      "Microsoft.Extensions.DependencyInjection.Abstractions/2.0.0": {
-        "type": "package",
-        "compile": {
-          "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {}
-        }
-      },
-      "Microsoft.Net.Native.Compiler/2.0.2": {
+      "Microsoft.Net.Native.Compiler/2.0.3": {
         "type": "package",
         "dependencies": {
           "Microsoft.Net.Native.SharedLibrary-arm": "2.0.0",
@@ -430,12 +430,12 @@
           "build/Microsoft.Net.Native.SharedLibrary-x86.targets": {}
         }
       },
-      "Microsoft.Net.UWPCoreRuntimeSdk/2.1.1": {
+      "Microsoft.Net.UWPCoreRuntimeSdk/2.1.2": {
         "type": "package",
         "dependencies": {
-          "runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.1",
-          "runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.1",
-          "runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.1"
+          "runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.2",
+          "runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.2",
+          "runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.2"
         },
         "build": {
           "build/Microsoft.Net.UWPCoreRuntimeSdk.props": {}
@@ -450,14 +450,14 @@
           "lib/netstandard1.0/_._": {}
         }
       },
-      "Microsoft.NETCore.UniversalWindowsPlatform/6.0.6": {
+      "Microsoft.NETCore.UniversalWindowsPlatform/6.0.7": {
         "type": "package",
         "dependencies": {
           "Microsoft.NETCore.Platforms": "2.0.0",
-          "Microsoft.Net.Native.Compiler": "2.0.2",
-          "Microsoft.Net.UWPCoreRuntimeSdk": "2.1.1",
+          "Microsoft.Net.Native.Compiler": "2.0.3",
+          "Microsoft.Net.UWPCoreRuntimeSdk": "2.1.2",
           "NETStandard.Library": "2.0.1",
-          "runtime.win10-arm.Microsoft.NETCore.UniversalWindowsPlatform": "6.0.6"
+          "runtime.win10-arm.Microsoft.NETCore.UniversalWindowsPlatform": "6.0.7"
         },
         "compile": {
           "ref/uap10.0.15138/Microsoft.CSharp.dll": {},
@@ -662,14 +662,14 @@
           "lib/uap10.0/Prism.dll": {}
         }
       },
-      "runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk/2.1.1": {
+      "runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk/2.1.2": {
         "type": "package",
         "build": {
           "build/runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk.props": {},
           "build/runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk.targets": {}
         }
       },
-      "runtime.win10-arm.Microsoft.NETCore.UniversalWindowsPlatform/6.0.6": {
+      "runtime.win10-arm.Microsoft.NETCore.UniversalWindowsPlatform/6.0.7": {
         "type": "package",
         "compile": {
           "ref/netstandard/_._": {}
@@ -843,27 +843,51 @@
           "runtimes/win10-arm/nativeassets/uap10.0.15138/clrcompression.dll": {}
         }
       },
-      "runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk/2.1.1": {
+      "runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk/2.1.2": {
         "type": "package",
         "build": {
           "build/runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk.props": {},
           "build/runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk.targets": {}
         }
       },
-      "runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk/2.1.1": {
+      "runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk/2.1.2": {
         "type": "package",
         "build": {
           "build/runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk.props": {},
           "build/runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk.targets": {}
         }
       },
+      "System.ValueTuple/4.4.0": {
+        "type": "package",
+        "compile": {
+          "ref/netstandard2.0/_._": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/_._": {}
+        }
+      },
+      "Unity/5.6.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/CommonServiceLocator.dll": {},
+          "lib/netstandard2.0/Unity.Abstractions.dll": {},
+          "lib/netstandard2.0/Unity.Container.dll": {},
+          "lib/netstandard2.0/Unity.ServiceLocation.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/CommonServiceLocator.dll": {},
+          "lib/netstandard2.0/Unity.Abstractions.dll": {},
+          "lib/netstandard2.0/Unity.Container.dll": {},
+          "lib/netstandard2.0/Unity.ServiceLocation.dll": {}
+        }
+      },
       "Prism.Windows/1.0.0": {
         "type": "project",
-        "framework": "UAP,Version=v10.0.16299",
+        "framework": "UAP,Version=v10.0.10586",
         "dependencies": {
-          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.6",
-          "Microsoft.Xaml.Behaviors.Uwp.Managed": "2.0.0",
-          "Prism.Core": "7.0.0.423-ci"
+          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.7",
+          "Prism.Core": "7.0.0.423-ci",
+          "System.ValueTuple": "4.4.0"
         },
         "compile": {
           "bin/placeholder/Prism.Windows.dll": {}
@@ -872,37 +896,55 @@
           "bin/placeholder/Prism.Windows.dll": {}
         }
       },
-      "Prism.Windows.Default/1.0.0": {
+      "Prism.Windows.Default.10586/1.0.0": {
         "type": "project",
-        "framework": "UAP,Version=v10.0.16299",
+        "framework": "UAP,Version=v10.0.10586",
         "dependencies": {
-          "Microsoft.Extensions.DependencyInjection": "2.0.0",
           "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.6",
           "Newtonsoft.Json": "11.0.1-beta3",
           "Prism.Core": "7.0.0.423-ci",
           "Prism.Windows": "1.0.0",
-          "Template10.Extras": "1.0.0"
+          "Template10.Extras.10586": "1.0.0",
+          "Unity": "5.6.0"
         },
         "compile": {
-          "bin/placeholder/Prism.Windows.Default.dll": {}
+          "bin/placeholder/Prism.Windows.Default.10586.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Prism.Windows.Default.dll": {}
+          "bin/placeholder/Prism.Windows.Default.10586.dll": {}
         }
       },
-      "Template10.Extras/1.0.0": {
+      "Template10.Extras.10586/1.0.0": {
         "type": "project",
-        "framework": "UAP,Version=v10.0.16299",
+        "framework": "UAP,Version=v10.0.10586",
         "dependencies": {
-          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.6",
+          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.7",
+          "Microsoft.Xaml.Behaviors.Uwp.Managed": "2.0.0",
           "Prism.Core": "7.0.0.423-ci",
           "Prism.Windows": "1.0.0"
         },
         "compile": {
-          "bin/placeholder/Template10.Extras.dll": {}
+          "bin/placeholder/Template10.Extras.10586.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Template10.Extras.dll": {}
+          "bin/placeholder/Template10.Extras.10586.dll": {}
+        }
+      },
+      "Template10.Extras.16299/1.0.0": {
+        "type": "project",
+        "framework": "UAP,Version=v10.0.16299",
+        "dependencies": {
+          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.7",
+          "Prism.Core": "7.0.0.423-ci",
+          "Prism.Windows": "1.0.0",
+          "Prism.Windows.Default.10586": "1.0.0",
+          "Template10.Extras.10586": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Template10.Extras.16299.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Template10.Extras.16299.dll": {}
         }
       }
     },
@@ -916,28 +958,7 @@
           "lib/netstandard2.0/Bogus.dll": {}
         }
       },
-      "Microsoft.Extensions.DependencyInjection/2.0.0": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "2.0.0"
-        },
-        "compile": {
-          "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.dll": {}
-        }
-      },
-      "Microsoft.Extensions.DependencyInjection.Abstractions/2.0.0": {
-        "type": "package",
-        "compile": {
-          "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {}
-        }
-      },
-      "Microsoft.Net.Native.Compiler/2.0.2": {
+      "Microsoft.Net.Native.Compiler/2.0.3": {
         "type": "package",
         "dependencies": {
           "Microsoft.Net.Native.SharedLibrary-arm": "2.0.0",
@@ -970,12 +991,12 @@
           "build/Microsoft.Net.Native.SharedLibrary-x86.targets": {}
         }
       },
-      "Microsoft.Net.UWPCoreRuntimeSdk/2.1.1": {
+      "Microsoft.Net.UWPCoreRuntimeSdk/2.1.2": {
         "type": "package",
         "dependencies": {
-          "runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.1",
-          "runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.1",
-          "runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.1"
+          "runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.2",
+          "runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.2",
+          "runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.2"
         },
         "build": {
           "build/Microsoft.Net.UWPCoreRuntimeSdk.props": {}
@@ -990,14 +1011,14 @@
           "lib/netstandard1.0/_._": {}
         }
       },
-      "Microsoft.NETCore.UniversalWindowsPlatform/6.0.6": {
+      "Microsoft.NETCore.UniversalWindowsPlatform/6.0.7": {
         "type": "package",
         "dependencies": {
           "Microsoft.NETCore.Platforms": "2.0.0",
-          "Microsoft.Net.Native.Compiler": "2.0.2",
-          "Microsoft.Net.UWPCoreRuntimeSdk": "2.1.1",
+          "Microsoft.Net.Native.Compiler": "2.0.3",
+          "Microsoft.Net.UWPCoreRuntimeSdk": "2.1.2",
           "NETStandard.Library": "2.0.1",
-          "runtime.win10-arm-aot.Microsoft.NETCore.UniversalWindowsPlatform": "6.0.6"
+          "runtime.win10-arm-aot.Microsoft.NETCore.UniversalWindowsPlatform": "6.0.7"
         },
         "compile": {
           "ref/uap10.0.15138/Microsoft.CSharp.dll": {},
@@ -1202,7 +1223,7 @@
           "lib/uap10.0/Prism.dll": {}
         }
       },
-      "runtime.win10-arm-aot.Microsoft.NETCore.UniversalWindowsPlatform/6.0.6": {
+      "runtime.win10-arm-aot.Microsoft.NETCore.UniversalWindowsPlatform/6.0.7": {
         "type": "package",
         "compile": {
           "ref/netstandard/_._": {}
@@ -1377,34 +1398,58 @@
           "runtimes/win10-arm-aot/nativeassets/uap10.0.15138/clrcompression.dll": {}
         }
       },
-      "runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk/2.1.1": {
+      "runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk/2.1.2": {
         "type": "package",
         "build": {
           "build/runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk.props": {},
           "build/runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk.targets": {}
         }
       },
-      "runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk/2.1.1": {
+      "runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk/2.1.2": {
         "type": "package",
         "build": {
           "build/runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk.props": {},
           "build/runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk.targets": {}
         }
       },
-      "runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk/2.1.1": {
+      "runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk/2.1.2": {
         "type": "package",
         "build": {
           "build/runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk.props": {},
           "build/runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk.targets": {}
         }
       },
+      "System.ValueTuple/4.4.0": {
+        "type": "package",
+        "compile": {
+          "ref/netstandard2.0/_._": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/_._": {}
+        }
+      },
+      "Unity/5.6.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/CommonServiceLocator.dll": {},
+          "lib/netstandard2.0/Unity.Abstractions.dll": {},
+          "lib/netstandard2.0/Unity.Container.dll": {},
+          "lib/netstandard2.0/Unity.ServiceLocation.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/CommonServiceLocator.dll": {},
+          "lib/netstandard2.0/Unity.Abstractions.dll": {},
+          "lib/netstandard2.0/Unity.Container.dll": {},
+          "lib/netstandard2.0/Unity.ServiceLocation.dll": {}
+        }
+      },
       "Prism.Windows/1.0.0": {
         "type": "project",
-        "framework": "UAP,Version=v10.0.16299",
+        "framework": "UAP,Version=v10.0.10586",
         "dependencies": {
-          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.6",
-          "Microsoft.Xaml.Behaviors.Uwp.Managed": "2.0.0",
-          "Prism.Core": "7.0.0.423-ci"
+          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.7",
+          "Prism.Core": "7.0.0.423-ci",
+          "System.ValueTuple": "4.4.0"
         },
         "compile": {
           "bin/placeholder/Prism.Windows.dll": {}
@@ -1413,37 +1458,55 @@
           "bin/placeholder/Prism.Windows.dll": {}
         }
       },
-      "Prism.Windows.Default/1.0.0": {
+      "Prism.Windows.Default.10586/1.0.0": {
         "type": "project",
-        "framework": "UAP,Version=v10.0.16299",
+        "framework": "UAP,Version=v10.0.10586",
         "dependencies": {
-          "Microsoft.Extensions.DependencyInjection": "2.0.0",
           "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.6",
           "Newtonsoft.Json": "11.0.1-beta3",
           "Prism.Core": "7.0.0.423-ci",
           "Prism.Windows": "1.0.0",
-          "Template10.Extras": "1.0.0"
+          "Template10.Extras.10586": "1.0.0",
+          "Unity": "5.6.0"
         },
         "compile": {
-          "bin/placeholder/Prism.Windows.Default.dll": {}
+          "bin/placeholder/Prism.Windows.Default.10586.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Prism.Windows.Default.dll": {}
+          "bin/placeholder/Prism.Windows.Default.10586.dll": {}
         }
       },
-      "Template10.Extras/1.0.0": {
+      "Template10.Extras.10586/1.0.0": {
         "type": "project",
-        "framework": "UAP,Version=v10.0.16299",
+        "framework": "UAP,Version=v10.0.10586",
         "dependencies": {
-          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.6",
+          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.7",
+          "Microsoft.Xaml.Behaviors.Uwp.Managed": "2.0.0",
           "Prism.Core": "7.0.0.423-ci",
           "Prism.Windows": "1.0.0"
         },
         "compile": {
-          "bin/placeholder/Template10.Extras.dll": {}
+          "bin/placeholder/Template10.Extras.10586.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Template10.Extras.dll": {}
+          "bin/placeholder/Template10.Extras.10586.dll": {}
+        }
+      },
+      "Template10.Extras.16299/1.0.0": {
+        "type": "project",
+        "framework": "UAP,Version=v10.0.16299",
+        "dependencies": {
+          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.7",
+          "Prism.Core": "7.0.0.423-ci",
+          "Prism.Windows": "1.0.0",
+          "Prism.Windows.Default.10586": "1.0.0",
+          "Template10.Extras.10586": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Template10.Extras.16299.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Template10.Extras.16299.dll": {}
         }
       }
     },
@@ -1457,28 +1520,7 @@
           "lib/netstandard2.0/Bogus.dll": {}
         }
       },
-      "Microsoft.Extensions.DependencyInjection/2.0.0": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "2.0.0"
-        },
-        "compile": {
-          "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.dll": {}
-        }
-      },
-      "Microsoft.Extensions.DependencyInjection.Abstractions/2.0.0": {
-        "type": "package",
-        "compile": {
-          "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {}
-        }
-      },
-      "Microsoft.Net.Native.Compiler/2.0.2": {
+      "Microsoft.Net.Native.Compiler/2.0.3": {
         "type": "package",
         "dependencies": {
           "Microsoft.Net.Native.SharedLibrary-arm": "2.0.0",
@@ -1511,12 +1553,12 @@
           "build/Microsoft.Net.Native.SharedLibrary-x86.targets": {}
         }
       },
-      "Microsoft.Net.UWPCoreRuntimeSdk/2.1.1": {
+      "Microsoft.Net.UWPCoreRuntimeSdk/2.1.2": {
         "type": "package",
         "dependencies": {
-          "runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.1",
-          "runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.1",
-          "runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.1"
+          "runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.2",
+          "runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.2",
+          "runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.2"
         },
         "build": {
           "build/Microsoft.Net.UWPCoreRuntimeSdk.props": {}
@@ -1531,14 +1573,14 @@
           "lib/netstandard1.0/_._": {}
         }
       },
-      "Microsoft.NETCore.UniversalWindowsPlatform/6.0.6": {
+      "Microsoft.NETCore.UniversalWindowsPlatform/6.0.7": {
         "type": "package",
         "dependencies": {
           "Microsoft.NETCore.Platforms": "2.0.0",
-          "Microsoft.Net.Native.Compiler": "2.0.2",
-          "Microsoft.Net.UWPCoreRuntimeSdk": "2.1.1",
+          "Microsoft.Net.Native.Compiler": "2.0.3",
+          "Microsoft.Net.UWPCoreRuntimeSdk": "2.1.2",
           "NETStandard.Library": "2.0.1",
-          "runtime.win10-x64.Microsoft.NETCore.UniversalWindowsPlatform": "6.0.6"
+          "runtime.win10-x64.Microsoft.NETCore.UniversalWindowsPlatform": "6.0.7"
         },
         "compile": {
           "ref/uap10.0.15138/Microsoft.CSharp.dll": {},
@@ -1743,21 +1785,21 @@
           "lib/uap10.0/Prism.dll": {}
         }
       },
-      "runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk/2.1.1": {
+      "runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk/2.1.2": {
         "type": "package",
         "build": {
           "build/runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk.props": {},
           "build/runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk.targets": {}
         }
       },
-      "runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk/2.1.1": {
+      "runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk/2.1.2": {
         "type": "package",
         "build": {
           "build/runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk.props": {},
           "build/runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk.targets": {}
         }
       },
-      "runtime.win10-x64.Microsoft.NETCore.UniversalWindowsPlatform/6.0.6": {
+      "runtime.win10-x64.Microsoft.NETCore.UniversalWindowsPlatform/6.0.7": {
         "type": "package",
         "compile": {
           "ref/netstandard/_._": {}
@@ -1931,20 +1973,44 @@
           "runtimes/win10-x64/nativeassets/uap10.0.15138/clrcompression.dll": {}
         }
       },
-      "runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk/2.1.1": {
+      "runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk/2.1.2": {
         "type": "package",
         "build": {
           "build/runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk.props": {},
           "build/runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk.targets": {}
         }
       },
+      "System.ValueTuple/4.4.0": {
+        "type": "package",
+        "compile": {
+          "ref/netstandard2.0/_._": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/_._": {}
+        }
+      },
+      "Unity/5.6.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/CommonServiceLocator.dll": {},
+          "lib/netstandard2.0/Unity.Abstractions.dll": {},
+          "lib/netstandard2.0/Unity.Container.dll": {},
+          "lib/netstandard2.0/Unity.ServiceLocation.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/CommonServiceLocator.dll": {},
+          "lib/netstandard2.0/Unity.Abstractions.dll": {},
+          "lib/netstandard2.0/Unity.Container.dll": {},
+          "lib/netstandard2.0/Unity.ServiceLocation.dll": {}
+        }
+      },
       "Prism.Windows/1.0.0": {
         "type": "project",
-        "framework": "UAP,Version=v10.0.16299",
+        "framework": "UAP,Version=v10.0.10586",
         "dependencies": {
-          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.6",
-          "Microsoft.Xaml.Behaviors.Uwp.Managed": "2.0.0",
-          "Prism.Core": "7.0.0.423-ci"
+          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.7",
+          "Prism.Core": "7.0.0.423-ci",
+          "System.ValueTuple": "4.4.0"
         },
         "compile": {
           "bin/placeholder/Prism.Windows.dll": {}
@@ -1953,37 +2019,55 @@
           "bin/placeholder/Prism.Windows.dll": {}
         }
       },
-      "Prism.Windows.Default/1.0.0": {
+      "Prism.Windows.Default.10586/1.0.0": {
         "type": "project",
-        "framework": "UAP,Version=v10.0.16299",
+        "framework": "UAP,Version=v10.0.10586",
         "dependencies": {
-          "Microsoft.Extensions.DependencyInjection": "2.0.0",
           "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.6",
           "Newtonsoft.Json": "11.0.1-beta3",
           "Prism.Core": "7.0.0.423-ci",
           "Prism.Windows": "1.0.0",
-          "Template10.Extras": "1.0.0"
+          "Template10.Extras.10586": "1.0.0",
+          "Unity": "5.6.0"
         },
         "compile": {
-          "bin/placeholder/Prism.Windows.Default.dll": {}
+          "bin/placeholder/Prism.Windows.Default.10586.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Prism.Windows.Default.dll": {}
+          "bin/placeholder/Prism.Windows.Default.10586.dll": {}
         }
       },
-      "Template10.Extras/1.0.0": {
+      "Template10.Extras.10586/1.0.0": {
         "type": "project",
-        "framework": "UAP,Version=v10.0.16299",
+        "framework": "UAP,Version=v10.0.10586",
         "dependencies": {
-          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.6",
+          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.7",
+          "Microsoft.Xaml.Behaviors.Uwp.Managed": "2.0.0",
           "Prism.Core": "7.0.0.423-ci",
           "Prism.Windows": "1.0.0"
         },
         "compile": {
-          "bin/placeholder/Template10.Extras.dll": {}
+          "bin/placeholder/Template10.Extras.10586.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Template10.Extras.dll": {}
+          "bin/placeholder/Template10.Extras.10586.dll": {}
+        }
+      },
+      "Template10.Extras.16299/1.0.0": {
+        "type": "project",
+        "framework": "UAP,Version=v10.0.16299",
+        "dependencies": {
+          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.7",
+          "Prism.Core": "7.0.0.423-ci",
+          "Prism.Windows": "1.0.0",
+          "Prism.Windows.Default.10586": "1.0.0",
+          "Template10.Extras.10586": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Template10.Extras.16299.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Template10.Extras.16299.dll": {}
         }
       }
     },
@@ -1997,28 +2081,7 @@
           "lib/netstandard2.0/Bogus.dll": {}
         }
       },
-      "Microsoft.Extensions.DependencyInjection/2.0.0": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "2.0.0"
-        },
-        "compile": {
-          "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.dll": {}
-        }
-      },
-      "Microsoft.Extensions.DependencyInjection.Abstractions/2.0.0": {
-        "type": "package",
-        "compile": {
-          "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {}
-        }
-      },
-      "Microsoft.Net.Native.Compiler/2.0.2": {
+      "Microsoft.Net.Native.Compiler/2.0.3": {
         "type": "package",
         "dependencies": {
           "Microsoft.Net.Native.SharedLibrary-arm": "2.0.0",
@@ -2051,12 +2114,12 @@
           "build/Microsoft.Net.Native.SharedLibrary-x86.targets": {}
         }
       },
-      "Microsoft.Net.UWPCoreRuntimeSdk/2.1.1": {
+      "Microsoft.Net.UWPCoreRuntimeSdk/2.1.2": {
         "type": "package",
         "dependencies": {
-          "runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.1",
-          "runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.1",
-          "runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.1"
+          "runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.2",
+          "runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.2",
+          "runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.2"
         },
         "build": {
           "build/Microsoft.Net.UWPCoreRuntimeSdk.props": {}
@@ -2071,14 +2134,14 @@
           "lib/netstandard1.0/_._": {}
         }
       },
-      "Microsoft.NETCore.UniversalWindowsPlatform/6.0.6": {
+      "Microsoft.NETCore.UniversalWindowsPlatform/6.0.7": {
         "type": "package",
         "dependencies": {
           "Microsoft.NETCore.Platforms": "2.0.0",
-          "Microsoft.Net.Native.Compiler": "2.0.2",
-          "Microsoft.Net.UWPCoreRuntimeSdk": "2.1.1",
+          "Microsoft.Net.Native.Compiler": "2.0.3",
+          "Microsoft.Net.UWPCoreRuntimeSdk": "2.1.2",
           "NETStandard.Library": "2.0.1",
-          "runtime.win10-x64-aot.Microsoft.NETCore.UniversalWindowsPlatform": "6.0.6"
+          "runtime.win10-x64-aot.Microsoft.NETCore.UniversalWindowsPlatform": "6.0.7"
         },
         "compile": {
           "ref/uap10.0.15138/Microsoft.CSharp.dll": {},
@@ -2283,14 +2346,14 @@
           "lib/uap10.0/Prism.dll": {}
         }
       },
-      "runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk/2.1.1": {
+      "runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk/2.1.2": {
         "type": "package",
         "build": {
           "build/runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk.props": {},
           "build/runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk.targets": {}
         }
       },
-      "runtime.win10-x64-aot.Microsoft.NETCore.UniversalWindowsPlatform/6.0.6": {
+      "runtime.win10-x64-aot.Microsoft.NETCore.UniversalWindowsPlatform/6.0.7": {
         "type": "package",
         "compile": {
           "ref/netstandard/_._": {}
@@ -2465,27 +2528,51 @@
           "runtimes/win10-x64-aot/nativeassets/uap10.0.15138/clrcompression.dll": {}
         }
       },
-      "runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk/2.1.1": {
+      "runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk/2.1.2": {
         "type": "package",
         "build": {
           "build/runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk.props": {},
           "build/runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk.targets": {}
         }
       },
-      "runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk/2.1.1": {
+      "runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk/2.1.2": {
         "type": "package",
         "build": {
           "build/runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk.props": {},
           "build/runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk.targets": {}
         }
       },
+      "System.ValueTuple/4.4.0": {
+        "type": "package",
+        "compile": {
+          "ref/netstandard2.0/_._": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/_._": {}
+        }
+      },
+      "Unity/5.6.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/CommonServiceLocator.dll": {},
+          "lib/netstandard2.0/Unity.Abstractions.dll": {},
+          "lib/netstandard2.0/Unity.Container.dll": {},
+          "lib/netstandard2.0/Unity.ServiceLocation.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/CommonServiceLocator.dll": {},
+          "lib/netstandard2.0/Unity.Abstractions.dll": {},
+          "lib/netstandard2.0/Unity.Container.dll": {},
+          "lib/netstandard2.0/Unity.ServiceLocation.dll": {}
+        }
+      },
       "Prism.Windows/1.0.0": {
         "type": "project",
-        "framework": "UAP,Version=v10.0.16299",
+        "framework": "UAP,Version=v10.0.10586",
         "dependencies": {
-          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.6",
-          "Microsoft.Xaml.Behaviors.Uwp.Managed": "2.0.0",
-          "Prism.Core": "7.0.0.423-ci"
+          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.7",
+          "Prism.Core": "7.0.0.423-ci",
+          "System.ValueTuple": "4.4.0"
         },
         "compile": {
           "bin/placeholder/Prism.Windows.dll": {}
@@ -2494,37 +2581,55 @@
           "bin/placeholder/Prism.Windows.dll": {}
         }
       },
-      "Prism.Windows.Default/1.0.0": {
+      "Prism.Windows.Default.10586/1.0.0": {
         "type": "project",
-        "framework": "UAP,Version=v10.0.16299",
+        "framework": "UAP,Version=v10.0.10586",
         "dependencies": {
-          "Microsoft.Extensions.DependencyInjection": "2.0.0",
           "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.6",
           "Newtonsoft.Json": "11.0.1-beta3",
           "Prism.Core": "7.0.0.423-ci",
           "Prism.Windows": "1.0.0",
-          "Template10.Extras": "1.0.0"
+          "Template10.Extras.10586": "1.0.0",
+          "Unity": "5.6.0"
         },
         "compile": {
-          "bin/placeholder/Prism.Windows.Default.dll": {}
+          "bin/placeholder/Prism.Windows.Default.10586.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Prism.Windows.Default.dll": {}
+          "bin/placeholder/Prism.Windows.Default.10586.dll": {}
         }
       },
-      "Template10.Extras/1.0.0": {
+      "Template10.Extras.10586/1.0.0": {
         "type": "project",
-        "framework": "UAP,Version=v10.0.16299",
+        "framework": "UAP,Version=v10.0.10586",
         "dependencies": {
-          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.6",
+          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.7",
+          "Microsoft.Xaml.Behaviors.Uwp.Managed": "2.0.0",
           "Prism.Core": "7.0.0.423-ci",
           "Prism.Windows": "1.0.0"
         },
         "compile": {
-          "bin/placeholder/Template10.Extras.dll": {}
+          "bin/placeholder/Template10.Extras.10586.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Template10.Extras.dll": {}
+          "bin/placeholder/Template10.Extras.10586.dll": {}
+        }
+      },
+      "Template10.Extras.16299/1.0.0": {
+        "type": "project",
+        "framework": "UAP,Version=v10.0.16299",
+        "dependencies": {
+          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.7",
+          "Prism.Core": "7.0.0.423-ci",
+          "Prism.Windows": "1.0.0",
+          "Prism.Windows.Default.10586": "1.0.0",
+          "Template10.Extras.10586": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Template10.Extras.16299.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Template10.Extras.16299.dll": {}
         }
       }
     },
@@ -2538,28 +2643,7 @@
           "lib/netstandard2.0/Bogus.dll": {}
         }
       },
-      "Microsoft.Extensions.DependencyInjection/2.0.0": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "2.0.0"
-        },
-        "compile": {
-          "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.dll": {}
-        }
-      },
-      "Microsoft.Extensions.DependencyInjection.Abstractions/2.0.0": {
-        "type": "package",
-        "compile": {
-          "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {}
-        }
-      },
-      "Microsoft.Net.Native.Compiler/2.0.2": {
+      "Microsoft.Net.Native.Compiler/2.0.3": {
         "type": "package",
         "dependencies": {
           "Microsoft.Net.Native.SharedLibrary-arm": "2.0.0",
@@ -2592,12 +2676,12 @@
           "build/Microsoft.Net.Native.SharedLibrary-x86.targets": {}
         }
       },
-      "Microsoft.Net.UWPCoreRuntimeSdk/2.1.1": {
+      "Microsoft.Net.UWPCoreRuntimeSdk/2.1.2": {
         "type": "package",
         "dependencies": {
-          "runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.1",
-          "runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.1",
-          "runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.1"
+          "runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.2",
+          "runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.2",
+          "runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.2"
         },
         "build": {
           "build/Microsoft.Net.UWPCoreRuntimeSdk.props": {}
@@ -2612,14 +2696,14 @@
           "lib/netstandard1.0/_._": {}
         }
       },
-      "Microsoft.NETCore.UniversalWindowsPlatform/6.0.6": {
+      "Microsoft.NETCore.UniversalWindowsPlatform/6.0.7": {
         "type": "package",
         "dependencies": {
           "Microsoft.NETCore.Platforms": "2.0.0",
-          "Microsoft.Net.Native.Compiler": "2.0.2",
-          "Microsoft.Net.UWPCoreRuntimeSdk": "2.1.1",
+          "Microsoft.Net.Native.Compiler": "2.0.3",
+          "Microsoft.Net.UWPCoreRuntimeSdk": "2.1.2",
           "NETStandard.Library": "2.0.1",
-          "runtime.win10-x86.Microsoft.NETCore.UniversalWindowsPlatform": "6.0.6"
+          "runtime.win10-x86.Microsoft.NETCore.UniversalWindowsPlatform": "6.0.7"
         },
         "compile": {
           "ref/uap10.0.15138/Microsoft.CSharp.dll": {},
@@ -2824,28 +2908,28 @@
           "lib/uap10.0/Prism.dll": {}
         }
       },
-      "runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk/2.1.1": {
+      "runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk/2.1.2": {
         "type": "package",
         "build": {
           "build/runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk.props": {},
           "build/runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk.targets": {}
         }
       },
-      "runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk/2.1.1": {
+      "runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk/2.1.2": {
         "type": "package",
         "build": {
           "build/runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk.props": {},
           "build/runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk.targets": {}
         }
       },
-      "runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk/2.1.1": {
+      "runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk/2.1.2": {
         "type": "package",
         "build": {
           "build/runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk.props": {},
           "build/runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk.targets": {}
         }
       },
-      "runtime.win10-x86.Microsoft.NETCore.UniversalWindowsPlatform/6.0.6": {
+      "runtime.win10-x86.Microsoft.NETCore.UniversalWindowsPlatform/6.0.7": {
         "type": "package",
         "compile": {
           "ref/netstandard/_._": {}
@@ -3019,13 +3103,37 @@
           "runtimes/win10-x86/nativeassets/uap10.0.15138/clrcompression.dll": {}
         }
       },
+      "System.ValueTuple/4.4.0": {
+        "type": "package",
+        "compile": {
+          "ref/netstandard2.0/_._": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/_._": {}
+        }
+      },
+      "Unity/5.6.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/CommonServiceLocator.dll": {},
+          "lib/netstandard2.0/Unity.Abstractions.dll": {},
+          "lib/netstandard2.0/Unity.Container.dll": {},
+          "lib/netstandard2.0/Unity.ServiceLocation.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/CommonServiceLocator.dll": {},
+          "lib/netstandard2.0/Unity.Abstractions.dll": {},
+          "lib/netstandard2.0/Unity.Container.dll": {},
+          "lib/netstandard2.0/Unity.ServiceLocation.dll": {}
+        }
+      },
       "Prism.Windows/1.0.0": {
         "type": "project",
-        "framework": "UAP,Version=v10.0.16299",
+        "framework": "UAP,Version=v10.0.10586",
         "dependencies": {
-          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.6",
-          "Microsoft.Xaml.Behaviors.Uwp.Managed": "2.0.0",
-          "Prism.Core": "7.0.0.423-ci"
+          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.7",
+          "Prism.Core": "7.0.0.423-ci",
+          "System.ValueTuple": "4.4.0"
         },
         "compile": {
           "bin/placeholder/Prism.Windows.dll": {}
@@ -3034,37 +3142,55 @@
           "bin/placeholder/Prism.Windows.dll": {}
         }
       },
-      "Prism.Windows.Default/1.0.0": {
+      "Prism.Windows.Default.10586/1.0.0": {
         "type": "project",
-        "framework": "UAP,Version=v10.0.16299",
+        "framework": "UAP,Version=v10.0.10586",
         "dependencies": {
-          "Microsoft.Extensions.DependencyInjection": "2.0.0",
           "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.6",
           "Newtonsoft.Json": "11.0.1-beta3",
           "Prism.Core": "7.0.0.423-ci",
           "Prism.Windows": "1.0.0",
-          "Template10.Extras": "1.0.0"
+          "Template10.Extras.10586": "1.0.0",
+          "Unity": "5.6.0"
         },
         "compile": {
-          "bin/placeholder/Prism.Windows.Default.dll": {}
+          "bin/placeholder/Prism.Windows.Default.10586.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Prism.Windows.Default.dll": {}
+          "bin/placeholder/Prism.Windows.Default.10586.dll": {}
         }
       },
-      "Template10.Extras/1.0.0": {
+      "Template10.Extras.10586/1.0.0": {
         "type": "project",
-        "framework": "UAP,Version=v10.0.16299",
+        "framework": "UAP,Version=v10.0.10586",
         "dependencies": {
-          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.6",
+          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.7",
+          "Microsoft.Xaml.Behaviors.Uwp.Managed": "2.0.0",
           "Prism.Core": "7.0.0.423-ci",
           "Prism.Windows": "1.0.0"
         },
         "compile": {
-          "bin/placeholder/Template10.Extras.dll": {}
+          "bin/placeholder/Template10.Extras.10586.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Template10.Extras.dll": {}
+          "bin/placeholder/Template10.Extras.10586.dll": {}
+        }
+      },
+      "Template10.Extras.16299/1.0.0": {
+        "type": "project",
+        "framework": "UAP,Version=v10.0.16299",
+        "dependencies": {
+          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.7",
+          "Prism.Core": "7.0.0.423-ci",
+          "Prism.Windows": "1.0.0",
+          "Prism.Windows.Default.10586": "1.0.0",
+          "Template10.Extras.10586": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Template10.Extras.16299.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Template10.Extras.16299.dll": {}
         }
       }
     },
@@ -3078,28 +3204,7 @@
           "lib/netstandard2.0/Bogus.dll": {}
         }
       },
-      "Microsoft.Extensions.DependencyInjection/2.0.0": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "2.0.0"
-        },
-        "compile": {
-          "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.dll": {}
-        }
-      },
-      "Microsoft.Extensions.DependencyInjection.Abstractions/2.0.0": {
-        "type": "package",
-        "compile": {
-          "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {}
-        }
-      },
-      "Microsoft.Net.Native.Compiler/2.0.2": {
+      "Microsoft.Net.Native.Compiler/2.0.3": {
         "type": "package",
         "dependencies": {
           "Microsoft.Net.Native.SharedLibrary-arm": "2.0.0",
@@ -3132,12 +3237,12 @@
           "build/Microsoft.Net.Native.SharedLibrary-x86.targets": {}
         }
       },
-      "Microsoft.Net.UWPCoreRuntimeSdk/2.1.1": {
+      "Microsoft.Net.UWPCoreRuntimeSdk/2.1.2": {
         "type": "package",
         "dependencies": {
-          "runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.1",
-          "runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.1",
-          "runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.1"
+          "runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.2",
+          "runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.2",
+          "runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk": "2.1.2"
         },
         "build": {
           "build/Microsoft.Net.UWPCoreRuntimeSdk.props": {}
@@ -3152,14 +3257,14 @@
           "lib/netstandard1.0/_._": {}
         }
       },
-      "Microsoft.NETCore.UniversalWindowsPlatform/6.0.6": {
+      "Microsoft.NETCore.UniversalWindowsPlatform/6.0.7": {
         "type": "package",
         "dependencies": {
           "Microsoft.NETCore.Platforms": "2.0.0",
-          "Microsoft.Net.Native.Compiler": "2.0.2",
-          "Microsoft.Net.UWPCoreRuntimeSdk": "2.1.1",
+          "Microsoft.Net.Native.Compiler": "2.0.3",
+          "Microsoft.Net.UWPCoreRuntimeSdk": "2.1.2",
           "NETStandard.Library": "2.0.1",
-          "runtime.win10-x86-aot.Microsoft.NETCore.UniversalWindowsPlatform": "6.0.6"
+          "runtime.win10-x86-aot.Microsoft.NETCore.UniversalWindowsPlatform": "6.0.7"
         },
         "compile": {
           "ref/uap10.0.15138/Microsoft.CSharp.dll": {},
@@ -3364,21 +3469,21 @@
           "lib/uap10.0/Prism.dll": {}
         }
       },
-      "runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk/2.1.1": {
+      "runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk/2.1.2": {
         "type": "package",
         "build": {
           "build/runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk.props": {},
           "build/runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk.targets": {}
         }
       },
-      "runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk/2.1.1": {
+      "runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk/2.1.2": {
         "type": "package",
         "build": {
           "build/runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk.props": {},
           "build/runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk.targets": {}
         }
       },
-      "runtime.win10-x86-aot.Microsoft.NETCore.UniversalWindowsPlatform/6.0.6": {
+      "runtime.win10-x86-aot.Microsoft.NETCore.UniversalWindowsPlatform/6.0.7": {
         "type": "package",
         "compile": {
           "ref/netstandard/_._": {}
@@ -3553,20 +3658,44 @@
           "runtimes/win10-x86-aot/nativeassets/uap10.0.15138/clrcompression.dll": {}
         }
       },
-      "runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk/2.1.1": {
+      "runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk/2.1.2": {
         "type": "package",
         "build": {
           "build/runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk.props": {},
           "build/runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk.targets": {}
         }
       },
+      "System.ValueTuple/4.4.0": {
+        "type": "package",
+        "compile": {
+          "ref/netstandard2.0/_._": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/_._": {}
+        }
+      },
+      "Unity/5.6.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/CommonServiceLocator.dll": {},
+          "lib/netstandard2.0/Unity.Abstractions.dll": {},
+          "lib/netstandard2.0/Unity.Container.dll": {},
+          "lib/netstandard2.0/Unity.ServiceLocation.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/CommonServiceLocator.dll": {},
+          "lib/netstandard2.0/Unity.Abstractions.dll": {},
+          "lib/netstandard2.0/Unity.Container.dll": {},
+          "lib/netstandard2.0/Unity.ServiceLocation.dll": {}
+        }
+      },
       "Prism.Windows/1.0.0": {
         "type": "project",
-        "framework": "UAP,Version=v10.0.16299",
+        "framework": "UAP,Version=v10.0.10586",
         "dependencies": {
-          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.6",
-          "Microsoft.Xaml.Behaviors.Uwp.Managed": "2.0.0",
-          "Prism.Core": "7.0.0.423-ci"
+          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.7",
+          "Prism.Core": "7.0.0.423-ci",
+          "System.ValueTuple": "4.4.0"
         },
         "compile": {
           "bin/placeholder/Prism.Windows.dll": {}
@@ -3575,37 +3704,55 @@
           "bin/placeholder/Prism.Windows.dll": {}
         }
       },
-      "Prism.Windows.Default/1.0.0": {
+      "Prism.Windows.Default.10586/1.0.0": {
         "type": "project",
-        "framework": "UAP,Version=v10.0.16299",
+        "framework": "UAP,Version=v10.0.10586",
         "dependencies": {
-          "Microsoft.Extensions.DependencyInjection": "2.0.0",
           "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.6",
           "Newtonsoft.Json": "11.0.1-beta3",
           "Prism.Core": "7.0.0.423-ci",
           "Prism.Windows": "1.0.0",
-          "Template10.Extras": "1.0.0"
+          "Template10.Extras.10586": "1.0.0",
+          "Unity": "5.6.0"
         },
         "compile": {
-          "bin/placeholder/Prism.Windows.Default.dll": {}
+          "bin/placeholder/Prism.Windows.Default.10586.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Prism.Windows.Default.dll": {}
+          "bin/placeholder/Prism.Windows.Default.10586.dll": {}
         }
       },
-      "Template10.Extras/1.0.0": {
+      "Template10.Extras.10586/1.0.0": {
         "type": "project",
-        "framework": "UAP,Version=v10.0.16299",
+        "framework": "UAP,Version=v10.0.10586",
         "dependencies": {
-          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.6",
+          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.7",
+          "Microsoft.Xaml.Behaviors.Uwp.Managed": "2.0.0",
           "Prism.Core": "7.0.0.423-ci",
           "Prism.Windows": "1.0.0"
         },
         "compile": {
-          "bin/placeholder/Template10.Extras.dll": {}
+          "bin/placeholder/Template10.Extras.10586.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Template10.Extras.dll": {}
+          "bin/placeholder/Template10.Extras.10586.dll": {}
+        }
+      },
+      "Template10.Extras.16299/1.0.0": {
+        "type": "project",
+        "framework": "UAP,Version=v10.0.16299",
+        "dependencies": {
+          "Microsoft.NETCore.UniversalWindowsPlatform": "6.0.7",
+          "Prism.Core": "7.0.0.423-ci",
+          "Prism.Windows": "1.0.0",
+          "Prism.Windows.Default.10586": "1.0.0",
+          "Template10.Extras.10586": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Template10.Extras.16299.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Template10.Extras.16299.dll": {}
         }
       }
     }
@@ -3626,36 +3773,14 @@
         "lib/netstandard2.0/Bogus.xml"
       ]
     },
-    "Microsoft.Extensions.DependencyInjection/2.0.0": {
-      "sha512": "wakg18gHYiUL1pcjjyZuYk6OvDpbSw1E7IWxm78TMepsr+gQ8W0tWzuRm0q/9RFblngwPwo15rrgZSUV51W5Iw==",
+    "Microsoft.Net.Native.Compiler/2.0.3": {
+      "sha512": "EekTfKp3VRWglAN6MLVInKCt7Mf6tDhhilCkpYwpDTE7fey9dM+eJc8xr6TeKRHq+0hWJ6B4fFuChF2a75uCPQ==",
       "type": "package",
-      "path": "microsoft.extensions.dependencyinjection/2.0.0",
-      "files": [
-        "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.dll",
-        "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.xml",
-        "microsoft.extensions.dependencyinjection.2.0.0.nupkg.sha512",
-        "microsoft.extensions.dependencyinjection.nuspec"
-      ]
-    },
-    "Microsoft.Extensions.DependencyInjection.Abstractions/2.0.0": {
-      "sha512": "eUdJ0Q/GfVyUJc0Jal5L1QZLceL78pvEM9wEKcHeI24KorqMDoVX+gWsMGLulQMfOwsUaPtkpQM2pFERTzSfSg==",
-      "type": "package",
-      "path": "microsoft.extensions.dependencyinjection.abstractions/2.0.0",
-      "files": [
-        "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll",
-        "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.Abstractions.xml",
-        "microsoft.extensions.dependencyinjection.abstractions.2.0.0.nupkg.sha512",
-        "microsoft.extensions.dependencyinjection.abstractions.nuspec"
-      ]
-    },
-    "Microsoft.Net.Native.Compiler/2.0.2": {
-      "sha512": "+pKd52WISAWTE9JDgHDRYCfMnaNKXmqgeJQW8JQU70XoEBnYRlNU0nNRpqKw/FkfmsH7mGloIgw6DwJsiZUa8Q==",
-      "type": "package",
-      "path": "microsoft.net.native.compiler/2.0.2",
+      "path": "microsoft.net.native.compiler/2.0.3",
       "files": [
         "build/Microsoft.Net.Native.Compiler.props",
         "build/Microsoft.Net.Native.Compiler.targets",
-        "microsoft.net.native.compiler.2.0.2.nupkg.sha512",
+        "microsoft.net.native.compiler.2.0.3.nupkg.sha512",
         "microsoft.net.native.compiler.nuspec",
         "tools/LibraryXML/Callisto.rd.xml",
         "tools/LibraryXML/GalaSoft.MvvmLight.Extras.Win8.rd.xml",
@@ -4543,10 +4668,10 @@
       "type": "package",
       "path": "microsoft.net.native.sharedlibrary-arm/2.0.0",
       "files": [
+        "Microsoft.Net.Native.SharedLibrary-arm.2.0.0.nupkg.sha512",
+        "Microsoft.Net.Native.SharedLibrary-arm.nuspec",
         "build/Microsoft.Net.Native.SharedLibrary-arm.props",
         "build/Microsoft.Net.Native.SharedLibrary-arm.targets",
-        "microsoft.net.native.sharedlibrary-arm.2.0.0.nupkg.sha512",
-        "microsoft.net.native.sharedlibrary-arm.nuspec",
         "tools/SharedLibrary/chk/AnalysisILToc/System.Collections.Concurrent.iltoc",
         "tools/SharedLibrary/chk/AnalysisILToc/System.Collections.Concurrent.iltocpdb",
         "tools/SharedLibrary/chk/AnalysisILToc/System.Collections.iltoc",
@@ -4894,10 +5019,10 @@
       "type": "package",
       "path": "microsoft.net.native.sharedlibrary-x64/2.0.0",
       "files": [
+        "Microsoft.Net.Native.SharedLibrary-x64.2.0.0.nupkg.sha512",
+        "Microsoft.Net.Native.SharedLibrary-x64.nuspec",
         "build/Microsoft.Net.Native.SharedLibrary-x64.props",
         "build/Microsoft.Net.Native.SharedLibrary-x64.targets",
-        "microsoft.net.native.sharedlibrary-x64.2.0.0.nupkg.sha512",
-        "microsoft.net.native.sharedlibrary-x64.nuspec",
         "tools/SharedLibrary/chk/AnalysisILToc/System.Collections.Concurrent.iltoc",
         "tools/SharedLibrary/chk/AnalysisILToc/System.Collections.Concurrent.iltocpdb",
         "tools/SharedLibrary/chk/AnalysisILToc/System.Collections.iltoc",
@@ -5245,10 +5370,10 @@
       "type": "package",
       "path": "microsoft.net.native.sharedlibrary-x86/2.0.0",
       "files": [
+        "Microsoft.Net.Native.SharedLibrary-x86.2.0.0.nupkg.sha512",
+        "Microsoft.Net.Native.SharedLibrary-x86.nuspec",
         "build/Microsoft.Net.Native.SharedLibrary-x86.props",
         "build/Microsoft.Net.Native.SharedLibrary-x86.targets",
-        "microsoft.net.native.sharedlibrary-x86.2.0.0.nupkg.sha512",
-        "microsoft.net.native.sharedlibrary-x86.nuspec",
         "tools/SharedLibrary/chk/AnalysisILToc/System.Collections.Concurrent.iltoc",
         "tools/SharedLibrary/chk/AnalysisILToc/System.Collections.Concurrent.iltocpdb",
         "tools/SharedLibrary/chk/AnalysisILToc/System.Collections.iltoc",
@@ -5591,15 +5716,15 @@
         "tools/SharedLibrary/ret/Toc/System.Text.RegularExpressions.toc"
       ]
     },
-    "Microsoft.Net.UWPCoreRuntimeSdk/2.1.1": {
-      "sha512": "4ud4s7laLdE3cirfDexEkKuUyZTkYZW/U9aBwt+M6spoEPdELCxepLBd4TSSUpCLXu6b8sRiZsNJZ75PdChFTg==",
+    "Microsoft.Net.UWPCoreRuntimeSdk/2.1.2": {
+      "sha512": "Lgwh58rl1g15JBcRYlEZjqNrfyOxf/RCZoxiC4x9A3ssXNOUdLrQiaWEyJYfxNQppKL/qE3M2CDg67W38Fz2Yw==",
       "type": "package",
-      "path": "microsoft.net.uwpcoreruntimesdk/2.1.1",
+      "path": "microsoft.net.uwpcoreruntimesdk/2.1.2",
       "files": [
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
         "build/Microsoft.Net.UWPCoreRuntimeSdk.props",
-        "microsoft.net.uwpcoreruntimesdk.2.1.1.nupkg.sha512",
+        "microsoft.net.uwpcoreruntimesdk.2.1.2.nupkg.sha512",
         "microsoft.net.uwpcoreruntimesdk.nuspec",
         "tools/CoreRuntime/Microsoft.Build.Net.CoreRuntimeTask.dll",
         "tools/CoreRuntime/Microsoft.Cci.dll",
@@ -5613,24 +5738,24 @@
       "path": "microsoft.netcore.platforms/2.0.0",
       "files": [
         "LICENSE.TXT",
+        "Microsoft.NETCore.Platforms.2.0.0.nupkg.sha512",
+        "Microsoft.NETCore.Platforms.nuspec",
         "THIRD-PARTY-NOTICES.TXT",
         "lib/netstandard1.0/_._",
-        "microsoft.netcore.platforms.2.0.0.nupkg.sha512",
-        "microsoft.netcore.platforms.nuspec",
         "runtime.json",
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
     },
-    "Microsoft.NETCore.UniversalWindowsPlatform/6.0.6": {
-      "sha512": "T758N2M9bvyDA/9KeguVHOiUdhmAlCsmihVgKKwmf4MhnSybB8AsjwgmrCemqQVq7a6G7wffW7OkT0pSM2kNzQ==",
+    "Microsoft.NETCore.UniversalWindowsPlatform/6.0.7": {
+      "sha512": "ieBIGwT7GnEIdlvx4Sg8fmpQ6Q7ZwkxOD1JcuWICtBsgrKsJAdu2WhnSd+GeCMenqfV+Z2ggAKGQUqE81EhCAw==",
       "type": "package",
-      "path": "microsoft.netcore.universalwindowsplatform/6.0.6",
+      "path": "microsoft.netcore.universalwindowsplatform/6.0.7",
       "files": [
         "LICENSE.TXT",
-        "Microsoft.NETCore.UniversalWindowsPlatform.6.0.6.nupkg.sha512",
-        "Microsoft.NETCore.UniversalWindowsPlatform.nuspec",
         "THIRD-PARTY-NOTICES.TXT",
+        "microsoft.netcore.universalwindowsplatform.6.0.7.nupkg.sha512",
+        "microsoft.netcore.universalwindowsplatform.nuspec",
         "ref/netcore50/_._",
         "ref/uap10.0.15138/Microsoft.CSharp.dll",
         "ref/uap10.0.15138/Microsoft.CSharp.xml",
@@ -5932,6 +6057,8 @@
       "path": "netstandard.library/2.0.1",
       "files": [
         "LICENSE.TXT",
+        "NETStandard.Library.2.0.1.nupkg.sha512",
+        "NETStandard.Library.nuspec",
         "THIRD-PARTY-NOTICES.TXT",
         "build/NETStandard.Library.targets",
         "build/netstandard2.0/NETStandard.Library.targets",
@@ -6049,9 +6176,7 @@
         "build/netstandard2.0/ref/mscorlib.dll",
         "build/netstandard2.0/ref/netstandard.dll",
         "build/netstandard2.0/ref/netstandard.xml",
-        "lib/netstandard1.0/_._",
-        "netstandard.library.2.0.1.nupkg.sha512",
-        "netstandard.library.nuspec"
+        "lib/netstandard1.0/_._"
       ]
     },
     "Newtonsoft.Json/11.0.1-beta3": {
@@ -6101,16 +6226,16 @@
         "prism.core.nuspec"
       ]
     },
-    "runtime.win10-arm-aot.Microsoft.NETCore.UniversalWindowsPlatform/6.0.6": {
-      "sha512": "Q4qwkiwdajYNEhVLDM7nFJDP7IMdrKpHbwI1oiJOL3d6iTV422JFfo8kbyYh8k8oOTfKfrHv/UkcIRPk9FjTbg==",
+    "runtime.win10-arm-aot.Microsoft.NETCore.UniversalWindowsPlatform/6.0.7": {
+      "sha512": "avtC8VVfL3vYwCzsbbHfzKkhuIFGS+D7c2gOFNal3UGIdPJ20qc+1oOQxNL+9QxO49xCAhGELf6o05Nj8YchSw==",
       "type": "package",
-      "path": "runtime.win10-arm-aot.microsoft.netcore.universalwindowsplatform/6.0.6",
+      "path": "runtime.win10-arm-aot.microsoft.netcore.universalwindowsplatform/6.0.7",
       "files": [
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
         "ref/netstandard/_._",
-        "runtime.win10-arm-aot.Microsoft.NETCore.UniversalWindowsPlatform.6.0.6.nupkg.sha512",
-        "runtime.win10-arm-aot.Microsoft.NETCore.UniversalWindowsPlatform.nuspec",
+        "runtime.win10-arm-aot.microsoft.netcore.universalwindowsplatform.6.0.7.nupkg.sha512",
+        "runtime.win10-arm-aot.microsoft.netcore.universalwindowsplatform.nuspec",
         "runtimes/win10-arm-aot/lib/uap10.0.15138/Microsoft.CSharp.dll",
         "runtimes/win10-arm-aot/lib/uap10.0.15138/Microsoft.VisualBasic.dll",
         "runtimes/win10-arm-aot/lib/uap10.0.15138/Microsoft.Win32.Primitives.dll",
@@ -6278,32 +6403,33 @@
         "runtimes/win10-arm-aot/nativeassets/uap10.0.15138/clrcompression.dll"
       ]
     },
-    "runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk/2.1.1": {
-      "sha512": "Za4tG6DSTwIeYP++FsivMKROmXH7O3VN5aNAg5iVmACSmkEP9cF1nwVsPoGqrYmiVtWCuWbqwprBz3wpCplYew==",
+    "runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk/2.1.2": {
+      "sha512": "J4XdbbcvE2iUCsup3rwOsZYaohWLIuP1IW/etf0bwQ9vWCqccuHO3yAWiaWZmWn7nn53PEJ9lZTfNNAiIm/bBw==",
       "type": "package",
-      "path": "runtime.win10-arm.microsoft.net.uwpcoreruntimesdk/2.1.1",
+      "path": "runtime.win10-arm.microsoft.net.uwpcoreruntimesdk/2.1.2",
       "files": [
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
         "build/runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk.props",
         "build/runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk.targets",
-        "runtime.win10-arm.microsoft.net.uwpcoreruntimesdk.2.1.1.nupkg.sha512",
+        "runtime.win10-arm.microsoft.net.uwpcoreruntimesdk.2.1.2.nupkg.sha512",
         "runtime.win10-arm.microsoft.net.uwpcoreruntimesdk.nuspec",
+        "tools/AppLocal/consoleuwpshim.exe",
         "tools/AppLocal/uwpshim.exe",
         "tools/Appx/Microsoft.NET.CoreRuntime.2.1.appx",
         "tools/CoreRuntime/copywin32resources.exe"
       ]
     },
-    "runtime.win10-arm.Microsoft.NETCore.UniversalWindowsPlatform/6.0.6": {
-      "sha512": "6y4QrQ+l0Oo6K06hWwVS+uNSLFE+tbBCuUBIaN9c3wB0DLWjn2A7rPKjBqoPBJoNK/NdeGPqR0AOXOKb+taauQ==",
+    "runtime.win10-arm.Microsoft.NETCore.UniversalWindowsPlatform/6.0.7": {
+      "sha512": "cAv6eXOf4fMCcRNZeBTITprR4Xt3w1UVYdHd2ju3a8AoSLT2TMGjnRq7OKuvkUwEhpYCyYjC1MG6dYbMQ/YBbA==",
       "type": "package",
-      "path": "runtime.win10-arm.microsoft.netcore.universalwindowsplatform/6.0.6",
+      "path": "runtime.win10-arm.microsoft.netcore.universalwindowsplatform/6.0.7",
       "files": [
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
         "ref/netstandard/_._",
-        "runtime.win10-arm.Microsoft.NETCore.UniversalWindowsPlatform.6.0.6.nupkg.sha512",
-        "runtime.win10-arm.Microsoft.NETCore.UniversalWindowsPlatform.nuspec",
+        "runtime.win10-arm.microsoft.netcore.universalwindowsplatform.6.0.7.nupkg.sha512",
+        "runtime.win10-arm.microsoft.netcore.universalwindowsplatform.nuspec",
         "runtimes/win10-arm/lib/uap10.0.15138/Microsoft.CSharp.dll",
         "runtimes/win10-arm/lib/uap10.0.15138/Microsoft.VisualBasic.dll",
         "runtimes/win10-arm/lib/uap10.0.15138/Microsoft.Win32.Primitives.dll",
@@ -6470,16 +6596,16 @@
         "runtimes/win10-arm/nativeassets/uap10.0.15138/clrcompression.dll"
       ]
     },
-    "runtime.win10-x64-aot.Microsoft.NETCore.UniversalWindowsPlatform/6.0.6": {
-      "sha512": "2mHmIyGr7MdGDisXckIUdJW1DbdHqFRb1P/d1XCOvohrF4mZEU2vr6f3m8JrcI4p5JqbxQBJVAS5LCNq0+FSww==",
+    "runtime.win10-x64-aot.Microsoft.NETCore.UniversalWindowsPlatform/6.0.7": {
+      "sha512": "ebFZQNM7+kuGUnasuUYLV9yJx9KkzuM2l1A5AbcfRCHBS8Ahtiyak3cLk8yA6xiVR06IfwvtkicSGWB7uq36BQ==",
       "type": "package",
-      "path": "runtime.win10-x64-aot.microsoft.netcore.universalwindowsplatform/6.0.6",
+      "path": "runtime.win10-x64-aot.microsoft.netcore.universalwindowsplatform/6.0.7",
       "files": [
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
         "ref/netstandard/_._",
-        "runtime.win10-x64-aot.Microsoft.NETCore.UniversalWindowsPlatform.6.0.6.nupkg.sha512",
-        "runtime.win10-x64-aot.Microsoft.NETCore.UniversalWindowsPlatform.nuspec",
+        "runtime.win10-x64-aot.microsoft.netcore.universalwindowsplatform.6.0.7.nupkg.sha512",
+        "runtime.win10-x64-aot.microsoft.netcore.universalwindowsplatform.nuspec",
         "runtimes/win10-x64-aot/lib/uap10.0.15138/Microsoft.CSharp.dll",
         "runtimes/win10-x64-aot/lib/uap10.0.15138/Microsoft.VisualBasic.dll",
         "runtimes/win10-x64-aot/lib/uap10.0.15138/Microsoft.Win32.Primitives.dll",
@@ -6647,32 +6773,33 @@
         "runtimes/win10-x64-aot/nativeassets/uap10.0.15138/clrcompression.dll"
       ]
     },
-    "runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk/2.1.1": {
-      "sha512": "lT71dcRPLbSVHtUUBM4Kg5sUQ+zipDShjKnSeUYnlhSYYUuXYt2L76+obbinMXvr4eUvM6XwL93fI6E4HRzrOA==",
+    "runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk/2.1.2": {
+      "sha512": "Mj9j4vg9yIdvppce0eC8+EIhLmv3Uv3CNKi2v84Fl5zeSs26w9l2svE2LTixB5OTE/pj2p7cW2lUMHeWWm1tgg==",
       "type": "package",
-      "path": "runtime.win10-x64.microsoft.net.uwpcoreruntimesdk/2.1.1",
+      "path": "runtime.win10-x64.microsoft.net.uwpcoreruntimesdk/2.1.2",
       "files": [
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
         "build/runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk.props",
         "build/runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk.targets",
-        "runtime.win10-x64.microsoft.net.uwpcoreruntimesdk.2.1.1.nupkg.sha512",
+        "runtime.win10-x64.microsoft.net.uwpcoreruntimesdk.2.1.2.nupkg.sha512",
         "runtime.win10-x64.microsoft.net.uwpcoreruntimesdk.nuspec",
+        "tools/AppLocal/consoleuwpshim.exe",
         "tools/AppLocal/uwpshim.exe",
         "tools/Appx/Microsoft.NET.CoreRuntime.2.1.appx",
         "tools/CoreRuntime/copywin32resources.exe"
       ]
     },
-    "runtime.win10-x64.Microsoft.NETCore.UniversalWindowsPlatform/6.0.6": {
-      "sha512": "KJ7TjMExpj9+k30/Zed+spk38SkMtdRyckzSKj0040WMMnnXStsU1iAATDD0h4rcTbiMdACaBlIHl3i7p98C7Q==",
+    "runtime.win10-x64.Microsoft.NETCore.UniversalWindowsPlatform/6.0.7": {
+      "sha512": "X7iEv9lXlMVmHe6D0HnWSn7ZO8rsIMjkID2M4ekfx9IllRDuLq67xIvWz71p7lyOtEN26Cq7LUa9GS2GebF7Yw==",
       "type": "package",
-      "path": "runtime.win10-x64.microsoft.netcore.universalwindowsplatform/6.0.6",
+      "path": "runtime.win10-x64.microsoft.netcore.universalwindowsplatform/6.0.7",
       "files": [
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
         "ref/netstandard/_._",
-        "runtime.win10-x64.Microsoft.NETCore.UniversalWindowsPlatform.6.0.6.nupkg.sha512",
-        "runtime.win10-x64.Microsoft.NETCore.UniversalWindowsPlatform.nuspec",
+        "runtime.win10-x64.microsoft.netcore.universalwindowsplatform.6.0.7.nupkg.sha512",
+        "runtime.win10-x64.microsoft.netcore.universalwindowsplatform.nuspec",
         "runtimes/win10-x64/lib/uap10.0.15138/Microsoft.CSharp.dll",
         "runtimes/win10-x64/lib/uap10.0.15138/Microsoft.VisualBasic.dll",
         "runtimes/win10-x64/lib/uap10.0.15138/Microsoft.Win32.Primitives.dll",
@@ -6839,16 +6966,16 @@
         "runtimes/win10-x64/nativeassets/uap10.0.15138/clrcompression.dll"
       ]
     },
-    "runtime.win10-x86-aot.Microsoft.NETCore.UniversalWindowsPlatform/6.0.6": {
-      "sha512": "ULbHfUEHeo41/DBR0O9Ps57mzYApjlOZZlOJOUjc6kDHR0TLLDU0lv5eXl88M2ouhCz0OlA4Nw1Hk3w4wNGRBQ==",
+    "runtime.win10-x86-aot.Microsoft.NETCore.UniversalWindowsPlatform/6.0.7": {
+      "sha512": "MtbgNudV3dJikzomvTd+NJdIDnjzpkWYg7mCUxG8bgswyTmrfkrkFyFndmmZSv7F1j7BAHjnfjm0s5W/VVzjeg==",
       "type": "package",
-      "path": "runtime.win10-x86-aot.microsoft.netcore.universalwindowsplatform/6.0.6",
+      "path": "runtime.win10-x86-aot.microsoft.netcore.universalwindowsplatform/6.0.7",
       "files": [
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
         "ref/netstandard/_._",
-        "runtime.win10-x86-aot.Microsoft.NETCore.UniversalWindowsPlatform.6.0.6.nupkg.sha512",
-        "runtime.win10-x86-aot.Microsoft.NETCore.UniversalWindowsPlatform.nuspec",
+        "runtime.win10-x86-aot.microsoft.netcore.universalwindowsplatform.6.0.7.nupkg.sha512",
+        "runtime.win10-x86-aot.microsoft.netcore.universalwindowsplatform.nuspec",
         "runtimes/win10-x86-aot/lib/uap10.0.15138/Microsoft.CSharp.dll",
         "runtimes/win10-x86-aot/lib/uap10.0.15138/Microsoft.VisualBasic.dll",
         "runtimes/win10-x86-aot/lib/uap10.0.15138/Microsoft.Win32.Primitives.dll",
@@ -7016,32 +7143,33 @@
         "runtimes/win10-x86-aot/nativeassets/uap10.0.15138/clrcompression.dll"
       ]
     },
-    "runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk/2.1.1": {
-      "sha512": "PmMz7gOHssh8MKY3jqtCAXNWHXWQQLhXUGjP/ZL8TCdB5Ba1JJHLaCzCS1pmndT84rsyDCF+Fai/nl9rn4AZSw==",
+    "runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk/2.1.2": {
+      "sha512": "MeYqB6D7vA9eRb2fDjN9LWTLAY+m5Ocg4SBoEtG1oLPXgfuJcUNUb+etdsid/V3j7jgr4ito60Wr8U03mmJGuA==",
       "type": "package",
-      "path": "runtime.win10-x86.microsoft.net.uwpcoreruntimesdk/2.1.1",
+      "path": "runtime.win10-x86.microsoft.net.uwpcoreruntimesdk/2.1.2",
       "files": [
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
         "build/runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk.props",
         "build/runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk.targets",
-        "runtime.win10-x86.microsoft.net.uwpcoreruntimesdk.2.1.1.nupkg.sha512",
+        "runtime.win10-x86.microsoft.net.uwpcoreruntimesdk.2.1.2.nupkg.sha512",
         "runtime.win10-x86.microsoft.net.uwpcoreruntimesdk.nuspec",
+        "tools/AppLocal/consoleuwpshim.exe",
         "tools/AppLocal/uwpshim.exe",
         "tools/Appx/Microsoft.NET.CoreRuntime.2.1.appx",
         "tools/CoreRuntime/copywin32resources.exe"
       ]
     },
-    "runtime.win10-x86.Microsoft.NETCore.UniversalWindowsPlatform/6.0.6": {
-      "sha512": "0KoE35RdKGERCqE6LgqJu/kmZy5YS3fttRvcfYt/FhPgzG9/ZbVZ5NfhBuXIAus1eCFQ40xQ2FifgxLhdotXLQ==",
+    "runtime.win10-x86.Microsoft.NETCore.UniversalWindowsPlatform/6.0.7": {
+      "sha512": "Lalm5ziKxvQrXV2WaGuM8BhO609wjiqzOygxPlOF8FCxel6brkOVlsIf9/5o0q6j7vXyiqUWjYLbjOy2iav5qA==",
       "type": "package",
-      "path": "runtime.win10-x86.microsoft.netcore.universalwindowsplatform/6.0.6",
+      "path": "runtime.win10-x86.microsoft.netcore.universalwindowsplatform/6.0.7",
       "files": [
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
         "ref/netstandard/_._",
-        "runtime.win10-x86.Microsoft.NETCore.UniversalWindowsPlatform.6.0.6.nupkg.sha512",
-        "runtime.win10-x86.Microsoft.NETCore.UniversalWindowsPlatform.nuspec",
+        "runtime.win10-x86.microsoft.netcore.universalwindowsplatform.6.0.7.nupkg.sha512",
+        "runtime.win10-x86.microsoft.netcore.universalwindowsplatform.nuspec",
         "runtimes/win10-x86/lib/uap10.0.15138/Microsoft.CSharp.dll",
         "runtimes/win10-x86/lib/uap10.0.15138/Microsoft.VisualBasic.dll",
         "runtimes/win10-x86/lib/uap10.0.15138/Microsoft.Win32.Primitives.dll",
@@ -7208,31 +7336,167 @@
         "runtimes/win10-x86/nativeassets/uap10.0.15138/clrcompression.dll"
       ]
     },
+    "System.ValueTuple/4.4.0": {
+      "sha512": "BahUww/+mdP4ARCAh2RQhQTg13wYLVrBb9SYVgW8ZlrwjraGCXHGjo0oIiUfZ34LUZkMMR+RAzR7dEY4S1HeQQ==",
+      "type": "package",
+      "path": "system.valuetuple/4.4.0",
+      "files": [
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net461/System.ValueTuple.dll",
+        "lib/net461/System.ValueTuple.xml",
+        "lib/net47/System.ValueTuple.dll",
+        "lib/net47/System.ValueTuple.xml",
+        "lib/netcoreapp2.0/_._",
+        "lib/netstandard1.0/System.ValueTuple.dll",
+        "lib/netstandard1.0/System.ValueTuple.xml",
+        "lib/netstandard2.0/_._",
+        "lib/portable-net40+sl4+win8+wp8/System.ValueTuple.dll",
+        "lib/portable-net40+sl4+win8+wp8/System.ValueTuple.xml",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
+        "ref/net461/System.ValueTuple.dll",
+        "ref/net461/System.ValueTuple.xml",
+        "ref/net47/System.ValueTuple.dll",
+        "ref/net47/System.ValueTuple.xml",
+        "ref/netcoreapp2.0/_._",
+        "ref/netstandard2.0/_._",
+        "ref/portable-net40+sl4+win8+wp8/System.ValueTuple.dll",
+        "ref/portable-net40+sl4+win8+wp8/System.ValueTuple.xml",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "ref/xamarintvos10/_._",
+        "ref/xamarinwatchos10/_._",
+        "system.valuetuple.4.4.0.nupkg.sha512",
+        "system.valuetuple.nuspec",
+        "useSharedDesignerContext.txt",
+        "version.txt"
+      ]
+    },
+    "Unity/5.6.0": {
+      "sha512": "ya0g0lnR6XSSVCMczTH8CCqMFTAlYbdYCCa3fZnogft/PE6nYAQe6ETswh0s7W7oCs4igG7Hyi6yhtjHeHCNjA==",
+      "type": "package",
+      "path": "unity/5.6.0",
+      "files": [
+        "lib/net40/CommonServiceLocator.dll",
+        "lib/net40/CommonServiceLocator.pdb",
+        "lib/net40/Unity.Abstractions.dll",
+        "lib/net40/Unity.Abstractions.pdb",
+        "lib/net40/Unity.Container.dll",
+        "lib/net40/Unity.Container.pdb",
+        "lib/net40/Unity.Interception.dll",
+        "lib/net40/Unity.Interception.pdb",
+        "lib/net40/Unity.ServiceLocation.dll",
+        "lib/net40/Unity.ServiceLocation.pdb",
+        "lib/net45/CommonServiceLocator.dll",
+        "lib/net45/CommonServiceLocator.pdb",
+        "lib/net45/Unity.Abstractions.dll",
+        "lib/net45/Unity.Abstractions.pdb",
+        "lib/net45/Unity.Configuration.dll",
+        "lib/net45/Unity.Configuration.pdb",
+        "lib/net45/Unity.Container.dll",
+        "lib/net45/Unity.Container.pdb",
+        "lib/net45/Unity.Interception.Configuration.dll",
+        "lib/net45/Unity.Interception.Configuration.pdb",
+        "lib/net45/Unity.Interception.dll",
+        "lib/net45/Unity.Interception.pdb",
+        "lib/net45/Unity.RegistrationByConvention.dll",
+        "lib/net45/Unity.RegistrationByConvention.pdb",
+        "lib/net45/Unity.ServiceLocation.dll",
+        "lib/net45/Unity.ServiceLocation.pdb",
+        "lib/net47/CommonServiceLocator.dll",
+        "lib/net47/CommonServiceLocator.pdb",
+        "lib/net47/Unity.Abstractions.dll",
+        "lib/net47/Unity.Abstractions.pdb",
+        "lib/net47/Unity.Configuration.dll",
+        "lib/net47/Unity.Configuration.pdb",
+        "lib/net47/Unity.Container.dll",
+        "lib/net47/Unity.Container.pdb",
+        "lib/net47/Unity.Interception.Configuration.dll",
+        "lib/net47/Unity.Interception.Configuration.pdb",
+        "lib/net47/Unity.Interception.dll",
+        "lib/net47/Unity.Interception.pdb",
+        "lib/net47/Unity.RegistrationByConvention.dll",
+        "lib/net47/Unity.RegistrationByConvention.pdb",
+        "lib/net47/Unity.ServiceLocation.dll",
+        "lib/net47/Unity.ServiceLocation.pdb",
+        "lib/netcoreapp1.0/CommonServiceLocator.deps.json",
+        "lib/netcoreapp1.0/CommonServiceLocator.dll",
+        "lib/netcoreapp1.0/CommonServiceLocator.pdb",
+        "lib/netcoreapp1.0/Unity.Abstractions.deps.json",
+        "lib/netcoreapp1.0/Unity.Abstractions.dll",
+        "lib/netcoreapp1.0/Unity.Abstractions.pdb",
+        "lib/netcoreapp1.0/Unity.Container.deps.json",
+        "lib/netcoreapp1.0/Unity.Container.dll",
+        "lib/netcoreapp1.0/Unity.Container.pdb",
+        "lib/netcoreapp1.0/Unity.ServiceLocation.deps.json",
+        "lib/netcoreapp1.0/Unity.ServiceLocation.dll",
+        "lib/netcoreapp1.0/Unity.ServiceLocation.pdb",
+        "lib/netstandard1.0/CommonServiceLocator.deps.json",
+        "lib/netstandard1.0/CommonServiceLocator.dll",
+        "lib/netstandard1.0/CommonServiceLocator.pdb",
+        "lib/netstandard1.0/Unity.Abstractions.deps.json",
+        "lib/netstandard1.0/Unity.Abstractions.dll",
+        "lib/netstandard1.0/Unity.Abstractions.pdb",
+        "lib/netstandard1.0/Unity.Container.deps.json",
+        "lib/netstandard1.0/Unity.Container.dll",
+        "lib/netstandard1.0/Unity.Container.pdb",
+        "lib/netstandard1.0/Unity.ServiceLocation.deps.json",
+        "lib/netstandard1.0/Unity.ServiceLocation.dll",
+        "lib/netstandard1.0/Unity.ServiceLocation.pdb",
+        "lib/netstandard2.0/CommonServiceLocator.deps.json",
+        "lib/netstandard2.0/CommonServiceLocator.dll",
+        "lib/netstandard2.0/CommonServiceLocator.pdb",
+        "lib/netstandard2.0/Unity.Abstractions.deps.json",
+        "lib/netstandard2.0/Unity.Abstractions.dll",
+        "lib/netstandard2.0/Unity.Abstractions.pdb",
+        "lib/netstandard2.0/Unity.Container.deps.json",
+        "lib/netstandard2.0/Unity.Container.dll",
+        "lib/netstandard2.0/Unity.Container.pdb",
+        "lib/netstandard2.0/Unity.ServiceLocation.deps.json",
+        "lib/netstandard2.0/Unity.ServiceLocation.dll",
+        "lib/netstandard2.0/Unity.ServiceLocation.pdb",
+        "unity.5.6.0.nupkg.sha512",
+        "unity.nuspec"
+      ]
+    },
     "Prism.Windows/1.0.0": {
       "type": "project",
       "path": "../../Source/Prism.Windows/Prism.Windows.csproj",
       "msbuildProject": "../../Source/Prism.Windows/Prism.Windows.csproj"
     },
-    "Prism.Windows.Default/1.0.0": {
+    "Prism.Windows.Default.10586/1.0.0": {
       "type": "project",
-      "path": "../../Source/Prism.Windows.Default/Prism.Windows.Default.csproj",
-      "msbuildProject": "../../Source/Prism.Windows.Default/Prism.Windows.Default.csproj"
+      "path": "../../Source/Prism.Windows.Default.10586/Prism.Windows.Default.10586.csproj",
+      "msbuildProject": "../../Source/Prism.Windows.Default.10586/Prism.Windows.Default.10586.csproj"
     },
-    "Template10.Extras/1.0.0": {
+    "Template10.Extras.10586/1.0.0": {
       "type": "project",
-      "path": "../../Source/Template10.Extras/Template10.Extras.csproj",
-      "msbuildProject": "../../Source/Template10.Extras/Template10.Extras.csproj"
+      "path": "../../Source/Template10.Extras.10586/Template10.Extras.10586.csproj",
+      "msbuildProject": "../../Source/Template10.Extras.10586/Template10.Extras.10586.csproj"
+    },
+    "Template10.Extras.16299/1.0.0": {
+      "type": "project",
+      "path": "../../Source/Template10.Extras.16299/Template10.Extras.16299.csproj",
+      "msbuildProject": "../../Source/Template10.Extras.16299/Template10.Extras.16299.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "UAP,Version=v10.0.16299": [
       "Bogus >= 22.0.2",
-      "Microsoft.NETCore.UniversalWindowsPlatform >= 6.0.6",
+      "Microsoft.NETCore.UniversalWindowsPlatform >= 6.0.7",
       "Microsoft.Xaml.Behaviors.Uwp.Managed >= 2.0.0",
       "Prism.Core >= 7.0.0.423-ci",
       "Prism.Windows >= 1.0.0",
-      "Prism.Windows.Default >= 1.0.0",
-      "Template10.Extras >= 1.0.0"
+      "Prism.Windows.Default.10586 >= 1.0.0",
+      "Template10.Extras.10586 >= 1.0.0",
+      "Template10.Extras.16299 >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -7242,9 +7506,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\git.repos\\Template10\\VSIX\\Prism.Windows (project)\\PrismSample.csproj",
-      "projectName": "PrismSample",
-      "projectPath": "C:\\git.repos\\Template10\\VSIX\\Prism.Windows (project)\\PrismSample.csproj",
+      "projectUniqueName": "C:\\git.repos\\Template10\\VSIX\\Prism.Windows (project)\\Sample Project.16299.csproj",
+      "projectName": "Sample Project.16299",
+      "projectPath": "C:\\git.repos\\Template10\\VSIX\\Prism.Windows (project)\\Sample Project.16299.csproj",
       "packagesPath": "C:\\Users\\jerry\\.nuget\\packages\\",
       "outputPath": "C:\\git.repos\\Template10\\VSIX\\Prism.Windows (project)\\obj\\",
       "projectStyle": "PackageReference",
@@ -7268,14 +7532,17 @@
       "frameworks": {
         "uap10.0.16299": {
           "projectReferences": {
-            "C:\\git.repos\\Template10\\Source\\Prism.Windows.Default\\Prism.Windows.Default.csproj": {
-              "projectPath": "C:\\git.repos\\Template10\\Source\\Prism.Windows.Default\\Prism.Windows.Default.csproj"
-            },
             "C:\\git.repos\\Template10\\Source\\Prism.Windows\\Prism.Windows.csproj": {
               "projectPath": "C:\\git.repos\\Template10\\Source\\Prism.Windows\\Prism.Windows.csproj"
             },
-            "C:\\git.repos\\Template10\\Source\\Template10.Extras\\Template10.Extras.csproj": {
-              "projectPath": "C:\\git.repos\\Template10\\Source\\Template10.Extras\\Template10.Extras.csproj"
+            "C:\\git.repos\\Template10\\Source\\Template10.Extras.10586\\Template10.Extras.10586.csproj": {
+              "projectPath": "C:\\git.repos\\Template10\\Source\\Template10.Extras.10586\\Template10.Extras.10586.csproj"
+            },
+            "C:\\git.repos\\Template10\\Source\\Template10.Extras.16299\\Template10.Extras.16299.csproj": {
+              "projectPath": "C:\\git.repos\\Template10\\Source\\Template10.Extras.16299\\Template10.Extras.16299.csproj"
+            },
+            "C:\\git.repos\\Template10\\Source\\Prism.Windows.Default.10586\\Prism.Windows.Default.10586.csproj": {
+              "projectPath": "C:\\git.repos\\Template10\\Source\\Prism.Windows.Default.10586\\Prism.Windows.Default.10586.csproj"
             }
           }
         }
@@ -7290,7 +7557,7 @@
           },
           "Microsoft.NETCore.UniversalWindowsPlatform": {
             "target": "Package",
-            "version": "[6.0.6, )"
+            "version": "[6.0.7, )"
           },
           "Microsoft.Xaml.Behaviors.Uwp.Managed": {
             "target": "Package",

@@ -1,4 +1,0 @@
-C:\git.repos\Template10\Basics\Template10.Application\obj\x86\Debug\Prism.Win.csproj.CoreCompileInputs.cache
-C:\git.repos\Template10\Basics\Template10.Application\obj\x86\Debug\Template10.Application.dll
-C:\git.repos\Template10\Basics\Template10.Application\obj\x86\Debug\Template10.Application.pdb
-C:\git.repos\Template10\Basics\Template10.Application\obj\x86\Debug\Prism.Win.csprojResolveAssemblyReference.cache

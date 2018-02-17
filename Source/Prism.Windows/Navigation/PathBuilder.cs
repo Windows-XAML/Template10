@@ -49,7 +49,7 @@ namespace Prism.Windows.Navigation
                 .Select(x => $"{x.Name}={x.Value}");
             if (encoded.Any())
             {
-                var querystring = string.Join('&', encoded);
+                var querystring = string.Join("&", encoded);
                 var value = $"{prefix}{page}?{querystring}";
                 return value;
             }

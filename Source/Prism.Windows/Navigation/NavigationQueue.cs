@@ -65,7 +65,7 @@ namespace Prism.Windows.Navigation
                 throw new Exception("Navigation path must not be absolute Uri.");
             }
 
-            var groups = uri.OriginalString.Split("/")
+            var groups = uri.OriginalString.Split('/')
                 .Where(x => !string.IsNullOrEmpty(x))
                 .Select((path, index) => new PathInfo(index, path, parameters));
 

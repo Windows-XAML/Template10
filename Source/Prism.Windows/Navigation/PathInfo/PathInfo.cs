@@ -58,6 +58,10 @@ namespace Prism.Windows.Navigation
                 View = info.View;
                 ViewModel = info.ViewModel;
             }
+            else
+            {
+                throw new Exception($"Count not find Key:[{Key}]. Use Central.Regsitry.");
+            }
         }
 
         public int Index { get; }

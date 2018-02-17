@@ -38,8 +38,8 @@ namespace PrismSample
             // built initial path
 
             var path = PathBuilder
-                .Create(true, nameof(MainPage), ("Record", "123"))
-                .Append(nameof(MainPage), ("Record", "567"))
+                .Create(true, nameof(MainPage), ("Filter", "Plumber"))
+                .Append(nameof(MainPage), ("Record", "567"), ("ScrollPosition", "234"))
                 .ToString();
 
             // do initial navigation (hide splash)
@@ -49,4 +49,6 @@ namespace PrismSample
             Window.Current.Content = shell;
         }
     }
+
+    public class DetailPage : PageRegistry { }
 }

@@ -59,18 +59,7 @@ namespace Prism.Windows.Mvvm
 
         private Type DefaultViewFactory(string key)
         {
-            if (string.IsNullOrEmpty(key))
-            {
-                return null;
-            }
-
-            var assembly = ReflectionUtilities.GetCallingAssembly(GetType().GetTypeInfo().Assembly);
-            var assembly_name = assembly.FullName.Split(",").First();
-            var types = from prefix in new[] { string.Empty, "Views.", "Pages." }
-                        from suffix in new[] { string.Empty, "Page", "View" }
-                        select $"{assembly_name}.{prefix}{key}{suffix}, {assembly.FullName}";
-            var type = types.Select(x => Type.GetType(x)).Where(x => x != null).FirstOrDefault();
-            return type;
+            throw new Exception($"Cannot find view with key:{key}. Register at Central.Registry.");
         }
 
         private Type DefaultViewModelFactory(Type page)
@@ -81,8 +70,8 @@ namespace Prism.Windows.Mvvm
             }
 
             var name = page.Name;
-            var assembly = ReflectionUtilities.GetCallingAssembly(GetType().GetTypeInfo().Assembly);
-            var assembly_name = assembly.FullName.Split(",").First();
+            var assembly = page.GetTypeInfo().Assembly;
+            var assembly_name = assembly.FullName.Split(',').First();
             var types = from prefix in new[] { string.Empty, "ViewModels." }
                         from suffix in new[] { string.Empty, "ViewModel" }
                         from moniker in new[] { name, name.Replace("Page", string.Empty), name.Replace("View", string.Empty) }

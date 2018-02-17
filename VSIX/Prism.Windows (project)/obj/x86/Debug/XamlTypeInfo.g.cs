@@ -12,14 +12,14 @@ namespace PrismSample
 {
     public partial class App : global::Windows.UI.Xaml.Markup.IXamlMetadataProvider
     {
-        private global::PrismSample.PrismSample_XamlTypeInfo.XamlMetaDataProvider __appProvider;
-        private global::PrismSample.PrismSample_XamlTypeInfo.XamlMetaDataProvider _AppProvider
+        private global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlMetaDataProvider __appProvider;
+        private global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlMetaDataProvider _AppProvider
         {
             get
             {
                 if (__appProvider == null)
                 {
-                    __appProvider = new global::PrismSample.PrismSample_XamlTypeInfo.XamlMetaDataProvider();
+                    __appProvider = new global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlMetaDataProvider();
                 }
                 return __appProvider;
             }
@@ -51,7 +51,7 @@ namespace PrismSample
     }
 }
 
-namespace PrismSample.PrismSample_XamlTypeInfo
+namespace PrismSample.Sample_Project_16299_XamlTypeInfo
 {
     /// <summary>
     /// Main class for providing metadata for the app or library
@@ -60,15 +60,15 @@ namespace PrismSample.PrismSample_XamlTypeInfo
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     public sealed class XamlMetaDataProvider : global::Windows.UI.Xaml.Markup.IXamlMetadataProvider
     {
-        private global::PrismSample.PrismSample_XamlTypeInfo.XamlTypeInfoProvider _provider = null;
+        private global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlTypeInfoProvider _provider = null;
 
-        private global::PrismSample.PrismSample_XamlTypeInfo.XamlTypeInfoProvider Provider
+        private global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlTypeInfoProvider Provider
         {
             get
             {
                 if (_provider == null)
                 {
-                    _provider = new global::PrismSample.PrismSample_XamlTypeInfo.XamlTypeInfoProvider();
+                    _provider = new global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlTypeInfoProvider();
                 }
                 return _provider;
             }
@@ -285,8 +285,8 @@ namespace PrismSample.PrismSample_XamlTypeInfo
 
         private global::Windows.UI.Xaml.Markup.IXamlType CreateXamlType(int typeIndex)
         {
-            global::PrismSample.PrismSample_XamlTypeInfo.XamlSystemBaseType xamlType = null;
-            global::PrismSample.PrismSample_XamlTypeInfo.XamlUserType userType;
+            global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlSystemBaseType xamlType = null;
+            global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlUserType userType;
             string typeName = _typeNameTable[typeIndex];
             global::System.Type type = _typeTable[typeIndex];
 
@@ -294,21 +294,21 @@ namespace PrismSample.PrismSample_XamlTypeInfo
             {
 
             case 0:   //  Prism.Windows.BootStrapper
-                userType = new global::PrismSample.PrismSample_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Prism.Windows.PrismApplicationBase"));
+                userType = new global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Prism.Windows.PrismApplicationBase"));
                 xamlType = userType;
                 break;
 
             case 1:   //  Prism.Windows.PrismApplicationBase
-                userType = new global::PrismSample.PrismSample_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Application"));
+                userType = new global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Application"));
                 xamlType = userType;
                 break;
 
             case 2:   //  Windows.UI.Xaml.Application
-                xamlType = new global::PrismSample.PrismSample_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                xamlType = new global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
             case 3:   //  Template10.Controls.NavViewProps
-                userType = new global::PrismSample.PrismSample_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.DependencyObject"));
+                userType = new global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.DependencyObject"));
                 userType.Activator = Activate_3_NavViewProps;
                 userType.AddMemberName("HeaderText");
                 userType.AddMemberName("HeaderCommands");
@@ -318,56 +318,56 @@ namespace PrismSample.PrismSample_XamlTypeInfo
                 break;
 
             case 4:   //  Windows.UI.Xaml.DependencyObject
-                xamlType = new global::PrismSample.PrismSample_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                xamlType = new global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
             case 5:   //  String
-                xamlType = new global::PrismSample.PrismSample_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                xamlType = new global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
             case 6:   //  Windows.UI.Xaml.Controls.Page
-                xamlType = new global::PrismSample.PrismSample_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                xamlType = new global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
             case 7:   //  System.Collections.ObjectModel.ObservableCollection`1<Object>
-                userType = new global::PrismSample.PrismSample_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("System.Collections.ObjectModel.Collection`1<Object>"));
+                userType = new global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("System.Collections.ObjectModel.Collection`1<Object>"));
                 userType.CollectionAdd = VectorAdd_7_ObservableCollection;
                 userType.SetIsReturnTypeStub();
                 xamlType = userType;
                 break;
 
             case 8:   //  System.Collections.ObjectModel.Collection`1<Object>
-                userType = new global::PrismSample.PrismSample_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Object"));
+                userType = new global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Object"));
                 userType.Activator = Activate_8_Collection;
                 userType.CollectionAdd = VectorAdd_8_Collection;
                 xamlType = userType;
                 break;
 
             case 9:   //  Object
-                xamlType = new global::PrismSample.PrismSample_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                xamlType = new global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
             case 10:   //  Boolean
-                xamlType = new global::PrismSample.PrismSample_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                xamlType = new global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
             case 11:   //  Windows.UI.Xaml.Controls.NavigationViewItem
-                xamlType = new global::PrismSample.PrismSample_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                xamlType = new global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
             case 12:   //  PrismSample.Views.MainPage
-                userType = new global::PrismSample.PrismSample_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
+                userType = new global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
                 userType.Activator = Activate_12_MainPage;
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
             case 13:   //  Windows.UI.Xaml.Controls.UserControl
-                xamlType = new global::PrismSample.PrismSample_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                xamlType = new global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
             case 14:   //  Template10.Controls.NavViewEx
-                userType = new global::PrismSample.PrismSample_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.NavigationView"));
+                userType = new global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.NavigationView"));
                 userType.Activator = Activate_14_NavViewEx;
                 userType.AddMemberName("NavigationService");
                 userType.AddMemberName("ItemHeaderBehavior");
@@ -377,21 +377,21 @@ namespace PrismSample.PrismSample_XamlTypeInfo
                 break;
 
             case 15:   //  Windows.UI.Xaml.Controls.NavigationView
-                xamlType = new global::PrismSample.PrismSample_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                xamlType = new global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
             case 16:   //  Windows.UI.Xaml.Controls.ContentControl
-                xamlType = new global::PrismSample.PrismSample_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                xamlType = new global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
             case 17:   //  Prism.Windows.Navigation.IPlatformNavigationService
-                userType = new global::PrismSample.PrismSample_XamlTypeInfo.XamlUserType(this, typeName, type, null);
+                userType = new global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlUserType(this, typeName, type, null);
                 userType.SetIsReturnTypeStub();
                 xamlType = userType;
                 break;
 
             case 18:   //  Template10.Controls.NavViewEx.ItemHeaderBehaviors
-                userType = new global::PrismSample.PrismSample_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("System.Enum"));
+                userType = new global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("System.Enum"));
                 userType.AddEnumValue("Hide", global::Template10.Controls.NavViewEx.ItemHeaderBehaviors.Hide);
                 userType.AddEnumValue("Remove", global::Template10.Controls.NavViewEx.ItemHeaderBehaviors.Remove);
                 userType.AddEnumValue("None", global::Template10.Controls.NavViewEx.ItemHeaderBehaviors.None);
@@ -399,29 +399,29 @@ namespace PrismSample.PrismSample_XamlTypeInfo
                 break;
 
             case 19:   //  System.Enum
-                userType = new global::PrismSample.PrismSample_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("System.ValueType"));
+                userType = new global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("System.ValueType"));
                 xamlType = userType;
                 break;
 
             case 20:   //  System.ValueType
-                userType = new global::PrismSample.PrismSample_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Object"));
+                userType = new global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Object"));
                 xamlType = userType;
                 break;
 
             case 21:   //  System.Uri
-                userType = new global::PrismSample.PrismSample_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Object"));
+                userType = new global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Object"));
                 userType.SetIsReturnTypeStub();
                 xamlType = userType;
                 break;
 
             case 22:   //  PrismSample.Views.ShellPage
-                userType = new global::PrismSample.PrismSample_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
+                userType = new global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
             case 23:   //  PrismSample.Views.SplashPage
-                userType = new global::PrismSample.PrismSample_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
+                userType = new global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
@@ -500,14 +500,14 @@ namespace PrismSample.PrismSample_XamlTypeInfo
 
         private global::Windows.UI.Xaml.Markup.IXamlMember CreateXamlMember(string longMemberName)
         {
-            global::PrismSample.PrismSample_XamlTypeInfo.XamlMember xamlMember = null;
-            global::PrismSample.PrismSample_XamlTypeInfo.XamlUserType userType;
+            global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlMember xamlMember = null;
+            global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlUserType userType;
 
             switch (longMemberName)
             {
             case "Template10.Controls.NavViewProps.HeaderText":
-                userType = (global::PrismSample.PrismSample_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Template10.Controls.NavViewProps");
-                xamlMember = new global::PrismSample.PrismSample_XamlTypeInfo.XamlMember(this, "HeaderText", "String");
+                userType = (global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Template10.Controls.NavViewProps");
+                xamlMember = new global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlMember(this, "HeaderText", "String");
                 xamlMember.SetTargetTypeName("Windows.UI.Xaml.Controls.Page");
                 xamlMember.SetIsDependencyProperty();
                 xamlMember.SetIsAttachable();
@@ -515,8 +515,8 @@ namespace PrismSample.PrismSample_XamlTypeInfo
                 xamlMember.Setter = set_0_NavViewProps_HeaderText;
                 break;
             case "Template10.Controls.NavViewProps.HeaderCommands":
-                userType = (global::PrismSample.PrismSample_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Template10.Controls.NavViewProps");
-                xamlMember = new global::PrismSample.PrismSample_XamlTypeInfo.XamlMember(this, "HeaderCommands", "System.Collections.ObjectModel.ObservableCollection`1<Object>");
+                userType = (global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Template10.Controls.NavViewProps");
+                xamlMember = new global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlMember(this, "HeaderCommands", "System.Collections.ObjectModel.ObservableCollection`1<Object>");
                 xamlMember.SetTargetTypeName("Windows.UI.Xaml.Controls.Page");
                 xamlMember.SetIsDependencyProperty();
                 xamlMember.SetIsAttachable();
@@ -524,8 +524,8 @@ namespace PrismSample.PrismSample_XamlTypeInfo
                 xamlMember.Setter = set_1_NavViewProps_HeaderCommands;
                 break;
             case "Template10.Controls.NavViewProps.NavigationUri":
-                userType = (global::PrismSample.PrismSample_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Template10.Controls.NavViewProps");
-                xamlMember = new global::PrismSample.PrismSample_XamlTypeInfo.XamlMember(this, "NavigationUri", "String");
+                userType = (global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Template10.Controls.NavViewProps");
+                xamlMember = new global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlMember(this, "NavigationUri", "String");
                 xamlMember.SetTargetTypeName("Windows.UI.Xaml.DependencyObject");
                 xamlMember.SetIsDependencyProperty();
                 xamlMember.SetIsAttachable();
@@ -533,8 +533,8 @@ namespace PrismSample.PrismSample_XamlTypeInfo
                 xamlMember.Setter = set_2_NavViewProps_NavigationUri;
                 break;
             case "Template10.Controls.NavViewProps.IsStartPage":
-                userType = (global::PrismSample.PrismSample_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Template10.Controls.NavViewProps");
-                xamlMember = new global::PrismSample.PrismSample_XamlTypeInfo.XamlMember(this, "IsStartPage", "Boolean");
+                userType = (global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Template10.Controls.NavViewProps");
+                xamlMember = new global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlMember(this, "IsStartPage", "Boolean");
                 xamlMember.SetTargetTypeName("Windows.UI.Xaml.Controls.NavigationViewItem");
                 xamlMember.SetIsDependencyProperty();
                 xamlMember.SetIsAttachable();
@@ -542,26 +542,26 @@ namespace PrismSample.PrismSample_XamlTypeInfo
                 xamlMember.Setter = set_3_NavViewProps_IsStartPage;
                 break;
             case "Template10.Controls.NavViewEx.NavigationService":
-                userType = (global::PrismSample.PrismSample_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Template10.Controls.NavViewEx");
-                xamlMember = new global::PrismSample.PrismSample_XamlTypeInfo.XamlMember(this, "NavigationService", "Prism.Windows.Navigation.IPlatformNavigationService");
+                userType = (global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Template10.Controls.NavViewEx");
+                xamlMember = new global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlMember(this, "NavigationService", "Prism.Windows.Navigation.IPlatformNavigationService");
                 xamlMember.Getter = get_4_NavViewEx_NavigationService;
                 xamlMember.SetIsReadOnly();
                 break;
             case "Template10.Controls.NavViewEx.ItemHeaderBehavior":
-                userType = (global::PrismSample.PrismSample_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Template10.Controls.NavViewEx");
-                xamlMember = new global::PrismSample.PrismSample_XamlTypeInfo.XamlMember(this, "ItemHeaderBehavior", "Template10.Controls.NavViewEx.ItemHeaderBehaviors");
+                userType = (global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Template10.Controls.NavViewEx");
+                xamlMember = new global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlMember(this, "ItemHeaderBehavior", "Template10.Controls.NavViewEx.ItemHeaderBehaviors");
                 xamlMember.Getter = get_5_NavViewEx_ItemHeaderBehavior;
                 xamlMember.Setter = set_5_NavViewEx_ItemHeaderBehavior;
                 break;
             case "Template10.Controls.NavViewEx.SettingsNavigationUri":
-                userType = (global::PrismSample.PrismSample_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Template10.Controls.NavViewEx");
-                xamlMember = new global::PrismSample.PrismSample_XamlTypeInfo.XamlMember(this, "SettingsNavigationUri", "System.Uri");
+                userType = (global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Template10.Controls.NavViewEx");
+                xamlMember = new global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlMember(this, "SettingsNavigationUri", "System.Uri");
                 xamlMember.Getter = get_6_NavViewEx_SettingsNavigationUri;
                 xamlMember.Setter = set_6_NavViewEx_SettingsNavigationUri;
                 break;
             case "Template10.Controls.NavViewEx.SelectedItem":
-                userType = (global::PrismSample.PrismSample_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Template10.Controls.NavViewEx");
-                xamlMember = new global::PrismSample.PrismSample_XamlTypeInfo.XamlMember(this, "SelectedItem", "Object");
+                userType = (global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlUserType)GetXamlTypeByName("Template10.Controls.NavViewEx");
+                xamlMember = new global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlMember(this, "SelectedItem", "Object");
                 xamlMember.SetIsDependencyProperty();
                 xamlMember.Getter = get_7_NavViewEx_SelectedItem;
                 xamlMember.Setter = set_7_NavViewEx_SelectedItem;
@@ -621,9 +621,9 @@ namespace PrismSample.PrismSample_XamlTypeInfo
 
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Windows.UI.Xaml.Build.Tasks"," 10.0.16.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-    internal class XamlUserType : global::PrismSample.PrismSample_XamlTypeInfo.XamlSystemBaseType
+    internal class XamlUserType : global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlSystemBaseType
     {
-        global::PrismSample.PrismSample_XamlTypeInfo.XamlTypeInfoProvider _provider;
+        global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlTypeInfoProvider _provider;
         global::Windows.UI.Xaml.Markup.IXamlType _baseType;
         bool _isArray;
         bool _isMarkupExtension;
@@ -637,7 +637,7 @@ namespace PrismSample.PrismSample_XamlTypeInfo
         global::System.Collections.Generic.Dictionary<string, string> _memberNames;
         global::System.Collections.Generic.Dictionary<string, object> _enumValues;
 
-        public XamlUserType(global::PrismSample.PrismSample_XamlTypeInfo.XamlTypeInfoProvider provider, string fullName, global::System.Type fullType, global::Windows.UI.Xaml.Markup.IXamlType baseType)
+        public XamlUserType(global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlTypeInfoProvider provider, string fullName, global::System.Type fullType, global::Windows.UI.Xaml.Markup.IXamlType baseType)
             :base(fullName, fullType)
         {
             _provider = provider;
@@ -834,7 +834,7 @@ namespace PrismSample.PrismSample_XamlTypeInfo
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     internal class XamlMember : global::Windows.UI.Xaml.Markup.IXamlMember
     {
-        global::PrismSample.PrismSample_XamlTypeInfo.XamlTypeInfoProvider _provider;
+        global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlTypeInfoProvider _provider;
         string _name;
         bool _isAttachable;
         bool _isDependencyProperty;
@@ -843,7 +843,7 @@ namespace PrismSample.PrismSample_XamlTypeInfo
         string _typeName;
         string _targetTypeName;
 
-        public XamlMember(global::PrismSample.PrismSample_XamlTypeInfo.XamlTypeInfoProvider provider, string name, string typeName)
+        public XamlMember(global::PrismSample.Sample_Project_16299_XamlTypeInfo.XamlTypeInfoProvider provider, string name, string typeName)
         {
             _name = name;
             _typeName = typeName;

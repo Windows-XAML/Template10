@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9B2BF0DD-6978-4896-93BB-0F863B96D0CE}</ProjectGuid>
+    <ProjectGuid>{648C8631-C97F-4B81-98FC-F4370317751A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Prism.Windows</RootNamespace>
@@ -12,7 +12,7 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.16299.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
+    <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -106,50 +106,50 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Application\IStartArgs.cs" />
+    <Compile Include="Application\PrismApplicationBase.base.cs" />
+    <Compile Include="Application\PrismApplicationBase.events.cs" />
+    <Compile Include="Application\PrismApplicationBase.xaml.cs" />
+    <Compile Include="Application\StartArgs.cs" />
     <Compile Include="Application\StartCauses.cs" />
     <Compile Include="Application\StartKinds.cs" />
     <Compile Include="Central.cs" />
     <Compile Include="Mvvm\IViewModelLocator.cs" />
     <Compile Include="Mvvm\ViewModelBase.cs" />
     <Compile Include="Mvvm\ViewModelLocator.cs" />
-    <Compile Include="Navigation\NavigationService\Extensions.cs" />
-    <Compile Include="Navigation\PageRegistry\Extensions.cs" />
-    <Compile Include="Navigation\PathInfo\IPathInfo.cs" />
-    <Compile Include="Navigation\PathInfo\PathInfo.cs" />
-    <Compile Include="Navigation\PageRegistry\PageRegistry.cs" />
-    <Compile Include="Navigation\Prism.Core\Extensions.cs" />
-    <Compile Include="Navigation\PageRegistry\IPageRegistry.cs" />
-    <Compile Include="Application\IStartArgs.cs" />
     <Compile Include="Navigation\Extensions.cs" />
     <Compile Include="Navigation\FrameFacade\FrameFacade.cs" />
     <Compile Include="Navigation\FrameFacade\IFrameFacade.cs" />
-    <Compile Include="Navigation\NavigationService\IPlatformNavigationService.cs" />
-    <Compile Include="Navigation\PathBuilder.cs" />
-    <Compile Include="Navigation\Prism.Core\NavigationResult.cs" />
-    <Compile Include="Navigation\NavigationService\NavigationService.cs" />
     <Compile Include="Navigation\NavigationQueue.cs" />
+    <Compile Include="Navigation\NavigationService\Extensions.cs" />
+    <Compile Include="Navigation\NavigationService\IPlatformNavigationService.cs" />
+    <Compile Include="Navigation\NavigationService\NavigationService.cs" />
+    <Compile Include="Navigation\PageRegistry\Extensions.cs" />
+    <Compile Include="Navigation\PageRegistry\IPageRegistry.cs" />
+    <Compile Include="Navigation\PageRegistry\PageRegistry.cs" />
+    <Compile Include="Navigation\PathBuilder.cs" />
+    <Compile Include="Navigation\PathInfo\IPathInfo.cs" />
+    <Compile Include="Navigation\PathInfo\PathInfo.cs" />
+    <Compile Include="Navigation\Prism.Core\Extensions.cs" />
+    <Compile Include="Navigation\Prism.Core\NavigationParameters.cs" />
+    <Compile Include="Navigation\Prism.Core\NavigationResult.cs" />
     <Compile Include="Prism\INavigatedAwareAsync.cs" />
     <Compile Include="Prism\NavigationMode.cs" />
-    <Compile Include="Navigation\Prism.Core\NavigationParameters.cs" />
-    <Compile Include="Application\StartArgs.cs" />
-    <Compile Include="Application\PrismApplicationBase.base.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Application\PrismApplicationBase.events.cs" />
-    <Compile Include="Application\PrismApplicationBase.xaml.cs" />
     <Compile Include="Utilities\BindingUtilities.cs" />
     <Compile Include="Utilities\ReflectionUtilities.cs" />
     <Compile Include="Utilities\XamlUtilities.cs" />
-    <EmbeddedResource Include="Properties\Template10.Application.rd.xml" />
+    <EmbeddedResource Include="Properties\Prism.Windows.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.0.6</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed">
-      <Version>2.0.0</Version>
+      <Version>6.0.7</Version>
     </PackageReference>
     <PackageReference Include="Prism.Core">
       <Version>7.0.0.423-ci</Version>
+    </PackageReference>
+    <PackageReference Include="System.ValueTuple">
+      <Version>4.4.0</Version>
     </PackageReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
