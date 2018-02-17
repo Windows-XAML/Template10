@@ -12,6 +12,15 @@ using System.Collections.ObjectModel;
 
 namespace Sample.ViewModels
 {
+    class MainPageViewModel_Designer : MainPageViewModel
+    {
+        public MainPageViewModel_Designer()
+            : base(new DataService())
+        {
+            OnNavigatedTo(new NavigationParameters());
+        }
+    }
+
     class MainPageViewModel : ViewModelBase
     {
         private readonly IDataService _dataService;

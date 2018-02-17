@@ -8,6 +8,10 @@
     xmlns:viewmodels="using:Sample.ViewModels"
     mc:Ignorable="d">
 
+    <d:Page.DataContext>
+        <viewmodels:MainPageViewModel_Designer />
+    </d:Page.DataContext>
+
     <controls:NavViewProps.HeaderText>
         <x:String>Main Page</x:String>
     </controls:NavViewProps.HeaderText>
@@ -19,27 +23,39 @@
     </controls:NavViewProps.HeaderCommands>
 
     <Page.Resources>
+
+        <Color x:Key="CustomColor">DarkOliveGreen</Color>
+        <SolidColorBrush x:Key="CustomBrush" Color="{StaticResource CustomColor}" />
+
         <DataTemplate x:Key="GridViewItemTemplate">
-            <StackPanel
-                Width="250"
-                Height="150"
-                Margin="4"
-                Padding="16">
-                <StackPanel.Background>
-                    <SolidColorBrush Opacity=".05" Color="White" />
-                </StackPanel.Background>
-                <Border BorderBrush="White" BorderThickness="0,0,0,1">
+            <Grid>
+                <Grid.Background>
+                    <ImageBrush
+                        ImageSource="{Binding Image}"
+                        Opacity="1"
+                        Stretch="UniformToFill" />
+                </Grid.Background>
+                <StackPanel Padding="8" VerticalAlignment="Bottom">
+                    <StackPanel.Background>
+                        <LinearGradientBrush StartPoint=".25,1" EndPoint="0,0">
+                            <GradientStop Color="{StaticResource CustomColor}" />
+                            <GradientStop Offset="3" Color="Transparent" />
+                        </LinearGradientBrush>
+                    </StackPanel.Background>
                     <TextBlock
                         Foreground="White"
-                        Style="{StaticResource TitleTextBlockStyle}"
-                        Text="{Binding Title}" />
-                </Border>
-                <TextBlock
-                    Foreground="White"
-                    Style="{StaticResource SubtitleTextBlockStyle}"
-                    Text="{Binding Text}"
-                    TextWrapping="Wrap" />
-            </StackPanel>
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="{Binding Title}"
+                        TextTrimming="WordEllipsis"
+                        TextWrapping="NoWrap" />
+                    <TextBlock
+                        Foreground="White"
+                        MaxLines="3"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="{Binding Text}"
+                        TextWrapping="Wrap" />
+                </StackPanel>
+            </Grid>
         </DataTemplate>
     </Page.Resources>
 
@@ -48,18 +64,31 @@
         Padding="16,16,16,16"
         Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
         ItemTemplate="{StaticResource GridViewItemTemplate}"
-        ItemsSource="{Binding Items}">
+        ItemsSource="{Binding Items}"
+        RequestedTheme="Light">
+
+        <GridView.ItemContainerStyle>
+            <Style TargetType="GridViewItem">
+                <Setter Property="Margin" Value="4" />
+                <Setter Property="Height" Value="200" />
+                <Setter Property="Width" Value="200" />
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="VerticalContentAlignment" Value="Stretch" />
+            </Style>
+        </GridView.ItemContainerStyle>
 
         <GridView.Header>
             <StackPanel>
                 <TextBlock
                     x:Name="HeaderTextBlock"
                     Margin="16,0,0,0"
+                    Foreground="DarkOliveGreen"
                     Style="{StaticResource HeaderTextBlockStyle}"
                     Text="Default" />
                 <TextBlock
                     x:Name="SubHeaderTextBlock"
                     Margin="16,0,0,8"
+                    Foreground="DarkOliveGreen"
                     Style="{StaticResource SubheaderTextBlockStyle}"
                     Text="Default" />
             </StackPanel>

@@ -19,14 +19,17 @@ namespace Prism.Windows.Navigation
         }
         public static NavigationMode GetNavigationMode(this INavigationParameters parameters)
         {
+            if (!(parameters as INavigationParametersInternal).ContainsKey(nameof(NavigationMode))) return default(NavigationMode);
             return (parameters as INavigationParametersInternal).GetValue<NavigationMode>(nameof(NavigationMode));
         }
         public static NavigationService GetNavigationService(this INavigationParameters parameters)
         {
+            if (!(parameters as INavigationParametersInternal).ContainsKey(nameof(NavigationService))) return null;
             return (parameters as INavigationParametersInternal).GetValue<NavigationService>(nameof(NavigationService));
         }
         public static CoreDispatcher GetDispatcher(this INavigationParameters parameters)
         {
+            if (!(parameters as INavigationParametersInternal).ContainsKey(nameof(CoreDispatcher))) return null;
             return (parameters as INavigationParametersInternal).GetValue<CoreDispatcher>(nameof(CoreDispatcher));
         }
     }
