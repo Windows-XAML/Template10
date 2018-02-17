@@ -11,9 +11,9 @@ using Prism.Windows.Mvvm;
 
 namespace Prism.Windows.Navigation
 {
-    public class NavigationQueue : Queue<IPathInfo>
+    public class NavigationQueue : Queue<INavigationPath>
     {
-        public NavigationQueue(IEnumerable<IPathInfo> collection)
+        public NavigationQueue(IEnumerable<INavigationPath> collection)
             : base(collection.OrderBy(x => x.Index))
         {
             // empty
@@ -67,7 +67,7 @@ namespace Prism.Windows.Navigation
 
             var groups = uri.OriginalString.Split('/')
                 .Where(x => !string.IsNullOrEmpty(x))
-                .Select((path, index) => new PathInfo(index, path, parameters));
+                .Select((path, index) => new NavigationPath(index, path, parameters));
 
             queue = new NavigationQueue(groups)
             {

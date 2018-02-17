@@ -147,7 +147,7 @@ namespace Prism.Windows.Navigation
         }
 
         private async Task<INavigationResult> NavigateAsync(
-            IPathInfo pageNavInfo,
+            INavigationPath pageNavInfo,
             NavigationTransitionInfo infoOverride)
         {
             Debug.WriteLine($"{nameof(FrameFacade)}.{nameof(NavigateAsync)}({pageNavInfo})");

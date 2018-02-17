@@ -119,7 +119,7 @@
     <Compile Include="Navigation\Extensions.cs" />
     <Compile Include="Navigation\FrameFacade\FrameFacade.cs" />
     <Compile Include="Navigation\FrameFacade\IFrameFacade.cs" />
-    <Compile Include="Navigation\NavigationQueue.cs" />
+    <Compile Include="Navigation\NavigationQueue\NavigationQueue.cs" />
     <Compile Include="Navigation\NavigationService\Extensions.cs" />
     <Compile Include="Navigation\NavigationService\IPlatformNavigationService.cs" />
     <Compile Include="Navigation\NavigationService\NavigationService.cs" />
@@ -127,8 +127,8 @@
     <Compile Include="Navigation\PageRegistry\IPageRegistry.cs" />
     <Compile Include="Navigation\PageRegistry\PageRegistry.cs" />
     <Compile Include="Navigation\PathBuilder.cs" />
-    <Compile Include="Navigation\PathInfo\IPathInfo.cs" />
-    <Compile Include="Navigation\PathInfo\PathInfo.cs" />
+    <Compile Include="Navigation\NavigationPath\INavigationPath.cs" />
+    <Compile Include="Navigation\NavigationPath\NavigationPath.cs" />
     <Compile Include="Navigation\Prism.Core\Extensions.cs" />
     <Compile Include="Navigation\Prism.Core\NavigationParameters.cs" />
     <Compile Include="Navigation\Prism.Core\NavigationResult.cs" />

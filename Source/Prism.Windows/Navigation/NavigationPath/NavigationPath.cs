@@ -5,13 +5,13 @@ using Windows.Foundation;
 
 namespace Prism.Windows.Navigation
 {
-    public class PathInfo : IPathInfo
+    public class NavigationPath : INavigationPath
     {
         private string _originalString;
 
         public string QueryString { get; }
 
-        public PathInfo(int index, string originalString, INavigationParameters parameters)
+        public NavigationPath(int index, string originalString, INavigationParameters parameters)
         {
             Index = index;
 

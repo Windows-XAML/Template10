@@ -2,7 +2,7 @@
 
 namespace Prism.Windows.Navigation
 {
-    public interface IPathInfo
+    public interface INavigationPath
     {
         int Index { get; }
         string Key { get; }
