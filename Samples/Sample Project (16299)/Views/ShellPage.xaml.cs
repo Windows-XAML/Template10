@@ -51,10 +51,14 @@ namespace Sample.Views
 
         private void SetupGestures()
         {
-            _gestureService.BackRequested += async (s, e) => await ShellView.NavigationService.GoBackAsync();
-            _gestureService.ForwardRequested += async (s, e) => await ShellView.NavigationService.GoForwardAsync();
-            _gestureService.RefreshRequested += async (s, e) => await ShellView.NavigationService.RefreshAsync();
-            _gestureService.MenuRequested += (s, e) => ShellView.IsPaneOpen = true;
+            _gestureService.BackRequested += async (s, e) 
+                => await ShellView.NavigationService.GoBackAsync();
+            _gestureService.ForwardRequested += async (s, e) 
+                => await ShellView.NavigationService.GoForwardAsync();
+            _gestureService.RefreshRequested += async (s, e) 
+                => await ShellView.NavigationService.RefreshAsync();
+            _gestureService.MenuRequested += (s, e) 
+                => ShellView.IsPaneOpen = true;
             _gestureService.SearchRequested += (s, e) =>
             {
                 ShellView.IsPaneOpen = true;
