@@ -11,7 +11,7 @@
     <Page.Resources>
 
         <DataTemplate x:Key="NavViewExHeaderTemplate">
-            <Grid Padding="0,32,0,0">
+            <Grid>
                 <Grid.Background>
                     <AcrylicBrush BackgroundSource="Backdrop" TintOpacity="0.5" />
                 </Grid.Background>
@@ -41,10 +41,15 @@
         <controls:NavViewEx
             x:Name="ShellView"
             x:FieldModifier="Public"
-            HeaderTemplate="{StaticResource NavViewExHeaderTemplate}">
+            HeaderTemplate="{StaticResource NavViewExHeaderTemplate}"
+            RequestedTheme="Dark">
 
             <NavigationView.AutoSuggestBox>
-                <AutoSuggestBox QueryIcon="Find" />
+                <AutoSuggestBox
+                    QueryIcon="Find"
+                    QuerySubmitted="Search_QuerySubmitted"
+                    SuggestionChosen="Search_SuggestionChosen"
+                    TextChanged="Search_TextChanged" />
             </NavigationView.AutoSuggestBox>
 
             <NavigationView.MenuItems>

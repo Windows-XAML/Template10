@@ -24,6 +24,7 @@ namespace Sample
             container.RegisterSingleton<ShellPage, ShellPage>();
             container.RegisterSingleton<IDataService, DataService>();
             container.RegisterForNavigation<MainPage, MainPageViewModel>(nameof(MainPage));
+            container.RegisterForNavigation<SearchPage, SearchPageViewModel>(nameof(SearchPage));
         }
 
         public override async Task OnStartAsync(StartArgs args)

@@ -8,12 +8,14 @@ using System.Threading.Tasks;
 
 namespace Sample.Services
 {
-    interface IDataService
+    public interface IDataService
     {
         IEnumerable<DataItem> GetItems();
+        IEnumerable<string> GetSuggestions(string text, int count);
+        IEnumerable<DataItem> Search(string text);
     }
 
-    class DataService : IDataService
+    public class DataService : IDataService
     {
         public IEnumerable<DataItem> GetItems()
         {
@@ -27,6 +29,22 @@ namespace Sample.Services
                 .RuleFor(i => i.Text, f => f.Lorem.Sentences(3))
                 .RuleFor(i => i.Image, f => $"ms-appx:///Images/{f.PickRandom(images)}.jpg");
             return items.Generate(150);
+        }
+
+        public IEnumerable<string> GetSuggestions(string text, int count)
+        {
+            return GetItems()
+                .Where(x => x.Title.ToLower().Contains(text.ToLower()))
+                .OrderBy(x => x.Title)
+                .Take(count)
+                .Select(x => x.Title);
+        }
+
+        public IEnumerable<DataItem> Search(string text)
+        {
+            return GetItems()
+                .Where(x => x.Title.ToLower().Contains(text.ToLower()))
+                .OrderBy(x => x.Title);
         }
     }
 }

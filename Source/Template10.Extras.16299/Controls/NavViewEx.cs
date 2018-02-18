@@ -132,7 +132,7 @@ namespace Template10.Controls
             _paneTitleTextBlock.SetValue(Grid.ColumnProperty, 1);
             _paneTitleTextBlock.SetValue(Grid.RowProperty, 1);
             _paneTitleTextBlock.SetValue(Canvas.ZIndexProperty, 100);
-            parent_grid.Children.Add(_paneTitleTextBlock);
+            // parent_grid.Children.Add(_paneTitleTextBlock);
 
             _backButton = new Button
             {
@@ -159,7 +159,7 @@ namespace Template10.Controls
             };
         }
 
-        public IPlatformNavigationService Start()
+        public IPlatformNavigationService Initialize()
         {
             var first = MenuItems
                 .OfType<NavigationViewItem>()
