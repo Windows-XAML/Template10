@@ -5,7 +5,7 @@ using Windows.UI.Xaml.Media.Animation;
 
 namespace Prism.Windows.Navigation
 {
-    public static partial class Extensions
+    public static partial class IContainerRegistryExtensions
     {
         public static Task RefreshAsync(this INavigationService service)
             => (service as IPlatformNavigationService).RefreshAsync();

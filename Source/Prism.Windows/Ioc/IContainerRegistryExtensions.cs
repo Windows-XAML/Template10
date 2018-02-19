@@ -1,9 +1,14 @@
-﻿using Prism.Ioc;
+﻿using Prism.Navigation;
+using Prism.Windows.Navigation;
 using System;
+using System.Threading.Tasks;
+using Windows.Foundation;
+using Windows.UI.Core;
+using Windows.UI.Xaml.Navigation;
 
-namespace Prism.Windows.Navigation
+namespace Prism.Ioc
 {
-    public static partial class Extensions
+    public static partial class IContainerRegistryExtensions
     {
         public static void Register(IContainerRegistry registry, string key, Type view, Type viewModel)
         {
@@ -22,5 +27,6 @@ namespace Prism.Windows.Navigation
             => Register(registry, typeof(TView).Name, typeof(TView), null);
         public static void RegisterForNavigation<TView>(this IContainerRegistry registry, string key)
             => Register(registry, key, typeof(TView), null);
+       
     }
 }

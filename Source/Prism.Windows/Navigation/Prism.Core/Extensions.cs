@@ -3,7 +3,7 @@ using Windows.UI.Core;
 
 namespace Prism.Windows.Navigation
 {
-    public static partial class Extensions
+    public static partial class IContainerRegistryExtensions
     {
         internal static void SetNavigationMode(this INavigationParameters parameters, NavigationMode mode)
         {

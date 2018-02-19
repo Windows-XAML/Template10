@@ -1,8 +1,8 @@
-﻿using Prism.Navigation;
+﻿using Prism.Ioc;
+using Prism.Navigation;
 using System;
 using System.Threading.Tasks;
 using Windows.Foundation;
-using Windows.UI.Core;
 using Windows.UI.Xaml.Navigation;
 
 namespace Prism.Windows.Navigation
