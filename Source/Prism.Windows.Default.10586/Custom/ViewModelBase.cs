@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Prism.Windows.Mvvm
+namespace Prism.Mvvm
 {
     public abstract class ViewModelBase
         : Prism.Mvvm.BindableBase,

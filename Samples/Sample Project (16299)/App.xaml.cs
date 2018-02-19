@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Sample.Views;
-using Prism.Windows;
-using Prism.Windows.Navigation;
+using Prism;
+using Prism.Navigation;
 using Windows.UI.Xaml;
 using Prism.Ioc;
 using Sample.ViewModels;

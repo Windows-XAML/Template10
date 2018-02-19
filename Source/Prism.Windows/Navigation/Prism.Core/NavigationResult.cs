@@ -1,7 +1,7 @@
 ﻿using Prism.Navigation;
 using System;
 
-namespace Prism.Windows.Navigation
+namespace Prism.Navigation
 {
     public class NavigationResult : INavigationResult
     {

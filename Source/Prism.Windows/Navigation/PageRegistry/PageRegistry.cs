@@ -1,7 +1,7 @@
 ﻿using Prism.Ioc;
 using Prism.Navigation;
-using Prism.Windows.Mvvm;
-using Prism.Windows.Utilities;
+using Prism.Mvvm;
+using Prism.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Reflection;
 using Windows.Foundation;
 
-namespace Prism.Windows.Navigation
+namespace Prism.Navigation
 {
     public static class PageRegistry
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Template10.Services;
-using Prism.Windows.Navigation;
+using Prism.Navigation;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -16,8 +16,8 @@ using System.Collections.ObjectModel;
 using Windows.UI.ViewManagement;
 using win = Windows;
 using System.Threading;
-using Prism.Windows;
-using Prism.Windows.Utilities;
+using Prism;
+using Prism.Utilities;
 using Template10.Services.Gesture;
 
 namespace Template10.Controls

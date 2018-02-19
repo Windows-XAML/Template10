@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI.Xaml.Navigation;
 
-namespace Prism.Windows.Navigation
+namespace Prism.Navigation
 {
     public static partial class Extensions
     {

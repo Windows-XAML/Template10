@@ -1,4 +1,4 @@
-﻿namespace Prism.Windows
+﻿namespace Prism
 {
     public enum StartCauses
     {

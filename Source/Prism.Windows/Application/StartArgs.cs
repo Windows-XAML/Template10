@@ -1,7 +1,7 @@
 ﻿using Windows.ApplicationModel.Activation;
 
 
-namespace Prism.Windows
+namespace Prism
 {
     public class StartArgs : IStartArgs
     {

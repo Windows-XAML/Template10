@@ -1,7 +1,7 @@
 ﻿using Prism.Navigation;
 using Windows.UI.Core;
 
-namespace Prism.Windows.Navigation
+namespace Prism.Navigation
 {
     public static partial class IContainerRegistryExtensions
     {

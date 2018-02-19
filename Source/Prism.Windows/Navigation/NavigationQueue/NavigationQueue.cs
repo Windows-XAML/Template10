@@ -7,9 +7,9 @@ using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
-using Prism.Windows.Mvvm;
+using Prism.Mvvm;
 
-namespace Prism.Windows.Navigation
+namespace Prism.Navigation
 {
     public class NavigationQueue : Queue<INavigationPath>
     {

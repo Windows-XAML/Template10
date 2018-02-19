@@ -2,7 +2,7 @@
 using Template10.Services.Serialization;
 using Prism.Ioc;
 using Windows.Storage;
-using Prism.Windows;
+using Prism;
 
 namespace Template10.Services.Settings
 {

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Prism.Windows.Navigation
+namespace Prism.Navigation
 {
     public class NavigationParameters : INavigationParameters, INavigationParametersInternal
     {

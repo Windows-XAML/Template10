@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 
-namespace Prism.Windows.Navigation
+namespace Prism.Navigation
 {
     public class PathBuilder
     {

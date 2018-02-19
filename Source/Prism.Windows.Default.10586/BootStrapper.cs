@@ -1,5 +1,5 @@
 ﻿using Prism.Ioc;
-using Prism.Windows.Navigation;
+using Prism.Navigation;
 using Prism.Logging;
 using Prism.Events;
 using Template10.Services;
@@ -18,7 +18,7 @@ using Windows.UI.Xaml;
 using Template10;
 using Unity;
 
-namespace Prism.Windows
+namespace Prism
 {
     public abstract class BootStrapper : PrismApplicationBase
     {

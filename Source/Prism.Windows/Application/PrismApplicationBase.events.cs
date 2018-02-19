@@ -2,7 +2,7 @@
 using Windows.Foundation;
 using Windows.UI.Xaml;
 
-namespace Prism.Windows
+namespace Prism
 {
     public interface IPrismApplicationEvents
     {

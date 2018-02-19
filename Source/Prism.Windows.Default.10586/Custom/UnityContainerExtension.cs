@@ -2,7 +2,7 @@
 using Prism.Ioc;
 using Unity;
 
-namespace Prism.Windows
+namespace Prism
 {
     public class UnityContainerExtension : IContainerExtension<IUnityContainer>
     {

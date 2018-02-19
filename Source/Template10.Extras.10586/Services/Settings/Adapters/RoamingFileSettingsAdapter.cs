@@ -3,7 +3,7 @@ using Template10.Extensions;
 using Prism.Ioc;
 using Template10.Services.File;
 using Template10.Services.Serialization;
-using Prism.Windows;
+using Prism;
 
 namespace Template10.Services.Settings
 {

@@ -1,6 +1,6 @@
 ﻿using Prism.Navigation;
-using Prism.Windows.Mvvm;
-using Prism.Windows.Navigation;
+using Prism.Mvvm;
+using Prism.Navigation;
 using Sample.Models;
 using Sample.Services;
 using System.Collections.ObjectModel;

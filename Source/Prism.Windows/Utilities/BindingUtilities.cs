@@ -2,7 +2,7 @@
 using System.Reflection;
 using Windows.UI.Xaml.Controls;
 
-namespace Prism.Windows.Utilities
+namespace Prism.Utilities
 {
     public static class BindingUtilities
     {

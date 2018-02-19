@@ -3,8 +3,8 @@ using Prism.Events;
 using Prism.Ioc;
 using Prism.Logging;
 using Prism.Navigation;
-using Prism.Windows.Mvvm;
-using Prism.Windows.Navigation;
+using Prism.Mvvm;
+using Prism.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -17,7 +17,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using System.Linq;
 
-namespace Prism.Windows
+namespace Prism
 {
     public interface IPrismApplicationBase
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 using Prism.Ioc;
-using Prism.Windows;
+using Prism;
 using Template10.Services.Serialization;
 using Windows.Storage;
 

@@ -1,10 +1,10 @@
-﻿using Prism.Windows.Utilities;
+﻿using Prism.Utilities;
 using System;
 using System.Linq;
 using System.Reflection;
 using Windows.UI.Xaml;
 
-namespace Prism.Windows.Mvvm
+namespace Prism.Mvvm
 {
     public class ViewModelLocator
     {

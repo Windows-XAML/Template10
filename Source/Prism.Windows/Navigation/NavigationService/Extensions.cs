@@ -3,7 +3,7 @@ using System;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Media.Animation;
 
-namespace Prism.Windows.Navigation
+namespace Prism.Navigation
 {
     public static partial class IContainerRegistryExtensions
     {

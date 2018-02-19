@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media.Animation;
 
-namespace Prism.Windows.Navigation
+namespace Prism.Navigation
 {
     public interface IFrameFacade
     {

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 
-namespace Prism.Windows.Utilities
+namespace Prism.Utilities
 {
     public static class XamlUtilities
     {

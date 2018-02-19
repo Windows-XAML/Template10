@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using win = Windows;
 
-namespace Prism.Windows.Utilities
+namespace Prism.Utilities
 {
     public static class ReflectionUtilities
     {

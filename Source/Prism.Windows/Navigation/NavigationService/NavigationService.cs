@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 
-namespace Prism.Windows.Navigation
+namespace Prism.Navigation
 {
     public class NavigationService : IPlatformNavigationService
     {

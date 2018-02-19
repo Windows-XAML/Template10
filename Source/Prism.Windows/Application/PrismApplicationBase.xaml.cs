@@ -4,7 +4,7 @@ using Windows.Foundation;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 
-namespace Prism.Windows
+namespace Prism
 {
     public abstract partial class PrismApplicationBase : Application
     {

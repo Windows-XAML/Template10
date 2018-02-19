@@ -1,11 +1,11 @@
 ﻿using win = Windows;
-using Prism.Windows.Navigation;
+using Prism.Navigation;
 using Windows.ApplicationModel.Core;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Prism.Windows.Utilities;
+using Prism.Utilities;
 using System.Linq;
 using System;
 using Windows.UI.Xaml.Media;

@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using Template10.Services.Serialization;
 
-namespace Prism.Windows
+namespace Prism
 {
     public class NewtonsoftSerializationService : ISerializationService
     {

@@ -9,9 +9,9 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using System.ComponentModel;
-using Prism.Windows.Utilities;
+using Prism.Utilities;
 
-namespace Prism.Windows.Navigation
+namespace Prism.Navigation
 {
     public class FrameFacade : IFrameFacade
     {
