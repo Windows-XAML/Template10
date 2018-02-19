@@ -167,7 +167,7 @@
     <Compile Include="Services\Web\Abstractions\IWebApiService.cs" />
     <Compile Include="Services\Web\Default\WebApiService.cs" />
     <Compile Include="Services\Web\Default\WindowsHttpClientAdapter.cs" />
-    <Compile Include="Utilities\Utility.cs" />
+    <Compile Include="Utilities\IEnumerableUtils.cs" />
     <Compile Include="Xaml.Behaviors\ChangeCursorAction.cs" />
     <Compile Include="Xaml.Behaviors\CloseFlyoutAction.cs" />
     <Compile Include="Xaml.Behaviors\ConditionalAction.cs" />
