@@ -11,6 +11,8 @@ namespace Prism.Navigation
 {
     public class NavigationService : IPlatformNavigationService
     {
+        public static Dictionary<Frame, INavigationService> Instances { get; } = new Dictionary<Frame, INavigationService>();
+
         private readonly IFrameFacade _frame;
 
         public NavigationService(Frame frame)
@@ -20,6 +22,7 @@ namespace Prism.Navigation
                 CanGoBackChanged?.Invoke(this, EventArgs.Empty);
             _frame.CanGoForwardChanged += (s, e) =>
                 CanGoForwardChanged?.Invoke(this, EventArgs.Empty);
+            Instances.Add(frame, this);
         }
 
         public async Task RefreshAsync()

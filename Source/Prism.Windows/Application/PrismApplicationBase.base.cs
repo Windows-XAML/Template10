@@ -4,7 +4,6 @@ using Prism.Ioc;
 using Prism.Logging;
 using Prism.Navigation;
 using Prism.Mvvm;
-using Prism.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -19,22 +18,13 @@ using System.Linq;
 
 namespace Prism
 {
-    public interface IPrismApplicationBase
-    {
-        void ConfigureViewModelLocator();
-        IContainerExtension CreateContainer();
-        void RegisterRequiredTypes(IContainerRegistry container);
-        void RegisterTypes(IContainerRegistry container);
-        void OnInitialize();
-        void OnStart(StartArgs args);
-        Task OnStartAsync(StartArgs args);
-    }
-
-    public abstract partial class PrismApplicationBase : IPrismApplicationBase
+    public abstract partial class PrismApplicationBase
     {
         public new static PrismApplicationBase Current => (PrismApplicationBase)Application.Current;
 
         private static SemaphoreSlim _startSemaphore = new SemaphoreSlim(1, 1);
+
+        public const string NavigationServiceParameterName = "navigationService";
 
         public PrismApplicationBase()
         {
@@ -45,7 +35,7 @@ namespace Prism
         {
             Prism.Mvvm.ViewModelLocationProvider.SetDefaultViewModelFactory((view, type) =>
             {
-                return Container.Resolve(type);
+                return _containerExtension.ResolveViewModelForView(view, type);
             });
         }
 
@@ -54,11 +44,21 @@ namespace Prism
 
         public abstract IContainerExtension CreateContainer();
 
-        public abstract void RegisterRequiredTypes(IContainerRegistry container);
+        protected virtual void RegisterRequiredTypes(IContainerRegistry container)
+        {
+            // required for view-models
+
+            container.Register<INavigationService, NavigationService>(NavigationServiceParameterName);
+
+            // standard prism services
+
+            container.RegisterSingleton<ILoggerFacade, EmptyLogger>();
+            container.RegisterSingleton<IEventAggregator, EventAggregator>();
+        }
 
         public abstract void RegisterTypes(IContainerRegistry container);
 
-        public virtual void OnInitialize() { /* empty */ }
+        public virtual void OnInitialized() { /* empty */ }
 
         public virtual void OnStart(StartArgs args) {  /* empty */ }
 
@@ -72,7 +72,7 @@ namespace Prism
             RegisterTypes(_containerExtension as IContainerRegistry);
             _containerExtension.FinalizeExtension();
             ConfigureViewModelLocator();
-            OnInitialize();
+            OnInitialized();
         }
 
         private async Task InternalStartAsync(StartArgs startArgs)

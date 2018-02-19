@@ -6,7 +6,7 @@ using Unity;
 using Unity.Resolution;
 using Windows.UI.Xaml.Controls;
 
-namespace Prism
+namespace Prism.Unity
 {
     public class UnityContainerExtension : IContainerExtension<IUnityContainer>
     {

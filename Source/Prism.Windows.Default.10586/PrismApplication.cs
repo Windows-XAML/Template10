@@ -20,9 +20,9 @@ using Unity;
 
 namespace Prism
 {
-    public abstract class BootStrapper : PrismApplicationBase
+    public abstract class PrismApplication : PrismApplicationBase
     {
-        public BootStrapper() : base()
+        public PrismApplication() : base()
         {
             (this as IPrismApplicationEvents).WindowCreated += (s, e) =>
             {
@@ -36,8 +36,12 @@ namespace Prism
             return new UnityContainerExtension(new UnityContainer());
         }
 
-        public override void RegisterRequiredTypes(IContainerRegistry container)
+        public override void RegisterTypes(IContainerRegistry container)
         {
+            // required for view-models
+
+            container.Register<INavigationService, NavigationService>(NavigationServiceParameterName);
+
             // standard prism services
 
             container.RegisterSingleton<ILoggerFacade, EmptyLogger>();

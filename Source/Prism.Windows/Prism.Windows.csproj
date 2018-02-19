@@ -115,6 +115,7 @@
     <Compile Include="Application\StartKinds.cs" />
     <Compile Include="Ioc\ContainerProvider.cs" />
     <Compile Include="Ioc\IContainerRegistryExtensions.cs" />
+    <Compile Include="Mvvm\ViewModelBase.cs" />
     <Compile Include="Mvvm\ViewModelLocator.cs" />
     <Compile Include="Navigation\FrameFacade\FrameFacade.cs" />
     <Compile Include="Navigation\FrameFacade\IFrameFacade.cs" />

@@ -10,16 +10,18 @@ using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using System.ComponentModel;
 using Prism.Utilities;
+using System.Threading;
 
 namespace Prism.Navigation
 {
     public class FrameFacade : IFrameFacade
     {
-        private Frame _frame;
+        private readonly Frame _frame;
         private readonly CoreDispatcher _dispatcher;
+        private readonly SynchronizationContext _syncContext;
+        private readonly IPlatformNavigationService _navigationService;
         public event EventHandler CanGoBackChanged;
         public event EventHandler CanGoForwardChanged;
-        private readonly IPlatformNavigationService _navigationService;
 
         internal FrameFacade(Frame frame, IPlatformNavigationService navigationService)
         {
@@ -32,6 +34,7 @@ namespace Prism.Navigation
                 => CanGoForwardChanged?.Invoke(this, EventArgs.Empty));
 
             _dispatcher = frame.Dispatcher;
+            _syncContext = SynchronizationContext.Current;
             _navigationService = navigationService;
         }
 
@@ -359,7 +362,7 @@ namespace Prism.Navigation
             parameters = parameters ?? new NavigationParameters();
             parameters.SetNavigationMode(mode);
             parameters.SetNavigationService(_navigationService);
-            parameters.SetDispatcher(_dispatcher);
+            parameters.SetSyncronizationContext(_syncContext);
             return parameters;
         }
 

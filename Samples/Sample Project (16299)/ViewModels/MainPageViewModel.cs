@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Prism.Mvvm;
-using Prism.Navigation;
 using Sample.Services;
 using Sample.Models;
 using System.Collections.ObjectModel;
+using System.Threading;
 
 namespace Sample.ViewModels
 {
@@ -16,6 +16,7 @@ namespace Sample.ViewModels
     {
         private readonly IDataService _dataService;
         private NavigationService _navigationService;
+        private SynchronizationContext _syncContext;
 
         public MainPageViewModel(IDataService dataService)
         {

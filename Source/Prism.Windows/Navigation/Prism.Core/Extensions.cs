@@ -1,4 +1,5 @@
 ﻿using Prism.Navigation;
+using System.Threading;
 using Windows.UI.Core;
 
 namespace Prism.Navigation
@@ -13,9 +14,9 @@ namespace Prism.Navigation
         {
             (parameters as INavigationParametersInternal).Add(nameof(NavigationService), service);
         }
-        internal static void SetDispatcher(this INavigationParameters parameters, CoreDispatcher dispatcher)
+        internal static void SetSyncronizationContext(this INavigationParameters parameters, SynchronizationContext context)
         {
-            (parameters as INavigationParametersInternal).Add(nameof(CoreDispatcher), dispatcher);
+            (parameters as INavigationParametersInternal).Add(nameof(SynchronizationContext), context);
         }
         public static NavigationMode GetNavigationMode(this INavigationParameters parameters)
         {
@@ -27,10 +28,10 @@ namespace Prism.Navigation
             if (!(parameters as INavigationParametersInternal).ContainsKey(nameof(NavigationService))) return null;
             return (parameters as INavigationParametersInternal).GetValue<NavigationService>(nameof(NavigationService));
         }
-        public static CoreDispatcher GetDispatcher(this INavigationParameters parameters)
+        public static SynchronizationContext GetSynchronizationContext(this INavigationParameters parameters)
         {
-            if (!(parameters as INavigationParametersInternal).ContainsKey(nameof(CoreDispatcher))) return null;
-            return (parameters as INavigationParametersInternal).GetValue<CoreDispatcher>(nameof(CoreDispatcher));
+            if (!(parameters as INavigationParametersInternal).ContainsKey(nameof(SynchronizationContext))) return null;
+            return (parameters as INavigationParametersInternal).GetValue<SynchronizationContext>(nameof(SynchronizationContext));
         }
     }
 

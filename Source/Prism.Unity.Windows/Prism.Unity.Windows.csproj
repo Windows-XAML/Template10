@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C929DB99-B5C8-4C38-85A7-6CF130E42451}</ProjectGuid>
+    <ProjectGuid>{CC3018EB-6D2B-4306-94A1-3A7CBA7A8F18}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Prism.Unity.Windows</RootNamespace>
@@ -106,19 +106,15 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Custom\NewtonsoftSerializationService.cs" />
-    <Compile Include="Custom\UnityContainerExtension.cs" />
-    <Compile Include="Custom\ViewModelBase.cs" />
     <Compile Include="PrismApplication.cs" />
+    <Compile Include="PrismIocExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnityContainerExtension.cs" />
     <EmbeddedResource Include="Properties\Prism.Unity.Windows.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.0.6</Version>
-    </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>11.0.1-beta3</Version>
     </PackageReference>
     <PackageReference Include="Prism.Core">
       <Version>7.0.0.423-ci</Version>
@@ -131,10 +127,6 @@
     <ProjectReference Include="..\Prism.Windows\Prism.Windows.csproj">
       <Project>{648c8631-c97f-4b81-98fc-f4370317751a}</Project>
       <Name>Prism.Windows</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Template10.Extras.10586\Template10.Extras.10586.csproj">
-      <Project>{9bb18d4b-bcdd-43c9-a7c2-416d13dd39a6}</Project>
-      <Name>Template10.Extras.10586</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

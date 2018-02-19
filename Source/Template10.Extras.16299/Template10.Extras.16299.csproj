@@ -120,10 +120,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Prism.Windows.Default.10586\Prism.Windows.Default.10586.csproj">
-      <Project>{c929db99-b5c8-4c38-85a7-6cf130e42451}</Project>
-      <Name>Prism.Windows.Default.10586</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Prism.Windows\Prism.Windows.csproj">
       <Project>{648C8631-C97F-4B81-98FC-F4370317751A}</Project>
       <Name>Prism.Windows</Name>
