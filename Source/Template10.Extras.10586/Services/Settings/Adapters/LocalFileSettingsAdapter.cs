@@ -12,7 +12,7 @@ namespace Template10.Services.Settings
         private readonly IFileService _helper;
 
         public LocalFileSettingsAdapter()
-            : this(Central.Container.Resolve<ISerializationService>())
+            : this(PrismApplicationBase.Current.Container.Resolve<ISerializationService>())
         {
             // empty
         }

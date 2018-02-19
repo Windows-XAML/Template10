@@ -11,7 +11,7 @@ namespace Template10.Services.Settings
         private ApplicationDataContainer _container;
 
         public RoamingSettingsAdapter()
-           : this(Central.Container.Resolve<ISerializationService>())
+           : this(PrismApplicationBase.Current.Container.Resolve<ISerializationService>())
         {
             // empty
         }

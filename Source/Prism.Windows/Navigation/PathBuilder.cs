@@ -14,6 +14,10 @@ namespace Prism.Windows.Navigation
             _value = value;
         }
 
+        public enum ClearBehaviors { ClearBackStack, AddToBackStack }
+
+        // what name would be nice?
+
         public static PathBuilder Create(bool clear, string page, params (string Name, string Value)[] parameters)
         {
             if (string.IsNullOrEmpty(page))

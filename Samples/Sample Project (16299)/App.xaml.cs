@@ -45,11 +45,9 @@ namespace Sample
 
             // do initial navigation (hide splash)
 
-            var shell = Central.Container.Resolve<ShellPage>();
+            var shell = PrismApplicationBase.Current.Container.Resolve<ShellPage>();
             await shell.ShellView.NavigationService.NavigateAsync(path);
             Window.Current.Content = shell;
         }
     }
-
-    public class DetailPage : PageRegistry { }
 }

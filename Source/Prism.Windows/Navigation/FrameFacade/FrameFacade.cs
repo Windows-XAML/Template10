@@ -227,9 +227,19 @@ namespace Prism.Windows.Navigation
             var new_vm = new_page?.DataContext;
             if (new_vm == null)
             {
-                if (Central.Registry.TryGetRegistration(_frame.CurrentSourcePageType, out var info) && info.ViewModel != null)
+                if (Mvvm.ViewModelLocator.GetAutowireViewModel(new_page) == false)
                 {
-                    new_page.DataContext = new_vm = Central.Container.Resolve(info.ViewModel);
+                    // developer, for some reason, opted-out
+                }
+                else
+                {
+                    // developer didn't set autowire, and did't set datacontext manually
+
+                    // set the autowire & see if we can find it for them
+                    Mvvm.ViewModelLocator.SetAutowireViewModel(new_page, true);
+
+                    // TODO: I wonder if I need to delay for a second?
+                    new_vm = new_page.DataContext;
                 }
             }
 

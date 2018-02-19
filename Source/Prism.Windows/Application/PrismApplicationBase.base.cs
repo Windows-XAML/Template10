@@ -21,6 +21,7 @@ namespace Prism.Windows
 {
     public interface IPrismApplicationBase
     {
+        void ConfigureViewModelLocator();
         IContainerExtension CreateContainer();
         void RegisterRequiredTypes(IContainerRegistry container);
         void RegisterTypes(IContainerRegistry container);
@@ -31,14 +32,25 @@ namespace Prism.Windows
 
     public abstract partial class PrismApplicationBase : IPrismApplicationBase
     {
-        private static SemaphoreSlim _startSemaphore = new SemaphoreSlim(1, 1);
+        public new static PrismApplicationBase Current => (PrismApplicationBase)Application.Current;
 
-        // public static IContainerExtension Container { get; private set; }
+        private static SemaphoreSlim _startSemaphore = new SemaphoreSlim(1, 1);
 
         public PrismApplicationBase()
         {
             InternalInitialize();
         }
+
+        public virtual void ConfigureViewModelLocator()
+        {
+            Prism.Mvvm.ViewModelLocationProvider.SetDefaultViewModelFactory((view, type) =>
+            {
+                return Container.Resolve(type);
+            });
+        }
+
+        IContainerExtension _containerExtension;
+        public IContainerProvider Container => _containerExtension;
 
         public abstract IContainerExtension CreateContainer();
 
@@ -55,10 +67,11 @@ namespace Prism.Windows
         private void InternalInitialize()
         {
             Debug.WriteLine($"{nameof(PrismApplicationBase)}.{nameof(InternalInitialize)}");
-            Central.Container.ContainerExtension = CreateContainer();
-            RegisterRequiredTypes(Central.Container.ContainerRegistry);
-            RegisterTypes(Central.Container.ContainerRegistry);
-            Central.Container.ContainerExtension.FinalizeExtension();
+            _containerExtension = CreateContainer();
+            RegisterRequiredTypes(_containerExtension as IContainerRegistry);
+            RegisterTypes(_containerExtension as IContainerRegistry);
+            _containerExtension.FinalizeExtension();
+            ConfigureViewModelLocator();
             OnInitialize();
         }
 

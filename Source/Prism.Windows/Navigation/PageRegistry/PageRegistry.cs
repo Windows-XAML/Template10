@@ -12,17 +12,17 @@ using Windows.Foundation;
 
 namespace Prism.Windows.Navigation
 {
-    public class PageRegistry : IPageRegistry
+    public static class PageRegistry
     {
         static Dictionary<string, (Type View, Type ViewModel)> _cache
             = new Dictionary<string, (Type View, Type ViewModel)>();
 
-        public void Register(string key, (Type View, Type ViewModel) info)
+        public static void Register(string key, (Type View, Type ViewModel) info)
         {
             _cache.Add(key, info);
         }
 
-        public bool TryGetRegistration(string key, out (string Key, Type View, Type ViewModel) info)
+        public static bool TryGetRegistration(string key, out (string Key, Type View, Type ViewModel) info)
         {
             if (_cache.ContainsKey(key))
             {
@@ -31,11 +31,12 @@ namespace Prism.Windows.Navigation
             }
             else
             {
-                return Central.Locator.TryUseFactories(key, out info);
+                info = (null, null, null);
+                return false;
             }
         }
 
-        public bool TryGetRegistration(Type view, out (string Key, Type View, Type ViewModel) info)
+        public static bool TryGetRegistration(Type view, out (string Key, Type View, Type ViewModel) info)
         {
             if (_cache.Any(x => x.Value.View == view))
             {

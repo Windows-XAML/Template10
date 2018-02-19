@@ -11,7 +11,7 @@ namespace Prism.Windows.Navigation
             {
                 registry.Register(viewModel);
             }
-            Central.Registry.Register(key, (view, viewModel));
+            PageRegistry.Register(key, (view, viewModel));
         }
 
         public static void RegisterForNavigation<TView, TViewModel>(this IContainerRegistry registry)

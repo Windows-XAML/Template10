@@ -52,7 +52,7 @@ namespace Prism.Windows.Navigation
 
             // get types
 
-            if (Central.Registry.TryGetRegistration(Key, out var info))
+            if (PageRegistry.TryGetRegistration(Key, out var info))
             {
                 Key = info.Key;
                 View = info.View;
@@ -60,7 +60,7 @@ namespace Prism.Windows.Navigation
             }
             else
             {
-                throw new Exception($"Count not find Key:[{Key}]. Use Central.Regsitry.");
+                throw new Exception($"Count not find Key:[{Key}]. Use RegisterTypes()/container.RegisterForNavigation<T, T>().");
             }
         }
 

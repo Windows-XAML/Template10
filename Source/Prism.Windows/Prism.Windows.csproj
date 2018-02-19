@@ -113,8 +113,6 @@
     <Compile Include="Application\StartArgs.cs" />
     <Compile Include="Application\StartCauses.cs" />
     <Compile Include="Application\StartKinds.cs" />
-    <Compile Include="Central.cs" />
-    <Compile Include="Mvvm\IViewModelLocator.cs" />
     <Compile Include="Mvvm\ViewModelLocator.cs" />
     <Compile Include="Navigation\Extensions.cs" />
     <Compile Include="Navigation\FrameFacade\FrameFacade.cs" />
@@ -124,7 +122,6 @@
     <Compile Include="Navigation\NavigationService\IPlatformNavigationService.cs" />
     <Compile Include="Navigation\NavigationService\NavigationService.cs" />
     <Compile Include="Navigation\PageRegistry\Extensions.cs" />
-    <Compile Include="Navigation\PageRegistry\IPageRegistry.cs" />
     <Compile Include="Navigation\PageRegistry\PageRegistry.cs" />
     <Compile Include="Navigation\PathBuilder.cs" />
     <Compile Include="Navigation\NavigationPath\INavigationPath.cs" />

@@ -21,7 +21,7 @@ namespace Template10.Services.Settings
         public SettingsHelper(ISettingsAdapter adapter)
         {
             _adapter = adapter;
-            _compressionService = Central.Container.Resolve<ICompressionService>();
+            _compressionService = PrismApplicationBase.Current.Container.Resolve<ICompressionService>();
             _serializationService = adapter.SerializationService;
         }
 
