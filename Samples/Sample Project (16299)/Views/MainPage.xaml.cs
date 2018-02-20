@@ -25,10 +25,14 @@ namespace Sample.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            //if (e.TryGetParameter<int>("Record", out var value))
-            //{
-            //    HeaderTextBlock.Text = $"Record: {value}";
-            //}
+            if (e.TryGetParameter<int>("Record", out var value))
+            {
+                MainGridView.Header = $"Record: {value}";
+            }
+            else
+            {
+                // handle failure
+            }
         }
     }
 }

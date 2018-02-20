@@ -10,6 +10,7 @@ namespace Sample.Services
 {
     public interface IDataService
     {
+        Task InitializeAsync();
         IEnumerable<DataItem> GetItems();
         IEnumerable<string> GetSuggestions(string text, int count);
         IEnumerable<DataItem> Search(string text);
@@ -17,6 +18,11 @@ namespace Sample.Services
 
     public class DataService : IDataService
     {
+        public async Task InitializeAsync()
+        {
+            await Task.CompletedTask;
+        }
+
         public IEnumerable<DataItem> GetItems()
         {
             Randomizer.Seed = new Random(8675309);

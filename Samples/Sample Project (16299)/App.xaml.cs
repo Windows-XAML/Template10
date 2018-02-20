@@ -62,11 +62,6 @@ namespace Sample
             container.RegisterForNavigation<SearchPage, SearchPageViewModel>(nameof(SearchPage));
         }
 
-        public override void OnInitialized()
-        {
-            base.OnInitialized();
-        }
-
         public override async Task OnStartAsync(StartArgs args)
         {
             // show splash
@@ -79,15 +74,29 @@ namespace Sample
             // built initial path
 
             var path = PathBuilder
-                .Create(true, nameof(MainPage), ("Filter", "Plumber"))
-                .Append(nameof(MainPage), ("Record", "567"), ("ScrollPosition", "234"))
+                .Create(nameof(MainPage), ("Record", "0567"))
+                .Append(nameof(MainPage), ("Record", "1567"))
+                .Append(nameof(MainPage), ("Record", "2567"))
+                .Append(nameof(MainPage), ("Record", "3567"))
+                .Append(nameof(MainPage), ("Record", "4567"))
+                .Append(nameof(MainPage), ("Record", "5567"))
+                .Append(nameof(MainPage), ("Record", "6567"))
                 .ToString();
 
-            // do initial navigation (hide splash)
+            // initialize services
 
-            var shell = PrismApplicationBase.Current.Container.Resolve<ShellPage>();
-            await shell.ShellView.NavigationService.NavigateAsync(path);
+            var data = Container.Resolve<IDataService>();
+            await data.InitializeAsync();
+
+            // setup shell
+
+            var shell = Container.Resolve<ShellPage>();
             Window.Current.Content = shell;
+
+            // first page 
+
+            var navigationService = shell.ShellView.NavigationService;
+            await navigationService.NavigateAsync(path);
         }
     }
 }
