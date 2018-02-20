@@ -13,9 +13,19 @@ namespace Prism.Navigation
     {
         public static Dictionary<Frame, INavigationService> Instances { get; } = new Dictionary<Frame, INavigationService>();
 
+        public static INavigationService Create(out Frame frame)
+        {
+            return new NavigationService(frame = new Frame());
+        }
+
+        public static INavigationService Create(Frame frame)
+        {
+            return new NavigationService(frame);
+        }
+
         private readonly IFrameFacade _frame;
 
-        public NavigationService(Frame frame)
+        private NavigationService(Frame frame)
         {
             _frame = new FrameFacade(frame, this);
             _frame.CanGoBackChanged += (s, e) =>

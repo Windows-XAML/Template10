@@ -42,7 +42,10 @@ namespace Prism
         IContainerExtension _containerExtension;
         public IContainerProvider Container => _containerExtension;
 
-        public abstract IContainerExtension CreateContainer();
+        public virtual IContainerExtension CreateContainer()
+        {
+            return new DefaultContainerExtension();
+        }
 
         protected virtual void RegisterRequiredTypes(IContainerRegistry container)
         {

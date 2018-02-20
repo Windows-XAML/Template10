@@ -7,6 +7,14 @@ namespace Prism.Navigation
 {
     public class NavigationParameters : INavigationParameters, INavigationParametersInternal
     {
+        public NavigationParameters(params (string Name, object Value)[] parameters)
+        {
+            foreach (var item in parameters)
+            {
+                _external.Add(item.Name, item.Value);
+            }
+        }
+
         Dictionary<string, object> _external = new Dictionary<string, object>();
         Dictionary<string, object> _internal = new Dictionary<string, object>();
 

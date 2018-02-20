@@ -51,7 +51,7 @@ namespace Template10.Controls
                 }
             };
 
-            NavigationService = new NavigationService(_frame);
+            NavigationService = (IPlatformNavigationService)Prism.Navigation.NavigationService.Create(_frame);
 
             ItemInvoked += (s, e) =>
             {

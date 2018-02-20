@@ -114,6 +114,7 @@
     <Compile Include="Application\StartCauses.cs" />
     <Compile Include="Application\StartKinds.cs" />
     <Compile Include="Ioc\ContainerProvider.cs" />
+    <Compile Include="Ioc\DefaultContainerExtension.cs" />
     <Compile Include="Ioc\IContainerRegistryExtensions.cs" />
     <Compile Include="Mvvm\ViewModelBase.cs" />
     <Compile Include="Mvvm\ViewModelLocator.cs" />

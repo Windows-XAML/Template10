@@ -6,6 +6,8 @@ using System.Reflection;
 
 namespace Prism.Navigation
 {
+    public enum BackStackBehaviors { Clear, Append }
+
     public class PathBuilder
     {
         private string _value;
@@ -14,17 +16,20 @@ namespace Prism.Navigation
             _value = value;
         }
 
-        public enum ClearBehaviors { ClearBackStack, AddToBackStack }
-
         // what name would be nice?
 
-        public static PathBuilder Create(bool clear, string page, params (string Name, string Value)[] parameters)
+        public static PathBuilder Create(string page, params (string Name, string Value)[] parameters)
+        {
+            return Create(BackStackBehaviors.Append, page, parameters);
+        }
+
+        public static PathBuilder Create(BackStackBehaviors clear, string page, params (string Name, string Value)[] parameters)
         {
             if (string.IsNullOrEmpty(page))
             {
                 throw new ArgumentNullException(nameof(page));
             }
-            var prefix = clear ? "/" : string.Empty;
+            var prefix = clear == BackStackBehaviors.Clear ? "/" : string.Empty;
             var value = Build(prefix, page, parameters);
             return new PathBuilder(value);
         }
