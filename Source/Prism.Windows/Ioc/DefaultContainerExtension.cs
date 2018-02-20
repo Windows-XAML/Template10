@@ -8,27 +8,27 @@ namespace Prism.Ioc
 
         public void FinalizeExtension()
         {
-            throw new NotImplementedException();
+            // empty
         }
 
         public void Register(Type from, Type to)
         {
-            throw new NotImplementedException();
+            // empty
         }
 
         public void Register(Type from, Type to, string name)
         {
-            throw new NotImplementedException();
+            // empty
         }
 
         public void RegisterInstance(Type type, object instance)
         {
-            throw new NotImplementedException();
+            // empty
         }
 
         public void RegisterSingleton(Type from, Type to)
         {
-            throw new NotImplementedException();
+            // empty
         }
 
         public object Resolve(Type type)

@@ -33,7 +33,7 @@ namespace Prism
 
         public virtual void ConfigureViewModelLocator()
         {
-            Prism.Mvvm.ViewModelLocationProvider.SetDefaultViewModelFactory((view, type) =>
+            ViewModelLocationProvider.SetDefaultViewModelFactory((view, type) =>
             {
                 return _containerExtension.ResolveViewModelForView(view, type);
             });
