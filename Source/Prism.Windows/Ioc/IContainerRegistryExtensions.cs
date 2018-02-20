@@ -1,4 +1,5 @@
-﻿using Prism.Navigation;
+﻿using Prism.Mvvm;
+using Prism.Navigation;
 using Prism.Navigation;
 using System;
 using System.Threading.Tasks;
@@ -10,11 +11,12 @@ namespace Prism.Ioc
 {
     public static partial class IContainerRegistryExtensions
     {
-        public static void Register(IContainerRegistry registry, string key, Type view, Type viewModel)
+        public static void Register(IContainerRegistry container, string key, Type view, Type viewModel)
         {
             if (viewModel != null)
             {
-                registry.Register(viewModel);
+                container.Register(viewModel);
+                ViewModelLocationProvider.Register(view.ToString(), viewModel);
             }
             PageRegistry.Register(key, (view, viewModel));
         }

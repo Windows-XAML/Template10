@@ -230,11 +230,7 @@ namespace Prism.Navigation
             var new_vm = new_page?.DataContext;
             if (new_vm == null)
             {
-                if (Mvvm.ViewModelLocator.GetAutowireViewModel(new_page) == false)
-                {
-                    // developer, for some reason, opted-out
-                }
-                else
+                if (Mvvm.ViewModelLocator.GetAutowireViewModel(new_page) == null)
                 {
                     // developer didn't set autowire, and did't set datacontext manually
 

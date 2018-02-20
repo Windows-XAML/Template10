@@ -34,13 +34,13 @@ namespace Sample.ViewModels
 
         public override async Task<bool> CanNavigateAsync(INavigationParameters parameters)
         {
-            if (await _dialogService.PromptAsync("Are you sure?") == MessageBoxResult.Yes)
+            //if (await _dialogService.PromptAsync("Are you sure?") == MessageBoxResult.Yes)
+            //{
+            if (IsValidate())
             {
-                if (IsValidate())
-                {
-                    return SaveData();
-                }
+                return SaveData();
             }
+            //}
             return false;
         }
 
