@@ -50,16 +50,15 @@ namespace Prism.Unity
 
         public object ResolveViewModelForView(object view, Type viewModelType)
         {
-            ParameterOverrides overrides = null;
             if (view is Page page)
             {
                 var service = NavigationService.Instances[page.Frame];
-                overrides = new ParameterOverrides
-                {
-                    { PrismApplicationBase.NavigationServiceParameterName, service }
-                };
+                return this.Resolve(viewModelType, (PrismApplicationBase.NavigationServiceParameterName, service));
             }
-            return Instance.Resolve(viewModelType, overrides);
+            else
+            {
+                return Instance.Resolve(viewModelType);
+            }
         }
     }
 }
