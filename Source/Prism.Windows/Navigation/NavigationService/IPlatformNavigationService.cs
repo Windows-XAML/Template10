@@ -6,6 +6,11 @@ using Windows.UI.Xaml.Media.Animation;
 
 namespace Prism.Navigation
 {
+    internal interface IPlatformNavigationService2
+    {
+        IFrameFacade FrameFacade { get; }
+    }
+
     public interface IPlatformNavigationService : INavigationService
     {
         Task RefreshAsync();

@@ -14,7 +14,7 @@ using System.Threading;
 
 namespace Prism.Navigation
 {
-    public class FrameFacade : IFrameFacade
+    public class FrameFacade : IFrameFacade, IFrameFacade2
     {
         private readonly Frame _frame;
         private readonly CoreDispatcher _dispatcher;
@@ -37,6 +37,8 @@ namespace Prism.Navigation
             _syncContext = SynchronizationContext.Current;
             _navigationService = navigationService;
         }
+
+        Frame IFrameFacade2.Frame => _frame;
 
         public bool CanGoBack()
             => _frame.CanGoBack;

@@ -1,6 +1,8 @@
 ﻿using Prism.Ioc;
 using Prism.Navigation;
 using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI.Xaml.Navigation;
@@ -9,6 +11,21 @@ namespace Prism.Navigation
 {
     public static partial class Extensions
     {
+        public static string GetNavigationPath(this INavigationService service)
+        {
+            var nav = service as IPlatformNavigationService2;
+            var facade = nav.FrameFacade as IFrameFacade2;
+            var sb = new List<string>();
+            foreach (var item in facade.Frame.BackStack)
+            {
+                if (PageRegistry.TryGetRegistration(item.SourcePageType, out var info))
+                {
+                    sb.Add(info.Key);
+                }
+            }
+            return string.Join("/", sb.ToArray());
+        }
+
         public static async Task<INavigationResult> NavigateAsync(this INavigationService service, string path, params (string Name, string Value)[] parameters)
         {
             var p = new NavigationParameters();

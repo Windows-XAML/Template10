@@ -2,10 +2,15 @@
 using System;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 
 namespace Prism.Navigation
 {
+    internal interface IFrameFacade2
+    {
+        Frame Frame { get; }
+    }
     public interface IFrameFacade
     {
         bool CanGoBack();

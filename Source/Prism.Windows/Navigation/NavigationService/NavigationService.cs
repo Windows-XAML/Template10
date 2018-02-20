@@ -14,8 +14,10 @@ namespace Prism.Navigation
 {
     public enum Gestures { Back, Forward, Refresh }
 
-    public class NavigationService : IPlatformNavigationService
+    public class NavigationService : IPlatformNavigationService, IPlatformNavigationService2
     {
+        IFrameFacade IPlatformNavigationService2.FrameFacade => _frame;
+
         public static Dictionary<Frame, INavigationService> Instances { get; } = new Dictionary<Frame, INavigationService>();
 
         public static INavigationService Create(Frame frame, params Gestures[] gestures)
