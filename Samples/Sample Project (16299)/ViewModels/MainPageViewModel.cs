@@ -9,18 +9,21 @@ using Sample.Services;
 using Sample.Models;
 using System.Collections.ObjectModel;
 using System.Threading;
+using Template10.Services.Dialog;
 
 namespace Sample.ViewModels
 {
     class MainPageViewModel : ViewModelBase
     {
         private readonly IDataService _dataService;
+        private readonly IDialogService _dialogService;
         private NavigationService _navigationService;
         private SynchronizationContext _syncContext;
 
-        public MainPageViewModel(IDataService dataService)
+        public MainPageViewModel(IDataService dataService, IDialogService dialogService)
         {
             _dataService = dataService;
+            _dialogService = dialogService;
         }
 
         public override void OnNavigatedTo(INavigationParameters parameters)
@@ -29,11 +32,14 @@ namespace Sample.ViewModels
             LoadData();
         }
 
-        public override bool CanNavigate(INavigationParameters parameters)
+        public override async Task<bool> CanNavigateAsync(INavigationParameters parameters)
         {
-            if (IsValidate())
+            if (await _dialogService.PromptAsync("Are you sure?") == MessageBoxResult.Yes)
             {
-                return SaveData();
+                if (IsValidate())
+                {
+                    return SaveData();
+                }
             }
             return false;
         }

@@ -22,7 +22,6 @@ using Template10.Services.Settings;
 using Template10.Services.Web;
 using Unity;
 using Prism.Unity;
-using Template10.Services.Gesture;
 
 namespace Sample
 {
@@ -31,8 +30,6 @@ namespace Sample
         public App()
         {
             InitializeComponent();
-            (this as IPrismApplicationEvents).WindowCreated += (s, e)
-                => GestureService.SetupForCurrentView(e.Window.CoreWindow);
         }
 
         public override void RegisterTypes(IContainerRegistry container)

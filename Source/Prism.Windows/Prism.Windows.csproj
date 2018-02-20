@@ -131,10 +131,12 @@
     <Compile Include="Navigation\NavigationPath\NavigationPath.cs" />
     <Compile Include="Navigation\Prism.Core\Extensions.cs" />
     <Compile Include="Navigation\Prism.Core\NavigationParameters.cs" />
-    <Compile Include="Navigation\Prism.Core\NavigationResult.cs" />
     <Compile Include="Prism\INavigatedAwareAsync.cs" />
     <Compile Include="Prism\NavigationMode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Gesture\GestureService.cs" />
+    <Compile Include="Services\Gesture\IGestureService.cs" />
+    <Compile Include="Services\Gesture\KeyDownEventArgs.cs" />
     <Compile Include="Utilities\BindingUtilities.cs" />
     <Compile Include="Utilities\ReflectionUtilities.cs" />
     <Compile Include="Utilities\XamlUtilities.cs" />

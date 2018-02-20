@@ -11,10 +11,10 @@ using System;
 using Windows.UI.Xaml.Media;
 using Template10.Services;
 using Template10.Services.Dialog;
-using Template10.Services.Gesture;
 using Sample.Services;
 using System.Collections.Generic;
 using Sample.Models;
+using Prism.Services;
 
 namespace Sample.Views
 {

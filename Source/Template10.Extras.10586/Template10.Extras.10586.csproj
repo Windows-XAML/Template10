@@ -126,9 +126,6 @@
     <Compile Include="Services\File\Abstractions\IFileService.cs" />
     <Compile Include="Services\File\Abstractions\StorageStrategies.enum.cs" />
     <Compile Include="Services\File\Default\FileService.cs" />
-    <Compile Include="Services\Gesture\GestureService.cs" />
-    <Compile Include="Services\Gesture\IGestureService.cs" />
-    <Compile Include="Services\Gesture\KeyDownEventArgs.cs" />
     <Compile Include="Services\Marketplace\Abstractions\IMarketplaceService.cs" />
     <Compile Include="Services\Marketplace\Default\MarketplaceHelper.cs" />
     <Compile Include="Services\Marketplace\Default\MarketplaceService.cs" />

@@ -8,16 +8,16 @@ using Windows.UI.Input;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 
-namespace Template10.Services.Gesture
+namespace Prism.Services
 {
     public class GestureService : IGestureService
     {
         private static Dictionary<CoreWindow, IGestureService> _cache
             = new Dictionary<CoreWindow, IGestureService>();
 
-        public static IGestureService GetForCurrentView()
+        public static IGestureService GetForCurrentView(CoreWindow window = null)
         {
-            if (!_cache.ContainsKey(Window.Current.CoreWindow))
+            if (!_cache.ContainsKey(window ?? Window.Current.CoreWindow))
             {
                 throw new Exception("Not setup for current view.");
             }
@@ -127,7 +127,7 @@ namespace Template10.Services.Gesture
                 Debug.WriteLine($"{nameof(GestureService)}.{nameof(RefreshRequested)}");
                 RaiseRefreshBackRequested();
             }
-            // this is still a preliminary value
+            // this is still a preliminary value?
             else if ((e.VirtualKey == VirtualKey.M) && e.OnlyAlt)
             {
                 Debug.WriteLine($"{nameof(GestureService)}.{nameof(MenuRequested)}");

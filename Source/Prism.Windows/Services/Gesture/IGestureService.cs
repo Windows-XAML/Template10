@@ -2,7 +2,7 @@
 using Windows.Foundation;
 using Windows.UI.Core;
 
-namespace Template10.Services.Gesture
+namespace Prism.Services
 {
     public interface IGestureService
     {

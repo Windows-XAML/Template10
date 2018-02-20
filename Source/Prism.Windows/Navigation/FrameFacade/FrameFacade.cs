@@ -49,7 +49,7 @@ namespace Prism.Navigation
         {
             if (!CanGoBack())
             {
-                return NavigationResult.Failure($"{nameof(CanGoBack)} is false.");
+                return this.Failure($"{nameof(CanGoBack)} is false.");
             }
 
             return await OrchestrateAsync(
@@ -66,7 +66,7 @@ namespace Prism.Navigation
         {
             if (!CanGoForward())
             {
-                return NavigationResult.Failure($"{nameof(CanGoForward)} is false.");
+                return this.Failure($"{nameof(CanGoForward)} is false.");
             }
 
             return await OrchestrateAsync(
@@ -146,7 +146,7 @@ namespace Prism.Navigation
 
             // finally
 
-            return NavigationResult.Successful();
+            return this.Successful();
         }
 
         private async Task<INavigationResult> NavigateAsync(
@@ -198,11 +198,11 @@ namespace Prism.Navigation
             }
             else if (!await CanNavigateAsync(parameters, old_vm))
             {
-                return NavigationResult.Failure($"[From]{old_vm}.CanNavigateAsync returned false.");
+                return this.Failure($"[From]{old_vm}.CanNavigateAsync returned false.");
             }
             else if (!CanNavigate(parameters, old_vm))
             {
-                return NavigationResult.Failure($"[From]{old_vm}.CanNavigate returned false.");
+                return this.Failure($"[From]{old_vm}.CanNavigate returned false.");
             }
 
             // navigate
@@ -211,7 +211,7 @@ namespace Prism.Navigation
             Debug.WriteLine($"{nameof(FrameFacade)}.{nameof(OrchestrateAsync)}.NavigateFrameAsync() returned {success}.");
             if (!success)
             {
-                return NavigationResult.Failure("NavigateFrameAsync() returned false.");
+                return this.Failure("NavigateFrameAsync() returned false.");
             }
 
             var new_page = _frame.Content as Page;
@@ -263,7 +263,7 @@ namespace Prism.Navigation
 
             // finally
 
-            return NavigationResult.Successful();
+            return this.Successful();
         }
 
         private static async Task<bool> CanNavigateAsync(INavigationParameters parameters, object vm)

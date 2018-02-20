@@ -1,21 +1,49 @@
 ﻿using Prism.Navigation;
+using Prism.Services;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Core;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 
 namespace Prism.Navigation
 {
+    public enum Gestures { Back, Forward, Refresh }
+
     public class NavigationService : IPlatformNavigationService
     {
         public static Dictionary<Frame, INavigationService> Instances { get; } = new Dictionary<Frame, INavigationService>();
 
-        public static INavigationService Create(out Frame frame)
+        public static INavigationService Create(Frame frame, params Gestures[] gestures)
         {
-            return new NavigationService(frame = new Frame());
+            return Create(frame, Window.Current.CoreWindow, gestures);
+        }
+
+        public static INavigationService Create(Frame frame, CoreWindow window, params Gestures[] gestures)
+        {
+            frame = frame ?? new Frame();
+            var gesture_service = GestureService.GetForCurrentView(window);
+            var navigation_service = new NavigationService(frame);
+            foreach (var gesture in gestures)
+            {
+                switch (gesture)
+                {
+                    case Gestures.Back:
+                        gesture_service.BackRequested += async (s, e) => await navigation_service.GoBackAsync();
+                        break;
+                    case Gestures.Forward:
+                        gesture_service.ForwardRequested += async (s, e) => await navigation_service.GoForwardAsync();
+                        break;
+                    case Gestures.Refresh:
+                        gesture_service.RefreshRequested += async (s, e) => await navigation_service.RefreshAsync();
+                        break;
+                }
+            }
+            return navigation_service;
         }
 
         public static INavigationService Create(Frame frame)

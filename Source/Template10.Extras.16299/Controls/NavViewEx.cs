@@ -18,7 +18,7 @@ using win = Windows;
 using System.Threading;
 using Prism;
 using Prism.Utilities;
-using Template10.Services.Gesture;
+using Prism.Services;
 
 namespace Template10.Controls
 {
@@ -51,7 +51,8 @@ namespace Template10.Controls
                 }
             };
 
-            NavigationService = (IPlatformNavigationService)Prism.Navigation.NavigationService.Create(_frame);
+            NavigationService = (IPlatformNavigationService)Prism.Navigation.NavigationService
+                .Create(_frame, Gestures.Back, Gestures.Forward, Gestures.Refresh);
 
             ItemInvoked += (s, e) =>
             {

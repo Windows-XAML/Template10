@@ -6,7 +6,7 @@ namespace Template10.Services.Dialog
 {
     public static class DialogExtensions
     {
-        public static ContentDialog SetOkToClose(this ContentDialog dialog, IDialogResourceResolver resolver = null)
+        internal static ContentDialog SetOkToClose(this ContentDialog dialog, IDialogResourceResolver resolver = null)
         {
             resolver = resolver ?? Settings.DefaultResolver;
             dialog.PrimaryButtonText = resolver.Resolve(ResourceTypes.Ok);
@@ -14,20 +14,20 @@ namespace Template10.Services.Dialog
             return dialog;
         }
 
-        public static ContentDialog SetPrimaryButton(this ContentDialog dialog, string text)
+        internal static ContentDialog SetPrimaryButton(this ContentDialog dialog, string text)
         {
             dialog.PrimaryButtonText = text;
             dialog.IsPrimaryButtonEnabled = true;
             return dialog;
         }
 
-        public static ContentDialog SetCloseButton(this ContentDialog dialog, string text)
+        internal static ContentDialog SetCloseButton(this ContentDialog dialog, string text)
         {
             dialog.CloseButtonText = text;
             return dialog;
         }
 
-        public static ContentDialog SetPrimaryButton(this ContentDialog dialog, string text,
+        internal static ContentDialog SetPrimaryButton(this ContentDialog dialog, string text,
             TypedEventHandler<ContentDialog, ContentDialogButtonClickEventArgs> clickHandler)
         {
             dialog.SetPrimaryButton(text);
@@ -35,14 +35,14 @@ namespace Template10.Services.Dialog
             return dialog;
         }
 
-        public static ContentDialog SetSecondaryButton(this ContentDialog dialog, string text)
+        internal static ContentDialog SetSecondaryButton(this ContentDialog dialog, string text)
         {
             dialog.SecondaryButtonText = text;
             dialog.IsSecondaryButtonEnabled = true;
             return dialog;
         }
 
-        public static ContentDialog SetSecondaryButton(this ContentDialog dialog, string text,
+        internal static ContentDialog SetSecondaryButton(this ContentDialog dialog, string text,
             TypedEventHandler<ContentDialog, ContentDialogButtonClickEventArgs> clickHandler)
         {
             dialog.SetSecondaryButton(text);

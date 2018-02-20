@@ -15,6 +15,7 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using System.Linq;
+using Prism.Services;
 
 namespace Prism
 {
@@ -29,6 +30,8 @@ namespace Prism
         public PrismApplicationBase()
         {
             InternalInitialize();
+            (this as IPrismApplicationEvents).WindowCreated += (s, e)
+                => GestureService.SetupForCurrentView(e.Window.CoreWindow);
         }
 
         public virtual void ConfigureViewModelLocator()

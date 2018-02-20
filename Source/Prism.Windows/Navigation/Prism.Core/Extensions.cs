@@ -1,4 +1,5 @@
 ﻿using Prism.Navigation;
+using System;
 using System.Threading;
 using Windows.UI.Core;
 
@@ -33,6 +34,15 @@ namespace Prism.Navigation
             if (!(parameters as INavigationParametersInternal).ContainsKey(nameof(SynchronizationContext))) return null;
             return (parameters as INavigationParametersInternal).GetValue<SynchronizationContext>(nameof(SynchronizationContext));
         }
+
+        internal static INavigationResult Successful(this FrameFacade result)
+            => new NavigationResult { Success = true, Exception = null };
+
+        internal static INavigationResult Failure(this FrameFacade result, Exception exception)
+            => new NavigationResult { Success = false, Exception = exception };
+
+        internal static INavigationResult Failure(this FrameFacade result, string message)
+            => new NavigationResult { Success = false, Exception = new Exception(message) };
     }
 
 }

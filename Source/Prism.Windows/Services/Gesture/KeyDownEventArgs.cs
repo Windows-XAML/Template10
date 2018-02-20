@@ -4,7 +4,7 @@ using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 
-namespace Template10.Services.Gesture
+namespace Prism.Services
 {
     public class KeyDownEventArgs : EventArgs
     {

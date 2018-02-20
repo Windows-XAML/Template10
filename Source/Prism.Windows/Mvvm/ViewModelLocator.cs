@@ -21,7 +21,10 @@ namespace Prism.Mvvm
                 typeof(ViewModelLocator), new PropertyMetadata(false, AutowireViewModelChanged));
         private static void AutowireViewModelChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Prism.Mvvm.ViewModelLocationProvider.AutoWireViewModelChanged(d, Bind);
+            if (!Windows.ApplicationModel.DesignMode.DesignModeEnabled)
+            {
+                ViewModelLocationProvider.AutoWireViewModelChanged(d, Bind);
+            }
         }
         private static void Bind(object view, object viewmodel)
         {
