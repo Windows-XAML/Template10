@@ -69,11 +69,16 @@ namespace Prism
 
         private void InternalInitialize()
         {
+            // don't forget there is no logger yet
             Debug.WriteLine($"{nameof(PrismApplicationBase)}.{nameof(InternalInitialize)}");
+
+            // dependecy injection
             _containerExtension = CreateContainer();
             RegisterRequiredTypes(_containerExtension as IContainerRegistry);
             RegisterTypes(_containerExtension as IContainerRegistry);
             _containerExtension.FinalizeExtension();
+
+            // finalize the application
             ConfigureViewModelLocator();
             OnInitialized();
         }
