@@ -11,7 +11,8 @@ namespace Sample.Services
     public interface IDataService
     {
         Task InitializeAsync();
-        IEnumerable<DataItem> GetItems();
+        IEnumerable<DataGroup> GetGroups(int groups, int items);
+        IEnumerable<DataItem> GetItems(int items);
         IEnumerable<string> GetSuggestions(string text, int count);
         IEnumerable<DataItem> Search(string text);
     }
@@ -23,23 +24,35 @@ namespace Sample.Services
             await Task.CompletedTask;
         }
 
-        public IEnumerable<DataItem> GetItems()
+        public IEnumerable<DataGroup> GetGroups(int groups, int items)
         {
             Randomizer.Seed = new Random(8675309);
 
-            var images = new[] { "Apples", "Bananas", "Blackberries", "Cabbage", "Carrots", "Cauliflower", "Cherries", "Coconuts", "EggPlant", "Figs", "Ginger", "Grapefruits", "Grapes", "GreenBeans", "Kale", "Kiwis", "Lemons", "Nectarines", "Onions", "Oranges", "Peaches", "Pears", "Plumbs", "Raspberries", "Strawberries", "Tomatoes", "Zuchinnis" };
+            var data = new Faker<DataGroup>()
+                .RuleFor(i => i.Title, f => f.Lorem.Sentence())
+                .RuleFor(i => i.Items, f => GetItems(items));
+            return data.Generate(groups);
+        }
 
-            var items = new Faker<DataItem>()
+        public IEnumerable<DataItem> GetItems(int items)
+        {
+            Randomizer.Seed = new Random(8675309);
+
+            var images = new[] { "Apples", "Bananas", "Blackberries", "Cabbage", "Carrots", "Cauliflower", "Cherries", "Coconuts",
+                "EggPlant", "Figs", "Ginger", "Grapefruits", "Grapes", "GreenBeans", "Kale", "Kiwis", "Lemons", "Nectarines",
+                "Onions", "Oranges", "Peaches", "Pears", "Plumbs", "Raspberries", "Strawberries", "Tomatoes", "Zuchinnis" };
+
+            var data = new Faker<DataItem>()
                 .RuleFor(i => i.Index, f => ++f.IndexVariable)
                 .RuleFor(i => i.Title, f => f.Commerce.ProductName())
                 .RuleFor(i => i.Text, f => f.Lorem.Sentences(3))
                 .RuleFor(i => i.Image, f => $"ms-appx:///Images/{f.PickRandom(images)}.jpg");
-            return items.Generate(150);
+            return data.Generate(items);
         }
 
         public IEnumerable<string> GetSuggestions(string text, int count)
         {
-            return GetItems()
+            return GetItems(150)
                 .Where(x => x.Title.ToLower().Contains(text.ToLower()))
                 .OrderBy(x => x.Title)
                 .Take(count)
@@ -48,7 +61,7 @@ namespace Sample.Services
 
         public IEnumerable<DataItem> Search(string text)
         {
-            return GetItems()
+            return GetItems(150)
                 .Where(x => x.Title.ToLower().Contains(text.ToLower()))
                 .OrderBy(x => x.Title);
         }

@@ -10,7 +10,9 @@ namespace Prism.Navigation
     internal interface IFrameFacade2
     {
         Frame Frame { get; }
+        string CurrentNavigationPath { get; set;  }
     }
+
     public interface IFrameFacade
     {
         bool CanGoBack();

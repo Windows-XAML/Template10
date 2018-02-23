@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 
@@ -6,8 +7,6 @@ namespace Prism
 {
     public interface IPrismApplicationEvents
     {
-        event EventHandler<object> Resuming;
-        event SuspendingEventHandler Suspending;
         event EnteredBackgroundEventHandler EnteredBackground;
         event LeavingBackgroundEventHandler LeavingBackground;
         event TypedEventHandler<PrismApplicationBase, WindowCreatedEventArgs> WindowCreated;
@@ -15,18 +14,17 @@ namespace Prism
 
     public abstract partial class PrismApplicationBase : IPrismApplicationEvents
     {
-        EventHandler<object> _resuming;
-        event EventHandler<object> IPrismApplicationEvents.Resuming
-        {
-            add { _resuming += value; }
-            remove { _resuming -= value; }
-        }
-        SuspendingEventHandler _suspending;
-        event SuspendingEventHandler IPrismApplicationEvents.Suspending
-        {
-            add { _suspending += value; }
-            remove { _suspending -= value; }
-        }
+#pragma warning disable CS0067 // unused events
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        private new event EventHandler<object> Resuming;
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        private new event SuspendingEventHandler Suspending;
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        private new event EnteredBackgroundEventHandler EnteredBackground;
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        private new event LeavingBackgroundEventHandler LeavingBackground;
+#pragma warning restore CS0067
+
         EnteredBackgroundEventHandler _enteredBackground;
         event EnteredBackgroundEventHandler IPrismApplicationEvents.EnteredBackground
         {

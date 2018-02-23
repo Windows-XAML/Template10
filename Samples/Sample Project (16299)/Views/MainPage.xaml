@@ -13,10 +13,24 @@
         <x:String>Main Page</x:String>
     </controls:NavViewProps.HeaderText>
 
+    <Page.Resources>
+        <CollectionViewSource x:Name="MainGridSource" ItemsPath="Items" Source="{Binding Groups}" IsSourceGrouped="True" />
+    </Page.Resources>
+
     <GridView
         x:Name="MainGridView"
         Header="Main Page Grid"
-        ItemsSource="{Binding Items}"
-        Style="{StaticResource ItemGridViewStyle}" />
+        ItemsSource="{Binding Source={StaticResource MainGridSource}}"
+        Style="{StaticResource ItemGridViewStyle}">
+        <GridView.GroupStyle>
+            <GroupStyle>
+                <GroupStyle.HeaderTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Title}" Style="{ThemeResource TitleTextBlockStyle}"/>
+                    </DataTemplate>
+                </GroupStyle.HeaderTemplate>
+            </GroupStyle>
+        </GridView.GroupStyle>
+    </GridView>
 
 </Page>

@@ -55,12 +55,8 @@
             <NavigationView.MenuItems>
                 <NavigationViewItem
                     controls:NavViewProps.NavigationUri="/MainPage"
-                    Content="Items"
+                    Content="Catalog"
                     Icon="Add" />
-                <NavigationViewItem Content="Two" Icon="Add" />
-                <NavigationViewItemHeader Content="Section 2" />
-                <NavigationViewItem Content="Calendar" Icon="Add" />
-                <NavigationViewItem Content="Forum" Icon="Add" />
             </NavigationView.MenuItems>
 
             <NavigationView.PaneFooter>

@@ -9,7 +9,7 @@ namespace Template10.Services.Web
     public class WindowsHttpClientAdapter : IWebApiAdapter
     {
         HttpClient _client;
-        private string _mediaType;
+        private string _mediaType = string.Empty;
 
         public WindowsHttpClientAdapter(out HttpClient client)
         {

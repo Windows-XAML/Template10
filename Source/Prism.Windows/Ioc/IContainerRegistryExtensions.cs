@@ -1,6 +1,5 @@
 ﻿using Prism.Mvvm;
 using Prism.Navigation;
-using Prism.Navigation;
 using System;
 using System.Threading.Tasks;
 using Windows.Foundation;

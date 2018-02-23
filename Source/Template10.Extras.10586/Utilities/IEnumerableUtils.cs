@@ -4,12 +4,36 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Foundation.Collections;
 
 namespace Template10.Utilities
 {
     public static class IEnumerableUtils
     {
         public static ObservableCollection<T> ToObservableCollection<T>(this IEnumerable<T> list) => new ObservableCollection<T>(list);
+
+        public static bool TryGetValue<T>(this IPropertySet set, string key, out T value)
+        {
+            if (set.TryGetValue(key, out var result) && result is T cast)
+            {
+                value = cast;
+                return true;
+            }
+            else
+            {
+                value = default(T);
+                return false;
+            }
+        }
+
+        public static bool ForceAdd<K, V>(this IDictionary<K, V> dictionary, K key, V value)
+        {
+            if (dictionary.ContainsKey(key))
+            {
+                dictionary.Remove(key);
+            }
+            return dictionary.TryAdd(key, value);
+        }
 
         public static bool TryAdd<K, V>(this IDictionary<K, V> dictionary, K key, V value)
         {

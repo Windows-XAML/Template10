@@ -11,9 +11,21 @@ using Windows.UI.Xaml.Navigation;
 using System.ComponentModel;
 using Prism.Utilities;
 using System.Threading;
+using Windows.UI.Xaml;
 
 namespace Prism.Navigation
 {
+    public class FrameFacadeProps : DependencyObject
+    {
+        public static string GetCurrentNavigationPath(Frame obj)
+            => (string)obj.GetValue(CurrentNavigationPathProperty);
+        public static void SetCurrentNavigationPath(Frame obj, string value)
+            => obj.SetValue(CurrentNavigationPathProperty, value);
+        public static readonly DependencyProperty CurrentNavigationPathProperty =
+            DependencyProperty.RegisterAttached("CurrentNavigationPath", typeof(string),
+                typeof(FrameFacadeProps), new PropertyMetadata(string.Empty));
+    }
+
     public class FrameFacade : IFrameFacade, IFrameFacade2
     {
         private readonly Frame _frame;
@@ -38,7 +50,14 @@ namespace Prism.Navigation
             _navigationService = navigationService;
         }
 
-        Frame IFrameFacade2.Frame => _frame;
+        Frame IFrameFacade2.Frame
+            => _frame;
+
+        string IFrameFacade2.CurrentNavigationPath
+        {
+            get => FrameFacadeProps.GetCurrentNavigationPath(_frame);
+            set => FrameFacadeProps.SetCurrentNavigationPath(_frame, value);
+        }
 
         public bool CanGoBack()
             => _frame.CanGoBack;
@@ -57,7 +76,9 @@ namespace Prism.Navigation
             return await OrchestrateAsync(
               parameters: parameters,
               mode: Prism.Navigation.NavigationMode.Back,
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
               navigate: async () =>
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
               {
                   _frame.GoBack(infoOverride);
                   return true;
@@ -74,7 +95,9 @@ namespace Prism.Navigation
             return await OrchestrateAsync(
                 parameters: null,
                 mode: Prism.Navigation.NavigationMode.Forward,
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
                 navigate: async () =>
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
                 {
                     _frame.GoForward();
                     return true;
@@ -86,7 +109,9 @@ namespace Prism.Navigation
             return await OrchestrateAsync(
                 parameters: null,
                 mode: Prism.Navigation.NavigationMode.Refresh,
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
                 navigate: async () =>
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
                 {
                     var original = _frame.BackStackDepth;
                     var state = _frame.GetNavigationState();
@@ -140,7 +165,11 @@ namespace Prism.Navigation
 
                 // do not continue on failure
 
-                if (!result.Success)
+                if (result.Success)
+                {
+                    (this as IFrameFacade2).CurrentNavigationPath = pageNavinfo.ToString();
+                }
+                else
                 {
                     return result;
                 }
@@ -160,7 +189,9 @@ namespace Prism.Navigation
             return await OrchestrateAsync(
                 parameters: pageNavInfo.Parameters,
                 mode: Prism.Navigation.NavigationMode.New,
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
                 navigate: async () =>
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
                 {
                     /*
                      * To enable serialization of the frame's state using GetNavigationState, 

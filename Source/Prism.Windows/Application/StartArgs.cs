@@ -22,9 +22,9 @@ namespace Prism
             return $"Args:{Arguments?.GetType()} Kind:{StartKind} Cause:{StartCause}";
         }
 
-        public object Arguments { get; private set; }
+        public object Arguments { get; internal set; }
 
-        public StartKinds StartKind { get; private set; }
+        public StartKinds StartKind { get; internal set; }
 
         public StartCauses StartCause
         {

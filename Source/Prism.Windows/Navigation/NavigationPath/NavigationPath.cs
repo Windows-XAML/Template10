@@ -76,7 +76,7 @@ namespace Prism.Navigation
 
         public override string ToString()
         {
-            return $"{_originalString} View:{View} ViewModel:{ViewModel}";
+            return _originalString;
         }
     }
 }

@@ -10,6 +10,7 @@ using Sample.Models;
 using System.Collections.ObjectModel;
 using System.Threading;
 using Template10.Services.Dialog;
+using Template10.Utilities;
 
 namespace Sample.ViewModels
 {
@@ -18,7 +19,6 @@ namespace Sample.ViewModels
         private readonly IDataService _dataService;
         private readonly IDialogService _dialogService;
         private NavigationService _navigationService;
-        private SynchronizationContext _syncContext;
 
         public MainPageViewModel(IDataService dataService, IDialogService dialogService)
         {
@@ -26,22 +26,11 @@ namespace Sample.ViewModels
             _dialogService = dialogService;
         }
 
-        public override void OnNavigatedTo(INavigationParameters parameters)
+        private string _headerText;
+        public string HeaderText
         {
-            _navigationService = parameters.GetNavigationService();
-            LoadData();
-        }
-
-        public override async Task<bool> CanNavigateAsync(INavigationParameters parameters)
-        {
-            //if (await _dialogService.PromptAsync("Are you sure?") == MessageBoxResult.Yes)
-            //{
-            if (IsValidate())
-            {
-                return SaveData();
-            }
-            //}
-            return false;
+            get => _headerText;
+            set => SetProperty(ref _headerText, value);
         }
 
         private DataItem _selectedItem;
@@ -52,14 +41,23 @@ namespace Sample.ViewModels
         }
 
         public ObservableCollection<DataItem> Items { get; } = new ObservableCollection<DataItem>();
+        public ObservableCollection<DataGroup> Groups { get; } = new ObservableCollection<DataGroup>();
+
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            _navigationService = parameters.GetNavigationService();
+            LoadData();
+        }
+
+        public override bool CanNavigate(INavigationParameters parameters)
+        {
+            return IsValid();
+        }
 
         private void LoadData()
         {
-            Items.Clear();
-            foreach (var item in _dataService.GetItems())
-            {
-                Items.Add(item);
-            }
+            Items.AddRange(_dataService.GetItems(150), true);
+            Groups.AddRange(_dataService.GetGroups(10, 10));
         }
 
         private bool SaveData()
@@ -67,7 +65,7 @@ namespace Sample.ViewModels
             return true;
         }
 
-        private bool IsValidate()
+        private bool IsValid()
         {
             return true;
         }

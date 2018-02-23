@@ -106,6 +106,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Application\IPrismApplicationBase.cs" />
     <Compile Include="Application\IStartArgs.cs" />
     <Compile Include="Application\PrismApplicationBase.base.cs" />
     <Compile Include="Application\PrismApplicationBase.events.cs" />
@@ -147,7 +148,7 @@
       <Version>6.0.7</Version>
     </PackageReference>
     <PackageReference Include="Prism.Core">
-      <Version>7.0.0.423-ci</Version>
+      <Version>7.0.0.425-ci</Version>
     </PackageReference>
     <PackageReference Include="System.ValueTuple">
       <Version>4.4.0</Version>

@@ -16,23 +16,84 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using System.Linq;
 using Prism.Services;
+using Windows.ApplicationModel.Activation;
+using Windows.Storage;
 
 namespace Prism
 {
-    public abstract partial class PrismApplicationBase
+    public interface IPrismApplicationBase
+    {
+        IContainerProvider Container { get; }
+
+        void ConfigureViewModelLocator();
+        IContainerExtension CreateContainer();
+        void OnInitialized();
+        void OnStart(StartArgs args);
+        Task OnStartAsync(StartArgs args);
+        void RegisterTypes(IContainerRegistry container);
+    }
+
+    public class ResumeArgs : IActivatedEventArgs
+    {
+        public ActivationKind Kind { get; set; }
+        public ApplicationExecutionState PreviousExecutionState { get; set; }
+        public SplashScreen SplashScreen { get; set; }
+        public DateTime SuspensionDate { get; internal set; }
+        public static ResumeArgs Create(ApplicationExecutionState state)
+        {
+            var args = new ResumeArgs
+            {
+                PreviousExecutionState = state
+            };
+            if (ApplicationData.Current.LocalSettings.Values.TryGetValue("Suspend_Data", out var value) && value is DateTime date)
+            {
+                args.SuspensionDate = date;
+            }
+            ApplicationData.Current.LocalSettings.Values.Remove("Suspend_Data");
+            return args;
+        }
+    }
+
+    public abstract partial class PrismApplicationBase : IPrismApplicationBase
     {
         public new static PrismApplicationBase Current => (PrismApplicationBase)Application.Current;
-
         private static SemaphoreSlim _startSemaphore = new SemaphoreSlim(1, 1);
-
         public const string NavigationServiceParameterName = "navigationService";
 
         public PrismApplicationBase()
         {
             InternalInitialize();
-            (this as IPrismApplicationEvents).WindowCreated += (s, e)
-                => GestureService.SetupForCurrentView(e.Window.CoreWindow);
+            (this as IPrismApplicationEvents).WindowCreated += (s, e) =>
+            {
+                GestureService.SetupForCurrentView(e.Window.CoreWindow);
+            };
+            base.Suspending += async (s, e) =>
+            {
+                if (ApplicationData.Current.LocalSettings.Values.ContainsKey("Suspend_Data"))
+                {
+                    ApplicationData.Current.LocalSettings.Values.Remove("Suspend_Data");
+                }
+                ApplicationData.Current.LocalSettings.Values.Add("Suspend_Data", DateTime.Now.ToString());
+                var deferral = e.SuspendingOperation.GetDeferral();
+                try
+                {
+                    OnSuspending();
+                    await OnSuspendingAsync();
+                }
+                finally
+                {
+                    deferral.Complete();
+                }
+            };
+            base.Resuming += async (s, e) =>
+            {
+                await InternalStartAsync(new StartArgs(ResumeArgs.Create(ApplicationExecutionState.Suspended), StartKinds.Resume));
+            };
         }
+
+        public virtual void OnSuspending() { /* empty */ }
+
+        public virtual Task OnSuspendingAsync() => Task.CompletedTask;
 
         public virtual void ConfigureViewModelLocator()
         {
@@ -86,15 +147,24 @@ namespace Prism
             OnInitialized();
         }
 
+
         private async Task InternalStartAsync(StartArgs startArgs)
         {
             await _startSemaphore.WaitAsync();
             Debug.WriteLine($"{nameof(PrismApplicationBase)}.{nameof(InternalStartAsync)}({startArgs})");
             try
             {
-                Window.Current.Activate();
+                if (startArgs.Arguments is ILaunchActivatedEventArgs e && e.PreviousExecutionState == ApplicationExecutionState.Terminated)
+                {
+                    if (ApplicationData.Current.LocalSettings.Values.ContainsKey("Suspend_Data"))
+                    {
+                        startArgs.Arguments = ResumeArgs.Create(ApplicationExecutionState.Terminated);
+                        startArgs.StartKind = StartKinds.Resume;
+                    }
+                }
                 OnStart(startArgs);
                 await OnStartAsync(startArgs);
+                Window.Current.Activate();
             }
             catch (Exception ex)
             {

@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Template10.Utilities;
 using Sample.Views;
 using Prism;
 using Prism.Navigation;
@@ -22,6 +23,9 @@ using Template10.Services.Settings;
 using Template10.Services.Web;
 using Unity;
 using Prism.Unity;
+using Windows.UI.Xaml.Controls;
+using Windows.Storage;
+using System;
 
 namespace Sample
 {
@@ -59,26 +63,37 @@ namespace Sample
             container.RegisterForNavigation<SearchPage, SearchPageViewModel>(nameof(SearchPage));
         }
 
+        public override void OnInitialized()
+        {
+            // empty
+        }
+
         public override async Task OnStartAsync(StartArgs args)
         {
-            // show splash
-
-            if (args.StartKind == StartKinds.Launch && args.Arguments is ILaunchActivatedEventArgs e)
-            {
-                Window.Current.Content = new SplashPage(e.SplashScreen);
-            }
-
             // built initial path
 
-            var path = PathBuilder
-                .Create(nameof(MainPage), ("Record", "0567"))
-                .Append(nameof(MainPage), ("Record", "1567"))
-                .Append(nameof(MainPage), ("Record", "2567"))
-                .Append(nameof(MainPage), ("Record", "3567"))
-                .Append(nameof(MainPage), ("Record", "4567"))
-                .Append(nameof(MainPage), ("Record", "5567"))
-                .Append(nameof(MainPage), ("Record", "6567"))
-                .ToString();
+            var navigationPath = string.Empty;
+
+            // handle startup
+
+            switch (args.StartKind)
+            {
+                case StartKinds.Launch when (args.Arguments is ILaunchActivatedEventArgs e):
+                    navigationPath = PathBuilder.Create(nameof(MainPage), ("Record", "0567")).ToString();
+                    Window.Current.Content = new SplashPage(e.SplashScreen);
+                    break;
+                case StartKinds.Resume when (args.Arguments is ResumeArgs resume && ApplicationData.Current.LocalSettings.Values.TryGetValue(nameof(Suspending), out navigationPath)):
+                    ApplicationData.Current.LocalSettings.Values.Remove(nameof(Suspending));
+                    if ((DateTime.Now - resume.SuspensionDate) < TimeSpan.FromHours(1))
+                    {
+                        return;
+                    }
+                    break;
+                case StartKinds.Prelaunch:
+                case StartKinds.Activate:
+                case StartKinds.Background:
+                    return;
+            }
 
             // initialize services
 
@@ -93,7 +108,16 @@ namespace Sample
             // first page 
 
             var navigationService = shell.ShellView.NavigationService;
-            await navigationService.NavigateAsync(path);
+            await navigationService.NavigateAsync(navigationPath);
+        }
+
+        public override void OnSuspending()
+        {
+            if (Window.Current.Content is ShellPage page)
+            {
+                var path = page.ShellView.NavigationService.GetNavigationPath(true);
+                ApplicationData.Current.LocalSettings.Values.ForceAdd(nameof(Suspending), path);
+            }
         }
     }
 }

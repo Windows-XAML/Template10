@@ -24,7 +24,8 @@ namespace Sample.Views
     {
         public SplashPage(Windows.ApplicationModel.Activation.SplashScreen splashScreen)
         {
-            this.InitializeComponent();
+            InitializeComponent();
+            Window.Current.Activate();
         }
     }
 }

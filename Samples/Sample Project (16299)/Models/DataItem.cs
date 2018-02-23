@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace Sample.Models
 {
+    public class DataGroup
+    {
+        public string Title { get; set; }
+        public IEnumerable<DataItem> Items { get; set; }
+    }
+
     public class DataItem
     {
         public string Title { get; set; }

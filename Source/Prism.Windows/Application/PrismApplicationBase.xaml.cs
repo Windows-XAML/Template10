@@ -8,13 +8,6 @@ namespace Prism
 {
     public abstract partial class PrismApplicationBase : Application
     {
-#pragma warning disable CS0067 // unused events
-        new event EventHandler<object> Resuming;
-        private new event SuspendingEventHandler Suspending;
-        private new event EnteredBackgroundEventHandler EnteredBackground;
-        private new event LeavingBackgroundEventHandler LeavingBackground;
-#pragma warning restore CS0067
-
         protected override sealed async void OnActivated(IActivatedEventArgs e) => await InternalStartAsync(new StartArgs(e, StartKinds.Activate));
         protected override sealed async void OnCachedFileUpdaterActivated(CachedFileUpdaterActivatedEventArgs e) => await InternalStartAsync(new StartArgs(e, StartKinds.Activate));
         protected override sealed async void OnFileActivated(FileActivatedEventArgs e) => await InternalStartAsync(new StartArgs(e, StartKinds.Activate));
