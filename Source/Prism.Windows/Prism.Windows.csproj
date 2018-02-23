@@ -108,9 +108,10 @@
   <ItemGroup>
     <Compile Include="Application\IPrismApplicationBase.cs" />
     <Compile Include="Application\IStartArgs.cs" />
-    <Compile Include="Application\PrismApplicationBase.base.cs" />
+    <Compile Include="Application\PrismApplicationBase.core.cs" />
     <Compile Include="Application\PrismApplicationBase.events.cs" />
     <Compile Include="Application\PrismApplicationBase.xaml.cs" />
+    <Compile Include="Application\ResumeArgs.cs" />
     <Compile Include="Application\StartArgs.cs" />
     <Compile Include="Application\StartCauses.cs" />
     <Compile Include="Application\StartKinds.cs" />

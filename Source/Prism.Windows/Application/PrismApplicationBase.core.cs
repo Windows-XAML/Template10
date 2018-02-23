@@ -1,57 +1,29 @@
-﻿using win = Windows;
-using Prism.Events;
+﻿using Prism.Events;
 using Prism.Ioc;
 using Prism.Logging;
 using Prism.Navigation;
 using Prism.Mvvm;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Windows.UI.Core;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using System.Linq;
 using Prism.Services;
 using Windows.ApplicationModel.Activation;
 using Windows.Storage;
+using Windows.UI.Xaml.Controls;
 
 namespace Prism
 {
     public interface IPrismApplicationBase
     {
         IContainerProvider Container { get; }
-
         void ConfigureViewModelLocator();
         IContainerExtension CreateContainer();
         void OnInitialized();
         void OnStart(StartArgs args);
         Task OnStartAsync(StartArgs args);
         void RegisterTypes(IContainerRegistry container);
-    }
-
-    public class ResumeArgs : IActivatedEventArgs
-    {
-        public ActivationKind Kind { get; set; }
-        public ApplicationExecutionState PreviousExecutionState { get; set; }
-        public SplashScreen SplashScreen { get; set; }
-        public DateTime SuspensionDate { get; internal set; }
-        public static ResumeArgs Create(ApplicationExecutionState state)
-        {
-            var args = new ResumeArgs
-            {
-                PreviousExecutionState = state
-            };
-            if (ApplicationData.Current.LocalSettings.Values.TryGetValue("Suspend_Data", out var value) && value is DateTime date)
-            {
-                args.SuspensionDate = date;
-            }
-            ApplicationData.Current.LocalSettings.Values.Remove("Suspend_Data");
-            return args;
-        }
     }
 
     public abstract partial class PrismApplicationBase : IPrismApplicationBase
@@ -91,45 +63,8 @@ namespace Prism
             };
         }
 
-        public virtual void OnSuspending() { /* empty */ }
-
-        public virtual Task OnSuspendingAsync() => Task.CompletedTask;
-
-        public virtual void ConfigureViewModelLocator()
-        {
-            ViewModelLocationProvider.SetDefaultViewModelFactory((view, type) =>
-            {
-                return _containerExtension.ResolveViewModelForView(view, type);
-            });
-        }
-
         IContainerExtension _containerExtension;
         public IContainerProvider Container => _containerExtension;
-
-        public virtual IContainerExtension CreateContainer()
-        {
-            return new DefaultContainerExtension();
-        }
-
-        protected virtual void RegisterRequiredTypes(IContainerRegistry container)
-        {
-            // required for view-models
-
-            container.Register<INavigationService, NavigationService>(NavigationServiceParameterName);
-
-            // standard prism services
-
-            container.RegisterSingleton<ILoggerFacade, EmptyLogger>();
-            container.RegisterSingleton<IEventAggregator, EventAggregator>();
-        }
-
-        public abstract void RegisterTypes(IContainerRegistry container);
-
-        public virtual void OnInitialized() { /* empty */ }
-
-        public virtual void OnStart(StartArgs args) {  /* empty */ }
-
-        public virtual Task OnStartAsync(StartArgs args) => Task.CompletedTask;
 
         private void InternalInitialize()
         {
@@ -176,5 +111,46 @@ namespace Prism
                 _startSemaphore.Release();
             }
         }
+
+        #region overrides
+
+        public virtual void OnSuspending() { /* empty */ }
+
+        public virtual Task OnSuspendingAsync() => Task.CompletedTask;
+
+        public abstract void RegisterTypes(IContainerRegistry container);
+
+        public virtual void OnInitialized() { /* empty */ }
+
+        public virtual void OnStart(StartArgs args) {  /* empty */ }
+
+        public virtual Task OnStartAsync(StartArgs args) => Task.CompletedTask;
+
+        public virtual void ConfigureViewModelLocator()
+        {
+            ViewModelLocationProvider.SetDefaultViewModelFactory((view, type) =>
+            {
+                return _containerExtension.ResolveViewModelForView(view, type);
+            });
+        }
+
+        public virtual IContainerExtension CreateContainer()
+        {
+            return new DefaultContainerExtension();
+        }
+
+        protected virtual void RegisterRequiredTypes(IContainerRegistry container)
+        {
+            // required for view-models
+
+            container.Register<INavigationService, NavigationService>(NavigationServiceParameterName);
+
+            // standard prism services
+
+            container.RegisterSingleton<ILoggerFacade, EmptyLogger>();
+            container.RegisterSingleton<IEventAggregator, EventAggregator>();
+        }
+
+        #endregion
     }
 }

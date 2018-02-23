@@ -70,6 +70,21 @@ namespace Sample
 
         public override async Task OnStartAsync(StartArgs args)
         {
+            if (args.StartKind == StartKinds.Resume)
+            {
+                if (args.Arguments is IResumeArgs resume)
+                {
+                    if ((DateTime.Now - resume.SuspensionDate) < TimeSpan.FromHours(1))
+                    {
+                        // continue with resume
+                    }
+                    else
+                    {
+                        // start over
+                    }
+                }
+            }
+
             // built initial path
 
             var navigationPath = string.Empty;
