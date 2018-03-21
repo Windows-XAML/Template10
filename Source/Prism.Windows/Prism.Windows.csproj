@@ -133,8 +133,6 @@
     <Compile Include="Navigation\NavigationPath\NavigationPath.cs" />
     <Compile Include="Navigation\Prism.Core\Extensions.cs" />
     <Compile Include="Navigation\Prism.Core\NavigationParameters.cs" />
-    <Compile Include="Prism\INavigatedAwareAsync.cs" />
-    <Compile Include="Prism\NavigationMode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Gesture\GestureService.cs" />
     <Compile Include="Services\Gesture\IGestureService.cs" />
@@ -146,14 +144,17 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.0.7</Version>
+      <Version>6.0.8</Version>
     </PackageReference>
     <PackageReference Include="Prism.Core">
-      <Version>7.0.0.425-ci</Version>
+      <Version>7.1.0.444-ci</Version>
     </PackageReference>
     <PackageReference Include="System.ValueTuple">
-      <Version>4.4.0</Version>
+      <Version>4.5.0-preview1-26216-02</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Prism\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

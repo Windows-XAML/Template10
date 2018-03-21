@@ -30,9 +30,9 @@ namespace Template10.Controls
 
         // Page custom HeaderText property
 
-        public static string GetHeaderText(Page obj)
+        public static string GetHeaderText(FrameworkElement obj)
             => (string)obj.GetValue(HeaderTextProperty);
-        public static void SetHeaderText(Page obj, string value)
+        public static void SetHeaderText(FrameworkElement obj, string value)
             => obj.SetValue(HeaderTextProperty, value);
         public static readonly DependencyProperty HeaderTextProperty =
             DependencyProperty.RegisterAttached("HeaderText", typeof(string),

@@ -1,4 +1,5 @@
 ﻿using Prism.Navigation;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,12 @@ namespace Prism.Navigation
             {
                 _external.Add(item.Name, item.Value);
             }
+        }
+
+        public NavigationParameters(string query)
+            : this(new Windows.Foundation.WwwFormUrlDecoder(query).Select(x => (x.Name, (object)x.Value)).ToArray())
+        {
+            // empty
         }
 
         Dictionary<string, object> _external = new Dictionary<string, object>();
@@ -37,16 +44,25 @@ namespace Prism.Navigation
             => _external.GetEnumerator();
 
         public T GetValue<T>(string key)
-            => (T)_external[key];
+        {
+            return (T)Convert.ChangeType(_internal[key], typeof(T));
+        }
 
         public IEnumerable<T> GetValues<T>(string key)
             => _external.Where(x => x.Key == key).Select(x => (T)x.Value);
 
         public bool TryGetValue<T>(string key, out T value)
         {
-            var success = _external.TryGetValue(key, out var result);
-            value = (T)result;
-            return success;
+            try
+            {
+                value = (T)Convert.ChangeType(_external[key], typeof(T));
+                return true;
+            }
+            catch
+            {
+                value = default(T);
+                return false;
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -64,7 +80,7 @@ namespace Prism.Navigation
         {
             if (_internal.TryGetValue(key, out var result))
             {
-                return (T)result;
+                return (T)Convert.ChangeType(result, typeof(T));
             }
             else
             {

@@ -21,7 +21,7 @@ namespace Prism.Navigation
 
         bool CanGoForward();
         event EventHandler CanGoForwardChanged;
-        Task<INavigationResult> GoForwardAsync();
+        Task<INavigationResult> GoForwardAsync(INavigationParameters parameters);
 
         Task<INavigationResult> RefreshAsync();
 

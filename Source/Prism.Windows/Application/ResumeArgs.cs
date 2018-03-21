@@ -17,7 +17,7 @@ namespace Prism
         public ApplicationExecutionState PreviousExecutionState { get; set; }
         public SplashScreen SplashScreen { get; set; }
         public DateTime SuspensionDate { get; set; }
-        public static ResumeArgs Create(ApplicationExecutionState state)
+        internal static ResumeArgs Create(ApplicationExecutionState state)
         {
             var args = new ResumeArgs
             {

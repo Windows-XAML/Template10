@@ -5,32 +5,44 @@
     xmlns:controls="using:Template10.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="using:Sample.Models"
-    xmlns:viewmodels="using:Sample.ViewModels"
+    controls:NavViewProps.HeaderText="{x:Bind ViewModel.HeaderText, Mode=OneWay}"
     mc:Ignorable="d">
 
-    <controls:NavViewProps.HeaderText>
-        <x:String>Main Page</x:String>
-    </controls:NavViewProps.HeaderText>
-
     <Page.Resources>
+        <DataTemplate x:Name="MainGridGroupHeaderTemplate">
+            <TextBlock Text="{Binding Title}" Style="{ThemeResource TitleTextBlockStyle}"/>
+        </DataTemplate>
         <CollectionViewSource x:Name="MainGridSource" ItemsPath="Items" Source="{Binding Groups}" IsSourceGrouped="True" />
     </Page.Resources>
 
-    <GridView
-        x:Name="MainGridView"
-        Header="Main Page Grid"
-        ItemsSource="{Binding Source={StaticResource MainGridSource}}"
-        Style="{StaticResource ItemGridViewStyle}">
-        <GridView.GroupStyle>
-            <GroupStyle>
-                <GroupStyle.HeaderTemplate>
+    <SemanticZoom>
+        <SemanticZoom.ZoomedInView>
+
+            <GridView
+                x:Name="MainGridView"
+                Header="Main Page Grid" 
+                ItemsSource="{x:Bind MainGridSource.View, Mode=OneWay}"
+                Style="{StaticResource ItemGridViewStyle}">
+                <GridView.GroupStyle>
+                    <GroupStyle HeaderTemplate="{StaticResource MainGridGroupHeaderTemplate}" HidesIfEmpty="True" />
+                </GridView.GroupStyle>
+            </GridView>
+
+        </SemanticZoom.ZoomedInView>
+        <SemanticZoom.ZoomedOutView>
+
+            <ListView 
+                ItemsSource="{x:Bind MainGridSource.View.CollectionGroups, Mode=OneWay}" >
+                <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Title}" Style="{ThemeResource TitleTextBlockStyle}"/>
+                        <TextBlock Text="{Binding Group.Title}" />
                     </DataTemplate>
-                </GroupStyle.HeaderTemplate>
-            </GroupStyle>
-        </GridView.GroupStyle>
-    </GridView>
+                </ListView.ItemTemplate>
+            </ListView>
+
+        </SemanticZoom.ZoomedOutView>
+    </SemanticZoom>
+
+
 
 </Page>

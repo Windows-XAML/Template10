@@ -95,15 +95,13 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\DataGroup.cs" />
     <Compile Include="Models\DataItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DataService.cs" />
     <Compile Include="Services\NewtonsoftSerializationService.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\SearchPageViewModel.cs" />
-    <Compile Include="Views\GalleryPage.xaml.cs">
-      <DependentUpon>GalleryPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -165,10 +163,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Views\GalleryPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -188,10 +182,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Bogus">
-      <Version>22.0.2</Version>
+      <Version>22.0.5</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.0.7</Version>
+      <Version>6.0.8</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed">
       <Version>2.0.0</Version>
@@ -200,7 +194,7 @@
       <Version>11.0.1</Version>
     </PackageReference>
     <PackageReference Include="Prism.Core">
-      <Version>7.0.0.425-ci</Version>
+      <Version>7.1.0.444-ci</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

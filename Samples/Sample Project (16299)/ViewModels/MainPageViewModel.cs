@@ -11,6 +11,7 @@ using System.Collections.ObjectModel;
 using System.Threading;
 using Template10.Services.Dialog;
 using Template10.Utilities;
+using System.Diagnostics;
 
 namespace Sample.ViewModels
 {
@@ -45,6 +46,10 @@ namespace Sample.ViewModels
 
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
+            if (parameters.TryGetValue<int>("Record", out var record))
+            {
+                Debug.WriteLine(record);
+            }
             _navigationService = parameters.GetNavigationService();
             LoadData();
         }

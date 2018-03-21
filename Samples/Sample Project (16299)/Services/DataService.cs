@@ -29,7 +29,7 @@ namespace Sample.Services
             Randomizer.Seed = new Random(8675309);
 
             var data = new Faker<DataGroup>()
-                .RuleFor(i => i.Title, f => f.Lorem.Sentence())
+                .RuleFor(i => i.Title, f => $"{++f.IndexVariable}. {f.Lorem.Sentence()}")
                 .RuleFor(i => i.Items, f => GetItems(items));
             return data.Generate(groups);
         }

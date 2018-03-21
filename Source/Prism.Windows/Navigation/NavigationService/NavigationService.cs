@@ -3,6 +3,7 @@ using Prism.Services;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Core;
@@ -76,7 +77,20 @@ namespace Prism.Navigation
             => _frame.CanGoForward();
 
         public async Task<INavigationResult> GoForwardAsync()
-            => await _frame.GoForwardAsync();
+            => await GoForwardAsync(
+                parameters: default(INavigationParameters));
+
+        public async Task<INavigationResult> GoForwardAsync(INavigationParameters parameters)
+        {
+            if (parameters == null && (_frame as IFrameFacade2).Frame.ForwardStack.Any())
+            {
+                var previous = (_frame as IFrameFacade2).Frame.ForwardStack.First().Parameter?.ToString();
+                parameters = new NavigationParameters(previous);
+            }
+
+            return await _frame.GoForwardAsync(
+                  parameters: parameters);
+        }
 
         // go back
 
@@ -96,9 +110,17 @@ namespace Prism.Navigation
                 infoOverride: default(NavigationTransitionInfo));
 
         public async Task<INavigationResult> GoBackAsync(INavigationParameters parameters = null, NavigationTransitionInfo infoOverride = null)
-            => await _frame.GoBackAsync(
-                parameters: parameters,
-                infoOverride: infoOverride);
+        {
+            if (parameters == null && (_frame as IFrameFacade2).Frame.BackStack.Any())
+            {
+                var previous = (_frame as IFrameFacade2).Frame.BackStack.Last().Parameter?.ToString();
+                parameters = new NavigationParameters(previous);
+            }
+
+            return await _frame.GoBackAsync(
+                    parameters: parameters,
+                    infoOverride: infoOverride);
+        }
 
         // navigate(string)
 

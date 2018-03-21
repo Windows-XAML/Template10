@@ -85,7 +85,7 @@ namespace Prism.Navigation
               });
         }
 
-        public async Task<INavigationResult> GoForwardAsync()
+        public async Task<INavigationResult> GoForwardAsync(INavigationParameters parameters)
         {
             if (!CanGoForward())
             {
@@ -93,7 +93,7 @@ namespace Prism.Navigation
             }
 
             return await OrchestrateAsync(
-                parameters: null,
+                parameters: parameters,
                 mode: Prism.Navigation.NavigationMode.Forward,
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
                 navigate: async () =>
@@ -188,7 +188,7 @@ namespace Prism.Navigation
 
             return await OrchestrateAsync(
                 parameters: pageNavInfo.Parameters,
-                mode: Prism.Navigation.NavigationMode.New,
+                mode: NavigationMode.New,
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
                 navigate: async () =>
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously

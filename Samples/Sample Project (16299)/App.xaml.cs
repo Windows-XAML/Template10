@@ -8,8 +8,6 @@ using Prism.Ioc;
 using Sample.ViewModels;
 using Windows.ApplicationModel.Activation;
 using Sample.Services;
-using Prism.Logging;
-using Prism.Events;
 using Template10.Services.Dialog;
 using Template10.Services.Compression;
 using Template10.Services.File;
@@ -23,7 +21,6 @@ using Template10.Services.Settings;
 using Template10.Services.Web;
 using Unity;
 using Prism.Unity;
-using Windows.UI.Xaml.Controls;
 using Windows.Storage;
 using System;
 
@@ -38,29 +35,12 @@ namespace Sample
 
         public override void RegisterTypes(IContainerRegistry container)
         {
-            // standard template 10 services
-
-            container.RegisterSingleton<ICompressionService, CompressionService>();
-            container.RegisterSingleton<IDialogService, DialogService>();
-            container.RegisterSingleton<IFileService, FileService>();
-            container.RegisterSingleton<IMarketplaceService, MarketplaceService>();
-            container.RegisterSingleton<INagService, NagService>();
-            container.RegisterSingleton<INetworkService, NetworkService>();
-            container.RegisterSingleton<IResourceService, ResourceService>();
-            container.RegisterSingleton<ISecretService, SecretService>();
-            container.RegisterSingleton<ISettingsHelper, SettingsHelper>();
-            container.RegisterSingleton<IWebApiService, WebApiService>();
-
-            // custom services
-
-            container.RegisterSingleton<ISerializationService, NewtonsoftSerializationService>();
-
-            // pages and view-models
-
+            container.RegisterTemplate10Services();
             container.RegisterSingleton<ShellPage, ShellPage>();
             container.RegisterSingleton<IDataService, DataService>();
             container.RegisterForNavigation<MainPage, MainPageViewModel>(nameof(MainPage));
             container.RegisterForNavigation<SearchPage, SearchPageViewModel>(nameof(SearchPage));
+            container.RegisterSingleton<ISerializationService, NewtonsoftSerializationService>();
         }
 
         public override void OnInitialized()

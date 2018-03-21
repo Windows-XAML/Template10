@@ -55,9 +55,6 @@ namespace Sample.Views
 
         private void SetupGestures()
         {
-            _gestureService.BackRequested += async (s, e) => await ShellView.NavigationService.GoBackAsync();
-            _gestureService.ForwardRequested += async (s, e) => await ShellView.NavigationService.GoForwardAsync();
-            _gestureService.RefreshRequested += async (s, e) => await ShellView.NavigationService.RefreshAsync();
             _gestureService.MenuRequested += (s, e) => ShellView.IsPaneOpen = true;
             _gestureService.SearchRequested += (s, e) =>
             {
@@ -86,12 +83,12 @@ namespace Sample.Views
 
         private async void Search_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
-            await ShellView.NavigationService.NavigateAsync("/SearchPage", ("SearchTerm", sender.Text = args.SelectedItem.ToString()));
+            await ShellView.NavigationService.NavigateAsync("SearchPage", ("SearchTerm", sender.Text = args.SelectedItem.ToString()));
         }
 
         private async void Search_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-            await ShellView.NavigationService.NavigateAsync("/SearchPage", ("SearchTerm", sender.Text));
+            await ShellView.NavigationService.NavigateAsync("SearchPage", ("SearchTerm", sender.Text));
         }
     }
 }

@@ -89,14 +89,7 @@ namespace Prism
             Debug.WriteLine($"{nameof(PrismApplicationBase)}.{nameof(InternalStartAsync)}({startArgs})");
             try
             {
-                if (startArgs.Arguments is ILaunchActivatedEventArgs e && e.PreviousExecutionState == ApplicationExecutionState.Terminated)
-                {
-                    if (ApplicationData.Current.LocalSettings.Values.ContainsKey("Suspend_Data"))
-                    {
-                        startArgs.Arguments = ResumeArgs.Create(ApplicationExecutionState.Terminated);
-                        startArgs.StartKind = StartKinds.Resume;
-                    }
-                }
+                TestResuming(startArgs);
                 OnStart(startArgs);
                 await OnStartAsync(startArgs);
                 Window.Current.Activate();
@@ -109,6 +102,18 @@ namespace Prism
             finally
             {
                 _startSemaphore.Release();
+            }
+        }
+
+        private static void TestResuming(StartArgs startArgs)
+        {
+            if (startArgs.Arguments is ILaunchActivatedEventArgs e && e.PreviousExecutionState == ApplicationExecutionState.Terminated)
+            {
+                if (ApplicationData.Current.LocalSettings.Values.ContainsKey("Suspend_Data"))
+                {
+                    startArgs.Arguments = ResumeArgs.Create(ApplicationExecutionState.Terminated);
+                    startArgs.StartKind = StartKinds.Resume;
+                }
             }
         }
 

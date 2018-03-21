@@ -18,16 +18,15 @@ namespace Sample.Views
 {
     public sealed partial class MainPage : Page
     {
-        public MainPage()
-        {
-            InitializeComponent();
-        }
+        public MainPage() => InitializeComponent();
+
+        ViewModels.MainPageViewModel ViewModel => DataContext as ViewModels.MainPageViewModel;
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             if (e.TryGetParameter<int>("Record", out var value))
             {
-                MainGridView.Header = $"Record: {value}";
+                // ViewModel.HeaderText = $"Record: {value}";
             }
             else
             {

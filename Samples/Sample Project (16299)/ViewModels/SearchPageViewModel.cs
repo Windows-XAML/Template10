@@ -21,7 +21,15 @@ namespace Sample.ViewModels
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
             _navigationService = parameters.GetNavigationService();
-            Search(SearchTerm = parameters.GetValue<string>("SearchTerm"));
+            if (parameters.TryGetValue<string>("SearchTerm", out var searchTerm))
+            {
+                Search(SearchTerm = searchTerm);
+            }
+            else
+            {
+                SearchTerm = "No search term provided.";
+            }
+
         }
 
         void Search(string term)
