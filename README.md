@@ -18,4 +18,4 @@ Are you looking for the code currently in Nuget?
 
 ## About Template 10.2
 
-We are building the next version of Template 10. We might not get finished before the Fall Creators Update, so we don't recommend waiting for it. Aside: the work on 10.2 is what you find in the `master` branch.
+We are building the next version of Template 10. We are making good progress but we don't recommend waiting for it. Aside: the work on 10.2 is what you find in the `master` branch.
