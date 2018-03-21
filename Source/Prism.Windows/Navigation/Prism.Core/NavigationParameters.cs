@@ -45,7 +45,7 @@ namespace Prism.Navigation
 
         public T GetValue<T>(string key)
         {
-            return (T)Convert.ChangeType(_internal[key], typeof(T));
+            return (T)Convert.ChangeType(_external[key], typeof(T));
         }
 
         public IEnumerable<T> GetValues<T>(string key)
