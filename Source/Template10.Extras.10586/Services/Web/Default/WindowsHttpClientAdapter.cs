@@ -16,6 +16,11 @@ namespace Template10.Services.Web
             client = _client = new HttpClient();
         }
 
+        public void AddHeader(string key, string value)
+        {
+            _client.DefaultRequestHeaders.Add(key, value);
+        }
+
         public async Task<string> GetAsync(Uri path)
         {
             var response = await _client.GetAsync(path);

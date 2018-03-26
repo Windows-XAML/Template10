@@ -22,6 +22,11 @@ namespace Prism.Navigation
             _cache.Add(key, info);
         }
 
+        public static void RemoveRegistration(string key)
+        {
+            _cache.Remove(key);
+        }
+
         public static bool TryGetRegistration(string key, out (string Key, Type View, Type ViewModel) info)
         {
             if (_cache.ContainsKey(key))

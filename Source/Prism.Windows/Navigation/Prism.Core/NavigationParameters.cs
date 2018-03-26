@@ -17,7 +17,7 @@ namespace Prism.Navigation
         }
 
         public NavigationParameters(string query)
-            : this(new Windows.Foundation.WwwFormUrlDecoder(query).Select(x => (x.Name, (object)x.Value)).ToArray())
+            : this(string.IsNullOrWhiteSpace(query) ? Array.Empty<(string key, object value)>() : new Windows.Foundation.WwwFormUrlDecoder(query).Select(x => (x.Name, (object)x.Value)).ToArray())
         {
             // empty
         }
