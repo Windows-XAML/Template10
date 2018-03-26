@@ -6,6 +6,8 @@ namespace Template10.Services.Web
 {
     public interface IWebApiService
     {
+        void AddHeader(string key, string value);
+
         Task<string> GetAsync(Uri path);
 
         Task PutAsync<T>(Uri path, T payload);
