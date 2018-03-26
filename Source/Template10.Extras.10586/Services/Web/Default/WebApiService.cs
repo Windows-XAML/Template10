@@ -19,6 +19,11 @@ namespace Template10.Services.Web
             client.DefaultRequestHeaders.Accept.Add(header);
         }
 
+        public void AddHeader(string key, string value)
+        {
+            _adapter.AddHeader(key, value);
+        }
+
         public async Task<string> GetAsync(Uri path)
         {
             return await _adapter.GetAsync(path);
