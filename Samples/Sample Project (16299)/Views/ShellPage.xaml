@@ -29,7 +29,7 @@
                                 TextWrapping="NoWrap" />
                         </Grid>
                     </CommandBar.Content>
-                    <AppBarButton Icon="World" />
+                    <AppBarButton Icon="World" Label="Template 10" Click="Template10_Click" />
                 </CommandBar>
             </Grid>
         </DataTemplate>

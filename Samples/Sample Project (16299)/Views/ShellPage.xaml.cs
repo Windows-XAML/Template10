@@ -81,5 +81,10 @@ namespace Sample.Views
         {
             await ShellView.NavigationService.NavigateAsync("SearchPage", ("SearchTerm", sender.Text));
         }
+
+        private async void Template10_Click(object sender, RoutedEventArgs e)
+        {
+            await win.System.Launcher.LaunchUriAsync(new Uri("http://aka.ms/template10"));
+        }
     }
 }
