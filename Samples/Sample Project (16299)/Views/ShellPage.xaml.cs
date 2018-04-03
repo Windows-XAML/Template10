@@ -41,16 +41,7 @@ namespace Sample.Views
             ShellView.Loaded += (s, e) =>
             {
                 SetupGestures();
-                SetupControlBox();
             };
-        }
-
-        private void SetupControlBox()
-        {
-            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-            titleBar.ButtonBackgroundColor = Colors.Transparent;
-            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-            titleBar.ButtonForegroundColor = (Color)Resources["SystemBaseHighColor"];
         }
 
         private void SetupGestures()
