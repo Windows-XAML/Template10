@@ -147,7 +147,7 @@
       <Version>6.0.8</Version>
     </PackageReference>
     <PackageReference Include="Prism.Core">
-      <Version>7.1.0.444-ci</Version>
+      <Version>7.1.0.123-pre</Version>
     </PackageReference>
     <PackageReference Include="System.ValueTuple">
       <Version>4.5.0-preview1-26216-02</Version>
