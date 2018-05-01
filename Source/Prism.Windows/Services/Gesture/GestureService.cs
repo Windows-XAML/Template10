@@ -150,7 +150,7 @@ namespace Prism.Services
                 || (e.VirtualKey == VirtualKey.F5))
             {
                 Debug.WriteLine($"{nameof(GestureService)}.{nameof(RefreshRequested)}");
-                RaiseRefreshBackRequested();
+                RaiseRefreshRequested();
             }
             // this is still a preliminary value?
             else if ((e.VirtualKey == VirtualKey.M) && e.OnlyAlt)
