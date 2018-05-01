@@ -6,6 +6,8 @@
     xmlns:controls="using:Template10.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:Sample.Models"
+    xmlns:views="using:Sample.Views"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -36,7 +38,7 @@
 
     </Page.Resources>
 
-    <Grid>
+    <SplitView PanePlacement="Right" DisplayMode="Overlay" IsPaneOpen="True" Background="Transparent">
 
         <controls:NavViewEx
             x:Name="ShellView"
@@ -79,6 +81,10 @@
 
         </controls:NavViewEx>
 
-    </Grid>
+        <SplitView.Pane>
+            <views:EditView />
+        </SplitView.Pane>
+
+    </SplitView>
 
 </Page>

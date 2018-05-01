@@ -37,7 +37,7 @@ namespace Sample
         {
             container.RegisterTemplate10Services();
             container.RegisterSingleton<ShellPage, ShellPage>();
-            container.RegisterSingleton<IDataService, DataService>();
+            container.RegisterSingleton<IDataService, FakeDataService>();
             container.RegisterForNavigation<MainPage, MainPageViewModel>(nameof(MainPage));
             container.RegisterForNavigation<SearchPage, SearchPageViewModel>(nameof(SearchPage));
             container.RegisterSingleton<ISerializationService, NewtonsoftSerializationService>();

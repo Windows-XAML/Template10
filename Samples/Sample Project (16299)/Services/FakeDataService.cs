@@ -8,16 +8,7 @@ using System.Threading.Tasks;
 
 namespace Sample.Services
 {
-    public interface IDataService
-    {
-        Task InitializeAsync();
-        IEnumerable<DataGroup> GetGroups(int groups, int items);
-        IEnumerable<DataItem> GetItems(int items);
-        IEnumerable<string> GetSuggestions(string text, int count);
-        IEnumerable<DataItem> Search(string text);
-    }
-
-    public class DataService : IDataService
+    public class FakeDataService : IDataService
     {
         public async Task InitializeAsync()
         {
@@ -43,7 +34,7 @@ namespace Sample.Services
                 "Onions", "Oranges", "Peaches", "Pears", "Plumbs", "Raspberries", "Strawberries", "Tomatoes", "Zuchinnis" };
 
             var data = new Faker<DataItem>()
-                .RuleFor(i => i.Index, f => ++f.IndexVariable)
+                .RuleFor(i => i.Id, f => ++f.IndexVariable)
                 .RuleFor(i => i.Title, f => f.Commerce.ProductName())
                 .RuleFor(i => i.Text, f => f.Lorem.Sentences(3))
                 .RuleFor(i => i.Image, f => $"ms-appx:///Images/{f.PickRandom(images)}.jpg");
@@ -64,6 +55,21 @@ namespace Sample.Services
             return GetItems(150)
                 .Where(x => x.Title.ToLower().Contains(text.ToLower()))
                 .OrderBy(x => x.Title);
+        }
+
+        public void Save(DataItem item)
+        {
+            // TODO
+        }
+
+        public void Revert(DataItem item)
+        {
+            // TODO
+        }
+
+        public void Delete(DataItem item)
+        {
+            // TODO
         }
     }
 }
