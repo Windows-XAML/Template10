@@ -14,12 +14,13 @@ namespace Template10.Services.Dialog
     {
         public ElementTheme RequestedTheme { get; set; } = ElementTheme.Light;
 
-        public MessageBoxEx(string title, string text, MessageBoxType messageBoxType = MessageBoxType.Ok, IDialogResourceResolver resolver = null)
+        public MessageBoxEx(string title, string text, MessageBoxType messageBoxType = MessageBoxType.Ok, IDialogResourceResolver resolver = null, ElementTheme requestedTheme = ElementTheme.Light)
         {
             Text = text;
             Title = title;
             Type = messageBoxType;
             Resolver = resolver ?? Settings.DefaultResolver;
+            RequestedTheme = requestedTheme;
         }
 
         public string Text { get; set; }
