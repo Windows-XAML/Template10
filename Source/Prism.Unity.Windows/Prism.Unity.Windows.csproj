@@ -114,7 +114,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.0.8</Version>
+      <Version>6.1.2</Version>
     </PackageReference>
     <PackageReference Include="Prism.Core">
       <Version>7.1.0.123-pre</Version>
