@@ -18,6 +18,9 @@ namespace Template10.Services.Web
 
         public void AddHeader(string key, string value)
         {
+            if (_client.DefaultRequestHeaders.ContainsKey(key))
+                _client.DefaultRequestHeaders.Remove(key);
+
             _client.DefaultRequestHeaders.Add(key, value);
         }
 
