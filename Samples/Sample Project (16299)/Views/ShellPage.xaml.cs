@@ -41,16 +41,7 @@ namespace Sample.Views
             ShellView.Loaded += (s, e) =>
             {
                 SetupGestures();
-                SetupControlBox();
             };
-        }
-
-        private void SetupControlBox()
-        {
-            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-            titleBar.ButtonBackgroundColor = Colors.Transparent;
-            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-            titleBar.ButtonForegroundColor = (Color)Resources["SystemBaseHighColor"];
         }
 
         private void SetupGestures()
@@ -89,6 +80,11 @@ namespace Sample.Views
         private async void Search_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
             await ShellView.NavigationService.NavigateAsync("SearchPage", ("SearchTerm", sender.Text));
+        }
+
+        private async void Template10_Click(object sender, RoutedEventArgs e)
+        {
+            await win.System.Launcher.LaunchUriAsync(new Uri("http://aka.ms/template10"));
         }
     }
 }

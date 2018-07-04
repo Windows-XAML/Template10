@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Windows.Foundation;
 using Windows.System;
 using Windows.UI.Core;
@@ -60,11 +61,35 @@ namespace Prism.Services
         public event EventHandler ForwardRequested;
         public event TypedEventHandler<object, KeyDownEventArgs> KeyDown;
 
-        public void RaiseRefreshBackRequested() => RefreshRequested?.Invoke(this, EventArgs.Empty);
-        public void RaiseBackRequested() => BackRequested?.Invoke(this, EventArgs.Empty);
-        public void RaiseForwardRequested() => ForwardRequested?.Invoke(this, EventArgs.Empty);
-        public void RaiseSearchRequested() => SearchRequested?.Invoke(this, EventArgs.Empty);
-        public void RaiseMenuRequested() => MenuRequested?.Invoke(null, EventArgs.Empty);
+        #region Barrier
+
+        List<GestureBarrier> _barriers = new List<GestureBarrier>();
+        public GestureBarrier CreateBarrier(Gesture gesture)
+        {
+            GestureBarrier barrier = null;
+            return barrier = new GestureBarrier
+            {
+                Gesture = gesture,
+                Complete = () => _barriers.Remove(barrier),
+            };
+        }
+        bool IfCanRaiseEvent(Gesture evt, Action action)
+        {
+            if (_barriers.Any(x => x.Gesture.Equals(evt)))
+            {
+                return false;
+            }
+            action();
+            return true;
+        }
+
+        #endregion  
+
+        public bool RaiseRefreshRequested() => IfCanRaiseEvent(Gesture.Refresh, () => RefreshRequested?.Invoke(this, EventArgs.Empty));
+        public bool RaiseBackRequested() => IfCanRaiseEvent(Gesture.Back, () => BackRequested?.Invoke(this, EventArgs.Empty));
+        public bool RaiseForwardRequested() => IfCanRaiseEvent(Gesture.Forward, () => ForwardRequested?.Invoke(this, EventArgs.Empty));
+        public bool RaiseSearchRequested() => IfCanRaiseEvent(Gesture.Search, () => SearchRequested?.Invoke(this, EventArgs.Empty));
+        public bool RaiseMenuRequested() => IfCanRaiseEvent(Gesture.Menu, () => MenuRequested?.Invoke(null, EventArgs.Empty));
 
         private void Dispose(CoreWindow window)
         {
@@ -125,7 +150,7 @@ namespace Prism.Services
                 || (e.VirtualKey == VirtualKey.F5))
             {
                 Debug.WriteLine($"{nameof(GestureService)}.{nameof(RefreshRequested)}");
-                RaiseRefreshBackRequested();
+                RaiseRefreshRequested();
             }
             // this is still a preliminary value?
             else if ((e.VirtualKey == VirtualKey.M) && e.OnlyAlt)
