@@ -79,9 +79,17 @@ namespace Prism
 
             // finalize the application
             ConfigureViewModelLocator();
-            OnInitialized();
         }
 
+        static int _initialized = 0;
+        private void CallOnInitializedOnce()
+        {
+            // once and only once, ever
+            if (Interlocked.Increment(ref _initialized) == 1)
+            {
+                OnInitialized();
+            }
+        }
 
         private async Task InternalStartAsync(StartArgs startArgs)
         {
@@ -89,6 +97,7 @@ namespace Prism
             Debug.WriteLine($"{nameof(PrismApplicationBase)}.{nameof(InternalStartAsync)}({startArgs})");
             try
             {
+                CallOnInitializedOnce();
                 TestResuming(startArgs);
                 OnStart(startArgs);
                 await OnStartAsync(startArgs);
@@ -121,7 +130,19 @@ namespace Prism
 
         private static DateTime? SuspendData
         {
-            get => DateTime.TryParse(ApplicationData.Current.LocalSettings.Values["Suspend_Data"]?.ToString(), out var date) ? date : null;
+            get
+            {
+                if (ApplicationData.Current.LocalSettings.Values.TryGetValue("Suspend_Data", out var value)
+                    && value != null
+                    && DateTime.TryParse(value.ToString(), out var date))
+                {
+                    return date;
+                }
+                else
+                {
+                    return null;
+                }
+            }
             set => ApplicationData.Current.LocalSettings.Values["Suspend_Data"] = value;
         }
 
