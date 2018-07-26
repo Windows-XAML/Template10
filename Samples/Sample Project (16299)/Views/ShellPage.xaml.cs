@@ -15,6 +15,7 @@ using Sample.Services;
 using System.Collections.Generic;
 using Sample.Models;
 using Prism.Services;
+using Prism.Events;
 
 namespace Sample.Views
 {
@@ -23,8 +24,9 @@ namespace Sample.Views
         private readonly IGestureService _gestureService;
         private readonly IDialogService _dialogService;
         private readonly IDataService _dataService;
+        private readonly IEventAggregator _eventAggregator;
 
-        public ShellPage(IDialogService dialogService, IDataService dataService)
+        public ShellPage(IDialogService dialogService, IDataService dataService, IEventAggregator eventAggregator)
         {
             InitializeComponent();
 
@@ -33,25 +35,25 @@ namespace Sample.Views
                 return;
             }
 
-            _gestureService = GestureService.GetForCurrentView();
             _dialogService = dialogService;
             _dataService = dataService;
 
-            ShellView.Initialize();
-            ShellView.Loaded += (s, e) =>
-            {
-                SetupGestures();
-            };
-        }
-
-        private void SetupGestures()
-        {
+            _gestureService = GestureService.GetForCurrentView();
             _gestureService.MenuRequested += (s, e) => ShellView.IsPaneOpen = true;
             _gestureService.SearchRequested += (s, e) =>
             {
                 ShellView.IsPaneOpen = true;
                 ShellView.AutoSuggestBox?.Focus(FocusState.Programmatic);
             };
+
+            _eventAggregator = eventAggregator;
+            _eventAggregator.GetEvent<Messages.ShowEditorMessage>().Subscribe(item =>
+            {
+                EditSplitView.IsPaneOpen = true;
+                SideEditView.DataContext = item;
+            });
+
+            ShellView.Initialize();
         }
 
         private async void ProfileItem_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)

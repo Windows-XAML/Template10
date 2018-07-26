@@ -22,6 +22,7 @@
         x:Name="SearchGridView"
         Header="{Binding HeaderText}"
         ItemsSource="{Binding Items}"
+        SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
         Style="{StaticResource ItemGridViewStyle}" />
 
 </Page>

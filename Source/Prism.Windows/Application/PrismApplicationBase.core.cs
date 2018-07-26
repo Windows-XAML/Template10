@@ -107,14 +107,22 @@ namespace Prism
 
         private static void TestResuming(StartArgs startArgs)
         {
-            if (startArgs.Arguments is ILaunchActivatedEventArgs e && e.PreviousExecutionState == ApplicationExecutionState.Terminated)
+            if (startArgs.Arguments is ILaunchActivatedEventArgs e
+                && e.PreviousExecutionState == ApplicationExecutionState.Terminated)
             {
                 if (ApplicationData.Current.LocalSettings.Values.ContainsKey("Suspend_Data"))
                 {
+                    ApplicationData.Current.LocalSettings.Values.Remove("Suspend_Data");
                     startArgs.Arguments = ResumeArgs.Create(ApplicationExecutionState.Terminated);
                     startArgs.StartKind = StartKinds.Resume;
                 }
             }
+        }
+
+        private static DateTime? SuspendData
+        {
+            get => DateTime.TryParse(ApplicationData.Current.LocalSettings.Values["Suspend_Data"]?.ToString(), out var date) ? date : null;
+            set => ApplicationData.Current.LocalSettings.Values["Suspend_Data"] = value;
         }
 
         #region overrides
