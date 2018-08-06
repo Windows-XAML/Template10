@@ -38,7 +38,7 @@
 
     </Page.Resources>
 
-    <SplitView PanePlacement="Right" DisplayMode="Overlay" IsPaneOpen="True" Background="Transparent">
+    <SplitView PanePlacement="Right" DisplayMode="Overlay" IsPaneOpen="True" Background="Transparent" x:Name="EditSplitView">
 
         <controls:NavViewEx
             x:Name="ShellView"
@@ -82,7 +82,7 @@
         </controls:NavViewEx>
 
         <SplitView.Pane>
-            <views:EditView />
+            <views:EditView x:Name="SideEditView" />
         </SplitView.Pane>
 
     </SplitView>

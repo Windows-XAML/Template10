@@ -12,19 +12,22 @@ using System.Threading;
 using Template10.Services.Dialog;
 using Template10.Utilities;
 using System.Diagnostics;
+using Prism.Events;
 
 namespace Sample.ViewModels
 {
-    class MainPageViewModel : ViewModelBase
+    class MainPageViewModel : BindableBase
     {
         private readonly IDataService _dataService;
         private readonly IDialogService _dialogService;
+        private readonly IEventAggregator _eventAggregator;
         private NavigationService _navigationService;
 
-        public MainPageViewModel(IDataService dataService, IDialogService dialogService)
+        public MainPageViewModel(IDataService dataService, IDialogService dialogService, IEventAggregator eventAggregator)
         {
             _dataService = dataService;
             _dialogService = dialogService;
+            _eventAggregator = eventAggregator;
         }
 
         private string _headerText;
@@ -38,7 +41,14 @@ namespace Sample.ViewModels
         public DataItem SelectedItem
         {
             get => _selectedItem;
-            set => SetProperty(ref _selectedItem, value);
+            set
+            {
+                SetProperty(ref _selectedItem, value);
+                if (value != null)
+                {
+                    _eventAggregator.GetEvent<Messages.ShowEditorMessage>().Publish(value);
+                }
+            }
         }
 
         public ObservableCollection<DataItem> Items { get; } = new ObservableCollection<DataItem>();

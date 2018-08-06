@@ -79,9 +79,17 @@ namespace Prism
 
             // finalize the application
             ConfigureViewModelLocator();
-            OnInitialized();
         }
 
+        static int _initialized = 0;
+        private void CallOnInitializedOnce()
+        {
+            // once and only once, ever
+            if (Interlocked.Increment(ref _initialized) == 1)
+            {
+                OnInitialized();
+            }
+        }
 
         private async Task InternalStartAsync(StartArgs startArgs)
         {
@@ -89,6 +97,7 @@ namespace Prism
             Debug.WriteLine($"{nameof(PrismApplicationBase)}.{nameof(InternalStartAsync)}({startArgs})");
             try
             {
+                CallOnInitializedOnce();
                 TestResuming(startArgs);
                 OnStart(startArgs);
                 await OnStartAsync(startArgs);
@@ -107,14 +116,34 @@ namespace Prism
 
         private static void TestResuming(StartArgs startArgs)
         {
-            if (startArgs.Arguments is ILaunchActivatedEventArgs e && e.PreviousExecutionState == ApplicationExecutionState.Terminated)
+            if (startArgs.Arguments is ILaunchActivatedEventArgs e
+                && e.PreviousExecutionState == ApplicationExecutionState.Terminated)
             {
                 if (ApplicationData.Current.LocalSettings.Values.ContainsKey("Suspend_Data"))
                 {
+                    ApplicationData.Current.LocalSettings.Values.Remove("Suspend_Data");
                     startArgs.Arguments = ResumeArgs.Create(ApplicationExecutionState.Terminated);
                     startArgs.StartKind = StartKinds.Resume;
                 }
             }
+        }
+
+        private static DateTime? SuspendData
+        {
+            get
+            {
+                if (ApplicationData.Current.LocalSettings.Values.TryGetValue("Suspend_Data", out var value)
+                    && value != null
+                    && DateTime.TryParse(value.ToString(), out var date))
+                {
+                    return date;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            set => ApplicationData.Current.LocalSettings.Values["Suspend_Data"] = value;
         }
 
         #region overrides

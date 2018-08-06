@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prism.Unity.Windows", "Sour
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Prism.Windows.Template10 (16299)", "Samples\Sample Project (16299)\Sample.Prism.Windows.Template10 (16299).csproj", "{4E7407B1-5A1D-4552-BCBE-32B429FC4BCA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Prism.Windows.Blank", "Samples\Sample.Prism.Windows.Blank\Sample.Prism.Windows.Blank.csproj", "{BAA0FB40-0650-4D90-97F7-0F3CE89AA079}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -109,6 +111,26 @@ Global
 		{4E7407B1-5A1D-4552-BCBE-32B429FC4BCA}.Release|x86.ActiveCfg = Release|x86
 		{4E7407B1-5A1D-4552-BCBE-32B429FC4BCA}.Release|x86.Build.0 = Release|x86
 		{4E7407B1-5A1D-4552-BCBE-32B429FC4BCA}.Release|x86.Deploy.0 = Release|x86
+		{BAA0FB40-0650-4D90-97F7-0F3CE89AA079}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{BAA0FB40-0650-4D90-97F7-0F3CE89AA079}.Debug|ARM.ActiveCfg = Debug|ARM
+		{BAA0FB40-0650-4D90-97F7-0F3CE89AA079}.Debug|ARM.Build.0 = Debug|ARM
+		{BAA0FB40-0650-4D90-97F7-0F3CE89AA079}.Debug|ARM.Deploy.0 = Debug|ARM
+		{BAA0FB40-0650-4D90-97F7-0F3CE89AA079}.Debug|x64.ActiveCfg = Debug|x64
+		{BAA0FB40-0650-4D90-97F7-0F3CE89AA079}.Debug|x64.Build.0 = Debug|x64
+		{BAA0FB40-0650-4D90-97F7-0F3CE89AA079}.Debug|x64.Deploy.0 = Debug|x64
+		{BAA0FB40-0650-4D90-97F7-0F3CE89AA079}.Debug|x86.ActiveCfg = Debug|x86
+		{BAA0FB40-0650-4D90-97F7-0F3CE89AA079}.Debug|x86.Build.0 = Debug|x86
+		{BAA0FB40-0650-4D90-97F7-0F3CE89AA079}.Debug|x86.Deploy.0 = Debug|x86
+		{BAA0FB40-0650-4D90-97F7-0F3CE89AA079}.Release|Any CPU.ActiveCfg = Release|x86
+		{BAA0FB40-0650-4D90-97F7-0F3CE89AA079}.Release|ARM.ActiveCfg = Release|ARM
+		{BAA0FB40-0650-4D90-97F7-0F3CE89AA079}.Release|ARM.Build.0 = Release|ARM
+		{BAA0FB40-0650-4D90-97F7-0F3CE89AA079}.Release|ARM.Deploy.0 = Release|ARM
+		{BAA0FB40-0650-4D90-97F7-0F3CE89AA079}.Release|x64.ActiveCfg = Release|x64
+		{BAA0FB40-0650-4D90-97F7-0F3CE89AA079}.Release|x64.Build.0 = Release|x64
+		{BAA0FB40-0650-4D90-97F7-0F3CE89AA079}.Release|x64.Deploy.0 = Release|x64
+		{BAA0FB40-0650-4D90-97F7-0F3CE89AA079}.Release|x86.ActiveCfg = Release|x86
+		{BAA0FB40-0650-4D90-97F7-0F3CE89AA079}.Release|x86.Build.0 = Release|x86
+		{BAA0FB40-0650-4D90-97F7-0F3CE89AA079}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

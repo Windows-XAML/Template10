@@ -21,6 +21,7 @@
             <GridView
                 x:Name="MainGridView"
                 Header="Main Page Grid" 
+                SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
                 ItemsSource="{x:Bind MainGridSource.View, Mode=OneWay}"
                 Style="{StaticResource ItemGridViewStyle}">
                 <GridView.GroupStyle>

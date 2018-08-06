@@ -4,20 +4,20 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{4E7407B1-5A1D-4552-BCBE-32B429FC4BCA}</ProjectGuid>
+    <ProjectGuid>{BAA0FB40-0650-4D90-97F7-0F3CE89AA079}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Sample</RootNamespace>
-    <AssemblyName>Sample.Prism.Windows.Template10</AssemblyName>
+    <AssemblyName>Sample.Prism.Windows.Blank</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.16299.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.17134.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.14393.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
-    <PackageCertificateKeyFile>PrismSample_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>Sample.Prism.Windows.Blank_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -95,66 +95,22 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Messages\ShowEditorMessage.cs" />
-    <Compile Include="Models\DataGroup.cs" />
-    <Compile Include="Models\DataItem.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\FakeDataService.cs" />
-    <Compile Include="Services\IDataService.cs" />
-    <Compile Include="Services\NewtonsoftSerializationService.cs" />
-    <Compile Include="ViewModels\EditViewViewModel.cs" />
-    <Compile Include="ViewModels\MainPageViewModel.cs" />
-    <Compile Include="ViewModels\SearchPageViewModel.cs" />
-    <Compile Include="Views\EditView.xaml.cs">
-      <DependentUpon>EditView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\MainPage.xaml.cs">
+    <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SearchPage.xaml.cs">
-      <DependentUpon>SearchPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ShellPage.xaml.cs">
-      <DependentUpon>ShellPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SplashPage.xaml.cs">
-      <DependentUpon>SplashPage.xaml</DependentUpon>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\MainPageViewModel.cs" />
+    <Compile Include="Views\MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="PrismSample_TemporaryKey.pfx" />
+    <None Include="Sample.Prism.Windows.Blank_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\Apples.jpg" />
-    <Content Include="Images\Bananas.jpg" />
-    <Content Include="Images\Blackberries.jpg" />
-    <Content Include="Images\Cabbage.jpg" />
-    <Content Include="Images\Carrots.jpg" />
-    <Content Include="Images\Cauliflower.jpg" />
-    <Content Include="Images\Cherries.jpg" />
-    <Content Include="Images\Coconuts.jpg" />
-    <Content Include="Images\EggPlant.jpg" />
-    <Content Include="Images\Figs.jpg" />
-    <Content Include="Images\Ginger.jpg" />
-    <Content Include="Images\Grapefruits.jpg" />
-    <Content Include="Images\Grapes.jpg" />
-    <Content Include="Images\GreenBeans.jpg" />
-    <Content Include="Images\Kale.jpg" />
-    <Content Include="Images\Kiwis.jpg" />
-    <Content Include="Images\Lemons.jpg" />
-    <Content Include="Images\Nectarines.jpg" />
-    <Content Include="Images\Onions.jpg" />
-    <Content Include="Images\Oranges.jpg" />
-    <Content Include="Images\Peaches.jpg" />
-    <Content Include="Images\Pears.jpg" />
-    <Content Include="Images\Plumbs.jpg" />
-    <Content Include="Images\Raspberries.jpg" />
-    <Content Include="Images\Strawberries.jpg" />
-    <Content Include="Images\Tomatoes.jpg" />
-    <Content Include="Images\Zuchinnis.jpg" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -169,42 +125,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Views\EditView.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SearchPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ShellPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\SplashPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Bogus">
-      <Version>22.0.5</Version>
-    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.0.8</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed">
-      <Version>2.0.0</Version>
-    </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>11.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="Prism.Core">
-      <Version>7.1.0.123-pre</Version>
+      <Version>6.1.4</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -213,17 +145,13 @@
       <Name>Prism.Unity.Windows</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Source\Prism.Windows\Prism.Windows.csproj">
-      <Project>{648C8631-C97F-4B81-98FC-F4370317751A}</Project>
+      <Project>{648c8631-c97f-4b81-98fc-f4370317751a}</Project>
       <Name>Prism.Windows</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Source\Template10.Extras.10586\Template10.Extras.10586.csproj">
-      <Project>{9bb18d4b-bcdd-43c9-a7c2-416d13dd39a6}</Project>
-      <Name>Template10.Extras.10586</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Source\Template10.Extras.16299\Template10.Extras.16299.csproj">
-      <Project>{51e89714-0358-486d-8dfb-6600a3fa7319}</Project>
-      <Name>Template10.Extras.16299</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

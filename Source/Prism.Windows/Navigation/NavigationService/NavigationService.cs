@@ -21,12 +21,12 @@ namespace Prism.Navigation
 
         public static Dictionary<Frame, INavigationService> Instances { get; } = new Dictionary<Frame, INavigationService>();
 
-        public static INavigationService Create(Frame frame, params Gestures[] gestures)
+        public static IPlatformNavigationService Create(Frame frame, params Gestures[] gestures)
         {
             return Create(frame, Window.Current.CoreWindow, gestures);
         }
 
-        public static INavigationService Create(Frame frame, CoreWindow window, params Gestures[] gestures)
+        public static IPlatformNavigationService Create(Frame frame, CoreWindow window, params Gestures[] gestures)
         {
             frame = frame ?? new Frame();
             var gesture_service = GestureService.GetForCurrentView(window);
