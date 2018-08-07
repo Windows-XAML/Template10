@@ -201,7 +201,11 @@ namespace Template10.Controls
             }
             else if (selectedItem is NavigationViewItem item)
             {
-                if (item.GetValue(NavViewProps.NavigationUriProperty) is string path)
+				if (!withNavigation)
+				{
+					base.SelectedItem = item;
+				}
+				else if (item.GetValue(NavViewProps.NavigationUriProperty) is string path)
                 {
 					if (!withNavigation)
 					{
