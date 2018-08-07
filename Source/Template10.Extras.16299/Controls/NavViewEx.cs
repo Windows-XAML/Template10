@@ -1,28 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Template10.Services;
 using Prism.Navigation;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using Prism.Ioc;
 using System.Collections.ObjectModel;
-using Windows.UI.ViewManagement;
 using win = Windows;
 using System.Threading;
-using Prism;
 using Prism.Utilities;
 using Prism.Services;
 
 namespace Template10.Controls
 {
-    public class NavViewEx : NavigationView
+	public class NavViewEx : NavigationView
     {
         private Button _togglePaneButton;
         private TextBlock _paneTitleTextBlock;
@@ -75,7 +67,9 @@ namespace Template10.Controls
                 UpdateAppTitleVisibility();
                 UpdatePaneHeadersVisibility();
                 UpdatePageHeaderContent();
-                SetupBackButton();
+
+				if (ShowBackButton)
+					SetupBackButton();
             };
         }
 
@@ -381,5 +375,18 @@ namespace Template10.Controls
         {
             return MenuItems.OfType<NavigationViewItem>().SingleOrDefault(x => x.Content.Equals(content));
         }
-    }
+
+		#region ShowBackButton
+
+		public bool ShowBackButton
+		{
+			get => (bool)GetValue(ShowBackButtonProperty);
+			set => SetValue(ShowBackButtonProperty, value);
+		}
+		
+		public static readonly DependencyProperty ShowBackButtonProperty =
+			DependencyProperty.Register("ShowBackButton", typeof(bool), typeof(NavViewEx), new PropertyMetadata(true));
+
+		#endregion ShowBackButton
+	}
 }
