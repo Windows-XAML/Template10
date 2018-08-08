@@ -48,7 +48,7 @@ namespace Template10.Controls
 
             ItemInvoked += (s, e) =>
             {
-                SelectedItem = (e.IsSettingsInvoked) ? SettingsItem : Find(e.InvokedItem.ToString());
+                SelectedItem = (e.IsSettingsInvoked) ? SettingsItem : Find(e.InvokedItem);
             };
 
             RegisterPropertyChangedCallback(IsPaneOpenProperty, (s, e) =>
@@ -375,7 +375,7 @@ namespace Template10.Controls
             return false;
         }
 
-        private NavigationViewItem Find(string content)
+        private NavigationViewItem Find(object content)
         {
             return MenuItems.OfType<NavigationViewItem>().SingleOrDefault(x => x.Content.Equals(content));
         }
