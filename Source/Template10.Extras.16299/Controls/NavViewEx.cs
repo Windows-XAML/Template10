@@ -1,28 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Template10.Services;
 using Prism.Navigation;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using Prism.Ioc;
 using System.Collections.ObjectModel;
-using Windows.UI.ViewManagement;
 using win = Windows;
 using System.Threading;
-using Prism;
 using Prism.Utilities;
 using Prism.Services;
 
 namespace Template10.Controls
 {
-    public class NavViewEx : NavigationView
+	public class NavViewEx : NavigationView
     {
         private Button _togglePaneButton;
         private TextBlock _paneTitleTextBlock;
@@ -47,7 +39,7 @@ namespace Template10.Controls
             {
                 if (TryFindItem(e.SourcePageType, out var item))
                 {
-                    SetSelectedItem(item);
+                    SetSelectedItem(item, false);
                 }
             };
 
@@ -56,7 +48,7 @@ namespace Template10.Controls
 
             ItemInvoked += (s, e) =>
             {
-                SelectedItem = (e.IsSettingsInvoked) ? SettingsItem : Find(e.InvokedItem.ToString());
+                SelectedItem = (e.IsSettingsInvoked) ? SettingsItem : Find(e.InvokedItem);
             };
 
             RegisterPropertyChangedCallback(IsPaneOpenProperty, (s, e) =>
@@ -75,7 +67,9 @@ namespace Template10.Controls
                 UpdateAppTitleVisibility();
                 UpdatePaneHeadersVisibility();
                 UpdatePageHeaderContent();
-                SetupBackButton();
+
+				if (ShowBackButton)
+					SetupBackButton();
             };
         }
 
@@ -186,7 +180,7 @@ namespace Template10.Controls
             get => base.SelectedItem;
         }
 
-        private async void SetSelectedItem(object selectedItem)
+        private async void SetSelectedItem(object selectedItem, bool withNavigation = true)
         {
             if (selectedItem == null)
             {
@@ -207,16 +201,24 @@ namespace Template10.Controls
             }
             else if (selectedItem is NavigationViewItem item)
             {
-                if (item.GetValue(NavViewProps.NavigationUriProperty) is string path)
+				if (!withNavigation)
+				{
+					base.SelectedItem = item;
+				}
+				else if (item.GetValue(NavViewProps.NavigationUriProperty) is string path)
                 {
-                    if ((await NavigationService.NavigateAsync(path)).Success)
-                    {
-                        base.SelectedItem = selectedItem;
-                    }
-                    else
-                    {
-                        Debug.WriteLine($"{selectedItem}.{nameof(NavViewProps.NavigationUriProperty)} navigation failed.");
-                    }
+					if (!withNavigation)
+					{
+						base.SelectedItem = item;
+					}
+					else if ((await NavigationService.NavigateAsync(path)).Success)
+					{
+						base.SelectedItem = selectedItem;
+					}
+					else
+					{
+						Debug.WriteLine($"{selectedItem}.{nameof(NavViewProps.NavigationUriProperty)} navigation failed.");
+					}
                 }
                 else
                 {
@@ -362,7 +364,7 @@ namespace Template10.Controls
                 if (NavigationQueue.TryParse(menuItem.Path, null, out var menuQueue)
                     && Equals(menuQueue.Last().View, type))
                 {
-                    item = menuItem;
+                    item = menuItem.Item;
                     return true;
                 }
             }
@@ -373,9 +375,22 @@ namespace Template10.Controls
             return false;
         }
 
-        private NavigationViewItem Find(string content)
+        private NavigationViewItem Find(object content)
         {
             return MenuItems.OfType<NavigationViewItem>().SingleOrDefault(x => x.Content.Equals(content));
         }
-    }
+
+		#region ShowBackButton
+
+		public bool ShowBackButton
+		{
+			get => (bool)GetValue(ShowBackButtonProperty);
+			set => SetValue(ShowBackButtonProperty, value);
+		}
+		
+		public static readonly DependencyProperty ShowBackButtonProperty =
+			DependencyProperty.Register("ShowBackButton", typeof(bool), typeof(NavViewEx), new PropertyMetadata(true));
+
+		#endregion ShowBackButton
+	}
 }
