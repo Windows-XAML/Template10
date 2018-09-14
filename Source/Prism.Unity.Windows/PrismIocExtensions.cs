@@ -10,9 +10,9 @@ namespace Prism.Unity
         public static object Resolve(this IContainerProvider containerProvider, Type type, params (string Name, object Value)[] parameters)
         {
             var overrides = new ParameterOverrides();
-            foreach (var parameter in parameters)
+            foreach (var (Name, Value) in parameters)
             {
-                overrides.Add(parameter.Name, parameter.Value);
+                overrides.Add(Name, Value);
             }
             return containerProvider.GetContainer().Resolve(type, overrides);
         }
