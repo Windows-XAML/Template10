@@ -23,7 +23,7 @@ namespace Prism.Navigation
         }
 
         public NavigationParameters(string query)
-            : this(new Windows.Foundation.WwwFormUrlDecoder(query ?? string.Empty).Select(x => (x.Name, (object)x.Value)).ToArray())
+            : this(string.IsNullOrWhiteSpace(query) ? Array.Empty<(string key, object value)>() : new Windows.Foundation.WwwFormUrlDecoder(query).Select(x => (x.Name, (object)x.Value)).ToArray())
         {
             // empty
         }
@@ -51,7 +51,7 @@ namespace Prism.Navigation
 
         public T GetValue<T>(string key)
         {
-            return (T)Convert.ChangeType(_internal[key], typeof(T));
+            return (T)Convert.ChangeType(_external[key], typeof(T));
         }
 
         public IEnumerable<T> GetValues<T>(string key)
