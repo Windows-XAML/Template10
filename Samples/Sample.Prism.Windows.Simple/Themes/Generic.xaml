@@ -5,8 +5,8 @@
     <Style TargetType="local:AppBarLiteral">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate>
-                    <ContentPresenter Content="{TemplateBinding Tag}" />
+                <ControlTemplate TargetType="local:AppBarLiteral">
+                    <ContentPresenter Content="{TemplateBinding LiteralContent}" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

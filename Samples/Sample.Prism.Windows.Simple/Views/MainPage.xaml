@@ -26,9 +26,7 @@
                     <TextBlock Text="Star Trek" VerticalAlignment="Center" Margin="16,8,0,0" Style="{StaticResource TitleTextBlockStyle}" />
                 </CommandBar.Content>
                 <controls:AppBarLiteral>
-                    <controls:AppBarLiteral.Tag>
-                        <AutoSuggestBox QueryIcon="Find" PlaceholderText="Search" Text="{x:Bind ViewModel.SearchString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="250" Margin="0,8,4,0" />
-                    </controls:AppBarLiteral.Tag>
+                    <AutoSuggestBox QueryIcon="Find" PlaceholderText="Search" Text="{x:Bind ViewModel.SearchString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="250" Margin="0,8,4,0" />
                 </controls:AppBarLiteral>
                 <AppBarButton Label="Info" Icon="World" />
             </CommandBar>

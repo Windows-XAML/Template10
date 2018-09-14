@@ -142,11 +142,11 @@
     <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Prism.Unity.Windows\Prism.Unity.Windows.csproj">
+    <ProjectReference Include="..\..\Source\Prism.Unity.Windows\Prism.Unity.Windows.csproj">
       <Project>{cc3018eb-6d2b-4306-94a1-3a7cba7a8f18}</Project>
       <Name>Prism.Unity.Windows</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Prism.Windows\Prism.Windows.csproj">
+    <ProjectReference Include="..\..\Source\Prism.Windows\Prism.Windows.csproj">
       <Project>{648c8631-c97f-4b81-98fc-f4370317751a}</Project>
       <Name>Prism.Windows</Name>
     </ProjectReference>
