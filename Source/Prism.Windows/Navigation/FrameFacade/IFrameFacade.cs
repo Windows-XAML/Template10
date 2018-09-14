@@ -7,7 +7,7 @@ using Windows.UI.Xaml.Media.Animation;
 
 namespace Prism.Navigation
 {
-    internal interface IFrameFacade2
+    public interface IFrameFacade2
     {
         Frame Frame { get; }
         string CurrentNavigationPath { get; set;  }

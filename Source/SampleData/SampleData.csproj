@@ -186,7 +186,7 @@
     <Content Include="StarTrek\Images\VOY\Tuvok.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="StarTrek\Data.json" />
+    <Content Include="StarTrek\Data.json" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

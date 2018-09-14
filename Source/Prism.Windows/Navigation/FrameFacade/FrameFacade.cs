@@ -38,8 +38,10 @@ namespace Prism.Navigation
         internal FrameFacade(Frame frame, IPlatformNavigationService navigationService)
         {
             _frame = frame;
-            _frame.ContentTransitions = new TransitionCollection();
-            _frame.ContentTransitions.Add(new NavigationThemeTransition());
+            _frame.ContentTransitions = new TransitionCollection
+            {
+                new NavigationThemeTransition()
+            };
             _frame.RegisterPropertyChangedCallback(Frame.CanGoBackProperty, (s, p)
                 => CanGoBackChanged?.Invoke(this, EventArgs.Empty));
             _frame.RegisterPropertyChangedCallback(Frame.CanGoForwardProperty, (s, p)
@@ -247,8 +249,7 @@ namespace Prism.Navigation
                 return this.Failure("NavigateFrameAsync() returned false.");
             }
 
-            var new_page = _frame.Content as Page;
-            if (new_page == null)
+            if (!(_frame.Content is Page new_page))
             {
                 throw new Exception("There is no new page in Frame after Navigate.");
             }

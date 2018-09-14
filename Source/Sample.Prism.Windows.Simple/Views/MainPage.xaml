@@ -5,11 +5,81 @@
     xmlns:local="using:Sample.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:SampleData.StarTrek"
+    xmlns:viewmodels="using:Sample.ViewModels"
+    xmlns:controls="using:Sample.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-        <TextBlock Text="Hello world" Style="{StaticResource HeaderTextBlockStyle}" Margin="16" />
-    </Grid>
-    
+    <Page.DataContext>
+        <viewmodels:MainPageViewModel x:Name="ViewModel" />
+    </Page.DataContext>
+
+    <Page.Resources>
+        <CollectionViewSource x:Name="cvs" IsSourceGrouped="True" Source="{x:Bind ViewModel.Members}" ItemsPath="Members" />
+    </Page.Resources>
+
+    <GridView ItemsSource="{Binding Source={StaticResource cvs}}">
+        <GridView.Header>
+            <CommandBar IsDynamicOverflowEnabled="False">
+                <CommandBar.Content>
+                    <TextBlock Text="Star Trek" VerticalAlignment="Center" Margin="16,8,0,0" Style="{StaticResource TitleTextBlockStyle}" />
+                </CommandBar.Content>
+                <controls:AppBarLiteral>
+                    <controls:AppBarLiteral.Tag>
+                        <AutoSuggestBox QueryIcon="Find" PlaceholderText="Search" Text="{x:Bind ViewModel.SearchString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="250" Margin="0,8,4,0" />
+                    </controls:AppBarLiteral.Tag>
+                </controls:AppBarLiteral>
+                <AppBarButton Label="Info" Icon="World" />
+            </CommandBar>
+        </GridView.Header>
+        <GridView.GroupStyle>
+            <GroupStyle>
+                <GroupStyle.HeaderContainerStyle>
+                    <Style TargetType="GridViewHeaderItem">
+                        <Setter Property="Margin" Value="-12,0,0,0" />
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </GroupStyle.HeaderContainerStyle>
+                <GroupStyle.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Padding="8,8,8,42">
+                            <StackPanel.Background>
+                                <ImageBrush ImageSource="{Binding Show.Image.Path}" AlignmentX="Center" AlignmentY="Center" Stretch="UniformToFill" />
+                            </StackPanel.Background>
+                            <TextBlock Text="{Binding Show.Name}" Style="{StaticResource HeaderTextBlockStyle}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </GroupStyle.HeaderTemplate>
+            </GroupStyle>
+        </GridView.GroupStyle>
+        <GridView.Resources>
+            <Style TargetType="ItemsWrapGrid">
+                <Setter Property="GroupPadding" Value="16,16,16,0" />
+            </Style>
+        </GridView.Resources>
+        <GridView.ItemContainerStyle>
+            <Style TargetType="GridViewItem">
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="VerticalContentAlignment" Value="Stretch" />
+            </Style>
+        </GridView.ItemContainerStyle>
+        <GridView.ItemTemplate>
+            <DataTemplate x:DataType="models:Member">
+                <Grid Width="200" Height="200">
+                    <Grid.Background>
+                        <ImageBrush ImageSource="{Binding Image.Path}" />
+                    </Grid.Background>
+                    <StackPanel VerticalAlignment="Bottom" Padding="8,4,0,4">
+                        <StackPanel.Background>
+                            <SolidColorBrush Color="Black" Opacity=".5" />
+                        </StackPanel.Background>
+                        <TextBlock Text="{Binding Actor}" Style="{StaticResource TitleTextBlockStyle}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
+                        <TextBlock Text="{Binding Character}" Style="{StaticResource SubtitleTextBlockStyle}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
+                    </StackPanel>
+                </Grid>
+            </DataTemplate>
+        </GridView.ItemTemplate>
+    </GridView>
+
 </Page>

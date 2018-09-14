@@ -1,9 +1,12 @@
 ﻿using Newtonsoft.Json;
 
-namespace SampleData.Data.StarTrek
+namespace SampleData.StarTrek
 {
     public partial class Show 
     {
+        
+        [JsonProperty("ordinal")]
+        public string Ordinal { get; set; }
 
         [JsonProperty("abbreviation")]
         public string Abbreviation { get; set; }

@@ -2,11 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media.Animation;
 
 namespace Prism.Navigation
 {
-    internal interface IPlatformNavigationService2
+    public interface IPlatformNavigationService2
     {
         IFrameFacade FrameFacade { get; }
     }
@@ -26,5 +27,7 @@ namespace Prism.Navigation
 
         Task<INavigationResult> NavigateAsync(string path, INavigationParameters parameter, NavigationTransitionInfo infoOverride);
         Task<INavigationResult> NavigateAsync(Uri path, INavigationParameters parameter, NavigationTransitionInfo infoOverride);
+
+        void SetAsWindowContent(Window window, bool activate);
     }
 }

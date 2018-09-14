@@ -1,26 +1,32 @@
 ﻿{
   "shows": [
     {
+      "ordinal": "1",
       "abbreviation": "TOS",
       "name": "The Original Series"
     },
     {
+      "ordinal": "2",
       "abbreviation": "TNG",
       "name": "The Next Generation"
     },
     {
+      "ordinal": "3",
       "abbreviation": "VOY",
       "name": "Voyager"
     },
     {
+      "ordinal": "4",
       "abbreviation": "DS9",
       "name": "Deep Space Nine"
     },
     {
+      "ordinal": "5",
       "abbreviation": "ENT",
       "name": "Enterprise"
     },
     {
+      "ordinal": "6",
       "abbreviation": "DSC",
       "name": "Discovery"
     }

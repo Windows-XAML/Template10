@@ -19,7 +19,26 @@ namespace Prism.Navigation
     {
         IFrameFacade IPlatformNavigationService2.FrameFacade => _frame;
 
+        public void SetAsWindowContent(Window window, bool activate)
+        {
+            window.Content = this.GetXamlFrame();
+            if (activate)
+            {
+                window.Activate();
+            }
+        }
+
         public static Dictionary<Frame, INavigationService> Instances { get; } = new Dictionary<Frame, INavigationService>();
+
+        /// <summary>
+        /// Creates a navigation service
+        /// </summary>
+        /// <param name="gestures">Optional default getures tied to this Frame</param>
+        /// <returns>IPlatformNavigationService</returns>
+        public static IPlatformNavigationService Create(params Gestures[] gestures)
+        {
+            return Create(new Frame(), Window.Current.CoreWindow, gestures);
+        }
 
         /// <summary>
         /// Creates a navigation service
@@ -30,6 +49,16 @@ namespace Prism.Navigation
         public static IPlatformNavigationService Create(Frame frame, params Gestures[] gestures)
         {
             return Create(frame, Window.Current.CoreWindow, gestures);
+        }
+
+        /// <summary>
+        /// Creates a navigation service
+        /// </summary>
+        /// <param name="gestures">Optional default getures tied to this Frame</param>
+        /// <returns>IPlatformNavigationService</returns>
+        public static IPlatformNavigationService Create(CoreWindow window, params Gestures[] gestures)
+        {
+            return Create(new Frame(), window, gestures);
         }
 
         /// <summary>

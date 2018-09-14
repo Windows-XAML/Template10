@@ -1,12 +1,13 @@
 ﻿using Newtonsoft.Json;
-using SampleData.Data.StarTrek;
+using SampleData.StarTrek;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
 
-namespace SampleData
+namespace SampleData.StarTrek
 {
     public class Database
     {
@@ -37,39 +38,52 @@ namespace SampleData
 
             foreach (var ship in Ships = root.Ships)
             {
-                UpdateImagePaths(ship.Show, ship.Images);
-                ship.Image = ship.Images.First();
+                ship.Image = UpdateImagePaths(ship.Show, ship.Images);
             }
 
             foreach (var member in Members = root.Members)
             {
-                UpdateImagePaths(member.Show, member.Images);
-                member.Image = member.Images.First();
+                member.Image = UpdateImagePaths(member.Show, member.Images);
             }
 
             foreach (var show in Shows = root.Shows)
             {
                 UpdateImagePaths(show.Abbreviation, show.Images);
-                show.Image = Ships.First(x => x.Show == show.Abbreviation).Images.First();
+                show.Image = Ships.First(x => x.Show == show.Abbreviation)?.Images?.First();
             }
 
             return Open = true;
 
             Image UpdateImagePaths(string show, params Image[] images)
             {
-                foreach (var image in images)
+                if (images != null)
                 {
-                    image.Path = $"ms-appx:///SampleData/StarTrek/Images/{show}/{image.Path}";
+                    foreach (var image in images)
+                    {
+                        image.Path = $"ms-appx:///SampleData/StarTrek/Images/{show}/{image.Path}";
+                    }
+                    return images.FirstOrDefault();
                 }
-                return images.FirstOrDefault();
+                else
+                {
+                    return null;
+                }
             }
 
             async Task<JsonRoot> ReadJson()
             {
-                var path = new Uri("ms-appx:///SampleData/StarTrek/Data.json");
-                var file = await StorageFile.GetFileFromApplicationUriAsync(path);
-                var json = await FileIO.ReadTextAsync(file);
-                return JsonConvert.DeserializeObject<JsonRoot>(json);
+                try
+                {
+                    var path = new Uri("ms-appx:///SampleData/StarTrek/Data.json");
+                    var file = await StorageFile.GetFileFromApplicationUriAsync(path);
+                    var json = await FileIO.ReadTextAsync(file);
+                    return JsonConvert.DeserializeObject<JsonRoot>(json);
+                }
+                catch (Exception ex)
+                {
+                    Debugger.Break();
+                    throw;
+                }
             }
         }
     }

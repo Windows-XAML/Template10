@@ -6,12 +6,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
 namespace Prism.Navigation
 {
     public static partial class Extensions
     {
+        internal static Frame GetXamlFrame(this INavigationService service)
+        {
+            return ((service as IPlatformNavigationService2).FrameFacade as IFrameFacade2).Frame;
+        }
+
         public static string GetNavigationPath(this INavigationService service, bool includeParameters)
         {
             var nav = service as IPlatformNavigationService2;

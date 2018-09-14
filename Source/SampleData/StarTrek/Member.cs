@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace SampleData.Data.StarTrek
+namespace SampleData.StarTrek
 {
     public partial class Member 
     {

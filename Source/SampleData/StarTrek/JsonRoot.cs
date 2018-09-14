@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace SampleData.Data.StarTrek
+namespace SampleData.StarTrek
 {
     // represents the root of the json document read by the database
 

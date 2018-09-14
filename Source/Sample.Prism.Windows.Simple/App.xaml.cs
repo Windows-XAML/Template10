@@ -33,21 +33,25 @@ namespace Sample
 
         public override void RegisterTypes(IContainerRegistry container)
         {
-            container.RegisterForNavigation<MainPage, MainPageViewModel>(nameof(MainPage));
+            container.RegisterForNavigation<Views.MainPage, MainPageViewModel>(nameof(Views.MainPage));
         }
 
         public override void OnInitialized()
         {
-            var frame = new Frame();
-            NavigationService = Prism.Navigation.NavigationService
-                .Create(frame, Gestures.Back, Gestures.Forward, Gestures.Refresh);
-            Window.Current.Content = frame;
-            Window.Current.Activate();
+            NavigationService = Prism.Navigation.NavigationService.Create(Gestures.Back, Gestures.Forward, Gestures.Refresh);
+            NavigationService.SetAsWindowContent(Window.Current, true);
         }
 
         public override void OnStart(StartArgs args)
         {
-            NavigationService.NavigateAsync(nameof(Views.MainPage));
+            if (args.StartKind == StartKinds.Launch)
+            {
+                NavigationService.NavigateAsync(nameof(Views.MainPage));
+            }
+            else
+            {
+                // TODO
+            }
         }
     }
 }
