@@ -155,7 +155,14 @@ namespace Prism.Navigation
             if (parameters == null && (_frame as IFrameFacade2).Frame.BackStack.Any())
             {
                 var previous = (_frame as IFrameFacade2).Frame.BackStack.Last().Parameter?.ToString();
-                parameters = new NavigationParameters(previous);
+                if (previous is null)
+                {
+                    parameters = new NavigationParameters();
+                }
+                else
+                {
+                    parameters = new NavigationParameters(previous);
+                }
             }
 
             return await _frame.GoBackAsync(

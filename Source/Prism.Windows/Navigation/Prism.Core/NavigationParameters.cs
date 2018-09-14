@@ -8,7 +8,13 @@ namespace Prism.Navigation
 {
     public class NavigationParameters : INavigationParameters, INavigationParametersInternal
     {
+        public NavigationParameters()
+        {
+            // empty
+        }
+
         public NavigationParameters(params (string Name, object Value)[] parameters)
+            : this()
         {
             foreach (var item in parameters)
             {
@@ -17,7 +23,7 @@ namespace Prism.Navigation
         }
 
         public NavigationParameters(string query)
-            : this(new Windows.Foundation.WwwFormUrlDecoder(query).Select(x => (x.Name, (object)x.Value)).ToArray())
+            : this(new Windows.Foundation.WwwFormUrlDecoder(query ?? string.Empty).Select(x => (x.Name, (object)x.Value)).ToArray())
         {
             // empty
         }
