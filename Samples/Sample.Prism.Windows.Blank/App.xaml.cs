@@ -33,7 +33,7 @@ namespace Sample
 
         public override void RegisterTypes(IContainerRegistry container)
         {
-            container.RegisterForNavigation<MainPage, MainPageViewModel>(nameof(MainPage));
+            container.RegisterForNavigation<MainPage, MainPageViewModel>(nameof(Views.MainPage));
         }
 
         public override void OnInitialized()
