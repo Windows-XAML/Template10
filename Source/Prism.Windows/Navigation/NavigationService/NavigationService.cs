@@ -147,7 +147,7 @@ namespace Prism.Navigation
 
         public async Task<INavigationResult> GoBackAsync(INavigationParameters parameters)
             => await GoBackAsync(
-                parameters: default(INavigationParameters),
+                parameters: parameters,
                 infoOverride: default(NavigationTransitionInfo));
 
         public async Task<INavigationResult> GoBackAsync(INavigationParameters parameters = null, NavigationTransitionInfo infoOverride = null)
