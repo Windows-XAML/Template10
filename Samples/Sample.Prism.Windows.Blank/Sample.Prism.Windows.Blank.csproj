@@ -148,6 +148,10 @@
       <Project>{648c8631-c97f-4b81-98fc-f4370317751a}</Project>
       <Name>Prism.Windows</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Source\SampleData\SampleData.csproj">
+      <Project>{b8442c8a-b688-48d2-8ba7-325a675cc611}</Project>
+      <Name>SampleData</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
