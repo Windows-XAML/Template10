@@ -84,6 +84,9 @@ namespace Prism
         static int _initialized = 0;
         private void CallOnInitializedOnce()
         {
+            // don't forget there is no logger yet
+            Debug.WriteLine($"{nameof(PrismApplicationBase)}.{nameof(CallOnInitializedOnce)}");
+            
             // once and only once, ever
             if (Interlocked.Increment(ref _initialized) == 1)
             {
@@ -175,6 +178,9 @@ namespace Prism
 
         protected virtual void RegisterRequiredTypes(IContainerRegistry container)
         {
+            // don't forget there is no logger yet
+            Debug.WriteLine($"{nameof(PrismApplicationBase)}.{nameof(RegisterRequiredTypes)}");
+
             // required for view-models
 
             container.Register<INavigationService, NavigationService>(NavigationServiceParameterName);
