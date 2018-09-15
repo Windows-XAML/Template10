@@ -155,9 +155,7 @@
       <Version>4.5.0-preview1-26216-02</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Prism\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Reference Include="System.ComponentModel.TypeConverter">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft SDKs\NuGetPackagesFallback\microsoft.netcore.universalwindowsplatform\6.0.8\ref\uap10.0.15138\System.ComponentModel.TypeConverter.dll</HintPath>
