@@ -16,7 +16,6 @@ namespace SampleData.StarTrek
         [JsonProperty("name")]
         public string Name { get; set; }
 
-        [JsonIgnore]
         public Image Image { get; set; }
     }
 }

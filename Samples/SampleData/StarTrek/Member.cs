@@ -2,7 +2,7 @@
 
 namespace SampleData.StarTrek
 {
-    public partial class Member 
+    public partial class Member
     {
         [JsonProperty("show")]
         public string Show { get; set; }
@@ -22,7 +22,26 @@ namespace SampleData.StarTrek
         [JsonProperty("species")]
         public string Species { get; set; }
 
-        [JsonIgnore]
         public Image Image { get; set; }
+
+        public string ToJson() => JsonConvert.SerializeObject(this);
+        public static bool TryFromJson(string json, out Member member)
+        {
+            try
+            {
+                member = JsonConvert.DeserializeObject<Member>(json);
+                return true;
+            }
+            catch (System.Exception)
+            {
+                member = default(Member);
+                return false;
+            }
+        }
+
+        public override string ToString()
+        {
+            return $"{Character} by {Actor}";
+        }
     }
 }

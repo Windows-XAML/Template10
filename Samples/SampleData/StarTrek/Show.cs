@@ -17,7 +17,11 @@ namespace SampleData.StarTrek
         [JsonProperty("images")]
         public Image[] Images { get; set; }
 
-        [JsonIgnore]
         public Image Image { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Ordinal} {Abbreviation} {Name}";
+        }
     }
 }
