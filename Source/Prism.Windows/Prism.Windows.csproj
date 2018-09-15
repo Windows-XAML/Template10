@@ -106,7 +106,6 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Application\IPrismApplicationBase.cs" />
     <Compile Include="Application\IStartArgs.cs" />
     <Compile Include="Application\PrismApplicationBase.core.cs" />
     <Compile Include="Application\PrismApplicationBase.events.cs" />
