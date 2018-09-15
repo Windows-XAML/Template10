@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 namespace Prism.Navigation
@@ -44,6 +45,11 @@ namespace Prism.Navigation
         public static async Task<INavigationResult> NavigateAsync(this INavigationService service, string path, params (string Name, string Value)[] parameters)
         {
             return await service.NavigateAsync(PathBuilder.Create(path, parameters).ToString());
+        }
+
+        public static async Task<INavigationResult> NavigateAsync(this INavigationService service, string path, NavigationTransitionInfo infoOverride = null, params (string Name, string Value)[] parameters)
+        {
+            return await service.NavigateAsync(PathBuilder.Create(path, parameters).ToString(), null, infoOverride);
         }
 
         public static bool TryGetParameter<T>(this NavigationEventArgs args, string name, out T value)

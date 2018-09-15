@@ -107,9 +107,12 @@ namespace Prism.Services
         {
             var properties = e.CurrentPoint.Properties;
             // Ignore button chords with the left, right, and middle buttons
-            if (properties.IsLeftButtonPressed || properties.IsRightButtonPressed ||
-                properties.IsMiddleButtonPressed)
+            if (properties.IsLeftButtonPressed
+                || properties.IsRightButtonPressed
+                || properties.IsMiddleButtonPressed)
+            {
                 return;
+            }
             TestForNavigateRequested(e, properties);
         }
 
