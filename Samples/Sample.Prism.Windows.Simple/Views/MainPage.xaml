@@ -11,26 +11,25 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Page.DataContext>
-        <viewmodels:MainPageViewModel x:Name="ViewModel" />
-    </Page.DataContext>
-
     <Page.Resources>
         <CollectionViewSource x:Name="cvs" IsSourceGrouped="True" Source="{x:Bind ViewModel.Members}" ItemsPath="Members" />
     </Page.Resources>
 
-    <GridView ItemsSource="{Binding Source={StaticResource cvs}}">
-        <GridView.Header>
-            <CommandBar IsDynamicOverflowEnabled="False">
-                <CommandBar.Content>
-                    <TextBlock Text="Star Trek" VerticalAlignment="Center" Margin="16,8,0,0" Style="{StaticResource TitleTextBlockStyle}" />
-                </CommandBar.Content>
-                <controls:AppBarLiteral>
-                    <AutoSuggestBox QueryIcon="Find" PlaceholderText="Search" Text="{x:Bind ViewModel.SearchString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="250" Margin="0,8,4,0" />
-                </controls:AppBarLiteral>
-                <AppBarButton Label="Info" Icon="World" />
-            </CommandBar>
-        </GridView.Header>
+<Page.TopAppBar>
+    <CommandBar IsDynamicOverflowEnabled="False">
+        <CommandBar.Content>
+            <TextBlock Text="Star Trek" VerticalAlignment="Center" Margin="16,8,0,0" 
+                        Style="{StaticResource TitleTextBlockStyle}" />
+        </CommandBar.Content>
+        <controls:AppBarLiteral>
+            <AutoSuggestBox QueryIcon="Find" PlaceholderText="Search" Width="250" Margin="0,8,4,0"
+                            Text="{x:Bind ViewModel.SearchString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </controls:AppBarLiteral>
+        <AppBarButton Label="Info" Icon="World" AccessKey="i" />
+    </CommandBar>
+</Page.TopAppBar>
+
+    <GridView ItemsSource="{Binding Source={StaticResource cvs}}" IsItemClickEnabled="True" ItemClick="{x:Bind ViewModel.ItemClick}">
         <GridView.GroupStyle>
             <GroupStyle>
                 <GroupStyle.HeaderContainerStyle>
@@ -41,7 +40,7 @@
                 </GroupStyle.HeaderContainerStyle>
                 <GroupStyle.HeaderTemplate>
                     <DataTemplate>
-                        <StackPanel Padding="8,8,8,42">
+                        <StackPanel Padding="8,8,8,68">
                             <StackPanel.Background>
                                 <ImageBrush ImageSource="{Binding Show.Image.Path}" AlignmentX="Center" AlignmentY="Center" Stretch="UniformToFill" />
                             </StackPanel.Background>
@@ -49,13 +48,13 @@
                         </StackPanel>
                     </DataTemplate>
                 </GroupStyle.HeaderTemplate>
+                <GroupStyle.ContainerStyle>
+                    <Style TargetType="GroupItem">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                    </Style>
+                </GroupStyle.ContainerStyle>
             </GroupStyle>
         </GridView.GroupStyle>
-        <GridView.Resources>
-            <Style TargetType="ItemsWrapGrid">
-                <Setter Property="GroupPadding" Value="16,16,16,0" />
-            </Style>
-        </GridView.Resources>
         <GridView.ItemContainerStyle>
             <Style TargetType="GridViewItem">
                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -64,9 +63,9 @@
         </GridView.ItemContainerStyle>
         <GridView.ItemTemplate>
             <DataTemplate x:DataType="models:Member">
-                <Grid Width="200" Height="200">
+                <Grid Height="250" Width="200">
                     <Grid.Background>
-                        <ImageBrush ImageSource="{Binding Image.Path}" />
+                        <ImageBrush ImageSource="{Binding Image.Path}" AlignmentY="Top" Stretch="UniformToFill" />
                     </Grid.Background>
                     <StackPanel VerticalAlignment="Bottom" Padding="8,4,0,4">
                         <StackPanel.Background>

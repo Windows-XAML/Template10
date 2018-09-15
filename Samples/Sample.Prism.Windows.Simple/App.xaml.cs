@@ -3,6 +3,7 @@ using Prism.Ioc;
 using Prism.Navigation;
 using Prism.Unity;
 using Sample.ViewModels;
+using Sample.Views;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -33,7 +34,8 @@ namespace Sample
 
         public override void RegisterTypes(IContainerRegistry container)
         {
-            container.RegisterForNavigation<Views.MainPage, MainPageViewModel>(nameof(Views.MainPage));
+            container.RegisterForNavigation<MainPage, MainPageViewModel>(nameof(MainPage));
+            container.RegisterForNavigation<ItemPage, ItemPageViewModel>(nameof(ItemPage));
         }
 
         public override void OnInitialized()
@@ -46,7 +48,7 @@ namespace Sample
         {
             if (args.StartKind == StartKinds.Launch)
             {
-                NavigationService.NavigateAsync(nameof(Views.MainPage));
+                NavigationService.NavigateAsync(nameof(MainPage));
             }
             else
             {
