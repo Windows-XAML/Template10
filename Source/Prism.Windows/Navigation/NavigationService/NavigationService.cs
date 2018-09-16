@@ -1,4 +1,5 @@
-﻿using Prism.Navigation;
+﻿using Prism.Logging;
+using Prism.Navigation;
 using Prism.Services;
 using System;
 using System.Collections;
@@ -9,6 +10,8 @@ using System.Threading.Tasks;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Prism.Ioc;
+
 using Windows.UI.Xaml.Media.Animation;
 
 namespace Prism.Navigation
@@ -96,6 +99,7 @@ namespace Prism.Navigation
         }
 
         private readonly IFrameFacade _frame;
+        private readonly ILoggerFacade _logger;
 
         private NavigationService(Frame frame)
         {
@@ -105,6 +109,7 @@ namespace Prism.Navigation
             _frame.CanGoForwardChanged += (s, e) =>
                 CanGoForwardChanged?.Invoke(this, EventArgs.Empty);
             Instances.Add(frame, this);
+            _logger = PrismApplicationBase.Current.Container.Resolve<ILoggerFacade>();
         }
 
         public async Task RefreshAsync()
@@ -206,7 +211,7 @@ namespace Prism.Navigation
 
         public async Task<INavigationResult> NavigateAsync(Uri uri, INavigationParameters parameter, NavigationTransitionInfo infoOverride)
         {
-            System.Diagnostics.Debug.WriteLine($"{nameof(NavigationService)}.{nameof(NavigateAsync)}({uri})");
+            _logger.Log($"{nameof(NavigationService)}.{nameof(NavigateAsync)}(uri:{uri} parameter:{parameter} info:{infoOverride})", Category.Info, Priority.None);
             return await _frame.NavigateAsync(
                 uri: uri,
                 parameter: parameter,

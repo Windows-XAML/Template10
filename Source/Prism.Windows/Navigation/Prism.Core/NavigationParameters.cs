@@ -16,9 +16,9 @@ namespace Prism.Navigation
         public NavigationParameters(params (string Name, object Value)[] parameters)
             : this()
         {
-            foreach (var item in parameters)
+            foreach (var (Name, Value) in parameters)
             {
-                _external.Add(item.Name, item.Value);
+                _external.Add(Name, Value);
             }
         }
 
@@ -26,6 +26,13 @@ namespace Prism.Navigation
             : this(string.IsNullOrWhiteSpace(query) ? Array.Empty<(string key, object value)>() : new Windows.Foundation.WwwFormUrlDecoder(query).Select(x => (x.Name, (object)x.Value)).ToArray())
         {
             // empty
+        }
+
+        public override string ToString()
+        {
+            var i = string.Join(",", _internal.Select(x => $"({x.Key}:{x.Value})"));
+            var e = string.Join(",", _external.Select(x => $"({x.Key}:{x.Value})"));
+            return $"{{internal:{i} external:{e}}}";
         }
 
         Dictionary<string, object> _external = new Dictionary<string, object>();

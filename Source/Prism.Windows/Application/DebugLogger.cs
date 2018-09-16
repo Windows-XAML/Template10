@@ -7,7 +7,15 @@ namespace Prism
     {
         public void Log(string message, Category category, Priority priority)
         {
-            Debug.WriteLine($"{priority} {category} {message}");
+            var priority_text = priority.ToString();
+            var category_text = category.ToString();
+            if (priority == Priority.None && category == Category.Info)
+            {
+                priority_text = string.Empty;
+                category_text = string.Empty;
+            }
+
+            Debug.WriteLine($"{priority_text} {category_text} {message}");
         }
     }
 }
