@@ -56,10 +56,12 @@ namespace Prism
         public new static PrismApplicationBase Current => (PrismApplicationBase)Application.Current;
         private static SemaphoreSlim _startSemaphore = new SemaphoreSlim(1, 1);
         public const string NavigationServiceParameterName = "navigationService";
+        private readonly bool _logStartingEvents = false;
 
         public PrismApplicationBase()
         {
             InternalInitialize();
+            _logger.Log("[App.Constructor()]", Category.Info, Priority.None);
             (this as IPrismApplicationEvents).WindowCreated += (s, e) =>
             {
                 GestureService.SetupForCurrentView(e.Window.CoreWindow);
@@ -94,27 +96,41 @@ namespace Prism
         private void InternalInitialize()
         {
             // don't forget there is no logger yet
-            Debug.WriteLine($"{nameof(PrismApplicationBase)}.{nameof(InternalInitialize)}");
+            if (_logStartingEvents)
+            {
+                _logger.Log($"{nameof(PrismApplicationBase)}.{nameof(InternalInitialize)}", Category.Info, Priority.None);
+            }
 
             // dependecy injection
             _containerExtension = CreateContainer();
             RegisterRequiredTypes(_containerExtension as IContainerRegistry);
+            Debug.WriteLine("[App.RegisterTypes()]");
             RegisterTypes(_containerExtension as IContainerRegistry);
+            Debug.WriteLine("Dependency container has just been finalized.");
             _containerExtension.FinalizeExtension();
+
+            // now we can start logging instead of debug/write
+            _logger = Container.Resolve<ILoggerFacade>();
 
             // finalize the application
             ConfigureViewModelLocator();
         }
 
         static int _initialized = 0;
+        private ILoggerFacade _logger;
+
         private void CallOnInitializedOnce()
         {
             // don't forget there is no logger yet
-            Debug.WriteLine($"{nameof(PrismApplicationBase)}.{nameof(CallOnInitializedOnce)}");
+            if (_logStartingEvents)
+            {
+                _logger.Log($"{nameof(PrismApplicationBase)}.{nameof(CallOnInitializedOnce)}", Category.Info, Priority.None);
+            }
 
             // once and only once, ever
             if (Interlocked.Increment(ref _initialized) == 1)
             {
+                _logger.Log("[App.OnInitialize()]", Category.Info, Priority.None);
                 OnInitialized();
             }
         }
@@ -122,18 +138,24 @@ namespace Prism
         private async Task InternalStartAsync(StartArgs startArgs)
         {
             await _startSemaphore.WaitAsync();
-            Debug.WriteLine($"{nameof(PrismApplicationBase)}.{nameof(InternalStartAsync)}({startArgs})");
+            if (_logStartingEvents)
+            {
+                _logger.Log($"{nameof(PrismApplicationBase)}.{nameof(InternalStartAsync)}({startArgs})", Category.Info, Priority.None);
+            }
+
             try
             {
                 CallOnInitializedOnce();
                 TestResuming(startArgs);
+                _logger.Log($"[App.OnStart(startKind:{startArgs.StartKind}, startCause:{startArgs.StartCause})]", Category.Info, Priority.None);
                 OnStart(startArgs);
+                _logger.Log($"[App.OnStartAsync(startKind:{startArgs.StartKind}, startCause:{startArgs.StartCause})]", Category.Info, Priority.None);
                 await OnStartAsync(startArgs);
                 Window.Current.Activate();
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"ERROR {ex.Message}");
+                _logger.Log($"ERROR {ex.Message}", Category.Exception, Priority.High);
                 Debugger.Break();
             }
             finally
@@ -204,7 +226,7 @@ namespace Prism
         protected virtual void RegisterRequiredTypes(IContainerRegistry container)
         {
             // don't forget there is no logger yet
-            Debug.WriteLine($"{nameof(PrismApplicationBase)}.{nameof(RegisterRequiredTypes)}");
+            Debug.WriteLine($"{nameof(PrismApplicationBase)}.{nameof(RegisterRequiredTypes)}()");
 
             // required for view-models
 
