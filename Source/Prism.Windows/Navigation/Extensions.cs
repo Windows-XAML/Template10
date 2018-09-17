@@ -29,9 +29,16 @@ namespace Prism.Navigation
             {
                 if (PageRegistry.TryGetRegistration(item.SourcePageType, out var info))
                 {
-                    if (includeParameters)
+                    if (item.Parameter != null)
                     {
-                        sb.Add($"{info.Key}?{item.Parameter}");
+                        if (includeParameters)
+                        {
+                            sb.Add($"{info.Key}?{item.Parameter}");
+                        }
+                        else
+                        {
+                            sb.Add(info.Key);
+                        }
                     }
                     else
                     {
