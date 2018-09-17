@@ -29,7 +29,7 @@ namespace Prism.Navigation
 
     public class FrameFacade : IFrameFacade, IFrameFacade2
     {
-        bool _logStartingEvents = false;
+        private readonly bool _logStartingEvents = false;
 
         private readonly Frame _frame;
         private readonly CoreDispatcher _dispatcher;
