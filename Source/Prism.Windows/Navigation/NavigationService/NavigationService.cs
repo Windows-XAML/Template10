@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Controls;
 using Prism.Ioc;
 
 using Windows.UI.Xaml.Media.Animation;
+using System.Diagnostics;
 
 namespace Prism.Navigation
 {
@@ -212,10 +213,20 @@ namespace Prism.Navigation
         public async Task<INavigationResult> NavigateAsync(Uri uri, INavigationParameters parameter, NavigationTransitionInfo infoOverride)
         {
             _logger.Log($"{nameof(NavigationService)}.{nameof(NavigateAsync)}(uri:{uri} parameter:{parameter} info:{infoOverride})", Category.Info, Priority.None);
-            return await _frame.NavigateAsync(
-                uri: uri,
-                parameter: parameter,
-                infoOverride: infoOverride);
+
+            try
+            {
+                return await _frame.NavigateAsync(
+                    uri: uri,
+                    parameter: parameter,
+                    infoOverride: infoOverride);
+            }
+            catch (Exception ex)
+            {
+                _logger.Log($"Navigation error: {ex.Message}", Category.Exception, Priority.High);
+                Debugger.Break();
+                throw;
+            }
         }
     }
 }
