@@ -14,15 +14,22 @@ namespace Template10.Services.Dialog
     {
         public ElementTheme RequestedTheme { get; set; } = ElementTheme.Light;
 
-        public MessageBoxEx(string title, string text, MessageBoxType messageBoxType = MessageBoxType.Ok, IDialogResourceResolver resolver = null)
+        public MessageBoxEx(string title, string text, MessageBoxType messageBoxType = MessageBoxType.Ok, 
+			IDialogResourceResolver resolver = null, ElementTheme requestedTheme = ElementTheme.Light, string noText = null,
+			string yesText = null)
         {
+			NoText = noText;
+			YesText = yesText;
             Text = text;
             Title = title;
             Type = messageBoxType;
             Resolver = resolver ?? Settings.DefaultResolver;
+            RequestedTheme = requestedTheme;
         }
 
-        public string Text { get; set; }
+		public string NoText { get; set; }
+		public string YesText { get; set; }
+		public string Text { get; set; }
         public string Title { get; set; }
         public MessageBoxType Type { get; set; }
         public IDialogResourceResolver Resolver { get; set; }
@@ -81,12 +88,12 @@ namespace Template10.Services.Dialog
                     dialog.SetSecondaryButton(Resolver.Resolve(ResourceTypes.Cancel));
                     break;
                 case MessageBoxType.YesNo:
-                    dialog.SetPrimaryButton(Resolver.Resolve(ResourceTypes.Yes));
-                    dialog.SetSecondaryButton(Resolver.Resolve(ResourceTypes.No));
+                    dialog.SetPrimaryButton(YesText ?? Resolver.Resolve(ResourceTypes.Yes));
+                    dialog.SetSecondaryButton(NoText ?? Resolver.Resolve(ResourceTypes.No));
                     break;
                 case MessageBoxType.YesNoCancel:
-                    dialog.SetPrimaryButton(Resolver.Resolve(ResourceTypes.Yes));
-                    dialog.SetSecondaryButton(Resolver.Resolve(ResourceTypes.No));
+                    dialog.SetPrimaryButton(YesText ?? Resolver.Resolve(ResourceTypes.Yes));
+                    dialog.SetSecondaryButton(NoText ?? Resolver.Resolve(ResourceTypes.No));
                     dialog.SetCloseButton(Resolver.Resolve(ResourceTypes.Cancel));
                     break;
                 default:
