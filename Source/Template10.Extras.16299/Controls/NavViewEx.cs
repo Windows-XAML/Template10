@@ -45,7 +45,7 @@ namespace Template10.Controls
 
             _frame.Navigated += (s, e) =>
             {
-                if (TryFindItem(e.SourcePageType, out var item))
+                if (TryFindItem(e.SourcePageType, e.Parameter, out var item))
                 {
                     SetSelectedItem(item);
                 }
@@ -319,7 +319,7 @@ namespace Template10.Controls
             }
         }
 
-        private bool TryFindItem(Type type, out object item)
+        private bool TryFindItem(Type type,object parameter, out object item)
         {
             // registered?
 
@@ -333,10 +333,10 @@ namespace Template10.Controls
 
             if (NavigationQueue.TryParse(SettingsNavigationUri, null, out var settings))
             {
-                if (type == settings.Last().View)
+                if (type == settings.Last().View && (string)parameter == settings.Last().QueryString)
                 {
                     item = SettingsItem;
-                    return false;
+                    return true;
                 }
                 else
                 {
