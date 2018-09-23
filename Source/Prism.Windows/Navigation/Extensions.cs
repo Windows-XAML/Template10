@@ -24,7 +24,6 @@ namespace Prism.Navigation
             var nav = service as IPlatformNavigationService2;
             var facade = nav.FrameFacade as IFrameFacade2;
             var sb = new List<string>();
-            sb.Add(facade.CurrentNavigationPath);
             foreach (var item in facade.Frame.BackStack)
             {
                 if (PageRegistry.TryGetRegistration(item.SourcePageType, out var info))
@@ -46,6 +45,7 @@ namespace Prism.Navigation
                     }
                 }
             }
+            sb.Add(facade.CurrentNavigationPath);
             return $"/{string.Join("/", sb.ToArray())}";
         }
 
