@@ -131,7 +131,7 @@ namespace Prism.Navigation
         {
             if (parameters == null && (_frame as IFrameFacade2).Frame.ForwardStack.Any())
             {
-                var previous = (_frame as IFrameFacade2).Frame.ForwardStack.First().Parameter?.ToString();
+                var previous = (_frame as IFrameFacade2).Frame.ForwardStack.Last().Parameter?.ToString();
                 parameters = new NavigationParameters(previous);
             }
 
