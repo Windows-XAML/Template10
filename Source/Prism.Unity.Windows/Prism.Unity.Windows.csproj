@@ -120,7 +120,7 @@
       <Version>7.1.0.123-pre</Version>
     </PackageReference>
     <PackageReference Include="Unity">
-      <Version>5.7.3</Version>
+      <Version>5.8.11</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
