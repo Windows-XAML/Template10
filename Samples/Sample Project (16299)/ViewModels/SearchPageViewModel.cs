@@ -5,20 +5,22 @@ using Sample.Services;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Template10.Utilities;
+using Prism.Events;
 
 namespace Sample.ViewModels
 {
-    class SearchPageViewModel : BindableBase
+    class SearchPageViewModel : BindableBase, INavigatedAware
     {
         private readonly IDataService _dataService;
+        private readonly IEventAggregator _eventAggregator;
         private NavigationService _navigationService;
 
-        public SearchPageViewModel(IDataService dataService, IVarun varun)
+        public SearchPageViewModel(IDataService dataService, IEventAggregator eventAggregator)
         {
             _dataService = dataService;
         }
 
-        public override void OnNavigatedTo(INavigationParameters parameters)
+        public void OnNavigatedTo(INavigationParameters parameters)
         {
             _navigationService = parameters.GetNavigationService();
             if (parameters.TryGetValue<string>("SearchTerm", out var searchTerm))
@@ -29,7 +31,11 @@ namespace Sample.ViewModels
             {
                 SearchTerm = "No search term provided.";
             }
+        }
 
+        public void OnNavigatedFrom(INavigationParameters parameters)
+        {
+            // empty
         }
 
         void Search(string term)
