@@ -13,6 +13,7 @@ using Template10.Services.Dialog;
 using Template10.Utilities;
 using System.Diagnostics;
 using Prism.Events;
+using SampleData.Food;
 
 namespace Sample.ViewModels
 {
@@ -51,8 +52,9 @@ namespace Sample.ViewModels
             }
         }
 
-        public ObservableCollection<DataItem> Items { get; } = new ObservableCollection<DataItem>();
-        public ObservableCollection<DataGroup> Groups { get; } = new ObservableCollection<DataGroup>();
+        public ObservableCollection<Fruit> Items { get; } = new ObservableCollection<Fruit>();
+
+        public ObservableCollection<Group<Fruit>> Groups { get; } = new ObservableCollection<Group<Fruit>>();
 
         public void OnNavigatedTo(INavigationParameters parameters)
         {
@@ -76,8 +78,8 @@ namespace Sample.ViewModels
 
         private void LoadData()
         {
-            Items.AddRange(_dataService.GetItems(150), true);
-            Groups.AddRange(_dataService.GetGroups(10, 10));
+            Items.AddRange(_dataService.GetItems(), true);
+            Groups.AddRange(_dataService.GetGroups());
         }
 
         private bool SaveData()

@@ -99,9 +99,8 @@
     <Compile Include="Models\DataGroup.cs" />
     <Compile Include="Models\DataItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\FakeDataService.cs" />
+    <Compile Include="Services\DataService.cs" />
     <Compile Include="Services\IDataService.cs" />
-    <Compile Include="Services\NewtonsoftSerializationService.cs" />
     <Compile Include="ViewModels\EditViewViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\SearchPageViewModel.cs" />
@@ -128,33 +127,6 @@
     <None Include="PrismSample_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\Apples.jpg" />
-    <Content Include="Images\Bananas.jpg" />
-    <Content Include="Images\Blackberries.jpg" />
-    <Content Include="Images\Cabbage.jpg" />
-    <Content Include="Images\Carrots.jpg" />
-    <Content Include="Images\Cauliflower.jpg" />
-    <Content Include="Images\Cherries.jpg" />
-    <Content Include="Images\Coconuts.jpg" />
-    <Content Include="Images\EggPlant.jpg" />
-    <Content Include="Images\Figs.jpg" />
-    <Content Include="Images\Ginger.jpg" />
-    <Content Include="Images\Grapefruits.jpg" />
-    <Content Include="Images\Grapes.jpg" />
-    <Content Include="Images\GreenBeans.jpg" />
-    <Content Include="Images\Kale.jpg" />
-    <Content Include="Images\Kiwis.jpg" />
-    <Content Include="Images\Lemons.jpg" />
-    <Content Include="Images\Nectarines.jpg" />
-    <Content Include="Images\Onions.jpg" />
-    <Content Include="Images\Oranges.jpg" />
-    <Content Include="Images\Peaches.jpg" />
-    <Content Include="Images\Pears.jpg" />
-    <Content Include="Images\Plumbs.jpg" />
-    <Content Include="Images\Raspberries.jpg" />
-    <Content Include="Images\Strawberries.jpg" />
-    <Content Include="Images\Tomatoes.jpg" />
-    <Content Include="Images\Zuchinnis.jpg" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -191,9 +163,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Bogus">
-      <Version>24.0.0</Version>
-    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.1.7</Version>
     </PackageReference>
@@ -223,6 +192,10 @@
     <ProjectReference Include="..\..\Source\Template10.Extras.16299\Template10.Extras.16299.csproj">
       <Project>{51e89714-0358-486d-8dfb-6600a3fa7319}</Project>
       <Name>Template10.Extras.16299</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SampleData\SampleData.csproj">
+      <Project>{b8442c8a-b688-48d2-8ba7-325a675cc611}</Project>
+      <Name>SampleData</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

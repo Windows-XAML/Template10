@@ -37,10 +37,9 @@ namespace Sample
         {
             container.RegisterTemplate10Services();
             container.RegisterSingleton<ShellPage, ShellPage>();
-            container.RegisterSingleton<IDataService, FakeDataService>();
+            container.RegisterSingleton<IDataService, DataService>();
             container.RegisterForNavigation<MainPage, MainPageViewModel>(nameof(MainPage));
             container.RegisterForNavigation<SearchPage, SearchPageViewModel>(nameof(SearchPage));
-            container.RegisterSingleton<ISerializationService, NewtonsoftSerializationService>();
         }
 
         public override void OnInitialized()
@@ -77,7 +76,8 @@ namespace Sample
                     navigationPath = PathBuilder.Create(nameof(MainPage), ("Record", "0567")).ToString();
                     Window.Current.Content = new SplashPage(e.SplashScreen);
                     break;
-                case StartKinds.Resume when (args.Arguments is ResumeArgs resume && ApplicationData.Current.LocalSettings.Values.TryGetValue(nameof(Suspending), out navigationPath)):
+                case StartKinds.Resume when (args.Arguments is ResumeArgs resume 
+                        && ApplicationData.Current.LocalSettings.Values.TryGetValue(nameof(Suspending), out navigationPath)):
                     ApplicationData.Current.LocalSettings.Values.Remove(nameof(Suspending));
                     if ((DateTime.Now - resume.SuspensionDate) < TimeSpan.FromHours(1))
                     {

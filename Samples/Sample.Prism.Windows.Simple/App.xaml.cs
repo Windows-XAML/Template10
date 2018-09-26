@@ -2,6 +2,7 @@
 using Prism.Ioc;
 using Prism.Navigation;
 using Prism.Unity;
+using Sample.Services;
 using Sample.ViewModels;
 using Sample.Views;
 using System;
@@ -34,6 +35,7 @@ namespace Sample
 
         public override void RegisterTypes(IContainerRegistry container)
         {
+            container.Register<IDataService, DataService>();
             container.RegisterForNavigation<MainPage, MainPageViewModel>(nameof(MainPage));
             container.RegisterForNavigation<ItemPage, ItemPageViewModel>(nameof(ItemPage));
         }

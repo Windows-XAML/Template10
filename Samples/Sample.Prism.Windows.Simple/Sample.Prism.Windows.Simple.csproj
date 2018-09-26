@@ -98,6 +98,7 @@
     <Compile Include="Controls\AppBarLiteral.cs" />
     <Compile Include="Models\GroupedMembers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DataService.cs" />
     <Compile Include="ViewModels\ItemPageViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="Views\ItemPage.xaml.cs">
@@ -146,9 +147,7 @@
       <Version>6.1.7</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\Source\Prism.Unity.Windows\Prism.Unity.Windows.csproj">
       <Project>{cc3018eb-6d2b-4306-94a1-3a7cba7a8f18}</Project>

@@ -1,6 +1,7 @@
 ﻿using Prism.Mvvm;
 using Prism.Navigation;
 using Sample.Models;
+using Sample.Services;
 using SampleData.StarTrek;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,17 +13,13 @@ namespace Sample.ViewModels
 {
     class MainPageViewModel : BindableBase, INavigatedAwareAsync
     {
-        private static readonly Database _data;
-
-        static MainPageViewModel()
-        {
-            _data = new Database();
-        }
-
+        private IDataService _data;
         private NavigationService _nav;
 
-        public MainPageViewModel()
+        public MainPageViewModel(IDataService dataService, NavigationService navigationService)
         {
+            _data = dataService;
+            _nav = navigationService;
             PropertyChanged += (s, e) =>
             {
                 if (e.PropertyName.Equals(nameof(SearchString)))
@@ -34,7 +31,6 @@ namespace Sample.ViewModels
 
         public async Task OnNavigatedToAsync(INavigationParameters parameters)
         {
-            _nav = parameters.GetNavigationService();
             await _data.OpenAsync();
             FillMembers();
         }

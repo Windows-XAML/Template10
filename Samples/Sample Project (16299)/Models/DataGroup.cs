@@ -4,15 +4,10 @@ using System.Collections.ObjectModel;
 
 namespace Sample.Models
 {
-    public class DataGroup: BindableBase
+    public class Group<T>
     {
-        private string _title;
-        public string Title
-        {
-            get => _title;
-            set => SetProperty(ref _title, value);
-        }
+        public string Title { get; set; }
 
-        public ObservableCollection<DataItem> Items { get; set; }
+        public IEnumerable<T> Items { get; set; }
     }
 }
