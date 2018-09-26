@@ -16,7 +16,7 @@ using Prism.Events;
 
 namespace Sample.ViewModels
 {
-    class MainPageViewModel : BindableBase
+    class MainPageViewModel : BindableBase, INavigatedAware, IConfirmNavigation
     {
         private readonly IDataService _dataService;
         private readonly IDialogService _dialogService;
@@ -54,7 +54,7 @@ namespace Sample.ViewModels
         public ObservableCollection<DataItem> Items { get; } = new ObservableCollection<DataItem>();
         public ObservableCollection<DataGroup> Groups { get; } = new ObservableCollection<DataGroup>();
 
-        public override void OnNavigatedTo(INavigationParameters parameters)
+        public void OnNavigatedTo(INavigationParameters parameters)
         {
             if (parameters.TryGetValue<int>("Record", out var record))
             {
@@ -64,7 +64,12 @@ namespace Sample.ViewModels
             LoadData();
         }
 
-        public override bool CanNavigate(INavigationParameters parameters)
+        public void OnNavigatedFrom(INavigationParameters parameters)
+        {
+            // empty
+        }
+
+        public bool CanNavigate(INavigationParameters parameters)
         {
             return IsValid();
         }
