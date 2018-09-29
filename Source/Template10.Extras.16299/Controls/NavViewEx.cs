@@ -177,7 +177,7 @@ namespace Template10.Controls
         public enum ItemHeaderBehaviors { Hide, Remove, None }
         public ItemHeaderBehaviors ItemHeaderBehavior { get; set; } = ItemHeaderBehaviors.Remove;
 
-        public Uri SettingsNavigationUri { get; set; }
+        public string SettingsNavigationUri { get; set; }
         public event EventHandler SettingsInvoked;
 
         public new object SelectedItem
