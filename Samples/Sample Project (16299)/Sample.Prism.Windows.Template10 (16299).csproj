@@ -172,22 +172,17 @@
     <PackageReference Include="Newtonsoft.Json">
       <Version>11.0.2</Version>
     </PackageReference>
-    <PackageReference Include="Prism.Core">
-      <Version>7.1.0.123-pre</Version>
+    <PackageReference Include="Prism.Unity.Windows">
+      <Version>7.1.0.309-ci</Version>
+    </PackageReference>
+    <PackageReference Include="Prism.Windows">
+      <Version>7.1.0.309-ci</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Source\Prism.Unity.Windows\Prism.Unity.Windows.csproj">
-      <Project>{cc3018eb-6d2b-4306-94a1-3a7cba7a8f18}</Project>
-      <Name>Prism.Unity.Windows</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Source\Prism.Windows\Prism.Windows.csproj">
-      <Project>{648C8631-C97F-4B81-98FC-F4370317751A}</Project>
-      <Name>Prism.Windows</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Source\Template10.Extras.10586\Template10.Extras.10586.csproj">
+    <ProjectReference Include="..\..\Source\Template10.Extras.15063\Template10.Extras.15063.csproj">
       <Project>{9bb18d4b-bcdd-43c9-a7c2-416d13dd39a6}</Project>
-      <Name>Template10.Extras.10586</Name>
+      <Name>Template10.Extras.15063</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Source\Template10.Extras.16299\Template10.Extras.16299.csproj">
       <Project>{51e89714-0358-486d-8dfb-6600a3fa7319}</Project>

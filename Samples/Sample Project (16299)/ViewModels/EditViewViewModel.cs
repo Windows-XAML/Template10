@@ -4,6 +4,7 @@ using Prism.Mvvm;
 using Prism.Unity;
 using Sample.Models;
 using Sample.Services;
+using SampleData.Food;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,9 +25,9 @@ namespace Sample.ViewModels
             set => SetProperty(ref _item, value);
         }
 
-        public ICommand SaveCommand { get; } = new DelegateCommand<DataItem>(item => DataService().Save(item));
-        public ICommand DeleteCommand { get; } = new DelegateCommand<DataItem>(item => DataService().Delete(item));
-        public ICommand RevertCommand { get; } = new DelegateCommand<DataItem>(item => DataService().Revert(item));
+        public ICommand SaveCommand { get; } = new DelegateCommand<Fruit>(item => DataService().Save(item));
+        public ICommand DeleteCommand { get; } = new DelegateCommand<Fruit>(item => DataService().Delete(item));
+        public ICommand RevertCommand { get; } = new DelegateCommand<Fruit>(item => DataService().Revert(item));
 
         private static IDataService DataService()
         {

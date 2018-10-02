@@ -9,8 +9,11 @@ namespace Sample.Services
     {
         Task<bool> InitializeAsync();
         IEnumerable<Group<Fruit>> GetGroups();
-        IEnumerable<Fruit> GetItems();
+        List<Fruit> GetItems();
         IEnumerable<string> GetSuggestions(string text, int count);
         IEnumerable<Fruit> Search(string text);
+        void Save(Fruit item);
+        void Delete(Fruit item);
+        void Revert(Fruit item);
     }
 }

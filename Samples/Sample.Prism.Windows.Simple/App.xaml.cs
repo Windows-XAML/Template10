@@ -1,6 +1,7 @@
 ﻿using Prism;
 using Prism.Ioc;
 using Prism.Navigation;
+using Prism.Services;
 using Prism.Unity;
 using Sample.Services;
 using Sample.ViewModels;
@@ -36,25 +37,27 @@ namespace Sample
         public override void RegisterTypes(IContainerRegistry container)
         {
             container.Register<IDataService, DataService>();
+            container.Register<IJumpListService, JumpListService>();
+            container.RegisterInstance(new Lazy<IGestureService>(() => GestureService.GetForCurrentView()));
             container.RegisterForNavigation<MainPage, MainPageViewModel>(nameof(MainPage));
             container.RegisterForNavigation<ItemPage, ItemPageViewModel>(nameof(ItemPage));
         }
 
         public override void OnInitialized()
         {
-            NavigationService = Prism.Navigation.NavigationService.Create(Gestures.Back, Gestures.Forward, Gestures.Refresh);
-            NavigationService.SetAsWindowContent(Window.Current, true);
+            NavigationService = Prism.Navigation.NavigationService.Create(Gesture.Back, Gesture.Forward, Gesture.Refresh);
+            NavigationService.SetAsWindowContent(Window.Current, activate: true);
         }
 
         public override void OnStart(StartArgs args)
         {
-            if (args.StartKind == StartKinds.Launch)
+            if (args.StartCause == StartCauses.JumpListItem && args.Arguments is LaunchActivatedEventArgs e)
             {
-                NavigationService.NavigateAsync(nameof(MainPage));
+                NavigationService.NavigateAsync(new Uri(e.Arguments, UriKind.Relative));
             }
             else
             {
-                // TODO
+                NavigationService.NavigateAsync(nameof(MainPage));
             }
         }
     }

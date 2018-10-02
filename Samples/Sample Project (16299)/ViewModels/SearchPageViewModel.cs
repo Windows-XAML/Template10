@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Template10.Utilities;
 using Prism.Events;
+using SampleData.Food;
 
 namespace Sample.ViewModels
 {
@@ -13,16 +14,16 @@ namespace Sample.ViewModels
     {
         private readonly IDataService _dataService;
         private readonly IEventAggregator _eventAggregator;
-        private NavigationService _navigationService;
+        private readonly NavigationService _navigationService;
 
-        public SearchPageViewModel(IDataService dataService, IEventAggregator eventAggregator)
+        public SearchPageViewModel(IDataService dataService, IEventAggregator eventAggregator, NavigationService navigationService)
         {
             _dataService = dataService;
+            _navigationService = navigationService;
         }
 
         public void OnNavigatedTo(INavigationParameters parameters)
         {
-            _navigationService = parameters.GetNavigationService();
             if (parameters.TryGetValue<string>("SearchTerm", out var searchTerm))
             {
                 Search(SearchTerm = searchTerm);
@@ -58,8 +59,8 @@ namespace Sample.ViewModels
             set => SetProperty(ref _searchTerm, value);
         }
 
-        private DataItem _selectedItem;
-        public DataItem SelectedItem
+        private Fruit _selectedItem;
+        public Fruit SelectedItem
         {
             get => _selectedItem;
             set
@@ -72,6 +73,6 @@ namespace Sample.ViewModels
             }
         }
 
-        public ObservableCollection<DataItem> Items { get; } = new ObservableCollection<DataItem>();
+        public ObservableCollection<Fruit> Items { get; } = new ObservableCollection<Fruit>();
     }
 }

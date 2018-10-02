@@ -8,11 +8,23 @@ using System.Threading.Tasks;
 
 namespace Sample.ViewModels
 {
-    class MainPageViewModel : BindableBase, INavigatedAwareAsync
+    class MainPageViewModel : INavigatedAware
     {
-        public Task OnNavigatedToAsync(INavigationParameters parameters)
+        private readonly INavigationService _navigationService;
+
+        public MainPageViewModel(INavigationService navigationService)
         {
-            return Task.CompletedTask;
+            _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
+        }
+
+        public void OnNavigatedTo(INavigationParameters parameters)
+        {
+            // empty
+        }
+
+        public void OnNavigatedFrom(INavigationParameters parameters)
+        {
+            // empty
         }
     }
 }

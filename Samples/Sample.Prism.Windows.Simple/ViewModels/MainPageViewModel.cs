@@ -2,37 +2,37 @@
 using Prism.Navigation;
 using Sample.Models;
 using Sample.Services;
-using SampleData.StarTrek;
+using Template10.SampleData.StarTrek;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Media.Animation;
+using System;
 
 namespace Sample.ViewModels
 {
     class MainPageViewModel : BindableBase, INavigatedAwareAsync
     {
-        private IDataService _data;
-        private NavigationService _nav;
+        private readonly IDataService _dataService;
+        private readonly INavigationService _navigationService;
 
-        public MainPageViewModel(IDataService dataService, NavigationService navigationService)
+        public MainPageViewModel(IDataService dataService, INavigationService navigationService)
         {
-            _data = dataService;
-            _nav = navigationService;
-            PropertyChanged += (s, e) =>
+            _dataService = dataService ?? throw new ArgumentNullException(nameof(dataService));
+            _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
+        }
+
+        public Task OnNavigatedToAsync(INavigationParameters parameters)
+        {
+            PropertyChanged += async (s, e) =>
             {
                 if (e.PropertyName.Equals(nameof(SearchString)))
                 {
-                    FillMembers();
+                    await FillMembersAsync();
                 }
             };
-        }
-
-        public async Task OnNavigatedToAsync(INavigationParameters parameters)
-        {
-            await _data.OpenAsync();
-            FillMembers();
+            return FillMembersAsync();
         }
 
         public ObservableCollection<GroupedMembers> Members { get; } = new ObservableCollection<GroupedMembers>();
@@ -44,34 +44,47 @@ namespace Sample.ViewModels
             set => SetProperty(ref _searchString, value);
         }
 
-        private void FillMembers()
+        public async void ItemClick(object sender, Windows.UI.Xaml.Controls.ItemClickEventArgs e)
+        {
+            if (e.ClickedItem is Member m)
+            {
+                await _navigationService.NavigateAsync(
+                   path: nameof(Views.ItemPage),
+                   infoOverride: new DrillInNavigationTransitionInfo(),
+                   parameters: (nameof(Member), m.ToJson()));
+            }
+        }
+
+        private async Task FillMembersAsync()
         {
             Members.Clear();
-            foreach (var group in _data.Shows
-                .OrderBy(x => x.Ordinal)
-                .Select(x => new GroupedMembers { Show = x }))
+            foreach (var group in await GetGroupsAsync())
             {
-                var members = GetFilteredMembers(group.Show);
-                group.Members = new ObservableCollection<Member>(members);
                 if (group.Members.Any())
                 {
                     Members.Add(group);
                 }
             }
 
-            IEnumerable<Member> GetFilteredMembers(Show show)
+            async Task<IEnumerable<GroupedMembers>> GetGroupsAsync()
             {
-                return _data.Members
-                    .Where(x => x.Show == show.Abbreviation)
-                    .Where(x => x.Character.ToLower().Contains(SearchString.Trim().ToLower()) || x.Actor.ToLower().Contains(SearchString.Trim().ToLower()));
+                await _dataService.OpenAsync();
+                return _dataService.Shows
+                    .OrderBy(x => x.Ordinal)
+                    .Select(x => new GroupedMembers
+                    {
+                        Show = x,
+                        Members = GetFilteredMembers(x)
+                    });
             }
-        }
 
-        public async void ItemClick(object sender, Windows.UI.Xaml.Controls.ItemClickEventArgs e)
-        {
-            if (e.ClickedItem is Member m)
+            ObservableCollection<Member> GetFilteredMembers(Show show)
             {
-                await _nav.NavigateAsync(nameof(Views.ItemPage), new DrillInNavigationTransitionInfo(), (nameof(Member), m.ToJson()));
+                var members = _dataService.Members
+                    .Where(x => x.Show == show.Abbreviation)
+                    .Where(x => x.Character.ToLower().Contains(SearchString.Trim().ToLower())
+                                || x.Actor.ToLower().Contains(SearchString.Trim().ToLower()));
+                return new ObservableCollection<Member>(members);
             }
         }
     }

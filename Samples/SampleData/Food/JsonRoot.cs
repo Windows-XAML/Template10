@@ -1,4 +1,4 @@
-﻿namespace SampleData.Food
+﻿namespace Template10.SampleData.Food
 {
     using Newtonsoft.Json;
 

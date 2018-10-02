@@ -18,7 +18,8 @@ namespace Sample.Services
             yield return new Group<Fruit> { Title = "Event Items", Items = GetItems().Where((x, i) => i % 2 == 0) };
         }
 
-        public IEnumerable<Fruit> GetItems() => _database.Fruit;
+        List<Fruit> _getItems;
+        public List<Fruit> GetItems() => _getItems ?? (_getItems = new List<Fruit>(_database.Fruit));
 
         public IEnumerable<string> GetSuggestions(string text, int count) => GetItems()
                 .Where(x => x.Name.ToLower().Contains(text.ToLower()))
@@ -31,5 +32,9 @@ namespace Sample.Services
         public IEnumerable<Fruit> Search(string text) => GetItems()
                 .Where(x => x.Name.ToLower().Contains(text.ToLower()))
                 .OrderBy(x => x.Name);
+
+        public void Save(Fruit item) { }
+        public void Delete(Fruit item) { GetItems().Remove(item); }
+        public void Revert(Fruit item) { }
     }
 }

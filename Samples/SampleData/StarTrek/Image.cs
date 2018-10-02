@@ -2,7 +2,7 @@
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
-namespace SampleData.StarTrek
+namespace Template10.SampleData.StarTrek
 {
     public partial class Image
     {

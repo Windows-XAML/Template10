@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="MSBuild.Sdk.Extras">
+
+  <PropertyGroup>
+    <TargetFrameworks>uap10.0.15063</TargetFrameworks>
+    <RootNamespace>Template10</RootNamespace>
+    <Title>Template10 Controls Resizer</Title>
+    <Description>Template 10 Controls Resizer</Description>
+    <PackageTags>win10;uwp;</PackageTags>
+    <AssemblyName>Template10.Controls.Resizer</AssemblyName>
+    <RepositoryType>Test</RepositoryType>
+    <RepositoryUrl>Test</RepositoryUrl>
+    <PackageIconUrl>Test</PackageIconUrl>
+    <PackageProjectUrl>Test</PackageProjectUrl>
+    <Copyright>Test</Copyright>
+    <PackageId>Template10.Controls.Resizer</PackageId>
+    <Authors>jerrynixon</Authors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Template10.Controls.Resizer.rd.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed">
+      <Version>2.0.0</Version>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>

@@ -1,6 +1,7 @@
-﻿using System;
+﻿using SampleData;
+using System;
 
-namespace SampleData.Email
+namespace Template10.SampleData.Email
 {
     public class Message: BindableBase
     {

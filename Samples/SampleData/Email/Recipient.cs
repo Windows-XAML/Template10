@@ -1,4 +1,6 @@
-﻿namespace SampleData.Email
+﻿using SampleData;
+
+namespace Template10.SampleData.Email
 {
     public class Recipient : BindableBase
     {

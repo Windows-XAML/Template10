@@ -10,5 +10,6 @@ namespace Sample.Views
         }
 
         ViewModels.MainPageViewModel ViewModel => DataContext as ViewModels.MainPageViewModel;
+       
     }
 }

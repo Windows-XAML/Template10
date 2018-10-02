@@ -2,7 +2,7 @@
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
-namespace SampleData.Food
+namespace Template10.SampleData.Food
 {
     public partial class Image
     {

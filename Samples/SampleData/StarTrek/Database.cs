@@ -1,13 +1,11 @@
 ﻿using Newtonsoft.Json;
-using SampleData.StarTrek;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
 
-namespace SampleData.StarTrek
+namespace Template10.SampleData.StarTrek
 {
     public class Database
     {
@@ -60,7 +58,7 @@ namespace SampleData.StarTrek
                 {
                     foreach (var image in images)
                     {
-                        image.Path = $"ms-appx:///SampleData/StarTrek/Images/{show}/{image.Path}";
+                        image.Path = $"ms-appx:///Template10.SampleData/StarTrek/Images/{show}/{image.Path}";
                     }
                     return images.FirstOrDefault();
                 }
@@ -74,7 +72,7 @@ namespace SampleData.StarTrek
             {
                 try
                 {
-                    var path = new Uri("ms-appx:///SampleData/StarTrek/Data.json");
+                    var path = new Uri("ms-appx:///Template10.SampleData/StarTrek/Data.json");
                     var file = await StorageFile.GetFileFromApplicationUriAsync(path);
                     var json = await FileIO.ReadTextAsync(file);
                     return JsonConvert.DeserializeObject<JsonRoot>(json);

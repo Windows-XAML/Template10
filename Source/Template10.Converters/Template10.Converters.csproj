@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="MSBuild.Sdk.Extras">
+
+  <PropertyGroup>
+    <TargetFrameworks>uap10.0.16299</TargetFrameworks>
+    <RootNamespace>Template10</RootNamespace>
+    <Title>Template10 Converters</Title>
+    <Description>Template10.Converters</Description>
+    <PackageTags>win10;uwp;</PackageTags>
+    <AssemblyName>Template10.Converters</AssemblyName>
+    <RepositoryType>Test</RepositoryType>
+    <RepositoryUrl>Test</RepositoryUrl>
+    <PackageIconUrl>Test</PackageIconUrl>
+    <PackageProjectUrl>Test</PackageProjectUrl>
+    <Copyright>Test</Copyright>
+    <PackageId>Template10.Converters</PackageId>
+    <Authors>jerrynixon</Authors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed">
+      <Version>2.0.0</Version>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>

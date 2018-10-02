@@ -22,13 +22,14 @@ namespace Sample.ViewModels
         private readonly IDataService _dataService;
         private readonly IDialogService _dialogService;
         private readonly IEventAggregator _eventAggregator;
-        private NavigationService _navigationService;
+        private readonly NavigationService _navigationService;
 
-        public MainPageViewModel(IDataService dataService, IDialogService dialogService, IEventAggregator eventAggregator)
+        public MainPageViewModel(IDataService dataService, IDialogService dialogService, IEventAggregator eventAggregator, NavigationService navigationService)
         {
             _dataService = dataService;
             _dialogService = dialogService;
             _eventAggregator = eventAggregator;
+            _navigationService = navigationService;
         }
 
         private string _headerText;
@@ -38,8 +39,8 @@ namespace Sample.ViewModels
             set => SetProperty(ref _headerText, value);
         }
 
-        private DataItem _selectedItem;
-        public DataItem SelectedItem
+        private Fruit _selectedItem;
+        public Fruit SelectedItem
         {
             get => _selectedItem;
             set
@@ -62,7 +63,6 @@ namespace Sample.ViewModels
             {
                 Debug.WriteLine(record);
             }
-            _navigationService = parameters.GetNavigationService();
             LoadData();
         }
 

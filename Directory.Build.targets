@@ -1,0 +1,9 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup Label="AssemblyInfo">
+    <Product>MSBuild-Sdks Test Projects</Product>
+    <Description>$(AssemblyTitle) Template Project using the SDK.</Description>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+</Project>

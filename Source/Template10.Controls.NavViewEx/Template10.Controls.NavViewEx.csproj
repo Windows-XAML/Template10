@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="MSBuild.Sdk.Extras">
+
+  <PropertyGroup>
+    <TargetFrameworks>uap10.0.16299</TargetFrameworks>
+    <RootNamespace>Template10</RootNamespace>
+    <Title>Template10 Controls NavViewEx</Title>
+    <Description>Template10 Controls NavViewEx</Description>
+    <PackageTags>win10;uwp;</PackageTags>
+    <AssemblyName>Template10.Controls.NavViewEx</AssemblyName>
+    <RepositoryType>Test</RepositoryType>
+    <RepositoryUrl>Test</RepositoryUrl>
+    <PackageIconUrl>Test</PackageIconUrl>
+    <PackageProjectUrl>Test</PackageProjectUrl>
+    <Copyright>Test</Copyright>
+    <PackageId>Template10.Controls.NavViewEx</PackageId>
+    <Authors>jerrynixon</Authors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Template10.Controls.NavViewEx.rd.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed">
+      <Version>2.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="Prism.Unity.Windows">
+      <Version>7.1.0.309-ci</Version>
+    </PackageReference>
+    <PackageReference Include="Prism.Windows">
+      <Version>7.1.0.309-ci</Version>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>

@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Template10.SampleData.StarTrek;
 
 namespace Sample.Models
 {
     public class GroupedMembers
     {
-        public SampleData.StarTrek.Show Show { get; set; }
-        public ObservableCollection<SampleData.StarTrek.Member> Members { get; set; }
+        public Show Show { get; set; }
+        public ObservableCollection<Member> Members { get; set; }
     }
 }
