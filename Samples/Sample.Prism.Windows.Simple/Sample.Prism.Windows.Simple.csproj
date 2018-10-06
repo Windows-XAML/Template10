@@ -98,6 +98,7 @@
     <Compile Include="Controls\AppBarLiteral.cs" />
     <Compile Include="Models\GroupedMembers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Helpers\BitmapImageHelper.cs" />
     <Compile Include="Services\DataService.cs" />
     <Compile Include="Services\IDataService.cs" />
     <Compile Include="Services\IJumpListService.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\NewWindowHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

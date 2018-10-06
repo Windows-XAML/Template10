@@ -4,21 +4,16 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Template10.Services;
-using Prism.Navigation;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Prism.Ioc;
 using System.Collections.ObjectModel;
 using Windows.UI.ViewManagement;
 using win = Windows;
 using System.Threading;
-using Prism;
-using Prism.Utilities;
-using Prism.Services;
+using Prism.Navigation;
 
 namespace Template10.Controls
 {
@@ -27,7 +22,7 @@ namespace Template10.Controls
         private Button _togglePaneButton;
         private TextBlock _paneTitleTextBlock;
         private Button _backButton;
-        private CoreDispatcher _dispatcher;
+        private readonly CoreDispatcher _dispatcher;
         private Frame _frame;
 
         public NavViewEx()
@@ -51,8 +46,8 @@ namespace Template10.Controls
                 }
             };
 
-            NavigationService = (IPlatformNavigationService)Prism.Navigation.NavigationService
-                .Create(_frame, Gestures.Back, Gestures.Forward, Gestures.Refresh);
+            NavigationService = Prism.Navigation.NavigationService
+                .Create(_frame, Gesture.Back, Gesture.Forward, Gesture.Refresh);
 
             ItemInvoked += (s, e) =>
             {
@@ -79,7 +74,7 @@ namespace Template10.Controls
             };
         }
 
-        public IPlatformNavigationService NavigationService { get; }
+        public INavigationService NavigationService { get; }
 
         private void SetupBackButton()
         {

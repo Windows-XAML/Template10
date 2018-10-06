@@ -15,13 +15,16 @@
                     <Button Style="{StaticResource TextBlockButtonStyle}" Height="48" Width="52" Click="{x:Bind ViewModel.GoBack}" AccessKey="b">
                         <SymbolIcon Symbol="Back" />
                     </Button>
+                    <Button Style="{StaticResource TextBlockButtonStyle}" Height="48" Width="52" Click="PopOpen_Click" AccessKey="p">
+                        <SymbolIcon Symbol="World" />
+                    </Button>
                     <TextBlock Text="{x:Bind ViewModel.Member.Character}" Margin="8,0" VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" />
                 </StackPanel>
             </CommandBar.Content>
         </CommandBar>
     </Page.TopAppBar>
 
-    <Grid Width="400" Height="400">
+    <Grid Width="400" Height="400" x:Name="MainGrid">
         <Grid.Background>
             <ImageBrush ImageSource="{x:Bind ViewModel.Member.Image.Path}" Stretch="UniformToFill" />
         </Grid.Background>
