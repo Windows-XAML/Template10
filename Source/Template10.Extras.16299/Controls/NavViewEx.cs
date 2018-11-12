@@ -47,7 +47,7 @@ namespace Template10.Controls
             {
                 if (TryFindItem(e.SourcePageType, e.Parameter, out var item))
                 {
-                    SetSelectedItem(item);
+                    SetSelectedItem(item, false);
                 }
             };
 
@@ -186,7 +186,7 @@ namespace Template10.Controls
             get => base.SelectedItem;
         }
 
-        private async void SetSelectedItem(object selectedItem)
+        private async void SetSelectedItem(object selectedItem, bool withNavigation = true)
         {
             if (selectedItem == null)
             {
@@ -209,14 +209,18 @@ namespace Template10.Controls
             {
                 if (item.GetValue(NavViewProps.NavigationUriProperty) is string path)
                 {
-                    if ((await NavigationService.NavigateAsync(path)).Success)
-                    {
-                        base.SelectedItem = selectedItem;
-                    }
-                    else
-                    {
-                        Debug.WriteLine($"{selectedItem}.{nameof(NavViewProps.NavigationUriProperty)} navigation failed.");
-                    }
+					if (!withNavigation)
+					{
+						base.SelectedItem = item;
+					}
+					else if ((await NavigationService.NavigateAsync(path)).Success)
+					{
+						base.SelectedItem = selectedItem;
+					}
+					else
+					{
+						Debug.WriteLine($"{selectedItem}.{nameof(NavViewProps.NavigationUriProperty)} navigation failed.");
+					}
                 }
                 else
                 {
@@ -362,7 +366,7 @@ namespace Template10.Controls
                 if (NavigationQueue.TryParse(menuItem.Path, null, out var menuQueue)
                     && Equals(menuQueue.Last().View, type))
                 {
-                    item = menuItem;
+                    item = menuItem.Item;
                     return true;
                 }
             }
