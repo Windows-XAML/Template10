@@ -620,22 +620,33 @@ namespace Template10.Common
         private void SetupLifecycleListeners()
         {
             Resuming += (s, e) => StartupOrchestratorAsync(OriginalActivatedArgs, StartKind.Launch);
-            Suspending += async (s, e) =>
+            Suspending += (s, e) =>
             {
                 var deferral = e.SuspendingOperation.GetDeferral();
-                try
+                Task.Run(async delegate
                 {
-                    if (AutoSuspendAllFrames)
+                    await Task.Yield();
+                    try
                     {
-                        await LifecycleLogic.AutoSuspendAllFramesAsync(this, e);
+                        await this.NavigationService.Dispatcher.DispatchAsync(async delegate
+                        {
+                            if (AutoSuspendAllFrames)
+                            {
+                                await LifecycleLogic.AutoSuspendAllFramesAsync(this, e);
+                            }
+                            var isPrelaunch = (OriginalActivatedArgs as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false;
+                            await OnSuspendingAsync(this, e, isPrelaunch);
+                        }).ConfigureAwait(false);
                     }
-                    var isPrelaunch = (OriginalActivatedArgs as LaunchActivatedEventArgs)?.PrelaunchActivated ?? false;
-                    await OnSuspendingAsync(this, e, isPrelaunch);
-                }
-                finally
-                {
-                    deferral.Complete();
-                }
+                    catch
+                    {
+                        // Ignore exceptions
+                    }
+                    finally
+                    {
+                        deferral.Complete();
+                    }
+                });
             };
         }
 
