@@ -136,7 +136,7 @@ namespace Template10.Services.FileService
         private static string Serialize<T>(T item) => JsonConvert.SerializeObject(item, Formatting.None, new JsonSerializerSettings()
         {
             TypeNameHandling = TypeNameHandling.Objects,
-            TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple
+            TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
         });
 
         private static T Deserialize<T>(string json) => JsonConvert.DeserializeObject<T>(json);
