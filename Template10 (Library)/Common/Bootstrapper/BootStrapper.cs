@@ -583,15 +583,22 @@ namespace Template10.Common
 
         private async Task SetupExtendedSessionAsync()
         {
-            var session = new ExtendedExecutionSession
+            try
             {
-                Reason = ExtendedExecutionReason.Unspecified,
-                Description = "Fewer suspensions"
-            };
-            var result = await session.RequestExtensionAsync();
-            if (result == ExtendedExecutionResult.Denied)
+                var session = new ExtendedExecutionSession
+                {
+                    Reason = ExtendedExecutionReason.Unspecified,
+                    Description = "Fewer suspensions"
+                };
+                var result = await session.RequestExtensionAsync();
+                if (result == ExtendedExecutionResult.Denied)
+                {
+                    // do nothing
+                }
+            }
+            catch
             {
-                // do nothing
+                // ignore exceptions
             }
         }
 
