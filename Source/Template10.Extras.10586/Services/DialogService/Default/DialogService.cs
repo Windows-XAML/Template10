@@ -1,4 +1,8 @@
-﻿using System.Threading.Tasks;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Windows.UI.Popups;
+using Windows.UI.Xaml.Controls;
 
 namespace Template10.Services.Dialog
 {
@@ -21,5 +25,15 @@ namespace Template10.Services.Dialog
 
         public async Task<bool> PromptAsync(string title, string content, MessageBoxType type, MessageBoxResult expected, IDialogResourceResolver resolver = null)
             => (await PromptAsync(title, content, type, resolver)).Equals(expected);
+            
+        public async Task<ContentDialogResult> ShowAsync(ContentDialog dialog, TimeSpan? timeout = null, CancellationToken? token = null)
+        {
+            return await DialogManager.OneAtATimeAsync(async () => await dialog.ShowAsync(), timeout, token);
+        }
+
+        public async Task<IUICommand> ShowAsync(MessageDialog dialog, TimeSpan? timeout = null, CancellationToken? token = null)
+        {
+            return await DialogManager.OneAtATimeAsync(async () => await dialog.ShowAsync(), timeout, token);
+        }
     }
 }
