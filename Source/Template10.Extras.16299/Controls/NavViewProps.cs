@@ -16,17 +16,7 @@ namespace Template10.Controls
             => obj.SetValue(NavigationUriProperty, value);
         public static readonly DependencyProperty NavigationUriProperty =
             DependencyProperty.RegisterAttached("NavigationUri", typeof(string),
-                typeof(NavigationView), new PropertyMetadata(null));
-
-        // NavigationViewItem custom IsStartPage property
-
-        public static bool GetIsStartPage(NavigationViewItem obj)
-            => (bool)obj.GetValue(IsStartPageProperty);
-        public static void SetIsStartPage(NavigationViewItem obj, bool value)
-            => obj.SetValue(IsStartPageProperty, value);
-        public static readonly DependencyProperty IsStartPageProperty =
-            DependencyProperty.RegisterAttached("IsStartPage", typeof(bool),
-                typeof(NavViewProps), new PropertyMetadata(false));
+                typeof(Microsoft.UI.Xaml.Controls.NavigationView), new PropertyMetadata(null));
 
         // Page custom HeaderText property
 
