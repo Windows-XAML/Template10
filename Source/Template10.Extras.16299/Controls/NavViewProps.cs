@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using NavigationView = Microsoft.UI.Xaml.Controls.NavigationView;
+using NavigationViewItem = Microsoft.UI.Xaml.Controls.NavigationViewItem;
 
 namespace Template10.Controls
 {
@@ -16,7 +18,17 @@ namespace Template10.Controls
             => obj.SetValue(NavigationUriProperty, value);
         public static readonly DependencyProperty NavigationUriProperty =
             DependencyProperty.RegisterAttached("NavigationUri", typeof(string),
-                typeof(Microsoft.UI.Xaml.Controls.NavigationView), new PropertyMetadata(null));
+                typeof(NavigationView), new PropertyMetadata(null));
+
+        // NavigationViewItem custom IsStartPage property
+
+        public static bool GetIsStartPage(NavigationViewItem obj)
+            => (bool)obj.GetValue(IsStartPageProperty);
+        public static void SetIsStartPage(NavigationViewItem obj, bool value)
+            => obj.SetValue(IsStartPageProperty, value);
+        public static readonly DependencyProperty IsStartPageProperty =
+            DependencyProperty.RegisterAttached("IsStartPage", typeof(bool),
+                typeof(NavViewProps), new PropertyMetadata(false));
 
         // Page custom HeaderText property
 

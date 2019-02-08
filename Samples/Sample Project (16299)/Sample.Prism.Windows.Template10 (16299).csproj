@@ -216,13 +216,13 @@
       <Project>{648C8631-C97F-4B81-98FC-F4370317751A}</Project>
       <Name>Prism.Windows</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Source\Template10.Extras.10586\Template10.Extras.10586.csproj">
+    <ProjectReference Include="..\..\Source\Template10.Extras.10586\Template10.Extras.15063.csproj">
       <Project>{9bb18d4b-bcdd-43c9-a7c2-416d13dd39a6}</Project>
-      <Name>Template10.Extras.10586</Name>
+      <Name>Template10.Extras.15063</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Source\Template10.Extras.16299\Template10.NavigationView.csproj">
       <Project>{51e89714-0358-486d-8dfb-6600a3fa7319}</Project>
-      <Name>Template10.Extras.16299</Name>
+      <Name>Template10.NavigationView</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
