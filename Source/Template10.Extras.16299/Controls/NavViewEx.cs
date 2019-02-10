@@ -195,20 +195,21 @@ namespace Template10.Controls
             {
                 if (item.GetValue(NavViewProps.NavigationUriProperty) is string path)
                 {
-					if (!withNavigation)
-					{
-                        PreviousItem = item;
-                        base.SelectedItem = item;
-					}
-					else if ((await NavigationService.NavigateAsync(path)).Success)
-					{
-                        PreviousItem = selectedItem;
-                        base.SelectedItem = selectedItem;
-					}
-					else
-					{
-						Debug.WriteLine($"{selectedItem}.{nameof(NavViewProps.NavigationUriProperty)} navigation failed.");
-					}
+			if (!withNavigation)
+			{
+				PreviousItem = item;
+				base.SelectedItem = item;
+			}
+			else if ((await NavigationService.NavigateAsync(path)).Success)
+			{
+				PreviousItem = selectedItem;
+				base.SelectedItem = selectedItem;
+			}
+			else
+			{
+				base.SelectedItem = PreviousItem;
+				Debug.WriteLine($"{selectedItem}.{nameof(NavViewProps.NavigationUriProperty)} navigation failed.");
+			}
                 }
                 else
                 {
