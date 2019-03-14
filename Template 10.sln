@@ -5,9 +5,9 @@ VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prism.Windows", "Source\Prism.Windows\Prism.Windows.csproj", "{648C8631-C97F-4B81-98FC-F4370317751A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Extras.16299", "Source\Template10.Extras.16299\Template10.Extras.16299.csproj", "{51E89714-0358-486D-8DFB-6600A3FA7319}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.NavigationView", "Source\Template10.Extras.16299\Template10.NavigationView.csproj", "{51E89714-0358-486D-8DFB-6600A3FA7319}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Extras.10586", "Source\Template10.Extras.10586\Template10.Extras.10586.csproj", "{9BB18D4B-BCDD-43C9-A7C2-416D13DD39A6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Extras.15063", "Source\Template10.Extras.10586\Template10.Extras.15063.csproj", "{9BB18D4B-BCDD-43C9-A7C2-416D13DD39A6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prism.Unity.Windows", "Source\Prism.Unity.Windows\Prism.Unity.Windows.csproj", "{CC3018EB-6D2B-4306-94A1-3A7CBA7A8F18}"
 EndProject
