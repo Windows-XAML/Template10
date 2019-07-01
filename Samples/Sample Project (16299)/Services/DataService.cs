@@ -1,5 +1,5 @@
 ﻿using Sample.Models;
-using SampleData.Food;
+using Template10.SampleData.Food;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

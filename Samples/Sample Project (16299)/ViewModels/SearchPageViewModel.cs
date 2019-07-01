@@ -6,7 +6,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Template10.Utilities;
 using Prism.Events;
-using SampleData.Food;
+using Template10.SampleData.Food;
 
 namespace Sample.ViewModels
 {

@@ -13,7 +13,7 @@ using Template10.Services.Dialog;
 using Template10.Utilities;
 using System.Diagnostics;
 using Prism.Events;
-using SampleData.Food;
+using Template10.SampleData.Food;
 
 namespace Sample.ViewModels
 {

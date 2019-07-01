@@ -4,7 +4,7 @@ using Prism.Mvvm;
 using Prism.Unity;
 using Sample.Models;
 using Sample.Services;
-using SampleData.Food;
+using Template10.SampleData.Food;
 using System;
 using System.Collections.Generic;
 using System.Linq;
