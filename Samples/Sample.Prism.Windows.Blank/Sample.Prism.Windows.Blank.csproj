@@ -11,8 +11,8 @@
     <AssemblyName>Sample.Prism.Windows.Blank</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.17134.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.15063.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.17763.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -128,8 +128,11 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Bogus">
+      <Version>27.0.1</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.1.7</Version>
+      <Version>6.2.8</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed">
       <Version>2.0.0</Version>
@@ -143,17 +146,13 @@
     <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Prism_Windows\Source\Prism\Prism.csproj">
-      <Project>{8e89a423-15ff-42b1-a615-083bb22fb072}</Project>
-      <Name>Prism</Name>
+    <ProjectReference Include="..\..\Source\Template10.Core.Unity\Template10.Core.Default.csproj">
+      <Project>{0ed71624-d9b7-4689-a531-58100ca4b9b8}</Project>
+      <Name>Template10.Core.Default</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Prism_Windows\Source\Windows10\Prism.Unity.Windows\Prism.Unity.Windows.csproj">
-      <Project>{dd9aa913-d8e0-4693-8f4a-f3d08c501a63}</Project>
-      <Name>Prism.Unity.Windows</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Prism_Windows\Source\Windows10\Prism.Windows\Prism.Windows.csproj">
-      <Project>{a6179412-e692-4a0e-b1c2-7de2b8a878a3}</Project>
-      <Name>Prism.Windows</Name>
+    <ProjectReference Include="..\..\Source\Template10.Core\Template10.Core.csproj">
+      <Project>{c246358b-68ae-4cc3-ae50-a2a5cb14cdca}</Project>
+      <Name>Template10.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="MSBuild.Sdk.Extras">
+
+  <PropertyGroup>
+    <TargetFrameworks>uap10.0.16299</TargetFrameworks>
+    <Title>Template 10 for UWP</Title>
+    <Description>Template 10 provides a navigation solution to UWP applications.</Description>
+    <PackageTags>xaml win10 uwp</PackageTags>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+  </ItemGroup>
+
+</Project>

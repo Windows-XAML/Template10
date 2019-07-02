@@ -174,29 +174,13 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Prism_Windows\Source\Prism\Prism.csproj">
-      <Project>{8e89a423-15ff-42b1-a615-083bb22fb072}</Project>
-      <Name>Prism</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Prism_Windows\Source\Windows10\Prism.Unity.Windows\Prism.Unity.Windows.csproj">
-      <Project>{dd9aa913-d8e0-4693-8f4a-f3d08c501a63}</Project>
-      <Name>Prism.Unity.Windows</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Prism_Windows\Source\Windows10\Prism.Windows\Prism.Windows.csproj">
-      <Project>{a6179412-e692-4a0e-b1c2-7de2b8a878a3}</Project>
-      <Name>Prism.Windows</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Source\Template10.Controls.NavViewEx\Template10.Controls.NavViewEx.csproj">
-      <Project>{264f8e6e-df63-44c9-8cf3-0774370ab147}</Project>
-      <Name>Template10.Controls.NavViewEx</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Source\Template10.Extras\Template10.Extras.csproj">
       <Project>{f30c9651-5df9-4441-9176-876347755c22}</Project>
       <Name>Template10.Extras</Name>
     </ProjectReference>
     <ProjectReference Include="..\SampleData\Template10.SampleData.csproj">
       <Project>{b8442c8a-b688-48d2-8ba7-325a675cc611}</Project>
-      <Name>SampleData</Name>
+      <Name>Template10.SampleData</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

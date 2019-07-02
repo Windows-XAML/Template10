@@ -1,10 +1,13 @@
 ﻿using Prism;
 using Prism.Ioc;
 using Prism.Navigation;
-using Prism.Services;
+using Template10.Services;
 using Prism.Unity;
 using Sample.ViewModels;
 using Windows.UI.Xaml;
+using Template10.Navigation;
+using Template10.Ioc;
+using Template10;
 
 namespace Sample
 {
@@ -24,7 +27,7 @@ namespace Sample
 
         public override void OnInitialized()
         {
-            NavigationService = Prism.Navigation.NavigationService.Create(Gesture.Back, Gesture.Forward, Gesture.Refresh);
+            NavigationService = NavigationFactory.Create(Gesture.Back, Gesture.Forward, Gesture.Refresh);
             NavigationService.SetAsWindowContent(Window.Current, activate: true);
         }
 
