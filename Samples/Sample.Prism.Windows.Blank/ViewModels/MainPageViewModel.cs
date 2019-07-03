@@ -9,14 +9,14 @@ using Template10.Navigation;
 
 namespace Sample.ViewModels
 {
-    class MainPageViewModel : ViewModelBase
+    public class MainPageViewModel : ViewModelBase
     {
-        public void OnNavigatedTo(INavigationParameters parameters)
+        public override void OnNavigatedTo(INavigationParameters parameters)
         {
             // empty
         }
 
-        public void OnNavigatedFrom(INavigationParameters parameters)
+        public override void OnNavigatedFrom(INavigationParameters parameters)
         {
             // empty
         }

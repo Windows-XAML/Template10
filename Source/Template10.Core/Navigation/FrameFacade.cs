@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Prism.Ioc;
@@ -14,7 +15,7 @@ namespace Template10.Navigation
 {
     public class FrameFacade : IFrameFacade, IFrameFacade2
     {
-        private readonly bool _logStartingEvents = false;
+        private readonly bool _logStartingEvents = true;
 
         private readonly Frame _frame;
         private readonly CoreDispatcher _dispatcher;
@@ -282,7 +283,8 @@ namespace Template10.Navigation
             }
             else
             {
-                SetNavigationService(new_vm);
+                SetViewModelOnPage(new_page, new_vm);
+                SetNavigationServiceOnVm(new_vm);
                 OnNavigatingTo(parameters, new_vm);
                 await OnNavigatedToAsync(parameters, new_vm);
                 OnNavigatedTo(parameters, new_vm);
@@ -297,11 +299,30 @@ namespace Template10.Navigation
             return this.NavigationSuccess();
         }
 
-        private void SetNavigationService(object new_vm)
+        private void SetViewModelOnPage<T>(Page new_page, T new_vm) where T: class
         {
             if (_logStartingEvents)
             {
-                _logger.Log($"STARTING {nameof(SetNavigationService)}", Category.Info, Priority.None);
+                _logger.Log($"STARTING {nameof(SetViewModelOnPage)}", Category.Info, Priority.None);
+            }
+
+            try
+            {
+                // TODO: this does not work yet
+                dynamic page = new_page;
+                page.ViewModel = new_vm as T;
+            }
+            catch (Exception ex)
+            {
+                return;
+            }
+        }
+
+        private void SetNavigationServiceOnVm(object new_vm)
+        {
+            if (_logStartingEvents)
+            {
+                _logger.Log($"STARTING {nameof(SetNavigationServiceOnVm)}", Category.Info, Priority.None);
             }
 
             if (new_vm is ViewModelBase vm)

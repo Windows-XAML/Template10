@@ -138,6 +138,7 @@
     <Compile Include="Mvvm\INavigationParametersInternal.cs" />
     <Compile Include="Mvvm\INavigationResult.cs" />
     <Compile Include="Mvvm\INavigationService.cs" />
+    <Compile Include="Mvvm\IPage.cs" />
     <Compile Include="Mvvm\NavigationMode.cs" />
     <Compile Include="Mvvm\ViewModelBase.cs" />
     <Compile Include="Mvvm\ViewModelLocator.cs" />

@@ -5,7 +5,6 @@ using Windows.UI.Xaml;
 
 namespace Template10.Mvvm
 {
-    [Obsolete]
     public class ViewModelLocator
     {
         public static bool? GetAutowireViewModel(DependencyObject obj)
