@@ -5,10 +5,15 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 
-namespace Template10.Utilities
+namespace Template10
 {
     public static class XamlUtilities
     {
+        public static List<FrameworkElement> VisualChildren(this DependencyObject parent)
+        {
+            return RecurseChildren(parent);
+        }
+
         public static List<FrameworkElement> RecurseChildren(DependencyObject parent)
         {
             var list = new List<FrameworkElement>();
