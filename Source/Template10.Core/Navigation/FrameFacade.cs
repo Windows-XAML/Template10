@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Prism.Ioc;
 using Prism.Logging;
 using Template10.Mvvm;
-using Template10.Utilities;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
@@ -283,7 +282,6 @@ namespace Template10.Navigation
             }
             else
             {
-                SetViewModelOnPage(new_page, new_vm);
                 SetNavigationServiceOnVm(new_vm);
                 OnNavigatingTo(parameters, new_vm);
                 await OnNavigatedToAsync(parameters, new_vm);
@@ -292,30 +290,11 @@ namespace Template10.Navigation
 
             // refresh-bindings
 
-            BindingUtilities.UpdateBindings(new_page);
+            new_page.UpdateBindings();
 
             // finally
 
             return this.NavigationSuccess();
-        }
-
-        private void SetViewModelOnPage<T>(Page new_page, T new_vm) where T: class
-        {
-            if (_logStartingEvents)
-            {
-                _logger.Log($"STARTING {nameof(SetViewModelOnPage)}", Category.Info, Priority.None);
-            }
-
-            try
-            {
-                // TODO: this does not work yet
-                dynamic page = new_page;
-                page.ViewModel = new_vm as T;
-            }
-            catch (Exception ex)
-            {
-                return;
-            }
         }
 
         private void SetNavigationServiceOnVm(object new_vm)
