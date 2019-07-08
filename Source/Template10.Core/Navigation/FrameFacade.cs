@@ -263,12 +263,8 @@ namespace Template10.Navigation
                     _logger.Log("No view-model is set for target page, we will attempt to find view-model declared using RegisterForNavigation<P, VM>().", Category.Info, Priority.None);
 
                     // set the autowire & see if we can find it for them
-                    Mvvm.ViewModelLocator.SetAutowireViewModel(new_page, true);
-
-                    // TODO: I wonder if I need to delay for a second?
-
+                    ViewModelLocator.SetAutowireViewModel(new_page, true);
                     new_vm = new_page.DataContext;
-
                     if (new_vm != null)
                     {
                         _logger.Log($"View-Model: {new_vm} found for target View: {new_page}.", Category.Info, Priority.None);
