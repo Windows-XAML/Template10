@@ -1,10 +1,9 @@
 ﻿using Prism.Ioc;
-using Template10;
 using Unity;
 
-namespace Prism.Unity
+namespace Template10
 {
-    public abstract class PrismApplication : PrismApplicationBase
+    public abstract class ApplicationBase : ApplicationTemplate
     {
         public override IContainerExtension CreateContainerExtension()
         {

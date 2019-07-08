@@ -1,39 +1,35 @@
-﻿using Prism;
-using Prism.Ioc;
-using Prism.Navigation;
+﻿using Prism.Ioc;
 using Template10.Services;
-using Prism.Unity;
 using Sample.ViewModels;
 using Windows.UI.Xaml;
 using Template10.Navigation;
 using Template10.Ioc;
 using Template10;
+using Sample.Views;
 
 namespace Sample
 {
-    sealed partial class App : PrismApplication
+    sealed partial class App : ApplicationBase 
     {
         public static IPlatformNavigationService NavigationService { get; private set; }
 
-        public App()
-        {
-            InitializeComponent();
-        }
+        public App() => InitializeComponent();
 
         public override void RegisterTypes(IContainerRegistry container)
         {
-            container.RegisterForNavigation<Views.MainPage, MainPageViewModel>(nameof(Views.MainPage));
+            container.RegisterView<MainPage, MainPageViewModel>();
         }
 
         public override void OnInitialized()
         {
             NavigationService = NavigationFactory.Create(Gesture.Back, Gesture.Forward, Gesture.Refresh);
-            NavigationService.SetAsWindowContent(Window.Current, activate: true);
+            Window.Current.Content = NavigationService.GetXamlFrame();
+            Window.Current.Activate();
         }
 
         public override void OnStart(StartArgs args)
         {
-            NavigationService.NavigateAsync(nameof(Views.MainPage));
+            NavigationService.NavigateAsync(nameof(MainPage));
         }
     }
 }

@@ -3,10 +3,10 @@ using Windows.UI.Xaml;
 
 namespace Template10
 {
-    public interface IPrismApplicationEvents
+    public interface IApplicationEvents
     {
         event EnteredBackgroundEventHandler EnteredBackground;
         event LeavingBackgroundEventHandler LeavingBackground;
-        event TypedEventHandler<PrismApplicationBase, WindowCreatedEventArgs> WindowCreated;
+        event TypedEventHandler<ApplicationTemplate, WindowCreatedEventArgs> WindowCreated;
     }
 }

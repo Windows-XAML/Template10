@@ -15,18 +15,18 @@ using Windows.UI.Xaml;
 
 namespace Template10
 {
-    public abstract partial class PrismApplicationBase : IPrismApplicationBase
+    public abstract partial class ApplicationTemplate : IApplicationBase
     {
-        public static new PrismApplicationBase Current => (PrismApplicationBase)Application.Current;
+        public static new ApplicationTemplate Current => (ApplicationTemplate)Application.Current;
         private static readonly SemaphoreSlim _startSemaphore = new SemaphoreSlim(1, 1);
         public const string NavigationServiceParameterName = "navigationService";
         private readonly bool _logStartingEvents = false;
 
-        public PrismApplicationBase()
+        public ApplicationTemplate()
         {
             InternalInitialize();
             _logger.Log("[App.Constructor()]", Category.Info, Priority.None);
-            (this as IPrismApplicationEvents).WindowCreated += (s, e) =>
+            (this as IApplicationEvents).WindowCreated += (s, e) =>
             {
                 GestureService.SetupForCurrentView(e.Window.CoreWindow);
             };
@@ -62,7 +62,7 @@ namespace Template10
             // don't forget there is no logger yet
             if (_logStartingEvents)
             {
-                _logger.Log($"{nameof(PrismApplicationBase)}.{nameof(InternalInitialize)}", Category.Info, Priority.None);
+                _logger.Log($"{nameof(ApplicationTemplate)}.{nameof(InternalInitialize)}", Category.Info, Priority.None);
             }
 
             // dependecy injection
@@ -95,7 +95,7 @@ namespace Template10
             // don't forget there is no logger yet
             if (_logStartingEvents)
             {
-                _logger.Log($"{nameof(PrismApplicationBase)}.{nameof(CallOnInitializedOnce)}", Category.Info, Priority.None);
+                _logger.Log($"{nameof(ApplicationTemplate)}.{nameof(CallOnInitializedOnce)}", Category.Info, Priority.None);
             }
 
             // once and only once, ever
@@ -111,7 +111,7 @@ namespace Template10
             await _startSemaphore.WaitAsync();
             if (_logStartingEvents)
             {
-                _logger.Log($"{nameof(PrismApplicationBase)}.{nameof(InternalStartAsync)}({startArgs})", Category.Info, Priority.None);
+                _logger.Log($"{nameof(ApplicationTemplate)}.{nameof(InternalStartAsync)}({startArgs})", Category.Info, Priority.None);
             }
 
             try
@@ -195,7 +195,7 @@ namespace Template10
         protected virtual void RegisterRequiredTypes(IContainerRegistry containerRegistry)
         {
             // don't forget there is no logger yet
-            Debug.WriteLine($"{nameof(PrismApplicationBase)}.{nameof(RegisterRequiredTypes)}()");
+            Debug.WriteLine($"{nameof(ApplicationTemplate)}.{nameof(RegisterRequiredTypes)}()");
         }
 
         #endregion

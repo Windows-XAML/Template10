@@ -22,6 +22,15 @@ namespace Template10.Ioc
             PageRegistry.Register(key, (view, viewModel));
         }
 
+        public static void RegisterView<TView, TViewModel>(this IContainerRegistry registry)
+            => Register(registry, typeof(TView).Name, typeof(TView), typeof(TViewModel));
+        public static void RegisterView<TView, TViewModel>(this IContainerRegistry registry, string key)
+            => Register(registry, key, typeof(TView), typeof(TViewModel));
+        public static void RegisterView<TView>(this IContainerRegistry registry)
+            => Register(registry, typeof(TView).Name, typeof(TView), null);
+        public static void RegisterView<TView>(this IContainerRegistry registry, string key)
+            => Register(registry, key, typeof(TView), null);
+
         public static void RegisterForNavigation<TView, TViewModel>(this IContainerRegistry registry)
             => Register(registry, typeof(TView).Name, typeof(TView), typeof(TViewModel));
         public static void RegisterForNavigation<TView, TViewModel>(this IContainerRegistry registry, string key)

@@ -6,7 +6,7 @@ using Windows.UI.Xaml;
 
 namespace Template10
 {
-    public abstract partial class PrismApplicationBase : Application
+    public abstract partial class ApplicationTemplate : Application
     {
         protected override sealed async void OnActivated(IActivatedEventArgs e) => await InternalStartAsync(new StartArgs(e, StartKinds.Activate));
         protected override sealed async void OnCachedFileUpdaterActivated(CachedFileUpdaterActivatedEventArgs e) => await InternalStartAsync(new StartArgs(e, StartKinds.Activate));

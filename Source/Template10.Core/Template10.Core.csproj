@@ -122,8 +122,8 @@
   <ItemGroup>
     <Compile Include="Ioc\ContainerProvider.cs" />
     <Compile Include="Ioc\IContainerRegistryExtensions.cs" />
-    <Compile Include="IPrismApplicationBase.cs" />
-    <Compile Include="IPrismApplicationEvents.cs" />
+    <Compile Include="IApplicationBase.cs" />
+    <Compile Include="IApplicationEvents.cs" />
     <Compile Include="IResumeArgs.cs" />
     <Compile Include="IStartArgs.cs" />
     <Compile Include="Mvvm\IConfirmNavigation.cs" />
@@ -138,7 +138,6 @@
     <Compile Include="Mvvm\INavigationParametersInternal.cs" />
     <Compile Include="Mvvm\INavigationResult.cs" />
     <Compile Include="Mvvm\INavigationService.cs" />
-    <Compile Include="Mvvm\IPage.cs" />
     <Compile Include="Mvvm\NavigationMode.cs" />
     <Compile Include="Mvvm\ViewModelBase.cs" />
     <Compile Include="Mvvm\ViewModelLocator.cs" />
@@ -160,9 +159,9 @@
     <Compile Include="Navigation\NavigationService.cs" />
     <Compile Include="Navigation\PageRegistry.cs" />
     <Compile Include="Navigation\PathBuilder.cs" />
-    <Compile Include="PrismApplicationBase.core.cs" />
-    <Compile Include="PrismApplicationBase.events.cs" />
-    <Compile Include="PrismApplicationBase.xaml.cs" />
+    <Compile Include="ApplicationTemplate.core.cs" />
+    <Compile Include="ApplicationTemplate.events.cs" />
+    <Compile Include="ApplicationTemplate.xaml.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResumeArgs.cs" />
     <Compile Include="Services\Gesture\Gesture.cs" />

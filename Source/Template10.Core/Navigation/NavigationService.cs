@@ -26,7 +26,7 @@ namespace Template10.Navigation
             _frame.CanGoForwardChanged += (s, e) =>
                 CanGoForwardChanged?.Invoke(this, EventArgs.Empty);
             Instances.Add(frame, this);
-            _logger = PrismApplicationBase.Current.Container.Resolve<ILoggerFacade>();
+            _logger = ApplicationTemplate.Current.Container.Resolve<ILoggerFacade>();
         }
 
         public async Task RefreshAsync()

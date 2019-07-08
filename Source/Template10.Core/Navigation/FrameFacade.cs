@@ -41,7 +41,7 @@ namespace Template10.Navigation
             _dispatcher = frame.Dispatcher;
             _syncContext = SynchronizationContext.Current;
             _navigationService = navigationService;
-            _logger = PrismApplicationBase.Current.Container.Resolve<ILoggerFacade>();
+            _logger = ApplicationTemplate.Current.Container.Resolve<ILoggerFacade>();
         }
 
         Frame IFrameFacade2.Frame

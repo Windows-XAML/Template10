@@ -1,12 +1,11 @@
 ﻿using System;
 using Prism.Ioc;
-using Prism.Navigation;
 using Template10.Navigation;
 using Unity;
 using Unity.Resolution;
 using Windows.UI.Xaml.Controls;
 
-namespace Prism.Unity
+namespace Template10
 {
     public sealed class UnityContainerExtension : IContainerExtension<IUnityContainer>
     {

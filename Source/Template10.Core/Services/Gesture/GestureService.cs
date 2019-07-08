@@ -54,7 +54,7 @@ namespace Template10.Services
             window.Dispatcher.AcceleratorKeyActivated += Dispatcher_AcceleratorKeyActivated;
             window.PointerPressed += CoreWindow_PointerPressed;
             SystemNavigationManager.GetForCurrentView().BackRequested += GestureService_BackRequested;
-            _logger = PrismApplicationBase.Current.Container.Resolve<ILoggerFacade>();
+            _logger = ApplicationTemplate.Current.Container.Resolve<ILoggerFacade>();
         }
 
         public event EventHandler MenuRequested;

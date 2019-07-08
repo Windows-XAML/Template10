@@ -9,11 +9,12 @@ namespace Template10.Navigation
 {
     public static class INavigationServiceExtensions
     {
-        private static Frame GetXamlFrame(this IPlatformNavigationService service)
+        public static Frame GetXamlFrame(this IPlatformNavigationService service)
         {
             return ((service as IPlatformNavigationService2).FrameFacade as IFrameFacade2).Frame;
         }
 
+        [Obsolete]
         public static IPlatformNavigationService SetAsWindowContent(this IPlatformNavigationService service, Window window, bool activate)
         {
             window.Content = service.GetXamlFrame();

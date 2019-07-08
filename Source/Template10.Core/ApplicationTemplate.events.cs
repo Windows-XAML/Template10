@@ -5,7 +5,7 @@ using Windows.UI.Xaml;
 
 namespace Template10
 {
-    public abstract partial class PrismApplicationBase : IPrismApplicationEvents
+    public abstract partial class ApplicationTemplate : IApplicationEvents
     {
 #pragma warning disable CS0067 // unused events
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -19,19 +19,19 @@ namespace Template10
 #pragma warning restore CS0067
 
         EnteredBackgroundEventHandler _enteredBackground;
-        event EnteredBackgroundEventHandler IPrismApplicationEvents.EnteredBackground
+        event EnteredBackgroundEventHandler IApplicationEvents.EnteredBackground
         {
             add { _enteredBackground += value; }
             remove { _enteredBackground -= value; }
         }
         LeavingBackgroundEventHandler _leavingBackground;
-        event LeavingBackgroundEventHandler IPrismApplicationEvents.LeavingBackground
+        event LeavingBackgroundEventHandler IApplicationEvents.LeavingBackground
         {
             add { _leavingBackground += value; }
             remove { _leavingBackground -= value; }
         }
-        TypedEventHandler<PrismApplicationBase, WindowCreatedEventArgs> _windowCreated;
-        event TypedEventHandler<PrismApplicationBase, WindowCreatedEventArgs> IPrismApplicationEvents.WindowCreated
+        TypedEventHandler<ApplicationTemplate, WindowCreatedEventArgs> _windowCreated;
+        event TypedEventHandler<ApplicationTemplate, WindowCreatedEventArgs> IApplicationEvents.WindowCreated
         {
             add { _windowCreated += value; }
             remove { _windowCreated -= value; }

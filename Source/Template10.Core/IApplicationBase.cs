@@ -1,10 +1,9 @@
 ﻿using System.Threading.Tasks;
 using Prism.Ioc;
-using Prism.Modularity;
 
 namespace Template10
 {
-    public interface IPrismApplicationBase
+    public interface IApplicationBase
     {
         /*
          
@@ -29,7 +28,6 @@ namespace Template10
          * 16. INavigatedAware not implemented.
          
          */
-
 
         IContainerProvider Container { get; }
         void ConfigureViewModelLocator();
