@@ -7,7 +7,14 @@ namespace Template10
     {
         public override IContainerExtension CreateContainerExtension()
         {
-            return new UnityContainerExtension(new UnityContainer());
+            var container = new UnityContainer();
+            return new UnityContainerExtension(container);
+        }
+
+        protected override void RegisterInternalTypes(IContainerRegistry containerRegistry)
+        {
+            // containerRegistry.RegisterTemplate10Services();
+            base.RegisterInternalTypes(containerRegistry);
         }
     }
 }

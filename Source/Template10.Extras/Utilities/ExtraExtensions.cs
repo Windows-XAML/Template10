@@ -15,9 +15,9 @@ using Template10.Services.Secrets;
 using Template10.Services.Settings;
 using Template10.Services.Web;
 
-namespace Template10.Utilities
+namespace Template10
 {
-    public static class Extensions
+    public static class ExtraExtensions
     {
         /// <summary>
         /// Automatically registers: 

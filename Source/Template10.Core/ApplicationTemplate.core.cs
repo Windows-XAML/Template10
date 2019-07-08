@@ -71,7 +71,7 @@ namespace Template10
             {
                 registry.RegisterSingleton<ILoggerFacade, DebugLogger>();
                 registry.RegisterSingleton<IEventAggregator, EventAggregator>();
-                RegisterRequiredTypes(registry);
+                RegisterInternalTypes(registry);
             }
 
             Debug.WriteLine("[App.RegisterTypes()]");
@@ -192,10 +192,10 @@ namespace Template10
 
         public abstract IContainerExtension CreateContainerExtension();
 
-        protected virtual void RegisterRequiredTypes(IContainerRegistry containerRegistry)
+        protected virtual void RegisterInternalTypes(IContainerRegistry containerRegistry)
         {
             // don't forget there is no logger yet
-            Debug.WriteLine($"{nameof(ApplicationTemplate)}.{nameof(RegisterRequiredTypes)}()");
+            Debug.WriteLine($"{nameof(ApplicationTemplate)}.{nameof(RegisterInternalTypes)}()");
         }
 
         #endregion

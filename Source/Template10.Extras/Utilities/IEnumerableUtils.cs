@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation.Collections;
 
-namespace Template10.Utilities
+namespace Template10
 {
     public static class IEnumerableUtils
     {
