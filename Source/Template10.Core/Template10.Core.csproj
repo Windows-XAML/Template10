@@ -121,35 +121,36 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Ioc\ContainerProvider.cs" />
+    <Compile Include="Ioc\IContainerExtensionExtensions.cs" />
     <Compile Include="Ioc\IContainerRegistryExtensions.cs" />
     <Compile Include="IApplicationBase.cs" />
     <Compile Include="IApplicationEvents.cs" />
     <Compile Include="IResumeArgs.cs" />
     <Compile Include="IStartArgs.cs" />
-    <Compile Include="Mvvm\IConfirmNavigation.cs" />
-    <Compile Include="Mvvm\IConfirmNavigationAsync.cs" />
-    <Compile Include="Mvvm\IDestructible.cs" />
-    <Compile Include="Mvvm\INavigatedAware.cs" />
-    <Compile Include="Mvvm\INavigatedAwareAsync.cs" />
-    <Compile Include="Mvvm\INavigatingAware.cs" />
-    <Compile Include="Mvvm\INavigatingAwareAsync.cs" />
-    <Compile Include="Mvvm\INavigationAware.cs" />
-    <Compile Include="Mvvm\INavigationParameters.cs" />
-    <Compile Include="Mvvm\INavigationParametersInternal.cs" />
-    <Compile Include="Mvvm\INavigationResult.cs" />
-    <Compile Include="Mvvm\INavigationService.cs" />
-    <Compile Include="Mvvm\NavigationMode.cs" />
+    <Compile Include="Navigation\Abstract\IConfirmNavigation.cs" />
+    <Compile Include="Navigation\Abstract\IConfirmNavigationAsync.cs" />
+    <Compile Include="Navigation\Abstract\IDestructible.cs" />
+    <Compile Include="Navigation\Abstract\INavigatedAware.cs" />
+    <Compile Include="Navigation\Abstract\INavigatedAwareAsync.cs" />
+    <Compile Include="Navigation\Abstract\INavigatingAware.cs" />
+    <Compile Include="Navigation\Abstract\INavigatingAwareAsync.cs" />
+    <Compile Include="Navigation\Abstract\INavigationAware.cs" />
+    <Compile Include="Navigation\Abstract\INavigationParameters.cs" />
+    <Compile Include="Navigation\Abstract\INavigationParametersInternal.cs" />
+    <Compile Include="Navigation\Abstract\INavigationResult.cs" />
+    <Compile Include="Navigation\Abstract\INavigationService.cs" />
+    <Compile Include="Navigation\NavigationMode.cs" />
     <Compile Include="Mvvm\ViewModelBase.cs" />
     <Compile Include="Mvvm\ViewModelLocator.cs" />
     <Compile Include="Navigation\FrameFacade.cs" />
     <Compile Include="Navigation\FrameFacadeExtensions.cs" />
-    <Compile Include="Navigation\IFrameFacade.cs" />
-    <Compile Include="Navigation\IFrameFacade2.cs" />
-    <Compile Include="Navigation\INavigationParametersExtensions.cs" />
-    <Compile Include="Navigation\INavigationPath.cs" />
-    <Compile Include="Navigation\INavigationServiceExtensions.cs" />
-    <Compile Include="Navigation\IPlatformNavigationService.cs" />
-    <Compile Include="Navigation\IPlatformNavigationService2.cs" />
+    <Compile Include="Navigation\Abstract\IFrameFacade.cs" />
+    <Compile Include="Navigation\Abstract\IFrameFacade2.cs" />
+    <Compile Include="Navigation\Abstract\INavigationParametersExtensions.cs" />
+    <Compile Include="Navigation\Abstract\INavigationPath.cs" />
+    <Compile Include="Navigation\Abstract\INavigationServiceExtensions.cs" />
+    <Compile Include="Navigation\Abstract\IPlatformNavigationService.cs" />
+    <Compile Include="Navigation\Abstract\IPlatformNavigationService2.cs" />
     <Compile Include="Navigation\NavigationEventArgsExtensions.cs" />
     <Compile Include="Navigation\NavigationFactory.cs" />
     <Compile Include="Navigation\NavigationParameters.cs" />
@@ -165,10 +166,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResumeArgs.cs" />
     <Compile Include="Services\Gesture\Gesture.cs" />
-    <Compile Include="Services\Gesture\GestureBarrier.cs" />
+    <Compile Include="Services\Gesture\GestureBlocker.cs" />
     <Compile Include="Services\Gesture\GestureService.cs" />
     <Compile Include="Services\Gesture\IGestureService.cs" />
     <Compile Include="Services\Gesture\KeyDownEventArgs.cs" />
+    <Compile Include="Services\WindowService.cs" />
     <Compile Include="StartArgs.cs" />
     <Compile Include="StartCauses.cs" />
     <Compile Include="StartKinds.cs" />
@@ -181,10 +183,10 @@
       <Version>27.0.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.8</Version>
+      <Version>6.1.7</Version>
     </PackageReference>
     <PackageReference Include="Prism.Core">
-      <Version>7.1.0.431</Version>
+      <Version>7.2.0.1367</Version>
     </PackageReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

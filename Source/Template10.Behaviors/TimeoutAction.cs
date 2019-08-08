@@ -5,7 +5,6 @@ using Windows.UI.Xaml.Markup;
 
 namespace Template10.Behaviors
 {
-    // DOCS: https://github.com/Windows-XAML/Template10/wiki/Behaviors-and-Actions
     [ContentProperty(Name = nameof(Actions))]
     public sealed class TimeoutAction : DependencyObject, IAction
     {
@@ -31,7 +30,6 @@ namespace Template10.Behaviors
             get { return (int)GetValue(MillisecondsProperty); }
             set { SetValue(MillisecondsProperty, value); }
         }
-
         public static readonly DependencyProperty MillisecondsProperty =
             DependencyProperty.Register(nameof(Milliseconds), typeof(int),
                 typeof(TimeoutAction), new PropertyMetadata(5000));

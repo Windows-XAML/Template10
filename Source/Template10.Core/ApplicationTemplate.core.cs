@@ -8,10 +8,15 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Template10.Core.Services;
+using Template10.Ioc;
+using Template10.Navigation;
 using Template10.Services;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Core;
 using Windows.Storage;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace Template10
 {
@@ -28,8 +33,36 @@ namespace Template10
             _logger.Log("[App.Constructor()]", Category.Info, Priority.None);
             (this as IApplicationEvents).WindowCreated += (s, e) =>
             {
-                GestureService.SetupForCurrentView(e.Window.CoreWindow);
+                WindowService.Register(e.Window);
+                GestureService.SetupWindowListeners(e.Window.CoreWindow);
             };
+
+            CoreApplication.Exiting += (s, e) =>
+            {
+                OnStop(new StopArgs(StopKind.CoreApplicationExiting) { CoreApplicationEventArgs = e });
+                OnStopAsync(new StopArgs(StopKind.CoreApplicationExiting) { CoreApplicationEventArgs = e }).RunSynchronously();
+            };
+
+            //Window.Current.Closed += (s, e) =>
+            //{
+            //    OnStop(new StopArgs(StopKind.CoreWindowClosed) { CoreWindowEventArgs = e });
+            //    OnStopAsync(new StopArgs(StopKind.CoreWindowClosed) { CoreWindowEventArgs = e }).RunSynchronously();
+            //};
+
+            //Windows.UI.Core.Preview.SystemNavigationManagerPreview.GetForCurrentView().CloseRequested += async (s, e) =>
+            //{
+            //    var deferral = e.GetDeferral();
+            //    try
+            //    {
+            //        OnStop(new StopArgs(StopKind.CloseRequested) { CloseRequestedPreviewEventArgs = e });
+            //        await OnStopAsync(new StopArgs(StopKind.CloseRequested) { CloseRequestedPreviewEventArgs = e });
+            //    }
+            //    finally
+            //    {
+            //        deferral.Complete();
+            //    }
+            //};
+
             base.Suspending += async (s, e) =>
             {
                 if (ApplicationData.Current.LocalSettings.Values.ContainsKey("Suspend_Data"))
@@ -40,8 +73,8 @@ namespace Template10
                 var deferral = e.SuspendingOperation.GetDeferral();
                 try
                 {
-                    OnSuspending();
-                    await OnSuspendingAsync();
+                    OnStop(new StopArgs(StopKind.Suspending) { SuspendingEventArgs = e });
+                    await OnStopAsync(new StopArgs(StopKind.Suspending) { SuspendingEventArgs = e });
                 }
                 finally
                 {
@@ -90,12 +123,12 @@ namespace Template10
         private static int _initialized = 0;
         private ILoggerFacade _logger;
 
-        private void CallOnInitializedOnce()
+        private void CallOnInitializedOnlyOnce()
         {
             // don't forget there is no logger yet
             if (_logStartingEvents)
             {
-                _logger.Log($"{nameof(ApplicationTemplate)}.{nameof(CallOnInitializedOnce)}", Category.Info, Priority.None);
+                _logger.Log($"{nameof(ApplicationTemplate)}.{nameof(CallOnInitializedOnlyOnce)}", Category.Info, Priority.None);
             }
 
             // once and only once, ever
@@ -116,8 +149,8 @@ namespace Template10
 
             try
             {
-                CallOnInitializedOnce();
-                TestResuming(startArgs);
+                CallOnInitializedOnlyOnce();
+                ConfigureIfResuming(startArgs);
                 _logger.Log($"[App.OnStart(startKind:{startArgs.StartKind}, startCause:{startArgs.StartCause})]", Category.Info, Priority.None);
                 OnStart(startArgs);
                 _logger.Log($"[App.OnStartAsync(startKind:{startArgs.StartKind}, startCause:{startArgs.StartCause})]", Category.Info, Priority.None);
@@ -130,7 +163,7 @@ namespace Template10
             }
         }
 
-        private static void TestResuming(StartArgs startArgs)
+        private static void ConfigureIfResuming(StartArgs startArgs)
         {
             if (startArgs.Arguments is ILaunchActivatedEventArgs e
                 && e.PreviousExecutionState == ApplicationExecutionState.Terminated)
@@ -164,26 +197,24 @@ namespace Template10
 
         #region overrides
 
-        public virtual void OnSuspending() { /* empty */ }
+        public virtual void OnStop(IStopArgs stopArgs) { /* empty */ }
 
-        public virtual Task OnSuspendingAsync()
-        {
-            return Task.CompletedTask;
-        }
+        public virtual Task OnStopAsync(IStopArgs stopArgs) => Task.CompletedTask;
 
         public abstract void RegisterTypes(IContainerRegistry container);
 
         public virtual void OnInitialized() { /* empty */ }
 
-        public virtual void OnStart(StartArgs args) {  /* empty */ }
+        public virtual void OnStart(IStartArgs args) {  /* empty */ }
 
-        public virtual Task OnStartAsync(StartArgs args)
+        public virtual Task OnStartAsync(IStartArgs args)
         {
             return Task.CompletedTask;
         }
 
         public virtual void ConfigureViewModelLocator()
         {
+            // this is a testability method
             ViewModelLocationProvider.SetDefaultViewModelFactory((view, type) =>
             {
                 return _containerExtension.ResolveViewModelForView(view, type);

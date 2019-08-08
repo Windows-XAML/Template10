@@ -7,26 +7,31 @@ using Windows.UI.Xaml.Controls;
 
 namespace Template10.Behaviors
 {
-    public class MessageDialogAction : DependencyObject, IAction
+    public class MessageAction : DependencyObject, IAction
     {
         public object Execute(object sender, object parameter) => ExecuteAsync(sender, parameter);
 
-        Boolean busy = false;
+        bool _busy = false;
         public async Task ExecuteAsync(object sender, object parameter)
         {
-            if (busy)
+            if (_busy)
             {
                 return;
             }
-            busy = true;
+            _busy = true;
             try
             {
-                var d = new ContentDialog { Title = Title, Content = Content, PrimaryButtonText = OkText };
-                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () => await d.ShowAsync());
+                var dialog = new ContentDialog
+                {
+                    Title = Title,
+                    Content = Content,
+                    PrimaryButtonText = ButtonText
+                };
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () => await dialog.ShowAsync());
             }
             finally
             {
-                busy = false;
+                _busy = false;
             }
         }
 
@@ -37,7 +42,7 @@ namespace Template10.Behaviors
         }
         public static readonly DependencyProperty ContentProperty =
             DependencyProperty.Register(nameof(Content), typeof(string),
-                typeof(MessageDialogAction), new PropertyMetadata(string.Empty));
+                typeof(MessageAction), new PropertyMetadata(string.Empty));
 
         public string Title
         {
@@ -46,16 +51,15 @@ namespace Template10.Behaviors
         }
         public static readonly DependencyProperty TitleProperty =
             DependencyProperty.Register(nameof(Title), typeof(string),
-                typeof(MessageDialogAction), new PropertyMetadata(string.Empty));
+                typeof(MessageAction), new PropertyMetadata(string.Empty));
 
-        public string OkText
+        public string ButtonText
         {
-            get { return (string)GetValue(OkTextProperty); }
-            set { SetValue(OkTextProperty, value); }
+            get { return (string)GetValue(ButtonTextProperty); }
+            set { SetValue(ButtonTextProperty, value); }
         }
-        public static readonly DependencyProperty OkTextProperty =
-            DependencyProperty.Register(nameof(OkText), typeof(string),
-                typeof(MessageDialogAction), new PropertyMetadata("Ok"));
-
+        public static readonly DependencyProperty ButtonTextProperty =
+            DependencyProperty.Register(nameof(ButtonText), typeof(string),
+                typeof(MessageAction), new PropertyMetadata("Close"));
     }
 }

@@ -9,18 +9,18 @@ using Windows.UI.Xaml.Media.Animation;
 
 namespace Template10.Navigation
 {
-    public class NavigationService : IPlatformNavigationService, IPlatformNavigationService2
+    public class NavigationService : INavigationService, INavigationService2
     {
-        IFrameFacade IPlatformNavigationService2.FrameFacade => _frame;
+        IFrameFacade INavigationService2.FrameFacade => _frame;
 
-        public static Dictionary<Frame, IPlatformNavigationService> Instances { get; } = new Dictionary<Frame, IPlatformNavigationService>();
+        public static Dictionary<Frame, INavigationService> Instances { get; } = new Dictionary<Frame, INavigationService>();
 
         private readonly IFrameFacade _frame;
         private readonly ILoggerFacade _logger;
 
-        internal NavigationService(Frame frame)
+        internal NavigationService(Frame frame, string id)
         {
-            _frame = new FrameFacade(frame, this);
+            _frame = new FrameFacade(frame, this, id);
             _frame.CanGoBackChanged += (s, e) =>
                 CanGoBackChanged?.Invoke(this, EventArgs.Empty);
             _frame.CanGoForwardChanged += (s, e) =>

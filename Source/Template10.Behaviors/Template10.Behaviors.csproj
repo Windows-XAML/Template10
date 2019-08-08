@@ -5,9 +5,9 @@
     <TargetFrameworks>uap10.0.15063</TargetFrameworks>
     <RootNamespace>Template10</RootNamespace>
     <Title>Template10 Extras</Title>
-    <Description>Template 10 Extras Library</Description>
+    <Description>Template 10 Behaviors Library</Description>
     <PackageTags>win10;uwp;</PackageTags>
-    <AssemblyName>Template10.Extras</AssemblyName>
+    <AssemblyName>Template10.Behaviors</AssemblyName>
     <RepositoryType>Test</RepositoryType>
     <RepositoryUrl>Test</RepositoryUrl>
     <PackageIconUrl>Test</PackageIconUrl>
@@ -18,16 +18,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="EllipsisBehavior.cs" />
     <Compile Remove="Xaml.Behaviors\ThrottledEventTriggerBehavior.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Properties\Template10.Extras.rd.xml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed">
-      <Version>2.0.0</Version>
+      <Version>2.0.1</Version>
     </PackageReference>
   </ItemGroup>
 

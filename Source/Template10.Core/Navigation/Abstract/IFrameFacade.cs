@@ -6,6 +6,8 @@ namespace Template10.Navigation
 {
     public interface IFrameFacade
     {
+        string Id { get; set; }
+
         bool CanGoBack();
         event EventHandler CanGoBackChanged;
         Task<INavigationResult> GoBackAsync(INavigationParameters parameters, NavigationTransitionInfo infoOverride);

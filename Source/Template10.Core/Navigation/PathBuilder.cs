@@ -16,8 +16,6 @@ namespace Template10.Navigation
             _value = value;
         }
 
-        // what name would be nice?
-
         public static PathBuilder Create(string page, params (string Name, string Value)[] parameters)
         {
             return Create(BackStackBehaviors.Append, page, parameters);

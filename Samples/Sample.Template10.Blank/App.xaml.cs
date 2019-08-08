@@ -6,12 +6,14 @@ using Template10.Navigation;
 using Template10.Ioc;
 using Template10;
 using Sample.Views;
+using Windows.UI.Xaml.Controls;
+using System.Threading.Tasks;
 
 namespace Sample
 {
-    sealed partial class App : ApplicationBase 
+    sealed partial class App : ApplicationBase
     {
-        public static IPlatformNavigationService NavigationService { get; private set; }
+        private INavigationService _nav;
 
         public App() => InitializeComponent();
 
@@ -22,14 +24,15 @@ namespace Sample
 
         public override void OnInitialized()
         {
-            NavigationService = NavigationFactory.Create(Gesture.Back, Gesture.Forward, Gesture.Refresh);
-            Window.Current.Content = NavigationService.GetXamlFrame();
-            Window.Current.Activate();
+            _nav = NavigationFactory
+                .Create(new Frame())
+                .ActivateWindow(Window.Current)
+                .AttachGestures(Gesture.Back, Gesture.Forward, Gesture.Refresh);
         }
 
-        public override void OnStart(StartArgs args)
+        public override async Task OnStartAsync(IStartArgs args)
         {
-            NavigationService.NavigateAsync(nameof(MainPage));
+            await _nav.NavigateAsync(nameof(MainPage));
         }
     }
 }

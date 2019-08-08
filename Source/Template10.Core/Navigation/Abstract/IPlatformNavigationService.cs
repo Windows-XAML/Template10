@@ -5,7 +5,7 @@ using Windows.UI.Xaml.Media.Animation;
 
 namespace Template10.Navigation
 {
-    public interface IPlatformNavigationService 
+    public interface INavigationService 
     {
         Task<INavigationResult> GoBackAsync();
         Task<INavigationResult> GoBackAsync(INavigationParameters parameters);

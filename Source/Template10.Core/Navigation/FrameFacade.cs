@@ -1,9 +1,8 @@
-﻿using System;
-using System.Linq;
+﻿using Prism.Ioc;
+using Prism.Logging;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Prism.Ioc;
-using Prism.Logging;
 using Template10.Mvvm;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
@@ -19,13 +18,13 @@ namespace Template10.Navigation
         private readonly Frame _frame;
         private readonly CoreDispatcher _dispatcher;
         private readonly SynchronizationContext _syncContext;
-        private readonly IPlatformNavigationService _navigationService;
+        private readonly INavigationService _navigationService;
         private readonly ILoggerFacade _logger;
 
         public event EventHandler CanGoBackChanged;
         public event EventHandler CanGoForwardChanged;
 
-        internal FrameFacade(Frame frame, IPlatformNavigationService navigationService)
+        internal FrameFacade(Frame frame, INavigationService navigationService, string id)
         {
             _frame = frame;
             _frame.ContentTransitions = new TransitionCollection
@@ -41,16 +40,32 @@ namespace Template10.Navigation
             _syncContext = SynchronizationContext.Current;
             _navigationService = navigationService;
             _logger = ApplicationTemplate.Current.Container.Resolve<ILoggerFacade>();
+
+            if (id != null)
+            {
+                Id = id;
+            }
         }
 
         Frame IFrameFacade2.Frame
-            => _frame;
+        {
+            get
+            {
+                return _frame;
+            }
+        }
 
         public bool CanGoBack()
-            => _frame.CanGoBack;
+        {
+            return _frame.CanGoBack;
+        }
 
         public bool CanGoForward()
-            => _frame.CanGoForward;
+        {
+            return _frame.CanGoForward;
+        }
+
+        public string Id { get; set; } = Guid.NewGuid().ToString();
 
         public async Task<INavigationResult> GoBackAsync(INavigationParameters parameters,
             NavigationTransitionInfo infoOverride)
@@ -116,7 +131,7 @@ namespace Template10.Navigation
                 });
         }
 
-        async Task<INavigationResult> NavigateAsync(
+        private async Task<INavigationResult> NavigateAsync(
             string path,
             INavigationParameters parameter,
             NavigationTransitionInfo infoOverride)

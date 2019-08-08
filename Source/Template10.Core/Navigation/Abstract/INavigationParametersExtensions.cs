@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Linq;
+using System.Threading;
 
 namespace Template10.Navigation
 {
@@ -13,7 +14,7 @@ namespace Template10.Navigation
             (parameters as INavigationParametersInternal).Add(nameof(NavigationMode), mode);
         }
 
-        internal static void SetNavigationService(this INavigationParameters parameters, IPlatformNavigationService service)
+        internal static void SetNavigationService(this INavigationParameters parameters, INavigationService service)
         {
             if ((parameters as INavigationParametersInternal).ContainsKey(nameof(NavigationService)))
             {
@@ -39,6 +40,11 @@ namespace Template10.Navigation
             }
 
             return (parameters as INavigationParametersInternal).GetValue<NavigationMode>(nameof(NavigationMode));
+        }
+
+        public static INavigationService GetNavigationService(this Windows.UI.Xaml.Controls.Frame frame)
+        {
+            return NavigationService.Instances.Single(x => x.Value.GetXamlFrame() == frame).Value;
         }
 
         public static INavigationService GetNavigationService(this INavigationParameters parameters)

@@ -27,7 +27,7 @@ namespace Template10.Services
             return _cache[Window.Current.CoreWindow];
         }
 
-        public static void SetupForCurrentView(CoreWindow window)
+        public static void SetupWindowListeners(CoreWindow window)
         {
             if (_cache.ContainsKey(window))
             {
@@ -35,7 +35,7 @@ namespace Template10.Services
             }
             _cache.Add(window, new GestureService(window));
 
-            // remove when closed
+            window.Closed += Window_Closed;
 
             void Window_Closed(CoreWindow sender, CoreWindowEventArgs args)
             {
@@ -46,7 +46,6 @@ namespace Template10.Services
                     _cache.Remove(window);
                 }
             }
-            window.Closed += Window_Closed;
         }
 
         private GestureService(CoreWindow window)
@@ -57,44 +56,90 @@ namespace Template10.Services
             _logger = ApplicationTemplate.Current.Container.Resolve<ILoggerFacade>();
         }
 
-        public event EventHandler MenuRequested;
-        public event EventHandler BackRequested;
-        public event EventHandler SearchRequested;
-        public event EventHandler RefreshRequested;
-        public event EventHandler ForwardRequested;
-        public event TypedEventHandler<object, KeyDownEventArgs> KeyDown;
+        public Dictionary<string, Action<KeyDownEventArgs>> KeyDownCallbacks { get; } = new Dictionary<string, Action<KeyDownEventArgs>>();
+        public Dictionary<string, Action> BackRequestedCallbacks { get; } = new Dictionary<string, Action>();
+        public Dictionary<string, Action> ForwardRequestedCallbacks { get; } = new Dictionary<string, Action>();
+        public Dictionary<string, Action> MenuRequestedCallbacks { get; } = new Dictionary<string, Action>();
+        public Dictionary<string, Action> RefreshRequestedCallbacks { get; } = new Dictionary<string, Action>();
+        public Dictionary<string, Action> SearchRequestedCallbacks { get; } = new Dictionary<string, Action>();
 
-        #region Barrier
-
-        List<GestureBarrier> _barriers = new List<GestureBarrier>();
         private readonly ILoggerFacade _logger;
 
-        public GestureBarrier CreateBarrier(Gesture gesture)
+        #region Blocker
+
+        List<GestureBlocker> _blockers = new List<GestureBlocker>();
+        public GestureBlocker CreateBlocker(Gesture gesture, BlockerPeriod period)
         {
-            GestureBarrier barrier = null;
-            return barrier = new GestureBarrier
+            GestureBlocker blocker = null;
+            blocker = new GestureBlocker(gesture, period)
             {
-                Gesture = gesture,
-                Complete = () => _barriers.Remove(barrier),
+                Remove = () => _blockers.Remove(blocker)
             };
+            _blockers.Add(blocker);
+            return blocker;
         }
-        bool IfCanRaiseEvent(Gesture evt, Action action)
+        bool RaiseAnyBlockers(Gesture gesture)
         {
-            if (_barriers.Any(x => x.Gesture.Equals(evt)))
+            var blockers = _blockers.Where(x => x.Gesture.Equals(gesture));
+            foreach (var blocker in blockers)
             {
-                return false;
+                blocker.RaiseEvent();
             }
-            action();
-            return true;
+            return blockers.Any();
         }
 
-        #endregion  
+        #endregion
 
-        public bool RaiseRefreshRequested() => IfCanRaiseEvent(Gesture.Refresh, () => RefreshRequested?.Invoke(this, EventArgs.Empty));
-        public bool RaiseBackRequested() => IfCanRaiseEvent(Gesture.Back, () => BackRequested?.Invoke(this, EventArgs.Empty));
-        public bool RaiseForwardRequested() => IfCanRaiseEvent(Gesture.Forward, () => ForwardRequested?.Invoke(this, EventArgs.Empty));
-        public bool RaiseSearchRequested() => IfCanRaiseEvent(Gesture.Search, () => SearchRequested?.Invoke(this, EventArgs.Empty));
-        public bool RaiseMenuRequested() => IfCanRaiseEvent(Gesture.Menu, () => MenuRequested?.Invoke(null, EventArgs.Empty));
+        public void RaiseRefreshRequested()
+        {
+            if (!RaiseAnyBlockers(Gesture.Refresh))
+            {
+                foreach (var item in RefreshRequestedCallbacks)
+                {
+                    item.Value();
+                }
+            }
+        }
+        public void RaiseBackRequested()
+        {
+            if (!RaiseAnyBlockers(Gesture.Back))
+            {
+                foreach (var item in BackRequestedCallbacks)
+                {
+                    item.Value();
+                }
+            }
+        }
+        public void RaiseForwardRequested()
+        {
+            if (!RaiseAnyBlockers(Gesture.Forward))
+            {
+                foreach (var item in ForwardRequestedCallbacks)
+                {
+                    item.Value();
+                }
+            }
+        }
+        public void RaiseSearchRequested()
+        {
+            if (!RaiseAnyBlockers(Gesture.Search))
+            {
+                foreach (var item in SearchRequestedCallbacks)
+                {
+                    item.Value();
+                }
+            }
+        }
+        public void RaiseMenuRequested()
+        {
+            if (!RaiseAnyBlockers(Gesture.Menu))
+            {
+                foreach (var item in MenuRequestedCallbacks)
+                {
+                    item.Value();
+                }
+            }
+        }
 
         private void Dispose(CoreWindow window)
         {
@@ -131,7 +176,10 @@ namespace Template10.Services
             TestForSearchRequested(args);
             TestForMenuRequested(args);
             TestForNavigateRequested(args);
-            KeyDown?.Invoke(null, args);
+            foreach (var item in KeyDownCallbacks)
+            {
+                item.Value?.Invoke(args);
+            }
         }
 
         private void TestForNavigateRequested(KeyDownEventArgs e)
@@ -143,7 +191,7 @@ namespace Template10.Services
                 || (e.OnlyAlt && e.VirtualKey == VirtualKey.Back)
                 || (e.OnlyAlt && e.VirtualKey == VirtualKey.Left))
             {
-                _logger.Log($"{nameof(GestureService)}.{nameof(BackRequested)}", Category.Info, Priority.None);
+                _logger.Log($"{nameof(GestureService)}.BackRequested", Category.Info, Priority.None);
                 RaiseBackRequested();
             }
             else if ((e.VirtualKey == VirtualKey.GoForward)
@@ -151,19 +199,19 @@ namespace Template10.Services
                 || (e.VirtualKey == VirtualKey.GamepadRightShoulder)
                 || (e.OnlyAlt && e.VirtualKey == VirtualKey.Right))
             {
-                _logger.Log($"{nameof(GestureService)}.{nameof(ForwardRequested)}", Category.Info, Priority.None);
+                _logger.Log($"{nameof(GestureService)}.ForwardRequested", Category.Info, Priority.None);
                 RaiseForwardRequested();
             }
             else if ((e.VirtualKey == VirtualKey.Refresh)
                 || (e.VirtualKey == VirtualKey.F5))
             {
-                _logger.Log($"{nameof(GestureService)}.{nameof(RefreshRequested)}", Category.Info, Priority.None);
+                _logger.Log($"{nameof(GestureService)}.RefreshRequested", Category.Info, Priority.None);
                 RaiseRefreshRequested();
             }
             // this is still a preliminary value?
             else if ((e.VirtualKey == VirtualKey.M) && e.OnlyAlt)
             {
-                _logger.Log($"{nameof(GestureService)}.{nameof(MenuRequested)}", Category.Info, Priority.None);
+                _logger.Log($"{nameof(GestureService)}.MenuRequested", Category.Info, Priority.None);
                 RaiseMenuRequested();
             }
         }
@@ -178,12 +226,12 @@ namespace Template10.Services
                 e.Handled = true;
                 if (backPressed)
                 {
-                    _logger.Log($"{nameof(GestureService)}.{nameof(BackRequested)}", Category.Info, Priority.None);
+                    _logger.Log($"{nameof(GestureService)}.BackRequested", Category.Info, Priority.None);
                     RaiseBackRequested();
                 }
                 else if (forwardPressed)
                 {
-                    _logger.Log($"{nameof(GestureService)}.{nameof(ForwardRequested)}", Category.Info, Priority.None);
+                    _logger.Log($"{nameof(GestureService)}.ForwardRequested", Category.Info, Priority.None);
                     RaiseForwardRequested();
                 }
             }
@@ -193,7 +241,7 @@ namespace Template10.Services
         {
             if (args.VirtualKey == VirtualKey.GamepadMenu)
             {
-                _logger.Log($"{nameof(GestureService)}.{nameof(MenuRequested)}", Category.Info, Priority.None);
+                _logger.Log($"{nameof(GestureService)}.MenuRequested", Category.Info, Priority.None);
                 RaiseMenuRequested();
             }
         }
@@ -202,7 +250,7 @@ namespace Template10.Services
         {
             if (args.OnlyControl && args.Character.ToString().ToLower().Equals("e"))
             {
-                _logger.Log($"{nameof(GestureService)}.{nameof(SearchRequested)}", Category.Info, Priority.None);
+                _logger.Log($"{nameof(GestureService)}.SearchRequested", Category.Info, Priority.None);
                 RaiseSearchRequested();
             }
         }

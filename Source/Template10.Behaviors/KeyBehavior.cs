@@ -80,7 +80,7 @@ namespace Template10.Behaviors
             if (e.Key == Key)
             {
                 Interaction.ExecuteActions(AssociatedObject, Actions, null);
-                e.Handled = true;
+                e.Handled = false;
             }
         }
 

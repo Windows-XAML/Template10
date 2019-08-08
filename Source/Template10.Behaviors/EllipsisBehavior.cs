@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xaml.Interactivity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.Foundation.Collections;
@@ -10,38 +11,45 @@ using xaml = Windows.UI.Xaml;
 namespace Template10.Behaviors
 {
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Behaviors-and-Actions
+    [Obsolete]
     [TypeConstraint(typeof(CommandBar))]
     public class EllipsisBehavior : DependencyObject, IBehavior
     {
-        private CommandBar _commandBar => AssociatedObject as CommandBar;
+        private CommandBar CommandBar => AssociatedObject as CommandBar;
 
         public DependencyObject AssociatedObject { get; private set; }
 
         public void Attach(DependencyObject associatedObject)
         {
             AssociatedObject = associatedObject;
-            _commandBar.Loaded += CommandBar_Loaded;
-            _commandBar.PrimaryCommands.VectorChanged += Commands_VectorChanged;
-            _commandBar.SecondaryCommands.VectorChanged += Commands_VectorChanged;
+            CommandBar.Loaded += CommandBar_Loaded;
+            CommandBar.PrimaryCommands.VectorChanged += Commands_VectorChanged;
+            CommandBar.SecondaryCommands.VectorChanged += Commands_VectorChanged;
             Update();
         }
 
         public void Detach()
         {
-            _commandBar.Loaded -= CommandBar_Loaded;
-            _commandBar.PrimaryCommands.VectorChanged -= Commands_VectorChanged;
-            _commandBar.SecondaryCommands.VectorChanged -= Commands_VectorChanged;
+            CommandBar.Loaded -= CommandBar_Loaded;
+            CommandBar.PrimaryCommands.VectorChanged -= Commands_VectorChanged;
+            CommandBar.SecondaryCommands.VectorChanged -= Commands_VectorChanged;
         }
 
-        private void CommandBar_Loaded(object sender, RoutedEventArgs e) => Update();
+        private void CommandBar_Loaded(object sender, RoutedEventArgs e)
+        {
+            Update();
+        }
 
-        private void Commands_VectorChanged(IObservableVector<ICommandBarElement> sender, IVectorChangedEventArgs @event) => Update();
+        private void Commands_VectorChanged(IObservableVector<ICommandBarElement> sender, IVectorChangedEventArgs @event)
+        {
+            Update();
+        }
 
         public enum Visibilities { Visible, Collapsed, Auto }
         public Visibilities Visibility
         {
-            get { return (Visibilities)GetValue(VisibilityProperty); }
-            set { SetValue(VisibilityProperty, value); }
+            get => (Visibilities)GetValue(VisibilityProperty);
+            set => SetValue(VisibilityProperty, value);
         }
         public static readonly DependencyProperty VisibilityProperty =
             DependencyProperty.Register(nameof(Visibility), typeof(Visibilities),
@@ -49,9 +57,9 @@ namespace Template10.Behaviors
 
         private Button FindButtonByName()
         {
-            if (VisualTreeHelper.GetChildrenCount(_commandBar) > 0)
+            if (VisualTreeHelper.GetChildrenCount(CommandBar) > 0)
             {
-                var child = VisualTreeHelper.GetChild(_commandBar, 0) as FrameworkElement; /* Templated root */
+                var child = VisualTreeHelper.GetChild(CommandBar, 0) as FrameworkElement; /* Templated root */
                 return child?.FindName("MoreButton") as Button;
             }
             return null;
@@ -59,7 +67,7 @@ namespace Template10.Behaviors
 
         private Button FindButtonByTreeEnum()
         {
-            var controls = AllChildren(_commandBar).OfType<Control>();
+            var controls = AllChildren(CommandBar).OfType<Control>();
             return controls.OfType<Button>().FirstOrDefault(x => x.Name.Equals("MoreButton"));
         }
 
@@ -83,7 +91,7 @@ namespace Template10.Behaviors
 
         private Button FindButton()
         {
-            if (_commandBar == null)
+            if (CommandBar == null)
             {
                 return null;
             }
@@ -113,8 +121,8 @@ namespace Template10.Behaviors
                     button.Visibility = xaml.Visibility.Collapsed;
                     break;
                 case Visibilities.Auto:
-                    var count = _commandBar.PrimaryCommands.OfType<Control>().Count(x => x.Visibility.Equals(xaml.Visibility.Visible));
-                    count += _commandBar.SecondaryCommands.OfType<Control>().Count(x => x.Visibility.Equals(xaml.Visibility.Visible));
+                    var count = CommandBar.PrimaryCommands.OfType<Control>().Count(x => x.Visibility.Equals(xaml.Visibility.Visible));
+                    count += CommandBar.SecondaryCommands.OfType<Control>().Count(x => x.Visibility.Equals(xaml.Visibility.Visible));
                     button.Visibility = (count > 0) ? xaml.Visibility.Visible : xaml.Visibility.Collapsed;
                     break;
             }

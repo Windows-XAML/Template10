@@ -1,8 +1,39 @@
-﻿using Windows.ApplicationModel.Activation;
+﻿using Windows.ApplicationModel;
+using Windows.ApplicationModel.Activation;
 
 
 namespace Template10
 {
+    public enum StopKind
+    {
+        Suspending, 
+        CloseRequested,
+        CoreWindowClosed,
+        CoreApplicationExiting
+    }
+
+    public interface IStopArgs
+    {
+        StopKind StopKind { get; }
+        SuspendingEventArgs SuspendingEventArgs { get; }
+        Windows.UI.Core.Preview.SystemNavigationCloseRequestedPreviewEventArgs CloseRequestedPreviewEventArgs { get; }
+        Windows.UI.Core.CoreWindowEventArgs CoreWindowEventArgs { get; }
+        object CoreApplicationEventArgs { get; }
+    }
+
+    public class StopArgs : IStopArgs
+    {
+        public StopArgs(StopKind kind)
+        {
+            StopKind = kind;
+        }
+        public StopKind StopKind { get; }
+        public SuspendingEventArgs SuspendingEventArgs { get; internal set; }
+        public Windows.UI.Core.Preview.SystemNavigationCloseRequestedPreviewEventArgs CloseRequestedPreviewEventArgs { get; internal set; }
+        public Windows.UI.Core.CoreWindowEventArgs CoreWindowEventArgs { get; internal set; }
+        public object CoreApplicationEventArgs { get; internal set; }
+    }
+
     public class StartArgs : IStartArgs
     {
         public StartArgs(IActivatedEventArgs args, StartKinds startKind)

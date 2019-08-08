@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Microsoft.Xaml.Interactivity;
+using System;
 using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
-using Microsoft.Xaml.Interactivity;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
@@ -44,17 +44,17 @@ namespace Prism.Windows.Behaviors
             typeof(EventTriggerBehaviorBase),
             new PropertyMetadata(null, new PropertyChangedCallback(EventTriggerBehaviorBase.OnSourceObjectChanged)));
 
-        private object resolvedSource;
-        private Delegate eventHandler;
-        private bool isLoadedEventRegistered;
-        private bool isWindowsRuntimeEvent;
-        private Func<Delegate, EventRegistrationToken> addEventHandlerMethod;
-        private Action<EventRegistrationToken> removeEventHandlerMethod;
+        private object _resolvedSource;
+        private Delegate _eventHandler;
+        private bool _isLoadedEventRegistered;
+        private bool _isWindowsRuntimeEvent;
+        private Func<Delegate, EventRegistrationToken> _addEventHandlerMethod;
+        private Action<EventRegistrationToken> _removeEventHandlerMethod;
 
         /// <summary>
         /// Resolved source.
         /// </summary>
-        protected object ResolvedSource => resolvedSource;
+        protected object ResolvedSource => _resolvedSource;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventTriggerBehaviorBase"/> class.
@@ -70,11 +70,11 @@ namespace Prism.Windows.Behaviors
         {
             get
             {
-                var actionCollection = (ActionCollection)this.GetValue(EventTriggerBehaviorBase.ActionsProperty);
+                var actionCollection = (ActionCollection)GetValue(EventTriggerBehaviorBase.ActionsProperty);
                 if (actionCollection == null)
                 {
                     actionCollection = new ActionCollection();
-                    this.SetValue(EventTriggerBehaviorBase.ActionsProperty, actionCollection);
+                    SetValue(EventTriggerBehaviorBase.ActionsProperty, actionCollection);
                 }
 
                 return actionCollection;
@@ -86,15 +86,9 @@ namespace Prism.Windows.Behaviors
         /// </summary>
         public string EventName
         {
-            get
-            {
-                return (string)this.GetValue(EventTriggerBehaviorBase.EventNameProperty);
-            }
+            get => (string)GetValue(EventTriggerBehaviorBase.EventNameProperty);
 
-            set
-            {
-                this.SetValue(EventTriggerBehaviorBase.EventNameProperty, value);
-            }
+            set => SetValue(EventTriggerBehaviorBase.EventNameProperty, value);
         }
 
         /// <summary>
@@ -103,15 +97,9 @@ namespace Prism.Windows.Behaviors
         /// </summary>
         public object SourceObject
         {
-            get
-            {
-                return (object)this.GetValue(EventTriggerBehaviorBase.SourceObjectProperty);
-            }
+            get => GetValue(EventTriggerBehaviorBase.SourceObjectProperty);
 
-            set
-            {
-                this.SetValue(EventTriggerBehaviorBase.SourceObjectProperty, value);
-            }
+            set => SetValue(EventTriggerBehaviorBase.SourceObjectProperty, value);
         }
 
         /// <summary>
@@ -120,7 +108,7 @@ namespace Prism.Windows.Behaviors
         protected override void OnAttached()
         {
             base.OnAttached();
-            this.SetResolvedSource(this.ComputeResolvedSource());
+            SetResolvedSource(ComputeResolvedSource());
         }
 
         /// <summary>
@@ -129,26 +117,26 @@ namespace Prism.Windows.Behaviors
         protected override void OnDetaching()
         {
             base.OnDetaching();
-            this.SetResolvedSource(null);
+            SetResolvedSource(null);
         }
 
         private void SetResolvedSource(object newSource)
         {
-            if (this.AssociatedObject == null || this.resolvedSource == newSource)
+            if (AssociatedObject == null || _resolvedSource == newSource)
             {
                 return;
             }
 
-            if (this.resolvedSource != null)
+            if (_resolvedSource != null)
             {
-                this.UnregisterEvent(this.EventName);
+                UnregisterEvent(EventName);
             }
 
-            this.resolvedSource = newSource;
+            _resolvedSource = newSource;
 
-            if (this.resolvedSource != null)
+            if (_resolvedSource != null)
             {
-                this.RegisterEvent(this.EventName);
+                RegisterEvent(EventName);
             }
         }
 
@@ -156,12 +144,12 @@ namespace Prism.Windows.Behaviors
         {
             // If the SourceObject property is set at all, we want to use it. It is possible that it is data
             // bound and bindings haven't been evaluated yet. Plus, this makes the API more predictable.
-            if (this.ReadLocalValue(EventTriggerBehaviorBase.SourceObjectProperty) != DependencyProperty.UnsetValue)
+            if (ReadLocalValue(EventTriggerBehaviorBase.SourceObjectProperty) != DependencyProperty.UnsetValue)
             {
-                return this.SourceObject;
+                return SourceObject;
             }
 
-            return this.AssociatedObject;
+            return AssociatedObject;
         }
 
         private void RegisterEvent(string eventName)
@@ -173,39 +161,39 @@ namespace Prism.Windows.Behaviors
 
             if (eventName != "Loaded")
             {
-                var sourceObjectType = this.resolvedSource.GetType();
+                var sourceObjectType = _resolvedSource.GetType();
                 var info = sourceObjectType.GetRuntimeEvent(eventName);
                 if (info == null)
                 {
-                    throw new ArgumentException(string.Format(                        
+                    throw new ArgumentException(string.Format(
                         "Can not find event {0} for the class {1}",
-                        this.EventName,
+                        EventName,
                         sourceObjectType.Name));
                 }
 
                 var methodInfo = typeof(EventTriggerBehaviorBase).GetTypeInfo().GetDeclaredMethod("OnEvent");
-                this.eventHandler = methodInfo.CreateDelegate(info.EventHandlerType, this);
+                _eventHandler = methodInfo.CreateDelegate(info.EventHandlerType, this);
 
-                this.isWindowsRuntimeEvent = EventTriggerBehaviorBase.IsWindowsRuntimeEvent(info);
-                if (this.isWindowsRuntimeEvent)
+                _isWindowsRuntimeEvent = EventTriggerBehaviorBase.IsWindowsRuntimeEvent(info);
+                if (_isWindowsRuntimeEvent)
                 {
-                    this.addEventHandlerMethod = add => (EventRegistrationToken)info.AddMethod.Invoke(this.resolvedSource, new object[] { add });
-                    this.removeEventHandlerMethod = token => info.RemoveMethod.Invoke(this.resolvedSource, new object[] { token });
+                    _addEventHandlerMethod = add => (EventRegistrationToken)info.AddMethod.Invoke(_resolvedSource, new object[] { add });
+                    _removeEventHandlerMethod = token => info.RemoveMethod.Invoke(_resolvedSource, new object[] { token });
 
-                    WindowsRuntimeMarshal.AddEventHandler(this.addEventHandlerMethod, this.removeEventHandlerMethod, this.eventHandler);
+                    WindowsRuntimeMarshal.AddEventHandler(_addEventHandlerMethod, _removeEventHandlerMethod, _eventHandler);
                 }
                 else
                 {
-                    info.AddEventHandler(this.resolvedSource, this.eventHandler);
+                    info.AddEventHandler(_resolvedSource, _eventHandler);
                 }
             }
-            else if (!this.isLoadedEventRegistered)
+            else if (!_isLoadedEventRegistered)
             {
-                var element = this.resolvedSource as FrameworkElement;
+                var element = _resolvedSource as FrameworkElement;
                 if (element != null && !EventTriggerBehaviorBase.IsElementLoaded(element))
                 {
-                    this.isLoadedEventRegistered = true;
-                    element.Loaded += this.OnEvent;
+                    _isLoadedEventRegistered = true;
+                    element.Loaded += OnEvent;
                 }
             }
         }
@@ -219,28 +207,28 @@ namespace Prism.Windows.Behaviors
 
             if (eventName != "Loaded")
             {
-                if (this.eventHandler == null)
+                if (_eventHandler == null)
                 {
                     return;
                 }
 
-                var info = this.resolvedSource.GetType().GetRuntimeEvent(eventName);
-                if (this.isWindowsRuntimeEvent)
+                var info = _resolvedSource.GetType().GetRuntimeEvent(eventName);
+                if (_isWindowsRuntimeEvent)
                 {
-                    WindowsRuntimeMarshal.RemoveEventHandler(this.removeEventHandlerMethod, this.eventHandler);
+                    WindowsRuntimeMarshal.RemoveEventHandler(_removeEventHandlerMethod, _eventHandler);
                 }
                 else
                 {
-                    info.RemoveEventHandler(this.resolvedSource, this.eventHandler);
+                    info.RemoveEventHandler(_resolvedSource, _eventHandler);
                 }
 
-                this.eventHandler = null;
+                _eventHandler = null;
             }
-            else if (this.isLoadedEventRegistered)
+            else if (_isLoadedEventRegistered)
             {
-                this.isLoadedEventRegistered = false;
-                var element = (FrameworkElement)this.resolvedSource;
-                element.Loaded -= this.OnEvent;
+                _isLoadedEventRegistered = false;
+                var element = (FrameworkElement)_resolvedSource;
+                element.Loaded -= OnEvent;
             }
         }
 
@@ -252,7 +240,7 @@ namespace Prism.Windows.Behaviors
         /// <param name="eventArgs">Event argument.</param>
         protected virtual void OnEvent(object sender, object eventArgs)
         {
-            Interaction.ExecuteActions(this.resolvedSource, this.Actions, eventArgs);
+            Interaction.ExecuteActions(_resolvedSource, Actions, eventArgs);
         }
 
         private static void OnSourceObjectChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
@@ -264,7 +252,7 @@ namespace Prism.Windows.Behaviors
         private static void OnEventNameChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
             var behavior = (EventTriggerBehaviorBase)dependencyObject;
-            if (behavior.AssociatedObject == null || behavior.resolvedSource == null)
+            if (behavior.AssociatedObject == null || behavior._resolvedSource == null)
             {
                 return;
             }

@@ -1,6 +1,6 @@
 ﻿namespace Template10.Navigation
 {
-    public interface IPlatformNavigationService2
+    public interface INavigationService2
     {
         IFrameFacade FrameFacade { get; }
     }

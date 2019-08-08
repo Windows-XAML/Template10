@@ -12,7 +12,7 @@ namespace Template10.Mvvm
         INavigatingAware,
         INavigatingAwareAsync
     {
-        public IPlatformNavigationService NavigationService { get; internal set; }
+        public INavigationService NavigationService { get; internal set; }
 
         public virtual bool CanNavigate(INavigationParameters parameters)
         {

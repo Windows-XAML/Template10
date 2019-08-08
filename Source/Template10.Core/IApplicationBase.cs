@@ -3,6 +3,10 @@ using Prism.Ioc;
 
 namespace Template10
 {
+    public interface ISuspend
+    {
+    }
+
     public interface IApplicationBase
     {
         /*
@@ -33,8 +37,8 @@ namespace Template10
         void ConfigureViewModelLocator();
         IContainerExtension CreateContainerExtension();
         void OnInitialized();
-        void OnStart(StartArgs args);
-        Task OnStartAsync(StartArgs args);
+        void OnStart(IStartArgs args);
+        Task OnStartAsync(IStartArgs args);
         void RegisterTypes(IContainerRegistry container);
     }
 }
