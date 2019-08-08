@@ -10,7 +10,12 @@ namespace Template10
         public ActivationKind Kind { get; set; }
         public ApplicationExecutionState PreviousExecutionState { get; set; }
         public SplashScreen SplashScreen { get; set; }
-        public DateTime SuspensionDate { get; set; }
+        public ResumeArgs SetSuspensionDate(DateTime? date)
+        {
+            SuspensionDate = date;
+            return this;
+        }
+        public DateTime? SuspensionDate { get; set; }
         internal static ResumeArgs Create(ApplicationExecutionState state)
         {
             var args = new ResumeArgs

@@ -7,6 +7,6 @@ namespace Template10
     {
         ApplicationExecutionState PreviousExecutionState { get; set; }
         ActivationKind Kind { get; set; }
-        DateTime SuspensionDate { get; set; }
+        DateTime? SuspensionDate { get; set; }
     }
 }

@@ -39,16 +39,19 @@ namespace Template10
 
             CoreApplication.Exiting += (s, e) =>
             {
-                OnStop(new StopArgs(StopKind.CoreApplicationExiting) { CoreApplicationEventArgs = e });
-                OnStopAsync(new StopArgs(StopKind.CoreApplicationExiting) { CoreApplicationEventArgs = e }).RunSynchronously();
+                var stopArgs = new StopArgs(StopKind.CoreApplicationExiting) { CoreApplicationEventArgs = e };
+                OnStop(stopArgs);
+                OnStopAsync(stopArgs).RunSynchronously();
             };
 
+            // this is a timing problem
             //Window.Current.Closed += (s, e) =>
             //{
             //    OnStop(new StopArgs(StopKind.CoreWindowClosed) { CoreWindowEventArgs = e });
             //    OnStopAsync(new StopArgs(StopKind.CoreWindowClosed) { CoreWindowEventArgs = e }).RunSynchronously();
             //};
 
+            // this is a timing problem
             //Windows.UI.Core.Preview.SystemNavigationManagerPreview.GetForCurrentView().CloseRequested += async (s, e) =>
             //{
             //    var deferral = e.GetDeferral();
@@ -65,16 +68,13 @@ namespace Template10
 
             base.Suspending += async (s, e) =>
             {
-                if (ApplicationData.Current.LocalSettings.Values.ContainsKey("Suspend_Data"))
-                {
-                    ApplicationData.Current.LocalSettings.Values.Remove("Suspend_Data");
-                }
-                ApplicationData.Current.LocalSettings.Values.Add("Suspend_Data", DateTime.Now.ToString());
+                SuspendData = DateTime.Now;
                 var deferral = e.SuspendingOperation.GetDeferral();
                 try
                 {
-                    OnStop(new StopArgs(StopKind.Suspending) { SuspendingEventArgs = e });
-                    await OnStopAsync(new StopArgs(StopKind.Suspending) { SuspendingEventArgs = e });
+                    var stopArgs = new StopArgs(StopKind.Suspending) { SuspendingEventArgs = e };
+                    OnStop(stopArgs);
+                    await OnStopAsync(stopArgs);
                 }
                 finally
                 {
@@ -83,7 +83,11 @@ namespace Template10
             };
             base.Resuming += async (s, e) =>
             {
-                await InternalStartAsync(new StartArgs(ResumeArgs.Create(ApplicationExecutionState.Suspended), StartKinds.Resume));
+                var resumeArgs = ResumeArgs
+                    .Create(ApplicationExecutionState.Suspended)
+                    .SetSuspensionDate(SuspendData);
+                var startArgs = new StartArgs(resumeArgs, StartKinds.Resume);
+                await InternalStartAsync(startArgs);
             };
         }
 
@@ -192,7 +196,7 @@ namespace Template10
                     return null;
                 }
             }
-            set => ApplicationData.Current.LocalSettings.Values["Suspend_Data"] = value;
+            set => ApplicationData.Current.LocalSettings.Values["Suspend_Data"] = value.ToString();
         }
 
         #region overrides
