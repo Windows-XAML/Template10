@@ -30,11 +30,11 @@ namespace Template10
             add { _leavingBackground += value; }
             remove { _leavingBackground -= value; }
         }
-        TypedEventHandler<ApplicationTemplate, WindowCreatedEventArgs> _windowCreated;
-        event TypedEventHandler<ApplicationTemplate, WindowCreatedEventArgs> IApplicationEvents.WindowCreated
-        {
-            add { _windowCreated += value; }
-            remove { _windowCreated -= value; }
-        }
+        //TypedEventHandler<ApplicationTemplate, WindowCreatedEventArgs> _windowCreated;
+        //event TypedEventHandler<ApplicationTemplate, WindowCreatedEventArgs> IApplicationEvents.WindowCreated
+        //{
+        //    add { _windowCreated += value; }
+        //    remove { _windowCreated -= value; }
+        //}
     }
 }

@@ -2,21 +2,16 @@
 using Prism.Ioc;
 using Prism.Logging;
 using Prism.Mvvm;
-using Prism.Navigation;
 using System;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Template10.Core.Services;
 using Template10.Ioc;
-using Template10.Navigation;
 using Template10.Services;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
-using Windows.Storage;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 
 namespace Template10
 {
@@ -31,11 +26,6 @@ namespace Template10
         {
             InternalInitialize();
             _logger.Log("[App.Constructor()]", Category.Info, Priority.None);
-            (this as IApplicationEvents).WindowCreated += (s, e) =>
-            {
-                WindowService.Register(e.Window);
-                GestureService.SetupWindowListeners(e.Window.CoreWindow);
-            };
 
             CoreApplication.Exiting += (s, e) =>
             {
@@ -44,27 +34,30 @@ namespace Template10
                 OnStopAsync(stopArgs).RunSynchronously();
             };
 
-            // this is a timing problem
-            //Window.Current.Closed += (s, e) =>
-            //{
-            //    OnStop(new StopArgs(StopKind.CoreWindowClosed) { CoreWindowEventArgs = e });
-            //    OnStopAsync(new StopArgs(StopKind.CoreWindowClosed) { CoreWindowEventArgs = e }).RunSynchronously();
-            //};
+            WindowService.WindowCreatedCallBacks.Add(Guid.Empty, args =>
+            {
+                WindowService.WindowCreatedCallBacks.Remove(Guid.Empty);
 
-            // this is a timing problem
-            //Windows.UI.Core.Preview.SystemNavigationManagerPreview.GetForCurrentView().CloseRequested += async (s, e) =>
-            //{
-            //    var deferral = e.GetDeferral();
-            //    try
-            //    {
-            //        OnStop(new StopArgs(StopKind.CloseRequested) { CloseRequestedPreviewEventArgs = e });
-            //        await OnStopAsync(new StopArgs(StopKind.CloseRequested) { CloseRequestedPreviewEventArgs = e });
-            //    }
-            //    finally
-            //    {
-            //        deferral.Complete();
-            //    }
-            //};
+                args.Window.Closed += (s, e) =>
+                {
+                    OnStop(new StopArgs(StopKind.CoreWindowClosed) { CoreWindowEventArgs = e });
+                    OnStopAsync(new StopArgs(StopKind.CoreWindowClosed) { CoreWindowEventArgs = e }).RunSynchronously();
+                };
+
+                Windows.UI.Core.Preview.SystemNavigationManagerPreview.GetForCurrentView().CloseRequested += async (s, e) =>
+                {
+                    var deferral = e.GetDeferral();
+                    try
+                    {
+                        OnStop(new StopArgs(StopKind.CloseRequested) { CloseRequestedPreviewEventArgs = e });
+                        await OnStopAsync(new StopArgs(StopKind.CloseRequested) { CloseRequestedPreviewEventArgs = e });
+                    }
+                    finally
+                    {
+                        deferral.Complete();
+                    }
+                };
+            });
 
             base.Suspending += async (s, e) =>
             {
@@ -84,11 +77,11 @@ namespace Template10
 
             base.Resuming += async (s, e) =>
             {
-                var resumeArgs = ResumeArgs.Create(ApplicationExecutionState.Suspended);
-                var startArgs = new StartArgs(resumeArgs, StartKinds.ResumeInMemory)
+                var resumeArgs = new ResumeArgs
                 {
-                    StartKind = StartKinds.Activate
+                    PreviousExecutionState = ApplicationExecutionState.Suspended,
                 };
+                var startArgs = new StartArgs(resumeArgs, StartKinds.ResumeInMemory);
                 await InternalStartAsync(startArgs);
             };
         }
@@ -162,6 +155,7 @@ namespace Template10
                     startArgs.StartKind = StartKinds.ResumeFromTerminate;
                     startArgs.Arguments = resumeArgs;
                 }
+                SuspensionUtilities.ClearSuspendDate();
 
                 _logger.Log($"[App.OnStart(startKind:{startArgs.StartKind}, startCause:{startArgs.StartCause})]", Category.Info, Priority.None);
                 OnStart(startArgs);
@@ -182,7 +176,10 @@ namespace Template10
 
         public virtual void OnStop(IStopArgs stopArgs) { /* empty */ }
 
-        public virtual Task OnStopAsync(IStopArgs stopArgs) => Task.CompletedTask;
+        public virtual Task OnStopAsync(IStopArgs stopArgs)
+        {
+            return Task.CompletedTask;
+        }
 
         public abstract void RegisterTypes(IContainerRegistry container);
 

@@ -7,6 +7,6 @@ namespace Template10
     {
         event EnteredBackgroundEventHandler EnteredBackground;
         event LeavingBackgroundEventHandler LeavingBackground;
-        event TypedEventHandler<ApplicationTemplate, WindowCreatedEventArgs> WindowCreated;
+        // event TypedEventHandler<ApplicationTemplate, WindowCreatedEventArgs> WindowCreated;
     }
 }

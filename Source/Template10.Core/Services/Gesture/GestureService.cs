@@ -176,7 +176,7 @@ namespace Template10.Services
             TestForSearchRequested(args);
             TestForMenuRequested(args);
             TestForNavigateRequested(args);
-            foreach (var item in KeyDownCallbacks)
+            foreach (var item in KeyDownCallbacks.ToArray())
             {
                 item.Value?.Invoke(args);
             }

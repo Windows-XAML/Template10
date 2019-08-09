@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Template10.Services;
 using Windows.UI.Xaml;
 
 namespace Template10.Core.Services
 {
     static class WindowService
     {
+        public static Dictionary<Guid, Action<WindowCreatedEventArgs>> WindowCreatedCallBacks { get; } = new Dictionary<Guid, Action<WindowCreatedEventArgs>>();
+
         static readonly List<Window> _instances = new List<Window>();
 
         public static void Register(Window window)
@@ -54,6 +57,16 @@ namespace Template10.Core.Services
             }
             window = null;
             return false;
+        }
+
+        internal static void ForwardWindowCreated(WindowCreatedEventArgs args)
+        {
+            GestureService.SetupWindowListeners(args.Window.CoreWindow);
+            foreach (var item in WindowCreatedCallBacks.ToArray())
+            {
+                item.Value?.Invoke(args);
+            }
+            _instances.Add(args.Window);
         }
     }
 }

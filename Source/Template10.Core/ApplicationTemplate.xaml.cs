@@ -1,4 +1,5 @@
 ﻿using System;
+using Template10.Core.Services;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.UI.Core;
@@ -21,7 +22,7 @@ namespace Template10
         protected override void OnWindowCreated(WindowCreatedEventArgs args)
         {
             base.OnWindowCreated(args);
-            _windowCreated?.Invoke(this, args);
+            WindowService.ForwardWindowCreated(args);
         }
     }
 }

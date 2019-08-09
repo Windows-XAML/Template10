@@ -6,7 +6,6 @@ using Template10.Services;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media.Animation;
 
 namespace Template10.Navigation
 {
@@ -14,7 +13,12 @@ namespace Template10.Navigation
     {
         public static Frame GetXamlFrame(this INavigationService service)
         {
-            return ((service as INavigationService2).FrameFacade as IFrameFacade2).Frame;
+            return (service.GetFrameFacade() as IFrameFacade2).Frame;
+        }
+
+        public static IFrameFacade GetFrameFacade(this INavigationService service)
+        {
+            return (service as INavigationService2).FrameFacade;
         }
 
         public static INavigationService ActivateWindow(this INavigationService service, Window window = null)
@@ -23,6 +27,10 @@ namespace Template10.Navigation
             window = window ?? Window.Current;
             window.Content = frame;
             window.Activate();
+            while (!WindowService.TryGetWindow(frame, out _))
+            {
+                Task.Delay(50).RunSynchronously();
+            }
             return service;
         }
 
