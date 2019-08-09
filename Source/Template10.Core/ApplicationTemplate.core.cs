@@ -68,7 +68,7 @@ namespace Template10
 
             base.Suspending += async (s, e) =>
             {
-                SuspendData = DateTime.Now;
+                SuspensionUtilities.SetSuspendDate(DateTime.Now);
                 var deferral = e.SuspendingOperation.GetDeferral();
                 try
                 {
@@ -81,12 +81,14 @@ namespace Template10
                     deferral.Complete();
                 }
             };
+
             base.Resuming += async (s, e) =>
             {
-                var resumeArgs = ResumeArgs
-                    .Create(ApplicationExecutionState.Suspended)
-                    .SetSuspensionDate(SuspendData);
-                var startArgs = new StartArgs(resumeArgs, StartKinds.Resume);
+                var resumeArgs = ResumeArgs.Create(ApplicationExecutionState.Suspended);
+                var startArgs = new StartArgs(resumeArgs, StartKinds.ResumeInMemory)
+                {
+                    StartKind = StartKinds.Activate
+                };
                 await InternalStartAsync(startArgs);
             };
         }
@@ -154,49 +156,26 @@ namespace Template10
             try
             {
                 CallOnInitializedOnlyOnce();
-                ConfigureIfResuming(startArgs);
+
+                if (SuspensionUtilities.IsResuming(startArgs, out var resumeArgs))
+                {
+                    startArgs.StartKind = StartKinds.ResumeFromTerminate;
+                    startArgs.Arguments = resumeArgs;
+                }
+
                 _logger.Log($"[App.OnStart(startKind:{startArgs.StartKind}, startCause:{startArgs.StartCause})]", Category.Info, Priority.None);
                 OnStart(startArgs);
+
                 _logger.Log($"[App.OnStartAsync(startKind:{startArgs.StartKind}, startCause:{startArgs.StartCause})]", Category.Info, Priority.None);
                 await OnStartAsync(startArgs);
+
+                // this is redundant, but a friendly add-on
                 Window.Current.Activate();
             }
             finally
             {
                 _startSemaphore.Release();
             }
-        }
-
-        private static void ConfigureIfResuming(StartArgs startArgs)
-        {
-            if (startArgs.Arguments is ILaunchActivatedEventArgs e
-                && e.PreviousExecutionState == ApplicationExecutionState.Terminated)
-            {
-                if (ApplicationData.Current.LocalSettings.Values.ContainsKey("Suspend_Data"))
-                {
-                    ApplicationData.Current.LocalSettings.Values.Remove("Suspend_Data");
-                    startArgs.Arguments = ResumeArgs.Create(ApplicationExecutionState.Terminated);
-                    startArgs.StartKind = StartKinds.Resume;
-                }
-            }
-        }
-
-        private static DateTime? SuspendData
-        {
-            get
-            {
-                if (ApplicationData.Current.LocalSettings.Values.TryGetValue("Suspend_Data", out var value)
-                    && value != null
-                    && DateTime.TryParse(value.ToString(), out var date))
-                {
-                    return date;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            set => ApplicationData.Current.LocalSettings.Values["Suspend_Data"] = value.ToString();
         }
 
         #region overrides

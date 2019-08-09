@@ -6,6 +6,7 @@
         Launch,
         Activate,
         Background,
-        Resume
+        ResumeInMemory,
+        ResumeFromTerminate
     }
 }

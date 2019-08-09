@@ -120,6 +120,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="SuspensionUtilities.cs" />
     <Compile Include="Ioc\ContainerProvider.cs" />
     <Compile Include="Ioc\IContainerExtensionExtensions.cs" />
     <Compile Include="Ioc\IContainerRegistryExtensions.cs" />

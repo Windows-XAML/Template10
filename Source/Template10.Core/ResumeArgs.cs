@@ -10,12 +10,7 @@ namespace Template10
         public ActivationKind Kind { get; set; }
         public ApplicationExecutionState PreviousExecutionState { get; set; }
         public SplashScreen SplashScreen { get; set; }
-        public ResumeArgs SetSuspensionDate(DateTime? date)
-        {
-            SuspensionDate = date;
-            return this;
-        }
-        public DateTime? SuspensionDate { get; set; }
+        public DateTime? SuspendDate { get; set; }
         internal static ResumeArgs Create(ApplicationExecutionState state)
         {
             var args = new ResumeArgs
@@ -24,7 +19,7 @@ namespace Template10
             };
             if (ApplicationData.Current.LocalSettings.Values.TryGetValue("Suspend_Data", out var value) && value is DateTime date)
             {
-                args.SuspensionDate = date;
+                args.SuspendDate = date;
             }
             ApplicationData.Current.LocalSettings.Values.Remove("Suspend_Data");
             return args;
