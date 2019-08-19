@@ -8,6 +8,7 @@ using Template10;
 using Sample.Views;
 using Windows.UI.Xaml.Controls;
 using System.Threading.Tasks;
+using System;
 
 namespace Sample
 {
@@ -24,15 +25,20 @@ namespace Sample
 
         public override void OnInitialized()
         {
+            var frame = new Frame();
+            Window.Current.Content = new ShellPage { Frame = frame };
+            Window.Current.Activate();
             _nav = NavigationFactory
-                .Create(new Frame())
-                .ActivateWindow(Window.Current)
-                .AttachGestures(Gesture.Back, Gesture.Forward, Gesture.Refresh);
+                .Create(frame, Guid.Empty.ToString())
+                .AttachGestures(Window.Current, Gesture.Back, Gesture.Forward, Gesture.Refresh);
         }
 
         public override async Task OnStartAsync(IStartArgs args)
         {
-            await _nav.NavigateAsync(nameof(MainPage));
+            if (args.StartKind == StartKinds.Launch)
+            {
+                await _nav.NavigateAsync(nameof(MainPage));
+            }
         }
     }
 }

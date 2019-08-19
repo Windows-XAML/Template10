@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Template10.Core.Services;
 using Template10.Services;
@@ -21,33 +22,32 @@ namespace Template10.Navigation
             return (service as INavigationService2).FrameFacade;
         }
 
+        public static INavigationService SetAsWindowContent(this INavigationService service, Window window = null)
+        {
+            var frame = service.GetXamlFrame() ?? throw new NullReferenceException(nameof(Frame));
+            if (window == null && !WindowService.TryGetWindow(frame, out window))
+            {
+                throw new NullReferenceException(nameof(window));
+            }
+            window.Content = frame;
+            return service;
+        }
+
         public static INavigationService ActivateWindow(this INavigationService service, Window window = null)
         {
-            var frame = service.GetXamlFrame();
             window = window ?? Window.Current;
-            window.Content = frame;
             window.Activate();
-            while (!WindowService.TryGetWindow(frame, out _))
+            while (!WindowService.AllWindows.Contains(window))
             {
                 Task.Delay(50).RunSynchronously();
             }
             return service;
         }
 
-        public static INavigationService AttachGestures(this INavigationService service, params Gesture[] gestures)
-        {
-            var frame = service.GetXamlFrame();
-            if (!WindowService.TryGetWindow(frame, out var window))
-            {
-                throw new Exception("XAML Frame has is not part of a Window's visual tree. Gestures require a CoreWindow.");
-            }
-            return AttachGestures(service, window.CoreWindow, gestures);
-        }
-
-        public static INavigationService AttachGestures(this INavigationService service, CoreWindow window, params Gesture[] gestures)
+        public static INavigationService AttachGestures(this INavigationService service, Window window, params Gesture[] gestures)
         {
             var service2 = service as INavigationService2;
-            var gesture_service = GestureService.GetForCurrentView(window);
+            var gesture_service = GestureService.GetForCurrentView(window.CoreWindow);
             foreach (var gesture in gestures)
             {
                 switch (gesture)

@@ -138,12 +138,20 @@ namespace Template10
             }
         }
 
+        private static int _started = 0;
+
         private async Task InternalStartAsync(StartArgs startArgs)
         {
             await _startSemaphore.WaitAsync();
             if (_logStartingEvents)
             {
                 _logger.Log($"{nameof(ApplicationTemplate)}.{nameof(InternalStartAsync)}({startArgs})", Category.Info, Priority.None);
+            }
+
+            // sometimes activation is rased through the base.onlaunch. We'll fix that.
+            if (Interlocked.Increment(ref _started) > 1 && startArgs.StartKind == StartKinds.Launch)
+            {
+                startArgs.StartKind = StartKinds.Activate;
             }
 
             try

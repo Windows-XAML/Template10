@@ -4,5 +4,6 @@
     {
         object Arguments { get; }
         StartCauses StartCause { get; }
+        StartKinds StartKind { get; }
     }
 }

@@ -8,7 +8,7 @@ using Windows.UI.Xaml;
 
 namespace Template10.Core.Services
 {
-    static class WindowService
+    public static class WindowService
     {
         public static Dictionary<Guid, Action<WindowCreatedEventArgs>> WindowCreatedCallBacks { get; } = new Dictionary<Guid, Action<WindowCreatedEventArgs>>();
 
