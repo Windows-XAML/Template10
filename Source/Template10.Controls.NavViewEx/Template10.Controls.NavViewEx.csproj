@@ -22,9 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!--<ProjectReference Include="..\..\..\Prism_Windows\Source\Windows10\Prism.Windows\Prism.Windows.csproj" />-->
-    <ProjectReference Include="..\..\..\Prism_Windows\Source\Prism\Prism.csproj" />
-    <ProjectReference Include="..\Template10.Extras\Template10.Extras.csproj" />
+    <ProjectReference Include="..\Template10.Core\Template10.Core.csproj" />
   </ItemGroup>
 
 </Project>

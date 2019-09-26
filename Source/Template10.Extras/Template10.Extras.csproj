@@ -2,7 +2,7 @@
 <Project Sdk="MSBuild.Sdk.Extras">
 
   <PropertyGroup>
-    <TargetFrameworks>uap10.0.15063</TargetFrameworks>
+    <TargetFrameworks>uap10.0.16299</TargetFrameworks>
     <RootNamespace>Template10</RootNamespace>
     <Title>Template10 Extras</Title>
     <Description>Template10.Extras</Description>
@@ -19,8 +19,15 @@
 
   <ItemGroup>
     <Compile Remove="Common\**" />
+    <Compile Remove="Services\Settings\**" />
     <EmbeddedResource Remove="Common\**" />
+    <EmbeddedResource Remove="Services\Settings\**" />
     <None Remove="Common\**" />
+    <None Remove="Services\Settings\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Prism.Core" Version="7.0.0.362" />
   </ItemGroup>
 
 </Project>

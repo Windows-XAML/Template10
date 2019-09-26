@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using System.Collections.ObjectModel;
-using Windows.UI.ViewManagement;
 using win = Windows;
 using System.Threading;
-using Prism.Navigation;
+using Template10.Navigation;
+using Template10.Services;
 
 namespace Template10.Controls
 {
@@ -23,7 +19,7 @@ namespace Template10.Controls
         private TextBlock _paneTitleTextBlock;
         private Button _backButton;
         private readonly CoreDispatcher _dispatcher;
-        private Frame _frame;
+        private readonly Frame _frame;
 
         public NavViewEx()
         {
@@ -46,8 +42,9 @@ namespace Template10.Controls
                 }
             };
 
-            NavigationService = Prism.Navigation.NavigationService
-                .Create(_frame, Gesture.Back, Gesture.Forward, Gesture.Refresh);
+            NavigationService = NavigationFactory
+                .Create(_frame)
+                .AttachGestures(Window.Current, Gesture.Back, Gesture.Forward, Gesture.Refresh);
 
             ItemInvoked += (s, e) =>
             {
@@ -155,7 +152,7 @@ namespace Template10.Controls
             };
         }
 
-        public IPlatformNavigationService Initialize()
+        public INavigationService Initialize()
         {
             var first = MenuItems
                 .OfType<NavigationViewItem>()
@@ -314,11 +311,11 @@ namespace Template10.Controls
             }
         }
 
-        private bool TryFindItem(Type type,object parameter, out object item)
+        private bool TryFindItem(Type type, object parameter, out object item)
         {
             // registered?
 
-            if (!PageRegistry.TryGetRegistration(type, out var info))
+            if (!Navigation.PageRegistry.TryGetRegistration(type, out var info))
             {
                 item = null;
                 return false;
@@ -326,7 +323,7 @@ namespace Template10.Controls
 
             // search settings
 
-            if (NavigationQueue.TryParse(SettingsNavigationUri, null, out var settings))
+            if (Navigation.NavigationQueue.TryParse(SettingsNavigationUri, null, out var settings))
             {
                 if (type == settings.Last().View && (string)parameter == settings.Last().QueryString)
                 {
@@ -354,7 +351,7 @@ namespace Template10.Controls
 
             foreach (var menuItem in menuItems)
             {
-                if (NavigationQueue.TryParse(menuItem.Path, null, out var menuQueue)
+                if (Navigation.NavigationQueue.TryParse(menuItem.Path, null, out var menuQueue)
                     && Equals(menuQueue.Last().View, type))
                 {
                     item = menuItem;
