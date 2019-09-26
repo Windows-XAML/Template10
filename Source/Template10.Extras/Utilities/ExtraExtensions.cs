@@ -12,7 +12,6 @@ using Template10.Services.Nag;
 using Template10.Services.Network;
 using Template10.Services.Resources;
 using Template10.Services.Secrets;
-using Template10.Services.Settings;
 using Template10.Services.Web;
 
 namespace Template10
@@ -41,7 +40,7 @@ namespace Template10
             registry.RegisterSingleton<INetworkService, NetworkService>();
             registry.RegisterSingleton<IResourceService, ResourceService>();
             registry.RegisterSingleton<ISecretService, SecretService>();
-            registry.RegisterSingleton<ISettingsHelper, SettingsHelper>();
+            // registry.RegisterSingleton<ISettingsHelper, SettingsHelper>();
             registry.RegisterSingleton<IWebApiService, WebApiService>();
         }
     }
