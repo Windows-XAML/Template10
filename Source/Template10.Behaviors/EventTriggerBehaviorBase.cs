@@ -12,7 +12,7 @@ namespace Prism.Windows.Behaviors
     /// A behavior that listens for a specified event on its source and executes its actions when that event is fired.
     /// </summary>
     [ContentPropertyAttribute(Name = "Actions")]
-    public class EventTriggerBehaviorBase : Behavior
+    internal class EventTriggerBehaviorBase : Behavior
     {
         /// <summary>
         /// Identifies the <seealso cref="Actions"/> dependency property.

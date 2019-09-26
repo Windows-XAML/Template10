@@ -13,7 +13,7 @@ namespace Template10.Behaviors
     // DOCS: https://github.com/Windows-XAML/Template10/wiki/Behaviors-and-Actions
     [Obsolete]
     [TypeConstraint(typeof(CommandBar))]
-    public class EllipsisBehavior : DependencyObject, IBehavior
+    internal class EllipsisBehavior : DependencyObject, IBehavior
     {
         private CommandBar CommandBar => AssociatedObject as CommandBar;
 
