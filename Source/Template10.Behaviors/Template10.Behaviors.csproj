@@ -15,7 +15,7 @@
     <Copyright>Jerry Nixon</Copyright>
     <PackageId>Template10.Behaviors</PackageId>
     <Authors>Jerry Nixon</Authors>
-    <VersionPrefix>1.0.0</VersionPrefix>
+    <VersionPrefix>1.0.1</VersionPrefix>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
