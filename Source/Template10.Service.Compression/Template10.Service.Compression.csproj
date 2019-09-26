@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="MSBuild.Sdk.Extras">
+
+  <PropertyGroup>
+    <TargetFrameworks>uap10.0.16299</TargetFrameworks>
+    <RootNamespace>Template10</RootNamespace>
+    <Title>Template10 Compression Service</Title>
+    <Description>Template10.Extras</Description>
+    <PackageTags>win10;uwp;</PackageTags>
+    <AssemblyName>Template10.Service.Compression</AssemblyName>
+    <RepositoryType>Test</RepositoryType>
+    <RepositoryUrl>Test</RepositoryUrl>
+    <PackageIconUrl>Test</PackageIconUrl>
+    <PackageProjectUrl>Test</PackageProjectUrl>
+    <Copyright>Test</Copyright>
+    <PackageId>Template10.Service.Compression</PackageId>
+    <Authors>jerrynixon</Authors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Common\**" />
+    <EmbeddedResource Remove="Common\**" />
+    <None Remove="Common\**" />
+  </ItemGroup>
+
+</Project>
