@@ -1,6 +1,5 @@
 ﻿# SerializationService
-The `SerializationService` provides a simple abstracted interface to a service that implements consistent
-serialization and deserialization of objects:
+The `SerializationService` provides a simple abstracted interface to a service that implements consistent serialization and deserialization of objects:
 
 ```csharp
 // Serialize the passed object to a string. Returns null if the parameter is null. Returns an empty string
