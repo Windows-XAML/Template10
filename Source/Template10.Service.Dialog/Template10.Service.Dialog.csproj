@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9A73B975-9FEB-414B-9B58-807A71A65E2E}</ProjectGuid>
+    <ProjectGuid>{E48145E5-BE27-4DA7-B6D3-3E2BA1E3577E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Template10.Service.Compression</RootNamespace>
-    <AssemblyName>Template10.Service.Compression</AssemblyName>
+    <RootNamespace>Template10.Service.Dialog</RootNamespace>
+    <AssemblyName>Template10.Service.Dialog</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.16299.0</TargetPlatformVersion>
@@ -120,11 +120,20 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Abstractions\CompressionMethods.enum.cs" />
-    <Compile Include="Abstractions\ICompressionService.cs" />
-    <Compile Include="Default\CompressionService.cs" />
+    <Compile Include="Abstractions\IDialogResourceResolver.cs" />
+    <Compile Include="Abstractions\IDialogService.cs" />
+    <Compile Include="Abstractions\IMessageBoxEx.cs" />
+    <Compile Include="Abstractions\MessageBoxResult.enum.cs" />
+    <Compile Include="Abstractions\MessageBoxType.enum.cs" />
+    <Compile Include="Abstractions\ResourceTypes.enum.cs" />
+    <Compile Include="Controls\MessageBoxEx.cs" />
+    <Compile Include="Default\DefaultDialogResourceResolver.cs" />
+    <Compile Include="Default\DialogManager.cs" />
+    <Compile Include="Default\DialogService.cs" />
+    <Compile Include="Default\Settings.cs" />
+    <Compile Include="Extensions\DialogExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\Template10.Service.Compression.rd.xml" />
+    <EmbeddedResource Include="Properties\Template10.Service.Dialog.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">

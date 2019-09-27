@@ -1,4 +1,4 @@
-﻿namespace Template10.Services.Compression
+﻿namespace Template10.Service.Compression
 {
     public enum CompressionMethods { gzip }
 }
