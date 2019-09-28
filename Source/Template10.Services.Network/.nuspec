@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/01/nuspec.xsd">
+
+  <metadata>
+
+    <title>Template10 Network Service</title>
+    <id>Template10.Services.NetworkService</id>
+    <description>Handy Network Service for WinRT. Part of Template 10, a Library of Helpers for UWP.</description>
+
+    <version>0.0.1</version>
+
+    <copyright>Jerry Nixon (c) 2017-2020</copyright>
+    <authors>Windows Developers</authors>
+    <owners>Windows-Xaml,JerryNixon,DarenMay</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>http://aka.ms/Template10-License</licenseUrl>
+    <projectUrl>http://aka.ms/Template10-Nuget</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/Windows-XAML/Template10/master/Assets/NuGetLogo.png</iconUrl>
+    <tags>Windows 10, Windows10, Win10, W10, UAP, UWP, WinRT, XAML, Template 10, Template10, T10, Universal App</tags>
+
+
+    <dependencies>
+      <group targetFramework="UAP10.0.16299">
+        <!--<dependency id="Microsoft.NETCore.UniversalWindowsPlatform" version="6.0.0" />-->
+        <dependency id="Template10.Services.Serialization" version="1.0.0" />
+      </group>
+    </dependencies>
+
+  </metadata>
+
+  <files>
+    <file src="obj\debug\Template10.Services.NetworkService.dll" target="lib\uap10.0" />
+  </files>
+
+</package>

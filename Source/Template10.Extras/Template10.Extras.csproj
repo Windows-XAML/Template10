@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="MSBuild.Sdk.Extras">
 
+  <!-- do not deploy -->
+
   <PropertyGroup>
     <TargetFrameworks>uap10.0.16299</TargetFrameworks>
     <RootNamespace>Template10</RootNamespace>
