@@ -15,19 +15,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Core.Default", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{2027C16E-05F0-4886-B9C3-6010C1C4490C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Service.Compression", "..\..\source\Template10.Service.Compression\Template10.Service.Compression.csproj", "{9A73B975-9FEB-414B-9B58-807A71A65E2E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.Compression", "..\..\source\Template10.Services.Compression\Template10.Services.Compression.csproj", "{9A73B975-9FEB-414B-9B58-807A71A65E2E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Service.Dialog", "..\..\Source\Template10.Service.Dialog\Template10.Service.Dialog.csproj", "{E48145E5-BE27-4DA7-B6D3-3E2BA1E3577E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.Dialog", "..\..\Source\Template10.Services.Dialog\Template10.Services.Dialog.csproj", "{E48145E5-BE27-4DA7-B6D3-3E2BA1E3577E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Service.File", "..\..\Source\Template10.Service.File\Template10.Service.File.csproj", "{61F80E50-3023-413D-A0AE-15966CD21245}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.File", "..\..\Source\Template10.Services.File\Template10.Services.File.csproj", "{61F80E50-3023-413D-A0AE-15966CD21245}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Service.Marketplace", "..\..\Source\Template10.Service.Marketplace\Template10.Service.Marketplace.csproj", "{5BF4ADFB-40C5-4F24-BF70-8AA65546DF76}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.Marketplace", "..\..\Source\Template10.Services.Marketplace\Template10.Services.Marketplace.csproj", "{5BF4ADFB-40C5-4F24-BF70-8AA65546DF76}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Service.Nag", "..\..\Source\Template10.Service.Nag\Template10.Service.Nag.csproj", "{F75FA021-BDB1-483D-8983-9788F8BAF04D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.Nag", "..\..\Source\Template10.Services.Nag\Template10.Services.Nag.csproj", "{F75FA021-BDB1-483D-8983-9788F8BAF04D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Service.Network", "..\..\Source\Template10.Service.Network\Template10.Service.Network.csproj", "{143779A3-6800-4B6E-94BD-3968010E87E9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.Network", "..\..\Source\Template10.Services.Network\Template10.Services.Network.csproj", "{143779A3-6800-4B6E-94BD-3968010E87E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Service.Resources", "..\..\Source\Template10.Service.Resources\Template10.Service.Resources.csproj", "{20037722-A1AB-4BB2-BB9B-F09D3CD25F47}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.Resources", "..\..\Source\Template10.Services.Resources\Template10.Services.Resources.csproj", "{20037722-A1AB-4BB2-BB9B-F09D3CD25F47}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{13C50096-71EE-4EBB-9862-30F861326A87}"
 	ProjectSection(SolutionItems) = preProject
@@ -36,11 +36,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		global.json = global.json
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Service.Secrets", "..\..\Source\Template10.Service.Secrets\Template10.Service.Secrets.csproj", "{5DAB193E-87DB-40FF-B80C-28B8B3EBA7A6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.Secrets", "..\..\Source\Template10.Services.Secrets\Template10.Services.Secrets.csproj", "{5DAB193E-87DB-40FF-B80C-28B8B3EBA7A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Service.Serialization", "..\..\Source\Template10.Service.Serialization\Template10.Service.Serialization.csproj", "{5FF268EC-A424-496F-8645-5E8670EA5BA2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.Serialization", "..\..\Source\Template10.Services.Serialization\Template10.Services.Serialization.csproj", "{5FF268EC-A424-496F-8645-5E8670EA5BA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Service.Web", "..\..\Source\Template10.Service.Web\Template10.Service.Web.csproj", "{99249EFC-9105-4E8F-A7E5-8F45CF4375C7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.Web", "..\..\Source\Template10.Services.Web\Template10.Services.Web.csproj", "{99249EFC-9105-4E8F-A7E5-8F45CF4375C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
