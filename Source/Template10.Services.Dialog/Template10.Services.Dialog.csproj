@@ -15,9 +15,9 @@
     <Copyright>Jerry Nixon, Daren May</Copyright>
     <PackageId>Template10.Services.DialogService</PackageId>
     <Authors>Jerry Nixon, Daren May</Authors>
-    <VersionPrefix>2.0.3</VersionPrefix>
+    <VersionPrefix>1.0.2</VersionPrefix>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    <AssemblyVersion>2.0.3.0</AssemblyVersion>
+    <AssemblyVersion>1.0.2.0</AssemblyVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 

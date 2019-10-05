@@ -1,144 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="MSBuild.Sdk.Extras/2.0.54">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C246358B-68AE-4CC3-AE50-A2A5CB14CDCA}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Template10</RootNamespace>
+    <TargetFrameworks>uap10.0.16299</TargetFrameworks>
+    <RootNamespace>Template10.Core</RootNamespace>
+    <Title>Template10 Core</Title>
+    <Description>Building block to enable Template10.Default or any custom implementation. Part of Template 10, a Library of Helpers for UWP.</Description>
+    <PackageTags>Windows 10, Windows10, W10, UAP, UWP, WinRT, XAML, Template 10, Template10, T10, Universal App, Windows Universal</PackageTags>
     <AssemblyName>Template10.Core</AssemblyName>
-    <DefaultLanguage>en-US</DefaultLanguage>
-    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.17763.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
-    <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <RepositoryType></RepositoryType>
+    <RepositoryUrl>https://aka.ms/template10</RepositoryUrl>
+    <PackageIcon>NuGetLogo.png</PackageIcon>
+    <PackageProjectUrl>https://aka.ms/template10</PackageProjectUrl>
+    <Copyright>Jerry Nixon, Daren May</Copyright>
+    <PackageId>Template10.Core</PackageId>
+    <Authors>Jerry Nixon, Daren May</Authors>
+    <VersionPrefix>2.0.1</VersionPrefix>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <AssemblyVersion>2.0.1.0</AssemblyVersion>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
-    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Compile Include="SuspensionUtilities.cs" />
-    <Compile Include="Ioc\ContainerProvider.cs" />
-    <Compile Include="Ioc\IContainerExtensionExtensions.cs" />
-    <Compile Include="Ioc\IContainerRegistryExtensions.cs" />
-    <Compile Include="IApplicationBase.cs" />
-    <Compile Include="IApplicationEvents.cs" />
-    <Compile Include="IResumeArgs.cs" />
-    <Compile Include="IStartArgs.cs" />
-    <Compile Include="Navigation\Abstract\IConfirmNavigation.cs" />
-    <Compile Include="Navigation\Abstract\IConfirmNavigationAsync.cs" />
-    <Compile Include="Navigation\Abstract\IDestructible.cs" />
-    <Compile Include="Navigation\Abstract\INavigatedAware.cs" />
-    <Compile Include="Navigation\Abstract\INavigatedAwareAsync.cs" />
-    <Compile Include="Navigation\Abstract\INavigatingAware.cs" />
-    <Compile Include="Navigation\Abstract\INavigatingAwareAsync.cs" />
-    <Compile Include="Navigation\Abstract\INavigationAware.cs" />
-    <Compile Include="Navigation\Abstract\INavigationParameters.cs" />
-    <Compile Include="Navigation\Abstract\INavigationParametersInternal.cs" />
-    <Compile Include="Navigation\Abstract\INavigationResult.cs" />
-    <Compile Include="Navigation\Abstract\INavigationService.cs" />
-    <Compile Include="Navigation\NavigationMode.cs" />
-    <Compile Include="Mvvm\ViewModelBase.cs" />
-    <Compile Include="Mvvm\ViewModelLocator.cs" />
-    <Compile Include="Navigation\FrameFacade.cs" />
-    <Compile Include="Navigation\FrameFacadeExtensions.cs" />
-    <Compile Include="Navigation\Abstract\IFrameFacade.cs" />
-    <Compile Include="Navigation\Abstract\IFrameFacade2.cs" />
-    <Compile Include="Navigation\Abstract\INavigationParametersExtensions.cs" />
-    <Compile Include="Navigation\Abstract\INavigationPath.cs" />
-    <Compile Include="Navigation\Abstract\INavigationServiceExtensions.cs" />
-    <Compile Include="Navigation\Abstract\IPlatformNavigationService.cs" />
-    <Compile Include="Navigation\Abstract\IPlatformNavigationService2.cs" />
-    <Compile Include="Navigation\NavigationEventArgsExtensions.cs" />
-    <Compile Include="Navigation\NavigationFactory.cs" />
-    <Compile Include="Navigation\NavigationParameters.cs" />
-    <Compile Include="Navigation\NavigationParametersExtensions.cs" />
-    <Compile Include="Navigation\NavigationPath.cs" />
-    <Compile Include="Navigation\NavigationQueue.cs" />
-    <Compile Include="Navigation\NavigationService.cs" />
-    <Compile Include="Navigation\PageRegistry.cs" />
-    <Compile Include="Navigation\PathBuilder.cs" />
-    <Compile Include="ApplicationTemplate.core.cs" />
-    <Compile Include="ApplicationTemplate.events.cs" />
-    <Compile Include="ApplicationTemplate.xaml.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResumeArgs.cs" />
-    <Compile Include="Services\Gesture\Gesture.cs" />
-    <Compile Include="Services\Gesture\GestureBlocker.cs" />
-    <Compile Include="Services\Gesture\GestureService.cs" />
-    <Compile Include="Services\Gesture\IGestureService.cs" />
-    <Compile Include="Services\Gesture\KeyDownEventArgs.cs" />
-    <Compile Include="Services\WindowService.cs" />
-    <Compile Include="StartArgs.cs" />
-    <Compile Include="StartCauses.cs" />
-    <Compile Include="StartKinds.cs" />
-    <Compile Include="Utilities\BindingUtilities.cs" />
-    <Compile Include="Utilities\XamlUtilities.cs" />
-    <EmbeddedResource Include="Properties\Template10.Core.rd.xml" />
+    <None Include="..\..\Assets\NuGetLogo.png" Pack="true" Visible="false" PackagePath="" />
   </ItemGroup>
+
   <ItemGroup>
-    <PackageReference Include="Bogus">
-      <Version>27.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.1.7</Version>
-    </PackageReference>
-    <PackageReference Include="Prism.Core">
-      <Version>7.2.0.1367</Version>
-    </PackageReference>
+    <PackageReference Include="Prism.Core" Version="7.2.0.1367" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include=".nuspec">
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
-    <VisualStudioVersion>14.0</VisualStudioVersion>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <VersionSuffix>DEBUG-$([System.DateTime]::UtcNow.ToString(yyMMdd-HHmmss))</VersionSuffix>
   </PropertyGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
+
+  <Target Name="CopyPackage" AfterTargets="Pack">
+    <Copy SourceFiles="$(OutputPath)$(PackageId).$(PackageVersion).nupkg" DestinationFolder="c:\nuget" />
   </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
-  <Target Name="PostBuildMacros">
-    <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
-      <Output TaskParameter="Assemblies" ItemName="Targets" />
-    </GetAssemblyIdentity>
-    <ItemGroup>
-      <VersionNumber Include="@(Targets->'%(Version)')" />
-    </ItemGroup>
-  </Target>
-  <PropertyGroup>
-    <PostBuildEventDependsOn>
-      $(PostBuildEventDependsOn);
-      PostBuildMacros;
-    </PostBuildEventDependsOn>
-    <PostBuildEvent>$(SolutionDir)nuget pack $(ProjectDir).nuspec -OutputDirectory "c:\nuget" -Version @(VersionNumber)</PostBuildEvent>
-  </PropertyGroup>
+
+
 </Project>

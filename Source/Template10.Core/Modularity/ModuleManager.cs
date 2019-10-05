@@ -12,6 +12,7 @@ namespace Prism.Modularity
     /// </summary>
     public class ModuleManager : IModuleManager
     {
+
         /// <summary>
         /// The module catalog.
         /// </summary>
@@ -55,11 +56,11 @@ namespace Prism.Modularity
             var modules = ModuleCatalog.Modules.Where(m => m.ModuleName == moduleName);
             if (modules == null || modules.Count() == 0)
             {
-                throw new ModuleNotFoundException(moduleName, string.Format(CultureInfo.CurrentCulture, Resources.ModuleNotFound, moduleName));
+                throw new ModuleNotFoundException(moduleName, string.Format(CultureInfo.CurrentCulture, "Failed to load type for module {0}.", moduleName));
             }
             else if(modules.Count() > 1)
             {
-                throw new DuplicateModuleException(moduleName, string.Format(CultureInfo.CurrentCulture, Resources.DuplicatedModuleInCatalog, moduleName));
+                throw new DuplicateModuleException(moduleName, string.Format(CultureInfo.CurrentCulture, "A duplicated module with name {0} has been found by the loader", moduleName));
             }
 
             var modulesToLoad = ModuleCatalog.CompleteListWithDependencies(modules);

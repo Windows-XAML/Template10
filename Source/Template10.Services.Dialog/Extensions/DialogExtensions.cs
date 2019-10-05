@@ -8,7 +8,7 @@ namespace Template10.Services
     {
         internal static ContentDialog SetOkToClose(this ContentDialog dialog, IDialogResourceResolver resolver = null)
         {
-            resolver = resolver ?? Settings.DefaultResolver;
+            resolver = resolver ?? DialogSettings.DefaultResolver;
             dialog.PrimaryButtonText = resolver.Resolve(ResourceTypes.Ok);
             dialog.IsPrimaryButtonEnabled = true;
             return dialog;
