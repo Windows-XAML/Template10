@@ -18,10 +18,12 @@ In this hands-on lab you will create a simple application that will show you how
 6. Uncheck **Place solution and project in the same directory**.
 7. To create the solution and project, click **Create**.
     After a few moments, the new solution will open. This is a minimal application that will display a blank window.
+
     ![Starting Solution](Images/StartingSolution.png)
 8. To run the app, hit **F5**.
+
     ![Blank App Window](Images/BlankAppWindow.png)
-9. Close the blank app before proceeding.
+9.  Close the blank app before proceeding.
 
 ## Adding the Template10 Nuget Package
 
