@@ -40,6 +40,18 @@
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
+      <Extensions>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="template10markdown">
+            <uap:SupportedFileTypes>
+              <uap:FileType>.t10md</uap:FileType>
+            </uap:SupportedFileTypes>
+            <uap:DisplayName>Template10 Sample Markdown File</uap:DisplayName>
+            <uap:Logo>Assets\T10 128x128.png</uap:Logo>
+            <uap:InfoTip>Template10 Sample Markdown File</uap:InfoTip>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+      </Extensions>
     </Application>
   </Applications>
 

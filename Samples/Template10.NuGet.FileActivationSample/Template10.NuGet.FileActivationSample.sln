@@ -5,6 +5,11 @@ VisualStudioVersion = 16.0.29326.143
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.NuGet.FileActivationSample", "Template10.NuGet.FileActivationSample.csproj", "{27E0D9E9-D359-4F22-BB87-E76966CD880F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SampleFile", "SampleFile", "{857F25A6-E23D-4F83-8F2C-9AA7C044CEE2}"
+	ProjectSection(SolutionItems) = preProject
+		Sample.t10md = Sample.t10md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
