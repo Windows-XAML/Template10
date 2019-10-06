@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="MSBuild.Sdk.Extras">
+<Project Sdk="MSBuild.Sdk.Extras/2.0.54">
 
   <!-- do not deploy -->
 
@@ -31,5 +31,9 @@
   <ItemGroup>
     <PackageReference Include="Prism.Core" Version="7.0.0.362" />
   </ItemGroup>
+
+  <Target Name="CopyPackage" AfterTargets="Pack">
+    <Copy SourceFiles="$(OutputPath)$(PackageId).$(PackageVersion).nupkg" DestinationFolder="c:\nuget" />
+  </Target>
 
 </Project>

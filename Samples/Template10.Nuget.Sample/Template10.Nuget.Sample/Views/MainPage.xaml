@@ -1,0 +1,22 @@
+﻿<Page
+    x:Class="Template10.Nuget.Sample.Views.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:designtime="using:Template10.Nuget.Sample.ViewModels.Design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    mc:Ignorable="d">
+
+    <d:Page.DataContext>
+        <designtime:MainPageViewModel />
+    </d:Page.DataContext>
+
+    <Grid>
+        <TextBlock
+            Margin="16"
+            Style="{StaticResource HeaderTextBlockStyle}"
+            Text="{Binding Title}" />
+    </Grid>
+
+</Page>

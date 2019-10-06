@@ -19,7 +19,7 @@ namespace Template10.Services
             Text = text;
             Title = title;
             Type = messageBoxType;
-            Resolver = resolver ?? Settings.DefaultResolver;
+            Resolver = resolver ?? DialogSettings.DefaultResolver;
         }
 
         public string Text { get; set; }

@@ -164,11 +164,11 @@ namespace Template10.Services
             var result = MessageBoxResult.Cancel;
             if (nag.AllowDefer)
             {
-                result = await _dialogService.PromptAsync(nag.Message, MessageBoxType.YesNoCancel, Settings.CustomResolver);
+                result = await _dialogService.PromptAsync(nag.Message, MessageBoxType.YesNoCancel, NagSettings.CustomResolver);
             }
             else
             {
-                result = await _dialogService.PromptAsync(nag.Message, MessageBoxType.YesNo, Settings.CustomResolver);
+                result = await _dialogService.PromptAsync(nag.Message, MessageBoxType.YesNo, NagSettings.CustomResolver);
             }
             switch (result)
             {
