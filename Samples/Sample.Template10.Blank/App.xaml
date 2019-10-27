@@ -1,0 +1,7 @@
+﻿<T10:ApplicationBase
+    xmlns:T10="using:Template10"
+    x:Class="Sample.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+</T10:ApplicationBase>

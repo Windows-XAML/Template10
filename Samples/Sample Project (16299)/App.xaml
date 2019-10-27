@@ -1,0 +1,70 @@
+﻿<prism:PrismApplication
+    x:Class="Sample.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:prism="using:Prism.Unity">
+
+    <Application.Resources>
+        <ResourceDictionary>
+
+            <Style x:Key="ItemGridViewStyle" TargetType="GridView">
+                <Setter Property="Padding" Value="16,16,16,16" />
+                <Setter Property="Background" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}" />
+                <Setter Property="HeaderTemplate" Value="{StaticResource GridViewHeaderTemplate}" />
+                <Setter Property="ItemContainerStyle" Value="{StaticResource GridViewItemStyle}" />
+                <Setter Property="ItemTemplate" Value="{StaticResource GridViewItemTemplate}" />
+                <Setter Property="ItemsSource" Value="{Binding Items}" />
+            </Style>
+
+            <Style x:Key="GridViewItemStyle" TargetType="GridViewItem">
+                <Setter Property="Margin" Value="4" />
+                <Setter Property="Height" Value="200" />
+                <Setter Property="Width" Value="200" />
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="VerticalContentAlignment" Value="Stretch" />
+            </Style>
+
+            <DataTemplate x:Key="GridViewHeaderTemplate">
+                <StackPanel>
+                    <TextBlock
+                        Margin="8,0,0,0"
+                        Style="{StaticResource TitleTextBlockStyle}"
+                        Text="{Binding}" />
+                </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate x:Key="GridViewItemTemplate">
+                <Grid>
+                    <Grid.Resources>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Foreground" Value="White" />
+                        </Style>
+                    </Grid.Resources>
+                    <Grid.Background>
+                        <ImageBrush
+                            ImageSource="{Binding Image}"
+                            Opacity="1"
+                            Stretch="UniformToFill" />
+                    </Grid.Background>
+                    <StackPanel
+                        Padding="8"
+                        VerticalAlignment="Bottom"
+                        Background="{ThemeResource SystemControlChromeMediumLowAcrylicElementMediumBrush}">
+                        <TextBlock
+                            Style="{StaticResource BodyTextBlockStyle}"
+                            Text="{Binding Title}"
+                            TextTrimming="WordEllipsis"
+                            TextWrapping="NoWrap" />
+                        <TextBlock
+                            MaxLines="3"
+                            Style="{StaticResource CaptionTextBlockStyle}"
+                            Text="{Binding Text}"
+                            TextWrapping="Wrap" />
+                    </StackPanel>
+                </Grid>
+            </DataTemplate>
+
+        </ResourceDictionary>
+    </Application.Resources>
+
+</prism:PrismApplication>

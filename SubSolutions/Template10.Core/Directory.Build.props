@@ -1,0 +1,8 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup Condition="$(MSBuildProjectName.Contains('-'))">
+    <AssemblyName>$(MSBuildProjectName.Replace('-', '_'))</AssemblyName>
+    <RootNamespace>$(MSBuildProjectName.Replace('-', '_'))</RootNamespace>
+  </PropertyGroup>
+
+</Project>

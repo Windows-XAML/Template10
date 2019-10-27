@@ -1,0 +1,221 @@
+﻿<Page
+    x:Class="Sample.Template10.Behaviors.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Sample.Template10.Behaviors"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:b="using:Template10.Behaviors"
+    xmlns:c="using:Microsoft.Xaml.Interactions.Core"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Pivot>
+        <PivotItem Header="ChangeCursor">
+            <StackPanel Margin="32">
+                <TextBlock Text="Mouse over the colors to change the cursor." Style="{ThemeResource CaptionTextBlockStyle}" />
+                <Grid Height="250">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="100" />
+                    </Grid.ColumnDefinitions>
+                    <i:Interaction.Behaviors>
+                        <c:EventTriggerBehavior EventName="PointerExited">
+                            <b:ChangeCursorAction Cursor="Arrow" />
+                        </c:EventTriggerBehavior>
+                    </i:Interaction.Behaviors>
+                    <Rectangle Fill="Red" Grid.Column="0">
+                        <i:Interaction.Behaviors>
+                            <c:EventTriggerBehavior EventName="PointerEntered">
+                                <b:ChangeCursorAction Cursor="Hand" />
+                            </c:EventTriggerBehavior>
+                        </i:Interaction.Behaviors>
+                    </Rectangle>
+                    <TextBlock Grid.Column="0" VerticalAlignment="Bottom" Text="Hand" />
+                    <Rectangle Fill="Blue" Grid.Column="1">
+                        <i:Interaction.Behaviors>
+                            <c:EventTriggerBehavior EventName="PointerEntered">
+                                <b:ChangeCursorAction Cursor="Help" />
+                            </c:EventTriggerBehavior>
+                        </i:Interaction.Behaviors>
+                    </Rectangle>
+                    <TextBlock Grid.Column="1" VerticalAlignment="Bottom" Text="Help" />
+                    <Rectangle Fill="Green" Grid.Column="2" >
+                        <i:Interaction.Behaviors>
+                            <c:EventTriggerBehavior EventName="PointerEntered">
+                                <b:ChangeCursorAction Cursor="Person" />
+                            </c:EventTriggerBehavior>
+                        </i:Interaction.Behaviors>
+                    </Rectangle>
+                    <TextBlock Grid.Column="2" VerticalAlignment="Bottom" Text="Person" />
+                    <Rectangle Fill="Orange" Grid.Column="3">
+                        <i:Interaction.Behaviors>
+                            <c:EventTriggerBehavior EventName="PointerEntered">
+                                <b:ChangeCursorAction Cursor="Cross" />
+                            </c:EventTriggerBehavior>
+                        </i:Interaction.Behaviors>
+                    </Rectangle>
+                    <TextBlock Grid.Column="3" VerticalAlignment="Bottom" Text="Cross" />
+                </Grid>
+            </StackPanel>
+        </PivotItem>
+        <PivotItem Header="Focus">
+            <StackPanel Margin="32">
+                <TextBlock Text="Mouse over the colors to change the focus." Style="{ThemeResource CaptionTextBlockStyle}" />
+                <Grid Height="250">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="100" />
+                    </Grid.ColumnDefinitions>
+                    <Rectangle Fill="Red" Grid.Column="0">
+                        <i:Interaction.Behaviors>
+                            <c:EventTriggerBehavior EventName="PointerEntered">
+                                <b:FocusAction TargetObject="{Binding ElementName=FirstNameTextBox}" />
+                            </c:EventTriggerBehavior>
+                        </i:Interaction.Behaviors>
+                    </Rectangle>
+                    <TextBox Header="First Name" x:Name="FirstNameTextBox" VerticalAlignment="Bottom" Grid.Column="0" />
+                    <Rectangle Fill="Blue" Grid.Column="1">
+                        <i:Interaction.Behaviors>
+                            <c:EventTriggerBehavior EventName="PointerEntered">
+                                <b:FocusAction TargetObject="{Binding ElementName=MiddleNameTextBox}" />
+                            </c:EventTriggerBehavior>
+                        </i:Interaction.Behaviors>
+                    </Rectangle>
+                    <TextBox Header="Middle Name" x:Name="MiddleNameTextBox" VerticalAlignment="Bottom" Grid.Column="1" />
+                    <Rectangle Fill="Green" Grid.Column="2" >
+                        <i:Interaction.Behaviors>
+                            <c:EventTriggerBehavior EventName="PointerEntered">
+                                <b:FocusAction TargetObject="{Binding ElementName=LastNameTextBox}" />
+                            </c:EventTriggerBehavior>
+                        </i:Interaction.Behaviors>
+                    </Rectangle>
+                    <TextBox Header="Last Name" x:Name="LastNameTextBox" VerticalAlignment="Bottom" Grid.Column="2" />
+                    <Rectangle Fill="Orange" Grid.Column="3">
+                        <i:Interaction.Behaviors>
+                            <c:EventTriggerBehavior EventName="PointerEntered">
+                                <b:FocusAction TargetObject="{Binding ElementName=EmailNameTextBox}" />
+                            </c:EventTriggerBehavior>
+                        </i:Interaction.Behaviors>
+                    </Rectangle>
+                    <TextBox Header="Email" x:Name="EmailNameTextBox" VerticalAlignment="Bottom" Grid.Column="3" />
+                </Grid>
+            </StackPanel>
+        </PivotItem>
+        <PivotItem Header="Open+CloseFlyout">
+            <StackPanel Margin="32">
+                <TextBlock Text="Click the AppBarButton to reveal the Flyover." Style="{ThemeResource CaptionTextBlockStyle}" />
+                <TextBlock Text="Click the Close button to close the Flyover." Style="{ThemeResource CaptionTextBlockStyle}" />
+                <AppBarButton Content="Click me, please" Background="Silver">
+                    <FlyoutBase.AttachedFlyout>
+                        <Flyout>
+                            <StackPanel>
+                                <TextBlock Text="Awesome Flyout!" />
+                                <Button Content="Close">
+                                    <i:Interaction.Behaviors>
+                                        <c:EventTriggerBehavior EventName="Click">
+                                            <b:CloseFlyoutAction />
+                                        </c:EventTriggerBehavior>
+                                    </i:Interaction.Behaviors>
+                                </Button>
+                            </StackPanel>
+                        </Flyout>
+                    </FlyoutBase.AttachedFlyout>
+                    <i:Interaction.Behaviors>
+                        <c:EventTriggerBehavior EventName="Tapped">
+                            <b:OpenFlyoutAction />
+                        </c:EventTriggerBehavior>
+                    </i:Interaction.Behaviors>
+                </AppBarButton>
+            </StackPanel>
+        </PivotItem>
+        <PivotItem Header="Conditional+Message">
+            <StackPanel Margin="32">
+                <TextBlock Text="Click the Submit button, CheckBoxes are required." Style="{ThemeResource CaptionTextBlockStyle}" />
+                <CheckBox x:Name="Required1CheckBox" Content="This is required." IsChecked="True" />
+                <CheckBox x:Name="Required2CheckBox" Content="This is also required." />
+                <Button Content="Submit">
+                    <i:Interaction.Behaviors>
+                        <i:BehaviorCollection>
+                            <c:EventTriggerBehavior EventName="Tapped">
+                                <b:ConditionalAction Operator="AllTrue">
+                                    <b:ConditionalAction.Conditions>
+                                        <b:Condition LeftValue="{x:Bind Required1CheckBox.IsChecked, Mode=OneWay}" Operator="IsTrue" />
+                                        <b:Condition LeftValue="{x:Bind Required2CheckBox.IsChecked, Mode=OneWay}" Operator="IsTrue" />
+                                    </b:ConditionalAction.Conditions>
+                                    <b:ConditionalAction.Else>
+                                        <b:MessageAction Title="Failure" Content="Please check both CheckBox 1 and 2" />
+                                    </b:ConditionalAction.Else>
+                                    <b:MessageAction Title="Success" Content="Both CheckBox 1 and 2 are checked" />
+                                </b:ConditionalAction>
+                            </c:EventTriggerBehavior>
+                        </i:BehaviorCollection>
+                    </i:Interaction.Behaviors>
+                </Button>
+            </StackPanel>
+        </PivotItem>
+        <PivotItem Header="Timeout">
+            <StackPanel Margin="32">
+                <TextBlock Text="Click the Submit button, Color changes in 5 seconds." Style="{ThemeResource CaptionTextBlockStyle}" />
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Submit" VerticalAlignment="Top">
+                        <i:Interaction.Behaviors>
+                            <i:BehaviorCollection>
+                                <c:EventTriggerBehavior EventName="Tapped">
+                                    <c:ChangePropertyAction TargetObject="{Binding ElementName=ColorRectangle}" PropertyName="Fill" Value="Red" />
+                                    <b:TimeoutAction Milliseconds="5000">
+                                        <c:ChangePropertyAction TargetObject="{Binding ElementName=ColorRectangle}" PropertyName="Fill" Value="Green" />
+                                    </b:TimeoutAction>
+                                </c:EventTriggerBehavior>
+                            </i:BehaviorCollection>
+                        </i:Interaction.Behaviors>
+                    </Button>
+                    <Rectangle Height="32" Width="50" x:Name="ColorRectangle" Fill="Green" Margin="8,0" />
+                </StackPanel>
+            </StackPanel>
+        </PivotItem>
+        <PivotItem Header="Key">
+            <StackPanel Margin="32">
+                <TextBlock Text="Type in the TextBox, Letters and Enter light up letters below." Style="{ThemeResource CaptionTextBlockStyle}" />
+                <TextBox PlaceholderText="The quick brown fox jumps over the lazy dog.">
+                    <i:Interaction.Behaviors>
+                        <i:BehaviorCollection>
+                            <b:KeyBehavior Event="KeyDown" Key="A">
+                                <c:ChangePropertyAction TargetObject="{Binding ElementName=ATextBlock}" PropertyName="Foreground" Value="Green" />
+                            </b:KeyBehavior>
+                            <b:KeyBehavior Event="KeyDown" Key="E">
+                                <c:ChangePropertyAction TargetObject="{Binding ElementName=ETextBlock}" PropertyName="Foreground" Value="Green" />
+                            </b:KeyBehavior>
+                            <b:KeyBehavior Event="KeyDown" Key="I">
+                                <c:ChangePropertyAction TargetObject="{Binding ElementName=ITextBlock}" PropertyName="Foreground" Value="Green" />
+                            </b:KeyBehavior>
+                            <b:KeyBehavior Event="KeyDown" Key="O">
+                                <c:ChangePropertyAction TargetObject="{Binding ElementName=OTextBlock}" PropertyName="Foreground" Value="Green" />
+                            </b:KeyBehavior>
+                            <b:KeyBehavior Event="KeyDown" Key="U">
+                                <c:ChangePropertyAction TargetObject="{Binding ElementName=UTextBlock}" PropertyName="Foreground" Value="Green" />
+                            </b:KeyBehavior>
+                            <b:KeyBehavior Event="KeyDown" Key="Enter">
+                                <c:ChangePropertyAction TargetObject="{Binding ElementName=EnterTextBlock}" PropertyName="Foreground" Value="Green" />
+                            </b:KeyBehavior>
+                        </i:BehaviorCollection>
+                    </i:Interaction.Behaviors>
+                </TextBox>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text=" A" x:Name="ATextBlock" />
+                    <TextBlock Text=" E" x:Name="ETextBlock" />
+                    <TextBlock Text=" I" x:Name="ITextBlock" />
+                    <TextBlock Text=" O" x:Name="OTextBlock" />
+                    <TextBlock Text=" U" x:Name="UTextBlock" />
+                    <TextBlock Text=" [enter]" x:Name="EnterTextBlock" />
+                </StackPanel>
+            </StackPanel>
+        </PivotItem>
+    </Pivot>
+
+</Page>

@@ -1,0 +1,90 @@
+﻿<Page
+    x:Class="Sample.Views.ShellPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:appmodel="using:Windows.ApplicationModel"
+    xmlns:controls="using:Template10.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:Sample.Models"
+    xmlns:views="using:Sample.Views"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+
+        <DataTemplate x:Key="NavViewExHeaderTemplate">
+            <Grid>
+                <Grid.Background>
+                    <AcrylicBrush BackgroundSource="Backdrop" TintOpacity="0.5" />
+                </Grid.Background>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="0" />
+                </Grid.ColumnDefinitions>
+                <CommandBar Background="Transparent" OverflowButtonVisibility="Visible">
+                    <CommandBar.Content>
+                        <Grid Margin="12,5,0,11" VerticalAlignment="Stretch">
+                            <TextBlock
+                                VerticalAlignment="Bottom"
+                                Style="{StaticResource TitleTextBlockStyle}"
+                                Text="{Binding}"
+                                TextWrapping="NoWrap" />
+                        </Grid>
+                    </CommandBar.Content>
+                    <AppBarButton Icon="World" Label="Template 10" Click="Template10_Click" />
+                </CommandBar>
+            </Grid>
+        </DataTemplate>
+
+    </Page.Resources>
+
+    <SplitView PanePlacement="Right" DisplayMode="Overlay" IsPaneOpen="True" Background="Transparent" x:Name="EditSplitView">
+
+        <controls:NavViewEx
+            x:Name="ShellView"
+            x:FieldModifier="Public"
+            HeaderTemplate="{StaticResource NavViewExHeaderTemplate}"
+            RequestedTheme="Dark">
+
+            <NavigationView.AutoSuggestBox>
+                <AutoSuggestBox
+                    QueryIcon="Find"
+                    QuerySubmitted="Search_QuerySubmitted"
+                    SuggestionChosen="Search_SuggestionChosen"
+                    TextChanged="Search_TextChanged" />
+            </NavigationView.AutoSuggestBox>
+
+            <NavigationView.MenuItems>
+                <NavigationViewItem
+                    controls:NavViewProps.NavigationUri="/MainPage"
+                    Content="Catalog"
+                    Icon="Add" />
+            </NavigationView.MenuItems>
+
+            <NavigationView.PaneFooter>
+                <StackPanel>
+                    <NavigationViewItem Tapped="ProfileItem_Tapped">
+                        <StackPanel Orientation="Horizontal">
+                            <PersonPicture Height="18" ProfilePicture="https://pbs.twimg.com/profile_images/937749470908792832/S2f8GeBy_normal.jpg" />
+                            <TextBlock
+                                Margin="16,0,0,0"
+                                VerticalAlignment="Center"
+                                Text="Jerry Nixon" />
+                        </StackPanel>
+                    </NavigationViewItem>
+                    <NavigationViewItem
+                        Content="Feedback"
+                        Icon="Flag"
+                        Tapped="FeedbackItem_Tapped" />
+                </StackPanel>
+            </NavigationView.PaneFooter>
+
+        </controls:NavViewEx>
+
+        <SplitView.Pane>
+            <views:EditView x:Name="SideEditView" />
+        </SplitView.Pane>
+
+    </SplitView>
+
+</Page>
