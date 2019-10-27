@@ -22,6 +22,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.UI.Xaml" Version="2.2.190917002" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Template10.Core\Template10.Core.csproj" />
   </ItemGroup>
 
