@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using Prism.Ioc;
 using Template10.Navigation;
 using Template10.NuGet.FileActivationSample.ViewModels;
 using Template10.Services;
@@ -17,6 +18,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
+
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace Template10.NuGet.FileActivationSample.Views
@@ -29,10 +31,10 @@ namespace Template10.NuGet.FileActivationSample.Views
         private IDialogService _dialogService;
         public event EventHandler<Exception> NavigationFailed;
 
-        public ShellPage()
+        public ShellPage(IDialogService dialogService)
         {
             InitializeComponent();
-            _dialogService = App.Current.Container.Resolve<IDialogService>();
+            _dialogService = dialogService;
         }
 
         public new Frame Frame

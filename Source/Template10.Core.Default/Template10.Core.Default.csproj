@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Template10.Core" Version="2.0.1" />
+    <PackageReference Include="Template10.Core" Version="2" />
     <PackageReference Include="Unity" Version="5.11.1" />
   </ItemGroup>
 

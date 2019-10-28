@@ -13,7 +13,6 @@ namespace Template10
 
         protected override void RegisterInternalTypes(IContainerRegistry containerRegistry)
         {
-            // containerRegistry.RegisterTemplate10Services();
             base.RegisterInternalTypes(containerRegistry);
         }
     }
