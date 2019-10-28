@@ -22,11 +22,12 @@ namespace Template10.NuGet.FileActivationSample.ViewModels
             get => _text;
             set => SetProperty(ref _text, value);
         }
+
         public override async Task OnNavigatedToAsync(INavigationParameters parameters)
         {
             Title = "The application was launched by file association.";
-            var file = parameters["file"] as IStorageItem;
-            if (file.IsOfType(Windows.Storage.StorageItemTypes.File))
+            var file = parameters.GetValue<IStorageItem>("file");
+            if (file.IsOfType(StorageItemTypes.File))
             {
                 Text = await FileIO.ReadTextAsync(file as StorageFile);
             }
