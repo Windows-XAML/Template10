@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  IgnorableNamespaces="uap mp">
+
+  <Identity
+    Name="d1d9c701-6f4f-46ef-bfd8-ab4847e7dba3"
+    Publisher="CN=daren"
+    Version="1.0.0.0" />
+
+  <mp:PhoneIdentity PhoneProductId="d1d9c701-6f4f-46ef-bfd8-ab4847e7dba3" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+
+  <Properties>
+    <DisplayName>Template10.NuGet.FileActivationSample</DisplayName>
+    <PublisherDisplayName>daren</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="x-generate"/>
+  </Resources>
+
+  <Applications>
+    <Application Id="App"
+      Executable="$targetnametoken$.exe"
+      EntryPoint="Template10.NuGet.FileActivationSample.App">
+      <uap:VisualElements
+        DisplayName="Template10.NuGet.FileActivationSample"
+        Square150x150Logo="Assets\Square150x150Logo.png"
+        Square44x44Logo="Assets\Square44x44Logo.png"
+        Description="Template10.NuGet.FileActivationSample"
+        BackgroundColor="transparent">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
+        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+      </uap:VisualElements>
+      <Extensions>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="template10markdown">
+            <uap:SupportedFileTypes>
+              <uap:FileType>.t10md</uap:FileType>
+            </uap:SupportedFileTypes>
+            <uap:DisplayName>Template10 Sample Markdown File</uap:DisplayName>
+            <uap:Logo>Assets\T10 128x128.png</uap:Logo>
+            <uap:InfoTip>Template10 Sample Markdown File</uap:InfoTip>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+
+  <Capabilities>
+    <Capability Name="internetClient" />
+  </Capabilities>
+</Package>
