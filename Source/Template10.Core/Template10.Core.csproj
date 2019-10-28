@@ -2,7 +2,7 @@
 <Project Sdk="MSBuild.Sdk.Extras/2.0.54">
 
   <PropertyGroup>
-    <TargetFrameworks>uap10.0.16299</TargetFrameworks>
+    <TargetFrameworks>uap10.0.17134</TargetFrameworks>
     <RootNamespace>Template10.Core</RootNamespace>
     <Title>Template10 Core</Title>
     <Description>Building block to enable Template10.Default or any custom implementation. Part of Template 10, a Library of Helpers for UWP.</Description>
@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Prism.Core" Version="7.1.0.431" />
+    <PackageReference Include="Prism.Core" Version="7.2.0.1367" />
   </ItemGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">

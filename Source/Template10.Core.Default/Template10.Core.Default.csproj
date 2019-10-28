@@ -2,7 +2,7 @@
 <Project Sdk="MSBuild.Sdk.Extras/2.0.54">
 
   <PropertyGroup>
-    <TargetFrameworks>uap10.0.16299</TargetFrameworks>
+    <TargetFrameworks>uap10.0.17134</TargetFrameworks>
     <RootNamespace>Template10</RootNamespace>
     <Title>Template10</Title>
     <Description>The default implimentation of Template 10 for Navigation. Template 10 is a Library of Helpers for UWP.</Description>
