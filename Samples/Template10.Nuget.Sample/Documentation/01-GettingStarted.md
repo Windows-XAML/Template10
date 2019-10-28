@@ -17,6 +17,12 @@ In this hands-on lab you will create a simple application that will show you how
 5. Under **Solution name**, leave the default value.
 6. Uncheck **Place solution and project in the same directory**.
 7. To create the solution and project, click **Create**.
+	
+	You will be prompted with "Select the target and minimum platform versions that your UWP application will support."
+	The Minimum version must be set to 16299 or higher. The Target version can be set to anything you like.
+
+	> Your minimum version must be UAP 10.0.16299 or higher.
+
     After a few moments, the new solution will open. This is a minimal application that will display a blank window.
 
     ![Starting Solution](Images/StartingSolution.png)
