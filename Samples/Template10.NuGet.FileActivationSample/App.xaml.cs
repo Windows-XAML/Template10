@@ -33,8 +33,9 @@ namespace Template10.NuGet.FileActivationSample
 
         public override void OnInitialized()
         {
-            var frame = new Frame();
-            Window.Current.Content = new ShellPage { Frame = frame };
+            var shell = (ShellPage)Container.Resolve(typeof(ShellPage));
+            var frame = shell.Frame = new Frame();
+            Window.Current.Content = shell;
             Window.Current.Activate();
             _nav = NavigationFactory
                 .Create(frame, Guid.Empty.ToString())
