@@ -18,7 +18,7 @@
     <VersionPrefix>2.0.1</VersionPrefix>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <AssemblyVersion>2.0.1.0</AssemblyVersion>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
@@ -30,13 +30,12 @@
     <PackageReference Include="Unity" Version="5.11.1" />
   </ItemGroup>
 
-
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <VersionSuffix>DEBUG-$([System.DateTime]::UtcNow.ToString(yyMMdd-HHmmss))</VersionSuffix>
   </PropertyGroup>
 
   <Target Name="CopyPackage" AfterTargets="Pack">
-    <Copy SourceFiles="$(OutputPath)$(PackageId).$(PackageVersion).nupkg" DestinationFolder="c:\nuget" />
+    <!--<Copy SourceFiles="$(OutputPath)$(PackageId).$(PackageVersion).nupkg" DestinationFolder="c:\nuget" />-->
   </Target>
 
 

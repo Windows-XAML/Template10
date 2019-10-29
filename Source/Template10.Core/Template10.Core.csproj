@@ -29,12 +29,16 @@
     <PackageReference Include="Prism.Core" Version="7.2.0.1367" />
   </ItemGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <Version>2.0.$([System.DateTime]::UtcNow.ToString(yyMMdd))</Version>
+  </PropertyGroup>
+
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <VersionSuffix>DEBUG-$([System.DateTime]::UtcNow.ToString(yyMMdd-HHmmss))</VersionSuffix>
+    <VersionSuffix>.DEBUG-$([System.DateTime]::UtcNow.ToString(yyMMdd-HHmmss))</VersionSuffix>
   </PropertyGroup>
 
   <Target Name="CopyPackage" AfterTargets="Pack">
-    <Copy SourceFiles="$(OutputPath)$(PackageId).$(PackageVersion).nupkg" DestinationFolder="c:\nuget" />
+    <!--<Copy SourceFiles="$(OutputPath)$(PackageId).$(PackageVersion).nupkg" DestinationFolder="c:\nuget" />-->
   </Target>
 
 
