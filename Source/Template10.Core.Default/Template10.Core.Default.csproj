@@ -2,7 +2,7 @@
 <Project Sdk="MSBuild.Sdk.Extras/2.0.54">
 
   <PropertyGroup>
-    <TargetFrameworks>uap10.0.16299</TargetFrameworks>
+    <TargetFrameworks>uap10.0.17134</TargetFrameworks>
     <RootNamespace>Template10</RootNamespace>
     <Title>Template10</Title>
     <Description>The default implimentation of Template 10 for Navigation. Template 10 is a Library of Helpers for UWP.</Description>
@@ -18,7 +18,7 @@
     <VersionPrefix>2.0.1</VersionPrefix>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <AssemblyVersion>2.0.1.0</AssemblyVersion>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,17 +26,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Template10.Core" Version="2.0.1" />
+    <PackageReference Include="Template10.Core" Version="2" />
     <PackageReference Include="Unity" Version="5.11.1" />
   </ItemGroup>
-
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <VersionSuffix>DEBUG-$([System.DateTime]::UtcNow.ToString(yyMMdd-HHmmss))</VersionSuffix>
   </PropertyGroup>
 
   <Target Name="CopyPackage" AfterTargets="Pack">
-    <Copy SourceFiles="$(OutputPath)$(PackageId).$(PackageVersion).nupkg" DestinationFolder="c:\nuget" />
+    <!--<Copy SourceFiles="$(OutputPath)$(PackageId).$(PackageVersion).nupkg" DestinationFolder="c:\nuget" />-->
   </Target>
 
 
