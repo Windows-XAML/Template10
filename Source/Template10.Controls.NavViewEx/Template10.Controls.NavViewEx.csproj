@@ -2,7 +2,7 @@
 <Project Sdk="MSBuild.Sdk.Extras">
 
   <PropertyGroup>
-    <TargetFrameworks>uap10.0.16299</TargetFrameworks>
+    <TargetFrameworks>uap10.0.18362</TargetFrameworks>
     <RootNamespace>Template10</RootNamespace>
     <Title>Template10 Controls NavViewEx</Title>
     <Description>Template10 Controls NavViewEx</Description>
@@ -22,7 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Template10.Core\Template10.Core.csproj" />
+    <PackageReference Include="Microsoft.UI.Xaml" Version="2.2.190917002" />
+    <PackageReference Include="Template10" Version="2.0.1" />
   </ItemGroup>
 
 </Project>
