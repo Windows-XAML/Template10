@@ -1,5 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Prism.Ioc;
+using Windows.ApplicationModel.Activation;
+using Windows.UI.Xaml;
 
 namespace Template10
 {
@@ -32,7 +35,7 @@ namespace Template10
          * 16. INavigatedAware not implemented.
          
          */
-
+        Func<SplashScreen, UIElement> ExtendedSplashScreenFactory { get; set; }
         IContainerProvider Container { get; }
         void ConfigureViewModelLocator();
         IContainerExtension CreateContainerExtension();

@@ -85,6 +85,8 @@ namespace Template10
             };
         }
 
+        public Func<SplashScreen, UIElement> ExtendedSplashScreenFactory { get; set; }
+
         private IContainerExtension _containerExtension;
         public IContainerProvider Container => _containerExtension;
 
@@ -153,6 +155,8 @@ namespace Template10
                 startArgs.StartKind = StartKinds.Activate;
             }
 
+            SetupExtendedSplashScreen();
+
             try
             {
                 CallOnInitializedOnlyOnce();
@@ -169,13 +173,28 @@ namespace Template10
 
                 _logger.Log($"[App.OnStartAsync(startKind:{startArgs.StartKind}, startCause:{startArgs.StartCause})]", Category.Info, Priority.None);
                 await OnStartAsync(startArgs);
-
-                // this is redundant, but a friendly add-on
-                Window.Current.Activate();
             }
             finally
             {
                 _startSemaphore.Release();
+            }
+
+            void SetupExtendedSplashScreen()
+            {
+                if (startArgs.StartKind == StartKinds.Launch
+                    && startArgs.Arguments is IActivatedEventArgs act
+                    && Window.Current.Content is null
+                    && !(ExtendedSplashScreenFactory is null))
+                {
+                    try
+                    {
+                        Window.Current.Content = ExtendedSplashScreenFactory(act.SplashScreen);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception($"Error during {nameof(ExtendedSplashScreenFactory)}.", ex);
+                    }
+                }
             }
         }
 
