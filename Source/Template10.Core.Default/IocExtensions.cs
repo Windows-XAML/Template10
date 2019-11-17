@@ -1,10 +1,4 @@
-﻿using System;
-using System.Linq;
-using Prism.Ioc;
-using Unity;
-using Unity.Resolution;
-
-namespace Template10
+﻿namespace Template10
 {
     public static class IocExtensions
     {

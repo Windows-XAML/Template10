@@ -1,7 +1,7 @@
-﻿using Microsoft.Xaml.Interactivity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Xaml.Interactivity;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;

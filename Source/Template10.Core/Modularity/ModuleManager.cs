@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Reflection;
-using Prism.Properties;
 
 namespace Prism.Modularity
 {
@@ -58,7 +56,7 @@ namespace Prism.Modularity
             {
                 throw new ModuleNotFoundException(moduleName, string.Format(CultureInfo.CurrentCulture, "Failed to load type for module {0}.", moduleName));
             }
-            else if(modules.Count() > 1)
+            else if (modules.Count() > 1)
             {
                 throw new DuplicateModuleException(moduleName, string.Format(CultureInfo.CurrentCulture, "A duplicated module with name {0} has been found by the loader", moduleName));
             }
@@ -101,7 +99,7 @@ namespace Prism.Modularity
                     {
                         RaiseLoadModuleCompleted(moduleInfo, ex);
                     }
-                    
+
                 }
             }
         }

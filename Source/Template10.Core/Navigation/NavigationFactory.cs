@@ -1,7 +1,4 @@
 ﻿using System;
-using Template10.Services;
-using Windows.UI.Core;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace Template10.Navigation

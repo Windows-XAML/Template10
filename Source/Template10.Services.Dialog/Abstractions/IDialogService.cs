@@ -9,9 +9,9 @@ namespace Template10.Services
     public interface IDialogService
     {
         Task<IUICommand> ShowAsync(MessageDialog dialog, TimeSpan? timeout = null, CancellationToken? token = null);
-        
+
         Task<ContentDialogResult> ShowAsync(ContentDialog dialog, TimeSpan? timeout = null, CancellationToken? token = null);
-        
+
         Task<MessageBoxResult> AlertAsync(string content, IDialogResourceResolver resolver = null);
 
         Task<MessageBoxResult> AlertAsync(string title, string content, IDialogResourceResolver resolver = null);

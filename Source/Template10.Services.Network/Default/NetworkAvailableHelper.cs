@@ -10,11 +10,11 @@ namespace Template10.Services
         {
             NetworkInformation.NetworkStatusChanged += (s) =>
             {
-                ConnectionProfile internetConnectionProfile = NetworkInformation.GetInternetConnectionProfile();
-                ConnectionTypes conn = ConnectionTypes.None;
+                var internetConnectionProfile = NetworkInformation.GetInternetConnectionProfile();
+                var conn = ConnectionTypes.None;
                 if (internetConnectionProfile != null)
                 {
-                    NetworkConnectivityLevel connectionLevel = internetConnectionProfile.GetNetworkConnectivityLevel();
+                    var connectionLevel = internetConnectionProfile.GetNetworkConnectivityLevel();
                     conn = (connectionLevel == NetworkConnectivityLevel.InternetAccess) ? ConnectionTypes.Internet : ConnectionTypes.LocalNetwork;
                 }
                 if (AvailabilityChanged != null)
@@ -31,7 +31,10 @@ namespace Template10.Services
         {
             var _Profile = NetworkInformation.GetInternetConnectionProfile();
             if (_Profile == null)
+            {
                 return Task.FromResult<bool>(false);
+            }
+
             var net = NetworkConnectivityLevel.InternetAccess;
             return Task.FromResult<bool>(_Profile.GetNetworkConnectivityLevel().Equals(net));
         }
@@ -40,7 +43,9 @@ namespace Template10.Services
         {
             var _Profile = NetworkInformation.GetInternetConnectionProfile();
             if (_Profile == null)
+            {
                 return Task.FromResult<bool>(false);
+            }
 
             var local = NetworkConnectivityLevel.LocalAccess;
             return Task.FromResult<bool>(_Profile.GetNetworkConnectivityLevel().Equals(local));

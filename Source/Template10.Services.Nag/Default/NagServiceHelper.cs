@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Template10;
-using Template10.Services;
-using Windows.UI.Popups;
 
 namespace Template10.Services
 {
     public class NagServiceHelper
     {
-        readonly IDialogService _dialogService;
-        readonly IFileService _fileService;
-
-        const string _stateFileNameTemplate = "Template10.Service.Nag.{0}.json";
+        private readonly IDialogService _dialogService;
+        private readonly IFileService _fileService;
+        private const string _stateFileNameTemplate = "Template10.Service.Nag.{0}.json";
 
         public NagServiceHelper(IDialogService dialogService, IFileService fileService)
         {

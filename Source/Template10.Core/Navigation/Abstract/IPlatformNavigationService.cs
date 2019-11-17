@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media.Animation;
 
 namespace Template10.Navigation
 {
-    public interface INavigationService 
+    public interface INavigationService
     {
         Task<INavigationResult> GoBackAsync();
         Task<INavigationResult> GoBackAsync(INavigationParameters parameters);

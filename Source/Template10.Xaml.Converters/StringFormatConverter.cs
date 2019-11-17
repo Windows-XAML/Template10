@@ -17,8 +17,8 @@ namespace Template10.Converters
             if (string.IsNullOrWhiteSpace(language))
             {
                 return string.Format(format, value);
-            }    
-                
+            }
+
             try
             {
                 var culture = new CultureInfo(language);

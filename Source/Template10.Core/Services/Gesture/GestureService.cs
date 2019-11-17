@@ -1,21 +1,18 @@
-﻿using Prism.Logging;
-using Prism.Ioc;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using Windows.Foundation;
+using Prism.Ioc;
+using Prism.Logging;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Input;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 
 namespace Template10.Services
 {
     public class GestureService : IGestureService
     {
-        private static Dictionary<CoreWindow, IGestureService> _cache
+        private static readonly Dictionary<CoreWindow, IGestureService> _cache
             = new Dictionary<CoreWindow, IGestureService>();
 
         public static IGestureService GetForCurrentView(CoreWindow window = null)
@@ -67,7 +64,7 @@ namespace Template10.Services
 
         #region Blocker
 
-        List<GestureBlocker> _blockers = new List<GestureBlocker>();
+        private readonly List<GestureBlocker> _blockers = new List<GestureBlocker>();
         public GestureBlocker CreateBlocker(Gesture gesture, BlockerPeriod period)
         {
             GestureBlocker blocker = null;
@@ -78,7 +75,8 @@ namespace Template10.Services
             _blockers.Add(blocker);
             return blocker;
         }
-        bool RaiseAnyBlockers(Gesture gesture)
+
+        private bool RaiseAnyBlockers(Gesture gesture)
         {
             var blockers = _blockers.Where(x => x.Gesture.Equals(gesture));
             foreach (var blocker in blockers)

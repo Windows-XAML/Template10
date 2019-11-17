@@ -1,5 +1,4 @@
-﻿using Windows.Foundation;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 
 namespace Template10
 {

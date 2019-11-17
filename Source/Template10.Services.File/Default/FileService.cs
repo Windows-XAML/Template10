@@ -29,7 +29,10 @@ namespace Template10.Services
         {
             var file = await GetIfFileExistsAsync(key, location);
             if (file != null)
+            {
                 await file.DeleteAsync();
+            }
+
             return !(await FileExistsAsync(key, location));
         }
 
@@ -45,7 +48,9 @@ namespace Template10.Services
                 // fetch file
                 var file = await GetIfFileExistsAsync(key, location);
                 if (file == null)
+                {
                     return default(T);
+                }
                 // read content
                 var readValue = await FileIO.ReadTextAsync(file);
                 // convert to obj
@@ -65,7 +70,9 @@ namespace Template10.Services
                 // fetch file
                 var file = await GetIfFileExistsAsync(key, location);
                 if (file == null)
+                {
                     return string.Empty;
+                }
                 // read content
                 return await FileIO.ReadTextAsync(file);
             }

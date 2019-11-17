@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using Windows.Foundation;
 using Windows.UI.Xaml;
 
 namespace Template10
@@ -18,13 +17,14 @@ namespace Template10
         private new event LeavingBackgroundEventHandler LeavingBackground;
 #pragma warning restore CS0067
 
-        EnteredBackgroundEventHandler _enteredBackground;
+        private EnteredBackgroundEventHandler _enteredBackground;
         event EnteredBackgroundEventHandler IApplicationEvents.EnteredBackground
         {
             add { _enteredBackground += value; }
             remove { _enteredBackground -= value; }
         }
-        LeavingBackgroundEventHandler _leavingBackground;
+
+        private LeavingBackgroundEventHandler _leavingBackground;
         event LeavingBackgroundEventHandler IApplicationEvents.LeavingBackground
         {
             add { _leavingBackground += value; }

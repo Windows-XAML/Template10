@@ -1,6 +1,4 @@
 ﻿using Microsoft.Xaml.Interactivity;
-using System;
-using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Markup;

@@ -1,9 +1,4 @@
-﻿using Prism;
-using Prism.Ioc;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Prism.Ioc;
 
 namespace Template10.Ioc
 {

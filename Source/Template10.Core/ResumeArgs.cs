@@ -1,6 +1,5 @@
 ﻿using System;
 using Windows.ApplicationModel.Activation;
-using Windows.Storage;
 
 namespace Template10
 {
