@@ -1,4 +1,7 @@
-﻿namespace Template10
+﻿using Prism.Ioc;
+using Unity;
+
+namespace Template10
 {
     public abstract class ApplicationBase : ApplicationTemplate
     {

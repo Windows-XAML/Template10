@@ -1,4 +1,10 @@
-﻿namespace Template10
+﻿using System;
+using System.Linq;
+using Prism.Ioc;
+using Unity;
+using Unity.Resolution;
+
+namespace Template10
 {
     public sealed class UnityContainerExtension : IContainerExtension<IUnityContainer>
     {

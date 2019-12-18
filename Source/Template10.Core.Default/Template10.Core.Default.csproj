@@ -2,41 +2,49 @@
 <Project Sdk="MSBuild.Sdk.Extras/2.0.54">
 
   <PropertyGroup>
+    
+    <Title>Template10</Title>
+    <PackageId>Template10</PackageId>
+    <AssemblyName>Template10</AssemblyName>
+    <Description>The default implimentation of Template 10 for Navigation. Template 10 is a Library of Helpers for UWP.</Description>
+    
+    <VersionPrefix>2.0.2</VersionPrefix>
+    <AssemblyVersion>2.0.2.0</AssemblyVersion>
+
     <TargetFrameworks>uap10.0.17134</TargetFrameworks>
     <RootNamespace>Template10</RootNamespace>
-    <Title>Template10</Title>
-    <Description>The default implimentation of Template 10 for Navigation. Template 10 is a Library of Helpers for UWP.</Description>
     <PackageTags>Windows 10, Windows10, W10, UAP, UWP, WinRT, XAML, Template 10, Template10, T10, Universal App, Windows Universal</PackageTags>
-    <AssemblyName>Template10</AssemblyName>
     <RepositoryType></RepositoryType>
     <RepositoryUrl>https://aka.ms/template10</RepositoryUrl>
     <PackageIcon>NuGetLogo.png</PackageIcon>
     <PackageProjectUrl>https://aka.ms/template10</PackageProjectUrl>
     <Copyright>Jerry Nixon, Daren May</Copyright>
-    <PackageId>Template10</PackageId>
     <Authors>Jerry Nixon, Daren May</Authors>
-    <VersionPrefix>2.0.1</VersionPrefix>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    <AssemblyVersion>2.0.1.0</AssemblyVersion>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+ 
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="nuget.exe" />
+  </ItemGroup>
 
   <ItemGroup>
     <None Include="..\..\Assets\NuGetLogo.png" Pack="true" Visible="false" PackagePath="" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Template10.Core" Version="2" />
+    <PackageReference Include="Prism.Core" Version="7.2.0.1422" />
+    <PackageReference Include="Template10.Core" Version="2.0.1" />
     <PackageReference Include="Unity" Version="5.11.1" />
   </ItemGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <VersionSuffix>DEBUG-$([System.DateTime]::UtcNow.ToString(yyMMdd-HHmmss))</VersionSuffix>
+    <VersionSuffix>D$([System.DateTime]::UtcNow.ToString(yyMMdd))</VersionSuffix>
   </PropertyGroup>
 
   <Target Name="CopyPackage" AfterTargets="Pack">
-    <!--<Copy SourceFiles="$(OutputPath)$(PackageId).$(PackageVersion).nupkg" DestinationFolder="c:\nuget" />-->
+    <Copy SourceFiles="$(OutputPath)$(PackageId).$(PackageVersion).nupkg" DestinationFolder="c:\nuget" />
   </Target>
-
 
 </Project>
