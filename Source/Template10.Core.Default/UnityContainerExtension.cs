@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Linq;
 using Prism.Ioc;
-using Template10.Ioc;
-using Template10.Navigation;
 using Unity;
 using Unity.Resolution;
-using Windows.UI.Xaml.Controls;
 
 namespace Template10
 {

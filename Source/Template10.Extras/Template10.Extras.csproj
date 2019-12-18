@@ -4,19 +4,27 @@
   <!-- do not deploy -->
 
   <PropertyGroup>
-    <TargetFrameworks>uap10.0.16299</TargetFrameworks>
-    <RootNamespace>Template10</RootNamespace>
+
     <Title>Template10 Extras</Title>
-    <Description>Template10.Extras</Description>
-    <PackageTags>win10;uwp;</PackageTags>
-    <AssemblyName>Template10.Extras</AssemblyName>
-    <RepositoryType>Test</RepositoryType>
-    <RepositoryUrl>Test</RepositoryUrl>
-    <PackageIconUrl>Test</PackageIconUrl>
-    <PackageProjectUrl>Test</PackageProjectUrl>
-    <Copyright>Test</Copyright>
     <PackageId>Template10.Extras</PackageId>
-    <Authors>jerrynixon</Authors>
+    <AssemblyName>Template10.Extras</AssemblyName>
+    <Description>Template10 Extras</Description>
+
+    <VersionPrefix>1.2.0</VersionPrefix>
+    <AssemblyVersion>1.2.0.0</AssemblyVersion>
+
+    <TargetFrameworks>uap10.0.17134</TargetFrameworks>
+    <RootNamespace>Template10</RootNamespace>
+    <PackageTags>Windows 10, Windows10, W10, UAP, UWP, WinRT, XAML, Template 10, Template10, T10, Universal App, Windows Universal</PackageTags>
+    <RepositoryType></RepositoryType>
+    <RepositoryUrl>https://aka.ms/template10</RepositoryUrl>
+    <PackageIcon>NuGetLogo.png</PackageIcon>
+    <PackageProjectUrl>https://aka.ms/template10</PackageProjectUrl>
+    <Copyright>Jerry Nixon, Daren May</Copyright>
+    <Authors>Jerry Nixon, Daren May</Authors>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,6 +39,14 @@
   <ItemGroup>
     <PackageReference Include="Prism.Core" Version="7.0.0.362" />
   </ItemGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <Version>2.0.$([System.DateTime]::UtcNow.ToString(yyMMdd))</Version>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <VersionSuffix>D$([System.DateTime]::UtcNow.ToString(yyMMdd))</VersionSuffix>
+  </PropertyGroup>
 
   <Target Name="CopyPackage" AfterTargets="Pack">
     <Copy SourceFiles="$(OutputPath)$(PackageId).$(PackageVersion).nupkg" DestinationFolder="c:\nuget" />

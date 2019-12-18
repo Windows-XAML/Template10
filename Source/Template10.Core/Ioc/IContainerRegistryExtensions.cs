@@ -1,12 +1,7 @@
-﻿using Prism.Ioc;
+﻿using System;
+using Prism.Ioc;
 using Prism.Mvvm;
-using Prism.Navigation;
-using System;
-using System.Threading.Tasks;
 using Template10.Navigation;
-using Windows.Foundation;
-using Windows.UI.Core;
-using Windows.UI.Xaml.Navigation;
 
 namespace Template10.Ioc
 {

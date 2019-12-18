@@ -9,7 +9,7 @@ namespace Template10.Services
 {
     public class ResourceHelper
     {
-        private ResourceLoader _loader = ResourceLoader.GetForCurrentView();
+        private readonly ResourceLoader _loader = ResourceLoader.GetForCurrentView();
 
         /// <summary>
         /// All supported languages as per String resource files in application

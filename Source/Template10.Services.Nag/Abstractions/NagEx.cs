@@ -15,8 +15,16 @@ namespace Template10.Services
         /// <param name="nagAction"><see cref="NagEx.NagAction"/></param>
         public NagEx(string id, string message, Action nagAction)
         {
-            if (string.IsNullOrEmpty(id)) throw new ArgumentException("id cannot be null or empty", "id");
-            if (string.IsNullOrEmpty(message)) throw new ArgumentException("message cannot be null or empty", "message");
+            if (string.IsNullOrEmpty(id))
+            {
+                throw new ArgumentException("id cannot be null or empty", "id");
+            }
+
+            if (string.IsNullOrEmpty(message))
+            {
+                throw new ArgumentException("message cannot be null or empty", "message");
+            }
+
             Id = id;
             Message = message;
             NagAction = nagAction ?? throw new ArgumentNullException("nagAction");

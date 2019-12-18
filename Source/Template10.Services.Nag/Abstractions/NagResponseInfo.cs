@@ -2,7 +2,7 @@
 
 namespace Template10.Services
 {
-    public class NagResponseInfo 
+    public class NagResponseInfo
     {
         /// <summary>
         /// The unique id of the associated <see cref="NagEx"/>
@@ -40,7 +40,7 @@ namespace Template10.Services
         /// </summary>
         public bool IsAwaitingResponse
         {
-            get { return LastResponse != NagResponse.Accept && LastResponse != NagResponse.Decline; }            
+            get { return LastResponse != NagResponse.Accept && LastResponse != NagResponse.Decline; }
         }
 
         /// <summary>

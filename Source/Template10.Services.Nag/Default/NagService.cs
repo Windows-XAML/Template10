@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Template10.Services;
 
 namespace Template10.Services
 {
@@ -9,7 +8,7 @@ namespace Template10.Services
     /// </summary>
     public sealed class NagService : INagService
     {
-        readonly NagServiceHelper _nagHelper;
+        private readonly NagServiceHelper _nagHelper;
 
         public NagService(IDialogService dialogService, IFileService fileService)
         {

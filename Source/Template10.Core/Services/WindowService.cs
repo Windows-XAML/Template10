@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Template10.Services;
 using Windows.UI.Xaml;
 
@@ -12,7 +10,7 @@ namespace Template10.Core.Services
     {
         public static Dictionary<Guid, Action<WindowCreatedEventArgs>> WindowCreatedCallBacks { get; } = new Dictionary<Guid, Action<WindowCreatedEventArgs>>();
 
-        static readonly List<Window> _instances = new List<Window>();
+        private static readonly List<Window> _instances = new List<Window>();
 
         public static void Register(Window window)
         {

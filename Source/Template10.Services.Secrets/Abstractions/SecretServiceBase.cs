@@ -7,7 +7,7 @@
             _helper = new SecretHelper();
         }
 
-        static SecretHelper _helper;
+        private static readonly SecretHelper _helper;
         public SecretHelper Helper => _helper;
     }
 }

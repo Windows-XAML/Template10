@@ -34,7 +34,7 @@ namespace Template10.Navigation
             return $"{{internal:{i} external:{e}}}";
         }
 
-        Dictionary<string, object> _external = new Dictionary<string, object>();
+        private readonly Dictionary<string, object> _external = new Dictionary<string, object>();
         internal Dictionary<string, object> _internal = new Dictionary<string, object>();
 
         public object this[string key]

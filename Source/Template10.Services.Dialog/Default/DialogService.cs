@@ -25,7 +25,7 @@ namespace Template10.Services
 
         public async Task<bool> PromptAsync(string title, string content, MessageBoxType type, MessageBoxResult expected, IDialogResourceResolver resolver = null)
             => (await PromptAsync(title, content, type, resolver)).Equals(expected);
-            
+
         public async Task<ContentDialogResult> ShowAsync(ContentDialog dialog, TimeSpan? timeout = null, CancellationToken? token = null)
         {
             return await DialogManager.OneAtATimeAsync(async () => await dialog.ShowAsync(), timeout, token);

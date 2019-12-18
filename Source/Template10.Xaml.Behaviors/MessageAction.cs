@@ -11,7 +11,7 @@ namespace Template10.Behaviors
     {
         public object Execute(object sender, object parameter) => ExecuteAsync(sender, parameter);
 
-        bool _busy = false;
+        private bool _busy = false;
         public async Task ExecuteAsync(object sender, object parameter)
         {
             if (_busy)

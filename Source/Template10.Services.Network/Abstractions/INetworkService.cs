@@ -2,7 +2,7 @@
 
 namespace Template10.Services
 {
-    public interface INetworkService 
+    public interface INetworkService
     {
         Task<bool> GetIsInternetAvailableAsync();
         Task<bool> GetIsNetworkAvailableAsync();

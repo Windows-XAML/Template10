@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Template10.Core.Services;
 using Template10.Services;
-using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
