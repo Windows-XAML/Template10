@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using Template10.Services;
 
 namespace Template10.Services.Marketplace
 {

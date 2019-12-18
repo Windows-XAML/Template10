@@ -1,8 +1,8 @@
-﻿using Prism.Ioc;
-using Prism.Logging;
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Prism.Ioc;
+using Prism.Logging;
 using Template10.Mvvm;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;

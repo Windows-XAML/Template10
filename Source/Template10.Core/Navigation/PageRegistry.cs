@@ -6,7 +6,7 @@ namespace Template10.Navigation
 {
     public static class PageRegistry
     {
-        static Dictionary<string, (Type View, Type ViewModel)> _cache
+        private static readonly Dictionary<string, (Type View, Type ViewModel)> _cache
             = new Dictionary<string, (Type View, Type ViewModel)>();
 
         public static void Register(string key, (Type View, Type ViewModel) info)

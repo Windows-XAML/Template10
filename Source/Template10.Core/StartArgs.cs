@@ -6,7 +6,7 @@ namespace Template10
 {
     public enum StopKind
     {
-        Suspending, 
+        Suspending,
         CloseRequested,
         CoreWindowClosed,
         CoreApplicationExiting

@@ -2,14 +2,13 @@
 using System.Threading.Tasks;
 using Windows.Storage.Streams;
 using Windows.Web.Http;
-using Windows.Web.Http.Headers;
 
 namespace Template10.Services
 {
     public class WindowsHttpClientAdapter : IWebApiAdapter
     {
-        HttpClient _client;
-        private string _mediaType = string.Empty;
+        private readonly HttpClient _client;
+        private readonly string _mediaType = string.Empty;
 
         public WindowsHttpClientAdapter(out HttpClient client)
         {

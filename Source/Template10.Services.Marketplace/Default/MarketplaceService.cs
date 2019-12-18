@@ -1,13 +1,11 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Windows.ApplicationModel;
-using Template10.Services;
 
 namespace Template10.Services.Marketplace
 {
     public sealed class MarketplaceService : IMarketplaceService
     {
-        readonly MarketplaceHelper _helper;
+        private readonly MarketplaceHelper _helper;
         public MarketplaceService()
         {
             _helper = new MarketplaceHelper();

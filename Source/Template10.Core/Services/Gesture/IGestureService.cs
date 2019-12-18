@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.UI.Core;
 
 namespace Template10.Services
 {

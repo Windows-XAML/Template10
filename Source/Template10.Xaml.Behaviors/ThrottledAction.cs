@@ -1,7 +1,5 @@
-﻿using Microsoft.Xaml.Interactivity;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Microsoft.Xaml.Interactivity;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Markup;
 
@@ -38,7 +36,7 @@ namespace Template10.Behaviors
             DependencyProperty.Register(nameof(Actions), typeof(ActionCollection),
                 typeof(ThrottledAction), new PropertyMetadata(null));
 
-        bool Busy { get; set; }
+        private bool Busy { get; set; }
 
         public object Execute(object sender, object parameter)
         {

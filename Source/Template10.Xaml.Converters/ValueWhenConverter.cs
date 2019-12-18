@@ -16,7 +16,7 @@ namespace Template10.Converters
 
             try
             {
-                if (object.Equals(value,parameter ?? When))
+                if (object.Equals(value, parameter ?? When))
                 {
                     return Value;
                 }
@@ -59,7 +59,7 @@ namespace Template10.Converters
         public object Value { get; set; }
         public object Otherwise { get; set; }
         public object When { get; set; }
-        public object OtherwiseValueBack{ get; set; }
+        public object OtherwiseValueBack { get; set; }
         public bool Debug { get; set; }
     }
 }

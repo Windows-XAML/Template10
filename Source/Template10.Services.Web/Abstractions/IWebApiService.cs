@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Windows.Web.Http;
 
 namespace Template10.Services
 {

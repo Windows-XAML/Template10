@@ -37,7 +37,7 @@ namespace Prism.Modularity
 
             ModuleName = name;
             ModuleType = Type.GetType(type) ?? throw new ArgumentNullException(nameof(type));
-            foreach (string dependency in dependsOn)
+            foreach (var dependency in dependsOn)
             {
                 if (!DependsOn.Contains(dependency))
                 {
@@ -109,11 +109,11 @@ namespace Prism.Modularity
         {
             get
             {
-                if(_dependsOn == null)
+                if (_dependsOn == null)
                 {
                     _dependsOn = new Collection<string>();
                     var moduleType = ModuleType;
-                    foreach(var dependencyAttribute in moduleType.GetTypeInfo().GetCustomAttributes<ModuleDependencyAttribute>())
+                    foreach (var dependencyAttribute in moduleType.GetTypeInfo().GetCustomAttributes<ModuleDependencyAttribute>())
                     {
                         _dependsOn.Add(dependencyAttribute.ModuleName);
                     }

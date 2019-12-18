@@ -2,23 +2,27 @@
 <Project Sdk="MSBuild.Sdk.Extras/2.0.54">
 
   <PropertyGroup>
-    <TargetFrameworks>uap10.0.16299</TargetFrameworks>
-    <RootNamespace>Template10.Services</RootNamespace>
+
     <Title>Template10 File Service</Title>
+    <PackageId>Template10.Services.File</PackageId>
+    <AssemblyName>Template10.Services.File</AssemblyName>
     <Description>Handy File Service for WinRT. Part of Template 10, a Library of Helpers for UWP.</Description>
+    <RootNamespace>Template10.Services</RootNamespace>
+
+    <VersionPrefix>1.0.2</VersionPrefix>
+    <AssemblyVersion>1.0.2.0</AssemblyVersion>
+
+    <TargetFrameworks>uap10.0.17134</TargetFrameworks>
     <PackageTags>Windows 10, Windows10, W10, UAP, UWP, WinRT, XAML, Template 10, Template10, T10, Universal App, Windows Universal</PackageTags>
-    <AssemblyName>Template10.Services.FileService</AssemblyName>
     <RepositoryType></RepositoryType>
     <RepositoryUrl>https://aka.ms/template10</RepositoryUrl>
     <PackageIcon>NuGetLogo.png</PackageIcon>
     <PackageProjectUrl>https://aka.ms/template10</PackageProjectUrl>
     <Copyright>Jerry Nixon, Daren May</Copyright>
-    <PackageId>Template10.Services.FileService</PackageId>
     <Authors>Jerry Nixon, Daren May</Authors>
-    <VersionPrefix>1.0.1</VersionPrefix>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    <AssemblyVersion>1.0.1.0</AssemblyVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    
   </PropertyGroup>
 
   <ItemGroup>
@@ -30,12 +34,11 @@
   </ItemGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <VersionSuffix>DEBUG-$([System.DateTime]::UtcNow.ToString(yyMMdd-HHmmss))</VersionSuffix>
+    <VersionSuffix>D$([System.DateTime]::UtcNow.ToString(yyMMdd))</VersionSuffix>
   </PropertyGroup>
 
   <Target Name="CopyPackage" AfterTargets="Pack">
     <Copy SourceFiles="$(OutputPath)$(PackageId).$(PackageVersion).nupkg" DestinationFolder="c:\nuget" />
   </Target>
-
 
 </Project>

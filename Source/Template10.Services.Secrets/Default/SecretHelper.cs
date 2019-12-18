@@ -7,7 +7,7 @@ namespace Template10.Services
     {
         // https://msdn.microsoft.com/en-us/library/windows/apps/windows.security.credentials.passwordvault.aspx
 
-        static PasswordVault _vault;
+        private static readonly PasswordVault _vault;
 
         static SecretHelper()
         {
@@ -65,7 +65,11 @@ namespace Template10.Services
 
                 if (credential.Password.Length > 0)
                 {
-                    if (RemoveIfExists) _vault.Remove(credential);
+                    if (RemoveIfExists)
+                    {
+                        _vault.Remove(credential);
+                    }
+
                     return true;
                 }
                 else
