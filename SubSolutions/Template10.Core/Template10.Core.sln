@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Template10.Services.File", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Template10.Services.Marketplace", "..\..\Source\Template10.Services.Marketplace\Template10.Services.Marketplace.csproj", "{5BF4ADFB-40C5-4F24-BF70-8AA65546DF76}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.Network", "..\..\Source\Template10.Services.Network\Template10.Services.Network.csproj", "{143779A3-6800-4B6E-94BD-3968010E87E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Template10.Services.Network", "..\..\Source\Template10.Services.Network\Template10.Services.Network.csproj", "{143779A3-6800-4B6E-94BD-3968010E87E9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Template10.Services.Resources", "..\..\Source\Template10.Services.Resources\Template10.Services.Resources.csproj", "{20037722-A1AB-4BB2-BB9B-F09D3CD25F47}"
 EndProject
@@ -27,11 +27,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_assets", "_assets", "{13C5
 		..\Assets\NuGetLogo.png = ..\Assets\NuGetLogo.png
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.Secrets", "..\..\Source\Template10.Services.Secrets\Template10.Services.Secrets.csproj", "{5DAB193E-87DB-40FF-B80C-28B8B3EBA7A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Template10.Services.Secrets", "..\..\Source\Template10.Services.Secrets\Template10.Services.Secrets.csproj", "{5DAB193E-87DB-40FF-B80C-28B8B3EBA7A6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Template10.Services.Serialization", "..\..\Source\Template10.Services.Serialization\Template10.Services.Serialization.csproj", "{5FF268EC-A424-496F-8645-5E8670EA5BA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.Web", "..\..\Source\Template10.Services.Web\Template10.Services.Web.csproj", "{99249EFC-9105-4E8F-A7E5-8F45CF4375C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Template10.Services.Web", "..\..\Source\Template10.Services.Web\Template10.Services.Web.csproj", "{99249EFC-9105-4E8F-A7E5-8F45CF4375C7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Xaml", "Xaml", "{E02DC3E6-2B16-4A8C-9A90-BB16C89FCABD}"
 EndProject
@@ -46,6 +46,12 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Template10.Controls.NavViewEx", "..\..\Source\Template10.Controls.NavViewEx\Template10.Controls.NavViewEx.csproj", "{E1E4EDDE-EFB2-4606-A259-6E95B332E209}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Template10.Controls.Resizer", "..\..\Source\Template10.Controls.Resizer\Template10.Controls.Resizer.csproj", "{DF958D7C-35CD-4E43-A256-D203049AF3D8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Template10.Services.Settings", "..\..\Source\Template10.Services.Settings\Template10.Services.Settings.csproj", "{2D4747FF-AA2D-49EB-9176-283A14BA8855}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services.Tests", "Services.Tests", "{A5778ACC-6354-4E9A-972B-7D66F522BFA6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template10.Services.Serialization.Tests", "..\..\Source\Services.Tests\Template10.Services.Serialization.Tests\Template10.Services.Serialization.Tests.csproj", "{F321C025-F4E0-43B3-BDA5-48C7A6619827}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -381,6 +387,54 @@ Global
 		{DF958D7C-35CD-4E43-A256-D203049AF3D8}.Release|x64.Build.0 = Release|Any CPU
 		{DF958D7C-35CD-4E43-A256-D203049AF3D8}.Release|x86.ActiveCfg = Release|Any CPU
 		{DF958D7C-35CD-4E43-A256-D203049AF3D8}.Release|x86.Build.0 = Release|Any CPU
+		{2D4747FF-AA2D-49EB-9176-283A14BA8855}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D4747FF-AA2D-49EB-9176-283A14BA8855}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D4747FF-AA2D-49EB-9176-283A14BA8855}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{2D4747FF-AA2D-49EB-9176-283A14BA8855}.Debug|ARM.Build.0 = Debug|Any CPU
+		{2D4747FF-AA2D-49EB-9176-283A14BA8855}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{2D4747FF-AA2D-49EB-9176-283A14BA8855}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{2D4747FF-AA2D-49EB-9176-283A14BA8855}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2D4747FF-AA2D-49EB-9176-283A14BA8855}.Debug|x64.Build.0 = Debug|Any CPU
+		{2D4747FF-AA2D-49EB-9176-283A14BA8855}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2D4747FF-AA2D-49EB-9176-283A14BA8855}.Debug|x86.Build.0 = Debug|Any CPU
+		{2D4747FF-AA2D-49EB-9176-283A14BA8855}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D4747FF-AA2D-49EB-9176-283A14BA8855}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D4747FF-AA2D-49EB-9176-283A14BA8855}.Release|ARM.ActiveCfg = Release|Any CPU
+		{2D4747FF-AA2D-49EB-9176-283A14BA8855}.Release|ARM.Build.0 = Release|Any CPU
+		{2D4747FF-AA2D-49EB-9176-283A14BA8855}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{2D4747FF-AA2D-49EB-9176-283A14BA8855}.Release|ARM64.Build.0 = Release|Any CPU
+		{2D4747FF-AA2D-49EB-9176-283A14BA8855}.Release|x64.ActiveCfg = Release|Any CPU
+		{2D4747FF-AA2D-49EB-9176-283A14BA8855}.Release|x64.Build.0 = Release|Any CPU
+		{2D4747FF-AA2D-49EB-9176-283A14BA8855}.Release|x86.ActiveCfg = Release|Any CPU
+		{2D4747FF-AA2D-49EB-9176-283A14BA8855}.Release|x86.Build.0 = Release|Any CPU
+		{F321C025-F4E0-43B3-BDA5-48C7A6619827}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{F321C025-F4E0-43B3-BDA5-48C7A6619827}.Debug|Any CPU.Build.0 = Debug|x86
+		{F321C025-F4E0-43B3-BDA5-48C7A6619827}.Debug|Any CPU.Deploy.0 = Debug|x86
+		{F321C025-F4E0-43B3-BDA5-48C7A6619827}.Debug|ARM.ActiveCfg = Debug|ARM
+		{F321C025-F4E0-43B3-BDA5-48C7A6619827}.Debug|ARM.Build.0 = Debug|ARM
+		{F321C025-F4E0-43B3-BDA5-48C7A6619827}.Debug|ARM.Deploy.0 = Debug|ARM
+		{F321C025-F4E0-43B3-BDA5-48C7A6619827}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{F321C025-F4E0-43B3-BDA5-48C7A6619827}.Debug|ARM64.Build.0 = Debug|ARM64
+		{F321C025-F4E0-43B3-BDA5-48C7A6619827}.Debug|ARM64.Deploy.0 = Debug|ARM64
+		{F321C025-F4E0-43B3-BDA5-48C7A6619827}.Debug|x64.ActiveCfg = Debug|x64
+		{F321C025-F4E0-43B3-BDA5-48C7A6619827}.Debug|x64.Build.0 = Debug|x64
+		{F321C025-F4E0-43B3-BDA5-48C7A6619827}.Debug|x64.Deploy.0 = Debug|x64
+		{F321C025-F4E0-43B3-BDA5-48C7A6619827}.Debug|x86.ActiveCfg = Debug|x86
+		{F321C025-F4E0-43B3-BDA5-48C7A6619827}.Debug|x86.Build.0 = Debug|x86
+		{F321C025-F4E0-43B3-BDA5-48C7A6619827}.Debug|x86.Deploy.0 = Debug|x86
+		{F321C025-F4E0-43B3-BDA5-48C7A6619827}.Release|Any CPU.ActiveCfg = Release|x86
+		{F321C025-F4E0-43B3-BDA5-48C7A6619827}.Release|ARM.ActiveCfg = Release|ARM
+		{F321C025-F4E0-43B3-BDA5-48C7A6619827}.Release|ARM.Build.0 = Release|ARM
+		{F321C025-F4E0-43B3-BDA5-48C7A6619827}.Release|ARM.Deploy.0 = Release|ARM
+		{F321C025-F4E0-43B3-BDA5-48C7A6619827}.Release|ARM64.ActiveCfg = Release|ARM64
+		{F321C025-F4E0-43B3-BDA5-48C7A6619827}.Release|ARM64.Build.0 = Release|ARM64
+		{F321C025-F4E0-43B3-BDA5-48C7A6619827}.Release|ARM64.Deploy.0 = Release|ARM64
+		{F321C025-F4E0-43B3-BDA5-48C7A6619827}.Release|x64.ActiveCfg = Release|x64
+		{F321C025-F4E0-43B3-BDA5-48C7A6619827}.Release|x64.Build.0 = Release|x64
+		{F321C025-F4E0-43B3-BDA5-48C7A6619827}.Release|x64.Deploy.0 = Release|x64
+		{F321C025-F4E0-43B3-BDA5-48C7A6619827}.Release|x86.ActiveCfg = Release|x86
+		{F321C025-F4E0-43B3-BDA5-48C7A6619827}.Release|x86.Build.0 = Release|x86
+		{F321C025-F4E0-43B3-BDA5-48C7A6619827}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -400,6 +454,8 @@ Global
 		{F75FA021-BDB1-483D-8983-9788F8BAF04D} = {2027C16E-05F0-4886-B9C3-6010C1C4490C}
 		{E1E4EDDE-EFB2-4606-A259-6E95B332E209} = {E02DC3E6-2B16-4A8C-9A90-BB16C89FCABD}
 		{DF958D7C-35CD-4E43-A256-D203049AF3D8} = {E02DC3E6-2B16-4A8C-9A90-BB16C89FCABD}
+		{2D4747FF-AA2D-49EB-9176-283A14BA8855} = {2027C16E-05F0-4886-B9C3-6010C1C4490C}
+		{F321C025-F4E0-43B3-BDA5-48C7A6619827} = {A5778ACC-6354-4E9A-972B-7D66F522BFA6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ABB2D64E-116C-4725-B2D5-133AD8C966E9}

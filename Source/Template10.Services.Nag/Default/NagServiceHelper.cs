@@ -7,7 +7,7 @@ namespace Template10.Services
     {
         private readonly IDialogService _dialogService;
         private readonly IFileService _fileService;
-        private const string _stateFileNameTemplate = "Template10.Service.Nag.{0}.json";
+        private const string _stateFileNameTemplate = "Template10.Services.Nag.{0}.json";
 
         public NagServiceHelper(IDialogService dialogService, IFileService fileService)
         {

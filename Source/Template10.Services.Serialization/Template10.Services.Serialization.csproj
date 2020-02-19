@@ -9,8 +9,8 @@
     <Description>Handy Compression Serialization for WinRT. Part of Template 10, a Library of Helpers for UWP.</Description>
     <RootNamespace>Template10.Services</RootNamespace>
 
-    <VersionPrefix>1.0.3</VersionPrefix>
-    <AssemblyVersion>1.0.3.0</AssemblyVersion>
+    <VersionPrefix>1.0.4</VersionPrefix>
+    <AssemblyVersion>1.0.4.0</AssemblyVersion>
 
     <TargetFrameworks>uap10.0.17134</TargetFrameworks>
     <PackageTags>Windows 10, Windows10, W10, UAP, UWP, WinRT, XAML, Template 10, Template10, T10, Universal App, Windows Universal</PackageTags>
@@ -22,11 +22,16 @@
     <Authors>Jerry Nixon, Daren May</Authors>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <FileVersion>1.0.4.0</FileVersion>
     
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="..\..\Assets\NuGetLogo.png" Pack="true" Visible="false" PackagePath="" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" Version="4.7.1" />
   </ItemGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">

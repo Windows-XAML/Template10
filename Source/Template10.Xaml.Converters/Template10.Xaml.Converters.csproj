@@ -25,6 +25,11 @@
     
   </PropertyGroup>
 
+
+  <ItemGroup>
+    <None Include="..\..\Assets\NuGetLogo.png" Pack="true" Visible="false" PackagePath="" />
+  </ItemGroup>
+
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <VersionSuffix>D$([System.DateTime]::UtcNow.ToString(yyMMdd))</VersionSuffix>
   </PropertyGroup>

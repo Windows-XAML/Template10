@@ -3,14 +3,14 @@
 
   <PropertyGroup>
 
-    <Title>Template10 File Service</Title>
-    <PackageId>Template10.Services.File</PackageId>
-    <AssemblyName>Template10.Services.File</AssemblyName>
-    <Description>Handy File Service for WinRT. Part of Template 10, a Library of Helpers for UWP.</Description>
+    <Title>Template10 Settings Service</Title>
+    <PackageId>Template10.Services.Settings</PackageId>
+    <AssemblyName>Template10.Services.Settings</AssemblyName>
+    <Description>Handy Settings service for WinRT. Part of Template 10, a Library of Helpers for UWP.</Description>
     <RootNamespace>Template10.Services</RootNamespace>
 
-    <VersionPrefix>1.0.2</VersionPrefix>
-    <AssemblyVersion>1.0.2.0</AssemblyVersion>
+    <VersionPrefix>1.0.0</VersionPrefix>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
 
     <TargetFrameworks>uap10.0.17134</TargetFrameworks>
     <PackageTags>Windows 10, Windows10, W10, UAP, UWP, WinRT, XAML, Template 10, Template10, T10, Universal App, Windows Universal</PackageTags>
@@ -22,7 +22,7 @@
     <Authors>Jerry Nixon, Daren May</Authors>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    
+
   </PropertyGroup>
 
   <ItemGroup>
@@ -30,7 +30,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Template10.Services.Serialization" Version="1.0.4" />
+    <PackageReference Include="Template10.Services.CompressionService" Version="1.0.1" />
+    <PackageReference Include="Template10.Services.FileService" Version="1.0.1" />
   </ItemGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">

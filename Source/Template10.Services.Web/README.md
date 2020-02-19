@@ -1,6 +1,6 @@
 ﻿# WebService
 
-The `WebService` provides simplified access to REST based services and provides the means to automatically serialize and deserialize payloads to/from JSON. Leverages the [Template 10 Serialization Service](https://www.nuget.org/packages/Template10.Service.Serialization/).
+The `WebService` provides simplified access to REST based services and provides the means to automatically serialize and deserialize payloads to/from JSON. Leverages the [Template 10 Serialization Service](https://www.nuget.org/packages/Template10.Services.Serialization/).
 
 ```csharp
 public interface IWebApiAdapter

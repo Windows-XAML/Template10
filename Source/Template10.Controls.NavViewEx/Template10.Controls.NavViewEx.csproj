@@ -26,6 +26,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="..\..\Assets\NuGetLogo.png" Pack="true" Visible="false" PackagePath="" />
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Include="Properties\Template10.Controls.NavViewEx.rd.xml" />
   </ItemGroup>
 
