@@ -7,6 +7,12 @@ namespace Template10.Services
     internal static class DialogManager
     {
         private static readonly SemaphoreSlim _oneAtATimeAsync = new SemaphoreSlim(1, 1);
+
+        internal static Task<bool> IsDialogRunning()
+        {
+            return Task.FromResult(_oneAtATimeAsync.CurrentCount < 1);
+        }
+
         internal static async Task<T> OneAtATimeAsync<T>(Func<Task<T>> show, TimeSpan? timeout, CancellationToken? token)
         {
             var to = timeout ?? TimeSpan.FromHours(1);

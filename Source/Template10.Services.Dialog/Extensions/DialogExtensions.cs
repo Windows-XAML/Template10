@@ -1,4 +1,5 @@
 ﻿
+using System.Threading;
 using Windows.Foundation;
 using Windows.UI.Xaml.Controls;
 
@@ -48,6 +49,12 @@ namespace Template10.Services
             dialog.SetSecondaryButton(text);
             dialog.SecondaryButtonClick += clickHandler;
             return dialog;
+        }
+
+        public static IAsyncOperation<ContentDialogResult> ShowAsync(this ContentDialog dialog, CancellationToken token)
+        {
+            token.Register(() => dialog.Hide());
+            return dialog.ShowAsync();
         }
     }
 }
